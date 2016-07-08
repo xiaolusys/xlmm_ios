@@ -103,7 +103,7 @@
     BOOL isRefundNum = (refundNum == REFUND_STATUS_NO_REFUND || refundNum == REFUND_STATUS_REFUND_CLOSE);
     if (isCountNum && isRefundNum) {
         desArr = @[@"订单创建",@"支付成功",@"产品发货",@"产品签收",@"交易完成"];
-        for (int i = 0 ; i < desArr.count; i++) {
+        for ( i = 0 ; i < desArr.count; i++) {
             if (countNum == i) {
                 if (countNum >= 1) {
                     i --;

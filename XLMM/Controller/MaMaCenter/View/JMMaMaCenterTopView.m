@@ -29,6 +29,10 @@
 @property (nonatomic, strong) UIButton *isVipMamaButton;
 @property (nonatomic, strong) UILabel *buttonLabel;
 /**
+ *  MaMa等级
+ */
+@property (nonatomic, strong) UILabel *mamaLeveLabel;
+/**
  *  Vip剩余时间
  */
 @property (nonatomic, strong) UILabel *remainingTimeLabel;
@@ -83,7 +87,10 @@
     self.accumulatedEarningsLabel.text = [NSString stringWithFormat:@"%.2f",carryValue];
     
     CGFloat cashValue = [self.centerModel.cash_value floatValue];
+    
     self.balanceLabel.text = [NSString stringWithFormat:@"%.2f",cashValue];
+    
+    self.mamaLeveLabel.text = self.extraModel.agencylevel_display;
     
     NSString *limtStr = self.extraModel.surplus_days;
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
@@ -98,6 +105,8 @@
     self.remainingTimeLabel.attributedText = str;
     
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    
+    
     
 }
 - (void)createUI {
@@ -141,6 +150,11 @@
     self.buttonLabel = buttonLabel;
     self.buttonLabel.textColor = [UIColor whiteColor];
     self.buttonLabel.font = [UIFont systemFontOfSize:14.];
+    
+    UILabel *mamaLeveLabel = [UILabel new];
+    [self addSubview:mamaLeveLabel];
+    self.mamaLeveLabel = mamaLeveLabel;
+    self.mamaLeveLabel.font = [UIFont boldSystemFontOfSize:16.];
     
     UILabel *remainingTimeLabel = [UILabel new];
     [self addSubview:remainingTimeLabel];
@@ -247,6 +261,10 @@
         make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY);
     }];
     
+    [self.mamaLeveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.isVipMamaButton.mas_right).offset(10);
+        make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY);
+    }];
     
     [self.remainingTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.isVipMamaButton);

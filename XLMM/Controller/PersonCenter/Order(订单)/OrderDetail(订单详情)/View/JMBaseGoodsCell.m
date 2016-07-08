@@ -55,7 +55,6 @@
     UIImageView *iconImage = [UIImageView new];
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
-    self.iconImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewClick:)];
     [self.iconImage addGestureRecognizer:tap];
     
@@ -160,7 +159,12 @@
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
     self.iconImage.layer.cornerRadius = 5;
-
+    if (packageModel) {
+        self.iconImage.userInteractionEnabled = YES;
+    }else {
+        self.iconImage.userInteractionEnabled = NO;
+    }
+    
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.payment floatValue];
@@ -195,6 +199,7 @@
             }
         }
     }else {
+        self.optionButton.hidden = YES;
         if (refundStatus == REFUND_STATUS_NO_REFUND) {
             self.refundLabel.text = @"";
         }
@@ -204,6 +209,8 @@
     
     self.orderModel = [[JMOrderGoodsModel alloc] init];
     self.orderModel = goodsModel;
+    
+    
     
 }
 - (void)optionButtonClick:(UIButton *)button {

@@ -19,6 +19,8 @@
 
 @property (nonatomic, assign) NSInteger indexSection;
 
+@property (nonatomic, copy) NSString *packAgeStr;
+
 @property (nonatomic, weak) id<JMOrderDetailSectionViewDelegate>delegate;
 
 @end

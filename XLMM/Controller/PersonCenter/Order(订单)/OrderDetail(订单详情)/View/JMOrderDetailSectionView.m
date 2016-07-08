@@ -30,7 +30,11 @@
 - (void)setIndexSection:(NSInteger)indexSection {
     NSArray *arr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
     _indexSection = indexSection;
-    self.packageLabel.text = [NSString stringWithFormat:@"包裹%@ :",arr[_indexSection]];
+    self.packageLabel.text = [NSString stringWithFormat:@"包裹%@",arr[indexSection]];
+}
+- (void)setPackAgeStr:(NSString *)packAgeStr {
+    _packAgeStr = packAgeStr;
+    self.descLabel.text = packAgeStr;
 }
 - (void)setUpTopUI {
     UIView *baseView = [UIView new];

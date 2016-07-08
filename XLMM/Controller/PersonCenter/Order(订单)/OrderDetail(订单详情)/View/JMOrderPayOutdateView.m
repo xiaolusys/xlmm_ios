@@ -42,11 +42,18 @@
 }
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
     if (_isShow) {
+        _dateStr = @"";
+        self.sureOrderButton.hidden = NO;
+        self.canelOrderButton.hidden = NO;
         _createTimeStr = createTimeStr;
         _dateStr = [self formatterTimeString:createTimeStr];
         _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+//        self.bottomView.hidden = NO;
     }else {
-        
+//        self.bottomView.hidden = YES;
+        self.sureOrderButton.hidden = YES;
+        self.canelOrderButton.hidden = YES;
+        self.bottomView.hidden = YES;
     }
     
 }
@@ -55,30 +62,29 @@
     UIView *bottomView = [UIView new];
     [self addSubview:bottomView];
     self.bottomView = bottomView;
-    self.bottomView.frame = self.frame;
     
     UILabel *outDateTitleLabel = [UILabel new];
-    [bottomView addSubview:outDateTitleLabel];
+    [self.bottomView addSubview:outDateTitleLabel];
     self.outDateTitleLabel = outDateTitleLabel;
     self.outDateTitleLabel.font = [UIFont systemFontOfSize:13.];
     self.outDateTitleLabel.textColor = [UIColor buttonTitleColor];
     self.outDateTitleLabel.text = @"支付剩余时间";
     
     UILabel *orderOutdateTime = [UILabel new];
-    [bottomView addSubview:orderOutdateTime];
+    [self.bottomView addSubview:orderOutdateTime];
     self.orderOutdateTime = orderOutdateTime;
     self.orderOutdateTime.font = [UIFont systemFontOfSize:13.];
     self.orderOutdateTime.textColor = [UIColor buttonTitleColor];
     
     JMSelecterButton *canelOrderButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-    [bottomView addSubview:canelOrderButton];
+    [self.bottomView addSubview:canelOrderButton];
     self.canelOrderButton = canelOrderButton;
     [self.canelOrderButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"取消订单" TitleFont:14. CornerRadius:20];
     self.canelOrderButton.tag = 100;
     [self.canelOrderButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
     
     JMSelecterButton *sureOrderButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-    [bottomView addSubview:sureOrderButton];
+    [self.bottomView addSubview:sureOrderButton];
     self.sureOrderButton = sureOrderButton;
     [self.sureOrderButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"立即支付" TitleFont:14. CornerRadius:20];
     self.sureOrderButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
@@ -86,6 +92,12 @@
     [self.sureOrderButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
     
     kWeakSelf
+    
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(weakSelf);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@60);
+    }];
     
     [self.outDateTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.bottomView).offset(10);
@@ -147,6 +159,10 @@
         self.canelOrderButton.hidden = YES;
         self.sureOrderButton.hidden = YES;
         self.bottomView.hidden = YES;
+    }else {
+        self.canelOrderButton.hidden = NO;
+        self.sureOrderButton.hidden = NO;
+        self.bottomView.hidden = NO;
     }
 
     

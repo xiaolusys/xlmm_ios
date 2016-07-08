@@ -11,6 +11,7 @@
                 <outlet property="addButton" destination="ahD-VO-bdT" id="qle-88-9LD"/>
                 <outlet property="addButtonClicked" destination="ahD-VO-bdT" id="bC0-JK-AO7"/>
                 <outlet property="buttonView" destination="3Kf-Nv-VDr" id="0b8-k9-ZEO"/>
+                <outlet property="choiseRefundWay" destination="vj0-db-erA" id="sUW-he-i5z"/>
                 <outlet property="commitButton" destination="mz5-NN-eNZ" id="3iU-SL-adv"/>
                 <outlet property="infoLabel" destination="ZM3-U8-2Z0" id="VcL-Zb-ZWp"/>
                 <outlet property="inputTextView" destination="y6Z-I9-VjJ" id="nG2-rL-mvh"/>
@@ -33,7 +34,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Si-3k-qeZ">
-                    <rect key="frame" x="0.0" y="64" width="320" height="183"/>
+                    <rect key="frame" x="0.0" y="159" width="320" height="183"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ik-sf-9Uq">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
@@ -213,7 +214,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0CJ-1j-UGT">
-                    <rect key="frame" x="0.0" y="262" width="320" height="160"/>
+                    <rect key="frame" x="0.0" y="357" width="320" height="160"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qhs-fj-eOP">
                             <rect key="frame" x="0.0" y="1" width="320" height="158"/>
@@ -338,17 +339,27 @@
                         <constraint firstItem="mz5-NN-eNZ" firstAttribute="top" secondItem="vMf-R1-itQ" secondAttribute="bottom" constant="10" id="tVb-Ic-nFr"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vj0-db-erA">
+                    <rect key="frame" x="0.0" y="64" width="320" height="80"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="9VW-8O-mZf"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="vj0-db-erA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1Hq-i5-DDv"/>
                 <constraint firstAttribute="trailing" secondItem="7Si-3k-qeZ" secondAttribute="trailing" id="A8D-VM-uGM"/>
                 <constraint firstAttribute="bottom" secondItem="3Kf-Nv-VDr" secondAttribute="bottom" id="Naf-93-WPx"/>
+                <constraint firstItem="vj0-db-erA" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="SuD-NI-Zxm"/>
                 <constraint firstItem="3Kf-Nv-VDr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UTI-PR-cDc"/>
+                <constraint firstItem="vj0-db-erA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Upo-2F-9SR"/>
                 <constraint firstItem="0CJ-1j-UGT" firstAttribute="top" secondItem="7Si-3k-qeZ" secondAttribute="bottom" constant="15" id="W3B-Co-eh0"/>
                 <constraint firstItem="0CJ-1j-UGT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bEQ-Cv-nxw"/>
                 <constraint firstAttribute="trailing" secondItem="3Kf-Nv-VDr" secondAttribute="trailing" id="lou-dD-Iy0"/>
                 <constraint firstAttribute="trailing" secondItem="0CJ-1j-UGT" secondAttribute="trailing" id="riM-GW-4RW"/>
-                <constraint firstItem="7Si-3k-qeZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ybg-2e-zY7"/>
+                <constraint firstItem="7Si-3k-qeZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="159" id="ybg-2e-zY7"/>
                 <constraint firstItem="7Si-3k-qeZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ynP-BL-6bT"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>

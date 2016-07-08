@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "PerDingdanModel.h"
 #import "JMOrderGoodsModel.h"
 
 @interface ShenQingTuikuanController : UIViewController
 
 @property (nonatomic, strong) JMOrderGoodsModel *dingdanModel;
 
-@property (nonatomic, strong) UIButton *button;
+
 @property (copy, nonatomic) NSString *tid;
 @property (copy, nonatomic) NSString *oid;
 @property (copy, nonatomic) NSString *status;
@@ -48,8 +47,38 @@
 @property (weak, nonatomic) IBOutlet UIButton *commitButton;
 
 
-
-
+@property (weak, nonatomic) IBOutlet UIView *choiseRefundWay;
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

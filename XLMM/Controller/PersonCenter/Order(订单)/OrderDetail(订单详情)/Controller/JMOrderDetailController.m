@@ -34,10 +34,11 @@
 #import "JMPopView.h"
 #import "JMEditAddressController.h"
 #import "JMOrderDetailSectionView.h"
+#import "JMRefundController.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMShareViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate>
+@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMShareViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *orderGoodsDataSource;
@@ -77,6 +78,12 @@
  *  修改物流视图
  */
 @property (nonatomic,strong) JMPopLogistcsController *showViewVC;
+/**
+ *  退款选择弹出框视图
+ */
+@property (nonatomic,strong) JMRefundController *refundVC;
+
+
 @end
 
 @implementation JMOrderDetailController {
@@ -128,7 +135,6 @@
     }else {
         _isTimeLineView = NO;
     }
-
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -155,12 +161,10 @@
     self.tableView.showsVerticalScrollIndicator = NO;
 }
 - (void)createBottomView {
-    
     JMOrderPayOutdateView *outDateView = [[JMOrderPayOutdateView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 60, SCREENWIDTH, 60)];
     [self.view addSubview:outDateView];
     self.outDateView = outDateView;
     self.outDateView.delegate = self;
-    
 }
 - (void)createTableHeaderView {
     CGFloat _timeLineHeight = 0.;
@@ -177,8 +181,6 @@
 - (void)createTableFooterView {
     JMOrderDetailFooterView *orderDetailFooterView = [JMOrderDetailFooterView enterFooterView];
     self.orderDetailFooterView = orderDetailFooterView;
-    
-    
     self.tableView.tableFooterView = self.orderDetailFooterView;
 }
 #pragma mark 请求数据
@@ -222,6 +224,7 @@
         [_refundStatusDisplayArray addObject:goodsDic[@"refund_status_display"]];
     }
     // ===== 订单详情包裹分包数据源模型 =======
+    _logisticsArr = [NSMutableArray array];
     NSArray *packArr = dicJson[@"package_orders"];
     for (NSDictionary *packDic in packArr) {
         self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:packDic];
@@ -233,11 +236,11 @@
     NSInteger statusCount = [dicJson[@"status"] integerValue];
     self.outDateView.statusCount = statusCount;
     self.outDateView.createTimeStr = dicJson[@"created"];
-    if (statusCount == ORDER_STATUS_WAITPAY) {
-        self.outDateView.hidden = NO;
-    }else {
-        self.outDateView.hidden = YES;
-    }
+//    if (statusCount == ORDER_STATUS_WAITPAY) {
+//        self.outDateView.hidden = NO;
+//    }else {
+//        self.outDateView.hidden = YES;
+//    }
     // == 包裹信息的分包判断 == //
     _dataSource = [NSMutableArray array];
     NSInteger count = [self.orderDetailModel.status integerValue];
@@ -273,7 +276,6 @@
     if (index == 100) {
         // 修改地址
         JMEditAddressController *editVC = [[JMEditAddressController alloc] init];
-        editVC.delegate = self;
         editVC.editDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
@@ -324,6 +326,7 @@
     }
     [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
     cell.delegate = self;
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];//刷新行
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -335,11 +338,18 @@
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
     if (_packageStr.length == 0) {
         return nil;
     }else {
         JMOrderDetailSectionView *sectionView = [[JMOrderDetailSectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
+        sectionView.indexSection = section;
+        self.packageModel = [[JMPackAgeModel alloc] init];
+        if (_packageStr.length == 0) {
+            self.packageModel = nil;
+        }else {
+            self.packageModel = _logisticsArr[section];
+            sectionView.packAgeStr = self.packageModel.assign_status_display;
+        }
         sectionView.delegate = self;
         return sectionView;
     }
@@ -358,7 +368,7 @@
     
     [self.navigationController pushViewController:queryVC animated:YES];
 }
-- (void)composeOptionTapClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
+- (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     queryVC.index = section;
     queryVC.orderDataSource = _dataSource[section];
@@ -379,7 +389,7 @@
     if (button.tag == 100) {
         self.packageModel = [[JMPackAgeModel alloc] init];
         if (_logisticsArr.count > 0) {
-            self.packageModel = _logisticsArr[row];
+            self.packageModel = _logisticsArr[section];
         }else {
             self.packageModel = nil;
         }
@@ -387,14 +397,17 @@
         if (isWarehouseOrder) {
             [self returnPopView];
         }else {
-            ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
-            tuikuanVC.dingdanModel = model;
-            tuikuanVC.refundDic = _refundDic;
-            tuikuanVC.tid = tid;
-            tuikuanVC.oid = model.orderGoodsID;
-            tuikuanVC.status = model.status_display;
-            tuikuanVC.button = button;
-            [self.navigationController pushViewController:tuikuanVC animated:YES];
+            JMShareView *cover = [JMShareView show];
+            cover.delegate = self;
+            JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
+            
+            if (self.refundVC.view == nil) {
+                self.refundVC = [[JMRefundController alloc] init];
+            }
+            self.refundVC.ordergoodsModel = model;
+            self.refundVC.refundDic = _refundDic;
+            self.refundVC.delegate = self;
+            menu.contentView = self.refundVC.view;
         }
     }else if (button.tag == 101) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
@@ -427,6 +440,19 @@
     }else {
     }
 }
+/**
+ *  选择退款方式 -> 极速退款 审核退款
+ */
+- (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic {
+    ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+    tuikuanVC.dingdanModel = goodsModel;
+    tuikuanVC.refundDic = refundDic;
+    tuikuanVC.tid = tid;
+    tuikuanVC.oid = goodsModel.orderGoodsID;
+    tuikuanVC.status = goodsModel.status_display;
+    [self.navigationController pushViewController:tuikuanVC animated:YES];
+}
+
 #pragma mark -- 弹出视图
 - (void)returnPopView {
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -476,10 +502,15 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                    NSLog(@"completion block: %@", result);
+                    
                     if (error == nil) {
+                        NSLog(@"PingppError is nil");
                     } else {
-
+                        NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                        // [self.navigationController popViewControllerAnimated:YES];
                     }
+                    //[weakSelf showAlertMessage:result];
                 }];
             });
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -498,9 +529,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
             if (error == nil) {
-            
             } else {
-
             }
         }];
     });
@@ -521,21 +550,13 @@
             [self performSelector:@selector(poptoView) withObject:nil afterDelay:.3];
         }
     }else {
-        
     }
-    
 }
 - (void)poptoView{
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)backClick:(UIButton *)sender {
-    NSInteger count = 0;
-    count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-    }else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
