@@ -85,7 +85,7 @@
         NSLog(@"no more");
         
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
-        
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     

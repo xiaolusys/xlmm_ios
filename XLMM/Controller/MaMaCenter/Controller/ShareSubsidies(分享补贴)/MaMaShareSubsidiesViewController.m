@@ -15,6 +15,7 @@
 #import "CarryLogModel.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
+#import "SVProgressHUD.h"
 
 @interface MaMaShareSubsidiesViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -174,6 +175,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
 - (void)loadMore {
     if ([self.nextPage class] == [NSNull class]) {
         [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

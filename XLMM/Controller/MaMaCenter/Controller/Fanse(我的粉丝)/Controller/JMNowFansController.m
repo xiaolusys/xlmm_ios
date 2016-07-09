@@ -61,7 +61,7 @@
     
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -117,6 +117,7 @@
 {
     if ([_urlStr class] == [NSNull class]) {
         [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];

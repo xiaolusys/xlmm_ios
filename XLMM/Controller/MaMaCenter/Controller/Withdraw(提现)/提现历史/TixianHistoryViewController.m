@@ -70,7 +70,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 
 #pragma mark --- 创建一个数据请求
 - (void)downloadData{
-
+    
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,_currentPage];
     NSLog(@"string = %@", self.nextString);
 
