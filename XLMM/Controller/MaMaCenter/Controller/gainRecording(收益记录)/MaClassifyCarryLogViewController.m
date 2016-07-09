@@ -219,6 +219,7 @@ static NSString *cellIdentifier = @"carryLogCell";
             NSString *nextStr = [self.nextdic objectForKey:number];
             if([nextStr class] == [NSNull class]) {
                 [table.mj_footer endRefreshingWithNoMoreData];
+                [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
                 return;
             }
             [self loadMore];

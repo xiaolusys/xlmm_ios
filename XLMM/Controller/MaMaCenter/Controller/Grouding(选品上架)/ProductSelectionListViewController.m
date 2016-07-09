@@ -356,10 +356,10 @@
     
 }
 - (void)loadDataSource {
-    [self.dataArr removeAllObjects];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return ;
+        [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
@@ -371,6 +371,7 @@
 - (void)loadMore {
     if ([self.nextUrl class] == [NSNull class]) {
         [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];

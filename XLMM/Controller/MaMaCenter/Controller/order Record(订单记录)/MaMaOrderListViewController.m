@@ -201,6 +201,7 @@
 - (void)loadMore {
     if ([self.nextPage class] == [NSNull class]) {
         [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

@@ -94,6 +94,7 @@
 //        }
       [self.quanbuCollectionView.mj_footer endRefreshingWithNoMoreData];
 //        [alterView show];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     
