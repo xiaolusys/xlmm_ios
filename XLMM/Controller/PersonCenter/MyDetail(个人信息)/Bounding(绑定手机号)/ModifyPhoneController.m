@@ -10,6 +10,7 @@
 #import "UIColor+RGBColor.h"
 #import "BoundingNewPhoneController.h"
 #import "UIViewController+NavigationBar.h"
+#import "MMClass.h"
 
 @interface ModifyPhoneController ()<UITextFieldDelegate>
 
@@ -22,11 +23,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"ModifyPhoneController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"ModifyPhoneController"];
 }
 
 - (void)viewDidLoad {

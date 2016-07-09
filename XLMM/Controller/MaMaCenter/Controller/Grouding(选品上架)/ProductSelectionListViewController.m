@@ -85,12 +85,17 @@
     [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
 
     self.numberLabel.text = self.numbersOfSelected;
+    
+    [MobClick beginLogPageView:@"ProductSelectionListViewController"];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"ProductSelectionListViewController"];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

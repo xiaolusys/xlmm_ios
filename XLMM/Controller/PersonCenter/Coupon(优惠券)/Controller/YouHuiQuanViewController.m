@@ -52,13 +52,15 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    [MobClick beginLogPageView:@"YouHuiQuan"];
     
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"YouHuiQuan"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

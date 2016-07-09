@@ -17,6 +17,8 @@
 #import "UIImage+ImageWithUrl.h"
 #import "NSArray+Log.h"
 
+#import "UMMobClick/MobClick.h"
+
 //#import "NSDictionary+Log.h"
 
 

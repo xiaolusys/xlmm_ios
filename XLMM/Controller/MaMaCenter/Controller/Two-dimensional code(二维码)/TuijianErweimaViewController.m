@@ -38,13 +38,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    [MobClick beginLogPageView:@"TuijianErweimaViewController"];
     
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"TuijianErweimaViewController"];
+}
+
 
 
 - (void)viewDidLoad {

@@ -19,7 +19,6 @@
 #import "SVProgressHUD.h"
 #import "WebViewController.h"
 #import "MJExtension.h"
-#import "UMMobClick/MobClick.h"
 
 
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
@@ -55,7 +54,7 @@
     [self downloadData];
     [self downloadHistoryData];
     
-    [MobClick beginLogPageView:@"cart"];
+    [MobClick beginLogPageView:@"ShoppingCart"];
 }
 
 -(void)displayDefaultView{
@@ -87,8 +86,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
-    
-    [MobClick endLogPageView:@"cart"];
+    [MobClick endLogPageView:@"ShoppingCart"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

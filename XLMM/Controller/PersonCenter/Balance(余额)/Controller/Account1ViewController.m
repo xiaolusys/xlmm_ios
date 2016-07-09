@@ -53,22 +53,26 @@ static NSString *identifier = @"AccountCell";
     return _dataArr;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [self.tableView.mj_header beginRefreshing];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"BlanceAccount"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"BlanceAccount"];
 }
+
+
 
 - (void)updateMoneyLabel{
    NSUserDefaults *drawCashM = [NSUserDefaults standardUserDefaults];

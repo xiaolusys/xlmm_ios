@@ -63,6 +63,17 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"PersonAllOrder"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"PersonAllOrder"];
+}
 
 
 - (void)reload
@@ -98,14 +109,6 @@
         NSLog(@"%@获取数据失败",urlString);
     }];
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
-}
-
-
-
 
 
 - (void)viewDidLoad {

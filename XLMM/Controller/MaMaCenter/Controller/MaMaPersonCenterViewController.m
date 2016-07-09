@@ -135,18 +135,19 @@
 
 @implementation MaMaPersonCenterViewController
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-    
+    self.navigationController.navigationBarHidden = NO;
     [self loadDataSource];
+    [MobClick beginLogPageView:@"MaMaPersonCenterViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    
+    [MobClick endLogPageView:@"MaMaPersonCenterViewController"];
 }
+
 - (NSMutableDictionary *)diction {
     if (!_diction) {
         _diction = [NSMutableDictionary dictionary];

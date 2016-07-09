@@ -58,6 +58,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"PublishNewPdtViewController"];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -67,6 +69,8 @@
         [theTimer invalidate];
     }
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"PublishNewPdtViewController"];
+
 }
 
 //- (PhotoView *)photoView {
