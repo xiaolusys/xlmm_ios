@@ -319,7 +319,7 @@
     self.orderGoodsModel = [[JMOrderGoodsModel alloc] init];
     self.packageModel = [[JMPackAgeModel alloc] init];
     self.orderGoodsModel = _dataSource[indexPath.section][indexPath.row];
-    if (_packageStr.length == 0) {
+    if (_logisticsArr.count == 0) {
         self.packageModel = nil;
     }else {
         self.packageModel = _logisticsArr[indexPath.section];
@@ -331,20 +331,20 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (_packageStr.length == 0) {
+    if (_logisticsArr.count == 0) {
         return 0;
     }else {
         return 35;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (_packageStr.length == 0) {
+    if (_logisticsArr.count == 0) {
         return nil;
     }else {
         JMOrderDetailSectionView *sectionView = [[JMOrderDetailSectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
         sectionView.indexSection = section;
         self.packageModel = [[JMPackAgeModel alloc] init];
-        if (_packageStr.length == 0) {
+        if (_logisticsArr.count == 0) {
             self.packageModel = nil;
         }else {
             self.packageModel = _logisticsArr[section];
