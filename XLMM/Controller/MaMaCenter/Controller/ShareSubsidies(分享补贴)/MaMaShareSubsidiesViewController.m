@@ -172,6 +172,10 @@ static NSString *cellIdentifier = @"shareSubsidies";
 
 //加载更多
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshing];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.tableView.mj_footer endRefreshing];

@@ -44,7 +44,9 @@
 @end
 
 static NSString *cellIdentifier = @"carryLogCell";
-@implementation MaClassifyCarryLogViewController
+@implementation MaClassifyCarryLogViewController {
+    NSString *_nextPage;
+}
 
 -(NSMutableArray *)tableViewArr {
     if (!_tableViewArr) {
@@ -269,6 +271,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 }
 
 - (void)loadMore {
+    
     NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
     NSString *url = [self.nextdic objectForKey:number];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
