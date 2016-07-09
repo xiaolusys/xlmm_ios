@@ -137,7 +137,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
     [self loadDataSource];
     [MobClick beginLogPageView:@"MaMaPersonCenterViewController"];
     
