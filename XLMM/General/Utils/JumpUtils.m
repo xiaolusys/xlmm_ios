@@ -13,7 +13,6 @@
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "MMDetailsViewController.h"
-#import "XiangQingViewController.h"
 #import "HomeViewController.h"
 #import "XlmmMall.h"
 #import "ChildViewController.h"
@@ -21,6 +20,7 @@
 #import "ProductSelectionListViewController.h"
 #import "CartViewController.h"
 #import "WebViewController.h"
+#import "JMOrderDetailController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -148,11 +148,12 @@
         } else if ([firstparam isEqualToString:@"trade_id"]){
             //跳到订单详情
             NSLog(@"trade_id = %@", firstvalue);
-            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+            JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+//            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
-            [vc.navigationController pushViewController:xiangqingVC animated:YES];
+            orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
+            [vc.navigationController pushViewController:orderDetailVC animated:YES];
         } else if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
             NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
             

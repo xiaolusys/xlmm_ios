@@ -15,7 +15,7 @@
 #import "Reachability.h"
 #import "NewLeftViewController.h"
 #import "MMDetailsViewController.h"
-#import "MobClick.h"
+#import "UMMobClick/MobClick.h"
 #import "SVProgressHUD.h"
 #import "ActivityView.h"
 #import "HomeViewController.h"
@@ -96,7 +96,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    self.isApinPayGo = YES;
+//    self.isApinPayGo = YES;
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
@@ -155,12 +155,11 @@
     
     //    [MobClick setLogEnabled:YES];
     //version标识
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-    //填写AppKey，设置发送策略和填写渠道
-    [MobClick startWithAppkey:@"5665541ee0f55aedfc0034f4" reportPolicy:BATCH channelId:nil];
+//    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
-    
+    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
+    UMConfigInstance.channelId = @"App Store";
+    [MobClick startWithConfigure:UMConfigInstance];
     
     //    Class cls = NSClassFromString(@"UMANUtil");
     //    SEL deviceIDSelector = @selector(openUDIDString);
@@ -663,6 +662,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    
     /**
      *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
      */

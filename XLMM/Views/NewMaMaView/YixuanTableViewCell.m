@@ -28,8 +28,8 @@
     return self;
 }
 
-- (void)fillData:(MaMaSelectProduct *)model{
-    [self.headImageView sd_setImageWithURL:[ NSURL URLWithString:[model.pic_path URLEncodedString]]];
+- (void)fillData:(JMAlreadyChooseModel *)model{
+    [self.headImageView sd_setImageWithURL:[ NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
     self.headImageView.layer.cornerRadius = 4;
     self.headImageView.layer.borderWidth = 1;
     self.headImageView.layer.borderColor   = [UIColor imageViewBorderColor].CGColor;
@@ -38,7 +38,7 @@
     self.stdPriceLabel.text = [NSString stringWithFormat:@"/¥%.0f", [model.std_sale_price floatValue]];
     self.headImageView.layer.masksToBounds = YES;
     self.headImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.pdtID = [model.product stringValue];
+    self.pdtID = model.product;
     self.model = model;
     
 }

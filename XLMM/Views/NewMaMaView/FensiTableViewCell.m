@@ -26,7 +26,7 @@
     if (model.fans_thumbnail.length == 0) {
         self.picImageView.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail URLEncodedString]]];
+        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.fans_thumbnail JMUrlEncodedString]]];
     }
     
     self.picImageView.layer.cornerRadius = 30;
@@ -44,7 +44,7 @@
     if (model.visitor_img.length == 0) {
         self.picImageView.image = [UIImage imageNamed:@"zhanwei"];
     }else {
-        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img URLEncodedString]]];
+        [self.picImageView sd_setImageWithURL:[NSURL URLWithString:[model.visitor_img JMUrlEncodedString]]];
     }
     
     self.picImageView.layer.cornerRadius = 30;
@@ -54,7 +54,8 @@
     self.name.text = model.visitor_nick;
     
     self.desLabel.text = model.visitor_description;
-    self.timeLabel.text = [self dealVisitorTime:model.created];
+
+    self.timeLabel.text = [self dealDate:model.created];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -77,4 +78,32 @@
     return time;
 }
 
+- (NSString *)dealDate:(NSString *)str {
+    NSMutableString *String1 = [[NSMutableString alloc] initWithString:str];
+    [String1 replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
+    
+    NSString *string2 = [NSString stringWithFormat:@"%@",String1];
+    NSString *string3 = [string2 substringWithRange:NSMakeRange(5,11)];
+    return string3;
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -42,7 +42,9 @@
         self.delegate = delegate;
         self.addressPicker.delegate = self;
         self.addressPicker.dataSource = self;
-        provinceArray = [[NSMutableArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
+        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
+        provinceArray = [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
+
         cityArray = [[provinceArray objectAtIndex:0] objectForKey:@"cities"];
         NSLog(@"province = %u", (unsigned int)provinceArray.count);
         NSLog(@"city = %u", (unsigned int)cityArray.count);

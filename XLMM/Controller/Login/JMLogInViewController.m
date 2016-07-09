@@ -16,7 +16,7 @@
 #import "RegisterViewController.h"
 #import "NSString+Encrypto.h"
 #import "MiPushSDK.h"
-#import "MobClick.h"
+//#import "MobClick.h"
 #import "AFNetworking.h"
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
@@ -81,6 +81,7 @@
     }
     
 }
+
 
 - (void)initUI {
     
@@ -177,7 +178,13 @@
     }
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
-    
+    [MobClick beginLogPageView:@"JMLogInViewController"];
+
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"JMLogInViewController"];
 }
 
 #pragma mark --- 监听微信登录的通知
@@ -275,6 +282,7 @@
     [userdefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
     [userdefaults synchronize];
     
+    
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
     req.state = @"xiaolumeimei" ;
@@ -311,7 +319,7 @@
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
     [SVProgressHUD dismiss];
-    [MobClick profileSignInWithPUID:@"playerID"];
+//    [MobClick profileSignInWithPUID:@"playerID"];
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];

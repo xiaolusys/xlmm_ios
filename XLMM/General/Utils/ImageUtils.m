@@ -14,7 +14,7 @@
 @implementation ImageUtils
 + (void)loadImage:(UIImageView *)img url:(NSString *)url{
 
-    [img sd_setImageWithURL:[NSURL URLWithString:[url URLEncodedString]]];
+    [img sd_setImageWithURL:[NSURL URLWithString:[url JMUrlEncodedString]]];
 
 }
 @end
