@@ -122,6 +122,7 @@
     [self createTableHeaderView];
     [self createTableFooterView];
 }
+
 - (void)setAllOrderModel:(JMAllOrderModel *)allOrderModel {
     _allOrderModel = allOrderModel;
     NSArray *arr = allOrderModel.orders;
@@ -155,7 +156,6 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60) style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
-    self.tableView.backgroundColor = [UIColor lineGrayColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;

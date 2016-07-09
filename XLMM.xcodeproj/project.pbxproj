@@ -577,10 +577,6 @@
 		1F498B3A1D276450007E77FC /* GoodsInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B271D276450007E77FC /* GoodsInfoModel.m */; };
 		1F498B3B1D276450007E77FC /* PayExtrasModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B291D276450007E77FC /* PayExtrasModel.m */; };
 		1F498B3C1D276450007E77FC /* JMOrderPayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B2C1D276450007E77FC /* JMOrderPayView.m */; };
-		1F498B411D27719C007E77FC /* Address.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B3D1D27719C007E77FC /* Address.plist */; };
-		1F498B421D27719C007E77FC /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B3E1D27719C007E77FC /* area.plist */; };
-		1F498B431D27719C007E77FC /* Logistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B3F1D27719C007E77FC /* Logistics.plist */; };
-		1F498B441D27719C007E77FC /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B401D27719C007E77FC /* provinces.plist */; };
 		1F498C121D2772D0007E77FC /* Account1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B481D2772D0007E77FC /* Account1ViewController.m */; };
 		1F498C131D2772D0007E77FC /* AccountEmpty.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B491D2772D0007E77FC /* AccountEmpty.xib */; };
 		1F498C141D2772D0007E77FC /* GuanzhuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B4C1D2772D0007E77FC /* GuanzhuViewController.m */; };
@@ -679,6 +675,7 @@
 		1F4DE5A91CE4712E00114BDA /* ice_Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A21CE4712E00114BDA /* ice_Image@2x.png */; };
 		1F4DE5AA1CE4712E00114BDA /* left_line_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A31CE4712E00114BDA /* left_line_selected@2x.png */; };
 		1F4DE5AB1CE4712E00114BDA /* oneHunder_Withdraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */; };
+		1F6CEBFA1D30F91A00E1F4DF /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CEBF91D30F91A00E1F4DF /* area.plist */; };
 		1F80FCDC1CE9D55B00E1BF86 /* back_ground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */; };
 		1F80FCE31CE9E68900E1BF86 /* back_image_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */; };
 		1F80FCE41CE9E68900E1BF86 /* back_image_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */; };
@@ -691,6 +688,9 @@
 		1F98FE5E1D1934B00043FA32 /* pay_successTopIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F98FE5D1D1934B00043FA32 /* pay_successTopIcon@2x.png */; };
 		1F98FE661D1A1EC20043FA32 /* get_fivteen_redpack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F98FE651D1A1EC20043FA32 /* get_fivteen_redpack@2x.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
+		1FC2B5711D30AD1300CA01AB /* Address.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B56D1D30AD1300CA01AB /* Address.plist */; };
+		1FC2B5731D30AD1300CA01AB /* Logistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B56F1D30AD1300CA01AB /* Logistics.plist */; };
+		1FC2B5741D30AD1300CA01AB /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B5701D30AD1300CA01AB /* provinces.plist */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		1FCDC51B1D23B60B00554777 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3266762B1BB5200E00307EC4 /* libz.tbd */; };
 		1FD158CB1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */; };
@@ -861,7 +861,6 @@
 		327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */; };
 		327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367041C1827D3008AAE86 /* libiconv.2.dylib */; };
 		327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 327367061C182800008AAE86 /* libsqlite3.dylib */; };
-		3277205F1CA8CCD600FC376F /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3277205E1CA8CCD600FC376F /* area.plist */; };
 		328422B11B841B7600C4EA76 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328422B01B841B7600C4EA76 /* CFNetwork.framework */; };
 		32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329601B708A3600A6F0BC /* UIKit.framework */; };
 		32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E329621B708A4000A6F0BC /* Foundation.framework */; };
@@ -1779,10 +1778,6 @@
 		1F498B291D276450007E77FC /* PayExtrasModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayExtrasModel.m; sourceTree = "<group>"; };
 		1F498B2B1D276450007E77FC /* JMOrderPayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayView.h; sourceTree = "<group>"; };
 		1F498B2C1D276450007E77FC /* JMOrderPayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayView.m; sourceTree = "<group>"; };
-		1F498B3D1D27719C007E77FC /* Address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Address.plist; path = plists/Address.plist; sourceTree = "<group>"; };
-		1F498B3E1D27719C007E77FC /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = area.plist; path = plists/area.plist; sourceTree = "<group>"; };
-		1F498B3F1D27719C007E77FC /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Logistics.plist; path = plists/Logistics.plist; sourceTree = "<group>"; };
-		1F498B401D27719C007E77FC /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = provinces.plist; path = plists/provinces.plist; sourceTree = "<group>"; };
 		1F498B471D2772D0007E77FC /* Account1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account1ViewController.h; sourceTree = "<group>"; };
 		1F498B481D2772D0007E77FC /* Account1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account1ViewController.m; sourceTree = "<group>"; };
 		1F498B491D2772D0007E77FC /* AccountEmpty.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountEmpty.xib; sourceTree = "<group>"; };
@@ -1936,6 +1931,7 @@
 		1F4DE5A21CE4712E00114BDA /* ice_Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ice_Image@2x.png"; sourceTree = "<group>"; };
 		1F4DE5A31CE4712E00114BDA /* left_line_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_line_selected@2x.png"; sourceTree = "<group>"; };
 		1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneHunder_Withdraw@2x.png"; sourceTree = "<group>"; };
+		1F6CEBF91D30F91A00E1F4DF /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_ground@2x.png"; sourceTree = "<group>"; };
 		1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_image_selecter@2x.png"; sourceTree = "<group>"; };
 		1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_image_nomal@2x.png"; sourceTree = "<group>"; };
@@ -1949,6 +1945,9 @@
 		1F98FE651D1A1EC20043FA32 /* get_fivteen_redpack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "get_fivteen_redpack@2x.png"; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
+		1FC2B56D1D30AD1300CA01AB /* Address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Address.plist; sourceTree = "<group>"; };
+		1FC2B56F1D30AD1300CA01AB /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Logistics.plist; sourceTree = "<group>"; };
+		1FC2B5701D30AD1300CA01AB /* provinces.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = provinces.plist; sourceTree = "<group>"; };
 		1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayOutdateView.h; sourceTree = "<group>"; };
 		1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayOutdateView.m; sourceTree = "<group>"; };
 		1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAllOrderModel.h; sourceTree = "<group>"; };
@@ -2204,7 +2203,6 @@
 		327367021C1827A5008AAE86 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "/usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<absolute>"; };
 		327367041C1827D3008AAE86 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = /usr/lib/libiconv.2.dylib; sourceTree = "<absolute>"; };
 		327367061C182800008AAE86 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
-		3277205E1CA8CCD600FC376F /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		328422B01B841B7600C4EA76 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XLMM copy-Info.plist"; path = "/Users/younishijie/Desktop/xlmm/XLMM/XLMM copy-Info.plist"; sourceTree = "<absolute>"; };
 		32E329601B708A3600A6F0BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -3278,12 +3276,11 @@
 		1830744F1C97D49A00B7665E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1FC2B56C1D30AD1300CA01AB /* plistsPath */,
 				1FF533741D2D0E18003DEABF /* Refresh */,
 				1FF533271D27762F003DEABF /* Home */,
-				1F700AAC1CF7D3B6007B3FC0 /* plist */,
 				1F0D90471CEBF40A00C2334D /* Login */,
 				1F88D5901CB8E3460050A2E2 /* NewSetting */,
-				3277205D1CA8CCD000FC376F /* plists */,
 				1830768E1C97D51B00B7665E /* StartImage */,
 				183074501C97D49A00B7665E /* Images */,
 				183074861C97D49A00B7665E /* Loading */,
@@ -5053,17 +5050,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		1F700AAC1CF7D3B6007B3FC0 /* plist */ = {
-			isa = PBXGroup;
-			children = (
-				1F498B3D1D27719C007E77FC /* Address.plist */,
-				1F498B3E1D27719C007E77FC /* area.plist */,
-				1F498B3F1D27719C007E77FC /* Logistics.plist */,
-				1F498B401D27719C007E77FC /* provinces.plist */,
-			);
-			name = plist;
-			sourceTree = "<group>";
-		};
 		1F88D5901CB8E3460050A2E2 /* NewSetting */ = {
 			isa = PBXGroup;
 			children = (
@@ -5081,6 +5067,17 @@
 				1FF4C9D41CBCF57800CCDCF7 /* questions.png */,
 			);
 			path = NewSetting;
+			sourceTree = "<group>";
+		};
+		1FC2B56C1D30AD1300CA01AB /* plistsPath */ = {
+			isa = PBXGroup;
+			children = (
+				1F6CEBF91D30F91A00E1F4DF /* area.plist */,
+				1FC2B56D1D30AD1300CA01AB /* Address.plist */,
+				1FC2B56F1D30AD1300CA01AB /* Logistics.plist */,
+				1FC2B5701D30AD1300CA01AB /* provinces.plist */,
+			);
+			path = plistsPath;
 			sourceTree = "<group>";
 		};
 		1FD158E91D2F96A8006C4B14 /* refundImage */ = {
@@ -5343,14 +5340,6 @@
 				325BA10C1B68B18A006D64BD /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3277205D1CA8CCD000FC376F /* plists */ = {
-			isa = PBXGroup;
-			children = (
-				3277205E1CA8CCD600FC376F /* area.plist */,
-			);
-			path = plists;
 			sourceTree = "<group>";
 		};
 		328422B81B84217100C4EA76 /* framework */ = {
@@ -5815,7 +5804,6 @@
 				3A2BC1D81D2CFF6E00F6F54B /* ios-social-sdk-login-detail.html in Resources */,
 				1F498C1A1D2772D0007E77FC /* WithdrwaIsNo.xib in Resources */,
 				325B79E11C97E7160022F930 /* StartActivityView.xib in Resources */,
-				1F498B431D27719C007E77FC /* Logistics.plist in Resources */,
 				183076331C97D49A00B7665E /* selected_icon.png in Resources */,
 				183075DF1C97D49A00B7665E /* wodejingxuanyulan.png in Resources */,
 				1830765F1C97D49A00B7665E /* 圈圈加载0011.png in Resources */,
@@ -5835,6 +5823,7 @@
 				1F27A65E1D275FB400A0F80B /* MMRootViewController.xib in Resources */,
 				183076511C97D49A00B7665E /* yishiyong.png in Resources */,
 				183075D01C97D49A00B7665E /* mamaShare.png in Resources */,
+				1F6CEBFA1D30F91A00E1F4DF /* area.plist in Resources */,
 				1830760F1C97D49A00B7665E /* Icon-40@2x.png in Resources */,
 				1F27A5CE1D2520E200A0F80B /* MaMaHuoyueduViewController.xib in Resources */,
 				183076701C97D49A00B7665E /* 圈圈加载0028.png in Resources */,
@@ -5847,7 +5836,6 @@
 				183076741C97D49A00B7665E /* 圈圈加载0032.png in Resources */,
 				183076241C97D49A00B7665E /* newyouhuiquanyiyongbg.png in Resources */,
 				325B79961C97E6F10022F930 /* BuyCartsView.xib in Resources */,
-				1F498B421D27719C007E77FC /* area.plist in Resources */,
 				183075B91C97D49A00B7665E /* loading动画008.png in Resources */,
 				183076281C97D49A00B7665E /* qitiantuihuo.png in Resources */,
 				1F27A5E61D2520E200A0F80B /* MaMaPersonCenterViewController.xib in Resources */,
@@ -5903,7 +5891,6 @@
 				1FF533361D27762F003DEABF /* pop_bottom@2x.png in Resources */,
 				1F498C3D1D2772D0007E77FC /* NewLeftViewController.xib in Resources */,
 				183076541C97D49A00B7665E /* zhifubao.png in Resources */,
-				1F498B411D27719C007E77FC /* Address.plist in Resources */,
 				3A8D5E131CE47C83008730EF /* confirm2.png in Resources */,
 				1F498C251D2772D0007E77FC /* emptyJifenView.xib in Resources */,
 				183075DC1C97D49A00B7665E /* wodejingxuanfanhui.png in Resources */,
@@ -5915,6 +5902,7 @@
 				183075D81C97D49A00B7665E /* totalClick.png in Resources */,
 				1830767E1C97D49A00B7665E /* 圈圈加载0042.png in Resources */,
 				183071F51C97BE3700B7665E /* TiaoKuanViewController.xib in Resources */,
+				1FC2B5711D30AD1300CA01AB /* Address.plist in Resources */,
 				183071EF1C97BE3700B7665E /* RegisterViewController.xib in Resources */,
 				1830759A1C97D49A00B7665E /* pro1.jpg in Resources */,
 				183076191C97D49A00B7665E /* mamaerweimaicon.png in Resources */,
@@ -5935,6 +5923,7 @@
 				183076671C97D49A00B7665E /* 圈圈加载0019.png in Resources */,
 				183076211C97D49A00B7665E /* newyouhuiquanguoqibg.png in Resources */,
 				325B79D71C97E7160022F930 /* JifenReusableView.xib in Resources */,
+				1FC2B5731D30AD1300CA01AB /* Logistics.plist in Resources */,
 				3A2BC1D61D2CFF6E00F6F54B /* ios-social-sdk-comment-quick.html in Resources */,
 				183076851C97D49A00B7665E /* path1.png in Resources */,
 				183073F81C97D17800B7665E /* MJRefresh.bundle in Resources */,
@@ -5974,7 +5963,6 @@
 				183075831C97D49A00B7665E /* icon-jiantouzuo.png in Resources */,
 				183076161C97D49A00B7665E /* ladyIcon.png in Resources */,
 				3A1E059B1CE1C8CC001018AC /* Circle_Normal.png in Resources */,
-				1F498B441D27719C007E77FC /* provinces.plist in Resources */,
 				183075C61C97D49A00B7665E /* mamafensi.png in Resources */,
 				3A2BC1DD1D2CFF6E00F6F54B /* ios-social-sdk-socialbar.html in Resources */,
 				1F27A5D71D2520E200A0F80B /* FensiListViewController.xib in Resources */,
@@ -6135,7 +6123,6 @@
 				1830762F1C97D49A00B7665E /* retina_HD4.7.png in Resources */,
 				183075BA1C97D49A00B7665E /* loading动画009.png in Resources */,
 				325B7A131C97E73A0022F930 /* PicFooterCollectionReusableView.xib in Resources */,
-				3277205F1CA8CCD600FC376F /* area.plist in Resources */,
 				1830765C1C97D49A00B7665E /* 圈圈加载0008.png in Resources */,
 				1FF4C9D51CBCF57800CCDCF7 /* waitsend.png in Resources */,
 				3A2BC1DC1D2CFF6E00F6F54B /* ios-social-sdk-share-quick.html in Resources */,
@@ -6155,6 +6142,7 @@
 				183075E41C97D49A00B7665E /* back_image.png in Resources */,
 				1F27A6651D275FB400A0F80B /* ChiMaBiaoViewController.xib in Resources */,
 				1830759D1C97D49A00B7665E /* shareFirends.png in Resources */,
+				1FC2B5741D30AD1300CA01AB /* provinces.plist in Resources */,
 				1830744D1C97D17900B7665E /* WeiboSDK.bundle in Resources */,
 				183075791C97D49A00B7665E /* icon-fanhui2.png in Resources */,
 				1F4DE5A91CE4712E00114BDA /* ice_Image@2x.png in Resources */,

@@ -121,7 +121,7 @@
 }
 
 + (UIColor *)countLabelColor{
-    return [UIColor colorWithR:187 G:187 B:187 alpha:1];
+    return [UIColor colorWithR:246 G:246 B:246 alpha:1];
 }
 
 + (UIColor *)buttonTitleColor{

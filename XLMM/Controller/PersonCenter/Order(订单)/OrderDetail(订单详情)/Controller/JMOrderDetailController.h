@@ -14,6 +14,7 @@
 
 @property (nonatomic, copy) NSString *urlString;
 
+
 @property (nonatomic, strong) JMAllOrderModel *allOrderModel;
 
 @end
