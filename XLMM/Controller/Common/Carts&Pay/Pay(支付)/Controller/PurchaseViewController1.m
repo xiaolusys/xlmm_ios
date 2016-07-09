@@ -36,6 +36,7 @@
 #import "JMPopLogistcsModel.h"
 #import "JMPayShareController.h"
 #import "JMShareModel.h"
+#import "PersonCenterViewController1.h"
 
 
 //购物车支付界面
@@ -1274,7 +1275,10 @@
 }
 - (void)popview{
     [MobClick event:@"buy_cancel"];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
 }
 
 

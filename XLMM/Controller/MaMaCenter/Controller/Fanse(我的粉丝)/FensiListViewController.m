@@ -149,6 +149,10 @@
     
 }
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshing];
+        return;
+    }
     NSString *string = self.nextPage;
     [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
 }

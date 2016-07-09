@@ -135,6 +135,10 @@ static NSString *identifier = @"AccountCell";
 
 }
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self endRefresh];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.tableView.mj_footer endRefreshing];

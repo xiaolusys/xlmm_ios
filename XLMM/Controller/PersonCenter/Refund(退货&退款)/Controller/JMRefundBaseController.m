@@ -109,9 +109,12 @@
     
 }
 - (void)loadMore {
+    if ([_nextPage class] == [NSNull class]) {
+        [self endRefresh];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:_nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self fetchedRefundData:responseObject];
         [self endRefresh];
