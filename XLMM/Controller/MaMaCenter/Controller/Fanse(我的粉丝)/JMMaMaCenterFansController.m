@@ -136,7 +136,7 @@
     }
 }
 - (void)btnClicked:(UIButton *)button{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark --pageViewControll代理方法
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{

@@ -60,7 +60,7 @@
     
     if ([orderDetailModel.channel isEqualToString:@"budget"]) {
         _imageStr = @"payWay_xiaoluPay";
-    }else if ([orderDetailModel.channel isEqualToString:@"wx_pub"]) {
+    }else if ([orderDetailModel.channel isEqualToString:@"wx"]) {
         _imageStr = @"weixinIcon";
     }else {
         _imageStr = @"zhifubaoiconthird";

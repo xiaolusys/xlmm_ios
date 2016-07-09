@@ -161,7 +161,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
     [MobClick endLogPageView:@"JMFetureFansController"];
 }
