@@ -50,6 +50,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor countLabelColor];
         [self createUI];
     }
     return self;
@@ -153,7 +154,7 @@
     
     UIView *lineView = [UIView new];
     [self addSubview:lineView];
-    lineView.backgroundColor = [UIColor titleDarkGrayColor];
+    lineView.backgroundColor = [UIColor lineGrayColor];
     kWeakSelf
     
     [oneView mas_makeConstraints:^(MASConstraintMaker *make) {

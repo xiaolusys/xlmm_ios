@@ -15,6 +15,7 @@
 #import "JMPopView.h"
 #import "SVProgressHUD.h"
 #import "JMRefundCell.h"
+#import "Masonry.h"
 
 @interface JMRefundController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
@@ -69,10 +70,26 @@
     self.tableView.tableHeaderView = headView;
     UIImageView *leftImage = [[UIImageView alloc] init];
     [headView addSubview:leftImage];
-    leftImage.frame = CGRectMake(18, 18, 22, 22);
+    [leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headView).offset(15);
+        make.centerY.equalTo(headView.mas_centerY);
+        make.height.width.mas_equalTo(@22);
+    }];
     leftImage.image = [UIImage imageNamed:@"leftArrowIcon"];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goBack:)];
     [headView addGestureRecognizer:tap];
+    
+    
+    UILabel *headLabel = [UILabel new];
+    [headView addSubview:headLabel];
+    headLabel.font = [UIFont systemFontOfSize:16.];
+    headLabel.textColor = [UIColor buttonTitleColor];
+    headLabel.text = @"退款方式";
+    [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headView.mas_centerX);
+        make.centerY.equalTo(headView.mas_centerY);
+    }];
+    
     
 }
 - (void)goBack:(UITapGestureRecognizer *)tap {

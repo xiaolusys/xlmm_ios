@@ -53,7 +53,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
@@ -85,6 +84,7 @@
     footer.hidden = YES;
     
     self.collectionView.mj_footer = footer;
+ 
     
 }
 
@@ -343,9 +343,11 @@
 //    xiangqingVC.urlString = urlString;
 //    xiangqingVC.createString = createdString;
 //    [self.navigationController pushViewController:xiangqingVC animated:YES];
+
     JMAllOrderModel *orderModel = [JMAllOrderModel mj_objectWithKeyValues:dic];
     
     JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+    
     orderDetailVC.allOrderModel = orderModel;
     orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, orderModel.goodsID];
     [self.navigationController pushViewController:orderDetailVC animated:YES];
@@ -356,7 +358,6 @@
 - (void)timerFireMethod:(NSTimer*)thetimer
 {
     NSArray  *array = thetimer.userInfo;
-    
    // NSLog(@"array = %@", array);
     for (int i = 0; i<array.count; i++) {
         
@@ -392,12 +393,11 @@
         NSCalendarUnitMinute |
         NSCalendarUnitSecond;
           NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:endDate options:0];
-
+        
         shengyushijian = [NSString stringWithFormat:@"剩余时间%02ld:%02ld", (long)[d minute], (long)[d second]];
      //   NSLog(@"shengyu shijian = %@" , shengyushijian);
         if ([d minute] < 0 || [d second] < 0) {
             shengyushijian = @"剩余时间00:00";
-            
         }
 #pragma mark 设置倒计时
         UILabel *label = (UILabel *)[self.labelArray objectAtIndex:i];

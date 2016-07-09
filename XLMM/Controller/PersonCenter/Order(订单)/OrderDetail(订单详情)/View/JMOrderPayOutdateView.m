@@ -163,9 +163,9 @@
         self.canelOrderButton.hidden = NO;
         self.sureOrderButton.hidden = NO;
         self.bottomView.hidden = NO;
+        
     }
 
-    
     
 }
 - (NSString *)formatterTimeString:(NSString *)timeString{

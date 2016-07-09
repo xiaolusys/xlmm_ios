@@ -71,7 +71,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"PersonAllOrder"];
 }
 
