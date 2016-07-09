@@ -178,7 +178,13 @@
     }
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
-    
+    [MobClick beginLogPageView:@"JMLogInViewController"];
+
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"JMLogInViewController"];
 }
 
 #pragma mark --- 监听微信登录的通知
