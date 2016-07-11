@@ -174,7 +174,7 @@
         make.bottom.equalTo(weakSelf.iconImage);
     }];
     [self.goodsRefundMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.goodsPaymentLabel.mas_right).offset(20);
+        make.left.equalTo(weakSelf.goodsPaymentLabel.mas_right).offset(10);
         make.centerY.equalTo(weakSelf.goodsPaymentLabel.mas_centerY);
     }];
     
