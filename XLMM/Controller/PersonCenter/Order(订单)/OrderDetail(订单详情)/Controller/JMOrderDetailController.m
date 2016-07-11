@@ -294,7 +294,8 @@
     }
 }
 - (void)ClickLogistics:(JMPopLogistcsController *)click Title:(NSString *)title {
-    self.orderDetailHeaderView.logisticsStr = title;
+    [self.tableView.mj_header beginRefreshing];
+//    self.orderDetailHeaderView.logisticsStr = title;
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopView hide];

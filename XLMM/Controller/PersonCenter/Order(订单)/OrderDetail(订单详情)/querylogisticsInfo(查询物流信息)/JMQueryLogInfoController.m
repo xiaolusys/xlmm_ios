@@ -366,6 +366,7 @@
     UILabel *logNameLabel = [UILabel new];
     [topBackView addSubview:logNameLabel];
     self.logNameLabel = logNameLabel;
+    self.logNameLabel.text = self.logName;
     
     UILabel *logNumLabel = [UILabel new];
     [topBackView addSubview:logNumLabel];

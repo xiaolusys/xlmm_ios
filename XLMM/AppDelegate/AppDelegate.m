@@ -190,19 +190,13 @@
     
     //创建导航控制器，添加根视图控制器
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
-    //    MMRootViewController *root = [[MMRootViewController alloc] init];
-    //    HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
-    //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
-    //    // 设置代理
-    //
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    //    leftMenu.push
     
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;
@@ -394,6 +388,7 @@
         [manager POST:urlString parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   //  NSError *error;
+                  if (!responseObject) return ;
                   NSLog(@"JSON: %@", responseObject);
                   NSString *user_account = [responseObject objectForKey:@"user_account"];
                   
