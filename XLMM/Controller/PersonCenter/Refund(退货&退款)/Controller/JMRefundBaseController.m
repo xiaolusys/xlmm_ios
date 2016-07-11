@@ -55,7 +55,6 @@
     [self createTableView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-
 }
 
 - (void)createTableView {
@@ -106,7 +105,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self endRefresh];
     }];
-    
+
 }
 - (void)loadMore {
     if ([_nextPage class] == [NSNull class]) {

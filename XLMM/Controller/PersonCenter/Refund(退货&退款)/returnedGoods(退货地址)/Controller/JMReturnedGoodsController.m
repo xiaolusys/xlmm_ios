@@ -53,8 +53,7 @@
     [self createNavigationBarWithTitle:@"填写快递单" selecotr:@selector(backClicked:)];
     [self createUI];
     [self createRightButonItem];
-    //注册键盘的通知
-    [self monitorKeyboard];
+
 }
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
@@ -228,7 +227,7 @@
             
             
             
-            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", (long)self.refundModelr.order_id],
+            NSDictionary *parameters = @{@"id":self.refundModelr.order_id,
                                          @"modify":@2,
                                          @"company":self.expressL.text,
                                          @"sid":self.expressListTF.text
@@ -265,79 +264,34 @@
     
     
 }
-
-#pragma mark - 监听键盘
-
-- (void)monitorKeyboard
-{
-    //添加监听键盘弹出
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
-    //添加监听键盘隐藏
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)keyboardShow:(NSNotification *)notification
-{
-    if (_isPopup) {
-        return;
-    }
-    _isPopup = YES;
-    self.expressBtn.enabled = NO;
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
-    NSValue *frameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect frame = [frameValue CGRectValue];
-    CGFloat height = frame.size.height;
-    CGPoint center = self.baseScrollV.center;
-    center.y -= height;
-    self.baseScrollV.center = center;
-//        CGFloat maxY = CGRectGetMaxY(self.sureButton.frame) + self.baseScrollV.frame.origin.y;
-//    
-//        CGRect kbEndFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//        CGFloat kbY = kbEndFrame.origin.y;
-//    
-//        CGFloat delta = kbY - maxY;
-//        if (delta < 0) {
-//            [UIView animateWithDuration:0.3 animations:^{
-//                self.baseScrollV.transform = CGAffineTransformMakeTranslation(0, delta);
-//            }];
-//        }
-}
-
-- (void)keyboardHide:(NSNotification *)notification
-{
-    if (!_isPopup) {
-        return;
-    }
-    _isPopup = NO;
-    self.expressBtn.enabled = YES;
-
-    NSValue *frameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect frame = [frameValue CGRectValue];
-    CGFloat height = frame.size.height;
-    
-    CGPoint center = self.baseScrollV.center;
-    center.y += height;
-    self.baseScrollV.center = center;
-//        [UIView animateWithDuration:0.25 animations:^{
-//            self.baseScrollV.transform = CGAffineTransformIdentity;
-//        }];
-
-}
-
 #pragma mark ==== 输入框协议方法
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
+    if (!_isPopup) {
+    }else {
+        _isPopup = NO;
+        self.expressBtn.enabled = YES;
+        CGPoint center = self.baseScrollV.center;
+        center.y += 260;
+        self.baseScrollV.center = center;
+    }
+    
+    
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    self.expressListTF = textField;
-//    if ([textField.text isEqualToString:@""]) {
-//        CGRect frame = CGRectMake(0, self.baseScrollV.contentSize.height - 216, self.baseScrollV.frame.size.width, 216);
-//        textField.frame = frame;
-//    }
+    if (_isPopup) {
+        return;
+    }
+    _isPopup = YES;
+    self.expressBtn.enabled = NO;
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    CGPoint center = self.baseScrollV.center;
+    center.y -= 260;
+    self.baseScrollV.center = center;
     [textField becomeFirstResponder];
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
