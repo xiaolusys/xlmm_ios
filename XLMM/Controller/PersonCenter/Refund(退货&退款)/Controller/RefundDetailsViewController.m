@@ -218,7 +218,7 @@
         
         count = desArr.count;
     }else {
-        if (self.refundModelr.has_good_return == 0) {
+        if ([self.refundModelr.has_good_return integerValue] == 0) {
 //            self.createdLabel.text = @"申请退款";
             desArr = @[@"申请退款",@"同意申请",@"等待返款",@"退款成功"];
             countNum -= 3;
