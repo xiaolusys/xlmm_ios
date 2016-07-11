@@ -43,6 +43,7 @@
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
     self.titleLabel.font = [UIFont systemFontOfSize:12.];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     
     UILabel *PriceLabel = [UILabel new];
     [self.contentView addSubview:PriceLabel];
@@ -96,6 +97,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImage.mas_bottom).offset(10);
         make.centerX.equalTo(weakSelf.contentView.mas_centerX);
+        make.width.mas_equalTo(imageW);
     }];
     
     [self.curreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
