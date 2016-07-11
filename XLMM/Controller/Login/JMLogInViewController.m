@@ -74,10 +74,10 @@
     
     if ([WXApi isWXAppInstalled]) {
         self.wechatBtn.enabled = YES;
-        //        self.wechatBtn.hidden = NO;
+        self.wechatBtn.hidden = NO;
     }else {
+        self.wechatBtn.hidden = YES;
         self.wechatBtn.enabled = NO;
-        //        self.wechatBtn.hidden = YES;
     }
     
 }

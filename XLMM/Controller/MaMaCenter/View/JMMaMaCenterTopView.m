@@ -151,10 +151,14 @@
     self.buttonLabel.textColor = [UIColor whiteColor];
     self.buttonLabel.font = [UIFont systemFontOfSize:14.];
     
+    UIImageView *levelImage = [UIImageView new];
+    [self addSubview:levelImage];
+    levelImage.image = [UIImage imageNamed:@"MaMaViepLevel_88_64"];
+    
     UILabel *mamaLeveLabel = [UILabel new];
-    [self addSubview:mamaLeveLabel];
+    [levelImage addSubview:mamaLeveLabel];
     self.mamaLeveLabel = mamaLeveLabel;
-    self.mamaLeveLabel.font = [UIFont boldSystemFontOfSize:16.];
+    self.mamaLeveLabel.font = [UIFont boldSystemFontOfSize:11.];
     
     UILabel *remainingTimeLabel = [UILabel new];
     [self addSubview:remainingTimeLabel];
@@ -261,9 +265,14 @@
         make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY);
     }];
     
-    [self.mamaLeveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    // == MaMaVip等级显示
+    [levelImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.isVipMamaButton.mas_right).offset(10);
-        make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY);
+        make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY).offset(-3);
+    }];
+    [self.mamaLeveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(levelImage).offset(3);
+        make.bottom.equalTo(levelImage).offset(-3);
     }];
     
     [self.remainingTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
