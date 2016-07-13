@@ -1230,9 +1230,7 @@
     [MobClick endLogPageView:@"purchase"];
     
 }
-//- (void)isApinPayGo {
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
+
 
 - (void)purchaseViewWillEnterForeground:(NSNotification *)notification
 {

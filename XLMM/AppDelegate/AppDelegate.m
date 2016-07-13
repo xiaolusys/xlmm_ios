@@ -153,9 +153,10 @@
     
     NSLog(@"%d", self.isLaunchedByNotification);
     
-    //    [MobClick setLogEnabled:YES];
+    //[MobClick setLogEnabled:YES];
     //version标识
-//    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
     
     UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
     UMConfigInstance.channelId = @"App Store";
@@ -722,7 +723,7 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-    
+
     [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
                

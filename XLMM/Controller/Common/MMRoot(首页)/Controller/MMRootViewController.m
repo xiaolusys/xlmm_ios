@@ -84,8 +84,9 @@
 #define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
 #define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
 #define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
-//因为可能有多个品牌,那么先预留10个
+//因为可能有多个品牌,那么先预留100个
 #define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
+#define TAG_COLLECTION_BRAND_END (TAG_ROOT_VIEW_BASE+11+100)
 
 @interface MMRootViewController ()<JMRepopViewDelegate,MMNavigationDelegate, WXApiDelegate>{
     UIView *_view;
@@ -110,6 +111,7 @@
     UIView *backView;
     NSDictionary *huodongJson;
     float allActivityHeight;
+    float allBrandHeight;
     
     NSMutableDictionary *_diction;
 }
@@ -135,7 +137,7 @@
 @property (nonatomic, strong)NSArray *activityArr;
 @property (nonatomic, strong)NSMutableArray *activityDataArr;
 
-@property (nonatomic, strong)NSMutableArray *brandArr;
+@property (nonatomic, strong)NSArray *brandArr;
 @property (nonatomic, strong)NSMutableArray *brandDataArr;
 //商品
 @property (nonatomic, strong)NSMutableArray *collectionArr;
@@ -814,75 +816,101 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSArray *brands = [jsonDic objectForKey:@"promotion_brands"];
     NSLog(@"initBrand count=%lu",(unsigned long)brands.count );
     
+    self.brandArr = brands;
+    [self.brandDataArr removeAllObjects];
+    
     if (brands.count ==0){
         self.brandViewHeight.constant = 0;
         [self.view layoutIfNeeded];
         return;
     }
+    
+    for (NSDictionary *brandDic in brands) {
+        ActivityModel *brandM = [[ActivityModel alloc] init];
+        [brandM setValuesForKeysWithDictionary:brandDic];
+        [self.brandDataArr addObject:brandM];
+    }
+    
     self.brandViewHeight.constant = BRAND_HEIGHT * brands.count;
     
     [self.view layoutIfNeeded];
     
+    allBrandHeight = 0;
     NSInteger index = 0;
     for(NSDictionary *brand in brands){
-        NSLog(@"x=%f y=%f url=%@",self.brandView.frame.origin.x,
+        NSLog(@"x=%f y=%f url=%@, allBrandHeight=%f",self.brandView.frame.origin.x,
               self.brandView.frame.origin.y,
-              [brand objectForKey:@"brand_pic"]);
+              [brand objectForKey:@"act_logo"], allBrandHeight);
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 + BRAND_HEIGHT * index, WIDTH, 1)];
+        UIView *oneBrandView = [[UIView alloc] initWithFrame:CGRectMake(0, allBrandHeight, WIDTH, BRAND_HEIGHT)];
+        [self.brandView addSubview:oneBrandView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, allBrandHeight, WIDTH, 1)];
         lineView.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
-        [self.brandView addSubview:lineView];
+        [oneBrandView addSubview:lineView];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10 + BRAND_HEIGHT * index, 80, 20)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 80, 20)];
+        [ImageUtils loadImage:imageView url:[brand objectForKey:@"act_logo"]];
+        [oneBrandView addSubview:imageView];
         
-        [ImageUtils loadImage:imageView url:[brand objectForKey:@"brand_pic"]];
-        
-        [self.brandView addSubview:imageView];
-        
-        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 + BRAND_HEIGHT * index, 50, 20)];
-        textView.text = [brand objectForKey:@"brand_desc"];
-        textView.font
-        = [UIFont fontWithName:@"Arial" size:10.0];
+        NSString *tail_title;
+        if([brand objectForKey:@"extras"] != NULL){
+            if([[brand objectForKey:@"extras"] objectForKey:@"brandinfo"] != NULL){
+                tail_title= [[[brand objectForKey:@"extras"] objectForKey:@"brandinfo"] objectForKey:@"tail_title"];
+            }
+        }
+        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 , 50, 20)];
+        NSLog(@"tail_title=%@", tail_title);
+        if(tail_title != NULL){
+            textView.text = tail_title;
+        }
+        textView.font = [UIFont fontWithName:@"Arial" size:14.0];
         textView.textColor = [UIColor blackColor];
-        textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        [self.brandView addSubview:textView];
+//        textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [oneBrandView addSubview:textView];
         
-        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15 + BRAND_HEIGHT * index, 10, 10)];
+        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15, 10, 10)];
         UIImage *image = [UIImage imageNamed:@"icon-jiantouyou"];
         arrowView.image = image;
-        [self.brandView addSubview:arrowView];
+        [oneBrandView addSubview:arrowView];
         
-        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 40 + BRAND_HEIGHT * index, WIDTH, 1)];
-        lineView1.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
-        [self.brandView addSubview:lineView1];
+//        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 40, WIDTH, 1)];
+//        lineView1.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+//        [oneBrandView addSubview:lineView1];
         
-        //展示品牌商品
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
-        flowLayout.minimumInteritemSpacing = 5;
-        flowLayout.minimumLineSpacing = 5;
-        flowLayout.scrollDirection= UICollectionViewScrollDirectionHorizontal;
+        //展示品牌入口
+        UIImageView *topicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH - 10, 145)];
         
-        UICollectionView *brandCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 45 + BRAND_HEIGHT * index, SCREENWIDTH - 15, 145) collectionViewLayout:flowLayout];
+        topicImageView.tag = TAG_COLLECTION_BRAND + index;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(brandTapAction:)];
+        topicImageView.userInteractionEnabled = YES;
+        [topicImageView addGestureRecognizer:tap];
         
-        brandCollectionView.backgroundColor = [UIColor whiteColor];
-        brandCollectionView.tag = TAG_COLLECTION_BRAND + index;
-        brandCollectionView.scrollEnabled = YES;
-        brandCollectionView.showsHorizontalScrollIndicator = FALSE;
+        ActivityModel *acM = self.brandDataArr[index];
+        [topicImageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                //通过加载图片得到其高度
+                                float h;
+                                if((image == nil) || (image.size.width == 0)){
+                                    h = BRAND_HEIGHT;
+                                }
+                                else{
+                                    h = image.size.height * (WIDTH /image.size.width);
+                                }
+                                NSLog(@"topic height %f %f allBrandHeight=%f", image.size.height, h, allBrandHeight);
+                                topicImageView.frame = CGRectMake(0, 45, SCREENWIDTH, h);
+                                oneBrandView.frame = CGRectMake(0, allBrandHeight, SCREENWIDTH, h+55);
+                                allBrandHeight += h + 55;
+                                
+                                NSLog(@"all topicHeight %f", allBrandHeight);
+                                
+                                self.brandViewHeight.constant = allBrandHeight;
+                            }];
+        [oneBrandView addSubview:topicImageView];
         
-        brandCollectionView.delegate = self;
-        brandCollectionView.dataSource = self;
-        
-        [brandCollectionView registerClass:[JMRootScrolCell class] forCellWithReuseIdentifier:kbrandCell];
-//        [brandCollectionView registerNib:[UINib nibWithNibName:@"JMRootScrolCell" bundle:nil] forCellWithReuseIdentifier:kbrandCell];
-        [self.brandView addSubview:brandCollectionView];
-        [self.brandArr addObject:brandCollectionView];
-        
-        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, BRAND_HEIGHT - 1 + BRAND_HEIGHT * index, WIDTH, 1)];
-        lineView2.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
-        [self.brandView addSubview:lineView2];
-        
-        [self getBrandGoods:[brand objectForKey:@"id"] index:index];
+//        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, BRAND_HEIGHT - 1 + BRAND_HEIGHT * index, WIDTH, 1)];
+//        lineView2.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+//        [self.brandView addSubview:lineView2];
         
         index++;
     }
@@ -1274,49 +1302,112 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 
 #pragma mark --品牌信息处理
--(void)getBrandGoods:(NSString*)brandId index:(NSInteger)index{
-    NSLog(@"getBrandGoods %@", brandId);
-    //网络请求
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/brands/%@/products", Root_URL, brandId];
-    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        [self fetchedBrandData:responseObject index:index];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //未登录处理
-        //        [self showDefaultView];
-        NSLog(@"get brand goods failed.");
-    }];
+//-(void)getBrandGoods:(NSString*)brandId index:(NSInteger)index{
+//    NSLog(@"getBrandGoods %@", brandId);
+//    //网络请求
+//    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+//    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/brands/%@/products", Root_URL, brandId];
+//    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        [self fetchedBrandData:responseObject index:index];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        //未登录处理
+//        //        [self showDefaultView];
+//        NSLog(@"get brand goods failed.");
+//    }];
+//}
+//
+//- (void)fetchedBrandData:(NSDictionary *)jsonDic index:(NSInteger)index{
+//    if (jsonDic.count == 0) return;
+//    
+//    NSArray *goodsArray = [jsonDic objectForKey:@"results"];
+//    NSMutableArray *goods = [[NSMutableArray alloc] init];
+//    
+//    if (goodsArray.count == 0)return;
+//    for (NSDictionary *product in goodsArray) {
+//        BrandGoodsModel *goodsModel = [BrandGoodsModel new];
+//        
+//        goodsModel.brandID = [product objectForKey:@"id"];
+//        goodsModel.product_id = [product objectForKey:@"product_id"];
+//        goodsModel.product_name = [product objectForKey:@"product_name"] ;
+//        goodsModel.product_img = [product objectForKey:@"product_img"];
+//        goodsModel.product_lowest_price = [product objectForKey:@"product_lowest_price"];
+//        goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
+//        
+//        [goods addObject:goodsModel];
+//        
+//        
+//        
+//    }
+//    [self.brandDataArr addObject:goods];
+//    
+//    UICollectionView *collection = self.brandArr[index];
+//    [collection reloadData];
+//    
+//    
+//}
+
+- (void)brandTapAction:(UITapGestureRecognizer *)tap {
+    NSLog(@"点击了 brandTapAction。。。。。");
+    //判断点击的活动
+    UIImageView *imageV = (UIImageView *)tap.view;
+    NSInteger imageTag = imageV.tag - TAG_COLLECTION_BRAND;
+    
+    [self brandClick:self.brandArr[imageTag]];
 }
 
-- (void)fetchedBrandData:(NSDictionary *)jsonDic index:(NSInteger)index{
-    if (jsonDic.count == 0) return;
+- (void)brandClick:(NSDictionary *)dic {
+    [MobClick event:@"brand_click"];
     
-    NSArray *goodsArray = [jsonDic objectForKey:@"results"];
-    NSMutableArray *goods = [[NSMutableArray alloc] init];
-    
-    if (goodsArray.count == 0)return;
-    for (NSDictionary *product in goodsArray) {
-        BrandGoodsModel *goodsModel = [BrandGoodsModel new];
-        
-        goodsModel.brandID = [product objectForKey:@"id"];
-        goodsModel.product_id = [product objectForKey:@"product_id"];
-        goodsModel.product_name = [product objectForKey:@"product_name"] ;
-        goodsModel.product_img = [product objectForKey:@"product_img"];
-        goodsModel.product_lowest_price = [product objectForKey:@"product_lowest_price"];
-        goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
-        
-        [goods addObject:goodsModel];
-        
-        
-        
+    login_required = [[dic objectForKey:@"login_required"] boolValue];
+    NSString *app_link = [dic objectForKey:@"act_applink"];
+    NSLog(@"Activity login required %d", login_required);
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if(app_link == NULL){
+            WebViewController *huodongVC = [[WebViewController alloc] init];
+            
+            _diction = nil;
+            NSString *active = @"active";
+            _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
+            [_diction setValue:active forKey:@"type_title"];
+            [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
+            [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
+            huodongVC.webDiction = _diction;
+            huodongVC.isShowNavBar = true;
+            huodongVC.isShowRightShareBtn = true;
+            huodongVC.titleName = [dic objectForKey:@"title"];
+            [self.navigationController pushViewController:huodongVC animated:YES];
+        }
+        else{
+            [JumpUtils jumpToLocation:app_link viewController:self];
+        }
+    } else{
+        if (login_required) {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            if(app_link == NULL){
+                WebViewController *huodongVC = [[WebViewController alloc] init];
+                
+                _diction = nil;
+                NSString *active = @"active";
+                _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [_diction setValue:active forKey:@"type_title"];
+                [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
+                [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
+                
+                huodongVC.webDiction = _diction;
+                huodongVC.isShowNavBar = true;
+                huodongVC.isShowRightShareBtn = true;
+                huodongVC.titleName = [dic objectForKey:@"title"];
+                [self.navigationController pushViewController:huodongVC animated:YES];
+            }
+            else{
+                [JumpUtils jumpToLocation:app_link viewController:self];
+            }
+
+        }
     }
-    [self.brandDataArr addObject:goods];
-    
-    UICollectionView *collection = self.brandArr[index];
-    [collection reloadData];
-    
-    
 }
 
 #pragma mark --点击
@@ -1369,8 +1460,14 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //循环遍历改变背景
     [self changeBtnImg];
-    
-    
+    if(self.currentIndex == 0){
+        [MobClick event:@"yestoday"];
+    }else if(self.currentIndex == 1){
+        [MobClick event:@"today"];
+    }else if(self.currentIndex == 2){
+        [MobClick event:@"tomorrow"];
+    }
+
     //改变scrollview的偏移
     NSLog(@"-categoryBtnClick-currentIndex---%ld", (long)self.currentIndex);
     self.collectionViewScrollview.contentOffset = CGPointMake(tag *SCREENWIDTH, 0);
@@ -1411,7 +1508,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         self.labelIndicate.text = @"距本场结束";
-    } if(self.currentIndex == 2){
+    }else if(self.currentIndex == 2){
         btn = [self.categoryView viewWithTag:TAG_BTN_YESTODAY];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
@@ -2137,6 +2234,14 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         //NSLog(@"index %d %f %f",  index, scrollView.contentOffset.x, WIDTH );
         if(self.currentIndex != index){
             self.currentIndex = index;
+            if(self.currentIndex == 0){
+                [MobClick event:@"yestoday"];
+            }else if(self.currentIndex == 1){
+                [MobClick event:@"today"];
+            }else if(self.currentIndex == 2){
+                [MobClick event:@"tomorrow"];
+            }
+            
             NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
             if((currentArr != nil) && (currentArr.count == 0)){
                 [self goodsRequest];
