@@ -900,14 +900,15 @@
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
                             [MobClick event:@"buy_cancel"];
-                            [self.navigationController popViewControllerAnimated:YES];
+                            [self popview];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
                             NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",error.code]};
                             [MobClick event:@"buy_fail" attributes:temp_dict];
                             NSLog(@"%@",error);
+                            [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
                         }
-                        [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
+                        
                     }
                     
                 }];

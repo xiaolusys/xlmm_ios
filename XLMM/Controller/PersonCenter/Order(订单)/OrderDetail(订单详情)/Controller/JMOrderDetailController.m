@@ -37,6 +37,9 @@
 #import "JMRefundController.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
+#import "JMPayShareController.h"
+#import "WXApi.h"
+#import "PersonOrderViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -92,6 +95,9 @@
  *  分享模型
  */
 @property (nonatomic,strong) JMShareModel *shareModel;
+
+@property (nonatomic, assign)BOOL isInstallWX;
+
 @end
 
 @implementation JMOrderDetailController {
@@ -550,7 +556,12 @@
     [string appendString:@"/charge"];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"channel"] = continueDic[@"id"];
-    
+    if ([continueDic[@"id"] isEqualToString:@"wx"]) {
+        if (!self.isInstallWX) {
+            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
+            return;
+        }
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:string parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
@@ -570,20 +581,34 @@
                 NSLog(@"completion block: %@", result);
                 
                 if (error == nil) {
-                    NSLog(@"PingppError is nil");
-                    [SVProgressHUD dismiss];
+                    [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                    [MobClick event:@"buy_succ"];
+                    [self pushShareVC];
                 } else {
-                    [SVProgressHUD dismiss];
-                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-                    // [self.navigationController popViewControllerAnimated:YES];
+                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+                        [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                        [MobClick event:@"buy_cancel"];
+                        [self popview];
+                    } else {
+                        [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                        NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",error.code]};
+                        [MobClick event:@"buy_fail" attributes:temp_dict];
+                        NSLog(@"%@",error);
+                        [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
+                    }
+                    
                 }
-                //[weakSelf showAlertMessage:result];
             }];
         });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"%@",error);
     }];
+}
+- (void)pushShareVC {
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = tid;
+    [self.navigationController pushViewController:payShareVC animated:YES];
 }
 #pragma mark --NSURLConnectionDataDelegate--
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
@@ -614,27 +639,60 @@
             NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
             [connection start];
             
-            [self performSelector:@selector(poptoView) withObject:nil afterDelay:.3];
+            [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
         }
     }else {
     }
 }
-- (void)poptoView{
+- (void)popToview {
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)backClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark --- 支付成功的弹出框
+- (void)paySuccessful{
+    [MobClick event:@"buy_succ"];
+    [self pushShareVC];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+}
+- (void)popview {
+    [MobClick event:@"buy_cancel"];
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(purchaseViewWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"OrderDetail"];
+    if ([WXApi isWXAppInstalled]) {
+        //  NSLog(@"安装了微信");
+        self.isInstallWX = YES;
+    }
+    else{
+        self.isInstallWX = NO;
+    }
 }
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:app];
     [MobClick endLogPageView:@"OrderDetail"];
+}
+- (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
+
 }
 @end
 
