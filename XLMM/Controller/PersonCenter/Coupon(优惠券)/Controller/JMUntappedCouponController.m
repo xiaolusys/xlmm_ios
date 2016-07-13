@@ -144,12 +144,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView.mj_header beginRefreshing];
-    
+    [MobClick beginLogPageView:@"YouHuiQuan"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    
+    [MobClick endLogPageView:@"YouHuiQuan"];
 }
 @end
 

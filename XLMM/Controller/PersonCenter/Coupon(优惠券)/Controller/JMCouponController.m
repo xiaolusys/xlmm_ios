@@ -26,15 +26,16 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick:)];
     self.view.backgroundColor = [UIColor countLabelColor];
+    
 }
 - (NSArray *)classArr {
     return @[@"JMUntappedCouponController",@"JMExpiredCouponController",@"JMUsedCouponController"];
 }
 - (NSArray *)titleArr {
+    [SVProgressHUD showWithStatus:@"优惠券努力加载中......"];
     NSArray *countArr = @[@"0",@"3",@"1"];
     NSInteger count = 0;
     _titleArr = [NSMutableArray array];
-    [SVProgressHUD showWithStatus:@"优惠券努力加载中......"];
     NSArray *tArr = @[@"未使用",@"已过期",@"已使用"];
     for (int i = 0; i < [self classArr].count; i++) {
         count = [countArr[i] integerValue];

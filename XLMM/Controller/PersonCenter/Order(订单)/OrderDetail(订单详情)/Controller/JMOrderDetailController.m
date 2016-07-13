@@ -544,6 +544,7 @@
     }
 }
 - (void)Clickrefund:(JMRefundController *)click ContinuePay:(NSDictionary *)continueDic {
+    [SVProgressHUD showWithStatus:@"支付处理中....."];
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/%@",Root_URL,tid];
     NSMutableString *string = [[NSMutableString alloc] initWithString:urlStr];
     [string appendString:@"/charge"];
@@ -554,6 +555,7 @@
     [manager POST:string parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
         if (!responseObject)return;
+        [SVProgressHUD dismiss];
         NSError *parseError = nil;
         NSDictionary *dic = responseObject[@"charge"];
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
@@ -569,7 +571,9 @@
                 
                 if (error == nil) {
                     NSLog(@"PingppError is nil");
+                    [SVProgressHUD dismiss];
                 } else {
+                    [SVProgressHUD dismiss];
                     NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
                     // [self.navigationController popViewControllerAnimated:YES];
                 }
@@ -577,6 +581,7 @@
             }];
         });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
         NSLog(@"%@",error);
     }];
 }
