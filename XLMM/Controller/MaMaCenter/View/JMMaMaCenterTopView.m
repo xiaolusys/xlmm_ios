@@ -24,6 +24,14 @@
  */
 @property (nonatomic, strong) UIImageView *mamaIconImage;
 /**
+ *  MaMaID
+ */
+@property (nonatomic, strong) UILabel *mamaIDLabel;
+/**
+ *  续费图片
+ */
+@property (nonatomic, strong) UIImageView *renewImage;
+/**
  *  MaMa是不是会员
  */
 @property (nonatomic, strong) UIButton *isVipMamaButton;
@@ -92,6 +100,8 @@
     
     self.mamaLeveLabel.text = self.extraModel.agencylevel_display;
     
+    self.mamaIDLabel.text = [NSString stringWithFormat:@"ID: %@",centerModel.mama_id];
+    
     NSString *limtStr = self.extraModel.surplus_days;
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     NSInteger count = limtStr.length;
@@ -103,6 +113,12 @@
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22.0] range:NSMakeRange(6, count)];
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0] range:NSMakeRange(6+count, 1)];
     self.remainingTimeLabel.attributedText = str;
+    
+    NSInteger limtNum = [limtStr integerValue];
+    if (limtNum > 15) {
+//        self.renewImage.hidden = YES;
+    }
+    
     
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     
@@ -132,6 +148,23 @@
     self.mamaIconImage.layer.borderColor = [UIColor whiteColor].CGColor;
 //    self.mamaIconImage.image = [UIImage imageNamed:@"zhanwei"];
     
+    UILabel *mamaIDLabel = [UILabel new];
+    [self addSubview:mamaIDLabel];
+    self.mamaIDLabel = mamaIDLabel;
+    self.mamaIDLabel.font = [UIFont systemFontOfSize:14.];
+    
+    UIView *renewView = [UIView new];
+    [self addSubview:renewView];
+    UITapGestureRecognizer *renewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapVipClick:)];
+    [renewView addGestureRecognizer:renewTap];
+    UIView *renewTapView = [renewTap view];
+    renewTapView.tag = 101;
+    
+    UIImageView *renewImage = [UIImageView new];
+    [renewView addSubview:renewImage];
+    self.renewImage = renewImage;
+    self.renewImage.image = [UIImage imageNamed:@"MaMa_renew"];
+
     UIButton *isVipMamaButton = [UIButton new];
     [self addSubview:isVipMamaButton];
     self.isVipMamaButton = isVipMamaButton;
@@ -172,6 +205,9 @@
     self.vipExamination.image = [UIImage imageNamed:@"vipGrade_Examination"];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapVipClick:)];
     [self.vipExamination addGestureRecognizer:tap];
+    UIView *vipView = [tap view];
+    vipView.tag = 100;
+    
 
     // ====== 收益相关 ====== //
     UIButton *balanceButton = [UIButton new];
@@ -249,6 +285,11 @@
         make.width.height.mas_equalTo(@50);
     }];
     
+    [self.mamaIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.mamaIconImage.mas_bottom).offset(10);
+        make.centerX.equalTo(weakSelf.mamaIconImage.mas_centerX);
+    }];
+    
     [self.isVipMamaButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(mamaIconBackImage.mas_right).offset(10);
         make.top.equalTo(mamaIconBackImage).offset(5);
@@ -278,6 +319,18 @@
     [self.remainingTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.isVipMamaButton);
         make.top.equalTo(weakSelf.isVipMamaButton.mas_bottom).offset(10);
+    }];
+    
+    [renewView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(weakSelf.remainingTimeLabel);
+        make.top.equalTo(weakSelf.remainingTimeLabel.mas_bottom);
+        make.bottom.equalTo(weakSelf.lineView);
+    }];
+    [self.renewImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(renewView);
+        make.top.equalTo(renewView).offset(5);
+        make.width.mas_equalTo(@35);
+        make.height.mas_equalTo(@15);
     }];
     
     [self.vipExamination mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -356,8 +409,9 @@
 //    
 //}
 - (void)tapVipClick:(UITapGestureRecognizer *)tap {
-    if (_delegate && [_delegate respondsToSelector:@selector(composeTapBackPageup:Tap:)]) {
-        [_delegate composeTapBackPageup:self Tap:tap];
+    UIView *tapView = [tap view];
+    if (_delegate && [_delegate respondsToSelector:@selector(composeTapBackPageup:Index:)]) {
+        [_delegate composeTapBackPageup:self Index:tapView.tag];
     }
 }
 

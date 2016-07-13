@@ -150,8 +150,8 @@
     }];
     
     [self.saleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.salePriceLabel.mas_right).offset(10);
-        make.bottom.equalTo(weakSelf.agentPriceLabel);
+        make.top.equalTo(weakSelf.agentPriceLabel.mas_bottom).offset(5);
+        make.left.equalTo(weakSelf.agentPriceLabel);
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {

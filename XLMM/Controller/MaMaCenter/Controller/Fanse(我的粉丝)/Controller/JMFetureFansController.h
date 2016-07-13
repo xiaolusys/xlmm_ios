@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMPageViewBaseController.h"
 
-@interface JMFetureFansController : UIViewController<UIBarPositioningDelegate>
+@interface JMFetureFansController : JMPageViewBaseController<UIBarPositioningDelegate>
 
 @end

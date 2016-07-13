@@ -29,6 +29,7 @@
 #import "JMComplaintSuggestController.h"
 #import "JMReturnedGoodsController.h"
 #import "JMRefundBaseController.h"
+#import "JMCouponController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -259,10 +260,11 @@
 - (IBAction)youhuquanClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = NO;
+        JMCouponController *couponVC = [[JMCouponController alloc] init];
+//        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+//        youhuiVC.isSelectedYHQ = NO;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:youhuiVC];
+            [self.pushVCDelegate rootVCPushOtherVC:couponVC];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{

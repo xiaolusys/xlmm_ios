@@ -17,4 +17,6 @@
 
 @property (nonatomic, strong) JMAllOrderModel *allOrderModel;
 
+@property (nonatomic, copy) NSString *orderTid;
+
 @end

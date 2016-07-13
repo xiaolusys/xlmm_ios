@@ -364,6 +364,7 @@
     
     JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
     orderDetailVC.allOrderModel = self.allOrderModel;
+    orderDetailVC.orderTid = self.allOrderModel.tid;
     orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, self.allOrderModel.goodsID];
     
     [self.navigationController pushViewController:orderDetailVC animated:YES];

@@ -241,14 +241,22 @@
         [self.navigationController pushViewController:VC animated:YES];
     }
 }
-- (void)composeTapBackPageup:(JMMaMaCenterTopView *)backPageup Tap:(UITapGestureRecognizer *)tap {
-    WebViewController *webVC = [[WebViewController alloc] init];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:self.extraModel.next_level_exam_url forKey:@"web_url"];
-    webVC.webDiction = dict;
-    webVC.isShowNavBar = true;
-    webVC.isShowRightShareBtn = false;
-    [self.navigationController pushViewController:webVC animated:YES];
+- (void)composeTapBackPageup:(JMMaMaCenterTopView *)backPageup Index:(NSInteger)index {
+    // 100 Vip考试   101 续费
+    if (index == 100) {
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:self.extraModel.next_level_exam_url forKey:@"web_url"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = false;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }else if (index == 101) {
+        
+    }else {
+        
+    }
+    
 }
 
 

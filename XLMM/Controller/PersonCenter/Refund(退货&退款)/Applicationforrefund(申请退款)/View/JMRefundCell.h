@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "JMAppForRefundModel.h"
+#import "JMContinuePayModel.h"
 
 @interface JMRefundCell : UITableViewCell
 
 - (void)configWithModel:(JMAppForRefundModel *)model;
+
+- (void)configWithPayModel:(JMContinuePayModel *)model;
 
 @end

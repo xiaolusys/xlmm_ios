@@ -128,6 +128,7 @@
     UIScrollView *timeLineView = [[UIScrollView alloc] init];
     [self addSubview:timeLineView];
     self.timeLineView = timeLineView;
+    self.timeLineView.backgroundColor = [UIColor countLabelColor];
     // == 第一行视图 == //
     UIView *oneView = [UIView new];
     [self addSubview:oneView];
