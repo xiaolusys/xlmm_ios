@@ -1232,13 +1232,13 @@
 }
 - (void)isApinPayGo {
     
-    NSInteger count = 0;
-    count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-    }else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+//    NSInteger count = 0;
+//    count = [[self.navigationController viewControllers] indexOfObject:self];
+//    if (count >= 2) {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+//    }else {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
 }
 
 - (void)purchaseViewWillEnterForeground:(NSNotification *)notification

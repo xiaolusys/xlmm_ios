@@ -723,7 +723,7 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-    self.isApinPayGo = YES;
+//    self.isApinPayGo = YES;
     
     [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
