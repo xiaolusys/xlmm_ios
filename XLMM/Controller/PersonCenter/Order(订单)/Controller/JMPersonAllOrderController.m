@@ -18,6 +18,7 @@
 #import "UIViewController+NavigationBar.h"
 #import "JMAllOrderModel.h"
 #import "Masonry.h"
+#import "JMOrderDetailController.h"
 
 @interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -190,6 +191,15 @@
     [cell configWithAllOrder:self.orderGoodsModel];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.orderDetailModel = self.sectionDataSource[indexPath.section];
+    JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+    orderDetailVC.allOrderModel = self.orderDetailModel;
+    orderDetailVC.orderTid = self.orderDetailModel.tid;
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, self.orderDetailModel.goodsID];
+    
+    [self.navigationController pushViewController:orderDetailVC animated:YES];
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
 }
@@ -204,7 +214,8 @@
     
     UIView *sectionShowView = [UIView new];
     [sectionView addSubview:sectionShowView];
-
+    sectionShowView.backgroundColor = [UIColor whiteColor];
+    
     UIView *bottomView = [UIView new];
     [sectionShowView addSubview:bottomView];
     

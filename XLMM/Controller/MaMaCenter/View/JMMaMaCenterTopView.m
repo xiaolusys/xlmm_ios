@@ -116,7 +116,7 @@
     
     NSInteger limtNum = [limtStr integerValue];
     if (limtNum > 15) {
-//        self.renewImage.hidden = YES;
+        self.renewImage.hidden = YES;
     }
     
     
