@@ -556,7 +556,12 @@
     [string appendString:@"/charge"];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"channel"] = continueDic[@"id"];
-    
+    if ([continueDic[@"id"] isEqualToString:@"wx"]) {
+        if (!self.isInstallWX) {
+            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
+            return;
+        }
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:string parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
