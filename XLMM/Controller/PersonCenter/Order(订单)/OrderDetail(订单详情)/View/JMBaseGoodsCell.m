@@ -213,6 +213,22 @@
     
     
 }
+- (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel {
+    NSString *string = goodsModel.pic_path;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
+    
+    self.titleLabel.text = goodsModel.title;
+    self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
+    CGFloat payment = [goodsModel.payment floatValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
+    
+}
 - (void)optionButtonClick:(UIButton *)button {
     if (_delegate && [_delegate respondsToSelector:@selector(composeOptionClick:Button:Section:Row:)]) {
         [_delegate composeOptionClick:self Button:button Section:_sectionCount Row:_rowCount];

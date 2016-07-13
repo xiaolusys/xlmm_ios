@@ -479,11 +479,16 @@
         if (buttonIndex == 0) {
             
         }else if (buttonIndex == 1) {
-            [MobClick event:@"refund"];
+            
             
             [SVProgressHUD showWithStatus:@"退款处理中....."];
             //budget
             NSString *refundChannel = self.refundDic[@"refund_channel"];
+            if ([refundChannel isEqualToString:@"budget"]) {
+                [MobClick event:@"refundChannel_budget"];
+            }else {
+                [MobClick event:@"refundChannel_audit"];
+            }
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
             NSString *descStr;
             descStr = self.inputTextView.text;

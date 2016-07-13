@@ -12,5 +12,12 @@
 
 @property (nonatomic, strong)NSNumber *fansNum; 
 
+@property (nonatomic, strong)UIPageViewController *pageControll;
+
+@property (nonatomic, assign) NSInteger index;
+
+- (NSArray *)titleArr;
+
+- (NSArray *)classArr;
 
 @end

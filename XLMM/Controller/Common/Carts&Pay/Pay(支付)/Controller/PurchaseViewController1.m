@@ -1202,7 +1202,7 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1230,16 +1230,7 @@
     [MobClick endLogPageView:@"purchase"];
     
 }
-- (void)isApinPayGo {
-    
-//    NSInteger count = 0;
-//    count = [[self.navigationController viewControllers] indexOfObject:self];
-//    if (count >= 2) {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-//    }else {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-}
+
 
 - (void)purchaseViewWillEnterForeground:(NSNotification *)notification
 {

@@ -35,6 +35,8 @@
 #import "JMEditAddressController.h"
 #import "JMOrderDetailSectionView.h"
 #import "JMRefundController.h"
+#import "JMShareViewController.h"
+#import "JMShareModel.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -82,8 +84,14 @@
  *  退款选择弹出框视图
  */
 @property (nonatomic,strong) JMRefundController *refundVC;
-
-
+/**
+ *  分享弹出视图
+ */
+@property (nonatomic,strong) JMShareViewController *shareView;
+/**
+ *  分享模型
+ */
+@property (nonatomic,strong) JMShareModel *shareModel;
 @end
 
 @implementation JMOrderDetailController {
@@ -97,10 +105,9 @@
     NSMutableArray *_dataSource; //商品分组信息
     
     NSString *_packageStr; // 判断是否分包
-    
     NSDictionary *_refundDic;
     NSString *tid;
-    
+    NSString *_orderTid;
     NSString *_addressGoodsID;
     
     BOOL _isTimeLineView;
@@ -183,10 +190,33 @@
     self.orderDetailFooterView = orderDetailFooterView;
     self.tableView.tableFooterView = self.orderDetailFooterView;
 }
+#pragma mark 分享红包接口数据
+- (void)loadShareRedpage:(NSString *)orderTid {
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,orderTid];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [SVProgressHUD dismiss];
+        if (!responseObject) return;
+        [self shareRedpageData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
+}
+- (void)shareRedpageData:(NSDictionary *)shareDict {
+    JMShareModel *shareModel = [JMShareModel mj_objectWithKeyValues:shareDict];
+    self.shareModel = shareModel;
+    self.shareModel.share_type = [NSString stringWithFormat:@"%@",[shareDict objectForKey:@"code"]];
+    self.shareModel.share_img = [shareDict objectForKey:@"post_img"]; //图片
+    self.shareModel.desc = [shareDict objectForKey:@"description"]; // 文字详情
+    self.shareModel.title = [shareDict objectForKey:@"title"]; //标题
+    self.shareModel.share_link = [shareDict objectForKey:@"share_link"];
+}
 #pragma mark 请求数据
 - (void)loadDataSource {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"device"] = @"app";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:self.urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return ;
         [self.orderGoodsDataSource removeAllObjects];
         [self refetchData:responseObject];
@@ -206,7 +236,8 @@
     
     _refundDic = dicJson[@"extras"];
     tid = [dicJson objectForKey:@"id"];
-    
+    _orderTid = dicJson[@"tid"];
+    [self loadShareRedpage:_orderTid];
     // ===== 订单详情主数据源模型 =======
     self.orderDetailModel = [JMOrderDetailModel mj_objectWithKeyValues:dicJson];
     // ===== 订单详情收货地址数据源模型 =======
@@ -299,6 +330,7 @@
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopView hide];
+    [SVProgressHUD dismiss];
 }
 #pragma mark UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -485,39 +517,68 @@
         UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"小鹿美美" message:@"取消的产品可能会被人抢走哦~\n要取消吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alterView show];
         alterView.tag = 100;
-    }else { // 继续支付
-        NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/trades/%@",Root_URL,tid];
-        NSMutableString *string = [[NSMutableString alloc] initWithString:urlStr];
-        [string appendString:@"/charge"];
-     
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"%@", responseObject);
-            if (!responseObject)return;
-            NSError *parseError = nil;
-            NSDictionary *dic = responseObject;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-            NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            
-            JMOrderDetailController * __weak weakSelf = self;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                    NSLog(@"completion block: %@", result);
-                    
-                    if (error == nil) {
-                        NSLog(@"PingppError is nil");
-                    } else {
-                        NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
-                        // [self.navigationController popViewControllerAnimated:YES];
-                    }
-                    //[weakSelf showAlertMessage:result];
-                }];
-            });
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        }];
-
+    }else if (index == 101) { // 继续支付
+        JMShareView *cover = [JMShareView show];
+        cover.delegate = self;
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
+        
+        if (self.refundVC.view == nil) {
+            self.refundVC = [[JMRefundController alloc] init];
+        }
+        self.refundVC.continuePayDic = _refundDic;
+        self.refundVC.delegate = self;
+        menu.contentView = self.refundVC.view;
+    }else if (index == 102) {
+        //分享红包
+        JMShareViewController *shareView = [[JMShareViewController alloc] init];
+        self.shareView = shareView;
+        self.shareView.model = self.shareModel;
+        JMShareView *cover = [JMShareView show];
+        cover.delegate = self;
+        //弹出视图
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+        menu.contentView = self.shareView.view;
+        
+    }else {
+        
     }
+}
+- (void)Clickrefund:(JMRefundController *)click ContinuePay:(NSDictionary *)continueDic {
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/%@",Root_URL,tid];
+    NSMutableString *string = [[NSMutableString alloc] initWithString:urlStr];
+    [string appendString:@"/charge"];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"channel"] = continueDic[@"id"];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:string parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        if (!responseObject)return;
+        NSError *parseError = nil;
+        NSDictionary *dic = responseObject[@"charge"];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
+        
+        
+        JMOrderDetailController * __weak weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                NSLog(@"completion block: %@", result);
+                
+                if (error == nil) {
+                    NSLog(@"PingppError is nil");
+                } else {
+                    NSLog(@"PingppError: code=%lu msg=%@", (unsigned  long)error.code, [error getMsg]);
+                    // [self.navigationController popViewControllerAnimated:YES];
+                }
+                //[weakSelf showAlertMessage:result];
+            }];
+        });
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 #pragma mark --NSURLConnectionDataDelegate--
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{

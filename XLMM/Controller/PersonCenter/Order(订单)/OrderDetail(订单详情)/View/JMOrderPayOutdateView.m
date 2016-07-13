@@ -17,7 +17,13 @@
 @property (nonatomic, strong) UILabel *orderOutdateTime;
 @property (nonatomic, strong) JMSelecterButton *canelOrderButton;
 @property (nonatomic, strong) JMSelecterButton *sureOrderButton;
+@property (nonatomic, strong) JMSelecterButton *shareButton;
 @property (nonatomic, strong) UIView *bottomView;
+
+@property (nonatomic, strong) UIView *sharBottom;
+@property (nonatomic, strong) UIImageView *shareImage;
+@property (nonatomic, strong) UILabel *descLabel;
+
 @end
 
 @implementation JMOrderPayOutdateView {
@@ -57,6 +63,7 @@
     }
     
 }
+
 - (void)setUpTopUI {
     
     UIView *bottomView = [UIView new];
@@ -91,6 +98,11 @@
     self.sureOrderButton.tag = 101;
     [self.sureOrderButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.canelOrderButton.hidden = YES;
+    self.sureOrderButton.hidden = YES;
+    self.orderOutdateTime.hidden = YES;
+    self.outDateTitleLabel.hidden = YES;
+    self.bottomView.hidden = YES;
     kWeakSelf
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -120,6 +132,62 @@
         make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
         make.width.mas_equalTo(@90);
         make.height.mas_equalTo(@40);
+    }];
+    // === 显示红包 === //
+    UIView *sharBottom = [UIView new];
+    [self addSubview:sharBottom];
+    self.sharBottom = sharBottom;
+    self.sharBottom.backgroundColor = [UIColor blackColor];
+    self.sharBottom.alpha = 0.8;
+    
+    UIImageView *shareImage = [UIImageView new];
+    [self.sharBottom addSubview:shareImage];
+    shareImage.image = [UIImage imageNamed:@"show_RedpageImage"];
+    self.shareImage = shareImage;
+    
+    UILabel *descLabel = [UILabel new];
+    [self.sharBottom addSubview:descLabel];
+    self.descLabel = descLabel;
+    self.descLabel.font = [UIFont systemFontOfSize:13.];
+    self.descLabel.textColor = [UIColor whiteColor];
+    self.descLabel.text = @"您获得一个红包可以分享给好友";
+    
+    JMSelecterButton *shareButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.sharBottom addSubview:shareButton];
+    self.shareButton = shareButton;
+    [self.shareButton setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:15];
+    [self.shareButton setTitle:@"立即分享" forState:UIControlStateNormal];
+    self.shareButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    self.shareButton.tag = 102;
+    [self.shareButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.sharBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(weakSelf);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@60);
+    }];
+    
+    self.sharBottom.hidden = YES;
+    self.shareImage.hidden = YES;
+    self.descLabel.hidden = YES;
+    self.shareButton.hidden = YES;
+    
+    [shareImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.sharBottom).offset(10);
+        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+        make.width.height.mas_equalTo(@28);
+    }];
+    
+    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(shareImage.mas_right).offset(10);
+        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+    }];
+    
+    [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.sharBottom).offset(-10);
+        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+        make.width.mas_equalTo(@80);
+        make.height.mas_equalTo(@30);
     }];
     
     
@@ -156,17 +224,18 @@
     self.orderOutdateTime.text = string;
     if ([d minute] < 0 || [d second] < 0) {
         self.orderOutdateTime.text = @"00:00";
-        self.canelOrderButton.hidden = YES;
-        self.sureOrderButton.hidden = YES;
-        self.bottomView.hidden = YES;
+
+        self.shareImage.hidden = NO;
+        self.descLabel.hidden = NO;
+        self.shareButton.hidden = NO;
+        self.sharBottom.hidden = NO;
     }else {
+        self.bottomView.hidden = NO;
         self.canelOrderButton.hidden = NO;
         self.sureOrderButton.hidden = NO;
-        self.bottomView.hidden = NO;
-        
+        self.orderOutdateTime.hidden = NO;
+        self.outDateTitleLabel.hidden = NO;
     }
-
-    
 }
 - (NSString *)formatterTimeString:(NSString *)timeString{
     if (timeString == nil) {

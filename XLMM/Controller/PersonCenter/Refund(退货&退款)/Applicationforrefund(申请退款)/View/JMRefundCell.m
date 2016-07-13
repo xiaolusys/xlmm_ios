@@ -65,7 +65,10 @@
     self.decLabel.text = model.desc;
     
 }
-
+- (void)configWithPayModel:(JMContinuePayModel *)model {
+    self.nameLabel.text = model.name;
+    self.decLabel.text = model.msg;
+}
 @end
 
 
