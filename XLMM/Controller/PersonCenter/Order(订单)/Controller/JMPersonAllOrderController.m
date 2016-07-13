@@ -291,12 +291,14 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"PersonOrder"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"PersonOrder"];
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

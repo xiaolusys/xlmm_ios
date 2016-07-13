@@ -62,7 +62,7 @@
     UILabel *couponValueLabel = [UILabel new];
     [self.couponBackImage addSubview:couponValueLabel];
     self.couponValueLabel = couponValueLabel;
-    self.couponValueLabel.font = [UIFont systemFontOfSize:60.];
+    self.couponValueLabel.font = [UIFont systemFontOfSize:52.];
     
     UILabel *couponUsefeeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponUsefeeLabel];
@@ -79,13 +79,13 @@
     UILabel *couponCreatedTimeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponCreatedTimeLabel];
     self.couponCreatedTimeLabel = couponCreatedTimeLabel;
-    self.couponCreatedTimeLabel.font = [UIFont systemFontOfSize:12.];
+    self.couponCreatedTimeLabel.font = [UIFont systemFontOfSize:11.];
     self.couponCreatedTimeLabel.textColor = [UIColor titleDarkGrayColor];
     
     UILabel *couponDeadLineLabel = [UILabel new];
     [self.couponBackImage addSubview:couponDeadLineLabel];
     self.couponDeadLineLabel = couponDeadLineLabel;
-    self.couponDeadLineLabel.font = [UIFont systemFontOfSize:12.];
+    self.couponDeadLineLabel.font = [UIFont systemFontOfSize:11.];
     self.couponDeadLineLabel.textColor = [UIColor titleDarkGrayColor];
     
     // 期限label
@@ -110,8 +110,8 @@
     }];
     
     [self.couponValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.couponBackImage).offset(75);
-        make.top.equalTo(weakSelf.couponBackImage);
+        make.left.equalTo(weakSelf.couponBackImage).offset(65);
+        make.top.equalTo(weakSelf.couponBackImage).offset(5);
     }];
     
     [self.couponUsefeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -130,7 +130,7 @@
     }];
     
     [deadLineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.couponValueLabel);
+        make.left.equalTo(weakSelf.couponBackImage).offset(55);
         make.bottom.equalTo(weakSelf.couponBackImage).offset(-10);
     }];
     [self.couponCreatedTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

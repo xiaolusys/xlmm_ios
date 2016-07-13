@@ -49,19 +49,25 @@
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
     if (_isShow) {
         _dateStr = @"";
-        self.sureOrderButton.hidden = NO;
-        self.canelOrderButton.hidden = NO;
+//        self.sureOrderButton.hidden = NO;
+//        self.canelOrderButton.hidden = NO;
+        self.bottomView.hidden = NO;
         _createTimeStr = createTimeStr;
         _dateStr = [self formatterTimeString:createTimeStr];
         _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-//        self.bottomView.hidden = NO;
     }else {
-//        self.bottomView.hidden = YES;
         self.sureOrderButton.hidden = YES;
         self.canelOrderButton.hidden = YES;
         self.bottomView.hidden = YES;
+        
+        self.shareImage.hidden = NO;
+        self.descLabel.hidden = NO;
+        self.shareButton.hidden = NO;
+        self.sharBottom.hidden = NO;
+        
     }
     
+
 }
 
 - (void)setUpTopUI {
@@ -155,9 +161,9 @@
     JMSelecterButton *shareButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.sharBottom addSubview:shareButton];
     self.shareButton = shareButton;
-    [self.shareButton setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:15];
+    [self.shareButton setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:10.];
     [self.shareButton setTitle:@"立即分享" forState:UIControlStateNormal];
-    self.shareButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    self.shareButton.titleLabel.font = [UIFont systemFontOfSize:13.];
     self.shareButton.tag = 102;
     [self.shareButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -186,8 +192,8 @@
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.sharBottom).offset(-10);
         make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
-        make.width.mas_equalTo(@80);
-        make.height.mas_equalTo(@30);
+        make.width.mas_equalTo(@70);
+        make.height.mas_equalTo(@25);
     }];
     
     
@@ -201,18 +207,20 @@
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     //  2015-10-29T15:50:19
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    [formatter setDateFormat:[NSString stringWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
     NSDate *date = [formatter dateFromString:_dateStr];
     //  NSLog(@"date = %@", date);
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSInteger unitFlags = NSCalendarUnitYear |
+    unsigned int unitFlags = NSCalendarUnitYear |
     NSCalendarUnitMonth |
     NSCalendarUnitDay |
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDate *todate = [NSDate dateWithTimeInterval:20 * 60 sinceDate:date];
+    
     // NSLog(@"todate = %@", todate);
     //把目标时间装载入date
     //用来得到具体的时差

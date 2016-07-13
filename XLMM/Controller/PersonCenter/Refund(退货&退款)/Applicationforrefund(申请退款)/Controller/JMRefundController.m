@@ -135,10 +135,10 @@
     }
     if (_isRefund == YES) {
         JMAppForRefundModel *model = self.dataSource[indexPath.row];
-        [cell configWithModel:model];
+        [cell configWithModel:model Index:indexPath.row];
     }else {
         JMContinuePayModel *continueModel = self.dataSource[indexPath.row];
-        [cell configWithPayModel:continueModel];
+        [cell configWithPayModel:continueModel Index:indexPath.row];
     }
     
     

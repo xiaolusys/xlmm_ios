@@ -24,10 +24,6 @@
  */
 @property (nonatomic, strong) UILabel *couponMoneyLabel;
 /**
- *  app优惠
- */
-@property (nonatomic, strong) UILabel *appCouponMoneyLabel;
-/**
  *  运费
  */
 @property (nonatomic, strong) UILabel *freightMoneyLabel;
@@ -44,7 +40,7 @@
 }
 
 + (instancetype)enterFooterView {
-    JMOrderDetailFooterView *footerView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
+    JMOrderDetailFooterView *footerView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 220)];
     return footerView;
 }
 
@@ -68,8 +64,6 @@
     self.payWayImage.image = [UIImage imageNamed:_imageStr];
     self.goodsAllMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.total_fee floatValue]];
     self.couponMoneyLabel.text = [NSString stringWithFormat:@"－¥%.2f",[orderDetailModel.discount_fee floatValue]];
-//    self.appCouponMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.total_fee floatValue]];
-    self.appCouponMoneyLabel.text = @"－¥2.00";
     self.freightMoneyLabel.text = [NSString stringWithFormat:@"＋¥%.2f",[orderDetailModel.post_fee floatValue]];
     self.clearingMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.payment floatValue]];
 }
@@ -104,26 +98,14 @@
     [oneView addSubview:couponMoneyL];
     couponMoneyL.font = [UIFont systemFontOfSize:14.];
     couponMoneyL.textColor = [UIColor buttonTitleColor];
-    couponMoneyL.text = @"优惠券";
+    couponMoneyL.text = @"优惠金额";
     
     UILabel *couponMoneyLabel = [UILabel new];
     [oneView addSubview:couponMoneyLabel];
     self.couponMoneyLabel = couponMoneyLabel;
     self.couponMoneyLabel.font = [UIFont systemFontOfSize:14.];
     self.couponMoneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    
-    UILabel *appCouponMoneyL = [UILabel new];
-    [oneView addSubview:appCouponMoneyL];
-    appCouponMoneyL.font = [UIFont systemFontOfSize:14.];
-    appCouponMoneyL.textColor = [UIColor buttonTitleColor];
-    appCouponMoneyL.text = @"APP支付优惠";
-    
-    UILabel *appCouponMoneyLabel = [UILabel new];
-    [oneView addSubview:appCouponMoneyLabel];
-    self.appCouponMoneyLabel = appCouponMoneyLabel;
-    self.appCouponMoneyLabel.font = [UIFont systemFontOfSize:14.];
-    self.appCouponMoneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    
+
     UILabel *freightMoneyL = [UILabel new];
     [oneView addSubview:freightMoneyL];
     freightMoneyL.font = [UIFont systemFontOfSize:14.];
@@ -159,7 +141,7 @@
     
     [oneView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(weakSelf);
-        make.height.mas_equalTo(@190);
+        make.height.mas_equalTo(@150);
     }];
     [payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(oneView).offset(20);
@@ -186,16 +168,8 @@
         make.right.equalTo(oneView).offset(-10);
         make.centerY.equalTo(couponMoneyL.mas_centerY);
     }];
-    [appCouponMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(couponMoneyL.mas_bottom).offset(20);
-        make.left.equalTo(oneView).offset(10);
-    }];
-    [self.appCouponMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(oneView).offset(-10);
-        make.centerY.equalTo(appCouponMoneyL.mas_centerY);
-    }];
     [freightMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(appCouponMoneyL.mas_bottom).offset(20);
+        make.top.equalTo(couponMoneyL.mas_bottom).offset(20);
         make.left.equalTo(oneView).offset(10);
     }];
     [self.freightMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
