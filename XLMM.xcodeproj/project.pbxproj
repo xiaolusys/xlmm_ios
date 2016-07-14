@@ -4127,6 +4127,7 @@
 		1F27A6141D27597100A0F80B /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				1F56E2AC1D373ADC0092EC91 /* store(存储) */,
 				1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */,
 				1F27A6151D27597100A0F80B /* Foundation+Log.h */,
 				1F27A6161D27597100A0F80B /* Foundation+Log.m */,
@@ -5140,6 +5141,13 @@
 				1F56E28C1D348E670092EC91 /* used_selectedcoupon@2x.png */,
 			);
 			path = Coupon;
+			sourceTree = "<group>";
+		};
+		1F56E2AC1D373ADC0092EC91 /* store(存储) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "store(存储)";
 			sourceTree = "<group>";
 		};
 		1F6CEC011D33849F00E1F4DF /* Cache */ = {

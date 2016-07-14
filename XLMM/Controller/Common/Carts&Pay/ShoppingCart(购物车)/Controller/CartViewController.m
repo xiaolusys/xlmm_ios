@@ -719,7 +719,6 @@
     [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
     
-    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
 //    NSLog(@"url = %@", urlString);
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
@@ -788,13 +787,19 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               //[self myAnimation];
-              [self downloadData];
-              [self downloadHistoryData];
-              if (self.dataArray.count >= 18) {
-                  NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
-                  
-                  [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
+              NSInteger codeNum = [responseObject[@"code"] integerValue];
+              if (codeNum == 0) {
+                  [self downloadData];
+                  [self downloadHistoryData];
+                  if (self.dataArray.count >= 18) {
+                      NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
+                      
+                      [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
+                  }
+              }else {
+                  [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
               }
+              
             
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
