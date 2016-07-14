@@ -148,7 +148,10 @@
  *  判断小鹿钱包是否足够支付->如果不足则调用微信或者支付宝，传payment。否则传budget。
  */
 @property (nonatomic,assign) BOOL isXLWforAlipay;
-
+/**
+ *  判断优惠券是否能够直接支付订单
+ */
+@property (nonatomic, assign) BOOL isCouponEnoughPay;
 @end
 
 
@@ -556,6 +559,7 @@
         couponValue = 0;
         [self calculationLabelValue];
     } else {
+        self.isUserCoupon = YES;
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
@@ -565,25 +569,23 @@
             if (self.couponMessage.length == 0) {
                 //goodsModel.coupon_message 为空的时候表示优惠券可以使用
                 //            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
-
-                self.isUserCoupon = YES;
+                self.isEnoughCoupon = YES;
                 self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
                 self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
                 self.couponLabel.hidden = NO;
                 yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
                 [self calculationLabelValue];
-                
             }else {
                 //优惠券不满足条件  提示警告信息
                 [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
                 self.couponLabel.text = @"";
-                self.isUserCoupon = NO;
+                self.isEnoughCoupon = NO;
                 couponValue = 0;
                 [self calculationLabelValue];
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+            self.isEnoughCoupon = NO;
             [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
             
         }];
@@ -683,7 +685,13 @@
         }
         
     }else {
-        [self createPayPopView];
+        if (self.isCouponEnoughPay) {
+            [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+            [self payMoney];
+        }else {
+            [self createPayPopView];
+        }
+        
     }
 }
 #pragma mark -- 支付
@@ -710,7 +718,7 @@
     
     //    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
     //是否使用了优惠券
-    if (self.isUserCoupon && self.isEnoughCoupon) {
+    if (self.isUserCoupon && self.isCouponEnoughPay) {
         //足够
         totalPayment = 0.00;
         discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
@@ -983,7 +991,7 @@
 - (void)calculationLabelValue {
     discount = couponValue + rightAmount;
     if (discount - amontPayment > 0.000001) {
-        
+        self.isCouponEnoughPay = YES;
         discount = amontPayment;
         //合计
         self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", 0.00];
@@ -994,7 +1002,9 @@
         self.goodsPayment.text = self.allPayLabel.text;
         //小鹿钱包
         self.availableLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
+        
     }else {
+        self.isCouponEnoughPay = NO;
         if (self.isUseXLW) {
             CGFloat surplus = amontPayment - couponValue - rightAmount;
             if (canUseWallet - surplus > 0.000001 || (fabs(canUseWallet - surplus) < 0.000001 || fabs(surplus - couponValue) < 0.000001)) {

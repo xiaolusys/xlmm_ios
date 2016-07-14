@@ -492,10 +492,6 @@
     if (section == 1) {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 44)];
         headerView.backgroundColor = [UIColor backgroundlightGrayColor];
-        
-        
-        
-        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 160, 34)];
         label.textColor = [UIColor settingBackgroundColor];
         label.font = [UIFont systemFontOfSize:12];

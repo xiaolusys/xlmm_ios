@@ -26,7 +26,9 @@
 
 
 @interface JMAuthcodeViewController ()<UITextFieldDelegate> {
-    //    NSUInteger secondsCountDown;
+//    NSTimer *countDownTimer;
+//    NSInteger secondsCountDown;
+    
 }
 
 @property (nonatomic,strong) JMLineView *lineView;
@@ -64,6 +66,7 @@
     [self prepareUI];
     [self prepareInitUI];
 
+    
 }
 
 #pragma mark ------ 初始化UI
@@ -243,7 +246,7 @@
 //        }
 //authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
         
-        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == YES) {
+        if ([self.config[@"isMessageLogin"] boolValue] == YES) {
             parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
         }
         
@@ -286,19 +289,19 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
-                [_selButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                _selButton.enabled = NO;
+                [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
+                _selButton.enabled = YES;
                 _selButton.selected = YES;
             });
         }else{
             int seconds = secondsCountDown % 60;
-            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+//            NSString *strTime = [NSString stringWithFormat:@"%02d", seconds];
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 //NSLog(@"____%@",strTime);
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:1];
-                [_selButton setTitle:[NSString stringWithFormat:@"%@秒",strTime] forState:UIControlStateNormal];
+                self.selButton.titleLabel.text = [NSString stringWithFormat:@" 剩余%02d秒",seconds];
                 [UIView commitAnimations];
                 _selButton.enabled = NO;
                 _selButton.selected = NO;

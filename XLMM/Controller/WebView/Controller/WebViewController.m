@@ -45,7 +45,7 @@
 
 //static BOOL isLogin;
 
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
@@ -170,6 +170,7 @@
     
     IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
     super.baseWebView = baseWebView1;
+    self.baseWebView.delegate = self;
     [self.view addSubview:super.baseWebView];
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
@@ -248,7 +249,15 @@
     }];
     
 }
-
+//#pragma mark IMYWebView代理方法
+//- (void)webViewDidStartLoad:(IMYWebView *)webView {
+////    [WebViewJavascriptBridge enableLogging];
+//    
+//    [_bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        [self myInvite:data];
+//    }];
+//    
+//}
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
     //    NSDictionary *dic = _model.mj_keyValues;
@@ -303,7 +312,7 @@
     menu.contentView = self.shareView.view;
 }
 
-- (void) universeShare:(NSDictionary *)data {
+- (void)universeShare:(NSDictionary *)data {
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
 
@@ -473,8 +482,23 @@
             [SVProgressHUD dismiss];
         }
     }];
+    /**
+     *  我的邀请加载
+     */
+//    [self.bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        [self myInvite:data callBack:responseCallback];
+//    }];
 }
-
+//- (void)myInvite:(id )data {
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, data[@"id"]];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        [self resolveActivityShareParam:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//}
 
 
 /**
