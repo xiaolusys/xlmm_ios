@@ -661,6 +661,12 @@
      */
     [configuration.userContentController addScriptMessageHandler:self name:@"showLoading"];
     
+    /**
+     *  我的邀请
+     */
+    [configuration.userContentController addScriptMessageHandler:self name:@"changeId"];
+    
+    
 }
 
 //从webview获得浏览器中的useragent，并进行更新
