@@ -116,8 +116,26 @@
 @property (nonatomic, strong) NSNumber *weekDay;
 
 @property (nonatomic, strong)NSString *eventLink;
-
-@property (nonatomic, strong)NSString *myInvitation;
+/**
+ *  我的邀请
+ */
+@property (nonatomic, copy)NSString *myInvitation;
+/**
+ *  MaMa等级考试入口
+ */
+@property (nonatomic, copy) NSString *examWebUrl;
+/**
+ *  关于粉丝入口
+ */
+@property (nonatomic, copy) NSString *fansWebUrl;
+/**
+ *  精品活动入口
+ */
+@property (nonatomic, copy) NSString *boutiqueActiveWebUrl;
+/**
+ *  续费入口
+ */
+@property (nonatomic, copy) NSString *renewWebUrl;
 /**
  *  妈妈中心顶部视图
  */
@@ -184,11 +202,11 @@
     // 创建顶部视图
     [self createMMCenterTopViwe];
     
-    
+    [self loadMaMaWeb];
     
 }
 - (void)loadDataSource {
-    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
+//    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
     //主页新的数据
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -202,6 +220,21 @@
         
     }];
 }
+- (void)loadMaMaWeb {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject == nil) {
+            return ;
+        }else {
+            [self mamaWebViewData:responseObject];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
+}
+
 #pragma mark --- 顶部视图创建
 - (void)createMMCenterTopViwe {
     JMMaMaCenterTopView *mamatopView = [[JMMaMaCenterTopView alloc] init];
@@ -246,13 +279,19 @@
     if (index == 100) {
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:self.extraModel.next_level_exam_url forKey:@"web_url"];
+        [dict setValue:self.examWebUrl forKey:@"web_url"];
         webVC.webDiction = dict;
         webVC.isShowNavBar = true;
         webVC.isShowRightShareBtn = false;
         [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 101) {
-        
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:self.renewWebUrl forKey:@"web_url"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = false;
+        [self.navigationController pushViewController:webVC animated:YES];
     }else {
         
     }
@@ -317,7 +356,23 @@
     self.eventLink = self.mamaCenterModel.mama_event_link;
 
 }
-
+// MaMaWebView跳转链接
+- (void)mamaWebViewData:(NSDictionary *)mamaDic {
+    NSArray *resultsArr = mamaDic[@"results"];
+    NSDictionary *resultsDict = [NSDictionary dictionary];
+    for (NSDictionary *dic in resultsArr) {
+        resultsDict = dic;
+    }
+    NSDictionary *extraDict = resultsDict[@"extra"];
+    
+    self.myInvitation = extraDict[@"invite"];             // --> 我的邀请
+    self.examWebUrl = extraDict[@"exam"];                 // --> 等级考试
+    self.fansWebUrl = extraDict[@"fans_explain"];         // --> 粉丝二维码
+    self.boutiqueActiveWebUrl = extraDict[@"act_info"];   // --> 精品活动
+    self.renewWebUrl = extraDict[@"renew"];               // --> 续费
+    
+    
+}
 - (void)createHuoYueDuView{
   self.huoyueduView.transform = CGAffineTransformMakeRotation(M_PI * 24/180);
     
@@ -369,34 +424,6 @@
 }
 
 
-- (void)downloadData{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/fanlist", Root_URL];
-    NSLog(@"string = %@", string);
-    [self downLoadWithURLString:string andSelector:@selector(fetchedData:)];
-    
-}
-
-- (void)fetchedData:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-//    NSError *error = nil;
-//    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//    if (error == nil) {
-//        self.fensilabel.text = [NSString stringWithFormat:@"%ld", array.count];
-//
-//        if (array.count == 0) {
-//            NSLog(@"您的粉丝列表为空");
-//        } else {
-//                       //生成粉丝列表。。。
-//           // [self createFanlistWithArray:array];
-//        }
-//    } else {
-//        NSLog(@"error = %@", error);
-//    }
-    
-}
-
 // 返回一周的订单数。。。。
 - (float)sumofoneWeek:(NSArray *)weekArray{
     float sum = 0.0;
@@ -404,47 +431,6 @@
         sum += [weekArray[i] floatValue];
     }
     return sum;
-    
-}
-
-#pragma mark --获取历史积累收益
-
-- (void)fetchedInfoData:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSError *error = nil;
-    NSDictionary *dicJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (!error) {
-     //   NSString *mco = [[dicJson objectForKey:@"mmclog"] objectForKey:@"mci"];
-        share_mmcode = [dicJson objectForKey:@"share_mmcode"];
-        self.mamalink = [dicJson objectForKey:@"mama_link"];
-        
-        self.myInvitation = [dicJson objectForKey:@"share_mmcode"];
-       }
-}
-
-
-#pragma mark --获取小鹿妈妈信息：等级，账户余额， 可提现金额， 名称等。。。
-
-- (void)fetchedMaMaData:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSError *error = nil;
-    NSArray *arrJson = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if (!error) {
-    //    NSLog(@"dicJson = %@", arrJson);
-        if (arrJson.count == 0) {
-            return;
-        }
-        NSDictionary *dic = [arrJson objectAtIndex:0];
-//        self.levelLabel.text = [NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]];
-//      //  NSLog(@"%@",[NSString stringWithFormat:@"%d", (int)[[dic objectForKey:@"agencylevel"] integerValue]]);
-//        self.jineLabel.text = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"get_cash_display"] floatValue]];
-        ableTixianJine = [[dic objectForKey:@"coulde_cashout"] floatValue];
-        nickName = [dic objectForKey:@"weikefu"];
-    }
     
 }
 
@@ -474,19 +460,6 @@
     [self createChart:allDingdan];
     
 }
-
-
-- (void)downloadDataWithUrlString:(NSString *)urlString selector:(SEL)aSelector{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
-        [self performSelectorOnMainThread:aSelector withObject:data waitUntilDone:YES];
-    });
-}
-
-
-
-
-
  //根据订单数据 画表格。。。。
 - (void)createChart:(NSMutableArray *)chartData {
     
@@ -1138,19 +1111,11 @@
 - (IBAction)erweima:(id)sender {
     
     NSLog(@"点击我的邀请");
-    
-//    TuijianErweimaViewController *erweima = [[TuijianErweimaViewController alloc] init];
-//    [self.navigationController pushViewController:erweima animated:YES];
+
     if ([self.myInvitation class] == [NSNull class])return;
-    
-//    MyInvitationViewController *invitation = [[MyInvitationViewController alloc] init];
-//    
-//    invitation.requestURL = self.myInvitation;
-//    [self.navigationController pushViewController:invitation animated:YES];
-    
+
     WebViewController *activity = [[WebViewController alloc] init];
-//    _diction = [NSMutableDictionary dictionary];
-//    _diction = nil;
+
     NSString *active = @"myInvite";
     NSString *titleName = @"我的邀请";
     [self.diction setValue:@4 forKey:@"activity_id"];
@@ -1169,9 +1134,7 @@
     
     ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
     [self.navigationController pushViewController:previous animated:YES];
-    
-//    MaMaShopViewController *shop = [[MaMaShopViewController alloc] init];
-//    [self.navigationController pushViewController:shop animated:YES];
+
 }
 #pragma mark --- 选品上架
 - (IBAction)xuanpinliebiao:(id)sender {
@@ -1243,10 +1206,7 @@
 }
 
 - (void)clickShareView {
-//    MaMaShareSubsidiesViewController *share = [[MaMaShareSubsidiesViewController alloc] init];
-//    share.clickDate = _clickDate;
-//    share.todayMoney = _money;
-//    [self.navigationController pushViewController:share animated:YES];
+
 }
 
 @end
