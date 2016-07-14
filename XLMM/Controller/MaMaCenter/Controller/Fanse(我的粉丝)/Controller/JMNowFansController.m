@@ -134,6 +134,7 @@
 - (void)refetch:(NSDictionary *)data {
     
     _urlStr = data[@"next"];
+    
     NSArray *arr = data[@"results"];
     for (NSDictionary *dic in arr) {
         FanceModel *fetureModel = [FanceModel mj_objectWithKeyValues:dic];

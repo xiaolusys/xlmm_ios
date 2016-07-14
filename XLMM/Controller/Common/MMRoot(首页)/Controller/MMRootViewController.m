@@ -2147,13 +2147,14 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark UIscrollViewDelegate  滚动视图代理方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+
     //NSLog(@"scrollViewWillBeginDragging");
     CGPoint offset = scrollView.contentOffset;
-//    CGRect bounds = scrollView.bounds;
-//    CGSize size = scrollView.contentSize;
-//    UIEdgeInsets inset = scrollView.contentInset;
+    //    CGRect bounds = scrollView.bounds;
+    //    CGSize size = scrollView.contentSize;
+    //    UIEdgeInsets inset = scrollView.contentInset;
     CGFloat currentOffset = offset.y;
-//    CGFloat maximunOffset = size.height;
+    //    CGFloat maximunOffset = size.height;
     
     if (currentOffset > SCREENHEIGHT) {
         self.topButton.hidden = NO;
@@ -2165,6 +2166,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
 {
+    
     return YES;
     //返回NO   关闭此功能
 }
@@ -2276,7 +2278,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         else if( scrollView.contentOffset.y > 0) {
             //            NSLog(@"today scroll up");
             [UIView animateWithDuration:1 animations:^{
-                self.lefttimeViewHeight.constant = 0;
+                self.lefttimeViewHeight.constant = 45;
                 
             }];
         }
@@ -2436,6 +2438,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [self.topButton bringSubviewToFront:self.view];
 }
 - (void)topButtonClick:(UIButton *)btn {
+    [self disableAllGoodsCollectionScroll];
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
     self.backScrollview.scrollEnabled = YES;
