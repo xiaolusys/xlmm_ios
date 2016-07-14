@@ -2879,7 +2879,7 @@
 				183073BB1C97D17800B7665E /* weibo */,
 			);
 			name = "Venders(第三方库)";
-			path = ../../Venders;
+			path = Venders;
 			sourceTree = "<group>";
 		};
 		183072951C97D17800B7665E /* AFNetworking */ = {
@@ -4383,7 +4383,6 @@
 		1F498AEF1D2761BE007E77FC /* WebView */ = {
 			isa = PBXGroup;
 			children = (
-				183072941C97D17800B7665E /* Venders(第三方库) */,
 				1F498AF01D2761BE007E77FC /* Controller */,
 				1F498AFD1D2761BE007E77FC /* Model */,
 				1F498AFE1D2761BE007E77FC /* View */,
@@ -5425,6 +5424,7 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
+				183072941C97D17800B7665E /* Venders(第三方库) */,
 				3A5214E81CC764AA00F4E699 /* Images.xcassets */,
 				1F27A61E1D275A6300A0F80B /* Tool */,
 				1F27A6141D27597100A0F80B /* Global */,
@@ -6791,7 +6791,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -6831,7 +6831,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6898,7 +6898,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -6964,7 +6964,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
