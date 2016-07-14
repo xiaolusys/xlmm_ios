@@ -31,6 +31,7 @@
  *  续费图片
  */
 @property (nonatomic, strong) UIImageView *renewImage;
+@property (nonatomic, strong) UIView *renewView;
 /**
  *  MaMa是不是会员
  */
@@ -117,6 +118,7 @@
     NSInteger limtNum = [limtStr integerValue];
     if (limtNum > 15) {
         self.renewImage.hidden = YES;
+        self.renewView.userInteractionEnabled = NO;
     }
     
     
@@ -159,6 +161,7 @@
     [renewView addGestureRecognizer:renewTap];
     UIView *renewTapView = [renewTap view];
     renewTapView.tag = 101;
+    self.renewView = renewView;
     
     UIImageView *renewImage = [UIImageView new];
     [renewView addSubview:renewImage];
