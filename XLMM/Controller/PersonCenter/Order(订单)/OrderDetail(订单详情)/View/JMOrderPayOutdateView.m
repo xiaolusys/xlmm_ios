@@ -233,10 +233,10 @@
     if ([d minute] < 0 || [d second] < 0) {
         self.orderOutdateTime.text = @"00:00";
 
-        self.shareImage.hidden = NO;
-        self.descLabel.hidden = NO;
-        self.shareButton.hidden = NO;
-        self.sharBottom.hidden = NO;
+//        self.shareImage.hidden = NO;
+//        self.descLabel.hidden = NO;
+//        self.shareButton.hidden = NO;
+//        self.sharBottom.hidden = NO;
     }else {
         self.bottomView.hidden = NO;
         self.canelOrderButton.hidden = NO;
