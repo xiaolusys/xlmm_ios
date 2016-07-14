@@ -71,6 +71,7 @@
     
     kWeakSelf
     [self.payShareImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf);
         make.bottom.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@230);

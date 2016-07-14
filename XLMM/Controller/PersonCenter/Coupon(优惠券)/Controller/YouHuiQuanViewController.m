@@ -193,7 +193,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
-    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
+    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 104) collectionViewLayout:flowLayout];
     self.myCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;
