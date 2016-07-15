@@ -279,7 +279,7 @@
     // ===== 订单退款选择是否弹出选择退款方式 ===== //
     _choiseRefundArr = [NSArray array];
     _choiseRefundArr = _refundDic[@"refund_choices"];
-    if (_choiseRefundArr.count > 1) {
+    if (_choiseRefundArr.count < 2) {
         _isPopChoiseRefundWay = NO;
     }else {
         _isPopChoiseRefundWay = YES;
@@ -673,11 +673,12 @@
                 tuikuanVC.oid = model.orderGoodsID;
                 tuikuanVC.status = model.status_display;
                 [self.navigationController pushViewController:tuikuanVC animated:YES];
-            
             }else {
                 ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
                 tuikuanVC.dingdanModel = model;
-                tuikuanVC.refundDic = _choiseRefundArr[0];
+                if (_choiseRefundArr.count > 0) {
+                    tuikuanVC.refundDic = _choiseRefundArr[0];
+                }
                 tuikuanVC.tid = tid;
                 tuikuanVC.oid = model.orderGoodsID;
                 tuikuanVC.status = model.status_display;
