@@ -718,7 +718,7 @@
     
     //    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
     //是否使用了优惠券
-    if (self.isUserCoupon && self.isCouponEnoughPay) {
+    if (self.isUserCoupon && self.isEnoughCoupon && self.isCouponEnoughPay) {
         //足够
         totalPayment = 0.00;
         discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
@@ -729,7 +729,7 @@
         //提交
         [self submitBuyGoods];
     }else {
-        if (self.isUserCoupon) {
+        if (self.isUserCoupon && self.isEnoughCoupon) {
             //使用不足
             parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, couponValue];
             discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
@@ -869,7 +869,7 @@
         
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [dic objectForKey:@"code"]};
+                NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)[[dic objectForKey:@"code"] integerValue]]};
                 [MobClick event:@"buy_fail" attributes:temp_dict];
                 
                 [SVProgressHUD dismiss];
@@ -911,7 +911,7 @@
                             [self popview];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
-                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",error.code]};
+                            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
                             [MobClick event:@"buy_fail" attributes:temp_dict];
                             NSLog(@"%@",error);
                             [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
