@@ -327,10 +327,10 @@
         NSLog(@"shop_info = null");
         return;
     }
+    NSDictionary *shopInfoDict = dic[@"shop_info"];
+    self.shopShareName = shopInfoDict[@"name"];
     
-    self.shopShareName = dic[@"shop_info"][@"name"];
-    
-    NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
+    NSString *urlString = shopInfoDict[@"thumbnail"];
     if(urlString != nil){
         self.shopShareImage = [UIImage imagewithURLString:[urlString imageShareCompression]];
     }

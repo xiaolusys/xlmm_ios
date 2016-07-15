@@ -792,7 +792,15 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
 }
 
-
+/**
+ *  接收到内存警告时候调用
+ */
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    // 停止所有的下载
+    [[SDWebImageManager sharedManager] cancelAll];
+    // 删除缓存
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
+}
 
 #pragma mark -
 #pragma mark RESideMenu Delegate

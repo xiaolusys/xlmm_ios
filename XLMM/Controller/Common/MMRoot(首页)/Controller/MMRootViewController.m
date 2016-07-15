@@ -137,7 +137,7 @@
 @property (nonatomic, strong)NSArray *activityArr;
 @property (nonatomic, strong)NSMutableArray *activityDataArr;
 
-@property (nonatomic, strong)NSArray *brandArr;
+@property (nonatomic, strong)NSMutableArray *brandArr;
 @property (nonatomic, strong)NSMutableArray *brandDataArr;
 //商品
 @property (nonatomic, strong)NSMutableArray *collectionArr;
@@ -501,25 +501,24 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [self createTopButton];
     
     
-    [self loadAddressInfo];
+//    [self loadAddressInfo];
     
     
 }
 // http://7xrst8.com2.z0.glb.qiniucdn.com//district/xiaolumm-district-v20160714-0.0.2.json
-- (void)loadAddressInfo {
-    NSString *addressUrlStr = @"http://7xrst8.com2.z0.glb.qiniucdn.com//district/xiaolumm-district-v20160714-0.0.2.json";
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:addressUrlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) {
-            return ;
-        }else {
-            [self addressData:responseObject];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-}
+//- (void)loadAddressInfo {
+//    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
+//    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+//    [manage GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) {
+//            return ;
+//        }else {
+//            [self addressData:responseObject];
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//}
 ///**
 // *  返回区划版本信息：
 // {
@@ -529,27 +528,28 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 // }
 // 客户端比较当前版本与最新版本是否一致，使用：hash来比较，如果版本不一致则重新下载download_url 里的内容
 // */
-- (void)addressData:(NSArray *)addressArray {
-//    NSString *version = addressArray[@"version"];
-//    NSUserDefaults
-    
-    // 省 province  市 city  区 area
-    NSMutableArray *proviceArr = [NSMutableArray arrayWithArray:addressArray];
-    NSMutableArray *cityArr = [NSMutableArray array];
-    NSMutableArray *areaeArr = [NSMutableArray array];
-    
-    cityArr = [[proviceArr objectAtIndex:0] objectForKey:@"childs"];
-    areaeArr = [[cityArr objectAtIndex:0] objectForKey:@"childs"];
-    NSMutableArray *nameArr = [NSMutableArray array];
-    for (NSDictionary *dic in areaeArr) {
-        
-        NSString *nameStr = dic[@"name"];
-        
-        [nameArr addObject:nameStr];
-    }
+//- (void)addressData:(NSDictionary *)addressDic {
+//    NSString *version = addressDic[@"version"];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:version forKey:@"version"];
+//    [defaults synchronize];
 
-    NSLog(@"%@",nameArr);
-}
+    
+    
+//    NSString *downloadURLString = addressDic[@"download_url"];
+    // 省 province  市 city  区 area
+//    NSMutableArray *proviceArr = [NSMutableArray arrayWithArray:addressArray];
+//    NSMutableArray *cityArr = [NSMutableArray array];
+//    NSMutableArray *areaeArr = [NSMutableArray array];
+//    
+//    cityArr = [[proviceArr objectAtIndex:0] objectForKey:@"childs"];
+//    areaeArr = [[cityArr objectAtIndex:0] objectForKey:@"childs"];
+    
+//    NSString *proviceName = [[proviceArr objectAtIndex:0] objectForKey:@"name"];
+//    NSString *cityName = [[cityArr objectAtIndex:0] objectForKey:@"name"];
+//    NSString *areaName = [[areaeArr objectAtIndex:0] objectForKey:@"name"];
+    
+//}
 
 
 #pragma mark --- 第一次打开程序
