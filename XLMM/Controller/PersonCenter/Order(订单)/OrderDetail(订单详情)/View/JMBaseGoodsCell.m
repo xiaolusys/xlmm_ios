@@ -167,7 +167,7 @@
     
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
-    CGFloat payment = [goodsModel.payment floatValue];
+    CGFloat payment = [goodsModel.total_fee floatValue];
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
 
@@ -224,7 +224,7 @@
     
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
-    CGFloat payment = [goodsModel.payment floatValue];
+    CGFloat payment = [goodsModel.total_fee floatValue];
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
     
