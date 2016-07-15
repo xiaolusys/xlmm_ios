@@ -117,6 +117,14 @@
     NSString *_addressGoodsID;
     
     BOOL _isTimeLineView;
+    BOOL _isPopChoiseRefundWay; // 是否弹出选择退款方式
+    NSArray *_choiseRefundArr; // 退款方式数组
+    NSDictionary *_choiseRefundDict; // 退款方式
+    
+    NSInteger _sectionCount;
+    NSInteger _rowCount;
+    
+    
 }
 - (NSMutableArray *)orderGoodsDataSource {
     if (_orderGoodsDataSource == nil) {
@@ -266,6 +274,15 @@
     for (NSDictionary *packDic in packArr) {
         self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:packDic];
         [_logisticsArr addObject:self.packageModel];
+    }
+    
+    // ===== 订单退款选择是否弹出选择退款方式 ===== //
+    _choiseRefundArr = [NSArray array];
+    _choiseRefundArr = _refundDic[@"refund_choices"];
+    if (_choiseRefundArr.count < 2) {
+        _isPopChoiseRefundWay = NO;
+    }else {
+        _isPopChoiseRefundWay = YES;
     }
     
     self.orderDetailHeaderView.orderDetailModel = self.orderDetailModel;
@@ -422,6 +439,8 @@
 }
 #pragma mark 商品可选状态
 - (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Button:(UIButton *)button Section:(NSInteger)section Row:(NSInteger)row {
+    _sectionCount = section;
+    _rowCount = row;
     // 100 申请退款 101 确认收货 102 退货退款 103 秒杀不退不换
     NSArray *arr = _dataSource[section];
     JMOrderGoodsModel *model = arr[row];
@@ -435,18 +454,23 @@
         BOOL isWarehouseOrder = (self.packageModel.assign_time != nil || self.packageModel.book_time != nil || self.packageModel.finish_time != nil);
         if (isWarehouseOrder) {
             [self returnPopView];
-        }else {
-            JMShareView *cover = [JMShareView show];
-            cover.delegate = self;
-            JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
-            
-            if (self.refundVC.view == nil) {
-                self.refundVC = [[JMRefundController alloc] init];
+        }else { // 如果只有一种退款方式不弹出选择框
+            if (_isPopChoiseRefundWay == YES) {
+                JMShareView *cover = [JMShareView show];
+                cover.delegate = self;
+                JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
+                if (self.refundVC.view == nil) {
+                    self.refundVC = [[JMRefundController alloc] init];
+                }
+                self.refundVC.ordergoodsModel = model;
+                self.refundVC.refundDic = _refundDic;
+                self.refundVC.delegate = self;
+                menu.contentView = self.refundVC.view;
+            }else {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"小鹿退款说明" message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款14天内只能用于购买，不可提现。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同意", nil];
+                alertView.tag = 101;
+                [alertView show];
             }
-            self.refundVC.ordergoodsModel = model;
-            self.refundVC.refundDic = _refundDic;
-            self.refundVC.delegate = self;
-            menu.contentView = self.refundVC.view;
         }
     }else if (button.tag == 101) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
@@ -483,15 +507,11 @@
  *  选择退款方式 -> 极速退款 审核退款
  */
 - (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic {
-    ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
-    tuikuanVC.dingdanModel = goodsModel;
-    tuikuanVC.refundDic = refundDic;
-    tuikuanVC.tid = tid;
-    tuikuanVC.oid = goodsModel.orderGoodsID;
-    tuikuanVC.status = goodsModel.status_display;
-    [self.navigationController pushViewController:tuikuanVC animated:YES];
+    _choiseRefundDict = refundDic;
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"小鹿退款说明" message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款14天内只能用于购买，不可提现。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同意", nil];
+    alertView.tag = 101;
+    [alertView show];
 }
-
 #pragma mark -- 弹出视图
 - (void)returnPopView {
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -640,8 +660,32 @@
             [connection start];
             
             [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
-        }
-    }else {
+        }else{}
+    }else if (alertView.tag == 101){
+        if (buttonIndex == 1) {
+            NSArray *arr = _dataSource[_sectionCount];
+            JMOrderGoodsModel *model = arr[_rowCount];
+            if (_isPopChoiseRefundWay == YES) {
+                ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+                tuikuanVC.dingdanModel = model;
+                tuikuanVC.refundDic = _choiseRefundDict;
+                tuikuanVC.tid = tid;
+                tuikuanVC.oid = model.orderGoodsID;
+                tuikuanVC.status = model.status_display;
+                [self.navigationController pushViewController:tuikuanVC animated:YES];
+            }else {
+                ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+                tuikuanVC.dingdanModel = model;
+                if (_choiseRefundArr.count > 0) {
+                    tuikuanVC.refundDic = _choiseRefundArr[0];
+                }
+                tuikuanVC.tid = tid;
+                tuikuanVC.oid = model.orderGoodsID;
+                tuikuanVC.status = model.status_display;
+                [self.navigationController pushViewController:tuikuanVC animated:YES];
+            }
+
+        }else{}
     }
 }
 - (void)popToview {

@@ -469,61 +469,47 @@
 }
 
 - (IBAction)commitClicked:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"小鹿退款说明" message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款14天内只能用于购买，不可提现。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同意", nil];
-    alertView.tag = 100;
-    [alertView show];
-
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 100) {
-        if (buttonIndex == 0) {
-            
-        }else if (buttonIndex == 1) {
-            
-            
-            [SVProgressHUD showWithStatus:@"退款处理中....."];
-            //budget
-            NSString *refundChannel = self.refundDic[@"refund_channel"];
-            if ([refundChannel isEqualToString:@"budget"]) {
-                [MobClick event:@"refundChannel_budget"];
-            }else {
-                [MobClick event:@"refundChannel_audit"];
-            }
-            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-            NSString *descStr;
-            descStr = self.inputTextView.text;
-            if ([self.inputTextView.text isEqualToString:@""]) {
-                descStr = @"七天无理由退货";
-            }
-            NSDictionary *parameters = @{@"id":self.oid,
-                                         @"reason":[NSNumber numberWithInt:reasonCode],
-                                         @"num":self.refundNumLabel.text,
-                                         @"sum_price":[NSNumber numberWithFloat:refundPrice],
-                                         @"description":descStr,
-                                         @"refund_channel":refundChannel
-                                         };
-
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-            [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSDictionary *dic = responseObject;
-                if (dic.count == 0) return;
-                NSInteger code = [dic[@"code"] integerValue];
-                if (code == 0) {
-                    [SVProgressHUD dismiss];
-                    [self returnPopView];
-                    
-                }else {
-                    [SVProgressHUD showErrorWithStatus:dic[@"info"]];
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
-            }];
-
-        }else {
-            
-        }
+    [SVProgressHUD showWithStatus:@"退款处理中....."];
+    //budget
+    NSString *refundChannel = self.refundDic[@"refund_channel"];
+    if ([refundChannel isEqualToString:@"budget"]) {
+        [MobClick event:@"refundChannel_budget"];
+    }else {
+        [MobClick event:@"refundChannel_audit"];
     }
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    NSString *descStr;
+    descStr = self.inputTextView.text;
+    if ([self.inputTextView.text isEqualToString:@""]) {
+        descStr = @"七天无理由退货";
+    }
+    NSDictionary *parameters = @{@"id":self.oid,
+                                 @"reason":[NSNumber numberWithInt:reasonCode],
+                                 @"num":self.refundNumLabel.text,
+                                 @"sum_price":[NSNumber numberWithFloat:refundPrice],
+                                 @"description":descStr,
+                                 @"refund_channel":refundChannel
+                                 };
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = responseObject;
+        if (dic.count == 0) return;
+        NSInteger code = [dic[@"code"] integerValue];
+        if (code == 0) {
+            [SVProgressHUD dismiss];
+            [self returnPopView];
+            
+        }else {
+            [SVProgressHUD showErrorWithStatus:dic[@"info"]];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
+    }];
+
+
 }
+
 #pragma mark -- 弹出视图
 - (void)returnPopView {
     
