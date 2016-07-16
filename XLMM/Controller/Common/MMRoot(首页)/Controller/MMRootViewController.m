@@ -55,6 +55,8 @@
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
 #import "Masonry.h"
+#import "JMHelper.h"
+#import "JMDBManager.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -170,6 +172,11 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 @implementation MMRootViewController {
     BOOL _isFirstOpenApp;
+    
+    BOOL _isStartDownload;
+    
+    NSString *_hash;
+    NSString *_downloadURLString;
 }
 
 //- (UIScrollView *)backScrollview {
@@ -338,6 +345,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [rightBtn addSubview:rightImageView];
         rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
         self.navigationItem.rightBarButtonItem = rightItem;
+    }else {
+        
     }
 }
 
@@ -501,57 +510,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [self createTopButton];
     
     
-//    [self loadAddressInfo];
-    
-    
+    [self loadAddressInfo];
+
+    self.session = [self backgroundSession];
 }
-// http://7xrst8.com2.z0.glb.qiniucdn.com//district/xiaolumm-district-v20160714-0.0.2.json
-//- (void)loadAddressInfo {
-//    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
-//    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-//    [manage GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject) {
-//            return ;
-//        }else {
-//            [self addressData:responseObject];
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
-//}
-///**
-// *  返回区划版本信息：
-// {
-// "version": "v20160714-0.0.2",
-// "hash": "2f5901750213d3338a8b95525b541dfbcfcca8d6",
-// "download_url": "http://7xrst8.com2.z0.glb.qiniucdn.com//district/xiaolumm-district-v20160714-0.0.2.json"
-// }
-// 客户端比较当前版本与最新版本是否一致，使用：hash来比较，如果版本不一致则重新下载download_url 里的内容
-// */
-//- (void)addressData:(NSDictionary *)addressDic {
-//    NSString *version = addressDic[@"version"];
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults setObject:version forKey:@"version"];
-//    [defaults synchronize];
-
-    
-    
-//    NSString *downloadURLString = addressDic[@"download_url"];
-    // 省 province  市 city  区 area
-//    NSMutableArray *proviceArr = [NSMutableArray arrayWithArray:addressArray];
-//    NSMutableArray *cityArr = [NSMutableArray array];
-//    NSMutableArray *areaeArr = [NSMutableArray array];
-//    
-//    cityArr = [[proviceArr objectAtIndex:0] objectForKey:@"childs"];
-//    areaeArr = [[cityArr objectAtIndex:0] objectForKey:@"childs"];
-    
-//    NSString *proviceName = [[proviceArr objectAtIndex:0] objectForKey:@"name"];
-//    NSString *cityName = [[cityArr objectAtIndex:0] objectForKey:@"name"];
-//    NSString *areaName = [[areaeArr objectAtIndex:0] objectForKey:@"name"];
-    
-//}
-
-
 #pragma mark --- 第一次打开程序
 - (void)returnPopView {
     /**
@@ -2186,16 +2148,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
 #pragma mark UIscrollViewDelegate  滚动视图代理方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
 
@@ -2472,6 +2424,117 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
         }
     }
+}
+#pragma mark 网络请求得到地址信息
+- (void)loadAddressInfo {
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
+    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    [manage GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) {
+            return ;
+        }else {
+            [self addressData:responseObject];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+- (void)addressData:(NSDictionary *)addressDic {
+    _hash = addressDic[@"hash"];
+    _downloadURLString = addressDic[@"download_url"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *oldVersion = [defaults stringForKey:@"hash"];
+    if (oldVersion == nil) {
+        [self startDownload:_downloadURLString];
+    }else {
+        if ([oldVersion isEqualToString:_hash]) {
+        }else {
+            [self startDownload:_downloadURLString];
+        }
+    }
+    [defaults setObject:_hash forKey:@"hash"];
+    [defaults synchronize];
+}
+#pragma mark -- 开始下载地址文件
+- (void)startDownload:(id)downloadURLString {
+    
+    if (self.downloadTask) {
+        return ;
+    }
+    NSURL *downloadURL = [NSURL URLWithString:downloadURLString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
+    self.downloadTask = [self.session downloadTaskWithRequest:request];
+    [self.downloadTask resume];
+    
+}
+- (NSURLSession *)backgroundSession {
+    static NSURLSession *session = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,^{
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:@"so.xiaolu.m.xiaolumeimei"];
+        session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    });
+    return session;
+}
+//这个方法用来跟踪下载数据并且根据进度刷新ProgressView
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+}
+//下载任务完成,这个方法在下载完成时触发，它包含了已经完成下载任务得 Session Task,Download Task和一个指向临时下载文件得文件路径
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+    
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *desPath = [path stringByAppendingPathComponent:@"addressInfo.json"];
+    NSURL *pathUrl = [NSURL fileURLWithPath:desPath];
+    NSError *errorCopy;
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    [fileManager removeItemAtURL:pathUrl error:NULL];
+    
+    BOOL success = [fileManager copyItemAtURL:location toURL:pathUrl error:nil];
+    
+//    
+//    NSArray *URLs = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+//    NSURL *documentsDirectory = [URLs objectAtIndex:0];
+//    NSURL *originalURL = [[downloadTask originalRequest] URL];
+//    NSURL *destinationURL = [documentsDirectory URLByAppendingPathComponent:[originalURL lastPathComponent]];
+//    NSError *errorCopy;
+//
+//    [fileManager removeItemAtURL:destinationURL error:NULL];
+//    BOOL success = [fileManager copyItemAtURL:location toURL:destinationURL error:&errorCopy];
+    if (success) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //播放音乐
+            self.player = [AVPlayer playerWithURL:pathUrl];
+            [self.player play];
+        });
+    } else {
+        NSLog(@"复制文件发生错误: %@", [errorCopy localizedDescription]);
+    }
+}
+
+#pragma mark - NSURLSessionTaskDelegate
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    if (error == nil) {
+        NSLog(@"任务: %@ 成功完成", task);
+    } else {
+        NSLog(@"任务: %@ 发生错误: %@", task, [error localizedDescription]);
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+    });
+    self.downloadTask = nil;
+}
+
+#pragma mark - NSURLSessionDelegate
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.backgroundSessionCompletionHandler) {
+        void (^completionHandler)() = appDelegate.backgroundSessionCompletionHandler;
+        appDelegate.backgroundSessionCompletionHandler = nil;
+        completionHandler();
+    }
+    NSLog(@"所有任务已完成!");
 }
 
 #pragma mark 返回顶部  image == >backTop

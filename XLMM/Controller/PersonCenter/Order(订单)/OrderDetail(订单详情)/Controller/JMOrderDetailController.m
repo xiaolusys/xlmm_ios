@@ -275,7 +275,6 @@
         self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:packDic];
         [_logisticsArr addObject:self.packageModel];
     }
-    
     // ===== 订单退款选择是否弹出选择退款方式 ===== //
     _choiseRefundArr = [NSArray array];
     _choiseRefundArr = _refundDic[@"refund_choices"];
@@ -297,8 +296,9 @@
 //    }
     // == 包裹信息的分包判断 == //
     _dataSource = [NSMutableArray array];
-    NSInteger count = [self.orderDetailModel.status integerValue];
-    if (count == ORDER_STATUS_PAYED) {
+//    NSInteger count = [self.orderDetailModel.status integerValue];
+    NSString *statusDes = self.orderDetailModel.status_display;
+    if ([statusDes isEqualToString:@"已付款"]) {
         self.orderDetailHeaderView.addressView.userInteractionEnabled = YES;
         self.orderDetailHeaderView.logisticsView.userInteractionEnabled = YES;
     }

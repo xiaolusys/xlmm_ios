@@ -166,11 +166,11 @@
     UIView *threeView = [UIView new];
     [self addSubview:threeView];
     self.addressView = threeView;
-    threeView.backgroundColor = [UIColor whiteColor];
-    threeView.userInteractionEnabled = NO;
+    self.addressView.backgroundColor = [UIColor whiteColor];
+    self.addressView.userInteractionEnabled = NO;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [threeView addGestureRecognizer:tap];
+    [self.addressView addGestureRecognizer:tap];
     UIView *threeTapView = [tap view];
     threeTapView.tag = 100;
     
@@ -200,11 +200,11 @@
     UIView *fourView = [UIView new];
     [self addSubview:fourView];
     self.logisticsView = fourView;
-    fourView.backgroundColor = [UIColor whiteColor];
-    fourView.userInteractionEnabled = NO;
+    self.logisticsView.backgroundColor = [UIColor whiteColor];
+    self.logisticsView.userInteractionEnabled = NO;
     
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [fourView addGestureRecognizer:tap1];
+    [self.logisticsView addGestureRecognizer:tap1];
     UIView *fourTapView = [tap1 view];
     fourTapView.tag = 101;
     

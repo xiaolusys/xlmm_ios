@@ -430,6 +430,7 @@
     
     [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.lineView.mas_bottom);
+        make.left.equalTo(weakSelf.bottomView);
         make.width.mas_equalTo(SCREENWIDTH);
         //        make.bottom.equalTo(weakSelf.view.mas_bottom);
         make.height.mas_equalTo(@40);

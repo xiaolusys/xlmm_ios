@@ -45,7 +45,10 @@
 
 @end
 
-@implementation JMReturnedGoodsController
+@implementation JMReturnedGoodsController {
+    NSString *_expressName;
+    NSString *_expressNum;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -186,7 +189,7 @@
 
 #pragma mark --- 选择物流公司
 - (void)choiseClick:(UIButton *)btn {
-    
+    [self.expressListTF resignFirstResponder];
     JMChooseLogisticsController *logisticsVC = [[JMChooseLogisticsController alloc] init];
     logisticsVC.delegate = self;
     [self.navigationController pushViewController:logisticsVC animated:YES];
@@ -197,13 +200,17 @@
 }
 #pragma mark --- 提交按钮点击
 - (void)sureButtonClick:(UIButton *)btn {
+    _expressName = self.expressL.text;
+    _expressNum = self.expressListTF.text;
+    
+    [self.expressListTF resignFirstResponder];
     NSLog(@"提交。。。。");
-    if([self.expressL.text isEqualToString:@"请选择快递公司"]){
+    if([_expressName isEqualToString:@"请选择快递公司"]){
         [SVProgressHUD showErrorWithStatus:@"请填写快递公司信息"];
         return;
     }
     
-    if([[self.expressListTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
+    if([[_expressNum stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
         [SVProgressHUD showErrorWithStatus:@"请填写快递单号信息"];
         return;
     }
@@ -229,8 +236,8 @@
             
             NSDictionary *parameters = @{@"id":self.refundModelr.order_id,
                                          @"modify":@2,
-                                         @"company":self.expressL.text,
-                                         @"sid":self.expressListTF.text
+                                         @"company":_expressName,
+                                         @"sid":_expressNum
                                          };
             
             NSLog(@"parameters = %@", parameters);
@@ -239,10 +246,18 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       
                       NSLog(@"JSON: %@", responseObject);
-                      UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退货成功，去看看其他商品吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                      alterView.tag = 4321;
-                      alterView.delegate = self;
-                      [alterView show];
+                      if (!responseObject) {
+                          return ;
+                      }else {
+                          NSString *info = responseObject[@"info"];
+                          
+                          UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:info delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                          alterView.tag = 4321;
+                          alterView.delegate = self;
+                          [alterView show];
+                          
+                      }
+                      
                       //                      [self.navigationController popToRootViewControllerAnimated:YES];
                       //                      NSLog(@"perration = %@", operation);
                       //                      [self.navigationController popViewControllerAnimated:YES];
@@ -324,7 +339,15 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
-//    [self.expressListTF resignFirstResponder];
+    if (!_isPopup) {
+    }else {
+        _isPopup = NO;
+        self.expressBtn.enabled = YES;
+        CGPoint center = self.baseScrollV.center;
+        center.y += 260;
+        self.baseScrollV.center = center;
+    }
+
     [self.baseScrollV endEditing:YES];
     NSLog(@"点击了");
 }
