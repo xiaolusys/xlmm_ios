@@ -120,6 +120,7 @@
 {
     if ([_urlStr class] == [NSNull class]) {
         [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];

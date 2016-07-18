@@ -39,6 +39,7 @@
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
 #import "MJExtension.h"
+#import "JMVipRenewController.h"
 
 
 
@@ -285,13 +286,17 @@
         webVC.isShowRightShareBtn = false;
         [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 101) {
-        WebViewController *webVC = [[WebViewController alloc] init];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:self.renewWebUrl forKey:@"web_url"];
-        webVC.webDiction = dict;
-        webVC.isShowNavBar = true;
-        webVC.isShowRightShareBtn = false;
-        [self.navigationController pushViewController:webVC animated:YES];
+//        WebViewController *webVC = [[WebViewController alloc] init];
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        [dict setValue:self.renewWebUrl forKey:@"web_url"];
+//        webVC.webDiction = dict;
+//        webVC.isShowNavBar = true;
+//        webVC.isShowRightShareBtn = false;
+//        [self.navigationController pushViewController:webVC animated:YES];
+        JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+        [self.navigationController pushViewController:renewVC animated:YES];
+        
+        
     }else {
         
     }
