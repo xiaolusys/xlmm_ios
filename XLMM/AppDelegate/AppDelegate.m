@@ -675,7 +675,8 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    application.applicationIconBadgeNumber = 0;
+
     NSLog(@"applicationDidBecomeActive");
     [self updateLoginState];
     
@@ -699,6 +700,8 @@
         UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alterView show];
     }
+    
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -791,8 +794,29 @@
     NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
 }
-
-
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
+    self.backgroundSessionCompletionHandler = completionHandler;
+    [self presentNotification];
+}
+-(void)presentNotification {
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = @"下载完成!";
+    localNotification.alertAction = @"后台传输下载已完成!";
+    //提示音
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    //icon提示加1
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+}
+/**
+ *  接收到内存警告时候调用
+ */
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    // 停止所有的下载
+    [[SDWebImageManager sharedManager] cancelAll];
+    // 删除缓存
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
+}
 
 #pragma mark -
 #pragma mark RESideMenu Delegate

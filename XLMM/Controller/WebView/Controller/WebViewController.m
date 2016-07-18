@@ -197,19 +197,19 @@
     NSString *loadStr = nil;
     NSString *active = _webDiction[@"type_title"];
     if ([active isEqualToString:@"myInvite"]) {
-        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         self.activityId = _webDiction[@"activity_id"];
         loadStr = _webDiction[@"web_url"];
         [self loadData];
     }else if ([active isEqualToString:@"active"]){
-        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
         loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
         [self loadData];
     }else {
         statusBarView.hidden = NO;
         if (_isShowNavBar) {
-            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         }else {
             super.baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
         }
