@@ -77,7 +77,7 @@
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
