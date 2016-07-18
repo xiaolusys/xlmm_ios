@@ -2482,9 +2482,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //下载任务完成,这个方法在下载完成时触发，它包含了已经完成下载任务得 Session Task,Download Task和一个指向临时下载文件得文件路径
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *desPath = [path stringByAppendingPathComponent:@"addressInfo.json"];
-    NSURL *pathUrl = [NSURL fileURLWithPath:desPath];
+//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *desPath = [path stringByAppendingPathComponent:@"addressInfo.json"];
+    NSString *addressPath = [JMHelper getFullPathWithFile];
+    NSURL *pathUrl = [NSURL fileURLWithPath:addressPath];
     NSError *errorCopy;
     
     NSFileManager *fileManager = [NSFileManager defaultManager];

@@ -12,10 +12,10 @@
 
 
 //获取 一个文件 在沙盒Library/Caches/ 目录下的路径
-+ (NSString *)getFullPathWithFile:(NSString *)urlName {
++ (NSString *)getFullPathWithFile {
     //先获取 沙盒中的Library/Caches/路径
-    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *myCacheDirectory = [docPath stringByAppendingPathComponent:@"addressCaches"];
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *myCacheDirectory = [docPath stringByAppendingPathComponent:@"addressInfo.json"];
     //检测MyCaches 文件夹是否存在
     if (![[NSFileManager defaultManager] fileExistsAtPath:myCacheDirectory]) {
         //不存在 那么创建
@@ -23,7 +23,7 @@
     }
 //    NSString * newName = urlName;
     
-    return [myCacheDirectory stringByAppendingPathComponent:urlName];
+    return myCacheDirectory;
 }
 //检测 缓存文件 是否超时
 + (BOOL)isTimeOutWithFile:(NSString *)filePath timeOut:(double)timeOut {

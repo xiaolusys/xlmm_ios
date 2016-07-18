@@ -861,6 +861,8 @@
     NSLog(@"submitBuyGoods %@", dic);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return ;
+        [SVProgressHUD dismiss];
         NSDictionary *dic = responseObject;
         NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         

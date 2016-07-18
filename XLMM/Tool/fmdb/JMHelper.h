@@ -11,7 +11,7 @@
 @interface JMHelper : NSObject
 
 //获取 一个文件 在沙盒沙盒Library/Caches/ 目录下的路径
-+ (NSString *)getFullPathWithFile:(NSString *)urlName;
++ (NSString *)getFullPathWithFile;
 //检测 缓存文件 是否超时
 + (BOOL)isTimeOutWithFile:(NSString *)filePath timeOut:(double)timeOut;
 

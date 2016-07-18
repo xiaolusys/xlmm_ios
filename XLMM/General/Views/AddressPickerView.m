@@ -20,18 +20,7 @@
     NSMutableArray *countyArray;
 }
 @end
-/**
- //    NSString *path = [JMHelper getFullPathWithFile:_downloadURLString];
- //    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:path];
- //    BOOL isTimeOut = [JMHelper isTimeOutWithFile:nil timeOut:30*24*60*60];
- if (_isStartDownload == NO) {
- //文件存在且不超时
- //读取本地
- //        NSData *data = [NSData dataWithContentsOfFile:path];
- //        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
- 
- - returns: <#return value description#>
- */
+
 @implementation AddressPickerView
 
 - (id)initWithdelegate:(id <AddressPickerDelegate>)delegate{
@@ -68,10 +57,26 @@
     
 }
 - (void)createAddress2 {
-    NSString *addressPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSData *data = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/addressInfo.json",addressPath]];
-    provinceArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//    NSString *addressPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSData *data = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/addressInfo.json",addressPath]];
+//    NSString *addressPath = [JMHelper getFullPathWithFile];
+//    NSData *data = [NSData dataWithContentsOfFile:addressPath];
     
+    
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *addressPath = [docPath stringByAppendingPathComponent:@"addressInfo.json"];
+    
+    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:addressPath];
+    if (isExist == YES) {
+        NSData *data = [NSData dataWithContentsOfFile:addressPath];
+        provinceArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    }else {
+        NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"areasAddress" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:jsonPath];
+        provinceArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//        provinceArray = [[NSMutableArray alloc] initWithContentsOfFile:jsonPath];
+    }
+
     cityArray = [[provinceArray objectAtIndex:0] objectForKey:@"childs"];
     NSLog(@"province = %u", (unsigned int)provinceArray.count);
     NSLog(@"city = %u", (unsigned int)cityArray.count);
