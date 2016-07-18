@@ -686,11 +686,9 @@
         
     }else {
         if (self.isCouponEnoughPay) {
-            self.isXLWforAlipay = NO;
             [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
             [self payMoney];
         }else {
-            self.isXLWforAlipay = YES;
             [self createPayPopView];
         }
         
@@ -786,11 +784,7 @@
                 return;
             }
             
-            if (self.isXLWforAlipay) {
-                dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],payMethod, parms];
-            }else {
-                dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@", dict, discount,[[NSNumber numberWithFloat:totalPayment] floatValue],@"budget", parms];
-            }
+            dict = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@",dict,discount, [[NSNumber numberWithFloat:totalPayment] floatValue], payMethod, parms];
             //提交
             [self submitBuyGoods];
         }
