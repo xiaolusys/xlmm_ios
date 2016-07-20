@@ -430,12 +430,16 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"JMPhonenumViewController"];
+    
 }
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"JMPhonenumViewController"];
 }
+
 - (void)backApointInterface {
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];

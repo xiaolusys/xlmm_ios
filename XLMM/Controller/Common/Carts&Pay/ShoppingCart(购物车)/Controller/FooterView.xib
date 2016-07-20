@@ -23,37 +23,12 @@
                     <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" tag="300" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youhuiquankongicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xRe-fa-UXb">
-                    <rect key="frame" x="262" y="6" width="50" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="UvU-T4-Mro"/>
-                        <constraint firstAttribute="width" constant="50" id="abn-al-fYY"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" tag="200" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="还差34元可用优惠券" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bo0-7X-hau">
-                    <rect key="frame" x="146" y="8" width="112" height="15"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" tag="400" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="      " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puC-hU-mHj">
-                    <rect key="frame" x="264" y="7" width="23" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="LVU-Cx-ulA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="N3u-Mr-PbH"/>
-                <constraint firstItem="bo0-7X-hau" firstAttribute="centerY" secondItem="x0t-bz-jmz" secondAttribute="centerY" id="N6F-PT-UyP"/>
-                <constraint firstItem="puC-hU-mHj" firstAttribute="centerY" secondItem="bo0-7X-hau" secondAttribute="centerY" id="NgL-Xl-g3r"/>
                 <constraint firstItem="x0t-bz-jmz" firstAttribute="centerY" secondItem="LVU-Cx-ulA" secondAttribute="centerY" id="Psf-4w-25D"/>
-                <constraint firstItem="puC-hU-mHj" firstAttribute="leading" secondItem="bo0-7X-hau" secondAttribute="trailing" constant="6" id="UzD-Zp-Lge"/>
-                <constraint firstAttribute="trailing" secondItem="xRe-fa-UXb" secondAttribute="trailing" constant="8" id="Zha-9h-VXl"/>
                 <constraint firstItem="x0t-bz-jmz" firstAttribute="leading" secondItem="LVU-Cx-ulA" secondAttribute="trailing" id="dTe-7a-BEv"/>
-                <constraint firstItem="xRe-fa-UXb" firstAttribute="centerY" secondItem="bo0-7X-hau" secondAttribute="centerY" id="hpl-Vc-HOb"/>
-                <constraint firstItem="xRe-fa-UXb" firstAttribute="leading" secondItem="bo0-7X-hau" secondAttribute="trailing" constant="4" id="rGV-Sf-1km"/>
                 <constraint firstItem="LVU-Cx-ulA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="yq8-8m-IlZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -61,7 +36,4 @@
             <point key="canvasLocation" x="461" y="269"/>
         </view>
     </objects>
-    <resources>
-        <image name="youhuiquankongicon.png" width="70" height="40"/>
-    </resources>
 </document>

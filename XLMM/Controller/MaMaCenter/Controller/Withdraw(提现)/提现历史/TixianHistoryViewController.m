@@ -70,7 +70,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 
 #pragma mark --- 创建一个数据请求
 - (void)downloadData{
-
+    
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,_currentPage];
     NSLog(@"string = %@", self.nextString);
 
@@ -193,11 +193,15 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"TixianHistoryViewController"];
+    
 }
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"TixianHistoryViewController"];
 }
+
 #pragma mark -- 添加返回顶部按钮
 
 - (void)createButton {

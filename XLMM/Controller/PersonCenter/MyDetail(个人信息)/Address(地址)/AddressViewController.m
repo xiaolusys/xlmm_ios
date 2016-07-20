@@ -46,13 +46,16 @@
         [dataArray removeAllObjects];
     }
     [self downloadAddressData];
+    
+    [MobClick beginLogPageView:@"AddressViewController"];
 
-
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"AddressViewController"];
 
 }
 - (void)viewDidDisappear:(BOOL)animated{
@@ -91,29 +94,37 @@
 }
 
 //下载数据
-- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
-    });
-}
+//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data == nil) {
+//            return ;
+//        }
+//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+//        
+//    });
+//}
 
 - (void)downloadAddressData{
-    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
-    
-    
+//    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
+    //2016.7.13 modify to afn
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:kAddress_List_URL parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              if (!responseObject)return ;
+              [self fatchedAddressData:responseObject];              
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+
 }
-- (void)fatchedAddressData:(NSData *)responsedata{
-    NSError *error = nil;
-    
-    NSArray *addressArray = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
-    if (error != nil) {
-        return;
-    }
+- (void)fatchedAddressData:(NSArray *)dic{
+    NSArray *addressArray = dic;
+
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");

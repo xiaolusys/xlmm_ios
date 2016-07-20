@@ -150,8 +150,8 @@
     }];
     
     [self.saleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.salePriceLabel.mas_right).offset(10);
-        make.bottom.equalTo(weakSelf.agentPriceLabel);
+        make.top.equalTo(weakSelf.agentPriceLabel.mas_bottom).offset(5);
+        make.left.equalTo(weakSelf.agentPriceLabel);
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -192,7 +192,7 @@
     NSDictionary *dic = model.level_info;
     self.leveModel = [JMLevelinfoModel mj_objectWithKeyValues:dic];
     
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageShareCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageShareCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.cornerRadius = 8;
     self.iconImage.layer.masksToBounds = YES;
@@ -234,7 +234,7 @@
     
     self.listModel = product;
     self.nameLabtl.text = product.name;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[product.pic_path imageShareCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[product.pic_path imageShareCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     
     self.pdtID = [NSString stringWithFormat:@"%@", product.goodsID];

@@ -15,8 +15,10 @@
 #import "UIView+RGSize.h"
 #import "JMSelecterButton.h"
 #import "AFNetworking.h"
+#import "AddressPickerView.h"
+#import "AddressModel.h"
 
-@interface JMEditAddressController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface JMEditAddressController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,AddressPickerDelegate>
 
 @property (nonatomic,strong) JMSelecterButton *sureButton;
 @property (nonatomic,strong) JMSelecterButton *cancelButton;
@@ -30,6 +32,10 @@
 @property (nonatomic,strong) UITextField *phoneNumTF;
 
 @property (nonatomic,strong) UITextField *detailAddressTF;
+
+
+@property (strong, nonatomic) AddressPickerView *addressPicker;
+
 /**
  *  显示修改后省市区信息
  */
@@ -85,10 +91,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self createNavigationBarWithTitle:@"修改地址" selecotr:@selector(btnClicked:)];
-    [self getPickViewData];
+//    [self getPickViewData];
     [self createTableView];
     [self createUITextField];
-    [self createPickView];
+//    [self createPickView];
     [self initView];
     
     referal_trade_id = _editDict[@"user_adress"][@"id"];
@@ -106,13 +112,13 @@
     
 }
 - (void)initView {
-    self.maskView = [[UIView alloc] initWithFrame:self.view.frame];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0;
-    //    [self.view addSubview:self.maskView];
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePickerView)]];
-    
-    self.bottomView.width = SCREENWIDTH;
+//    self.maskView = [[UIView alloc] initWithFrame:self.view.frame];
+//    self.maskView.backgroundColor = [UIColor blackColor];
+//    self.maskView.alpha = 0;
+//    //    [self.view addSubview:self.maskView];
+//    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePickerView)]];
+//    
+//    self.bottomView.width = SCREENWIDTH;
     
     UIButton *sureButton = [[UIButton alloc] init];
     [sureButton setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
@@ -139,27 +145,34 @@
         model.receiver_mobile = phoneStr ? phoneStr : _addressDic[@"receiver_mobile"];
         model.receiver_address = addStr ? addStr : _addressDic[@"receiver_address"];
         dic = model.mj_keyValues;
+    
+    
+    
+    
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:dic];
     [dict setObject:referal_trade_id forKey:@"id"];  // === > 地址信息ID
+    
     if (_editDict[@"logistic_company"] == nil) {
         [dict setObject:[NSNull null] forKey:@"logistic_company_code"];
     }else {
         [dict setObject:_editDict[@"logistic_company"] forKey:@"logistic_company_code"];
     }
+    
     [dict setObject:_editDict[@"id"] forKey:@"referal_trade_id"]; // == > 订单ID
     
     [manage POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (!responseObject) return;
-        
-        if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
-        
-            [self.delegate updateEditerWithmodel:dic];
-            
-        }
-        
+//        
+//        if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
+//        
+//            [self.delegate updateEditerWithmodel:dic];
+//            
+//        }
+//        
         [self.navigationController popViewControllerAnimated:YES];
 
         
@@ -167,22 +180,22 @@
     }];
     
 }
-
-#pragma mark ----  获取pickView的数据
-- (void)getPickViewData {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"Address" ofType:@"plist"];
-    _pickerDic = [[NSDictionary alloc] initWithContentsOfFile:path];
-    _provinceArray = [_pickerDic allKeys];
-    _selectedArray = [_pickerDic objectForKey:[[_pickerDic allKeys] objectAtIndex:0]];
-    
-    if (_selectedArray.count > 0) {
-        _cityArray = [[_selectedArray objectAtIndex:0] allKeys];
-    }
-    if (_cityArray.count > 0) {
-        _townArray = [[_selectedArray objectAtIndex:0] objectForKey:[_cityArray objectAtIndex:0]];
-    }
-    
-}
+//
+//#pragma mark ----  获取pickView的数据
+//- (void)getPickViewData {
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"Address" ofType:@"plist"];
+//    _pickerDic = [[NSDictionary alloc] initWithContentsOfFile:path];
+//    _provinceArray = [_pickerDic allKeys];
+//    _selectedArray = [_pickerDic objectForKey:[[_pickerDic allKeys] objectAtIndex:0]];
+//    
+//    if (_selectedArray.count > 0) {
+//        _cityArray = [[_selectedArray objectAtIndex:0] allKeys];
+//    }
+//    if (_cityArray.count > 0) {
+//        _townArray = [[_selectedArray objectAtIndex:0] objectForKey:[_cityArray objectAtIndex:0]];
+//    }
+//    
+//}
 
 #pragma mark --- 实现 UITableViewDelegate 与 UITableViewDataSource 协议方法
 
@@ -329,32 +342,70 @@
     }
     
 }
+
+- (void)pickerDidChangeStatus:(AddressPickerView *)picker{
+    
+    self.proLabel.text = picker.address.provinceName;
+    self.cityLabel.text = picker.address.cityName;
+    self.addressLabel.text = picker.address.countyName;
+    
+    proStr = picker.address.provinceName;
+    cityStr = picker.address.cityName;
+    disStr = picker.address.countyName;
+    
+//    NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
+//    self.provinceTextField.text = string;
+}
+
 #pragma mark ----- 点击选择地址的图片手势
 - (void)ImageViewClick:(UITapGestureRecognizer *)tap {
+    [self cancelLocatePicker];
+    self.addressPicker = [[AddressPickerView alloc] initWithdelegate:self];
+    [self.addressPicker showInView:self.view];
+    
     [self.conSigneeTF resignFirstResponder];
     [self.phoneNumTF resignFirstResponder];
     [self.detailAddressTF resignFirstResponder];
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.bottomView];
-    self.maskView.alpha = 0;
-    self.bottomView.top = self.view.height - 150;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0.1;
-        self.bottomView.bottom = self.view.height;
-    }];
+    
+//    [self.conSigneeTF resignFirstResponder];
+    
+//    [self.conSigneeTF resignFirstResponder];
+//    [self.phoneNumTF resignFirstResponder];
+//    [self.detailAddressTF resignFirstResponder];
+//    [self.view addSubview:self.maskView];
+//    [self.view addSubview:self.bottomView];
+//    self.maskView.alpha = 0;
+//    self.bottomView.top = self.view.height - 150;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.maskView.alpha = 0.1;
+//        self.bottomView.bottom = self.view.height;
+//    }];
+}
+-(void)cancelLocatePicker
+{
+    [self.addressPicker cancelPicker];
+    self.addressPicker.delegate = nil;
+    self.addressPicker = nil;
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    [self.conSigneeTF resignFirstResponder];
+    [self.phoneNumTF resignFirstResponder];
+    [self.detailAddressTF resignFirstResponder];
+    [self cancelLocatePicker];
 }
 /**
  *  隐藏
  */
-- (void)hidePickerView {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0;
-        self.bottomView.top = self.view.height;
-    } completion:^(BOOL finished) {
-        [self.maskView removeFromSuperview];
-        [self.bottomView removeFromSuperview];
-    }];
-}
+//- (void)hidePickerView {
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.maskView.alpha = 0;
+//        self.bottomView.top = self.view.height;
+//    } completion:^(BOOL finished) {
+//        [self.maskView removeFromSuperview];
+//        [self.bottomView removeFromSuperview];
+//    }];
+//}
 
 #pragma mark ----  实现 UITextField 的协议方法
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -395,171 +446,172 @@
     return YES;
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    
     [self.conSigneeTF resignFirstResponder];
     [self.phoneNumTF resignFirstResponder];
     [self.detailAddressTF resignFirstResponder];
+    
+    [self cancelLocatePicker];
+    
 }
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    
-}
-#pragma mark --- 创建pickView
-- (void)createPickView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 150, SCREENWIDTH, 150)];
-    self.bottomView = bottomView;
-    //    [self.view addSubview:self.bottomView];
-    
-    UIPickerView *chooseAddressPick = [[UIPickerView alloc] init];
-    self.chooseAddressPick = chooseAddressPick;
-    [self.bottomView addSubview:self.chooseAddressPick];
-    self.chooseAddressPick.delegate = self;
-    self.chooseAddressPick.dataSource = self;
-//    self.chooseAddressPick.showsSelectionIndicator = YES;
-//    self.chooseAddressPick.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    self.sureButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-    [self.bottomView addSubview:self.sureButton];
-    [self.sureButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"确定" TitleFont:13. CornerRadius:10.];
-    [self.sureButton addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.cancelButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-    [self.bottomView addSubview:self.cancelButton];
-    [self.cancelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"取消" TitleFont:13. CornerRadius:10.];
-    [self.cancelButton addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView);
-        make.right.equalTo(self.bottomView);
-        make.width.mas_equalTo(@80);
-        make.height.mas_equalTo(@30);
-    }];
-    
-    [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView);
-        make.left.equalTo(self.bottomView);
-        make.width.mas_equalTo(@80);
-        make.height.mas_equalTo(@30);
-    }];
-    
-    [self.chooseAddressPick mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.sureButton.mas_bottom);
-        make.left.equalTo(self.bottomView);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@120);
-    }];
-    
-}
-#pragma mark ---- 确定按钮与取消按钮的点击
-- (void)sureBtnClick:(UIButton *)sender {
-    
-    proStr = [_provinceArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:0]];
-    cityStr = [_cityArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:1]];
-    disStr = [_townArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:2]];
-    
-    self.proLabel.text = [_provinceArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:0]];
-    self.cityLabel.text = [_cityArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:1]];
-    self.addressLabel.text = [_townArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:2]];
-    [self hidePickerView];
-}
-- (void)cancelBtnClick:(UIButton *)sender {
-    [self hidePickerView];
-}
 
-#pragma mark ----- UIPicker Delegate
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    
-    return 3;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (component == 0) {
-        return _provinceArray.count;
-    }else if (component == 1) {
-        return _cityArray.count;
-    }else {
-        return _townArray.count;
-    }
-    
-    
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (component == 0) {
-        return [_provinceArray objectAtIndex:row];
-    } else if (component == 1) {
-        return [_cityArray objectAtIndex:row];
-    } else {
-        return [_townArray objectAtIndex:row];
-    }
-}
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    if (component == 0) {
-        return SCREENWIDTH / 3;
-    } else if (component == 1) {
-        return SCREENWIDTH / 3;
-    } else {
-        return SCREENWIDTH / 3;
-    }
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-//    self.proLabel.text = nil;
-//    self.cityLabel.text = nil;
-//    self.addressLabel.text = nil;
-    
-    if (component == 0) {
-        proStr = _provinceArray[row];
-        _selectedArray = [_pickerDic objectForKey:[_provinceArray objectAtIndex:row]];
-        if (_selectedArray.count > 0) {
-            _cityArray = [[_selectedArray objectAtIndex:0] allKeys];
-            cityStr = _cityArray[0];
-        } else {
-            _cityArray = nil;
-        }
-        if (_cityArray.count > 0) {
-            _townArray = [[_selectedArray objectAtIndex:0] objectForKey:[_cityArray objectAtIndex:0]];
-            disStr = _townArray[0];
-        } else {
-            _townArray = nil;
-        }
-        [pickerView selectedRowInComponent:1];
-        [pickerView selectedRowInComponent:2];
-        [pickerView reloadComponent:1];
-        [pickerView reloadComponent:2];
-        
-//        self.proLabel.text = proStr;
-//        self.cityLabel.text = cityStr;
-//        self.addressLabel.text = disStr;
-    }
-    
-    
-    else if (component == 1) {
-        disStr = nil;
-//        self.proLabel.text = proStr;
-        if (_selectedArray.count > 0 && _cityArray.count > 0) {
-            cityStr = _cityArray[row];
-//            self.cityLabel.text = cityStr;
-            _townArray = [[_selectedArray objectAtIndex:0] objectForKey:[_cityArray objectAtIndex:row]];
-            disStr = _townArray[0];
-        } else {
-            _townArray = nil;
-        }
-        [pickerView selectRow:1 inComponent:2 animated:YES];
-        [pickerView reloadComponent:2];
-//        self.addressLabel.text = disStr;
-    }else {
-//        self.proLabel.text = proStr;
-//        self.cityLabel.text = cityStr;
-        disStr = _townArray[row];
-        [pickerView reloadComponent:2];
-        
-//        self.addressLabel.text = disStr;
-        
-    }
-    
-}
+//#pragma mark --- 创建pickView
+//- (void)createPickView {
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 150, SCREENWIDTH, 150)];
+//    self.bottomView = bottomView;
+//    //    [self.view addSubview:self.bottomView];
+//    
+//    UIPickerView *chooseAddressPick = [[UIPickerView alloc] init];
+//    self.chooseAddressPick = chooseAddressPick;
+//    [self.bottomView addSubview:self.chooseAddressPick];
+//    self.chooseAddressPick.delegate = self;
+//    self.chooseAddressPick.dataSource = self;
+////    self.chooseAddressPick.showsSelectionIndicator = YES;
+////    self.chooseAddressPick.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    
+//    self.sureButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+//    [self.bottomView addSubview:self.sureButton];
+//    [self.sureButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"确定" TitleFont:13. CornerRadius:10.];
+//    [self.sureButton addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.cancelButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+//    [self.bottomView addSubview:self.cancelButton];
+//    [self.cancelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"取消" TitleFont:13. CornerRadius:10.];
+//    [self.cancelButton addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.bottomView);
+//        make.right.equalTo(self.bottomView);
+//        make.width.mas_equalTo(@80);
+//        make.height.mas_equalTo(@30);
+//    }];
+//    
+//    [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.bottomView);
+//        make.left.equalTo(self.bottomView);
+//        make.width.mas_equalTo(@80);
+//        make.height.mas_equalTo(@30);
+//    }];
+//    
+//    [self.chooseAddressPick mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.sureButton.mas_bottom);
+//        make.left.equalTo(self.bottomView);
+//        make.width.mas_equalTo(SCREENWIDTH);
+//        make.height.mas_equalTo(@120);
+//    }];
+//    
+//}
+//#pragma mark ---- 确定按钮与取消按钮的点击
+//- (void)sureBtnClick:(UIButton *)sender {
+//    
+//    proStr = [_provinceArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:0]];
+//    cityStr = [_cityArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:1]];
+//    disStr = [_townArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:2]];
+//    
+//    self.proLabel.text = [_provinceArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:0]];
+//    self.cityLabel.text = [_cityArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:1]];
+//    self.addressLabel.text = [_townArray objectAtIndex:[self.chooseAddressPick selectedRowInComponent:2]];
+//    [self hidePickerView];
+//}
+//- (void)cancelBtnClick:(UIButton *)sender {
+//    [self hidePickerView];
+//}
+//
+//#pragma mark ----- UIPicker Delegate
+//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+//    
+//    return 3;
+//}
+//- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+//    if (component == 0) {
+//        return _provinceArray.count;
+//    }else if (component == 1) {
+//        return _cityArray.count;
+//    }else {
+//        return _townArray.count;
+//    }
+//    
+//    
+//}
+//
+//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+//    if (component == 0) {
+//        return [_provinceArray objectAtIndex:row];
+//    } else if (component == 1) {
+//        return [_cityArray objectAtIndex:row];
+//    } else {
+//        return [_townArray objectAtIndex:row];
+//    }
+//}
+//- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+//    if (component == 0) {
+//        return SCREENWIDTH / 3;
+//    } else if (component == 1) {
+//        return SCREENWIDTH / 3;
+//    } else {
+//        return SCREENWIDTH / 3;
+//    }
+//}
+//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+////    self.proLabel.text = nil;
+////    self.cityLabel.text = nil;
+////    self.addressLabel.text = nil;
+//    
+//    if (component == 0) {
+//        proStr = _provinceArray[row];
+//        _selectedArray = [_pickerDic objectForKey:[_provinceArray objectAtIndex:row]];
+//        if (_selectedArray.count > 0) {
+//            _cityArray = [[_selectedArray objectAtIndex:0] allKeys];
+//            cityStr = _cityArray[0];
+//        } else {
+//            _cityArray = nil;
+//        }
+//        if (_cityArray.count > 0) {
+//            _townArray = [[_selectedArray objectAtIndex:0] objectForKey:[_cityArray objectAtIndex:0]];
+//            disStr = _townArray[0];
+//        } else {
+//            _townArray = nil;
+//        }
+//        [pickerView selectedRowInComponent:1];
+//        [pickerView selectedRowInComponent:2];
+//        [pickerView reloadComponent:1];
+//        [pickerView reloadComponent:2];
+//        
+////        self.proLabel.text = proStr;
+////        self.cityLabel.text = cityStr;
+////        self.addressLabel.text = disStr;
+//    }
+//    
+//    
+//    else if (component == 1) {
+//        disStr = nil;
+////        self.proLabel.text = proStr;
+//        if (_selectedArray.count > 0 && _cityArray.count > 0) {
+//            cityStr = _cityArray[row];
+////            self.cityLabel.text = cityStr;
+//            _townArray = [[_selectedArray objectAtIndex:0] objectForKey:[_cityArray objectAtIndex:row]];
+//            disStr = _townArray[0];
+//        } else {
+//            _townArray = nil;
+//        }
+//        [pickerView selectRow:1 inComponent:2 animated:YES];
+//        [pickerView reloadComponent:2];
+////        self.addressLabel.text = disStr;
+//    }else {
+////        self.proLabel.text = proStr;
+////        self.cityLabel.text = cityStr;
+//        disStr = _townArray[row];
+//        [pickerView reloadComponent:2];
+//        
+////        self.addressLabel.text = disStr;
+//        
+//    }
+//    
+//}
 //- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
 //    
 //    UILabel* pickerLabel = (UILabel*)view;
@@ -575,6 +627,16 @@
 //    
 //}
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"EditAddress"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"EditAddress"];
+}
 
 @end
 

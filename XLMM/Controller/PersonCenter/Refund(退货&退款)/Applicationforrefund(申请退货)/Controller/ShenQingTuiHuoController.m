@@ -61,7 +61,8 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHiden:) name:UIKeyboardWillHideNotification object:nil];
-    
+    [MobClick beginLogPageView:@"ShenQingTuiHuoController"];
+
 }
 
 
@@ -88,7 +89,8 @@
         self.changeStatusBlock(isChangeBtn);
     }
     
-    
+    [MobClick endLogPageView:@"ShenQingTuiHuoController"];
+
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification{
@@ -162,7 +164,7 @@
     
     //[self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
     
-    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path URLEncodedString]]];
+    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[self.dingdanModel.pic_path JMUrlEncodedString]]];
     self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;

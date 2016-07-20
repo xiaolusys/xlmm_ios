@@ -21,7 +21,6 @@
 #import "MJExtension.h"
 
 
-
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
     float allPrice;
     NewCartsModel *deleteModel;
@@ -55,7 +54,7 @@
     [self downloadData];
     [self downloadHistoryData];
     
-
+    [MobClick beginLogPageView:@"ShoppingCart"];
 }
 
 -(void)displayDefaultView{
@@ -87,6 +86,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"ShoppingCart"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -338,7 +338,7 @@
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
             cell.myImageView.layer.masksToBounds = YES;
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             cell.nameLabel.text = model.title;
@@ -373,7 +373,7 @@
 
             cell.headImageView.layer.cornerRadius = 5;
             cell.headImageView.layer.masksToBounds = YES;
-            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
             cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             
@@ -492,10 +492,6 @@
     if (section == 1) {
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 44)];
         headerView.backgroundColor = [UIColor backgroundlightGrayColor];
-        
-        
-        
-        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 160, 34)];
         label.textColor = [UIColor settingBackgroundColor];
         label.font = [UIFont systemFontOfSize:12];
@@ -719,7 +715,6 @@
     [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
     
-    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
 //    NSLog(@"url = %@", urlString);
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
@@ -759,7 +754,7 @@
 
 - (IBAction)purchaseClicked:(id)sender {
     NSLog(@"购买商品");
-    
+    [MobClick event:@"purchase"];
     
     PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
     
@@ -773,7 +768,7 @@
 #pragma mark ---- 重新购买按钮点击
 - (void)reBuyAddCarts:(NewCartsModel *)model{
     NSLog(@"%d", (int)model.ID);
- 
+    [MobClick event:@"buy_again_click"];
     
  
     
@@ -788,13 +783,19 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               //[self myAnimation];
-              [self downloadData];
-              [self downloadHistoryData];
-              if (self.dataArray.count >= 18) {
-                  NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
-                  
-                  [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
+              NSInteger codeNum = [responseObject[@"code"] integerValue];
+              if (codeNum == 0) {
+                  [self downloadData];
+                  [self downloadHistoryData];
+                  if (self.dataArray.count >= 18) {
+                      NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
+                      
+                      [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
+                  }
+              }else {
+                  [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
               }
+              
             
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {

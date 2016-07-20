@@ -52,13 +52,15 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    [MobClick beginLogPageView:@"YouHuiQuan"];
     
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"YouHuiQuan"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -191,7 +193,7 @@ static NSString *ksimpleHeadView = @"YHQHeadView";
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 8, 0);
-    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:flowLayout];
+    self.myCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 104) collectionViewLayout:flowLayout];
     self.myCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     self.myCollectionView.delegate = self;
     self.myCollectionView.dataSource = self;

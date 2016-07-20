@@ -78,7 +78,7 @@
     }
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -93,9 +93,7 @@
 
         if (!responseObject) return;
         
-        if (self.dataArray.count > 0) {
-            [self.dataArray removeAllObjects];
-        }
+        [self.dataArray removeAllObjects];
         
         [self refetch:responseObject];
         
@@ -109,12 +107,12 @@
 {
     if ([_urlStr class] == [NSNull class]) {
         [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
-        
         [self refetch:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
@@ -152,17 +150,17 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"JMFetureFansController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"JMFetureFansController"];
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

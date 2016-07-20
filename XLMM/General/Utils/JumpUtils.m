@@ -13,7 +13,6 @@
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "MMDetailsViewController.h"
-#import "XiangQingViewController.h"
 #import "HomeViewController.h"
 #import "XlmmMall.h"
 #import "ChildViewController.h"
@@ -21,6 +20,7 @@
 #import "ProductSelectionListViewController.h"
 #import "CartViewController.h"
 #import "WebViewController.h"
+#import "JMOrderDetailController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -92,9 +92,6 @@
     }
     
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
-        //跳转到shopping cart
-//        CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-//        [vc.navigationController pushViewController:cartVC animated:YES];
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
         
         if (login == NO) {
@@ -108,7 +105,10 @@
         }
 
     }
-
+    else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/brand"]){
+        //经过跟秀清讨论，直接跳转商品列表的需求还需要整理，暂时屏蔽
+        //[self jumpToBrand:target_url viewController:vc];
+    }
     else if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
         NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
@@ -148,11 +148,12 @@
         } else if ([firstparam isEqualToString:@"trade_id"]){
             //跳到订单详情
             NSLog(@"trade_id = %@", firstvalue);
-            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+            JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+//            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
             
             // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            xiangqingVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
-            [vc.navigationController pushViewController:xiangqingVC animated:YES];
+            orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
+            [vc.navigationController pushViewController:orderDetailVC animated:YES];
         } else if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
             NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
             
@@ -201,18 +202,26 @@
     }
     
 }
+
++(void) jumpToBrand:(NSString *)target_url viewController:(UIViewController *)vc{
+    if([target_url rangeOfString:@"?"].length > 0){
+        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+        NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+        
+        NSArray *params = [parameter componentsSeparatedByString:@"&"];
+        NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+        NSString *firstparam = [firstparams firstObject];
+        NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+        NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+        if ([firstparam isEqualToString:@"activity_id"]) {
+            MMCollectionController *brandVC = [[MMCollectionController alloc] init];
+            brandVC.activityId = firstvalue;
+            [vc.navigationController pushViewController:brandVC animated:YES];
+            
+        }
+    }
+
+}
+
 @end
-/**
- *  if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
- if (login == NO) {
- JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
- 
- [vc.navigationController pushViewController:enterVC animated:YES];
- return;
- }else {
- CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
- 
- [vc.navigationController pushViewController:cartVC animated:YES];
- }
- }else
- */
+

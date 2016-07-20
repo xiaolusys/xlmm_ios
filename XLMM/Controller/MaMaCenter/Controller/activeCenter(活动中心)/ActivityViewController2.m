@@ -8,6 +8,7 @@
 
 #import "ActivityViewController2.h"
 #import "UIViewController+NavigationBar.h"
+#import "MMClass.h"
 
 
 @interface ActivityViewController2 ()
@@ -19,12 +20,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"ActivityViewController2"];
     
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"ActivityViewController2"];
 }
 
 - (void)viewDidLoad {

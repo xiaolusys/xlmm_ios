@@ -31,12 +31,15 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"JiFen"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"Jifen"];
 }
+
 
 - (void)viewDidLoad {
     

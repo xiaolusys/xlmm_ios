@@ -17,6 +17,7 @@
 #import "SVProgressHUD.h"
 #import "JMMaMaOrderListCell.h"
 #import "Masonry.h"
+#import "MJExtension.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -27,7 +28,10 @@
 @property (nonatomic, strong)NSString *nextPage;
 
 @property (nonatomic,strong) UIButton *topButton;
-
+//下拉的标志
+@property (nonatomic) BOOL isPullDown;
+//上拉的标志
+@property (nonatomic) BOOL isLoadMore;
 @end
 
 @implementation MaMaOrderListViewController
@@ -48,13 +52,17 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"MaMaOrderListViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"MaMaOrderListViewController"];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,12 +74,38 @@
     
     [self createTableView];
     [self createButton];
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
 }
 
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+#pragma mrak 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _isPullDown = YES;
+        [weakSelf loadDate];
+    }];
+}
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
@@ -103,35 +137,14 @@
     
     self.tableView.tableHeaderView = headerV;
 //    self.tableView.estimatedRowHeight = 80;
-    
-    //添加上拉加载
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if([self.nextPage class] == [NSNull class]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return ;
-        }
-        [self loadMore];
-    }];
-    
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadNew];
-    }];
-    
-    [self loadDate];
-    
-    
-    
+
 }
-
-
-
 #pragma mark ---数据处理
 - (void)dataAnalysis:(NSDictionary *)data {
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     for (NSDictionary *order in results) {
-        MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
-        [orderM setValuesForKeysWithDictionary:order];
+        MaMaOrderModel *orderM = [MaMaOrderModel mj_objectWithKeyValues:order];
         NSString *date = [self dateDeal:orderM.date_field];
         self.dataArr = [[self.dataDic allKeys] mutableCopy];
         //判断对应键值的数组是否存在
@@ -146,7 +159,6 @@
     }
     self.dataArr = [[self.dataDic allKeys] mutableCopy];
     self.dataArr = [self sortAllKeyArray:self.dataArr];
-    [self.tableView reloadData];
 }
 
 //将日期去掉－
@@ -179,39 +191,37 @@
 }
 #pragma mark -- 请求数据
 - (void)loadDate {
-    //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
-    
-//    [SVProgressHUD showWithStatus:@"正在加载..."];
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
         if (!responseObject)return;
+        [self.dataArr removeAllObjects];
+        [self.dataDic removeAllObjects];
         [self dataAnalysis:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:   %@", error);
+        [self endRefresh];
     }];
 
 }
 //加载更多
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self endRefresh];
     }];
-}
-- (void)loadNew {
-    [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
-    if (self.nextPage == nil || [self.nextPage class] == [NSNull class]) {
-        [self.tableView.mj_header endRefreshing];
-        
-        return ;
-    }
-    [self loadDate];
 }
 
 #pragma mark ---UItableView的代理

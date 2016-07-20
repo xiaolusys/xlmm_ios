@@ -121,6 +121,11 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 //加载更多
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.tableView.mj_footer endRefreshing];

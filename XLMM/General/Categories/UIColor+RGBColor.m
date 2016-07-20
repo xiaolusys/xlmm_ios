@@ -61,7 +61,10 @@
 + (UIColor *)wechatBackColor {
     return [UIColor colorWithR:68 G:173 B:53 alpha:1];
 }
-
+// 红色
++ (UIColor *)couponValueColor {
+    return [UIColor colorWithR:197 G:79 B:79 alpha:1];
+}
 + (UIColor *)randomColor{
     return [UIColor colorWithR:arc4random()%256 G:arc4random()%256 B:arc4random()%256 alpha:1];
 }
@@ -121,7 +124,7 @@
 }
 
 + (UIColor *)countLabelColor{
-    return [UIColor colorWithR:187 G:187 B:187 alpha:1];
+    return [UIColor colorWithR:246 G:246 B:246 alpha:1];
 }
 
 + (UIColor *)buttonTitleColor{

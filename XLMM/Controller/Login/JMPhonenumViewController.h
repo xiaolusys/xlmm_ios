@@ -8,16 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class JMEditAddressModel;
-
-@protocol JMPhonenumViewControllerDelegate <NSObject>
-
-- (void)updateEditerWithmodel:(JMEditAddressModel *)model;
-
-@end
-
 @interface JMPhonenumViewController : UIViewController
 
-@property (nonatomic,weak) id<JMPhonenumViewControllerDelegate>delegate;
 
 @end

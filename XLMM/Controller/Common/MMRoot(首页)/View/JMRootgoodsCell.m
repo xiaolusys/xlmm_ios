@@ -43,6 +43,7 @@
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
     self.titleLabel.font = [UIFont systemFontOfSize:12.];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     
     UILabel *PriceLabel = [UILabel new];
     [self.contentView addSubview:PriceLabel];
@@ -96,6 +97,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImage.mas_bottom).offset(10);
         make.centerX.equalTo(weakSelf.contentView.mas_centerX);
+        make.width.mas_equalTo(imageW);
     }];
     
     [self.curreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,7 +150,7 @@
     NSLog(@"newString = %@", [newString imageCompression]);
     
     self.iconImage.alpha = 0.0;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
@@ -194,11 +196,11 @@
     }
     
     
-    //NSLog(@"newImageLink = %@", [newImageUrl imageCompression]);
+//    NSLog(@"name = %@ %@ %@ %@", model.name, model.isSaleopen, model.isSaleout , model.productModel);
     
     
     self.iconImage.alpha = 0.3;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
         }];
@@ -217,26 +219,16 @@
     self.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {
-        if (model.productModel == nil) {
-            if ([model.isSaleout boolValue]) {
-                
-                self.backView.hidden = NO;
-                
-            } else {
-                self.backView.hidden = YES;
-            }
-            
-        } else {
-            if ([model.isSaleout boolValue] && [[model.productModel objectForKey:@"is_single_spec"] boolValue]) {
-                
-                self.backView.hidden = NO;
-                
-            } else {
-                self.backView.hidden = YES;
-            }
+
+        if ([model.isSaleout boolValue]) {
+            self.backView.hidden = NO;
+        }
+        else {
+            self.backView.hidden = YES;
         }
         
-    } else {
+    }
+    else {
         self.backView.hidden = NO;
         //NSLog(@"isnew %d", [model.isNewgood boolValue]);
         if([model.isNewgood boolValue]){

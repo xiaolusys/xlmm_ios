@@ -44,7 +44,9 @@
 @end
 
 static NSString *cellIdentifier = @"carryLogCell";
-@implementation MaClassifyCarryLogViewController
+@implementation MaClassifyCarryLogViewController {
+    NSString *_nextPage;
+}
 
 -(NSMutableArray *)tableViewArr {
     if (!_tableViewArr) {
@@ -95,12 +97,14 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"MaClassifyCarryLogViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"MaClassifyCarryLogViewController"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -215,6 +219,7 @@ static NSString *cellIdentifier = @"carryLogCell";
             NSString *nextStr = [self.nextdic objectForKey:number];
             if([nextStr class] == [NSNull class]) {
                 [table.mj_footer endRefreshingWithNoMoreData];
+                [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
                 return;
             }
             [self loadMore];
@@ -267,6 +272,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 }
 
 - (void)loadMore {
+    
     NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
     NSString *url = [self.nextdic objectForKey:number];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

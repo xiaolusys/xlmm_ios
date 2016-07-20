@@ -21,6 +21,8 @@
 #import "Masonry.h"
 #import "DingdanModel.h"
 #import "MJExtension.h"
+#import "JMAllOrderModel.h"
+#import "JMOrderDetailController.h"
 
 #define kSimpleCellIdentifier @"simpleCell"
 
@@ -44,20 +46,20 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = NO;
     [self downlaodData];
-
-  
+    [MobClick beginLogPageView:@"PersonWatiPayOrder"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"PersonWaitPayOrder"];
 }
+
 
 //待支付界面 。。。。
 
@@ -82,6 +84,7 @@
     footer.hidden = YES;
     
     self.collectionView.mj_footer = footer;
+ 
     
 }
 
@@ -93,7 +96,7 @@
         NSLog(@"no more");
 
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
-
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     
@@ -244,7 +247,7 @@
         
         NSDictionary *details = [orderArray objectAtIndex:0];
         
-        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+        [cell.orderImageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
         cell.orderImageView.contentMode = UIViewContentModeScaleAspectFill;
         
         cell.nameLabel.text = [details objectForKey:@"title"];
@@ -287,7 +290,7 @@
             NSDictionary *details = [orderArray objectAtIndex:i - 1101];
             UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:i];
           //  NSLog(@"imageView = %@", imageView);
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] URLEncodedString]]];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[details objectForKey:@"pic_path"] JMUrlEncodedString]]];
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 5;
             imageView.layer.masksToBounds = YES;
@@ -327,26 +330,34 @@
 #pragma mark ---- 待支付订单跳转
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
   //  NSLog(@"%ld : %ld", (long)indexPath.section, (long)indexPath.row);
-    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+//    XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
     NSDictionary *dic = [self.dataArray objectAtIndex:indexPath.row];
-    NSString *ID = [dic objectForKey:@"id"];
-   // NSLog(@"id = %@", ID);
-    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
-    xiangqingVC.dingdanModel = dingdanModel;
-    xiangqingVC.goodsArr = dic[@"orders"];
-    //      http://m.xiaolu.so/rest/v1/trades/86412/details    //@"%@/rest/v2/trades/%@"
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
-  //  NSLog(@"urlString = %@", urlString);
-    xiangqingVC.urlString = urlString;
-    xiangqingVC.createString = createdString;
-    [self.navigationController pushViewController:xiangqingVC animated:YES];
+//    NSString *ID = [dic objectForKey:@"id"];
+//   // NSLog(@"id = %@", ID);
+//    DingdanModel *dingdanModel = [DingdanModel mj_objectWithKeyValues:dic];
+//    xiangqingVC.dingdanModel = dingdanModel;
+//    xiangqingVC.goodsArr = dic[@"orders"];
+//    //      http://m.xiaolu.so/rest/v1/trades/86412/details    //@"%@/rest/v2/trades/%@"
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, ID];
+//  //  NSLog(@"urlString = %@", urlString);
+//    xiangqingVC.urlString = urlString;
+//    xiangqingVC.createString = createdString;
+//    [self.navigationController pushViewController:xiangqingVC animated:YES];
+
+    JMAllOrderModel *orderModel = [JMAllOrderModel mj_objectWithKeyValues:dic];
+    
+    JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+    
+    orderDetailVC.allOrderModel = orderModel;
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, orderModel.goodsID];
+    [self.navigationController pushViewController:orderDetailVC animated:YES];
+    
 }
 
 //设计倒计时方法。。。。
 - (void)timerFireMethod:(NSTimer*)thetimer
 {
     NSArray  *array = thetimer.userInfo;
-    
    // NSLog(@"array = %@", array);
     for (int i = 0; i<array.count; i++) {
         
@@ -382,12 +393,11 @@
         NSCalendarUnitMinute |
         NSCalendarUnitSecond;
           NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:endDate options:0];
-
+        
         shengyushijian = [NSString stringWithFormat:@"剩余时间%02ld:%02ld", (long)[d minute], (long)[d second]];
      //   NSLog(@"shengyu shijian = %@" , shengyushijian);
         if ([d minute] < 0 || [d second] < 0) {
             shengyushijian = @"剩余时间00:00";
-            
         }
 #pragma mark 设置倒计时
         UILabel *label = (UILabel *)[self.labelArray objectAtIndex:i];

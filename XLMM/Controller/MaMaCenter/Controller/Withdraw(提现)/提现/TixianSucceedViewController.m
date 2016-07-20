@@ -104,7 +104,7 @@
     [self.headView addSubview:promptLabel];
     self.promptLabel = promptLabel;
     self.promptLabel.font = [UIFont systemFontOfSize:12.];
-    self.promptLabel.text = @"提现金额已冻结，24小时之内到账";
+    self.promptLabel.text = @"提现成功，24小时之内到账";
     self.promptLabel.textAlignment = NSTextAlignmentCenter;
 
     
@@ -113,11 +113,17 @@
     self.bottomView = bottomView;
     bottomView.backgroundColor = [UIColor lineGrayColor];
     
-    UILabel *activeLabel = [[UILabel alloc] init];
-    [self.bottomView addSubview:activeLabel];
-    self.activeLabel = activeLabel;
-    self.activeLabel.textAlignment = NSTextAlignmentCenter;
-    self.activeLabel.font = [UIFont systemFontOfSize:12.];
+    if (self.isActiveValue) {
+        UILabel *activeLabel = [[UILabel alloc] init];
+        [self.bottomView addSubview:activeLabel];
+        self.activeLabel = activeLabel;
+        self.activeLabel.textAlignment = NSTextAlignmentCenter;
+        self.activeLabel.font = [UIFont systemFontOfSize:12.];
+        
+    }else {
+        
+    }
+    
     
     
     
@@ -169,14 +175,17 @@
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
     }];
     
-    [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).offset(21/2);
-        make.centerX.equalTo(self.bottomView.mas_centerX);
-        make.width.mas_offset(SCREENWIDTH);
-    }];
+    if (self.isActiveValue) {
+        [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.bottomView.mas_top).offset(21/2);
+            make.centerX.equalTo(self.bottomView.mas_centerX);
+            make.width.mas_offset(SCREENWIDTH);
+        }];
+    }
+
     
     [self.completeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(35);
+        make.top.equalTo(self.bottomView).offset(55);
         make.left.equalTo(self.bottomView.mas_left).offset(15);
         make.width.mas_offset(SCREENWIDTH - 30);
         make.height.mas_offset(40);
@@ -213,9 +222,14 @@
 
     JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
     
-    billDetail.withdrawMoney = _surplusMoney;
+    billDetail.withdrawMoney = _surplusMoney; // 剩余金额
     
-    billDetail.activeValue = _activeValueNum;
+    billDetail.activeValue = _activeValueNum; // 剩余活跃值
+    
+    billDetail.withDrawF = self.tixianjine;
+    
+    billDetail.isActiveValue = self.isActiveValue;
+    
     
     [self.navigationController pushViewController:billDetail animated:YES];
     

@@ -28,12 +28,16 @@
 #import "CommonWebViewViewController.h"
 #import "JMComplaintSuggestController.h"
 #import "JMReturnedGoodsController.h"
+#import "JMRefundBaseController.h"
+#import "JMCouponController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
 @end
 
-@implementation NewLeftViewController
+@implementation NewLeftViewController {
+    NSDictionary *_persinCenterDict;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -62,6 +66,7 @@
 
 - (void)updateUserInfo:(NSDictionary *)dic {
     NSLog(@"dic = %@", dic);
+    _persinCenterDict = dic;
     NSString *nickName = [dic objectForKey:@"nick"];
     [self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"thumbnail"]]];
     
@@ -255,10 +260,11 @@
 - (IBAction)youhuquanClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = NO;
+        JMCouponController *couponVC = [[JMCouponController alloc] init];
+//        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+//        youhuiVC.isSelectedYHQ = NO;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:youhuiVC];
+            [self.pushVCDelegate rootVCPushOtherVC:couponVC];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{
@@ -350,9 +356,12 @@
 - (IBAction)tuihuoClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        
+        JMRefundBaseController *refundVC = [[JMRefundBaseController alloc] init];
+        
+//        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:tuihuoVC];
+            [self.pushVCDelegate rootVCPushOtherVC:refundVC];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{
@@ -437,6 +446,7 @@
 //        Account1ViewController *account = [[Account1ViewController alloc] initWithNibName:@"Account1ViewController" bundle:nil];
         Account1ViewController *account = [[Account1ViewController alloc] init];
         account.accountMoney = self.accountMoney;
+        account.personCenterDict = _persinCenterDict;
         
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:account];

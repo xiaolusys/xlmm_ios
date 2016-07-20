@@ -14,7 +14,7 @@
 
 - (void)composeBackPageup:(JMMaMaCenterTopView *)backPageup Index:(NSInteger)index;
 
-- (void)composeTapBackPageup:(JMMaMaCenterTopView *)backPageup Tap:(UITapGestureRecognizer *)tap;
+- (void)composeTapBackPageup:(JMMaMaCenterTopView *)backPageup Index:(NSInteger)index;
 
 @end
 

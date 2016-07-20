@@ -81,7 +81,7 @@
                             <constraint firstAttribute="height" constant="28" id="ppp-4y-k1w"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <state key="normal" title="重新购买">
+                        <state key="normal" title="加入购物车">
                             <color key="titleColor" red="0.96078431372549022" green="0.69411764705882351" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                         <connections>

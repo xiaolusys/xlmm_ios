@@ -16,7 +16,7 @@
 #import "RegisterViewController.h"
 #import "NSString+Encrypto.h"
 #import "MiPushSDK.h"
-#import "MobClick.h"
+//#import "MobClick.h"
 #import "AFNetworking.h"
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
@@ -74,10 +74,10 @@
     
     if ([WXApi isWXAppInstalled]) {
         self.wechatBtn.enabled = YES;
-        //        self.wechatBtn.hidden = NO;
+        self.wechatBtn.hidden = NO;
     }else {
+        self.wechatBtn.hidden = YES;
         self.wechatBtn.enabled = NO;
-        //        self.wechatBtn.hidden = YES;
     }
     
 }
@@ -178,7 +178,13 @@
     }
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
-    
+    [MobClick beginLogPageView:@"JMLogInViewController"];
+
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"JMLogInViewController"];
 }
 
 #pragma mark --- 监听微信登录的通知
@@ -313,7 +319,7 @@
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
     [SVProgressHUD dismiss];
-    [MobClick profileSignInWithPUID:@"playerID"];
+//    [MobClick profileSignInWithPUID:@"playerID"];
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
@@ -424,6 +430,7 @@
     
     [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.lineView.mas_bottom);
+        make.left.equalTo(weakSelf.bottomView);
         make.width.mas_equalTo(SCREENWIDTH);
         //        make.bottom.equalTo(weakSelf.view.mas_bottom);
         make.height.mas_equalTo(@40);

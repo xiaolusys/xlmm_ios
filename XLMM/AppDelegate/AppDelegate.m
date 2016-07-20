@@ -15,7 +15,7 @@
 #import "Reachability.h"
 #import "NewLeftViewController.h"
 #import "MMDetailsViewController.h"
-#import "MobClick.h"
+#import "UMMobClick/MobClick.h"
 #import "SVProgressHUD.h"
 #import "ActivityView.h"
 #import "HomeViewController.h"
@@ -51,7 +51,7 @@
 /**
  *  判断是否为支付页面跳转过来的
  */
-@property (nonatomic,assign) BOOL isApinPayGo;
+//@property (nonatomic,assign) BOOL isApinPayGo;
 
 @end
 
@@ -153,14 +153,14 @@
     
     NSLog(@"%d", self.isLaunchedByNotification);
     
-    //    [MobClick setLogEnabled:YES];
+    //[MobClick setLogEnabled:YES];
     //version标识
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [MobClick setAppVersion:version];
-    //填写AppKey，设置发送策略和填写渠道
-    [MobClick startWithAppkey:@"5665541ee0f55aedfc0034f4" reportPolicy:BATCH channelId:nil];
     
-    
+    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
+    UMConfigInstance.channelId = @"App Store";
+    [MobClick startWithConfigure:UMConfigInstance];
     
     //    Class cls = NSClassFromString(@"UMANUtil");
     //    SEL deviceIDSelector = @selector(openUDIDString);
@@ -191,19 +191,13 @@
     
     //创建导航控制器，添加根视图控制器
     MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
-    //    MMRootViewController *root = [[MMRootViewController alloc] init];
-    //    HomeViewController *home = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     
-    //    LeftMenuViewController *leftMenu = [[LeftMenuViewController alloc] initWithNibName:@"LeftMenuViewController" bundle:nil];
-    //    // 设置代理
-    //
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    //    leftMenu.push
     
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    // menuVC.backgroundImage = [UIImage imageNamed:@"backImage.jpg"];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;
@@ -395,6 +389,7 @@
         [manager POST:urlString parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   //  NSError *error;
+                  if (!responseObject) return ;
                   NSLog(@"JSON: %@", responseObject);
                   NSString *user_account = [responseObject objectForKey:@"user_account"];
                   
@@ -667,10 +662,10 @@
     /**
      *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
      */
-    if (self.isApinPayGo) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"isApinPayGo" object:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"isShareApinPayGo" object:nil];
-    }
+//    if (self.isApinPayGo) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"isApinPayGo" object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"isShareApinPayGo" object:nil];
+//    }
     
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");
@@ -680,7 +675,8 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    application.applicationIconBadgeNumber = 0;
+
     NSLog(@"applicationDidBecomeActive");
     [self updateLoginState];
     
@@ -704,6 +700,8 @@
         UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alterView show];
     }
+    
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -728,8 +726,7 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-    self.isApinPayGo = YES;
-    
+
     [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
                
@@ -797,8 +794,29 @@
     NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
 }
-
-
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
+    self.backgroundSessionCompletionHandler = completionHandler;
+    [self presentNotification];
+}
+-(void)presentNotification {
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = @"下载完成!";
+    localNotification.alertAction = @"后台传输下载已完成!";
+    //提示音
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    //icon提示加1
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+}
+/**
+ *  接收到内存警告时候调用
+ */
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    // 停止所有的下载
+    [[SDWebImageManager sharedManager] cancelAll];
+    // 删除缓存
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
+}
 
 #pragma mark -
 #pragma mark RESideMenu Delegate

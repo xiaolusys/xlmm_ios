@@ -87,14 +87,23 @@ static NSString * ksimpleCell = @"simpleCell";
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    
-    
+    if(self.childClothing){
+        [MobClick beginLogPageView:@"child"];
+    }
+    else{
+        [MobClick beginLogPageView:@"women"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-
+    if(self.childClothing){
+        [MobClick endLogPageView:@"child"];
+    }
+    else{
+        [MobClick endLogPageView:@"women"];
+    }
 }
 
 
@@ -129,6 +138,7 @@ static NSString * ksimpleCell = @"simpleCell";
     if([nextUrl class] == [NSNull class]
        || [nextUrl isEqualToString:@""] ) {
         [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
 

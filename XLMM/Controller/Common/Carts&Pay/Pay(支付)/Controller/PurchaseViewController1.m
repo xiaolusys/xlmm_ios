@@ -36,6 +36,8 @@
 #import "JMPopLogistcsModel.h"
 #import "JMPayShareController.h"
 #import "JMShareModel.h"
+#import "PersonCenterViewController1.h"
+
 
 //购物车支付界面
 @interface PurchaseViewController1 ()<JMChoiseLogisControllerDelegate,YouhuiquanDelegate, UIAlertViewDelegate,JMShareViewDelegate,JMOrderPayViewDelegate,PurchaseAddressDelegate>{
@@ -146,7 +148,10 @@
  *  判断小鹿钱包是否足够支付->如果不足则调用微信或者支付宝，传payment。否则传budget。
  */
 @property (nonatomic,assign) BOOL isXLWforAlipay;
-
+/**
+ *  判断优惠券是否能够直接支付订单
+ */
+@property (nonatomic, assign) BOOL isCouponEnoughPay;
 @end
 
 
@@ -438,7 +443,7 @@
         cartOwner.priceLabel.text = [NSString stringWithFormat:@"￥%.2f", [model.price floatValue]];
      
        // cartOwner.myImageView.image = [UIImage imagewithURLString:[model.imageURL URLEncodedString]];
-        [cartOwner.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL URLEncodedString]]];
+        [cartOwner.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.imageURL JMUrlEncodedString]]];
         cartOwner.myImageView.contentMode = UIViewContentModeScaleAspectFill;
         cartOwner.myImageView.layer.masksToBounds = YES;
         cartOwner.myImageView.layer.cornerRadius = 5;
@@ -554,6 +559,7 @@
         couponValue = 0;
         [self calculationLabelValue];
     } else {
+        self.isUserCoupon = YES;
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,_paramstring,model.ID];
         
@@ -563,25 +569,23 @@
             if (self.couponMessage.length == 0) {
                 //goodsModel.coupon_message 为空的时候表示优惠券可以使用
                 //            self.couponLabel.text = model.coupon_value; // ---- > 优惠额金额
-
-                self.isUserCoupon = YES;
+                self.isEnoughCoupon = YES;
                 self.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
                 self.couponLabel.textColor = [UIColor buttonEmptyBorderColor];
                 self.couponLabel.hidden = NO;
                 yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
                 [self calculationLabelValue];
-                
             }else {
                 //优惠券不满足条件  提示警告信息
                 [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
                 self.couponLabel.text = @"";
-                self.isUserCoupon = NO;
+                self.isEnoughCoupon = NO;
                 couponValue = 0;
                 [self calculationLabelValue];
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+            self.isEnoughCoupon = NO;
             [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
             
         }];
@@ -609,6 +613,8 @@
     [JMPopView hide];
 }
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
+    [MobClick event:@"logistics_choose"];
+    
     self.choiseLabel.text = model.name;
     _logisticsDic = [NSMutableDictionary dictionary];
     _logisticsDic = model.mj_keyValues;
@@ -679,7 +685,13 @@
         }
         
     }else {
-        [self createPayPopView];
+        if (self.isCouponEnoughPay) {
+            [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+            [self payMoney];
+        }else {
+            [self createPayPopView];
+        }
+        
     }
 }
 #pragma mark -- 支付
@@ -706,7 +718,7 @@
     
     //    [NSString stringWithFormat:@"pid:%@:value:%@",self.xlWallet[@"pid"],self.xlWallet[@"value"]];
     //是否使用了优惠券
-    if (self.isUserCoupon && self.isEnoughCoupon) {
+    if (self.isUserCoupon && self.isEnoughCoupon && self.isCouponEnoughPay) {
         //足够
         totalPayment = 0.00;
         discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
@@ -717,7 +729,7 @@
         //提交
         [self submitBuyGoods];
     }else {
-        if (self.isUserCoupon) {
+        if (self.isUserCoupon && self.isEnoughCoupon) {
             //使用不足
             parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  [self.couponInfo objectForKey:@"pid"], yhqModel.ID, couponValue];
             discountfee = discountfee + couponValue;//[yhqModel.coupon_value floatValue];
@@ -815,6 +827,8 @@
 
 - (void)submitBuyGoods {
     
+    [MobClick event:@"commit_buy"];
+    
     NSMutableString *dicStr = [NSMutableString stringWithFormat:@"%@",dict];
     [dicStr appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsDic[@"id"]],nil];
     
@@ -847,6 +861,8 @@
     NSLog(@"submitBuyGoods %@", dic);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:postPay parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return ;
+        [SVProgressHUD dismiss];
         NSDictionary *dic = responseObject;
         NSLog(@"shoppingcart_create succ,Return %ld", [[dic objectForKey:@"code"] integerValue]);
         
@@ -855,6 +871,9 @@
         
         if ([[dic objectForKey:@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)[[dic objectForKey:@"code"] integerValue]]};
+                [MobClick event:@"buy_fail" attributes:temp_dict];
+                
                 [SVProgressHUD dismiss];
                 NSString *errorStr = dic[@"info"];
                 NSString *messageStr = [NSString stringWithFormat:@"%@,请在购物车重新选择提交.",errorStr];
@@ -866,6 +885,8 @@
         }
         if ([[dic objectForKey:@"channel"] isEqualToString:@"budget"] && [[dic objectForKey:@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [MobClick event:@"buy_succ"];
+                
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [self pushShareVC];
             });
@@ -883,16 +904,21 @@
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [MobClick event:@"buy_succ"];
                         [self pushShareVC];
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
-                            [self.navigationController popViewControllerAnimated:YES];
+                            [MobClick event:@"buy_cancel"];
+                            [self popview];
                         } else {
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+                            [MobClick event:@"buy_fail" attributes:temp_dict];
                             NSLog(@"%@",error);
+                            [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
                         }
-                        [self performSelector:@selector(returnCart) withObject:nil afterDelay:1.0];
+                        
                     }
                     
                 }];
@@ -967,7 +993,7 @@
 - (void)calculationLabelValue {
     discount = couponValue + rightAmount;
     if (discount - amontPayment > 0.000001) {
-        
+        self.isCouponEnoughPay = YES;
         discount = amontPayment;
         //合计
         self.totalFeeLabel.text = [NSString stringWithFormat:@"合计¥%.2f", 0.00];
@@ -978,7 +1004,9 @@
         self.goodsPayment.text = self.allPayLabel.text;
         //小鹿钱包
         self.availableLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
+        
     }else {
+        self.isCouponEnoughPay = NO;
         if (self.isUseXLW) {
             CGFloat surplus = amontPayment - couponValue - rightAmount;
             if (canUseWallet - surplus > 0.000001 || (fabs(canUseWallet - surplus) < 0.000001 || fabs(surplus - couponValue) < 0.000001)) {
@@ -1187,7 +1215,7 @@
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isApinPayGo) name:@"isApinPayGo" object:nil];
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1203,6 +1231,8 @@
     else{
         self.isInstallWX = NO;
     }
+    
+    [MobClick beginLogPageView:@"purchase"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     UIApplication *app = [UIApplication sharedApplication];
@@ -1210,17 +1240,10 @@
                                                     name:UIApplicationWillEnterForegroundNotification
                                                   object:app];
     
-}
-- (void)isApinPayGo {
+    [MobClick endLogPageView:@"purchase"];
     
-    NSInteger count = 0;
-    count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-    }else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
+
 
 - (void)purchaseViewWillEnterForeground:(NSNotification *)notification
 {
@@ -1231,6 +1254,8 @@
 
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
+    [MobClick event:@"buy_succ"];
+    
     [self pushShareVC];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
@@ -1253,7 +1278,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)popview{
-    [self.navigationController popViewControllerAnimated:YES];
+    [MobClick event:@"buy_cancel"];
+    
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
 }
 
 

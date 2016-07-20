@@ -45,12 +45,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"MaMaHuoyueduViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"MaMaHuoyueduViewController"];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,6 +114,11 @@
 
 //加载更多
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.tableView.mj_footer endRefreshing];

@@ -8,6 +8,8 @@
 
 #import "AddressPickerView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "JMHelper.h"
+#import "JMDBManager.h"
 
 #define kDuration 0.3
 
@@ -21,16 +23,6 @@
 
 @implementation AddressPickerView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
-
-
 - (id)initWithdelegate:(id <AddressPickerDelegate>)delegate{
     self = [super initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 216)];
     if (self) {
@@ -42,35 +34,104 @@
         self.delegate = delegate;
         self.addressPicker.delegate = self;
         self.addressPicker.dataSource = self;
-        provinceArray = [[NSMutableArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
-        cityArray = [[provinceArray objectAtIndex:0] objectForKey:@"cities"];
-        NSLog(@"province = %u", (unsigned int)provinceArray.count);
-        NSLog(@"city = %u", (unsigned int)cityArray.count);
+
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        NSString *downloadURLString = [defaults stringForKey:@"download_url"];
         
-        _address.provinceName = [[provinceArray objectAtIndex:0] objectForKey:@"state"];
+//        NSString *path = [JMHelper getFullPathWithFile:downloadURLString];
         
-        NSLog(@"%@", [[provinceArray objectAtIndex:0] objectForKey:@"state"]);
-
-        NSLog(@"%@", self.address.provinceName);
-
+//        NSArray *arr = [[JMDBManager sharedManager] readModels];
         
+        
+//        NSData *data = [NSData dataWithContentsOfFile:downloadURLString];
+//        
+//        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+//        [self createAddress1];
+        [self createAddress2];
 
-        self.address.cityName = [[cityArray objectAtIndex:0] objectForKey:@"city"];
-        NSLog(@"%@", [[cityArray objectAtIndex:0] objectForKey:@"city"]);
-
-        NSLog(@"%@", _address.cityName);
-
-        countyArray = [[cityArray objectAtIndex:0] objectForKey:@"areas"];
-        if (countyArray.count > 0) {
-            self.address.countyName = [countyArray objectAtIndex:0];
-        } else{
-            self.address.countyName = @"";
-        }
         
     }
     return self;
 
     
+}
+- (void)createAddress2 {
+//    NSString *addressPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSData *data = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/addressInfo.json",addressPath]];
+//    NSString *addressPath = [JMHelper getFullPathWithFile];
+//    NSData *data = [NSData dataWithContentsOfFile:addressPath];
+    
+    
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *addressPath = [docPath stringByAppendingPathComponent:@"addressInfo.json"];
+    
+    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:addressPath];
+    if (isExist == YES) {
+        NSData *data = [NSData dataWithContentsOfFile:addressPath];
+        provinceArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    }else {
+        NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"areasAddress" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:jsonPath];
+        provinceArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//        provinceArray = [[NSMutableArray alloc] initWithContentsOfFile:jsonPath];
+    }
+
+    cityArray = [[provinceArray objectAtIndex:0] objectForKey:@"childs"];
+    NSLog(@"province = %u", (unsigned int)provinceArray.count);
+    NSLog(@"city = %u", (unsigned int)cityArray.count);
+    
+    _address.provinceName = [[provinceArray objectAtIndex:0] objectForKey:@"name"];
+    
+//    NSLog(@"%@", [[provinceArray objectAtIndex:0] objectForKey:@"state"]);
+    
+    NSLog(@"%@", self.address.provinceName);
+    
+    
+    
+    self.address.cityName = [[cityArray objectAtIndex:0] objectForKey:@"name"];
+//    NSLog(@"%@", [[cityArray objectAtIndex:0] objectForKey:@"city"]);
+    
+    NSLog(@"%@", _address.cityName);
+    
+    countyArray = [[cityArray objectAtIndex:0] objectForKey:@"childs"];
+    if (countyArray.count > 0) {
+        self.address.countyName = [[countyArray objectAtIndex:0] objectForKey:@"name"];
+    } else{
+        self.address.countyName = @"";
+    }
+
+    
+}
+- (void)createAddress1 {
+    
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"area" ofType:@"plist"];
+    provinceArray = [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
+
+    cityArray = [[provinceArray objectAtIndex:0] objectForKey:@"cities"];
+    NSLog(@"province = %u", (unsigned int)provinceArray.count);
+    NSLog(@"city = %u", (unsigned int)cityArray.count);
+    
+    _address.provinceName = [[provinceArray objectAtIndex:0] objectForKey:@"state"];
+    
+    NSLog(@"%@", [[provinceArray objectAtIndex:0] objectForKey:@"state"]);
+    
+    NSLog(@"%@", self.address.provinceName);
+    
+    
+    
+    self.address.cityName = [[cityArray objectAtIndex:0] objectForKey:@"city"];
+    NSLog(@"%@", [[cityArray objectAtIndex:0] objectForKey:@"city"]);
+    
+    NSLog(@"%@", _address.cityName);
+    
+    countyArray = [[cityArray objectAtIndex:0] objectForKey:@"areas"];
+    if (countyArray.count > 0) {
+        self.address.countyName = [countyArray objectAtIndex:0];
+    } else{
+        self.address.countyName = @"";
+    }
+
 }
 
 #pragma mark --PickerViewDelegate--
@@ -99,14 +160,14 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     switch (component) {
         case 0:
-            return [[provinceArray objectAtIndex:row] objectForKey:@"state"];
+            return [[provinceArray objectAtIndex:row] objectForKey:@"name"];
             break;
         case 1:
-            return [[cityArray objectAtIndex:row] objectForKey:@"city"];
+            return [[cityArray objectAtIndex:row] objectForKey:@"name"];
             break;
         case 2:
             if ([countyArray count] > 0) {
-                return [countyArray objectAtIndex:row];
+                return [[countyArray objectAtIndex:row] objectForKey:@"name"];
                 break;
             }
         default:
@@ -119,18 +180,23 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     switch (component) {
         case 0:
-            cityArray = [[provinceArray objectAtIndex:row] objectForKey:@"cities"];
+            cityArray = [[provinceArray objectAtIndex:row] objectForKey:@"childs"];
             [self.addressPicker selectRow:0 inComponent:1 animated:YES];
             [self.addressPicker reloadComponent:1];
             
-            countyArray = [[cityArray objectAtIndex:0] objectForKey:@"areas"];
+            countyArray = [[cityArray objectAtIndex:0] objectForKey:@"childs"];
             [self.addressPicker selectRow:0 inComponent:2 animated:YES];
             [self.addressPicker reloadComponent:2];
             
-            self.address.provinceName = [[provinceArray objectAtIndex:row] objectForKey:@"state"];
-            self.address.cityName = [[cityArray objectAtIndex:0] objectForKey:@"city"];
+            self.address.provinceName = [[provinceArray objectAtIndex:row] objectForKey:@"name"];
+            if (cityArray.count > 0) {
+                self.address.cityName = [[cityArray objectAtIndex:0] objectForKey:@"name"];
+            }else {
+                self.address.cityName = @"";
+            }
+            
             if ([countyArray count] > 0) {
-                self.address.countyName = [countyArray objectAtIndex:0];
+                self.address.countyName = [[countyArray objectAtIndex:0] objectForKey:@"name"];
             } else{
                 self.address.countyName = @"";
             }
@@ -138,20 +204,20 @@
 
             break;
         case 1:
-            countyArray = [[cityArray objectAtIndex:row] objectForKey:@"areas"];
+            countyArray = [[cityArray objectAtIndex:row] objectForKey:@"childs"];
             [self.addressPicker selectRow:0 inComponent:2 animated:YES];
             [self.addressPicker reloadComponent:2];
             
-            self.address.cityName = [[cityArray objectAtIndex:row] objectForKey:@"city"];
+            self.address.cityName = [[cityArray objectAtIndex:row] objectForKey:@"name"];
             if ([countyArray count] > 0) {
-                self.address.countyName = [countyArray objectAtIndex:0];
+                self.address.countyName = [[countyArray objectAtIndex:0] objectForKey:@"name"];
             } else{
                 self.address.countyName = @"";
             }
             break;
         case 2:
             if ([countyArray count] > 0) {
-                self.address.countyName = [countyArray objectAtIndex:row];
+                self.address.countyName = [[countyArray objectAtIndex:row]objectForKey:@"name"];
             } else{
                 self.address.countyName = @"";
             }

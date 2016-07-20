@@ -24,7 +24,7 @@
 @class JMPackAgeModel;
 @interface JMBaseGoodsCell : UITableViewCell
 
-
+- (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel;
 
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount;
 

@@ -15,6 +15,7 @@
 #import "WithdrawCashViewController.h"
 #import "AccountModel.h"
 #import "SVProgressHUD.h"
+#import "JMWithdrawCashController.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -26,14 +27,24 @@
 @property (nonatomic, assign)CGFloat headerH;
 
 @property (nonatomic, strong)UILabel *moneyLabel;
+
+/**
+ *  下拉刷新的标志
+ */
+@property (nonatomic, assign) BOOL isPullDown;
+/**
+ *  上拉加载的标志
+ */
+@property (nonatomic, assign) BOOL isLoadMore;
+
 @end
 
 static NSString *identifier = @"AccountCell";
-@implementation Account1ViewController
-
-{
+@implementation Account1ViewController {
+    NSMutableArray *_imageArray;
     UIView *emptyView;
 }
+
 
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
@@ -42,36 +53,120 @@ static NSString *identifier = @"AccountCell";
     return _dataArr;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
+    [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"BlanceAccount"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"BlanceAccount"];
 }
+
+
 
 - (void)updateMoneyLabel{
    NSUserDefaults *drawCashM = [NSUserDefaults standardUserDefaults];
     NSString *str = [drawCashM objectForKey:@"DrawCashM"];
     self.moneyLabel.text = str;
-    
-    //刷新记录
-    [self againRequest:YES];
-}
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
     [self createNavigationBarWithTitle:@"钱包" selecotr:@selector(backBtnClicked:)];
+    
+    [self createRightbutton];
+    [self createTableView];
+
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
+    
+    
+}
+#pragma mark 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _isPullDown = YES;
+        [weakSelf loadDataSource];
+    }];
+}
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
+#pragma mark 数据请求
+- (void)loadDataSource {
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject)return;
+        [self.dataArr removeAllObjects];
+        [self dataAnalysis:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self endRefresh];
+    }];
+
+}
+- (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        return;
+    }
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.tableView.mj_footer endRefreshing];
+        if (!responseObject)return;
+        [self dataAnalysis:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self endRefresh];
+    }];
+}
+- (void)dataAnalysis:(NSDictionary *)data {
+    self.nextPage = data[@"next"];
+    NSArray *results = data[@"results"];
+    if (results.count == 0 ) {
+        [self createEmptyView];
+        return;
+    }
+    for (NSDictionary *account in results) {
+        AccountModel *accountM = [[AccountModel alloc] init];
+        [accountM setValuesForKeysWithDictionary:account];
+        [self.dataArr addObject:accountM];
+    }
+}
+
+
+- (void)createRightbutton{
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
     [button1 setTitle:@"提现" forState:UIControlStateNormal];
     [button1 setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
@@ -80,15 +175,7 @@ static NSString *identifier = @"AccountCell";
     self.navigationItem.rightBarButtonItem = rightItem;
     
     self.navigationController.navigationBarHidden = NO;
-//    self.money = 0;
-    
-    [self createTableView];
-//    if (!self.money > 0) {
-//        //        [self createEmptyView];
-//    }
-    //    [self createEmptyView];
 }
-
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
@@ -129,27 +216,6 @@ static NSString *identifier = @"AccountCell";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
-    [self againRequest:NO];
-}
-
-- (void)againRequest:(BOOL)type {
-    if (type) {
-        [self.dataArr removeAllObjects];
-    }
-    [SVProgressHUD showWithStatus:@"加载中..."];
-    //网络请求
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
-        if (!responseObject)return;
-        [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:   %@", error);
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"获取信息失败，请检查网络或重试"];
-    }];
 }
 
 - (void)createEmptyView{
@@ -176,10 +242,14 @@ static NSString *identifier = @"AccountCell";
 
 //提现
 - (void)rightBarButtonAction {
-    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
-    CGFloat money = [self.moneyLabel.text floatValue];
-    NSNumber *number = [NSNumber numberWithFloat:money];
-    drawCash.money = number;
+    JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
+    drawCash.personCenterDict = self.personCenterDict;
+    
+//    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
+//    CGFloat money = [self.moneyLabel.text floatValue];
+//    NSNumber *number = [NSNumber numberWithFloat:money];
+//    drawCash.money = number;
+    
     [self.navigationController pushViewController:drawCash animated:YES];
 }
 
@@ -199,67 +269,25 @@ static NSString *identifier = @"AccountCell";
     return cell;
 }
 
-#pragma mark--网络请求
-- (void)dataAnalysis:(NSDictionary *)data {
-    self.nextPage = data[@"next"];
-    
-    if (!self.isFirstLoad && !([self.nextPage class] == [NSNull class])) {
-        [self addLoadMoreFooter];
-    }
-    
-    NSArray *results = data[@"results"];
-    if (results.count == 0 ) {
-        [self createEmptyView];
-        return;
-    }
-    
-    for (NSDictionary *account in results) {
-        AccountModel *accountM = [[AccountModel alloc] init];
-        [accountM setValuesForKeysWithDictionary:account];
-        [self.dataArr addObject:accountM];
-    }
-    [self.tableView reloadData];
-}
-
-- (void)addLoadMoreFooter {
-    //添加上拉加载
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if([self.nextPage class] == [NSNull class]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return ;
-        }
-        [self loadMore];
-    }];
-}
-
-//加载更多
-- (void)loadMore {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.tableView.mj_footer endRefreshing];
-        if (!responseObject)return;
-        [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

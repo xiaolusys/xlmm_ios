@@ -35,7 +35,7 @@
 #import "JMPopView.h"
 #import "MJExtension.h"
 #import "JMShareModel.h"
-
+#import "UMMobClick/MobClick.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -45,7 +45,7 @@
 
 //static BOOL isLogin;
 
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
@@ -162,6 +162,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
+    [MobClick event:@"activity"];
     
     NSString *titleName = self.titleName;
     
@@ -169,6 +170,7 @@
     
     IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
     super.baseWebView = baseWebView1;
+    self.baseWebView.delegate = self;
     [self.view addSubview:super.baseWebView];
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
@@ -195,19 +197,19 @@
     NSString *loadStr = nil;
     NSString *active = _webDiction[@"type_title"];
     if ([active isEqualToString:@"myInvite"]) {
-        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         self.activityId = _webDiction[@"activity_id"];
         loadStr = _webDiction[@"web_url"];
         [self loadData];
     }else if ([active isEqualToString:@"active"]){
-        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
         loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
         [self loadData];
     }else {
         statusBarView.hidden = NO;
         if (_isShowNavBar) {
-            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         }else {
             super.baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
         }
@@ -247,7 +249,15 @@
     }];
     
 }
-
+//#pragma mark IMYWebView代理方法
+//- (void)webViewDidStartLoad:(IMYWebView *)webView {
+////    [WebViewJavascriptBridge enableLogging];
+//    
+//    [_bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        [self myInvite:data];
+//    }];
+//    
+//}
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
     //    NSDictionary *dic = _model.mj_keyValues;
@@ -302,7 +312,7 @@
     menu.contentView = self.shareView.view;
 }
 
-- (void) universeShare:(NSDictionary *)data {
+- (void)universeShare:(NSDictionary *)data {
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
 
@@ -472,8 +482,23 @@
             [SVProgressHUD dismiss];
         }
     }];
+    /**
+     *  我的邀请加载
+     */
+//    [self.bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        [self myInvite:data callBack:responseCallback];
+//    }];
 }
-
+//- (void)myInvite:(id )data {
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, data[@"id"]];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        [self resolveActivityShareParam:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//}
 
 
 /**

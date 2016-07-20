@@ -24,4 +24,6 @@
 //剩余活跃值
 @property (nonatomic,assign) NSInteger activeValueNum;
 
+@property (nonatomic, assign) BOOL isActiveValue;
+
 @end

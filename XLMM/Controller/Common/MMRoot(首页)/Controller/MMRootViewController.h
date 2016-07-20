@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "NewLeftViewController.h"
+#import <AVFoundation/AVFoundation.h>
+
+@interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate,NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDownloadDelegate,UIDocumentInteractionControllerDelegate>
+
+// === 离线下载
+@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
+@property (nonatomic, strong) AVPlayer *player;
 
 
-@interface MMRootViewController : UIViewController <RootVCPushOtherVCDelegate, UIScrollViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *backScrollview;
 @property (weak, nonatomic) IBOutlet UIView *aboveView;

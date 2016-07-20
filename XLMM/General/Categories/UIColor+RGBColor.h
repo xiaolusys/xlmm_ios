@@ -42,4 +42,5 @@
 + (UIColor *)timeLabelColor;
 + (UIColor *)titleDarkGrayColor;
 + (UIColor *)sectionViewColor;
++ (UIColor *)couponValueColor;
 @end

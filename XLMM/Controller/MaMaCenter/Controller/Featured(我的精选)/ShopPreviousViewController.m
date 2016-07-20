@@ -34,13 +34,16 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"ShopPreviousViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"ShopPreviousViewController"];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -324,10 +327,10 @@
         NSLog(@"shop_info = null");
         return;
     }
+    NSDictionary *shopInfoDict = dic[@"shop_info"];
+    self.shopShareName = shopInfoDict[@"name"];
     
-    self.shopShareName = dic[@"shop_info"][@"name"];
-    
-    NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
+    NSString *urlString = shopInfoDict[@"thumbnail"];
     if(urlString != nil){
         self.shopShareImage = [UIImage imagewithURLString:[urlString imageShareCompression]];
     }

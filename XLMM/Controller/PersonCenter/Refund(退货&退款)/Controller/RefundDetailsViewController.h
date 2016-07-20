@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@class TuihuoModel;
-
+//@class TuihuoModel;
+@class JMRefundModel;
 @interface RefundDetailsViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topToRefundHeight;
 
-@property (nonatomic, strong) TuihuoModel *model;
+@property (nonatomic, strong) JMRefundModel *refundModelr;
 @property (weak, nonatomic) IBOutlet UIButton *addressInfoButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headViewWidth;
 
@@ -22,5 +22,6 @@
 
 @property (nonatomic, copy) NSString *tuihuodizhi;
 @property (weak, nonatomic) IBOutlet UIScrollView *timeLineView;
+@property (weak, nonatomic) IBOutlet UIView *showRefundView;
 
 @end

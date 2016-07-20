@@ -26,7 +26,7 @@
 #import "UIImage+ImageWithSelectedView.h"
 //#import "MMLoadingAnimation.h"
 #import "AFNetworking.h"
-#import "MobClick.h"
+//#import "MobClick.h"
 #import "MJRefresh.h"
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
@@ -348,7 +348,7 @@
     self.midLabel.hidden = NO;
 //    [MMLoadingAnimation dismissLoadingView];
 
-   [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] URLEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+   [self.bottomImageView sd_setImageWithURL:[NSURL URLWithString:[[[dic objectForKey:@"pic_path"] JMUrlEncodedString] ImageNoCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 //       [MMLoadingAnimation dismissLoadingView];
        cartsButton.hidden = NO;
        if (image != nil) {
@@ -452,7 +452,7 @@
     NSString *imageUrlString = [json objectForKey:@"pic_path"];
     NSData *imageData = nil;
     do {
-        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString URLEncodedString]]];
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrlString JMUrlEncodedString]]];
         if (imageData != nil) {
             break;
         }
@@ -815,7 +815,7 @@
         
         UIImageView *imageview = [self.contentView viewWithTag:i * 100 + 100];
 
-        NSString *imagelink = [[[imageArray objectAtIndex:i] imagePostersCompression] URLEncodedString];
+        NSString *imagelink = [[[imageArray objectAtIndex:i] imagePostersCompression] JMUrlEncodedString];
         NSLog(@"imageLink = %@", imagelink);
    
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -1006,7 +1006,7 @@
                                      @"sku_id":skusID};
         //统计加入购物车的次数
         NSDictionary *dict = @{@"item_id": itemID};
-        [MobClick event:@"purchase" attributes:dict];
+//        [MobClick event:@"purchase" attributes:dict];
         
         
         [manager POST:kCart_URL parameters:parameters

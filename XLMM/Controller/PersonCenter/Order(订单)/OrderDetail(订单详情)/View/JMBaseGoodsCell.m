@@ -55,7 +55,6 @@
     UIImageView *iconImage = [UIImageView new];
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
-    self.iconImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewClick:)];
     [self.iconImage addGestureRecognizer:tap];
     
@@ -114,6 +113,7 @@
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImage);
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
+        make.right.equalTo(weakSelf.contentView).offset(-10);
     }];
     
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -153,16 +153,21 @@
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string URLEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
     self.iconImage.layer.cornerRadius = 5;
-
+    if (packageModel) {
+        self.iconImage.userInteractionEnabled = YES;
+    }else {
+        self.iconImage.userInteractionEnabled = NO;
+    }
+    
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
-    CGFloat payment = [goodsModel.payment floatValue];
+    CGFloat payment = [goodsModel.total_fee floatValue];
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
 
@@ -194,6 +199,7 @@
             }
         }
     }else {
+        self.optionButton.hidden = YES;
         if (refundStatus == REFUND_STATUS_NO_REFUND) {
             self.refundLabel.text = @"";
         }
@@ -203,6 +209,24 @@
     
     self.orderModel = [[JMOrderGoodsModel alloc] init];
     self.orderModel = goodsModel;
+    
+    
+    
+}
+- (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel {
+    NSString *string = goodsModel.pic_path;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
+    
+    self.titleLabel.text = goodsModel.title;
+    self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
+    CGFloat payment = [goodsModel.total_fee floatValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
     
 }
 - (void)optionButtonClick:(UIButton *)button {

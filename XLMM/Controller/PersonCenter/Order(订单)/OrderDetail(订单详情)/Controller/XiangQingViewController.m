@@ -470,7 +470,6 @@
         
         if (isWarehouseOrder) {
             [self returnPopView];
-            
         
         }else {
             ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
@@ -480,7 +479,6 @@
             tuikuanVC.tid = tid;
             tuikuanVC.oid = model.orderGoodsID;
             tuikuanVC.status = model.status_display;
-            tuikuanVC.button = button;
             [self.navigationController pushViewController:tuikuanVC animated:YES];
         }
 

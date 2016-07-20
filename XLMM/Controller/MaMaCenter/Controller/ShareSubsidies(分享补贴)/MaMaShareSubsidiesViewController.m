@@ -15,6 +15,7 @@
 #import "CarryLogModel.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
+#import "SVProgressHUD.h"
 
 @interface MaMaShareSubsidiesViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;
@@ -47,12 +48,15 @@ static NSString *cellIdentifier = @"shareSubsidies";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"MaMaShareSubsidiesViewController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MobClick endLogPageView:@"MaMaShareSubsidiesViewController"];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -169,6 +173,11 @@ static NSString *cellIdentifier = @"shareSubsidies";
 
 //加载更多
 - (void)loadMore {
+    if ([self.nextPage class] == [NSNull class]) {
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        return;
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.tableView.mj_footer endRefreshing];

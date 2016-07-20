@@ -61,7 +61,7 @@
     
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -117,6 +117,7 @@
 {
     if ([_urlStr class] == [NSNull class]) {
         [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
@@ -133,6 +134,7 @@
 - (void)refetch:(NSDictionary *)data {
     
     _urlStr = data[@"next"];
+    
     NSArray *arr = data[@"results"];
     for (NSDictionary *dic in arr) {
         FanceModel *fetureModel = [FanceModel mj_objectWithKeyValues:dic];
@@ -181,17 +183,17 @@
 }
 
 
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
+    [MobClick beginLogPageView:@"JMNowFansController"];
+    
 }
-
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBarHidden = YES;
     [SVProgressHUD dismiss];
+    [MobClick endLogPageView:@"JMNowFansController"];
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -224,6 +226,7 @@
         }
     }];
 }
+
 @end
 
 

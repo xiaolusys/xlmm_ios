@@ -87,7 +87,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
         NSLog(@"no more");
         
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
-        
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     
@@ -297,7 +297,7 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
     if (model.pic_path == nil || [model.pic_path class] == [NSNull class] || [model.pic_path isEqualToString:@""]) {
         cell.myImageView.image = nil;
     } else {
-        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path URLEncodedString]]];
+        [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
         cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
         
         cell.myImageView.layer.masksToBounds = YES;
@@ -330,18 +330,18 @@ static NSString * const reuseIdentifier = @"tuihuoCell";
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    TuihuoModel *model = [self.dataArray objectAtIndex:indexPath.row];
-   
-    
-    RefundDetailsViewController *xiangqingVC = [[RefundDetailsViewController alloc] init];
-
-    xiangqingVC.model = model;
-    
-    NSLog(@"refundmodel = %@", xiangqingVC.model);
-    
-    
-    [self.navigationController pushViewController:xiangqingVC animated:YES];
-    
+//    JMRefundModel *refundModelr = [self.dataArray objectAtIndex:indexPath.row];
+//   
+//    
+//    RefundDetailsViewController *xiangqingVC = [[RefundDetailsViewController alloc] init];
+//
+//    xiangqingVC.refundModelr = refundModelr;
+//    
+//    NSLog(@"refundmodel = %@", xiangqingVC.refundModelr);
+//    
+//    
+//    [self.navigationController pushViewController:xiangqingVC animated:YES];
+//    
 
 
 }

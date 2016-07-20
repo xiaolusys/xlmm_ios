@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMPageViewBaseController.h"
 
-@interface JMNowFansController : UIViewController<UIBarPositioningDelegate>
+@interface JMNowFansController : JMPageViewBaseController<UIBarPositioningDelegate>
 
 
 
