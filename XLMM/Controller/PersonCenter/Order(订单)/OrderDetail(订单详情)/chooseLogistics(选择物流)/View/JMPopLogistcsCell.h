@@ -17,7 +17,7 @@
 
 @interface JMPopLogistcsCell : UITableViewCell
 
-- (void)configWithModel:(JMPopLogistcsModel *)model;
+- (void)configWithModel:(JMPopLogistcsModel *)model Index:(NSInteger)index;
 
 //@property (nonatomic,weak) id<JMPopLogistcsCellDelegate>delegate;
 

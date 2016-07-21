@@ -7,29 +7,25 @@
 //
 
 #import "NewLeftViewController.h"
-#import "PersonCenterViewController1.h"
 #import "RESideMenu.h"
-#import "PersonCenterViewController2.h"
-#import "PersonCenterViewController3.h"
 #import "TuihuoViewController.h"
 #import "JifenViewController.h"
 #import "YouHuiQuanViewController.h"
 #import "UIImageView+WebCache.h"
 #import "MMUserCoupons.h"
-
 #import "AddressViewController.h"
 #import "SettingViewController.h"
 #import "JMLogInViewController.h"
 #import "Account1ViewController.h"
 #import "PersonOrderViewController.h"
 #import "UIColor+RGBColor.h"
-
 #import "AFHTTPRequestOperationManager.h"
 #import "CommonWebViewViewController.h"
 #import "JMComplaintSuggestController.h"
 #import "JMReturnedGoodsController.h"
 #import "JMRefundBaseController.h"
 #import "JMCouponController.h"
+#import "MMClass.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -221,22 +217,6 @@
     self.redCircle.layer.masksToBounds = YES;
     self.redCircle.hidden = NO;
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)jifenClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -253,12 +233,8 @@
         [self displayLoginView];
         return;
     }
-  
-    
 }
-
 - (IBAction)youhuquanClicked:(id)sender {
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         JMCouponController *couponVC = [[JMCouponController alloc] init];
 //        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
@@ -275,12 +251,9 @@
         return;
     }
 }
-
 - (IBAction)yueClicked:(id)sender {
-    
     NSLog(@"查看余额详情");
 }
-
 #pragma mark -- 投诉建议
 - (IBAction)suggestionClicked:(id)sender {
     
@@ -298,10 +271,7 @@
         [self displayLoginView];
         return;
     }
-
-    
 }
-
 - (IBAction)waitPayClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -323,11 +293,7 @@
         [self displayLoginView];
         return;
     }
-
-   
-
 }
-
 - (IBAction)waitSendClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -348,11 +314,7 @@
         [self displayLoginView];
         return;
     }
-    
-    
-    
 }
-
 - (IBAction)tuihuoClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -372,10 +334,7 @@
         [self displayLoginView];
         return;
     }
-    
-  
 }
-
 - (IBAction)allDingdanClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -395,10 +354,7 @@
         [self displayLoginView];
         return;
     }
-    
- 
 }
-
 - (void)quitLogin {
     self.touxiangImageView.image = nil;
     self.nameLabel.text = @"未登录";
@@ -492,3 +448,43 @@
     self.accountLabel.text = str;
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

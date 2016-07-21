@@ -15,6 +15,7 @@
 #import "JMFetureFansModel.h"
 #import "MJExtension.h"
 #import "JMFetureFansCell.h"
+#import "Masonry.h"
 
 
 @interface JMFetureFansController ()<UITableViewDataSource,UITableViewDelegate>
@@ -22,6 +23,8 @@
 @property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
+
+@property (nonatomic,strong) UIButton *topButton;
 
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
@@ -49,7 +52,8 @@
     [self createTableView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-
+    [self createButton];
+    
 }
 
 #pragma mrak 刷新界面
@@ -149,6 +153,45 @@
     [cell fillData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+#pragma mark 返回顶部  image == >backTop
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+}
+- (void)topButtonClick:(UIButton *)btn {
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
+}
+#pragma mark -- 添加滚动的协议方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

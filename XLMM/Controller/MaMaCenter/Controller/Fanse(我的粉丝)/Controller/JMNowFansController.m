@@ -92,10 +92,11 @@
         [self.tableView.mj_footer endRefreshing];
     }
 }
-- (void)loadDataSource{
-
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
-    
+- (NSString *)urlStr {
+    return [NSString stringWithFormat:@"%@/rest/v2/mama/fans", Root_URL];
+}
+- (void)loadDataSource {
+    NSString *string = [self urlStr];
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -198,7 +199,7 @@
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
-#pragma mark -- 添加返回顶部按钮
+#pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:topButton];
@@ -208,23 +209,34 @@
         make.right.equalTo(self.view).offset(-20);
         make.bottom.equalTo(self.view).offset(-20);
         make.width.height.mas_equalTo(@50);
-    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
 }
 - (void)topButtonClick:(UIButton *)btn {
     self.topButton.hidden = YES;
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
 }
 #pragma mark -- 添加滚动的协议方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [UIView animateWithDuration:0.5 animations:^{
-        if (self.dataArray.count == 0) {
-            self.topButton.hidden = YES;
-        }else {
-            self.topButton.hidden = NO;
-        }
-    }];
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
 }
 
 @end

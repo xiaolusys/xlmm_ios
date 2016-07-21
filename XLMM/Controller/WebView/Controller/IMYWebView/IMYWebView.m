@@ -24,6 +24,7 @@
 @property (nonatomic, copy) NSString *title;
 
 @property (nonatomic, strong) IMY_NJKWebViewProgress* njkWebViewProgress;
+
 @end
 
 @implementation IMYWebView
@@ -617,7 +618,9 @@
 }
 
 #pragma mark - WKScriptMessageHandler
-
+/**
+ *  OC在JS调用方法做的处理
+ */
 - (void)userContentController:(WKUserContentController *)userContentController
 
       didReceiveScriptMessage:(WKScriptMessage *)message {
@@ -631,8 +634,7 @@
 - (void)registerWkwebviewJsBridge:(WKWebViewConfiguration*) configuration{
     
     NSLog(@"registerWkwebviewJsBridge!");
-    
-    
+
     [configuration.userContentController  addScriptMessageHandler:self name:@"jumpToNativeLocation"];
     
     /**

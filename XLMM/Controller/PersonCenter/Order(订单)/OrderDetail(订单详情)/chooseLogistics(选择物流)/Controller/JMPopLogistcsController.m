@@ -106,7 +106,7 @@
     }
     
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
-    [cell configWithModel:model];
+    [cell configWithModel:model Index:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //选中cell时无色
     return cell;
 }

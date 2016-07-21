@@ -150,6 +150,7 @@
 //    }];
     
 }
+
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 
@@ -183,6 +184,7 @@
             [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
             self.optionButton.tag = 100;
         }else {
+            self.optionButton.hidden = YES;
             self.refundLabel.text = refundDisplay;
         }
     }else if (orderStatus == ORDER_STATUS_SENDED) {
@@ -197,6 +199,8 @@
                 self.optionButton.tag = 103;
                 self.optionButton.enabled = NO;
             }
+        }else {
+            self.optionButton.hidden = YES;
         }
     }else {
         self.optionButton.hidden = YES;
