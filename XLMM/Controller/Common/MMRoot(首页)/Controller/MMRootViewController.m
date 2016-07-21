@@ -21,7 +21,6 @@
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
-#import "XiangQingViewController.h"
 #import "MaMaPersonCenterViewController.h"
 #import "MMLoginStatus.h"
 #import "AFNetworking.h"
@@ -2137,6 +2136,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }
+//    JMShoppingCartController *cartVC = [[JMShoppingCartController alloc] init];
     CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
     [self.navigationController pushViewController:cartVC animated:YES];
 }
@@ -2548,7 +2548,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         make.right.equalTo(self.view).offset(-20);
         make.bottom.equalTo(self.view).offset(-20);
         make.width.height.mas_equalTo(@50);
-    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
 }

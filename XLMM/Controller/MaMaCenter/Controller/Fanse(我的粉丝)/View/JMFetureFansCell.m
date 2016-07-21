@@ -45,6 +45,7 @@
     self.descLabel = descLabel;
     self.descLabel.font = [UIFont systemFontOfSize:12.];
     self.descLabel.textColor = [UIColor timeLabelColor];
+    self.descLabel.numberOfLines = 0;
     
     UILabel *nameLabel = [UILabel new];
     [self.contentView addSubview:nameLabel];
@@ -68,11 +69,12 @@
     
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
-        make.top.equalTo(weakSelf.iconImage.mas_top).offset(10);
+        make.top.equalTo(weakSelf.iconImage).offset(5);
     }];
     
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.nameLabel);
+        make.right.equalTo(weakSelf.contentView).offset(-20);
         make.top.equalTo(weakSelf.nameLabel.mas_bottom).offset(15);
     }];
     

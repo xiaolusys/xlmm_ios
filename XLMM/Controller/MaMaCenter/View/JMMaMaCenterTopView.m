@@ -320,7 +320,7 @@
     }];
     
     [self.remainingTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.isVipMamaButton);
+        make.left.equalTo(weakSelf.mamaIconImage.mas_right).offset(10);
         make.top.equalTo(weakSelf.isVipMamaButton.mas_bottom).offset(10);
     }];
     

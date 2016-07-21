@@ -183,7 +183,7 @@
                 <outlet property="priceLabel" destination="QJe-Jt-wd5" id="r82-Op-KZN"/>
                 <outlet property="sizeLabel" destination="1Hu-nt-rsw" id="kvW-g3-9Uj"/>
             </connections>
-            <point key="canvasLocation" x="351" y="227"/>
+            <point key="canvasLocation" x="166" y="168"/>
         </tableViewCell>
     </objects>
     <resources>

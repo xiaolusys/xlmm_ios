@@ -295,15 +295,9 @@
 //        [self.navigationController pushViewController:webVC animated:YES];
         JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
         [self.navigationController pushViewController:renewVC animated:YES];
-        
-        
     }else {
-        
     }
-    
 }
-
-
 - (void)createWeekDay{
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -319,12 +313,8 @@
     NSLog(@"今天是周%@", self.weekDay);
     
 }
-
-
-
 //新接口数据
 - (void)updateMaMaHome:(NSDictionary *)dic {
-    
     NSDictionary *fortuneDic = dic[@"mama_fortune"];
     self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
     NSDictionary *extraDic = self.mamaCenterModel.extra_info;
@@ -381,13 +371,11 @@
 - (void)createHuoYueDuView{
   self.huoyueduView.transform = CGAffineTransformMakeRotation(M_PI * 24/180);
     
-    
     NSInteger huoyuezhi = arc4random()%(NSInteger)(SCREENWIDTH);
 
     huoyuezhi = SCREENWIDTH /2;
     NSLog(@"huoyuezhi = %ld", huoyuezhi);
     self.huoyueduRight.constant = SCREENWIDTH - 36;
-    
     
     if (self.huoyueduString == nil) {
        return;
@@ -542,16 +530,9 @@
                 whiteLine.backgroundColor = [UIColor whiteColor];
                 [shartView addSubview:whiteLine];
                 
-                
             }
         }
-      
-        
         [self.mamaScrollView addSubview:shartView];
-        
-        
-        
-        
         
         orongeCircleView = [[UIView alloc] init];
         orongeCircleView.layer.cornerRadius = 10;
@@ -566,9 +547,6 @@
         //   orongeCircleView.alpha = 0.3;
         
         [self.mamaScrollView addSubview:self.anotherOrongeView];
-        
-        
-        
         for (int j = 0; j < 7; j++) {
             CGPoint point2 = [linechart getPointForIndex:j];
 
@@ -579,14 +557,10 @@
                     lineColor = [UIColor imageViewBorderColor];
                 }
             }
-            
-            
             DotLineView *line = [[DotLineView alloc] initWithFrame:CGRectMake(point2.x, 0 , 1, point2.y) andColor:lineColor];
             line.backgroundColor = [UIColor clearColor];
             
             [shartView addSubview:line];
-            
-            
         }
     }
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 148, SCREENWIDTH - 40, 0.5)];
@@ -596,14 +570,9 @@
     bottomLine = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH + 20, 148, SCREENWIDTH - 40, 0.5)];
     bottomLine.backgroundColor = [UIColor lineGrayColor];
     [self.mamaScrollView addSubview:bottomLine];
-    
-    
-    
-    //画圆圈
-    
 
-    
-    
+    //画圆圈
+
     //本周日期
     NSArray *text = @[@"一", @"二", @"三", @"四",@"五",@"六",@"日"];
     for (int i = 0; i < 7; i++) {
@@ -618,10 +587,7 @@
         [self.labelArray addObject:label];
     }
    // NSLog(@"%@", self.labelArray);
-    
-    
-   
-    
+
     //下周日期
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *now;
@@ -684,9 +650,7 @@
     } completion:^(BOOL finished) {
         label.textColor = [UIColor whiteColor];
     }];
-    
-    
-    
+
     [self.lastweeknames removeAllObjects];
     
     for (int i = 0; i < 7; i++) {
@@ -702,9 +666,7 @@
     }
     
     NSLog(@"%@", self.lastweeknames);
-    
-    
-    
+
     for (int i = 0; i < 7; i++) {
         UILabel *label = [[UILabel alloc]  initWithFrame:CGRectMake(i * (SCREENWIDTH - 50)/6 + 5, 8, 40, 20)];
         label.text = self.lastweeknames[i];
@@ -718,14 +680,9 @@
         if (i == 6) {
             label.textColor = [UIColor whiteColor];
             self.anotherOrongeView.frame = label.frame;
-            
-            
         }
     }
-    
-    
     [self createButtons];
-    
 }
 - (void)createButtons{
     UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -739,9 +696,7 @@
     [btn2 addTarget:self action:@selector(btn2Clicked) forControlEvents:UIControlEventTouchUpInside];
     [self.mamaScrollView addSubview:btn2];
     [btn2 setBackgroundImage:[UIImage imageNamed:@"zhexianzuo.png"] forState:UIControlStateNormal];
-    
-    
-    
+
     UIButton *btn4 = [UIButton buttonWithType:UIButtonTypeSystem];
     btn4.frame = CGRectMake(0, 60, 20, 30);
     [self.mamaScrollView addSubview:btn4];
@@ -757,7 +712,6 @@
         
     }];
 }
-
 - (void)btn1Clicked{
     NSLog(@"qubenzhou");
     [UIView animateWithDuration:0.3 animations:^{
@@ -768,14 +722,9 @@
 }
 // 点击表格 更新数据
 - (void)tapClicked:(UITapGestureRecognizer *)recognizer{
-
-    
     UIView *weekView = [recognizer view];
     weekView.backgroundColor = [UIColor redColor];
-    
-    
     NSInteger week = weekView.tag - 1000;
-    
     if (week == 2) {
         week =1;
     } else if (week == 1){
@@ -783,10 +732,7 @@
     }
     
     NSLog(@"第 %ld 周订单数据", week);
-    
    // NSLog(@"weekView subView = %@", [weekView subviews]);
-    
-
     CGPoint location = [recognizer locationInView:recognizer.view];
   //  NSLog(@"location = %@", NSStringFromCGPoint(location));
     CGFloat width = location.x;
@@ -800,34 +746,23 @@
     if (days - quxiaodays < 0) {
         return;
     }
-
     FSLineChart *linechart = [weekView subviews][0];
     UIView *circleView = [weekView viewWithTag:300];
     UIView *lineView = [weekView viewWithTag:400];
-    
 
-    
     CGPoint point = [linechart getPointForIndex:index];
    // NSLog(@"point = %@", NSStringFromCGPoint(point));
-    
-    
+
     circleView.frame = CGRectMake(point.x - 3, point.y - 3, 6, 6);
     lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
-    
-
-    
+ 
     self.visitorDate = [NSNumber numberWithInteger:days - quxiaodays];
     NSLog(@"days = %ld", days - quxiaodays);
    // NSLog(@"array = %@", self.mamaOrderArray);
    // NSLog(@"%ld", quxiaodays);
-    
-   
-    
     NSDictionary *dic = self.mamaOrderArray[days - quxiaodays];
     
     NSLog(@"info = %@", dic);
-    
-    
     self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
     self.shouyiLabel.text = [NSString stringWithFormat:@"%.2f", [dic[@"carry"] floatValue]];
     self.todayNum.text = [dic[@"visitor_num"] stringValue];
@@ -848,8 +783,6 @@
             orongeCircleView.frame = rect;
         } completion:^(BOOL finished) {
             label.textColor = [UIColor whiteColor];
-            
-            
         }];
     } else if(week == 2) {
         NSLog(@"index = %ld", (long)index);
@@ -868,18 +801,9 @@
             self.anotherOrongeView.frame = rect;
         } completion:^(BOOL finished) {
             label.textColor = [UIColor whiteColor];
-            
-            
         }];
-
     }
-   
-    
-    
- 
 }
-
-
 //制作表格。。。
 -(FSLineChart*)chart2:(NSMutableArray *)chartData {
     // Creating the line chart
@@ -893,18 +817,14 @@
     self.lineChart.animationDuration = 1;
     self.lineChart.drawInnerGrid = NO;
     
-    
     [self.lineChart setChartData:chartData];
   
     [self.lineChart showLineViewAfterDelay:self.lineChart.animationDuration];
    
     return self.lineChart;
 }
-
 //  获取表格数据  2016 － 3-30 订单折线图 改为收益折线图。。。。
-
 - (void)prepareData{
-    
     NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/dailystats?from=0&days=14", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:chartUrl parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -922,28 +842,20 @@
 //            self.mamalabel.hidden = NO;
 //            return;
 //        }
-    
         self.mamaOrderArray = data;
         
         NSDictionary *dic = data[0];
     //    NSLog(@"info = %@", dic);
-        
-        
         self.dingdanLabel.text = [[dic objectForKey:@"order_num"] stringValue];
         self.shouyiLabel.text = [NSString stringWithFormat:@"%.2f", [dic[@"carry"] floatValue]];
         self.todayNum.text = [dic[@"visitor_num"] stringValue];
-        
-        
+
         NSLog(@"orderArray = %@", self.mamaOrderArray);
         data = arr;
-        
         NSLog(@"%@", arr);
-        
 //        for (NSMutableDictionary *testDic in data) {
 //            testDic[@"carry"] = [NSNumber numberWithFloat:0.00];
 //        }
-        
-        
         NSMutableArray *weekArray = [[NSMutableArray alloc] init];
         int xingqiji = (int)[self.weekDay integerValue];
         switch (xingqiji) {
@@ -983,9 +895,7 @@
                 NSLog(@"------carry = %@, shouyi = %@",[data[i] objectForKey:@"carry"], order_num);
                 
                 [weekArray addObject:order_num];
-                
             }
-            
 //            if ((i +1 - quxiaodays)%7 == 0)
             if ((i + 1 - quxiaodays)% 7 == 0) {
                 
@@ -1046,22 +956,16 @@
 }
 
 #pragma mark --TableViewDelegate
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     self.tableViewHeight.constant = self.dataArr.count *80;
-    
    return (self.dataArr.count);
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80;
 }
-
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
         MaMaOrderTableViewCell *cell = (MaMaOrderTableViewCell*)[tableView  dequeueReusableCellWithIdentifier:@"MaMaOrder" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1154,15 +1058,12 @@
     
     [self.navigationController pushViewController:share animated:YES];
 }
-
 #pragma mark --- 我的粉丝按钮
 - (IBAction)fansList:(id)sender {
-
     JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
     mamaCenterFansVC.fansNum = self.fansNum;
     [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
 }
-
 - (IBAction)boutiqueActivities:(id)sender {
     //精品活动
     if (self.eventLink == nil || self.eventLink.length == 0) {
@@ -1170,16 +1071,12 @@
         return;
     }
     WebViewController *activity = [[WebViewController alloc] init];
-    
 //    _diction = nil;
-    
     NSString *active = @"myInvite";
     NSString *titleName = @"精品活动";
-    
     [self.diction setValue:self.eventLink forKey:@"web_url"];
     [self.diction setValue:active forKey:@"type_title"];
     [self.diction setValue:titleName forKey:@"name_title"];
-    
     activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
     activity.isShowNavBar = true;
     activity.isShowRightShareBtn = true;
@@ -1189,29 +1086,86 @@
     activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
     activity.share_model.share_type = @"link";
     [self.navigationController pushViewController:activity animated:YES];
-    
 }
-
 - (IBAction)todayVisitor:(id)sender {
     TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
     today.visitorDate = self.visitorDate;
     [self.navigationController pushViewController:today animated:YES];
 }
-
 - (IBAction)todayOrder:(id)sender {
     MaMaOrderListViewController *order = [[MaMaOrderListViewController alloc] init];
     order.orderRecord = self.orderRecord;
     [self.navigationController pushViewController:order animated:YES];
 }
-
 - (IBAction)todayCarry:(id)sender {
     MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
     carry.earningsRecord = self.earningsRecord;
     [self.navigationController pushViewController:carry animated:YES];
 }
-
 - (void)clickShareView {
-
 }
-
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

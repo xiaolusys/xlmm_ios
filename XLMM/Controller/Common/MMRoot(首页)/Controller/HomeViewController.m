@@ -20,7 +20,6 @@
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "YouHuiQuanViewController.h"
-#import "XiangQingViewController.h"
 #import "MaMaPersonCenterViewController.h"
 #import "MMLoginStatus.h"
 #import "AFNetworking.h"

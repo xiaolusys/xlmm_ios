@@ -31,6 +31,8 @@
 
 @implementation JMUntappedCouponController {
     NSString *_urlStr;
+    
+    UIView *emptyView;
 }
 
 
@@ -38,6 +40,7 @@
     [super viewDidLoad];
     
     [self createTabelView];
+    [self displayEmptyView];
     
     [self createPullHeaderRefresh];
 //    [self createUsedButton];
@@ -103,6 +106,11 @@
         self.couponModel = [JMCouponModel mj_objectWithKeyValues:dict];
         [self.dataSource addObject:self.couponModel];
     }
+    NSInteger count = self.dataSource.count;
+    if (count == 0) {
+        emptyView.hidden = NO;
+    }else {
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -137,9 +145,24 @@
         
     }
 }
-//- (void)createUsedButton {
-//
-//}
+- (void)displayEmptyView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];
+    UIView *empty = views[0];
+    UIButton *button = (UIButton *)[empty viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 0.5;
+    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
+    [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
+    emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
+    emptyView.hidden = YES;
+    [self.view addSubview:emptyView];
+    empty.frame = CGRectMake(0, SCREENHEIGHT/2 - 100, SCREENWIDTH, 220);
+    [emptyView addSubview:empty];
+}
+- (void)gotoLeadingView{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

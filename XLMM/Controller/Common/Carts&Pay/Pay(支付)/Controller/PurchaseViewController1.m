@@ -36,7 +36,7 @@
 #import "JMPopLogistcsModel.h"
 #import "JMPayShareController.h"
 #import "JMShareModel.h"
-#import "PersonCenterViewController1.h"
+#import "CartListModel.h"
 
 
 //购物车支付界面
@@ -252,8 +252,8 @@
         return;
     }
     //构造参数字符串
-    for (NewCartsModel *model in self.cartsArray) {
-        NSString *str = [NSString stringWithFormat:@"%d,",model.ID];
+    for (CartListModel *model in self.cartsArray) {
+        NSString *str = [NSString stringWithFormat:@"%ld,",[model.cartID integerValue]];
         [paramstring appendString:str];
         
         

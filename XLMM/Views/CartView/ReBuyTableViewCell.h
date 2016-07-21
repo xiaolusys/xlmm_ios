@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class NewCartsModel;
-
+@class CartListModel;
 @protocol ReBuyCartViewDelegate <NSObject>
 
 @required
 
-- (void)reBuyAddCarts:(NewCartsModel*)model;
+- (void)reBuyAddCarts:(CartListModel*)model;
 
-- (void)composeImageTap:(NewCartsModel*)model;
+- (void)composeImageTap:(CartListModel*)model;
 
 @end
 
@@ -25,7 +24,7 @@
 @property (weak, nonatomic) id<ReBuyCartViewDelegate>delegate;
 
 
-@property (strong, nonatomic)NewCartsModel *cartModel;
+@property (strong, nonatomic)CartListModel *cartModel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *headImageView;
 @property (weak, nonatomic) IBOutlet UIButton *reBuyButton;

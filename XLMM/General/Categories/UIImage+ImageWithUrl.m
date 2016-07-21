@@ -35,7 +35,7 @@
 //            image = [UIImage imageWithData:data];
 //        }];
         
-        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMapped error:&imageError]; //[urlStr URLEncodedString]  == > urlString
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMappedAlways error:&imageError]; //[urlStr URLEncodedString]  == > urlString
         
         
         

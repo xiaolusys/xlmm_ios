@@ -12,18 +12,18 @@
 #import "ShoppingCartModel.h"
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
-#import "NewCartsModel.h"
+#import "CartListModel.h"
 #import "PurchaseViewController1.h"
 #import "NSString+URL.h"
 #import "ReBuyTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "WebViewController.h"
 #import "MJExtension.h"
-
+#import "CartListModel.h"
 
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
     float allPrice;
-    NewCartsModel *deleteModel;
+    CartListModel *deleteModel;
     BOOL download1;
     BOOL download2;
     BOOL isEmpty;
@@ -44,9 +44,7 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    
-    // This design has logical problem:
-    // downloadData & downloadHisoryData should be returned with on request.
+
     isEmpty = YES;
     download1 = NO;
     download2 = NO;
@@ -90,8 +88,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
     self.dataArray = [[NSMutableArray alloc] init];
@@ -112,116 +108,46 @@
     [self.myTableView registerClass:[CartTableCellTableViewCell1 class] forCellReuseIdentifier:@"simpleCellID"];
     [self.myTableView registerClass:[ReBuyTableViewCell class] forCellReuseIdentifier:@"ReBuyTableCell"];
     youhuiquanValud = 0;
-    
-    //[self createYhqValue];
 }
-
-// 获取可用优惠券金额 。。。
-- (void)createYhqValue{
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
-    if (data == nil) {
-        return;
-    }
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSLog(@"dic = %@", dic);
-    NSArray *array = [dic objectForKey:@"results"];
-    for (NSDictionary *info in array) {
-        NSInteger value = [[info objectForKey:@"coupon_value"] integerValue];
-        if (value > youhuiquanValud && value < 200) {
-            youhuiquanValud = value;
-        }
-    }
-    NSLog(@"value = %ld", youhuiquanValud);
-    
-}
-
-
-
-- (void)downloadData{
+- (void)downloadData {
     [SVProgressHUD dismiss];
-    NSLog(@"cart Url = %@", kCart_URL);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_URL]];
-        if (data == nil) {
-            NSLog(@"下载失败");
-            return ;
-        }
-
-        [self performSelectorOnMainThread:@selector(fetchedCartData:) withObject:data waitUntilDone:YES];
-    });
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:kCart_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return ;
+        [self fetchedCartData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
 }
+- (void)fetchedCartData:(NSArray *)careArr {
 
-- (void)fetchedCartData:(NSData *)responseData{
-   
-    NSError *error = nil;
-    NSArray *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    if (error != nil) {
-        NSLog(@"解析失败");
-        NSLog(@"error = %@", error);
-        return;
-    }
-    
     download1 = YES;
-    if (json.count > 0) {
+    if (careArr.count > 0) {
         isEmpty = NO;
     }
-    if (json.count <= 0 && download2 && isEmpty) {
+    if (careArr.count <= 0 && download2 && isEmpty) {
         [self displayDefaultView];
     }
-    
     [self.dataArray removeAllObjects];
-
-        
-    
     allPrice = 0.0f;
-    for (NSDictionary *dic in json) {
-        NewCartsModel *model = [NewCartsModel new];
-        model.status = [[dic objectForKey:@"status"] intValue];
-        model.sku_id = [dic objectForKey:@"sku_id"];
-        model.title = [dic objectForKey:@"title"];
-        model.price = [[dic objectForKey:@"price"] floatValue];
-        model.buyer_nick = [dic objectForKey:@"buyer_nick"];
-        model.num = [[dic objectForKey:@"num"] intValue];
-        model.remain_time = [dic objectForKey:@"remain_time"];
-        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
-        model.total_fee = [[dic objectForKey:@"total_fee"] floatValue];
-        model.item_id = [dic objectForKey:@"item_id"];
-        model.pic_path = [dic objectForKey:@"pic_path"];
-        model.sku_name = [dic objectForKey:@"sku_name"];
-        model.ID = [[dic objectForKey:@"id"] intValue];
-        model.buyer_id = [[dic objectForKey:@"buyer_id"] intValue];
-        model.item_weburl = [dic objectForKey:@"item_weburl"];
-        allPrice += model.total_fee;
+    for (NSDictionary *dic in careArr) {
+        CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
+        allPrice += [model.total_fee floatValue];
         [self.dataArray addObject:model];
         _carsGoodsDic = dic;
     }
-
     self.totalPricelabel.text = [NSString stringWithFormat:@"¥%.2f", allPrice];
-    
     [self.cartTableView reloadData];
 }
-
 - (void)downloadHistoryData{
-    NSLog(@"cart Url = %@", kCart_History_URL);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_History_URL]];
-        if (data == nil) {
-            NSLog(@"下载失败");
-            return ;
-        }
-        
-        [self performSelectorOnMainThread:@selector(fetchedHistoryCartData:) withObject:data waitUntilDone:YES];
-    });
+    [SVProgressHUD dismiss];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:kCart_History_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (!responseObject) return ;
+        [self fetchedHistoryCartData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
 }
-
-- (void)fetchedHistoryCartData:(NSData *)data{
-    if (data == nil) {
-        return;
-    }
-    NSError *error = nil;
-    NSArray *array = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    
+- (void)fetchedHistoryCartData:(NSArray *)array {
     download2 = YES;
     if (array.count > 0) {
         isEmpty = NO;
@@ -229,99 +155,26 @@
     if (array.count <= 0 && download1 && isEmpty) {
         [self displayDefaultView];
     }
-    
     [self.historyCarts removeAllObjects];
     for (NSDictionary *dic in array) {
-        NewCartsModel *model = [NewCartsModel new];
-        model.pic_path = [dic objectForKey:@"pic_path"];
-        model.title = [dic objectForKey:@"title"];
-        model.sku_name = [dic objectForKey:@"sku_name"];
-        model.price = [[dic objectForKey:@"price"] floatValue];
-        model.std_sale_price = [[dic objectForKey:@"std_sale_price"] floatValue];
-        model.is_sale_out = [[dic objectForKey:@"is_sale_out"] boolValue];
-        model.ID = [[dic objectForKey:@"id"] intValue];
-        model.sku_id = [dic objectForKey:@"sku_id"];
-        model.item_id = [dic objectForKey:@"item_id"];
-        model.item_weburl = [dic objectForKey:@"item_weburl"];
-
+        CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.historyCarts addObject:model];
     }
-    
     [self.myTableView reloadData];
 }
 
-
-- (void)backBtnClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
 #pragma mark --UITableViewDelegate--
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
     if (section == 0) {
         return self.dataArray.count;
     } else if (section == 1){
         return self.historyCarts.count;
-        
     }
     return 0;
 }
-#pragma mark == 点击进入商品详情
-- (void)composeImageTap:(NewCartsModel *)model {
-    NSString *weiUrl = model.item_weburl;
-    if (weiUrl == nil) {
-        return ;
-    }else {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:weiUrl forKey:@"web_url"];
-        WebViewController *webVC = [[WebViewController alloc] init];
-        webVC.webDiction = dic;
-        [self.navigationController pushViewController:webVC animated:YES];
-    }
-    
-}
-- (void)tapClick:(NewCartsModel *)model {
-    NSString *weiUrl = model.item_weburl;
-    if (weiUrl == nil) {
-        return ;
-    }else {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:weiUrl forKey:@"web_url"];
-        WebViewController *webVC = [[WebViewController alloc] init];
-        webVC.webDiction = dic;
-        [self.navigationController pushViewController:webVC animated:YES];
-    }
-}
-// -- 列表点击事件
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
-//    NSString *weiUrl = model.item_weburl;
-//    NSDictionary *dic = model.mj_keyValues;
-//    if (weiUrl == nil) {
-//        return ;
-//    }else {
-//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//        [dic setValue:weiUrl forKey:@"web_url"];
-//        WebViewController *webVC = [[WebViewController alloc] init];
-//        webVC.webDiction = dic;
-//        [self.navigationController pushViewController:webVC animated:YES];
-//    }
-//
-//}
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         static NSString *CellIdentifier = @"simpleCellID";
@@ -332,7 +185,7 @@
             
         } else{
             
-            NewCartsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+            CartListModel *model = [self.dataArray objectAtIndex:indexPath.row];
             cell.cartModel= model;
             cell.myImageView.layer.borderWidth = 0.5;
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
@@ -342,11 +195,11 @@
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             cell.nameLabel.text = model.title;
-            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.price];
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.price floatValue]];
             
             //    cell.contentView.backgroundColor = [UIColor redColor];
-            cell.numberLabel.text = [NSString stringWithFormat:@"%d", model.num];
-            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.std_sale_price];
+            cell.numberLabel.text = [NSString stringWithFormat:@"%ld", [model.num integerValue]];
+            cell.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.std_sale_price floatValue]];
             
             cell.sizeLabel.text = model.sku_name;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -365,7 +218,7 @@
             
         } else{
             
-            NewCartsModel *model = [self.historyCarts objectAtIndex:indexPath.row];
+            CartListModel *model = [self.historyCarts objectAtIndex:indexPath.row];
             cell.cartModel= model;
             cell.headImageView.layer.borderWidth = 0.5;
             cell.headImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
@@ -379,9 +232,9 @@
             
             cell.cartModel = model;
             cell.nameLabel.text = model.title;
-            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.price];
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.price floatValue]];
             
-            cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", model.std_sale_price];
+            cell.allPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.std_sale_price floatValue]];
             
             cell.sizeLabel.text = model.sku_name;
 
@@ -440,9 +293,6 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section == 0) {
-        
-//        NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"BlueView" owner:nil options:nil];
-//        self.blueView = views[0];
         if (self.dataArray.count == 0 && download1) {
             NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyCartView" owner:nil options:nil];
             
@@ -465,20 +315,12 @@
             
             youhuiquanLabel.text = [NSString stringWithFormat:@"¥%ld", youhuiquanValud];
             pricelabel.text = [NSString stringWithFormat:@"¥%.2f", allPrice];
-          
-            
             nameLabel.text = @"可使用优惠券";
-          
-            
             imageView.hidden = NO;
-            
             footerView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
             footerView.backgroundColor = [UIColor backgroundlightGrayColor];
-            
             return footerView;
         }
-        
-     
     }
     return [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -510,8 +352,6 @@
             lineView.hidden = NO;
         }
         return headerView;
-        
-    
     }
     return [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -530,25 +370,14 @@
 //        NSLog(@"indexpath . row ", )
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         //调用删除接口。。。。。。
-        
         [self deleteCatr];
         
     }
 }
 - (void)deleteCatr{
-    NSLog(@"确认删除");
-//    [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
-//    NSLog(@"url = %@", urlString);
-//    
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-//    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-//    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-//    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-    
-//    NSLog(@"%@",str1);
-    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,[deleteModel.cartID integerValue]];
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self downloadData];
@@ -558,34 +387,17 @@
         NSLog(@"data = %@", data);
         if (data != nil) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            
             NSLog(@"dic = %@", dic);
-            
             __unused NSInteger count = [[dic objectForKey:@"result"] integerValue];
             NSLog(@"count = %ld", (long)count);
-            
         }
-
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
 
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (void)buyOneGood{
-    
-    NSLog(@"至少买一个啊");
     UIView *myview = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2-120, 200, 240, 60)];
     myview.backgroundColor = [UIColor blackColor];
     myview.alpha = 0.7;
@@ -603,36 +415,31 @@
     } completion:^(BOOL finished) {
         [myview removeFromSuperview];
     }];
-    
-    
 }
-- (void)reduceNumber:(NewCartsModel *)cartModel{
+/**
+ *  减少一件商品
+ */
+- (void)reduceNumber:(CartListModel *)cartModel{
     
     [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/minus_product_carts", Root_URL, cartModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL, [cartModel.cartID integerValue]];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
               [self downloadData];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-              NSLog(@"Error: %@", error);
-              
           }
      ];
-
-    
-    
-    
 }
-- (void)addNumber:(NewCartsModel *)cartModel{
+/**
+ *  添加一件商品
+ */
+- (void)addNumber:(CartListModel *)cartModel{
    [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/plus_product_carts", Root_URL,cartModel.ID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,[cartModel.cartID integerValue]];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -643,58 +450,14 @@
               [self downloadData];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              //
-              NSLog(@"库存不足");
-              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 30)];
-              view.backgroundColor = [UIColor darkGrayColor];
-              view.layer.cornerRadius = 4;
-              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
-              label.text = @"商品库存不足";
-              label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor imageViewBorderColor];
-              label.font = [UIFont systemFontOfSize:14];
-              [view addSubview:label];
-              [self.view addSubview:view];
-              
-              
-              [UIView animateWithDuration:1.0 animations:^{
-                  view.alpha = 0;
-              } completion:^(BOOL finished) {
-                  [view removeFromSuperview];
-              }];
-              
-              NSLog(@"%@", operation);
-              NSLog(@"Error: %@", error.userInfo);
-              NSDictionary *dic = error.userInfo;
-              NSData *data = [dic objectForKey:@"com.alamofire.serialization.response.error.data"];
-              __unused NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-              NSLog(@"data = %@", str);
-              
+              [SVProgressHUD showErrorWithStatus:@"商品库存不足"];
               [self downloadData];
         }
      ];
-    
 }
-- (void)deleteCartView:(NewCartsModel *)cartModel{
-    NSLog(@"id = %d", cartModel.ID);
-
-    NSLog(@"删除购物车");
-  //  self.frontView.hidden = NO;
-//    NSArray *arrayViews = [[NSBundle mainBundle]loadNibNamed:@"ConfirmView" owner:self options:nil];
-//    self.myView = [arrayViews objectAtIndex:0];
-//    NSLog(@"%@",_myView );
-  
-//    UIButton *btn1 = self.retainBtn;
-//    UIButton *btn2 = self.deleteBtn;
- 
+- (void)deleteCartView:(CartListModel *)cartModel{
     deleteModel = cartModel;
     self.myView.frame = CGRectMake(10, 120, SCREENWIDTH - 20, 188);
-        
-   
-//    [btn1 addTarget:self action:@selector(retainClicked) forControlEvents:UIControlEventTouchUpInside];
-//    [btn2 addTarget:self action:@selector(deleteClicked) forControlEvents:UIControlEventTouchUpInside];
-   // [self.view addSubview:_myView];
-    
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定删除吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alterView show];
     
@@ -704,25 +467,18 @@
     self.frontView.hidden = YES;
     
 }
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         [self deleteClicked];
     }
 }
+/**
+ *  删除购物车操作
+ */
 - (void)deleteClicked{
-    NSLog(@"确认删除");
     [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%d/delete_carts", Root_URL,deleteModel.ID];
-//    NSLog(@"url = %@", urlString);
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-//    [request setHTTPMethod:@"POST"];//设置请求方式为POST，默认为GET
-//    NSData *received = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-//    __unused NSString *str1 = [[NSString alloc]initWithData:received encoding:NSUTF8StringEncoding];
-//    NSLog(@"%@",str1);
-    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,[deleteModel.cartID integerValue]];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self downloadData];
@@ -745,43 +501,28 @@
     }];
     
 }
-
-
-//
-//- (void)updateYouhuiquanLabel{
-//    
-//}
-
+/**
+ *  购买按钮
+ */
 - (IBAction)purchaseClicked:(id)sender {
-    NSLog(@"购买商品");
     [MobClick event:@"purchase"];
     
     PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
-    
     purchaseVC.cartsArray = self.dataArray;
-    
-    NSLog(@"purchase.array = %@", purchaseVC.cartsArray);
-    
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
-
 #pragma mark ---- 重新购买按钮点击
-- (void)reBuyAddCarts:(NewCartsModel *)model{
-    NSLog(@"%d", (int)model.ID);
+- (void)reBuyAddCarts:(CartListModel *)model{
     [MobClick event:@"buy_again_click"];
-    
- 
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
-                                 @"cart_id":[NSNumber numberWithInt:model.ID]                                 };
-    //            self.detailsModel.skuID = selectskuID;
-    NSLog(@"skuID = %@, itemID = %@", model.sku_id, model.item_id);
-    
+                                 @"cart_id":model.cartID
+                                 };
+
     [manager POST:kCart_URL parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"JSON: %@", responseObject);
               //[self myAnimation];
               NSInteger codeNum = [responseObject[@"code"] integerValue];
               if (codeNum == 0) {
@@ -789,48 +530,130 @@
                   [self downloadHistoryData];
                   if (self.dataArray.count >= 18) {
                       NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
-                      
                       [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
                   }
               }else {
                   [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
               }
-              
-            
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-              NSLog(@"error:, --.>>>%@", error.description);
-              NSDictionary *dic = [error userInfo];
-              NSLog(@"dic = %@", dic);
-              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+              [SVProgressHUD showErrorWithStatus:@"加入购物车失败，请检查网络或者注销后重新登录。"];
               
-              __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
-              NSLog(@"%@",str);
-              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
-              view.backgroundColor = [UIColor blackColor];
-              view.layer.cornerRadius = 8;
-              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
-              label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
-              label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor whiteColor];
-              label.font = [UIFont systemFontOfSize:24];
-              [view addSubview:label];
-              [self.view addSubview:view];
-              
-              
-              [UIView animateWithDuration:1.0 animations:^{
-                  view.alpha = 0;
-              } completion:^(BOOL finished) {
-                  [view removeFromSuperview];
-              }];
           }];
-
-
-
-
-    NSLog(@"重新购买了");
+}
+#pragma mark == 点击进入商品详情
+- (void)composeImageTap:(CartListModel *)model {
+    NSString *weiUrl = model.item_weburl;
+    if (weiUrl == nil) {
+        return ;
+    }else {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:weiUrl forKey:@"web_url"];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        webVC.webDiction = dic;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
+}
+- (void)tapClick:(CartListModel *)model {
+    NSString *weiUrl = model.item_weburl;
+    if (weiUrl == nil) {
+        return ;
+    }else {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:weiUrl forKey:@"web_url"];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        webVC.webDiction = dic;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
+}
+- (void)backBtnClicked:(UIButton *)button{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 @end
+/**
+ *  //- (void)downloadData{
+ //    [SVProgressHUD dismiss];
+ //    NSLog(@"cart Url = %@", kCart_URL);
+ //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+ //        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_URL]];
+ //        if (data == nil) {
+ //            NSLog(@"下载失败");
+ //            return ;
+ //        }
+ //
+ //        [self performSelectorOnMainThread:@selector(fetchedCartData:) withObject:data waitUntilDone:YES];
+ //    });
+ //}
+ //// 获取可用优惠券金额 。。。
+ //- (void)createYhqValue{
+ //    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons", Root_URL];
+ //    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:string]];
+ //    if (data == nil) {
+ //        return;
+ //    }
+ //    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+ //    NSLog(@"dic = %@", dic);
+ //    NSArray *array = [dic objectForKey:@"results"];
+ //    for (NSDictionary *info in array) {
+ //        NSInteger value = [[info objectForKey:@"coupon_value"] integerValue];
+ //        if (value > youhuiquanValud && value < 200) {
+ //            youhuiquanValud = value;
+ //        }
+ //    }
+ //    NSLog(@"value = %ld", youhuiquanValud);
+ //    
+ //}
+ NSLog(@"Error: %@", error);
+ NSLog(@"error:, --.>>>%@", error.description);
+ NSDictionary *dic = [error userInfo];
+ NSLog(@"dic = %@", dic);
+ NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+ 
+ __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+ NSLog(@"%@",str);
+ UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 60)];
+ view.backgroundColor = [UIColor blackColor];
+ view.layer.cornerRadius = 8;
+ UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 60)];
+ label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
+ label.textAlignment = NSTextAlignmentCenter;
+ label.textColor = [UIColor whiteColor];
+ label.font = [UIFont systemFontOfSize:24];
+ [view addSubview:label];
+ [self.view addSubview:view];
+ 
+ [UIView animateWithDuration:1.0 animations:^{
+ view.alpha = 0;
+ } completion:^(BOOL finished) {
+ [view removeFromSuperview];
+ }];
+ //
+ NSLog(@"库存不足");
+ UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 30)];
+ view.backgroundColor = [UIColor darkGrayColor];
+ view.layer.cornerRadius = 4;
+ UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
+ label.text = @"商品库存不足";
+ label.textAlignment = NSTextAlignmentCenter;
+ label.textColor = [UIColor imageViewBorderColor];
+ label.font = [UIFont systemFontOfSize:14];
+ [view addSubview:label];
+ [self.view addSubview:view];
+ 
+ 
+ [UIView animateWithDuration:1.0 animations:^{
+ view.alpha = 0;
+ } completion:^(BOOL finished) {
+ [view removeFromSuperview];
+ }];
+ 
+ NSLog(@"%@", operation);
+ NSLog(@"Error: %@", error.userInfo);
+ NSDictionary *dic = error.userInfo;
+ NSData *data = [dic objectForKey:@"com.alamofire.serialization.response.error.data"];
+ __unused NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+ NSLog(@"data = %@", str);
+ 
+
+ */
