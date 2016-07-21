@@ -685,8 +685,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         flowLayout.minimumInteritemSpacing = 5;
         flowLayout.minimumLineSpacing = 5;
         
-        
-        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-70) collectionViewLayout:flowLayout];
+        //高度需要去掉导航bar高度64+昨今明和倒计时时间80=144
+        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-144) collectionViewLayout:flowLayout];
         
         homeCollectionView.backgroundColor = [UIColor whiteColor];
         homeCollectionView.tag = TAG_GOODS_YESTODAY_SCROLLVIEW + i;
@@ -1141,7 +1141,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [collection.mj_footer endRefreshing];
         
         if (!responseObject){
-            self.collectionViewScrollview.scrollEnabled = YES; 
+            self.collectionViewScrollview.scrollEnabled = YES;
             return;
         }
         if(requestIndex != self.currentIndex){
@@ -2196,12 +2196,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //    brandMaxY = brandMaxY - 1;
     //    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
-    //    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
-    //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
+    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+    NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
-    //NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
-    //self.brandView.frame.size.height,self.activityView.frame.size.height);
+    NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
+    self.brandView.frame.size.height,self.activityView.frame.size.height);
     
     //在最外层back scrollview上进行滑动
     if (scrollView.tag == TAG_BACK_SCROLLVIEW
