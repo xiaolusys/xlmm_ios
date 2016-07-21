@@ -2196,12 +2196,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //    brandMaxY = brandMaxY - 1;
     //    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
-    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
-    NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
+//    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+//    NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
-    NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
-    self.brandView.frame.size.height,self.activityView.frame.size.height);
+//    NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
+//    self.brandView.frame.size.height,self.activityView.frame.size.height);
     
     //在最外层back scrollview上进行滑动
     if (scrollView.tag == TAG_BACK_SCROLLVIEW
