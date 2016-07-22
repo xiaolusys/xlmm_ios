@@ -20,6 +20,7 @@
 #import "WebViewController.h"
 #import "MJExtension.h"
 #import "CartListModel.h"
+#import "JMPurchaseController.h"
 
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
     float allPrice;
@@ -376,7 +377,7 @@
 }
 - (void)deleteCatr{
     self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,[deleteModel.cartID integerValue]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,deleteModel.cartID];
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -422,7 +423,7 @@
 - (void)reduceNumber:(CartListModel *)cartModel{
     
     [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL, [cartModel.cartID integerValue]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -439,7 +440,7 @@
  */
 - (void)addNumber:(CartListModel *)cartModel{
    [SVProgressHUD showWithStatus:@"加载中..."];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,[cartModel.cartID integerValue]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -478,7 +479,7 @@
 - (void)deleteClicked{
     [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,[deleteModel.cartID integerValue]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,deleteModel.cartID];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self downloadData];
@@ -507,8 +508,10 @@
 - (IBAction)purchaseClicked:(id)sender {
     [MobClick event:@"purchase"];
     
-    PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
-    purchaseVC.cartsArray = self.dataArray;
+//    PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
+//    purchaseVC.cartsArray = self.dataArray;
+    JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
+    purchaseVC.purchaseGoodsArr = self.dataArray;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 #pragma mark ---- 重新购买按钮点击
@@ -518,7 +521,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
-                                 @"cart_id":model.cartID
+                                 @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID]
                                  };
 
     [manager POST:kCart_URL parameters:parameters

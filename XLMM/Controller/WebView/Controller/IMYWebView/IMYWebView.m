@@ -212,7 +212,7 @@
 //                                                                      preferredStyle:UIAlertControllerStyleAlert];
 //    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
 //                                                        style:UIAlertActionStyleCancel
-//                                                      handler:^(UIAlertAction *action) {
+//                                                       handler:^(UIAlertAction *action) {
 //                                                          completionHandler();
 //                                                      }]];
 //    [self presentViewController:alertController animated:YES completion:^{}];
@@ -221,7 +221,7 @@
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
-{
+ {
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
     [self updateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
