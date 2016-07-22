@@ -41,8 +41,6 @@
 @property (nonatomic, strong) JMPurchaseHeaderView *purchaseHeaderView;
 
 @property (nonatomic, strong) JMPurchaseFooterView *purchaseFooterView;
-//下拉的标志
-@property (nonatomic) BOOL isPullDown;
 @property (nonatomic,strong) UIView *maskView;
 @property (nonatomic,strong) JMOrderPayView *payView;
 /**
@@ -66,7 +64,6 @@
 @property (nonatomic, assign) BOOL isEnoughBudget;
 @property (nonatomic, assign) BOOL isUseXLW;
 @property (nonatomic, assign) BOOL isInstallWX;
-@property (nonatomic, assign) BOOL isAgreeTerms;
 /**
  *  优惠券是否满足条件
  */
@@ -85,6 +82,8 @@
 @property (nonatomic,assign) BOOL isXLWforAlipay;
 
 @end
+
+static BOOL isAgreeTerms = YES;
 
 @implementation JMPurchaseController {
     
@@ -130,9 +129,8 @@
     [self createTableView];
     [self createTableHeaderView];
     [self createTableFooterView];
-    [self createPullHeaderRefresh];
     [self loadAddressInfo];
-    
+    [self loadDataSource];
     
     self.isCanCoupon = NO;
     self.isUseXLW = NO;
@@ -142,9 +140,13 @@
     self.isEnoughCoupon = NO;
     
     self.isUserCoupon = NO;
-    self.isAgreeTerms = NO;
 
     
+    if (isAgreeTerms) {
+        self.purchaseFooterView.termsButton.selected = YES;
+    }else {
+        self.purchaseFooterView.termsButton.selected = NO;
+    }
 }
 - (void)initView {
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -156,21 +158,6 @@
     self.payView = payView;
     self.payView.delegate = self;
 
-}
-#pragma mrak 刷新界面
-- (void)createPullHeaderRefresh {
-    kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _isPullDown = YES;
-        [weakSelf loadDataSource];
-//        [weakSelf loadAddressInfo];
-    }];
-}
-- (void)endRefresh {
-    if (_isPullDown) {
-        _isPullDown = NO;
-        [self.tableView.mj_header endRefreshing];
-    }
 }
 #pragma mark 订单支付网络请求
 - (void)loadDataSource {
@@ -193,13 +180,10 @@
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
         [self fetchedCartsData:responseObject];
-        [self endRefresh];
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self endRefresh];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
-    
 }
 #pragma mark 地址信息网络请求
 - (void)loadAddressInfo {
@@ -207,16 +191,12 @@
     [manager GET:kAddress_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return ;
         [self fetchedAddressData:responseObject];
-        [self endRefresh];
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self endRefresh];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
 }
-/**
- *  订单信息
- */
+#pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
     NSArray *logArr = purchaseDic[@"logistics_companys"];
     NSDictionary *logisticsDic = logArr[0];
@@ -258,7 +238,6 @@
             _rightAmount = [[dicExtras objectForKey:@"value"] floatValue];
             self.purchaseFooterView.appPayLabel.text = [NSString stringWithFormat:@"¥%.2f",_rightAmount];
             continue;
-            
         }
         // 余额
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 3 && _totalPayment > 0) {
@@ -272,18 +251,14 @@
                 //不足支付
                 self.isEnoughBudget = NO;
             }
-            
         }
     }
-    
     _uuid = [purchaseDic objectForKey:@"uuid"];
     _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
     
     [self calculationLabelValue];
-    
-    
 }
 #pragma mark 计算最终选需要付款的金额
 - (void)calculationLabelValue {
@@ -293,8 +268,9 @@
         self.isCouponEnoughPay = YES;
         _discount = _amontPayment;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
-        NSString *pamentStr = [NSString stringWithFormat:@"应付金额%.2f", 0.00];
-        self.purchaseFooterView.paymenLabel.attributedText = [self stringText:pamentStr];
+        NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
+        NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_amontPayment];
+        self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
         self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
     }else {
         self.isCouponEnoughPay = NO;
@@ -303,13 +279,15 @@
             if (_availableFloat - surplus > 0.000001 || (fabs(_availableFloat - surplus) < 0.000001 || fabs(surplus - _couponValue) < 0.000001)) {
                 //钱包金额够使用
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
-                NSString *pamentStr = [NSString stringWithFormat:@"应付金额%.2f", 0.00];
-                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:pamentStr];
+                NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
+                NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
+                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
-                NSString *pamentStr = [NSString stringWithFormat:@"应付金额%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
-                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:pamentStr];
+                NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _couponValue - _rightAmount - _availableFloat];
+                NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
+                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
             }
         }else {
@@ -320,8 +298,9 @@
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
             }
             self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _discount];
-            NSString *pamentStr = [NSString stringWithFormat:@"应付金额%.2f", _amontPayment - _discount];
-            self.purchaseFooterView.paymenLabel.attributedText = [self stringText:pamentStr];
+            NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _discount];
+            NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
+            self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
         }
     }
 }
@@ -415,7 +394,6 @@
  */
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
     [MobClick event:@"logistics_choose"];
-    
     self.purchaseHeaderView.logisticsLabel.text = model.name;
     _logisticsID = model.logistcsID;
     
@@ -450,15 +428,15 @@
     }else if (button.tag == 102) {
         button.selected = !button.selected;
         if (button.selected) { // 弹出框
-            self.isAgreeTerms = YES;
+            isAgreeTerms = YES;
             NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，订单向外贸工厂订货后无法退款，需要收货后走退货流程或者换货。质量问题退货会以现金券或小鹿余额形式补偿10元邮费。给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
         }else {
-            self.isAgreeTerms = NO;
+            isAgreeTerms = NO;
         }
     }else if (button.tag == 103) {
-        if (!self.isAgreeTerms) {
+        if (!isAgreeTerms) {
             [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
             return ;
         }else {
@@ -512,20 +490,12 @@
             [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
             return ;
         }
-        if (self.isEnoughBudget && self.isUseXLW) {
-            _payMethod = @"wx";
-        }else {
-            _payMethod = @"wx";
-        }
+        _payMethod = @"wx";
         [self hidePickerView];
         [self payMoney];
     }else if (index == 102) { // 选择了支付宝支付
         [SVProgressHUD showWithStatus:@"正在支付中....."];
-        if (self.isEnoughBudget && self.isUseXLW) {
-            _payMethod = @"alipay";
-        }else {
-            _payMethod = @"alipay";
-        }
+        _payMethod = @"alipay";
         [self hidePickerView];
         [self payMoney];
     }else{}
@@ -580,14 +550,6 @@
                     parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [_xlWallet objectForKey:@"pid"], _totalPayment];
                 }
             }else {
-                if (_payMethod.length == 0) {
-                    [SVProgressHUD showErrorWithStatus:@"请选择支付方式"];
-                    return;
-                }
-            }
-            if (_payMethod.length == 0) {
-                [SVProgressHUD showErrorWithStatus:@"余额不足请选择支付方式"];
-                return;
             }
             _parmsStr = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%.2f&channel=%@&pay_extras=%@",_parmsStr,_discount, [[NSNumber numberWithFloat:_totalPayment] floatValue], _payMethod, parms];
             [self submitBuyGoods];
@@ -655,9 +617,7 @@
                             NSLog(@"%@",error);
                             [self performSelector:@selector(backClick) withObject:nil afterDelay:1.0];
                         }
-                        
                     }
-                    
                 }];
             });
         }
@@ -739,13 +699,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作
-- (NSMutableAttributedString *)stringText:(NSString *)string {
+- (NSMutableAttributedString *)stringText:(NSString *)string WithStr:(NSString *)payString {
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+    NSInteger payLength = payString.length;
     NSInteger strLength = string.length;
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,4)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(4, strLength - 4)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(4, payLength)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
     [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(0,4)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.] range:NSMakeRange(4, strLength - 4)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.] range:NSMakeRange(4,payLength)];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
     return str;
 }
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
@@ -757,7 +720,6 @@
     }
     return dic;
 }
-
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -772,7 +734,6 @@
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
-    [self.tableView.mj_header beginRefreshing];
     if ([WXApi isWXAppInstalled]) {
         self.isInstallWX = YES;
     }else {
@@ -785,8 +746,7 @@
     
     [MobClick endLogPageView:@"purchase"];
 }
-- (void)purchaseViewWillEnterForeground:(NSNotification *)notification
-{
+- (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
     //进入前台时调用此函数
     NSLog(@"purchaseViewWillEnterForeground ");
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;

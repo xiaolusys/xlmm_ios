@@ -113,6 +113,7 @@
     termsButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH + 40);
     termsButton.tag = 102;
     [termsButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.termsButton = termsButton;
     
     UILabel *termsLabel = [UILabel new];
     [termsButton addSubview:termsLabel];

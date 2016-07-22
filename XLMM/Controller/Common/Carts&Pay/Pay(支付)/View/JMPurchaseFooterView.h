@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong) UIButton *goPayButton;
 
+@property (nonatomic, strong) UIButton *termsButton;
+
 @property (nonatomic, weak) id<JMPurchaseFooterViewDelegate> delegate;
 
 

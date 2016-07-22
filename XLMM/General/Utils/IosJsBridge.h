@@ -9,7 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef void(^DeviceBlock)(NSString *uuid);
+
 @interface IosJsBridge : NSObject
+
+
+@property (nonatomic, copy) DeviceBlock deviceBlock;
+
 + (void)dispatchJsBridgeFunc:(UIViewController *)vc name:(NSString *)name para:(NSString*)para;
 + (NSString *)getMobileSNCode;
 

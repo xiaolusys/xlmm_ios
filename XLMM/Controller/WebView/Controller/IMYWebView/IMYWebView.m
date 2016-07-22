@@ -628,7 +628,6 @@
     NSLog(@"WKScriptMessageHandler %@ %@",message.name, message.body);
     [IosJsBridge dispatchJsBridgeFunc:self.viewController name:message.name para:message.body];
     
-        
 }
 
 - (void)registerWkwebviewJsBridge:(WKWebViewConfiguration*) configuration{
