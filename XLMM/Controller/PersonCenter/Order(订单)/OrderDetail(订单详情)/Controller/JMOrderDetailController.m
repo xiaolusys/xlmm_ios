@@ -420,8 +420,11 @@
     queryVC.orderDataSource = arr;
     queryVC.logisDataSource = logisArr;
     NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
-    queryVC.logName = ligisticsDic[@"name"];
-    
+    if (ligisticsDic == nil) {
+        queryVC.logName = self.orderDetailHeaderView.logisticsStr;
+    }else {
+        queryVC.logName = ligisticsDic[@"name"];
+    }
     [self.navigationController pushViewController:queryVC animated:YES];
 }
 - (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
@@ -434,7 +437,11 @@
         queryVC.logisDataSource = _logisticsArr;
     }
     NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
-    queryVC.logName = ligisticsDic[@"name"];
+    if (ligisticsDic == nil) {
+        queryVC.logName = self.orderDetailHeaderView.logisticsStr;
+    }else {
+        queryVC.logName = ligisticsDic[@"name"];
+    }
     [self.navigationController pushViewController:queryVC animated:YES];
 }
 #pragma mark 商品可选状态

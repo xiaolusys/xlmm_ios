@@ -89,8 +89,10 @@
     
     NSDictionary *logisticsDic = orderDetailModel.logistics_company;
     if (logisticsDic.count == 0) {
+        self.logisticsStr = @"小鹿推荐";
         self.logisticsLabel.text = @"小鹿推荐";
     }else {
+        self.logisticsStr = logisticsDic[@"name"];
         self.logisticsLabel.text = logisticsDic[@"name"];
     }
     NSDictionary *dic = [orderDetailModel.orders[0] mj_keyValues];

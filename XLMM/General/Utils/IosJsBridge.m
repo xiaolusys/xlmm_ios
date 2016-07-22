@@ -151,8 +151,8 @@
 
 + (void)getNativeMobileSNCode{
     NSString *device = [self getMobileSNCode];
-
-
+    
+//    self.deviceBlock(device);
 }
 
 /**
