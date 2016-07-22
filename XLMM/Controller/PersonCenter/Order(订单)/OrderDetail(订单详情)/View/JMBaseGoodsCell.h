@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JMOrderGoodsModel.h"
+#import "CartListModel.h"
 
 @class JMBaseGoodsCell;
 //@class JMOrderGoodsModel;
@@ -27,6 +28,8 @@
 - (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel;
 
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount;
+
+- (void)configPurchaseModel:(CartListModel *)cartModel;
 
 @property (nonatomic, weak) id<JMBaseGoodsCellDelegate>delegate;
 

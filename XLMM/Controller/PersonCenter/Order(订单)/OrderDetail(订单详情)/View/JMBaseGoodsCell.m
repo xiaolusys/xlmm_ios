@@ -233,6 +233,26 @@
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
     
 }
+/**
+ *  支付订单数据源赋值
+ */
+- (void)configPurchaseModel:(CartListModel *)cartModel {
+    NSString *string = cartModel.pic_path;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
+    
+    self.titleLabel.text = cartModel.title;
+    self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",cartModel.sku_name];
+    CGFloat payment = [cartModel.total_fee floatValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    self.numLabel.text = [NSString stringWithFormat:@"x%@",cartModel.num];
+    
+}
+
 - (void)optionButtonClick:(UIButton *)button {
     if (_delegate && [_delegate respondsToSelector:@selector(composeOptionClick:Button:Section:Row:)]) {
         [_delegate composeOptionClick:self Button:button Section:_sectionCount Row:_rowCount];

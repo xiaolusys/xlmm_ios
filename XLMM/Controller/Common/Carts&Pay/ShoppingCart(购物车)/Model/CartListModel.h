@@ -21,7 +21,7 @@
 /**
  *  商品ID
  */
-@property (nonatomic,copy) NSString *cartID;
+@property (nonatomic,assign) NSInteger cartID;
 
 @property (nonatomic,copy) NSString *is_repayable;
 
