@@ -8,6 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class JMUpdataAppPopView;
+
+@protocol JMUpdataAppPopViewDelegate <NSObject>
+
+@optional
+
+- (void)composeUpdataAppButton:(JMUpdataAppPopView *)updataButton didClick:(NSInteger)index;
+
+@end
+
 @interface JMUpdataAppPopView : UIView
+
+@property (nonatomic, weak) id<JMUpdataAppPopViewDelegate> delegate;
+
+@property (nonatomic, copy) NSString *releaseNotes;
+
++ (instancetype)defaultUpdataPopView;
 
 @end
