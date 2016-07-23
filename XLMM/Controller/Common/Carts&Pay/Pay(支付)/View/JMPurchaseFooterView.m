@@ -68,24 +68,13 @@
     walletButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH - 15);
     walletButton.tag = 101;
     [walletButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    UILabel *walletL = [UILabel new];
-//    [walletButton addSubview:walletL];
-//    walletL.font = [UIFont systemFontOfSize:14.];
-//    walletL.text = @"小鹿钱包";
-//    walletL.textColor = [UIColor buttonTitleColor];
-    
+
     UILabel *walletLabel = [UILabel new];
     [walletButton addSubview:walletLabel];
     walletLabel.font = [UIFont systemFontOfSize:14.];
     walletLabel.textColor = [UIColor buttonTitleColor];
     self.walletLabel = walletLabel;
-    
-//    UIImageView *clicleImage = [UIImageView new];
-//    clicleImage.image = [UIImage imageNamed:@"circle_wallet_Normal"];//circle_wallet_Selected
-//    [walletButton addSubview:clicleImage];
-//    self.clicleImage = clicleImage;
-    
+
     UIView *appPayView = [UIView new];
     [self addSubview:appPayView];
     
@@ -106,29 +95,32 @@
     [self addSubview:currentTwoView];
     currentTwoView.backgroundColor = [UIColor lineGrayColor];
     
+    
+    UIView *termsView = [UIView new];
+    [self addSubview:termsView];
+    
     UIButton *termsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self addSubview:termsButton];
+    [termsView addSubview:termsButton];
     [termsButton setImage:[UIImage imageNamed:@"right_button"] forState:UIControlStateNormal];
     [termsButton setImage:[UIImage imageNamed:@"termsImage"] forState:UIControlStateSelected];
-    termsButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH + 40);
+//    termsButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH + 40);
     termsButton.tag = 102;
     [termsButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.termsButton = termsButton;
     
     UILabel *termsLabel = [UILabel new];
-    [termsButton addSubview:termsLabel];
-    termsLabel.font = [UIFont systemFontOfSize:14.];
+    [termsView addSubview:termsLabel];
+    termsLabel.font = [UIFont systemFontOfSize:13.];
     NSString *termStr = @"我已阅读并同意小鹿美美购买条款";
     NSInteger termStrLength = termStr.length;
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:termStr];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,7)];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(7, termStrLength - 7)];
     termsLabel.attributedText = str;
+    termsLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *termsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(termsTapClick:)];
+    [termsLabel addGestureRecognizer:termsTap];
 
-//    UIImageView *termsImage = [UIImageView new];
-//    termsImage.image = [UIImage imageNamed:@"right_button"]; // 28.28
-//    [termsButton addSubview:termsImage];
-    
     // == 第三个分割线 == //
     UIView *goodsMoneyView = [UIView new];
     [self addSubview:goodsMoneyView];
@@ -158,17 +150,7 @@
     
     UIView *bottomView = [UIView new];
     [self addSubview:bottomView];
-    
-//    UIView *paymenView = [UIView new];
-//    [bottomView addSubview:paymenView];
-//    paymenView.backgroundColor = [UIColor redColor];
-//    
-//    UILabel *paymenL = [UILabel new];
-//    [paymenView addSubview:paymenL];
-//    paymenL.font = [UIFont systemFontOfSize:12.];
-//    paymenL.textColor = [UIColor buttonTitleColor];
-//    paymenL.text = @"应付金额";
-    
+
     UILabel *paymenLabel = [UILabel new];
     [bottomView addSubview:paymenLabel];
     paymenLabel.font = [UIFont systemFontOfSize:18.];
@@ -217,21 +199,12 @@
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(@45);
     }];
-//    [walletL mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(walletButton).offset(15);
-//        make.centerY.equalTo(walletButton.mas_centerY);
-//    }];
+
     [walletLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(walletButton).offset(-35);
         make.centerY.equalTo(walletButton.mas_centerY);
     }];
-//    [clicleImage mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(walletButton).offset(-15);
-//        make.centerY.equalTo(walletButton.mas_centerY);
-//        make.width.height.mas_equalTo(@18);
-//    }];
-    
-    
+
     [appPayView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(walletButton.mas_bottom);
         make.left.right.equalTo(weakSelf);
@@ -252,20 +225,20 @@
         make.height.mas_equalTo(@15);
     }];
     
-    [termsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [termsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(currentTwoView.mas_bottom);
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(@45);
     }];
+    [termsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(termsView);
+        make.width.height.mas_equalTo(@45);
+        make.centerY.equalTo(termsView.mas_centerY);
+    }];
     [termsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(termsButton).offset(15);
+        make.left.equalTo(termsView).offset(15);
         make.centerY.equalTo(termsButton.mas_centerY);
     }];
-//    [termsImage mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(termsButton).offset(-15);
-//        make.centerY.equalTo(termsButton.mas_centerY);
-//        make.width.height.mas_equalTo(@15);
-//    }];
     
     [goodsMoneyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(termsButton.mas_bottom);
@@ -273,7 +246,7 @@
         make.height.mas_equalTo(@80);
     }];
     [goodsL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(goodsMoneyView).offset(10);
+        make.left.equalTo(goodsMoneyView).offset(15);
         make.top.equalTo(goodsMoneyView).offset(20);
     }];
     [postL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -294,14 +267,7 @@
         make.top.equalTo(goodsMoneyView.mas_bottom);
         make.height.mas_equalTo(@90);
     }];
-//    [paymenView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(bottomView).offset(10);
-//        make.centerX.equalTo(bottomView.mas_centerX);
-//    }];
-//    [paymenL mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(paymenView);
-//        make.centerY.equalTo(paymenView.mas_centerY);
-//    }];
+
     [paymenLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(bottomView).offset(10);
         make.centerX.equalTo(bottomView.mas_centerX);
@@ -312,20 +278,18 @@
         make.width.mas_equalTo(@(SCREENWIDTH - 30));
         make.height.mas_equalTo(@40);
     }];
-    
-    
-    
-    
+
 }
 - (void)buttonClick:(UIButton *)button {
-//    if (button.tag == 101) {
-//        button.selected = !button.selected;
-//    }
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterButtonView:UIButton:)]) {
         [_delegate composeFooterButtonView:self UIButton:button];
     }
 }
-
+- (void)termsTapClick:(UITapGestureRecognizer *)tap {
+    if (_delegate && [_delegate respondsToSelector:@selector(composeFooterTapView:)]) {
+        [_delegate composeFooterTapView:self];
+    }
+}
 @end
 
 

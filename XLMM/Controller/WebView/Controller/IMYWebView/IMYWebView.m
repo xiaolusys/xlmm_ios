@@ -193,6 +193,9 @@
 }
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
+//    [webView evaluateJavaScript:@"getNativeMobileSNCode" completionHandler:^(id _Nullable value, NSError * _Nullable error) {
+//        
+//    }];
     [self callback_webViewDidFinishLoad];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
@@ -627,6 +630,11 @@
     
     NSLog(@"WKScriptMessageHandler %@ %@",message.name, message.body);
     [IosJsBridge dispatchJsBridgeFunc:self.viewController name:message.name para:message.body];
+    
+//    IosJsBridge *ios = [IosJsBridge new];
+//    ios.deviceBlock = ^(NSString *uuid) {
+//        message(uuid);
+//    };
     
 }
 

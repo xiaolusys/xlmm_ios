@@ -726,6 +726,8 @@
 		1FDD07041D40FDDF0010231F /* score@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07031D40FDDF0010231F /* score@2x.png */; };
 		1FDD07061D40FED30010231F /* termsImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07051D40FED30010231F /* termsImage@2x.png */; };
 		1FDD07141D41F0610010231F /* UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07131D41F0610010231F /* UUID.m */; };
+		1FDD07161D4301B50010231F /* appUpDataImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07151D4301B50010231F /* appUpDataImage@2x.png */; };
+		1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07181D4303790010231F /* JMUpdataAppPopView.m */; };
 		1FF3F9991D3CB31500FABBCE /* MaMaExplainFirst@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */; };
 		1FF3F99A1D3CB31500FABBCE /* MaMaExplainSecond@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */; };
 		1FF3F99B1D3CB31500FABBCE /* MaMaExplainThird@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */; };
@@ -2034,6 +2036,9 @@
 		1FDD07051D40FED30010231F /* termsImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "termsImage@2x.png"; sourceTree = "<group>"; };
 		1FDD07121D41F0610010231F /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
 		1FDD07131D41F0610010231F /* UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUID.m; sourceTree = "<group>"; };
+		1FDD07151D4301B50010231F /* appUpDataImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appUpDataImage@2x.png"; sourceTree = "<group>"; };
+		1FDD07171D4303790010231F /* JMUpdataAppPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUpdataAppPopView.h; sourceTree = "<group>"; };
+		1FDD07181D4303790010231F /* JMUpdataAppPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUpdataAppPopView.m; sourceTree = "<group>"; };
 		1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainFirst@2x.png"; sourceTree = "<group>"; };
 		1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainSecond@2x.png"; sourceTree = "<group>"; };
 		1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainThird@2x.png"; sourceTree = "<group>"; };
@@ -4253,6 +4258,8 @@
 		1F27A6421D275FB400A0F80B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FDD07171D4303790010231F /* JMUpdataAppPopView.h */,
+				1FDD07181D4303790010231F /* JMUpdataAppPopView.m */,
 				1F27A6431D275FB400A0F80B /* JMRepopView.h */,
 				1F27A6441D275FB400A0F80B /* JMRepopView.m */,
 				1F27A6451D275FB400A0F80B /* JMRootgoodsCell.h */,
@@ -5300,6 +5307,7 @@
 		1FF533271D27762F003DEABF /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1FDD07151D4301B50010231F /* appUpDataImage@2x.png */,
 				1FF533281D27762F003DEABF /* backTop.png */,
 				1FF533291D27762F003DEABF /* btn_close@2x.png */,
 				1FF5332A1D27762F003DEABF /* hongbao_back@2x.png */,
@@ -6081,6 +6089,7 @@
 				183075B11C97D49A00B7665E /* loading动画0019.png in Resources */,
 				1FF5337B1D2D0E18003DEABF /* running1.png in Resources */,
 				325B79D11C97E7160022F930 /* Head2View.xib in Resources */,
+				1FDD07161D4301B50010231F /* appUpDataImage@2x.png in Resources */,
 				183075E81C97D49A00B7665E /* childIcon.png in Resources */,
 				1F56E28E1D348E670092EC91 /* outDate_coupon@2x.png in Resources */,
 				1F4DE5501CE4365600114BDA /* circle_wallet_Normal@2x.png in Resources */,
@@ -6585,6 +6594,7 @@
 				1F498AFF1D2761BE007E77FC /* CommonWebViewViewController.m in Sources */,
 				183074131C97D17800B7665E /* QNUpToken.m in Sources */,
 				18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */,
+				1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */,
 				183073E11C97D17800B7665E /* QNHex.m in Sources */,
 				183073EC1C97D17800B7665E /* MJRefreshComponent.m in Sources */,
 				1830744E1C97D17900B7665E /* SendMessageToWeibo.m in Sources */,

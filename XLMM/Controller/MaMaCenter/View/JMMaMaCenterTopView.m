@@ -116,9 +116,12 @@
     self.remainingTimeLabel.attributedText = str;
     
     NSInteger limtNum = [limtStr integerValue];
-    if (limtNum < 0) {
+    if (limtNum > 15) {
         self.renewImage.hidden = YES;
         self.renewView.userInteractionEnabled = NO;
+    }else {
+        self.renewImage.hidden = NO;
+        self.renewView.userInteractionEnabled = YES;
     }
     
     

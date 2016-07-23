@@ -56,6 +56,7 @@
 #import "Masonry.h"
 #import "JMHelper.h"
 #import "JMDBManager.h"
+#import "JMUpdataAppPopView.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -89,7 +90,7 @@
 #define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
 #define TAG_COLLECTION_BRAND_END (TAG_ROOT_VIEW_BASE+11+500)
 
-@interface MMRootViewController ()<JMRepopViewDelegate,MMNavigationDelegate, WXApiDelegate>{
+@interface MMRootViewController ()<JMRepopViewDelegate,MMNavigationDelegate, WXApiDelegate,JMUpdataAppPopViewDelegate>{
     UIView *_view;
     UIPageViewController *_pageVC;
     NSArray *_pageContentVC;
@@ -115,6 +116,8 @@
     float allBrandHeight;
     
     NSMutableDictionary *_diction;
+    
+    NSString *_releaseNotes;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -162,7 +165,14 @@
 @property (nonatomic,strong) JMRepopView *popView;
 
 @property (nonatomic, strong) UIButton *topButton;
-
+/**
+ *  版本更新弹出视图
+ */
+@property (nonatomic, strong) JMUpdataAppPopView *updataPopView;
+/**
+ *  是否弹出更新视图
+ */
+@property (nonatomic, assign) BOOL isPopUpdataView;
 @end
 
 
@@ -192,13 +202,15 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //    return _aboveView;
 //}
 //
-//- (UIView *)goodsView {
-//    if (!_goodsView) {
-//        self.goodsView = [[UIView alloc] initWithFrame:CGRectMake(0, ABOVEHIGHT, SCREENWIDTH, SCREENHEIGHT - ABOVEHIGHT)];
-//    }
-//    return _goodsView;
-//}
-//
+- (UIView *)maskView {
+    if (!_maskView) {
+        _maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _maskView.backgroundColor = [UIColor blackColor];
+        _maskView.alpha = 0.3;
+    }
+    return _maskView;
+}
+
 
 - (NSMutableArray *)activityDataArr {
     if (!_activityDataArr) {
@@ -518,9 +530,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     /**
      判断是否为第一次打开 -- 选择弹出优惠券弹窗
      */
-    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0.3;
+//    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    self.maskView.backgroundColor = [UIColor blackColor];
+//    self.maskView.alpha = 0.3;
     [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidepopView)]];
     JMRepopView *popView = [JMRepopView defaultPopView];
     self.popView = popView;
@@ -629,6 +641,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if([self checkNeedRefresh]){
         [self refreshView];
     }
+    if (self.isPopUpdataView == YES) {
+        [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
+    }else {
+        
+    }
+    
 }
 
 - (void)createRequestURL {
@@ -2368,7 +2386,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Get app version fail.");
     }];
-    
 }
 
 - (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
@@ -2381,10 +2398,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     self.latestVersion = [infoDic objectForKey:@"version"];
     self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
     self.trackName = [infoDic objectForKey:@"trackName"];//trackName
-    NSString *releaseNotes = [infoDic objectForKey:@"releaseNotes"];
-    
-    releaseNotes = [NSString stringWithFormat:@"新版本升级信息：\n%@",releaseNotes];
-    
+    _releaseNotes = [infoDic objectForKey:@"releaseNotes"];
+
+    _releaseNotes = [NSString stringWithFormat:@"新版本升级信息：\n%@",_releaseNotes];
+
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
     double doubleCurrentVersion = [app_Version doubleValue];
@@ -2393,42 +2410,34 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     NSLog(@"Get app version store=%@ %f appversion=%@ %f ",self.latestVersion, doubleUpdateVersion,app_Version, doubleCurrentVersion);
     
-    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending)
-    {
-        NSLog(@"%@ is bigger",self.latestVersion);
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-                                           message:releaseNotes
-                                          delegate: self
-                                 cancelButtonTitle:@"取消"
-                                 otherButtonTitles: @"升级", nil];
-        alert.tag = 1001;
-        [alert show];
-        
+    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending) {
+        self.isPopUpdataView = YES;
     }else
     {
-        NSLog(@"%@ is bigger",app_Version);
+        self.isPopUpdataView = NO;
     }
-    //    if (doubleCurrentVersion < doubleUpdateVersion) {
-    //
-    //        UIAlertView *alert;
-    //        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-    //                                           message:@"有新版本，是否升级！"
-    //                                          delegate: self
-    //                                 cancelButtonTitle:@"取消"
-    //                                 otherButtonTitles: @"升级", nil];
-    //        alert.tag = 1001;
-    //        [alert show];
-    //    }
-    
 }
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1001) {
-        if (buttonIndex == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
-        }
+- (void)updataAppPopView {
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideUpdataView)]];
+    JMUpdataAppPopView *updataPopView = [JMUpdataAppPopView defaultUpdataPopView];
+    self.updataPopView = updataPopView;
+    self.updataPopView.releaseNotes = _releaseNotes;
+    self.updataPopView.delegate = self;
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.updataPopView];
+    [JMPopViewAnimationSpring showView:self.updataPopView overlayView:self.maskView];
+}
+- (void)composeUpdataAppButton:(JMUpdataAppPopView *)updataButton didClick:(NSInteger)index {
+    if (index == 100) {
+        [self hideUpdataView];
+    }else if (index == 101) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        [self hideUpdataView];
+    }else {
     }
+}
+- (void)hideUpdataView {
+    [JMPopViewAnimationSpring dismissView:self.updataPopView overlayView:self.maskView];
 }
 #pragma mark 网络请求得到地址信息
 - (void)loadAddressInfo {
