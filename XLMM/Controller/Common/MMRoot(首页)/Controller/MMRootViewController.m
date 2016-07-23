@@ -86,9 +86,9 @@
 #define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
 #define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
 #define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
-//因为可能有多个品牌,那么先预留100个
+//因为可能有多个品牌,那么先预留500个
 #define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
-#define TAG_COLLECTION_BRAND_END (TAG_ROOT_VIEW_BASE+11+100)
+#define TAG_COLLECTION_BRAND_END (TAG_ROOT_VIEW_BASE+11+500)
 
 @interface MMRootViewController ()<JMRepopViewDelegate,MMNavigationDelegate, WXApiDelegate,JMUpdataAppPopViewDelegate>{
     UIView *_view;
@@ -703,8 +703,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         flowLayout.minimumInteritemSpacing = 5;
         flowLayout.minimumLineSpacing = 5;
         
-        
-        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-70) collectionViewLayout:flowLayout];
+        //高度需要去掉导航bar高度64+昨今明和倒计时时间80=144
+        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-144) collectionViewLayout:flowLayout];
         
         homeCollectionView.backgroundColor = [UIColor whiteColor];
         homeCollectionView.tag = TAG_GOODS_YESTODAY_SCROLLVIEW + i;
@@ -1059,11 +1059,15 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)goodsRequest{
     NSString *currentUrl = self.urlArr[self.currentIndex];
+    NSInteger requestIndex = self.currentIndex;
     NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,(long)self.currentIndex);
     AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
     [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return;
-        
+        if(requestIndex != self.currentIndex){
+            NSLog(@"user change currentindex %ld %ld", requestIndex, self.currentIndex);
+            return;
+        }
         [self goodsResult:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -1145,15 +1149,25 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     self.collectionViewScrollview.scrollEnabled = NO;
     
-    
+    NSInteger requestIndex = self.currentIndex;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
         //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
-        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
-        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1 2结合
+        UICollectionView *collection = self.collectionArr[requestIndex];
         [collection.mj_footer endRefreshing];
-        if (!responseObject)return ;
+        
+        if (!responseObject){
+            self.collectionViewScrollview.scrollEnabled = YES;
+            return;
+        }
+        if(requestIndex != self.currentIndex){
+            NSLog(@"user change index %ld %ld", requestIndex, self.currentIndex);
+            self.collectionViewScrollview.scrollEnabled = YES;
+            return;
+        }
+        
         [self goodsResult:responseObject];
         self.collectionViewScrollview.scrollEnabled = YES;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -1555,17 +1569,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark --collection的代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         NSLog(@"brand collection");
-        int index = 0;
-        for(NSMutableArray *obj in self.brandDataArr)
-        {
-            //NSLog(@"%@",obj);
-            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-                return obj.count;
-            }
-            index++;
-        }
         return 0;
     }
     else{
@@ -1579,25 +1584,25 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         //NSLog(@"brand collection cellForItemAtIndexPath");
         JMRootScrolCell *cell = (JMRootScrolCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
         
-        int index = 0;//JMRootgoodsCell
-        for(NSMutableArray *obj in self.brandDataArr)
-        {
-            //NSLog(@"%@",obj);
-            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-                NSArray *goods = [obj copy];
-                if(goods.count > indexPath.row){
-                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
-                    [cell fillDataWithModel:model];
-                }
-                return cell;
-                
-            }
-            index++;
-        }
+//        int index = 0;//JMRootgoodsCell
+//        for(NSMutableArray *obj in self.brandDataArr)
+//        {
+//            //NSLog(@"%@",obj);
+//            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+//                NSArray *goods = [obj copy];
+//                if(goods.count > indexPath.row){
+//                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+//                    [cell fillDataWithModel:model];
+//                }
+//                return cell;
+//                
+//            }
+//            index++;
+//        }
         return cell;
     }
     else{
@@ -1631,7 +1636,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         //        NSLog(@"brand collection sizeForItemAtIndexPath");
         return CGSizeMake(110, 145);
     }
@@ -1649,25 +1654,25 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
-        
-        int index = 0;
-        for(NSMutableArray *obj in self.brandDataArr)
-        {
-            //NSLog(@"%@",obj);
-            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-                NSArray *goods = [obj copy];
-                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
-                
-            }
-            index++;
-        }
-        
-        
-        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
-        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
-        [self.navigationController pushViewController:collectionVC animated:YES];
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
+//        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
+//        
+//        int index = 0;
+//        for(NSMutableArray *obj in self.brandDataArr)
+//        {
+//            //NSLog(@"%@",obj);
+//            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+//                NSArray *goods = [obj copy];
+//                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
+//                
+//            }
+//            index++;
+//        }
+//        
+//        
+//        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
+//        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
+//        [self.navigationController pushViewController:collectionVC animated:YES];
         
     }
     else{
@@ -2209,12 +2214,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //    brandMaxY = brandMaxY - 1;
     //    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
-    //    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
-    //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
+//    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+//    NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
-    //NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
-    //self.brandView.frame.size.height,self.activityView.frame.size.height);
+//    NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
+//    self.brandView.frame.size.height,self.activityView.frame.size.height);
     
     //在最外层back scrollview上进行滑动
     if (scrollView.tag == TAG_BACK_SCROLLVIEW

@@ -34,20 +34,27 @@
 //            
 //            image = [UIImage imageWithData:data];
 //        }];
-        
-        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMappedAlways error:&imageError]; //[urlStr URLEncodedString]  == > urlString
-        
-        
+        @try{
+            data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString] options:NSDataReadingMappedAlways error:&imageError]; //[urlStr URLEncodedString]  == > urlString
+            if(imageError != nil){
+                NSLog(@"loadingImageError = %@", imageError);
+                //默认后台返回的是转码过的，app直接访问，如果访问出错再转码尝试一次
+                NSString *urlStr = [urlString JMUrlEncodedString];
+                data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr] options:NSDataReadingMapped error:&imageError];
+            }
+
+        }
+        @catch(NSException *exception) {
+            NSLog(@"loadingImageError exception:%@", exception);
+            //默认后台返回的是转码过的，app直接访问，如果访问出错再转码尝试一次
+            NSString *urlStr = [urlString JMUrlEncodedString];
+            data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr] options:NSDataReadingMapped error:&imageError];
+        }
+       
         
     }
     
-    if(imageError != nil){
-        NSLog(@"loadingImageError = %@", imageError);
-        //默认后台返回的是转码过的，app直接访问，如果访问出错再转码尝试一次
-        NSString *urlStr = [urlString JMUrlEncodedString];
-        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr] options:NSDataReadingMapped error:&imageError];
-    }
-    // NSLog(@"data = %@", data);
+        // NSLog(@"data = %@", data);
     NSLog(@"imagewithURLString data.length %ld", (unsigned long)data.length);
     
     image = [UIImage imageWithData:data];
