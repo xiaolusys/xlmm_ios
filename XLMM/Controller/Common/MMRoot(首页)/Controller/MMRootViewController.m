@@ -2388,8 +2388,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     NSLog(@"Get app version store=%@ %f appversion=%@ %f ",self.latestVersion, doubleUpdateVersion,app_Version, doubleCurrentVersion);
     
-    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending)
-    {
+    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending) {
         NSLog(@"%@ is bigger",self.latestVersion);
         UIAlertView *alert;
         alert = [[UIAlertView alloc] initWithTitle:self.trackName
@@ -2417,6 +2416,15 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     //    }
     
 }
+/**
+ *  1 、新增兑换现金券的功能，
+ 更加方便用户购买。
+ 2 、订单物流查询更加便捷，
+ 3 、其它功能的优化。
+ *
+ *  @param alertView   <#alertView description#>
+ *  @param buttonIndex <#buttonIndex description#>
+ */
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1001) {

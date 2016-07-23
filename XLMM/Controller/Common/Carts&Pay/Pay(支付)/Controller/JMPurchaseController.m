@@ -106,7 +106,7 @@ static BOOL isAgreeTerms = YES;
     float _couponValue;               //优惠券金额
     float _discount;                  //计算金额
     
-    NSString *_yhqModelID;
+    NSString *_yhqModelID;            //优惠券ID
     NSString *_addressID;             //地址信息ID
     NSString *_parmsStr;              //支付提交参数
     
@@ -165,7 +165,6 @@ static BOOL isAgreeTerms = YES;
     if (self.purchaseGoodsArr.count == 0) {
         return;
     }
-    //构造参数字符串
     for (CartListModel *model in self.purchaseGoodsArr) {
         NSString *str = [NSString stringWithFormat:@"%ld,",model.cartID];
         [paramstring appendString:str];
@@ -195,6 +194,15 @@ static BOOL isAgreeTerms = YES;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
+}
+- (void)fetchedAddressData:(NSArray *)purchaseArr {
+    if (purchaseArr.count == 0) {
+        _addressID = @"";
+    }else {
+        NSDictionary *dic = purchaseArr[0];
+        _addressID = dic[@"id"];
+    }
+    self.purchaseHeaderView.addressArr = purchaseArr;
 }
 #pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
@@ -304,19 +312,6 @@ static BOOL isAgreeTerms = YES;
         }
     }
 }
-/**
- *  地址信息
- */
-- (void)fetchedAddressData:(NSArray *)purchaseArr {
-    if (purchaseArr.count == 0) {
-        _addressID = @"";
-    }else {
-        NSDictionary *dic = purchaseArr[0];
-        _addressID = dic[@"id"];
-    }
-    self.purchaseHeaderView.addressArr = purchaseArr;
-    
-}
 #pragma mark 创建视图
 - (void)createTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
@@ -351,8 +346,7 @@ static BOOL isAgreeTerms = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-
-#pragma mark 头部视图协议方法
+#pragma mark 地址信息,物流信息选择.
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
@@ -380,18 +374,12 @@ static BOOL isAgreeTerms = YES;
     }
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
-    //隐藏pop菜单
     [JMPopView hide];
 }
-/**
- *  添加地址回调方法
- */
+#pragma mark 选择地址,选择物流回调
 - (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
 }
-/**
- *  选择物流回调方法
- */
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
     [MobClick event:@"logistics_choose"];
     self.purchaseHeaderView.logisticsLabel.text = model.name;
@@ -427,11 +415,8 @@ static BOOL isAgreeTerms = YES;
         }
     }else if (button.tag == 102) {
         button.selected = !button.selected;
-        if (button.selected) { // 弹出框
+        if (button.selected) {
             isAgreeTerms = YES;
-            NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，订单向外贸工厂订货后无法退款，需要收货后走退货流程或者换货。质量问题退货会以现金券或小鹿余额形式补偿10元邮费。给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
         }else {
             isAgreeTerms = NO;
         }
@@ -459,6 +444,11 @@ static BOOL isAgreeTerms = YES;
             }
         }
     }else {}
+}
+- (void)composeFooterTapView:(JMPurchaseFooterView *)headerView {
+    NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，订单向外贸工厂订货后无法退款，需要收货后走退货流程或者换货。质量问题退货会以现金券或小鹿余额形式补偿10元邮费。给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
 }
 #pragma mark 支付弹出框 点击去结算按钮的时候弹出
 - (void)createPayPopView {
@@ -743,7 +733,10 @@ static BOOL isAgreeTerms = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:app];
     [MobClick endLogPageView:@"purchase"];
 }
 - (void)purchaseViewWillEnterForeground:(NSNotification *)notification {

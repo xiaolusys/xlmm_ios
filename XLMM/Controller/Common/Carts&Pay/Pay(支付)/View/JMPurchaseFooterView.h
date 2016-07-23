@@ -13,6 +13,8 @@
 
 - (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button;
 
+- (void)composeFooterTapView:(JMPurchaseFooterView *)headerView;
+
 @end
 
 
