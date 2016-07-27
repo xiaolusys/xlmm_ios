@@ -21,7 +21,6 @@
 #import "WebViewJavascriptBridge.h"
 #import "MMDetailsViewController.h"
 #import "YouHuiQuanViewController.h"
-#import "XiangQingViewController.h"
 #import "MaMaPersonCenterViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"

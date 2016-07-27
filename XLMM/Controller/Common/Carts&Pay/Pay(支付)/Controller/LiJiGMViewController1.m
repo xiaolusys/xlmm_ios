@@ -17,7 +17,6 @@
 #import "AFNetworking.h"
 #import "WXApi.h"
 #import "UIViewController+NavigationBar.h"
-#import "PersonCenterViewController1.h"
 #import "MMUserCoupons.h"
 #import "AFNetworking.h"
 
@@ -86,7 +85,7 @@
 
 - (void)cancelZhifu:(NSNotification *)notification{
     NSLog(@"取消支付了");
-    [self.navigationController pushViewController:[[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil] animated:YES];
+//    [self.navigationController pushViewController:[[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:nil] animated:YES];
     
     
 }

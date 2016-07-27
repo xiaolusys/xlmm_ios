@@ -24,6 +24,7 @@
 @property (nonatomic, copy) NSString *title;
 
 @property (nonatomic, strong) IMY_NJKWebViewProgress* njkWebViewProgress;
+
 @end
 
 @implementation IMYWebView
@@ -192,6 +193,9 @@
 }
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
+//    [webView evaluateJavaScript:@"getNativeMobileSNCode" completionHandler:^(id _Nullable value, NSError * _Nullable error) {
+//        
+//    }];
     [self callback_webViewDidFinishLoad];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
@@ -211,7 +215,7 @@
 //                                                                      preferredStyle:UIAlertControllerStyleAlert];
 //    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
 //                                                        style:UIAlertActionStyleCancel
-//                                                      handler:^(UIAlertAction *action) {
+//                                                       handler:^(UIAlertAction *action) {
 //                                                          completionHandler();
 //                                                      }]];
 //    [self presentViewController:alertController animated:YES completion:^{}];
@@ -220,7 +224,7 @@
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
-{
+ {
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
     [self updateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
@@ -617,7 +621,9 @@
 }
 
 #pragma mark - WKScriptMessageHandler
-
+/**
+ *  OC在JS调用方法做的处理
+ */
 - (void)userContentController:(WKUserContentController *)userContentController
 
       didReceiveScriptMessage:(WKScriptMessage *)message {
@@ -625,14 +631,17 @@
     NSLog(@"WKScriptMessageHandler %@ %@",message.name, message.body);
     [IosJsBridge dispatchJsBridgeFunc:self.viewController name:message.name para:message.body];
     
-        
+//    IosJsBridge *ios = [IosJsBridge new];
+//    ios.deviceBlock = ^(NSString *uuid) {
+//        message(uuid);
+//    };
+    
 }
 
 - (void)registerWkwebviewJsBridge:(WKWebViewConfiguration*) configuration{
     
     NSLog(@"registerWkwebviewJsBridge!");
-    
-    
+
     [configuration.userContentController  addScriptMessageHandler:self name:@"jumpToNativeLocation"];
     
     /**

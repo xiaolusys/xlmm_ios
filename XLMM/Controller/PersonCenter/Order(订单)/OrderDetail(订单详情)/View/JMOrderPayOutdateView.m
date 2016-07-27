@@ -30,6 +30,7 @@
     NSTimer *_orderOutTimer;
     NSString *_dateStr;
     BOOL _isShow;
+    BOOL _isShowShare;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -45,6 +46,14 @@
     }else {
         _isShow = NO;
     }
+    if ((statusCount >= ORDER_STATUS_PAYED) && (statusCount <= ORDER_STATUS_TRADE_SUCCESS)) {
+        _isShowShare = YES;
+    }else {
+        _isShowShare = NO;
+    }
+    
+    
+    
 }
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
     if (_isShow) {
@@ -56,14 +65,18 @@
         _dateStr = [self formatterTimeString:createTimeStr];
         _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     }else {
+        if (_isShowShare == YES) {
+            self.shareImage.hidden = NO;
+            self.descLabel.hidden = NO;
+            self.shareButton.hidden = NO;
+            self.sharBottom.hidden = NO;
+        }else {
+        
+        }
         self.sureOrderButton.hidden = YES;
         self.canelOrderButton.hidden = YES;
         self.bottomView.hidden = YES;
-        
-        self.shareImage.hidden = NO;
-        self.descLabel.hidden = NO;
-        self.shareButton.hidden = NO;
-        self.sharBottom.hidden = NO;
+
         
     }
     

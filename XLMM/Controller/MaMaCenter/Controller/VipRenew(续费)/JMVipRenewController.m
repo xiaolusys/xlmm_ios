@@ -29,10 +29,6 @@
 
 @property (nonatomic, strong) UIButton *sureButton;
 
-@property (nonatomic, strong) UIImageView *circleImage1;
-
-@property (nonatomic, strong) UIImageView *circleImage2;
-
 @property (nonatomic,strong) UIView *maskView;
 
 @property (nonatomic,strong) JMOrderPayView *payView;
@@ -42,11 +38,7 @@
 @end
 
 @implementation JMVipRenewController {
-    NSString *_cicleNomalImage;
-    NSString *_cicleSelectedImage;
-    
     NSDictionary *_renewDic;
-    
     // 支付请求参数
     NSString *_productID;   // 产品ID
     NSString *_skuID;
@@ -57,7 +49,6 @@
     NSString *_discounefee; // 优惠金额
     NSString *_orderID;     // 订单编号
     NSString *_totalfee;    // 实际支付
-    
     
     NSInteger _numCount;
     
@@ -80,14 +71,9 @@
     else{
         self.isInstallWX = NO;
     }
-    
-
     _numCount = 1;
-    
 }
 - (void)loadDataSource {
-    //    [self downloadDataWithUrlString:[NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/agency_info", Root_URL] selector:@selector(fetchedInfoData:)];
-    //主页新的数据
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_register_pro_info",Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -120,17 +106,14 @@
     self.payView = payView;
     self.payView.delegate = self;
     self.payView.width = SCREENWIDTH;
-    
-    //    JMChoiseLogisController *showViewVC = [[JMChoiseLogisController alloc] init];
-    //    self.showViewVC = showViewVC;
+
 }
 - (void)createRenewView {
     UIScrollView *baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     [self.view addSubview:baseScrollView];
     self.baseScrollView = baseScrollView;
-    //是否显示水平方向的滚动条
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
     self.baseScrollView.showsHorizontalScrollIndicator = NO;
-    //是否显示垂直方向的滚动条
     self.baseScrollView.showsVerticalScrollIndicator = NO;
     
     UIView *headView = [UIView new];
@@ -160,18 +143,9 @@
     self.allyearButton.tag = 101;
     [self.allyearButton addTarget:self action:@selector(renewButton:) forControlEvents:UIControlEventTouchUpInside];
     
-    _cicleNomalImage = @"unselected_icon";
-    _cicleSelectedImage = @"selected_icon";
-    UIImageView *circleImage1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_cicleSelectedImage]];
-    self.circleImage1 = circleImage1;
-    UIImageView *circleImage2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_cicleNomalImage]];
-    self.circleImage2 = circleImage2;
-    [headView addSubview:self.circleImage1];
-    [headView addSubview:self.circleImage2];
-    
     UIView *currentView = [UIView new];
     [headView addSubview:currentView];
-    currentView.backgroundColor = [UIColor sectionViewColor];
+    currentView.backgroundColor = [UIColor lineGrayColor];
     
     // footView //
     UILabel *titleLabel = [UILabel new];
@@ -252,24 +226,14 @@
     [self.halfyearButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headView).offset(space);
         make.top.equalTo(headView).offset(66);
-        make.width.mas_equalTo(@140);
-        make.height.mas_equalTo(@128);
-    }];
-    [self.circleImage1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.halfyearButton.mas_bottom).offset(18);
-        make.centerX.equalTo(weakSelf.halfyearButton.mas_centerX);
-        make.width.height.mas_equalTo(@22);
+        make.width.mas_equalTo(@143);
+        make.height.mas_equalTo(@165.5);
     }];
     [self.allyearButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.halfyearButton.mas_right).offset(space);
         make.top.equalTo(headView).offset(66);
-        make.width.mas_equalTo(@140);
-        make.height.mas_equalTo(@128);
-    }];
-    [self.circleImage2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.allyearButton.mas_bottom).offset(18);
-        make.centerX.equalTo(weakSelf.allyearButton.mas_centerX);
-        make.width.height.mas_equalTo(@22);
+        make.width.mas_equalTo(@143);
+        make.height.mas_equalTo(@165.5);
     }];
     [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(headView);
@@ -339,15 +303,12 @@
         make.width.mas_equalTo(SCREENWIDTH - 30);
     }];
     
-    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
+    
     
 }
 - (void)payMoney {
     NSArray *skusArr = _renewDic[@"normal_skus"];
-    
     NSDictionary *renewDic = skusArr[_numCount];
-    
-    
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"product_id"] = _productID;
     params[@"sku_id"] = renewDic[@"id"];
@@ -428,16 +389,14 @@
         self.halfyearButton.selected = !self.halfyearButton.selected;
         self.halfyearButton.selected = YES;
         self.allyearButton.selected = NO;
-        self.circleImage1.image = [UIImage imageNamed:_cicleSelectedImage];
-        self.circleImage2.image = [UIImage imageNamed:_cicleNomalImage];
+
         _numCount = 1;
         
     }else if (button.tag == 101) {
         self.allyearButton.selected = !self.allyearButton.selected;
         self.allyearButton.selected = YES;
         self.halfyearButton.selected = NO;
-        self.circleImage1.image = [UIImage imageNamed:_cicleNomalImage];
-        self.circleImage2.image = [UIImage imageNamed:_cicleSelectedImage];
+
         _numCount = 0;
     }else {
         [self createPayPopView];
@@ -502,7 +461,9 @@
     alterView.tag = 888;
     [alterView show];
 }
-
+- (void)viewDidLayoutSubviews {
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;

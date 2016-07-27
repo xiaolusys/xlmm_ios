@@ -12,6 +12,7 @@
 #import "Masonry.h"
 #import "NSString+URL.h"
 #import "MJExtension.h"
+#import "XlmmMall.h"
 
 @interface JMRefundBaseCell ()
 
@@ -191,7 +192,8 @@
 }
 
 - (void)configRefund:(JMRefundModel *)refundModel {
-    BOOL isGoodsReturn = (refundModel.has_good_return == 0);
+    //has_good_return == 1 退货
+    BOOL isGoodsReturn = ([refundModel.has_good_return integerValue] == 0);
     NSString *refundImageStr = @"";
     
     NSArray *statusShaftArr = refundModel.status_shaft;
@@ -204,14 +206,21 @@
         self.refundStatusLabel.text = statusDic[@"status_display"];
     }
     
-    
-    if (isGoodsReturn) {
+    NSInteger status = [refundModel.status integerValue];
+    if (isGoodsReturn == NO) {
         // 退货
-        self.refunStatusImage.hidden = NO;
         refundImageStr = @"refund_tuihuoImage";
         self.refundWayLabel.text = @"退货退款";
-        self.refundStatusLabel.textColor = [UIColor redColor];
+        if (status == REFUND_STATUS_SELLER_AGREED) {
+            self.refunStatusImage.hidden = NO;
+            self.refundStatusLabel.textColor = [UIColor redColor];
+            self.refundStatusLabel.text = @"请寄回商品";
+        }else {
+            self.refunStatusImage.hidden = YES;
+            self.refundStatusLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+        }
     }else {
+        self.refunStatusImage.hidden = YES;
         // 退款
         if ([refundModel.refund_channel isEqualToString:@"budget"]) {
             //退款到小鹿钱包

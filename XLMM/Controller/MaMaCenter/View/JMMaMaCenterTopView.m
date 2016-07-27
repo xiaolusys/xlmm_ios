@@ -116,9 +116,12 @@
     self.remainingTimeLabel.attributedText = str;
     
     NSInteger limtNum = [limtStr integerValue];
-    if (limtNum < 0) {
+    if (limtNum > 15) {
         self.renewImage.hidden = YES;
         self.renewView.userInteractionEnabled = NO;
+    }else {
+        self.renewImage.hidden = NO;
+        self.renewView.userInteractionEnabled = YES;
     }
     
     
@@ -320,7 +323,7 @@
     }];
     
     [self.remainingTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.isVipMamaButton);
+        make.left.equalTo(weakSelf.mamaIconImage.mas_right).offset(10);
         make.top.equalTo(weakSelf.isVipMamaButton.mas_bottom).offset(10);
     }];
     

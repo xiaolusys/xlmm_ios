@@ -355,8 +355,6 @@ static NSString *cellIdentifier = @"carryLogCell";
             [self requestAction];
         }
     }
-//    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
-
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -365,15 +363,13 @@ static NSString *cellIdentifier = @"carryLogCell";
         NSNumber *contentOffY = [NSNumber numberWithInteger:scrollView.contentOffset.y];
         [self.contentOffsetYDic setObject:contentOffY forKey:number];
     }
-    [UIView animateWithDuration:0.5 animations:^{
-        NSMutableDictionary *dic = [self.tableViewDataArr objectAtIndex:self.currentIndex];
-        if (dic.count == 0) {
-            self.topButton.hidden = YES;
-        }else {
-            self.topButton.hidden = NO;
-        }
-        
-    }];
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -482,13 +478,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark -- 添加返回顶部按钮
+#pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:topButton];
@@ -498,23 +488,43 @@ static NSString *cellIdentifier = @"carryLogCell";
         make.right.equalTo(self.view).offset(-20);
         make.bottom.equalTo(self.view).offset(-20);
         make.width.height.mas_equalTo(@50);
-    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
-    
 }
 - (void)topButtonClick:(UIButton *)btn {
-    UITableView *table = [self.tableViewArr objectAtIndex:self.currentIndex];
-
-    [table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
 }
 
-//- (void)hiddenBackTopBtn {
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.topButton.hidden = YES;
-//    }];
-//}
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

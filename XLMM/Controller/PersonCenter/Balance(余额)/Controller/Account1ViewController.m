@@ -12,10 +12,10 @@
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AccountTableViewCell.h"
-#import "WithdrawCashViewController.h"
 #import "AccountModel.h"
 #import "SVProgressHUD.h"
 #import "JMWithdrawCashController.h"
+#import "Masonry.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -27,7 +27,10 @@
 @property (nonatomic, assign)CGFloat headerH;
 
 @property (nonatomic, strong)UILabel *moneyLabel;
-
+/**
+ *  返回顶部按钮
+ */
+@property (nonatomic,strong) UIButton *topButton;
 /**
  *  下拉刷新的标志
  */
@@ -88,7 +91,7 @@ static NSString *identifier = @"AccountCell";
     
     [self createRightbutton];
     [self createTableView];
-
+    [self createButton];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     
@@ -252,7 +255,45 @@ static NSString *identifier = @"AccountCell";
     
     [self.navigationController pushViewController:drawCash animated:YES];
 }
-
+#pragma mark 返回顶部  image == >backTop
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+}
+- (void)topButtonClick:(UIButton *)btn {
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
+}
+#pragma mark -- 添加滚动的协议方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
+}
 #pragma mark ---UItableView的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
