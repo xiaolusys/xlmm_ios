@@ -153,12 +153,9 @@
 
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     
-    self.balanceLabel.text = @"34234.2";
-    self.accumulatedEarningsLabel.text = @"34234.2";
-    self.activenessLabel.text = @"34234.2";
-    self.todayEarningsLabel.text = @"234234";
-    self.futureEarningsLabe.text = @"234234";
-    self.rankingLabel.text = @"234234";
+    self.balanceLabel.text = [NSString stringWithFormat:@"%.2f",[mamaCenterModel.cash_value floatValue]];
+    self.accumulatedEarningsLabel.text = [NSString stringWithFormat:@"%.2f",[mamaCenterModel.carry_value floatValue]];
+    self.activenessLabel.text = mamaCenterModel.active_value_num;
     
 }
 - (void)createMaMaCenterView {
@@ -417,7 +414,7 @@
         make.height.mas_equalTo(@60);
     }];
     
-    NSArray *earningsArr = @[@"今日收益",@"潜在收益",@"排名"];
+    NSArray *earningsArr = @[@"访客",@"订单",@"收益"];
     NSInteger earningCount = 3;
     for (int i = 0 ; i < earningCount; i++) {
         UIButton *earningsV = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -475,7 +472,11 @@
     
     NSDictionary *dic = self.mamaOrderArray[days];
     // NSLog(@"dic = %@", dic);
-
+    
+    self.todayEarningsLabel.text = [dic[@"visitor_num"] stringValue];                         // 访客
+    self.futureEarningsLabe.text = [dic[@"order_num"] stringValue];                           // 订单
+    self.rankingLabel.text = [NSString stringWithFormat:@"%.2f", [dic[@"carry"] floatValue]]; // 收益
+    
     //改变竖线的位置。。。。
     [self createChart:allDingdan];
    
@@ -503,8 +504,12 @@
     _mamaResults = mamaResults;
     NSArray *data = [NSArray reverse:mamaResults];
     self.mamaOrderArray = data;
-    //    NSDictionary *dic = data[0];
+    NSDictionary *dic = data[0];
     data = mamaResults;
+    
+    self.todayEarningsLabel.text = [dic[@"visitor_num"] stringValue];                         // 访客
+    self.futureEarningsLabe.text = [dic[@"order_num"] stringValue];                           // 订单
+    self.rankingLabel.text = [NSString stringWithFormat:@"%.2f", [dic[@"carry"] floatValue]]; // 收益
     
     NSMutableArray *weekArray = [[NSMutableArray alloc] init];
     int xingqiji = (int)[self.weekDay integerValue];
@@ -840,6 +845,10 @@
     // NSLog(@"array = %@", self.mamaOrderArray);
     // NSLog(@"%ld", quxiaodays);
     NSDictionary *dic = self.mamaOrderArray[days - quxiaodays];
+    
+    self.todayEarningsLabel.text = [dic[@"visitor_num"] stringValue];                         // 访客
+    self.futureEarningsLabe.text = [dic[@"order_num"] stringValue];                           // 订单
+    self.rankingLabel.text = [NSString stringWithFormat:@"%.2f", [dic[@"carry"] floatValue]]; // 收益
     
     if (week == 1) {
         
