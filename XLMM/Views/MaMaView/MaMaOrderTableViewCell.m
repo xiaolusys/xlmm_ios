@@ -28,7 +28,7 @@
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.imageV.layer.masksToBounds = YES;
     self.imageV.layer.cornerRadius = 5;
-    self.imageV.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.imageV.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.imageV.layer.borderWidth = 0.5;
     self.imageV.contentMode = UIViewContentModeScaleAspectFill;
     

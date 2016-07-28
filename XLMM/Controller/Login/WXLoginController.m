@@ -213,7 +213,7 @@
  //   timeLabel.text = text;
     self.buttonLabel.text = text;
     self.buttonLabel.textColor = [UIColor cartViewBackGround];
-    self.codeButton.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.codeButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
 //#warning change timeLabel
     

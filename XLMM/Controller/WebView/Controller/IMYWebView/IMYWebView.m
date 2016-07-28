@@ -677,7 +677,20 @@
     
     
 }
-
+#pragma mark js调OC
+- (void)getNativeMobileSNCode:(id)body {
+    if ([body isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dict = (NSDictionary *)body;
+        
+        NSString *jsStr = [NSString stringWithFormat:@"postNativeMobileSNCode('%@')",[dict objectForKey:@"data"]];
+        
+        [self.realWebView evaluateJavaScript:jsStr completionHandler:^(id _Nullable data, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"错误 : %@",error.localizedDescription);
+            }
+        }];
+    }
+}
 //从webview获得浏览器中的useragent，并进行更新
 - (void)updateUserAgent{
     NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];

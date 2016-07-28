@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MoneyBlock)(CGFloat money);
+
 @interface JMWithdrawCashController : UIViewController
 
 @property (nonatomic, strong) NSDictionary *personCenterDict;
+
+@property (nonatomic,copy) MoneyBlock block;
 
 @end

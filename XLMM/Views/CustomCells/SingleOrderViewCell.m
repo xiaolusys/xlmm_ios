@@ -36,7 +36,7 @@
         self = [arrayOfViews objectAtIndex:0];
         self.orderImageView.layer.masksToBounds = YES;
         self.orderImageView.layer.cornerRadius = 5;
-        self.orderImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+        self.orderImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
         self.orderImageView.layer.borderWidth = 0.5;
         self.topHeight.constant = 0.5;
         self.midHeight.constant = 0.5;

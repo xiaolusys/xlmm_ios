@@ -13,7 +13,6 @@
 #import "AFNetworking.h"
 #import "UIViewController+NavigationBar.h"
 #import "CartListModel.h"
-#import "PurchaseViewController1.h"
 #import "NSString+URL.h"
 #import "ReBuyTableViewCell.h"
 #import "SVProgressHUD.h"

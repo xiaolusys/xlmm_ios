@@ -7,7 +7,6 @@
 //
 
 #import "RefundDetailsViewController.h"
-#import "TuihuoModel.h"
 #import "UIViewController+NavigationBar.h"
 #import "UIImageView+WebCache.h"
 #import "NSString+URL.h"
@@ -197,7 +196,7 @@
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = 5;
     self.imageView.layer.borderWidth = 0.5;
-    self.imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.imageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.circleView.layer.cornerRadius = 5;
     if ([self.refundModelr.has_good_return integerValue] == 0) {
         self.createdLabel.text = @"申请退款";

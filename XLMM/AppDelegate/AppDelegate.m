@@ -18,7 +18,6 @@
 #import "UMMobClick/MobClick.h"
 #import "SVProgressHUD.h"
 #import "ActivityView.h"
-#import "HomeViewController.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
 

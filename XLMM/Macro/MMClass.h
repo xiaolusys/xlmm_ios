@@ -38,7 +38,10 @@
  *  循环引用
  */
 #define kWeakSelf __weak typeof (self) weakSelf = self;
-
+/**
+ *  随机颜色
+ */
+#define RandomColor  arc4random() %256 /255.0
 
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height

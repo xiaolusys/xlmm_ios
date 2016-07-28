@@ -70,6 +70,7 @@
     clickHeadImgCount = 0;
     
     [self setUserInfo];
+    [self ishavemobel];
 }
 
 - (void)backClicked:(UIButton *)button{
@@ -117,20 +118,6 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)nickButtonClicked:(id)sender {
     ChangeNicknameViewController *changeNicknameView = [[ChangeNicknameViewController alloc] initWithNibName:@"ChangeNicknameViewController" bundle:nil];
@@ -142,6 +129,9 @@
 }
 
 - (void)ishavemobel{
+    
+    
+    
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     NSURL *url = [NSURL URLWithString:string];
     NSData *data = [NSData dataWithContentsOfURL:url];
@@ -153,13 +143,18 @@
     mobile = [dic objectForKey:@"mobile"];
     NSLog(@"mobel = %@", mobile);
     
+    if ([mobile isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+        self.bindingPhoneNum.textColor = [UIColor redColor];
+    }else {
+        self.bindingPhoneNum.textColor = [UIColor dingfanxiangqingColor];
+    }
+    
 }
 
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
     //return;
-     
-    [self ishavemobel];
+//    [self ishavemobel];
     if ([mobile isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
         ;
@@ -168,8 +163,7 @@
         wxloginVC.userInfo = dic;
         [self.navigationController pushViewController:wxloginVC animated:YES];
     }
-    
- }
+}
 
 - (IBAction)modifyButtonClicked:(id)sender {
     NSLog(@"修改密码");

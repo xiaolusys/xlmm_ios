@@ -879,7 +879,7 @@
         [button.layer setMasksToBounds:YES];
         [button.layer setBorderWidth:1];
         button.layer.cornerRadius = 3;
-        [button.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+        [button.layer setBorderColor:[UIColor buttonDisabledBorderColor].CGColor];
         //[button.layer setCornerRadius:8];
         
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -939,7 +939,7 @@
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
-                [btn.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+                [btn.layer setBorderColor:[UIColor buttonDisabledBorderColor].CGColor];
                 [btn setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
 
             }
@@ -1041,7 +1041,7 @@
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
               label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
               label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor imageViewBorderColor];
+              label.textColor = [UIColor buttonDisabledBorderColor];
               label.font = [UIFont systemFontOfSize:14];
               [view addSubview:label];
               [self.view addSubview:view];

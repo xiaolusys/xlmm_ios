@@ -20,8 +20,6 @@
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "MMDetailsViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "UUID.h"

@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *headerImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *bindingPhoneNum;
 
 - (IBAction)nickButtonClicked:(id)sender;
 - (IBAction)phoneButtonClicked:(id)sender;

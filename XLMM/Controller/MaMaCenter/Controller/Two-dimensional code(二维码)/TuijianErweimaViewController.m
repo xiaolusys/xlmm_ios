@@ -69,7 +69,7 @@
     self.shareButton.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
     self.whiteView.layer.cornerRadius = 8;
     self.whiteView.layer.borderWidth = 1;
-    self.whiteView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.whiteView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.whiteView.layer.shadowColor = [UIColor grayColor].CGColor;
     self.whiteView.layer.shadowOffset = CGSizeMake(2, 2);
     self.whiteView.contentMode = UIViewContentModeScaleAspectFill;

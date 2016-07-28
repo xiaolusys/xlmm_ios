@@ -69,6 +69,7 @@
     
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
+        make.width.mas_equalTo(SCREENWIDTH - 160);
         make.top.equalTo(weakSelf.iconImage).offset(5);
     }];
     
@@ -95,7 +96,7 @@
     }
     self.iconImage.layer.cornerRadius = 30;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.iconImage.layer.masksToBounds = YES;
     
     if ([model.nick isEqualToString:@""]) {
@@ -116,7 +117,7 @@
     
     self.iconImage.layer.cornerRadius = 30;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.iconImage.layer.masksToBounds = YES;
     self.nameLabel.text = model.visitor_nick;
     
@@ -133,7 +134,7 @@
     
     self.iconImage.layer.cornerRadius = 30;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.iconImage.layer.masksToBounds = YES;
     self.nameLabel.text = model.fans_nick;
     
