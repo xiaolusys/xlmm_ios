@@ -130,20 +130,12 @@
     NSDictionary *extraDic = self.mamaCenterModel.extra_info;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
     
-//    self.mamatopView.centerModel = self.mamaCenterModel;
-    
-    NSInteger ActiveNum = [self.mamaCenterModel.active_value_num integerValue];
-    if (ActiveNum == 0) {
-//        [self createHuoYueDuView];
-    }
+    self.mamaCenterHeaderView.mamaCenterModel = self.mamaCenterModel;
+    self.mamaCenterFooterView.mamaCenterModel = self.mamaCenterModel;
     
     // 账户金额
     self.carryValue = [self.mamaCenterModel.cash_value floatValue];
     self.activeValueNum = [NSNumber numberWithInteger:[self.mamaCenterModel.active_value_num integerValue]];
-    
-    self.mamaCenterHeaderView.mamaCenterModel = self.mamaCenterModel;
-    
-    
     self.fansNum = [NSNumber numberWithInteger:[self.mamaCenterModel.fans_num integerValue]];
     self.orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [self.mamaCenterModel.carry_value floatValue]];
@@ -239,9 +231,9 @@
  100 == > 账户余额
  101 == > 累计收益
  102 == > 活跃度
- 103 == > 今日收益
- 104 == > 潜在收益
- 105 == > 排名
+ 103 == > 访客
+ 104 == > 订单
+ 105 == > 收益
  106 == > 考试
  107 == > 续费
  */
@@ -260,19 +252,20 @@
         VC.activeValueNum = self.activeValueNum;
         [self.navigationController pushViewController:VC animated:YES];
     }else if (index == 103) {
-        NSLog(@"103 == > 今日收益");
+        NSLog(@"103 == > 访客");
+        TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
+        today.visitorDate = self.visitorDate;
+        [self.navigationController pushViewController:today animated:YES];
+    }else if (index == 104) {
+        NSLog(@"104 == > 订单");
+        MaMaOrderListViewController *order = [[MaMaOrderListViewController alloc] init];
+        order.orderRecord = self.orderRecord;
+        [self.navigationController pushViewController:order animated:YES];
+    }else if (index == 105) {
+        NSLog(@"105 == > 收益");
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
         carry.earningsRecord = self.earningsRecord;
         [self.navigationController pushViewController:carry animated:YES];
-    }else if (index == 104) {
-        NSLog(@"104 == > 潜在收益");
-    }else if (index == 105) {
-        NSLog(@"105 == > 排名");
-        JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
-        earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
-        earningsRankVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/carry_total_rank",Root_URL];
-        earningsRankVC.isTeamEarningsRank = NO;
-        [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else if (index == 106) {
         NSLog(@"106 == > 考试");
         WebViewController *webVC = [[WebViewController alloc] init];
@@ -363,12 +356,13 @@
         [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
     }else if (index == 109) {
         JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
-        
         [self.navigationController pushViewController:teamVC animated:YES];
     }else if (index == 110) {
-        TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-        today.visitorDate = self.visitorDate;
-        [self.navigationController pushViewController:today animated:YES];
+        JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
+        earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
+        earningsRankVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/carry_total_rank",Root_URL];
+        earningsRankVC.isTeamEarningsRank = NO;
+        [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else {
     
     }

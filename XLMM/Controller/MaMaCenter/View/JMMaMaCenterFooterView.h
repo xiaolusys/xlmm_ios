@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class JMMaMaCenterModel;
 @class JMMaMaCenterFooterView;
 @protocol JMMaMaCenterFooterViewDelegate <NSObject>
 
@@ -19,11 +20,12 @@
 
 @interface JMMaMaCenterFooterView : UIView
 
-
+@property (nonatomic, strong) JMMaMaCenterModel *mamaCenterModel;
 
 + (instancetype)enterFooterView;
 
 @property (nonatomic, weak) id<JMMaMaCenterFooterViewDelegate>delegate;
+
 
 
 @end
