@@ -38,7 +38,7 @@
 }
 
 + (instancetype)enterFooterView {
-    JMMaMaCenterFooterView *headView = [[JMMaMaCenterFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 430)];
+    JMMaMaCenterFooterView *headView = [[JMMaMaCenterFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 460)];
     headView.backgroundColor = [UIColor whiteColor];
     return headView;
 }
@@ -61,7 +61,7 @@
     
     UIView *oneSectionView = [UIView new];
     [self addSubview:oneSectionView];
-    oneSectionView.backgroundColor = [UIColor lineGrayColor];
+    oneSectionView.backgroundColor = [UIColor countLabelColor];
     
     UIButton *xlUniversityView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:xlUniversityView];
@@ -86,16 +86,19 @@
     
     UIView *twoSectionView = [UIView new];
     [self addSubview:twoSectionView];
-    twoSectionView.backgroundColor = [UIColor lineGrayColor];
+    twoSectionView.backgroundColor = [UIColor countLabelColor];
     
     UIView *thrSectionView = [UIView new];
     [self addSubview:thrSectionView];
-    thrSectionView.backgroundColor = [UIColor lineGrayColor];
+    thrSectionView.backgroundColor = [UIColor countLabelColor];
     
     UIView *forSectionView = [UIView new];
     [self addSubview:forSectionView];
-    forSectionView.backgroundColor = [UIColor lineGrayColor];
+    forSectionView.backgroundColor = [UIColor countLabelColor];
     
+    UIView *bottomView = [UIView new];
+    [self addSubview:bottomView];
+    bottomView.backgroundColor = [UIColor countLabelColor];
     
     kWeakSelf
     
@@ -141,6 +144,10 @@
         make.height.mas_equalTo(@15);
     }];
     
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(weakSelf);
+        make.height.mas_equalTo(@35);
+    }];
     
     CGFloat buttonW = SCREENWIDTH / 2;
     NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal"];
@@ -195,7 +202,7 @@
         titleLabel.textColor = [UIColor buttonTitleColor];
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(button).offset(10);
-            make.left.equalTo(iconImage.mas_right).offset(20);
+            make.left.equalTo(iconImage.mas_right).offset(15);
         }];
         
         UILabel *detailLabel = [UILabel new];
@@ -205,7 +212,7 @@
         detailLabel.textColor = [UIColor dingfanxiangqingColor];
         [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(button).offset(-10);
-            make.left.equalTo(iconImage.mas_right).offset(20);
+            make.left.equalTo(titleLabel);
         }];
         
         

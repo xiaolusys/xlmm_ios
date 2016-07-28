@@ -191,9 +191,9 @@
     return sectionView;
 }
 - (void)createHeaderView {
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
+    UIImageView *topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
     self.tableView.tableHeaderView = topView;
-    topView.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    topView.image = [UIImage imageNamed:@"wodejingxuanback"];
     
     UIImageView *mamaIconBackImage = [UIImageView new]; //wodejingxuantouxiangicon -- > 妈妈头像底层图片
     [topView addSubview:mamaIconBackImage];
