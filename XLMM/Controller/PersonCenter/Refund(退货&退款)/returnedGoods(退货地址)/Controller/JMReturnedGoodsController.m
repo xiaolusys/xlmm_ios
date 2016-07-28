@@ -16,7 +16,6 @@
 #import "UIViewController+NavigationBar.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
-#import "TuihuoModel.h"
 #import "JMRefundModel.h"
 
 @interface JMReturnedGoodsController ()<JMChooseLogisticsControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate> {

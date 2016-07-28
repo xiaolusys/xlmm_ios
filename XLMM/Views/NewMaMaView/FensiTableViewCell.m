@@ -31,7 +31,7 @@
     
     self.picImageView.layer.cornerRadius = 30;
     self.picImageView.layer.borderWidth = 0.5;
-    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.picImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.picImageView.layer.masksToBounds = YES;
     self.name.text = model.fans_nick;
     
@@ -49,7 +49,7 @@
     
     self.picImageView.layer.cornerRadius = 30;
     self.picImageView.layer.borderWidth = 0.5;
-    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.picImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.picImageView.layer.masksToBounds = YES;
     self.name.text = model.visitor_nick;
     

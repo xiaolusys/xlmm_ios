@@ -8,9 +8,7 @@
 
 #import "NewLeftViewController.h"
 #import "RESideMenu.h"
-#import "TuihuoViewController.h"
 #import "JifenViewController.h"
-#import "YouHuiQuanViewController.h"
 #import "UIImageView+WebCache.h"
 #import "MMUserCoupons.h"
 #import "AddressViewController.h"

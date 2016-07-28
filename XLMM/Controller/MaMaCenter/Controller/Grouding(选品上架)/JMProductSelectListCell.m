@@ -197,7 +197,7 @@
     self.iconImage.layer.cornerRadius = 8;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
     self.nameLabtl.text = model.name;
     self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.agent_price floatValue]];
@@ -246,7 +246,7 @@
     self.iconImage.layer.cornerRadius = 8;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
     self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
     self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];

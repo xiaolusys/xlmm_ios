@@ -8,19 +8,18 @@
 
 #import "JumpUtils.h"
 #import "MMClass.h"
-#import "YouHuiQuanViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "MMDetailsViewController.h"
-#import "HomeViewController.h"
 #import "XlmmMall.h"
 #import "ChildViewController.h"
-#import "TuihuoViewController.h"
 #import "ProductSelectionListViewController.h"
 #import "CartViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
+#import "JMMaMaPersonCenterController.h"
+#import "JMSegmentController.h"
+#import "JMRefundBaseController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -62,13 +61,13 @@
         [vc.navigationController pushViewController:womanVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         //跳转到用户未过期优惠券列表
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+        JMSegmentController *youhuiVC = [[JMSegmentController alloc] init];
         youhuiVC.isSelectedYHQ = NO;
         [vc.navigationController pushViewController:youhuiVC animated:YES];
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-        MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+        JMMaMaPersonCenterController *ma = [[JMMaMaPersonCenterController alloc] init];
         [vc.navigationController pushViewController:ma animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
@@ -78,7 +77,7 @@
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
         //跳转到退款退货列表
-        TuihuoViewController *tuihuoVC = [[TuihuoViewController alloc] initWithNibName:@"TuihuoViewController" bundle:nil];
+        JMRefundBaseController *tuihuoVC = [[JMRefundBaseController alloc] init];
         [vc.navigationController pushViewController:tuihuoVC animated:YES];
         
     }

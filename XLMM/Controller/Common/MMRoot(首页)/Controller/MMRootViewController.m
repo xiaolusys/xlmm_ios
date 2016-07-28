@@ -20,15 +20,12 @@
 #import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "MMLoginStatus.h"
 #import "AFNetworking.h"
 #import "NSString+Encrypto.h"
 #import "PublishNewPdtViewController.h"
 #import "ActivityView.h"
 #import "NSString+URL.h"
-#import "TuihuoViewController.h"
 #import "MMAdvertiseView.h"
 #import "SVProgressHUD.h"
 #import "MMAdvertiseView.h"
@@ -39,7 +36,6 @@
 #import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
 #import "MJRefresh.h"
-#import "HomeViewController.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
 #import "JMRootScrolCell.h"
@@ -57,6 +53,7 @@
 #import "JMHelper.h"
 #import "JMDBManager.h"
 #import "JMUpdataAppPopView.h"
+#import "JMMaMaPersonCenterController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -1982,8 +1979,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         // NSLog(@"json = %@", json);
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
-            MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-            [self.navigationController pushViewController:ma animated:YES];
+            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+//            MaMaPersonCenterViewController *mamaCenterVC= [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+            [self.navigationController pushViewController:mamaCenterVC animated:YES];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];

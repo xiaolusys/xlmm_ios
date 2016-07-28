@@ -148,7 +148,7 @@
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
-    self.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.myImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     number = [self.dingdanModel.num intValue];
     maxNumber = [self.dingdanModel.num intValue];
     

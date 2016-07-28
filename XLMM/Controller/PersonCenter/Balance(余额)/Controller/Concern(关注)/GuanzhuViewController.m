@@ -54,7 +54,7 @@
     
     self.saveView.layer.cornerRadius = 8;
     self.saveView.layer.borderWidth = 1;
-    self.saveView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.saveView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
 }
 

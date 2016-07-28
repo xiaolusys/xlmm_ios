@@ -67,6 +67,8 @@ static NSString *identifier = @"AccountCell";
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"BlanceAccount"];
     
+
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -166,6 +168,7 @@ static NSString *identifier = @"AccountCell";
         [accountM setValuesForKeysWithDictionary:account];
         [self.dataArr addObject:accountM];
     }
+    
 }
 
 
@@ -248,6 +251,9 @@ static NSString *identifier = @"AccountCell";
     JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
     drawCash.personCenterDict = self.personCenterDict;
     
+    drawCash.block=^(CGFloat money){
+        self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
+    };
 //    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
 //    CGFloat money = [self.moneyLabel.text floatValue];
 //    NSNumber *number = [NSNumber numberWithFloat:money];
