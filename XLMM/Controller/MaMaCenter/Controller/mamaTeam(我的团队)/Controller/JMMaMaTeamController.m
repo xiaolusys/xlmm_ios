@@ -78,7 +78,7 @@ static const NSUInteger ITEM_COUNT = 3;
     [self.navigationController pushViewController:earningsVC animated:YES];
 }
 - (void)loadDataSource {
-    NSString *urlStr = @"http://192.168.1.56:8000/rest/v2/mama/rank/44/get_team_members";//[self rankTeamUrlString];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/%@/get_team_members",Root_URL,self.mamaID];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return ;
@@ -96,7 +96,7 @@ static const NSUInteger ITEM_COUNT = 3;
     [self.tableView reloadData];
 }
 - (void)loadSelfInfoDataSource {
-    NSString *urlStr = @"http://192.168.1.56:8000/rest/v2/mama/teamrank/self_rank";//[self selfTeamInfoUrlString];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (!responseObject) return ;
@@ -108,7 +108,8 @@ static const NSUInteger ITEM_COUNT = 3;
 }
 - (void)fetchSelfTeamInfoData:(NSDictionary *)teamInfoDic {
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[teamInfoDic[@"thumbnail"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
-    self.earningsLabel.text = [NSString stringWithFormat:@"收益%@元",teamInfoDic[@"total"]];
+    CGFloat total = [teamInfoDic[@"total"] floatValue] / 100.00;
+    self.earningsLabel.text = [NSString stringWithFormat:@"收益%.2f元",total];
     self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队收益第%@",teamInfoDic[@"rank"]];
 
 }

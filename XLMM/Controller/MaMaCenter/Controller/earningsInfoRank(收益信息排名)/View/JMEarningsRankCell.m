@@ -125,7 +125,8 @@
     self.iconImage.layer.masksToBounds = YES;
     
     self.nameLabel.text = model.mama_nick;
-    self.numLabel.text = model.total;
+    CGFloat total = [model.total floatValue] / 100.00;
+    self.numLabel.text = [NSString stringWithFormat:@"%.2f",total];
     
 }
 - (void)configTeamModel:(JMMaMaTeamModel *)model Index:(NSInteger)index {
@@ -145,8 +146,9 @@
     self.iconImage.layer.masksToBounds = YES;
     
     self.nameLabel.text = model.mama_nick;
-    self.numLabel.text = model.duration_total;
-    
+    CGFloat total = [model.duration_total floatValue] / 100.00;
+    self.numLabel.text = [NSString stringWithFormat:@"%.2f",total];
+
 }
 
 

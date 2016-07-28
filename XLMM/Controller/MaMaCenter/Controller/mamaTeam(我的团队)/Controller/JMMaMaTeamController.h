@@ -10,7 +10,7 @@
 
 @interface JMMaMaTeamController : UIViewController
 
-
+@property (nonatomic, strong) NSString *mamaID;
 
 
 @end

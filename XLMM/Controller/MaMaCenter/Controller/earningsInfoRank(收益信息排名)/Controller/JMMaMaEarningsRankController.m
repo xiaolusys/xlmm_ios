@@ -103,13 +103,15 @@
     }
     
     if (self.isTeamEarningsRank == YES) {
-        self.earningsLabel.text = [NSString stringWithFormat:@"总收益额%@元",selfInfoDic[@"duration_total"]];
+        CGFloat total = [selfInfoDic[@"total"] floatValue] / 100.00;
+        self.earningsLabel.text = [NSString stringWithFormat:@"总收益额%.2f元",total];
         NSInteger rankChange = [selfInfoDic[@"rank"] integerValue];
         NSInteger rankAdd = labs(rankChange);
         self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队妈妈第%ld名",rankAdd];
 
     }else {
-        self.earningsLabel.text = [NSString stringWithFormat:@"收益%@元",selfInfoDic[@"total"]];
+        CGFloat total = [selfInfoDic[@"total"] floatValue] / 100.00;
+        self.earningsLabel.text = [NSString stringWithFormat:@"收益%.2f元",total];
         NSInteger rankChange = [selfInfoDic[@"rank_add"] integerValue];
         NSInteger rankAdd = labs(rankChange);
         if (rankChange > 0) {

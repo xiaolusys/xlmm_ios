@@ -466,7 +466,7 @@
 - (void)backApointInterface {
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
+    if (count > 2) {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
 //        [self.navigationController popViewControllerAnimated:YES];
     }else {

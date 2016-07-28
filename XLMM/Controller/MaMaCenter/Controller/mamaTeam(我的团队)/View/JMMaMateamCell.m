@@ -78,7 +78,8 @@
 - (void)config:(JMMaMaSelfTeamModel *)model {
     self.nameLabel.text = model.mama_nick;
     self.numLabel.text = [NSString stringWithFormat:@"%@件",model.num];
-    self.earningsLabel.text = model.total;
+    CGFloat total = [model.total floatValue] / 100.00;
+    self.earningsLabel.text = [NSString stringWithFormat:@"%.2f",total];
     
 }
 
