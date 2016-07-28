@@ -74,7 +74,9 @@
 
 @end
 
-@implementation JMMaMaPersonCenterController
+@implementation JMMaMaPersonCenterController {
+    NSString *_mamaID;
+}
 - (NSMutableDictionary *)diction {
     if (!_diction) {
         _diction = [NSMutableDictionary dictionary];
@@ -129,6 +131,8 @@
     self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
     NSDictionary *extraDic = self.mamaCenterModel.extra_info;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
+    
+    _mamaID = self.mamaCenterModel.mama_id;
     
     self.mamaCenterHeaderView.mamaCenterModel = self.mamaCenterModel;
     self.mamaCenterFooterView.mamaCenterModel = self.mamaCenterModel;
@@ -356,6 +360,7 @@
         [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
     }else if (index == 109) {
         JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
+        teamVC.mamaID = _mamaID;
         [self.navigationController pushViewController:teamVC animated:YES];
     }else if (index == 110) {
         JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];

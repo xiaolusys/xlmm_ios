@@ -126,6 +126,12 @@
     
     
 }
+- (JMRefundController *)refundVC {
+    if (_refundVC == nil) {
+        _refundVC = [[JMRefundController alloc] init];
+    }
+    return _refundVC;
+}
 - (NSMutableArray *)orderGoodsDataSource {
     if (_orderGoodsDataSource == nil) {
         _orderGoodsDataSource = [NSMutableArray array];
@@ -466,9 +472,6 @@
                 JMShareView *cover = [JMShareView show];
                 cover.delegate = self;
                 JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
-                if (self.refundVC.view == nil) {
-                    self.refundVC = [[JMRefundController alloc] init];
-                }
                 self.refundVC.ordergoodsModel = model;
                 self.refundVC.refundDic = _refundDic;
                 self.refundVC.delegate = self;
@@ -554,10 +557,6 @@
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
         JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
-        
-        if (self.refundVC.view == nil) {
-            self.refundVC = [[JMRefundController alloc] init];
-        }
         self.refundVC.continuePayDic = _refundDic;
         self.refundVC.delegate = self;
         menu.contentView = self.refundVC.view;
@@ -569,8 +568,8 @@
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
         //弹出视图
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
-        menu.contentView = self.shareView.view;
+        JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+        shareMenu.contentView = self.shareView.view;
         
     }else {
         

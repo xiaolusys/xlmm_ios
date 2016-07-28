@@ -157,7 +157,7 @@
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {
     NSLog(@"composeShareBtn Index=%ld", index);
-    if (index == 0) {
+    if (index == 100) {
         //微信分享
         if (_url == nil) {
             [self createPrompt];
@@ -181,7 +181,7 @@
 
         }
         [self cancelBtnClick];
-    }else if (index == 1) {
+    }else if (index == 101) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -202,7 +202,7 @@
             }];
             [self cancelBtnClick];
         }
-    }else if (index == 2) {
+    }else if (index == 102) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -214,7 +214,7 @@
         }];
         
         [self cancelBtnClick];
-    }else if (index == 3) {
+    }else if (index == 103) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -227,7 +227,7 @@
         }];
         [self cancelBtnClick];
 
-    }else if (index == 4) {
+    }else if (index == 104) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -236,7 +236,7 @@
         [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_imageData)];
         [self cancelBtnClick];
 
-    }else if (index == 5) {
+    }else if (index == 105) {
         _isCopy = YES;
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
         NSString *str = _url;

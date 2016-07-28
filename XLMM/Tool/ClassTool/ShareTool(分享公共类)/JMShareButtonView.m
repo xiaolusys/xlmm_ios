@@ -55,7 +55,7 @@
 //    [btn setImage:highImage forState:UIControlStateHighlighted];
     
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    btn.tag = self.subviews.count;
+    btn.tag = self.subviews.count + 100;
     [self addSubview:btn];
     
     
