@@ -85,7 +85,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor sectionViewColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     [self createTableView];
     [self createHeaderView];
@@ -198,7 +198,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;
-    
+    self.tableView.backgroundColor = [UIColor countLabelColor];
 }
 - (void)createHeaderView {
     JMMaMaCenterHeaderView *mamaCenterHeaderView = [JMMaMaCenterHeaderView enterHeaderView];;

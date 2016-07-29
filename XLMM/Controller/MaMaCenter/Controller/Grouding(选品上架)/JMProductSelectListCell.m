@@ -204,8 +204,10 @@
     self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.std_sale_price floatValue]];
     self.saleNumLabel.text = self.leveModel.sale_num_des;
     
-    self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  %@",self.leveModel.rebet_amount_des];
-    self.nextRebetLabtl.text = self.leveModel.next_rebet_amount_des;
+    CGFloat rebetAmount = [self.leveModel.rebet_amount floatValue];
+    CGFloat nextRebetAmount = [self.leveModel.next_rebet_amount floatValue];
+    self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
+    self.nextRebetLabtl.text = [NSString stringWithFormat:@"  ¥%.2f",nextRebetAmount];
     self.vipLabel.text = self.leveModel.next_agencylevel_desc;
     
     self.pdtID = [NSString stringWithFormat:@"%@", model.goodsID];
