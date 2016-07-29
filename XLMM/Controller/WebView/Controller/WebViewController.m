@@ -313,10 +313,18 @@
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
 
-    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-        [self resolveProductShareParam:data];
-    }
-    self.shareView.model = self.share_model;
+//    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+//        [self resolveProductShareParam:data];
+//    }
+    self.shareView.model = [[JMShareModel alloc] init];
+    self.shareView.model.share_type = [data objectForKey:@"share_type"];
+    
+    self.shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
+    self.shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+    
+    self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
+    self.shareView.model.share_link = [data objectForKey:@"link"];
+//    self.shareView.model = self.share_model;
     
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
