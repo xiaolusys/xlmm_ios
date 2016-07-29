@@ -8,9 +8,8 @@
 
 #import "MaMaOrderTableViewCell.h"
 #import "MaMaOrderModel.h"
-#import "UIImageView+WebCache.h"
-#import "UIColor+RGBColor.h"
-#import "NSString+URL.h"
+#import "MMClass.h"
+
 
 @implementation MaMaOrderTableViewCell
 

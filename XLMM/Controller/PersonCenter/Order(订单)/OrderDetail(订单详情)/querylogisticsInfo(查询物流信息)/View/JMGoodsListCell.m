@@ -7,12 +7,8 @@
 //
 
 #import "JMGoodsListCell.h"
-#import "UIColor+RGBColor.h"
-#import "UIImageView+WebCache.h"
 #import "MMClass.h"
-#import "Masonry.h"
 #import "JMOrderGoodsModel.h"
-#import "NSString+URL.h"
 
 @interface JMGoodsListCell ()
 

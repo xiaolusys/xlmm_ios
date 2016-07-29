@@ -11,23 +11,17 @@
 #import "JMLogInViewController.h"
 #import "MMClass.h"
 #import "CartViewController.h"
-#import "AFNetworking.h"
 #import "ChiMaBiaoViewController.h"
 #import "XidiShuomingViewController.h"
 #import "WXApi.h"
 #import "UIImage+UIImageExt.h"
-#import "NSString+URL.h"
 #import "UIImage+ImageWithUrl.h"
-#import "UIColor+RGBColor.h"
 #import "UIImageView+WebCache.h"
-#import "SVProgressHUD.h"
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
-//#import "MMLoadingAnimation.h"
-#import "AFNetworking.h"
-//#import "MobClick.h"
 #import "MJRefresh.h"
+
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;

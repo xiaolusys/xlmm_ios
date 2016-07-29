@@ -7,14 +7,11 @@
 //
 
 #import "ShopPreviousViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MamaShareView.h"
 #import "UMSocial.h"
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"
-#import "SVProgressHUD.h"
-#import "NSString+URL.h"
 
 @interface ShopPreviousViewController ()
 @property (nonatomic, strong)UIWebView *webView;

@@ -8,10 +8,7 @@
 
 #import "TodayVisitorViewController.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
-#import "UIViewController+NavigationBar.h"
 #import "MJRefresh.h"
-#import "AFHTTPRequestOperationManager.h"
 #import "JMFetureFansCell.h"
 #import "VisitorModel.h"
 

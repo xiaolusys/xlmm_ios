@@ -7,8 +7,8 @@
 //
 
 #import "PhotoView.h"
-#import "UIColor+RGBColor.h"
-#import "UIImageView+WebCache.h"
+#import "MMClass.h"
+
 
 #define SWIDTH [UIScreen mainScreen].bounds.size.width
 #define SHEIGHT [UIScreen mainScreen].bounds.size.height

@@ -8,15 +8,10 @@
 
 #import "JMAuthcodeViewController.h"
 #import "JMAuthcodeViewController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMLineView.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
-#import "SVProgressHUD.h"
 
 
 #define PHONE_NUM_LIMIT 11

@@ -11,9 +11,6 @@
 #import "AddressModel.h"
 #import "MMClass.h"
 #import "AddressTableCell.h"
-#import "AFNetworking.h"
-#import "AFNetworking.h"
-#import "UIViewController+NavigationBar.h"
 
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width

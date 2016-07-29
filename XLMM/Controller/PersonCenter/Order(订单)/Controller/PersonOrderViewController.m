@@ -8,7 +8,6 @@
 
 #import "PersonOrderViewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMPersonAllOrderController.h"
 #import "JMPersonWaitPayController.h"
 #import "JMPersonWaitGoodsController.h"

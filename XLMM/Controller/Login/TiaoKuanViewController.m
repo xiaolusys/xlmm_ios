@@ -7,7 +7,7 @@
 //
 
 #import "TiaoKuanViewController.h"
-#import "UIViewController+NavigationBar.h"
+#import "MMClass.h"
 
 
 @interface TiaoKuanViewController ()<UIWebViewDelegate>

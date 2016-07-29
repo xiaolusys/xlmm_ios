@@ -7,12 +7,9 @@
 //
 
 #import "DebugSettingViewController.h"
-#import "AFNetworking.h"
 #import "LGViews.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MiPushSDK.h"
-#import "SVProgressHUD.h"
 
 //动画时间
 #define kAnimationDuration 0.2

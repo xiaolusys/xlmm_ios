@@ -8,14 +8,10 @@
 
 #import "JMMaMaPersonCenterController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMMaMaCenterHeaderView.h"
-#import "AFNetworking.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
-#import "MJExtension.h"
 #import "JMMaMaCenterFooterView.h"
-#import "MJRefresh.h"
 #import "ProductSelectionListViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
@@ -29,7 +25,7 @@
 #import "TixianViewController.h"
 #import "MaMaHuoyueduViewController.h"
 #import "JMMaMaEarningsRankController.h"
-#import "SVProgressHUD.h"
+
 
 
 @interface JMMaMaPersonCenterController ()<UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate>
@@ -90,26 +86,11 @@
     [self createTableView];
     [self createHeaderView];
     [self createFooterView];
-//    [self createPullHeaderRefresh];
     [self loadfoldLineData];
     [self loadDataSource];
     [self loadMaMaWeb];
 }
-#pragma mrak 刷新界面
-- (void)createPullHeaderRefresh {
-    kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _isPullDown = YES;
-        [weakSelf loadDataSource];
-        [weakSelf loadfoldLineData];
-    }];
-}
-- (void)endRefresh {
-    if (_isPullDown) {
-        _isPullDown = NO;
-        [self.tableView.mj_header endRefreshing];
-    }
-}
+
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -118,11 +99,9 @@
             return ;
         }else {
             [self updateMaMaHome:responseObject];
-//            [self endRefresh];
             [self.tableView reloadData];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self endRefresh];
     }];
 }
 //新接口数据
@@ -160,7 +139,6 @@
 //        [self endRefresh];
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self endRefresh];
     }];
 }
 - (void)loadMaMaWeb {
@@ -343,7 +321,7 @@
         WebViewController *activity = [[WebViewController alloc] init];
         NSString *active = @"myInvite";
         NSString *titleName = @"我的邀请";
-        [self.diction setValue:@26 forKey:@"activity_id"];
+        [self.diction setValue:@38 forKey:@"activity_id"];
         [self.diction setValue:self.myInvitation forKey:@"web_url"];
         [self.diction setValue:active forKey:@"type_title"];
         [self.diction setValue:titleName forKey:@"name_title"];

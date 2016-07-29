@@ -7,26 +7,17 @@
 //
 
 #import "ShenQingTuikuanController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "UMMobClick/MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "MJExtension.h"
 #import "JMAppForRefundModel.h"
 #import "UIView+RGSize.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "JMOrderGoodsModel.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
-#import "Masonry.h"
 
 
 @interface ShenQingTuikuanController ()<JMRefundViewDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>

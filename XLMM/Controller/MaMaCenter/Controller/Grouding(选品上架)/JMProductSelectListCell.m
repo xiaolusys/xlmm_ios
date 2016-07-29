@@ -7,11 +7,8 @@
 //
 
 #import "JMProductSelectListCell.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMLevelinfoModel.h"
-#import "MJExtension.h"
-#import "NSString+URL.h"
 #import "NSString+Encrypto.h"
 
 @interface JMProductSelectListCell ()

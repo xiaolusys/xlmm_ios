@@ -8,13 +8,9 @@
 
 #import "JMComplaintSuggestController.h"
 #import "JMTextView.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMCompSugView.h"
-#import "UIColor+RGBColor.h"
 #import "JMSelecterButton.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "WebViewController.h"
 
 

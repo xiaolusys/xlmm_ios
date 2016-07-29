@@ -7,17 +7,11 @@
 //
 
 #import "JMQueryLogInfoController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMPopView.h"
 #import "JMGoodsListController.h"
 #import "JMLogTimeListController.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMOrderGoodsModel.h"
-#import "MJExtension.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
-#import "UIColor+RGBColor.h"
 #import "JMCleanView.h"
 #import "JMPackAgeModel.h"
 

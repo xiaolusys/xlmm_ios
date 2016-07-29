@@ -7,13 +7,11 @@
 //
 
 #import "TuijianErweimaViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
 #import "MMClass.h"
 #import "UIImage+ChangeGray.h"
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
-#import "SVProgressHUD.h"
 
 
 

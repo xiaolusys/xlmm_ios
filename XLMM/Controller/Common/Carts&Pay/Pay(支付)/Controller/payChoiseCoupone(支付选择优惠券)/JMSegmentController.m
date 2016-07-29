@@ -9,13 +9,9 @@
 #import "JMSegmentController.h"
 #import "HMSegmentedControl.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
-#import "SVProgressHUD.h"
 #import "JMCouponModel.h"
-#import "MJExtension.h"
 #import "JMUsableCouponController.h"
 #import "JMDisableCouponController.h"
-#import "UIViewController+NavigationBar.h"
 
 @interface JMSegmentController ()<YouhuiquanDelegate>
 

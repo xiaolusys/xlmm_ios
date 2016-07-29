@@ -8,13 +8,9 @@
 
 #import "JMVipRenewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
-#import "Masonry.h"
-#import "AFNetworking.h"
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
 #import "WXApi.h"
-#import "SVProgressHUD.h"
 #import "Pingpp.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。

@@ -7,11 +7,8 @@
 //
 
 #import "JMEarningsRankCell.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMEarningsRankModel.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "JMMaMaTeamModel.h"
 
 @interface JMEarningsRankCell ()

@@ -9,7 +9,6 @@
 #import "JifenViewController.h"
 #import "MMClass.h"
 #import "JiFenCollectionCell.h"
-#import "UIViewController+NavigationBar.h"
 #import "JifenReusableView.h"
 #import "JiFenModel.h"
 

@@ -7,9 +7,8 @@
 //
 
 #import "YixuanTableViewCell.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
+#import "MMClass.h"
+
 
 @implementation YixuanTableViewCell
 

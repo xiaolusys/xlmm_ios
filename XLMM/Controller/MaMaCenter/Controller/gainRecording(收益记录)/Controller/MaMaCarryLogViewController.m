@@ -8,14 +8,11 @@
 //
 
 #import "MaMaCarryLogViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "CarryLogModel.h"
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
-#import "SVProgressHUD.h"
 
 
 @interface MaMaCarryLogViewController ()

@@ -7,10 +7,8 @@
 //
 
 #import "JMFetureFansCell.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMFetureFansModel.h"
-#import "NSString+URL.h"
 #import "VisitorModel.h"
 
 @interface JMFetureFansCell ()

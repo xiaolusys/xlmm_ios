@@ -8,9 +8,7 @@
 
 #import "JMSharePackView.h"
 #import "MMClass.h"
-#import "Masonry.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 
 #define JMSHAREPROPORTION 0.62
 

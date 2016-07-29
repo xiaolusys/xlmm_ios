@@ -7,12 +7,8 @@
 //
 
 #import "JMPhonenumViewController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
-#import "UIViewController+NavigationBar.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "MiPushSDK.h"
 #import "VerifyPhoneViewController.h"
 #import "JMLineView.h"

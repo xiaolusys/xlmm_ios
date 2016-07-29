@@ -7,15 +7,9 @@
 //
 
 #import "ShenQingTuiHuoController.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMOrderGoodsModel.h"
-#import "UIColor+RGBColor.h"
-#import "NSString+URL.h"
-#import "UIImageView+WebCache.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "QiniuSDK.h"
-#import "SVProgressHUD.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"

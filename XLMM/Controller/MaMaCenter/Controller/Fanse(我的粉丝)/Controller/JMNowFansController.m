@@ -7,15 +7,10 @@
 //
 
 #import "JMNowFansController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 #import "MJRefresh.h"
-#import "Masonry.h"
 #import "FanceModel.h"
 #import "FensiTableViewCell.h"
-#import "AFNetworking.h"
-#import "MJExtension.h"
 #import "JMFetureFansCell.h"
 
 

@@ -8,11 +8,9 @@
 
 #import "JMMaMaCenterFansController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMNowFansController.h"
 #import "JMFetureFansController.h"
 #import "JMAboutFansController.h"
-#import "Masonry.h"
 
 
 

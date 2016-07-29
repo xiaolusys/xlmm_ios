@@ -8,7 +8,6 @@
 
 #import "JMOrderDetailFooterView.h"
 #import "MMClass.h"
-#import "Masonry.h"
 
 @interface JMOrderDetailFooterView ()
 /**

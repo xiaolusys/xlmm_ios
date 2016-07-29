@@ -7,18 +7,14 @@
 //
 
 #import "PublishNewPdtViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "PicCollectionViewCell.h"
 #import "PicHeaderCollectionReusableView.h"
 #import "PicFooterCollectionReusableView.h"
 #import "PhotoView.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "SharePicModel.h"
-#import "SVProgressHUD.h"
 #import "CountdownView.h"
 #import "UILabel+CustomLabel.h"
-#import "SVProgressHUD.h"
 
 
 

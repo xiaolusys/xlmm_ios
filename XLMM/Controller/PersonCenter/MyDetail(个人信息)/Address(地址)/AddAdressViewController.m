@@ -8,10 +8,7 @@
 
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
-#import "UIViewController+NavigationBar.h"
 
 @interface AddAdressViewController ()<UIAlertViewDelegate>
 

@@ -7,7 +7,6 @@
 //
 
 #import "ActivityViewController2.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
 

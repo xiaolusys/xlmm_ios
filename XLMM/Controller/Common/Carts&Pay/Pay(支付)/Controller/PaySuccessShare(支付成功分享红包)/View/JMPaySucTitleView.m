@@ -7,7 +7,6 @@
 //
 
 #import "JMPaySucTitleView.h"
-#import "Masonry.h"
 #import "MMClass.h"
 
 #define JMSUCTITLEPROPORTION 0.72

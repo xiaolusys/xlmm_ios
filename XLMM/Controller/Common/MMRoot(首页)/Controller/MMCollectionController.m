@@ -12,12 +12,9 @@
 #import "JMRootgoodsCell.h"
 #import "MMDetailsViewController.h"
 #import "MJRefresh.h"
-#import "NSString+URL.h"
-#import "SVProgressHUD.h"
 #import "LoadingAnimation.h"
 #import "MMLoadingAnimation.h"
-#import "UIViewController+NavigationBar.h"
-#import "Masonry.h"
+#import "CollectionModel.h"
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
