@@ -11,8 +11,6 @@
 @interface JMMaMaTeamModel : NSObject
 
 
-@property (nonatomic, copy) NSString *duration_num;
-
 @property (nonatomic, copy) NSString *duration_total;
 
 @property (nonatomic, copy) NSString *mama;
@@ -21,9 +19,11 @@
 
 @property (nonatomic, copy) NSString *mobile;
 
+@property (nonatomic, copy) NSString *num;
+
 @property (nonatomic, copy) NSString *rank;
 
-@property (nonatomic, copy) NSString *stat_time;
+@property (nonatomic, copy) NSString *total;
 
 @property (nonatomic, copy) NSString *thumbnail;
 
@@ -34,14 +34,14 @@
 
 /**
  *  {
- "duration_num" = 0;
- "duration_total" = 0;
- mama = 32;
- "mama_nick" = "GG@\U5c0f\U9e7f\U7f8e\U7f8e";
- mobile = "";
+ "duration_total" = 81641;
+ mama = 13420;
+ "mama_nick" = "\U96ea\U5170";
+ mobile = 13411023669;
+ num = 5115;
  rank = 10;
- "stat_time" = "2016-07-20T00:00:00";
- thumbnail = "http://wx.qlogo.cn/mmopen/pf11h2zpf4DYkep6XNO4wXmtg5ZaNvU4IqXMMriaicIvicGkz64ElI4fzDCHFksLDCqvRukCe4IeeYicM5v5M18P2ibkxhvs3Yn1ic/0";
+ thumbnail = "http://wx.qlogo.cn/mmopen/K1pXhCXurQEFIjD6Y7Ml5ZiaKnf361W1iabkYAvvOPGtWskIM2DOWiaPoOD6eXU0wL3kO7vbVlVySQy74nChB62ibS0OYicTeNuan/0";
+ total = 4514489;
  }
  */
 

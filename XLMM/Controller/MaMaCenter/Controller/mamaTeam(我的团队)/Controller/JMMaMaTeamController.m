@@ -11,6 +11,7 @@
 #import "JMMaMateamCell.h"
 #import "JMMaMaEarningsRankController.h"
 #import "JMMaMaSelfTeamModel.h"
+#import "JMSelecterButton.h"
 
 static const NSUInteger ITEM_COUNT = 3;
 
@@ -24,9 +25,10 @@ static const NSUInteger ITEM_COUNT = 3;
  */
 @property (nonatomic, strong) UIImageView *mamaIconImage;
 /**
- *  MaMa是不是会员
+ *  mama团队收益排行
  */
-@property (nonatomic, strong) UIButton *isVipMamaButton;
+@property (nonatomic, strong) JMSelecterButton *mamaRankButton;
+
 @property (nonatomic, strong) UILabel *buttonLabel;
 /**
  *  收益,团队收益排名
@@ -57,20 +59,15 @@ static const NSUInteger ITEM_COUNT = 3;
     [self createRightButonItem];
 }
 - (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 40)];
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setTitle:@"团队收益排名" forState:UIControlStateNormal];
+    [rightBtn setTitle:@"团队说明" forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)rightClicked:(UIButton *)button {
-    JMMaMaEarningsRankController *earningsVC = [[JMMaMaEarningsRankController alloc] init];
-    earningsVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
-    earningsVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/carry_total_rank",Root_URL];
-    earningsVC.isTeamEarningsRank = YES;
-    [self.navigationController pushViewController:earningsVC animated:YES];
 }
 - (void)loadDataSource {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/%@/get_team_members",Root_URL,self.mamaID];
@@ -105,7 +102,7 @@ static const NSUInteger ITEM_COUNT = 3;
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[teamInfoDic[@"thumbnail"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
     CGFloat total = [teamInfoDic[@"total"] floatValue] / 100.00;
     self.earningsLabel.text = [NSString stringWithFormat:@"收益%.2f元",total];
-    self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队收益第%@",teamInfoDic[@"rank"]];
+//    self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队收益第%@",teamInfoDic[@"rank"]];
 
 }
 - (void)createTableView {
@@ -188,6 +185,7 @@ static const NSUInteger ITEM_COUNT = 3;
     UIImageView *topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
     self.tableView.tableHeaderView = topView;
     topView.image = [UIImage imageNamed:@"wodejingxuanback"];
+    topView.userInteractionEnabled = YES;
     
     UIImageView *mamaIconBackImage = [UIImageView new]; //wodejingxuantouxiangicon -- > 妈妈头像底层图片
     [topView addSubview:mamaIconBackImage];
@@ -201,21 +199,19 @@ static const NSUInteger ITEM_COUNT = 3;
     self.mamaIconImage.layer.borderWidth = 1.;
     self.mamaIconImage.layer.borderColor = [UIColor whiteColor].CGColor;
     
-    UIButton *isVipMamaButton = [UIButton new];
-    [topView addSubview:isVipMamaButton];
-    self.isVipMamaButton = isVipMamaButton;
-    self.isVipMamaButton.layer.masksToBounds = YES;
-    self.isVipMamaButton.layer.cornerRadius = 10.;
-    self.isVipMamaButton.layer.borderWidth = 1.;
-    self.isVipMamaButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    JMSelecterButton *mamaRankButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [topView addSubview:mamaRankButton];
+    self.mamaRankButton = mamaRankButton;
+    [self.mamaRankButton setSelecterBorderColor:[UIColor whiteColor] TitleColor:[UIColor whiteColor] Title:@"查看团队收益" TitleFont:14. CornerRadius:15.];
+    [self.mamaRankButton addTarget:self action:@selector(mamaRankClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *buttonImage = [UIImageView new];
-    [self.isVipMamaButton addSubview:buttonImage];
+    [topView addSubview:buttonImage];
     buttonImage.backgroundColor = [UIColor clearColor];
     buttonImage.image = [UIImage imageNamed:@"mamaCrown_yellowColor"];
     
     UILabel *buttonLabel = [UILabel new];
-    [self.isVipMamaButton addSubview:buttonLabel];
+    [topView addSubview:buttonLabel];
     self.buttonLabel = buttonLabel;
     self.buttonLabel.textColor = [UIColor whiteColor];
     self.buttonLabel.font = [UIFont systemFontOfSize:14.];
@@ -246,21 +242,22 @@ static const NSUInteger ITEM_COUNT = 3;
         make.width.height.mas_equalTo(@50);
     }];
     
-    [self.isVipMamaButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(mamaIconBackImage.mas_right).offset(10);
-        make.top.equalTo(mamaIconBackImage).offset(5);
-        make.width.mas_equalTo(@90);
-        make.height.mas_equalTo(@20);
+    [self.mamaRankButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(topView).offset(-10);
+        make.centerY.equalTo(topView.mas_centerY);
+        make.width.mas_equalTo(@100);
+        make.height.mas_equalTo(@30);
     }];
+    
     [buttonImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.isVipMamaButton).offset(6);
-        make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY);
+        make.left.equalTo(mamaIconBackImage.mas_right).offset(15);
+        make.top.equalTo(mamaIconBackImage).offset(5);
         make.width.mas_equalTo(@18);
         make.height.mas_equalTo(@15);
     }];
     [buttonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(buttonImage.mas_right).offset(3);
-        make.centerY.equalTo(weakSelf.isVipMamaButton.mas_centerY);
+        make.centerY.equalTo(buttonImage.mas_centerY);
     }];
     
     [self.earningsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -276,7 +273,13 @@ static const NSUInteger ITEM_COUNT = 3;
     
     
 }
-
+- (void)mamaRankClick:(UIButton *)button {
+    JMMaMaEarningsRankController *earningsVC = [[JMMaMaEarningsRankController alloc] init];
+    earningsVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
+    earningsVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/carry_total_rank",Root_URL];
+    earningsVC.isTeamEarningsRank = YES;
+    [self.navigationController pushViewController:earningsVC animated:YES];
+}
 - (void)backClick:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
 }
