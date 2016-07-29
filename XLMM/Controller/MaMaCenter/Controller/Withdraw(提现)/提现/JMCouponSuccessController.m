@@ -7,9 +7,7 @@
 //
 
 #import "JMCouponSuccessController.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 
 @interface JMCouponSuccessController ()
 /*

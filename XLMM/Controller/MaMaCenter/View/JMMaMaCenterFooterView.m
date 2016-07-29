@@ -8,8 +8,6 @@
 
 #import "JMMaMaCenterFooterView.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "MJExtension.h"
 #import "JMMaMaCenterModel.h"
 
 @interface JMMaMaCenterFooterView ()

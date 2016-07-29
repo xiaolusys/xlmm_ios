@@ -20,6 +20,7 @@
 #import "JMMaMaPersonCenterController.h"
 #import "JMSegmentController.h"
 #import "JMRefundBaseController.h"
+#import "JMLogInViewController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面

@@ -7,14 +7,10 @@
 //
 
 #import "ProductSelectionListViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "YixuanTableViewController.h"
 #import "MJRefresh.h"
 #import "JMProductSelectionListModel.h"
-#import "MJExtension.h"
 #import "JMProductSelectListCell.h"
 
 

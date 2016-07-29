@@ -7,10 +7,8 @@
 //
 
 #import "JMRegisterViewController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
-#import "UIViewController+NavigationBar.h"
 
 @interface JMRegisterViewController ()
 

@@ -8,14 +8,11 @@
 
 #import "JMRefundController.h"
 #import "JMAppForRefundModel.h"
-#import "MJExtension.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "JMRefundCell.h"
-#import "Masonry.h"
 #import "JMContinuePayModel.h"
 
 @interface JMRefundController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>

@@ -8,7 +8,6 @@
 
 #import "CartTableCellTableViewCell1.h"
 #import "MMClass.h"
-#import "Masonry.h"
 
 @implementation CartTableCellTableViewCell1
 

@@ -7,24 +7,18 @@
 //
 
 #import "JMShareViewController.h"
-#import "Masonry.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 #import "MMClass.h"
 #import "JMShareButtonView.h"
 #import "JMShareView.h"
 #import "JMShareModel.h"
-#import "MJExtension.h"
 #import "UMSocial.h"
 #import "WXApi.h"
 #import "YoumengShare.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 #import "SendMessageToWeibo.h"
-#import "SVProgressHUD.h"
 #import "JMPopView.h"
-#import "AFNetworking.h"
-#import "NSString+URL.h"
 
 @interface JMShareViewController ()<JMShareButtonViewDelegate>
 

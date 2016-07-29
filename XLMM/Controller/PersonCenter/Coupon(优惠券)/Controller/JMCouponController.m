@@ -7,10 +7,7 @@
 //
 
 #import "JMCouponController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
-#import "SVProgressHUD.h"
 #import "HMSegmentedControl.h"
 #import "JMUsedCouponController.h"
 #import "JMExpiredCouponController.h"

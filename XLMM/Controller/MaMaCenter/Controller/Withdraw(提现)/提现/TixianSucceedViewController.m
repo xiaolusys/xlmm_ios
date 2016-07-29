@@ -7,10 +7,7 @@
 //
 
 #import "TixianSucceedViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "PublishNewPdtViewController.h"
-#import "UIColor+RGBColor.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMBillDetailController.h"
 

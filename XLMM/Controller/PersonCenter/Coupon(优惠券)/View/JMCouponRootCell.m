@@ -8,7 +8,6 @@
 
 #import "JMCouponRootCell.h"
 #import "MMClass.h"
-#import "Masonry.h"
 #import "JMCouponModel.h"
 
 

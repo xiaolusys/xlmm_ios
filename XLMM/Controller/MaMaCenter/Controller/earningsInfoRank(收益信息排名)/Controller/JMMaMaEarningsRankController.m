@@ -8,14 +8,8 @@
 
 #import "JMMaMaEarningsRankController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
-#import "Masonry.h"
-#import "AFNetworking.h"
-#import "MJExtension.h"
 #import "JMEarningsRankModel.h"
 #import "JMEarningsRankCell.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "JMMaMaTeamModel.h"
 
 @interface JMMaMaEarningsRankController ()
@@ -270,7 +264,15 @@
 - (void)backClick:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"MaMaEarningsRank"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"MaMaEarningsRank"];
+}
 @end
 
 

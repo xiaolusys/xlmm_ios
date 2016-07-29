@@ -8,9 +8,7 @@
 
 #import "SettingViewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "AddressViewController.h"
-#import "UIImageView+WebCache.h"
 #import "ChangeNicknameViewController.h"
 #import "SetPasswordViewController.h"
 #import "ModifyPhoneController.h"
@@ -20,7 +18,6 @@
 #import "ThirdAccountViewController.h"
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
-#import "AFNetworking.h"
 #import "DebugSettingViewController.h"
 
 @interface SettingViewController ()<UIAlertViewDelegate>{

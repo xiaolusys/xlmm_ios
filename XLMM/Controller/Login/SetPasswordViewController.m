@@ -7,8 +7,6 @@
 //
 
 #import "SetPasswordViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "TiaoKuanViewController.h"
 

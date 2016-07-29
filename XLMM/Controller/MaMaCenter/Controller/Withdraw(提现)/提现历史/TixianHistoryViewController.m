@@ -7,14 +7,10 @@
 //
 
 #import "TixianHistoryViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
-#import "SVProgressHUD.h"
 #import "MJRefresh.h"
-#import "Masonry.h"
 
 
 static NSString *CellIdentify = @"TixianCellIdentify";

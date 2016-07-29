@@ -17,13 +17,8 @@
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 #import "MJRefresh.h"
-#import "UIViewController+NavigationBar.h"
-#import "SVProgressHUD.h"
 #import "XlmmMall.h"
-#import "AFNetworking.h"
 #import "WebViewController.h"
-#import "MJExtension.h"
-#import "Masonry.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 

@@ -9,9 +9,6 @@
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "NSString+URL.h"
-#import "MJExtension.h"
 #import "XlmmMall.h"
 
 @interface JMRefundBaseCell ()

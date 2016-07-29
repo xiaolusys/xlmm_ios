@@ -8,8 +8,7 @@
 
 #import "JMReGoodsAddView.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "UIColor+RGBColor.h"
+
 
 @interface JMReGoodsAddView ()
 /**

@@ -7,15 +7,10 @@
 //
 
 #import "JMFetureFansController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
-#import "MJRefresh.h"
-#import "AFNetworking.h"
 #import "JMFetureFansModel.h"
-#import "MJExtension.h"
 #import "JMFetureFansCell.h"
-#import "Masonry.h"
+#import "MJRefresh.h"
 
 
 @interface JMFetureFansController ()<UITableViewDataSource,UITableViewDelegate>

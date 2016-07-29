@@ -7,12 +7,9 @@
 //
 
 #import "JMMaMaOrderListCell.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "MaMaOrderModel.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIColor+RGBColor.h"
+
 
 
 @interface JMMaMaOrderListCell ()

@@ -7,12 +7,10 @@
 //
 
 #import "FensiTableViewCell.h"
-#import "UIImageView+WebCache.h"
 #import "NSString+Encrypto.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
 #import "FanceModel.h"
 #import "VisitorModel.h"
+#import "MMClass.h"
 
 @implementation FensiTableViewCell
 

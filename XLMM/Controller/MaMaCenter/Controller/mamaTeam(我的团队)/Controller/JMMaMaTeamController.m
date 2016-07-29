@@ -8,13 +8,8 @@
 
 #import "JMMaMaTeamController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
-#import "Masonry.h"
-#import "AFNetworking.h"
-#import "MJExtension.h"
 #import "JMMaMateamCell.h"
 #import "JMMaMaEarningsRankController.h"
-#import "NSString+URL.h"
 #import "JMMaMaSelfTeamModel.h"
 
 static const NSUInteger ITEM_COUNT = 3;
@@ -285,7 +280,15 @@ static const NSUInteger ITEM_COUNT = 3;
 - (void)backClick:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"MaMaTeamEarningsRank"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"MaMaTeamEarningsRank"];
+}
 @end
 
 

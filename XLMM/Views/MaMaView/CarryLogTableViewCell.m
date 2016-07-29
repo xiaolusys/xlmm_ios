@@ -8,8 +8,9 @@
 
 #import "CarryLogTableViewCell.h"
 #import "CarryLogModel.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
+#import "MMClass.h"
+
+
 @interface CarryLogTableViewCell()
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageV;
 @property (weak, nonatomic) IBOutlet UILabel *sourceLabel;

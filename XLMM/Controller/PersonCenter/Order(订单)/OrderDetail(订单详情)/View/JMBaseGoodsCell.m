@@ -8,9 +8,6 @@
 
 #import "JMBaseGoodsCell.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "JMSelecterButton.h"
 #import "XlmmMall.h"
 #import "JMOrderGoodsModel.h"

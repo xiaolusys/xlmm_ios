@@ -8,7 +8,6 @@
 
 #import "IosJsBridge.h"
 #import <UIKit/UIKit.h>
-#import "SVProgressHUD.h"
 #import "JumpUtils.h"
 #import "JMLogInViewController.h"
 #import "JMShareViewController.h"
@@ -16,12 +15,10 @@
 #import "JMPopView.h"
 #import "MMClass.h"
 #import "WebViewController.h"
-#import "AFNetworking.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
 #import "YoumengShare.h"
-#import "NSString+URL.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 
@@ -150,6 +147,7 @@
 }
 
 + (void)getNativeMobileSNCode{
+
     NSString *device = [self getMobileSNCode];
 
 

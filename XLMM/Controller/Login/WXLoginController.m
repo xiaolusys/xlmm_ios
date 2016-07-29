@@ -8,10 +8,7 @@
 
 #import "WXLoginController.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
-#import "UIViewController+NavigationBar.h"
 #import "SetPasswordController.h"
-#import "AFNetworking.h"
 
 
 @interface WXLoginController ()<UITextFieldDelegate, UIAlertViewDelegate>

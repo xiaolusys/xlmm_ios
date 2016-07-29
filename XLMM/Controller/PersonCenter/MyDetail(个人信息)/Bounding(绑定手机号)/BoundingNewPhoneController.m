@@ -7,8 +7,6 @@
 //
 
 #import "BoundingNewPhoneController.h"
-#import "UIColor+RGBColor.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
 @interface BoundingNewPhoneController ()<UITextFieldDelegate>

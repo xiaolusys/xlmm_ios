@@ -7,15 +7,12 @@
 //
 
 #import "Account1ViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
-#import "SVProgressHUD.h"
 #import "JMWithdrawCashController.h"
-#import "Masonry.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;

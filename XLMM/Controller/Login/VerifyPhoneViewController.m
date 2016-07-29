@@ -8,11 +8,7 @@
 
 #import "SetPasswordViewController.h"
 #import "VerifyPhoneViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 
 #define PHONE_NUM_LIMIT 11
 #define VERIFY_CODE_LIMIT 6

@@ -7,15 +7,10 @@
 //
 
 #import "JMRefundBaseController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "SVProgressHUD.h"
 #import "MJRefresh.h"
-#import "AFNetworking.h"
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
-#import "MJExtension.h"
 #import "RefundDetailsViewController.h"
 
 @interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource>

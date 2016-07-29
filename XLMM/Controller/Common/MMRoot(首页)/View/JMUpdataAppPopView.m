@@ -8,7 +8,6 @@
 
 #import "JMUpdataAppPopView.h"
 #import "MMClass.h"
-#import "Masonry.h"
 
 @interface JMUpdataAppPopView ()
 

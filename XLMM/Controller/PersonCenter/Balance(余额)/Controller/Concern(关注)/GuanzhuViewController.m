@@ -7,8 +7,6 @@
 //
 
 #import "GuanzhuViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
 #import "UIImage+ChangeGray.h"
 #import "MMClass.h"
 

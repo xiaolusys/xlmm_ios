@@ -7,16 +7,12 @@
 //
 
 #import "MaClassifyCarryLogViewController.h"
-#import "MJRefresh.h"
-#import "SVProgressHUD.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "CarryLogModel.h"
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
-#import "Masonry.h"
 #import "JMMaMaEarningsRankController.h"
+#import "MJRefresh.h"
 
 #define BTNWIDTH (SCREENWIDTH * 0.25)
 

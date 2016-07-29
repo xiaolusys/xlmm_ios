@@ -7,7 +7,6 @@
 //
 
 #import "ThirdAccountViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
 @interface ThirdAccountViewController ()

@@ -7,9 +7,7 @@
 //
 
 #import "TSettingViewController.h"
-#import "UIImageView+WebCache.h"
 #import "VersionController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
 @interface TSettingViewController ()

@@ -8,13 +8,8 @@
 
 #import "JMOrderDetailController.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMOrderDetailHeaderView.h"
 #import "JMOrderDetailFooterView.h"
-#import "AFNetworking.h"
-#import "SVProgressHUD.h"
-#import "MJExtension.h"
 #import "JMOrderDetailModel.h"
 #import "JMOrderGoodsModel.h"
 #import "JMEditAddressModel.h"

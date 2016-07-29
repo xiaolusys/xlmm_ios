@@ -7,14 +7,10 @@
 //
 
 #import "TixianViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "TixianSucceedViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"
-#import "Masonry.h"
-
 
 @interface TixianViewController ()<UITableViewDelegate,UITableViewDataSource>
 

@@ -8,12 +8,8 @@
 
 #import "JMLogTimeListController.h"
 #import "JMOrderGoodsModel.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "UIColor+RGBColor.h"
 #import "JMTimeInfoModel.h"
-#import "MJExtension.h"
 
 @interface JMLogTimeListController ()<UITableViewDelegate,UITableViewDataSource>
 

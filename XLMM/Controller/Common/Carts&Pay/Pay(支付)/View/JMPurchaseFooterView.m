@@ -8,7 +8,6 @@
 
 #import "JMPurchaseFooterView.h"
 #import "MMClass.h"
-#import "Masonry.h"
 
 @interface JMPurchaseFooterView ()
 

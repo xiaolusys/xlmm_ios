@@ -7,13 +7,9 @@
 //
 
 #import "YixuanTableViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "YixuanTableViewCell.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 #import "ShopPreviousViewController.h"
-#import "MJExtension.h"
 #import "JMAlreadyChooseModel.h"
 
 

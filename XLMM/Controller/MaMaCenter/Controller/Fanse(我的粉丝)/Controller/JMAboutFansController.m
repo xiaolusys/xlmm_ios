@@ -7,9 +7,7 @@
 //
 
 #import "JMAboutFansController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 #import "IMYWebView.h"
 
 @interface JMAboutFansController ()

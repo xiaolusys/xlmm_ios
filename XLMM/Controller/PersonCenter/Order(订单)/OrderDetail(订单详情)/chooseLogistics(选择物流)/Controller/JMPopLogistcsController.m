@@ -8,15 +8,11 @@
 
 #import "JMPopLogistcsController.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "JMPopLogistcsCell.h"
 #import "JMPopLogistcsModel.h"
-#import "MJExtension.h"
 
 @interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource>
 

@@ -8,15 +8,11 @@
 
 #import "MaMaHuoyueduViewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "HuoyuezhiTableViewCell.h"
 #import "HuoyuezhiModel.h"
-#import "MJRefresh.h"
 #import "NSString+DeleteT.h"
-#import "AFNetworking.h"
 #import "CarryLogHeaderView.h"
-#import "SVProgressHUD.h"
-#import "Masonry.h"
+#import "MJRefresh.h"
 
 @interface MaMaHuoyueduViewController ()
 

@@ -8,8 +8,6 @@
 
 #import "ChangeNicknameViewController.h"
 #import "SettingViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
 #import "MMClass.h"
 #define NICK_LOWER_LIMIT 4
 #define NICK_UPPER_LIMIT 20

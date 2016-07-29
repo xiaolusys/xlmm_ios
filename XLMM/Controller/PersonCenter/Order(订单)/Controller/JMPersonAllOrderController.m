@@ -9,15 +9,10 @@
 #import "JMPersonAllOrderController.h"
 #import "MMClass.h"
 #import "JMBaseGoodsCell.h"
-#import "MJExtension.h"
 #import "MJRefresh.h"
-#import "AFNetworking.h"
 #import "JMFetureFansModel.h"
 #import "JMOrderGoodsModel.h"
-#import "SVProgressHUD.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMAllOrderModel.h"
-#import "Masonry.h"
 #import "JMOrderDetailController.h"
 
 @interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate>
