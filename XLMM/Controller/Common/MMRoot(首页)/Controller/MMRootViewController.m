@@ -900,7 +900,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //        [oneBrandView addSubview:lineView1];
         
         //展示品牌入口
-        UIImageView *topicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH - 10, 145)];
+        UIImageView *topicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH, 145)];
         
         topicImageView.tag = TAG_COLLECTION_BRAND + index;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(brandTapAction:)];
@@ -1180,7 +1180,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     allActivityHeight = 0;
     //创建活动展示图
     for (int i = 0; i < self.activityDataArr.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+ACTIVITYHEIGHT * i, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10+ACTIVITYHEIGHT * i, SCREENWIDTH, ACTIVITYHEIGHT)];
         
         //        imageView.contentMode = UIViewContentModeScaleAspectFit;
         //        imageView.autoresizesSubviews = YES;

@@ -80,17 +80,28 @@
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     ((WebViewController *)vc).shareView = shareView;
     
-    if([((WebViewController *)vc).webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-        ((WebViewController *)vc).share_model.share_type = [data objectForKey:@"share_type"];
-        
-        ((WebViewController *)vc).share_model.share_img = [data objectForKey:@"share_icon"]; //图片
-        ((WebViewController *)vc).share_model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-        
-        ((WebViewController *)vc).share_model.title = [data objectForKey:@"share_title"]; //标题
-        ((WebViewController *)vc).share_model.share_link = [data objectForKey:@"link"];
-    }
-    shareView.model = ((WebViewController *)vc).share_model;
+//    if([((WebViewController *)vc).webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+//    ((WebViewController *)vc).share_model.share_type = [data objectForKey:@"share_type"];
+//    
+//    ((WebViewController *)vc).share_model.share_img = [data objectForKey:@"share_icon"]; //图片
+//    ((WebViewController *)vc).share_model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+//    
+//    ((WebViewController *)vc).share_model.title = [data objectForKey:@"share_title"]; //标题
+//    ((WebViewController *)vc).share_model.share_link = [data objectForKey:@"link"];
+//
+//    }
+//    shareView.model = ((WebViewController *)vc).share_model;
     
+    shareView.model = [[JMShareModel alloc] init];
+    shareView.model.share_type = [data objectForKey:@"share_type"];
+    
+    shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
+    shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+    
+    shareView.model.title = [data objectForKey:@"share_title"]; //标题
+    shareView.model.share_link = [data objectForKey:@"link"];
+    
+    NSLog(@"%@ %@", shareView.model, data);
     JMShareView *cover = [JMShareView show];
     cover.delegate = ((WebViewController *)vc);
     //弹出视图
