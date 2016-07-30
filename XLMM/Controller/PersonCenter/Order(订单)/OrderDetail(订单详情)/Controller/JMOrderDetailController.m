@@ -35,6 +35,7 @@
 #import "JMPayShareController.h"
 #import "WXApi.h"
 #import "PersonOrderViewController.h"
+#import "JMBaseNavigationController.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -717,6 +718,14 @@
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 101;
     [self.navigationController pushViewController:orderVC animated:YES];
+    NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
+    for (UIViewController *vc in marr) {
+        if ([vc isKindOfClass:[PersonOrderViewController class]]) {
+            [marr removeObject:vc];
+            break;
+        }
+    }
+    self.navigationController.viewControllers = marr;
     
 }
 - (void)viewWillAppear:(BOOL)animated {

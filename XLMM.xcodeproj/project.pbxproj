@@ -740,6 +740,7 @@
 		1FDD07B61D49BAC90010231F /* TeamNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AC1D49BAC90010231F /* TeamNormal@2x.png */; };
 		1FDD07B71D49BAC90010231F /* VisitorRecordNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AD1D49BAC90010231F /* VisitorRecordNormal@2x.png */; };
 		1FDD07B81D49BAC90010231F /* xiaoluUniversityNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AE1D49BAC90010231F /* xiaoluUniversityNormal@2x.png */; };
+		1FDD08401D4CB12E0010231F /* JMBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD083F1D4CB12E0010231F /* JMBaseNavigationController.m */; };
 		1FF3F9991D3CB31500FABBCE /* MaMaExplainFirst@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */; };
 		1FF3F99A1D3CB31500FABBCE /* MaMaExplainSecond@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */; };
 		1FF3F99B1D3CB31500FABBCE /* MaMaExplainThird@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */; };
@@ -2054,6 +2055,8 @@
 		1FDD07AC1D49BAC90010231F /* TeamNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TeamNormal@2x.png"; sourceTree = "<group>"; };
 		1FDD07AD1D49BAC90010231F /* VisitorRecordNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VisitorRecordNormal@2x.png"; sourceTree = "<group>"; };
 		1FDD07AE1D49BAC90010231F /* xiaoluUniversityNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoluUniversityNormal@2x.png"; sourceTree = "<group>"; };
+		1FDD083E1D4CB12E0010231F /* JMBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBaseNavigationController.h; sourceTree = "<group>"; };
+		1FDD083F1D4CB12E0010231F /* JMBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseNavigationController.m; sourceTree = "<group>"; };
 		1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainFirst@2x.png"; sourceTree = "<group>"; };
 		1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainSecond@2x.png"; sourceTree = "<group>"; };
 		1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainThird@2x.png"; sourceTree = "<group>"; };
@@ -4130,6 +4133,8 @@
 				1F27A6181D27597100A0F80B /* JMFirstOpen.m */,
 				1F27A6191D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.h */,
 				1F27A61A1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m */,
+				1FDD083E1D4CB12E0010231F /* JMBaseNavigationController.h */,
+				1FDD083F1D4CB12E0010231F /* JMBaseNavigationController.m */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -6642,6 +6647,7 @@
 				183073F51C97D17800B7665E /* MJRefreshGifHeader.m in Sources */,
 				1FDD075B1D487E5E0010231F /* JMMaMateamCell.m in Sources */,
 				1FDD07261D45BA7F0010231F /* JMUsableCouponController.m in Sources */,
+				1FDD08401D4CB12E0010231F /* JMBaseNavigationController.m in Sources */,
 				1FF533EB1D2DFACB003DEABF /* JMOrderDetailFooterView.m in Sources */,
 				183073D71C97D17800B7665E /* QNDnsManager.m in Sources */,
 				321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */,
