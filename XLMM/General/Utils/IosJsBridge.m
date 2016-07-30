@@ -276,7 +276,7 @@
  *  详情界面加载
  */
 + (void)showLoading:(NSDictionary *)data{
-    BOOL isLoading = data[@"isLoading"];
+    BOOL isLoading = [data[@"isLoading"] boolValue];
     if (!isLoading) {
         [SVProgressHUD dismiss];
     }

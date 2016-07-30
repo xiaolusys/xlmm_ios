@@ -143,7 +143,7 @@
     self.iconImage.layer.masksToBounds = YES;
     
     self.nameLabel.text = model.mama_nick;
-    CGFloat total = [model.duration_total floatValue] / 100.00;
+    CGFloat total = [model.total floatValue] / 100.00;
     self.numLabel.text = [NSString stringWithFormat:@"%.2f",total];
 
 }

@@ -99,9 +99,9 @@
     if (self.isTeamEarningsRank == YES) {
         CGFloat total = [selfInfoDic[@"total"] floatValue] / 100.00;
         self.earningsLabel.text = [NSString stringWithFormat:@"总收益额%.2f元",total];
-        NSInteger rankChange = [selfInfoDic[@"rank"] integerValue];
-        NSInteger rankAdd = labs(rankChange);
-        self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队妈妈第%ld名",rankAdd];
+//        NSInteger rankChange = [selfInfoDic[@"rank"] integerValue];
+//        NSInteger rankAdd = labs(rankChange);
+//        self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队妈妈第%ld名",rankAdd];
 
     }else {
         CGFloat total = [selfInfoDic[@"total"] floatValue] / 100.00;
@@ -188,6 +188,7 @@
     UIImageView *topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
     self.tableView.tableHeaderView = topView;
     topView.image = [UIImage imageNamed:@"wodejingxuanback"];
+    topView.userInteractionEnabled = YES;
     
     UIImageView *mamaIconBackImage = [UIImageView new]; //wodejingxuantouxiangicon -- > 妈妈头像底层图片
     [topView addSubview:mamaIconBackImage];

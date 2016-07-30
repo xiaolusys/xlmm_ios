@@ -146,9 +146,10 @@
     }else {
         self.navigationController.navigationBarHidden = YES;
     }
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -161,7 +162,7 @@
     
     IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
     super.baseWebView = baseWebView1;
-    self.baseWebView.delegate = self;
+    
     [self.view addSubview:super.baseWebView];
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
@@ -174,10 +175,12 @@
     {
         NSLog(@"7.0 UIWebView");
         [self registerJsBridge];
+        self.baseWebView.delegate = self;
     }
     else
     {
         NSLog(@"bigger than8.0 WKWebView");
+//        self.baseWebView.delegate = self;
     }
     
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
@@ -476,7 +479,7 @@
      */
     [self.bridge registerHandler:@"showLoading" handler:^(id data, WVJBResponseCallback responseCallback) {
 
-        BOOL isLoading = data[@"isLoading"];
+        BOOL isLoading = [data[@"isLoading"] boolValue];
         if (!isLoading) {
             [SVProgressHUD dismiss];
         }
