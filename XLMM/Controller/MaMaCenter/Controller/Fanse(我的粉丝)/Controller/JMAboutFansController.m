@@ -23,7 +23,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"关于粉丝" selecotr:@selector(backBtnClicked:)];
     
-    NSString *loadLink = ABOUTFANS_URL;
+    NSString *loadLink = self.fansUrlString;
     
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 99) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;

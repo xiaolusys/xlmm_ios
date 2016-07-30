@@ -85,6 +85,7 @@
         NSString *className = [NSString stringWithFormat:@"%@",classArr[i]];
         Class cls = NSClassFromString(className);
         JMPageViewBaseController *VC = [[cls alloc] init];
+        VC.fansUrlString = self.fansUrlStr;
         [self.pageContent addObject:VC];
         
     }

@@ -277,7 +277,7 @@
 - (void)composeMaMaCenterFooterView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
 
     if (index == 100 || index == 107) {
-        if (self.eventLink == nil || self.eventLink.length == 0) {
+        if (self.boutiqueActiveWebUrl == nil || self.boutiqueActiveWebUrl.length == 0) {
             [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
             return;
         }
@@ -285,13 +285,13 @@
         //    _diction = nil;
         NSString *active = @"myInvite";
         NSString *titleName = @"精品活动";
-        [self.diction setValue:self.eventLink forKey:@"web_url"];
+        [self.diction setValue:self.boutiqueActiveWebUrl forKey:@"web_url"];
         [self.diction setValue:active forKey:@"type_title"];
         [self.diction setValue:titleName forKey:@"name_title"];
         activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
         activity.isShowNavBar = true;
         activity.isShowRightShareBtn = true;
-        activity.share_model.share_link = self.eventLink;
+        activity.share_model.share_link = self.boutiqueActiveWebUrl;
         activity.share_model.title = @"精品活动";
         activity.share_model.desc = @"更多精选活动,尽在小鹿美美~~";
         activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
@@ -330,6 +330,7 @@
     }else if (index == 108) {
         JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
         mamaCenterFansVC.fansNum = self.fansNum;
+        mamaCenterFansVC.fansUrlStr = self.fansWebUrl;
         [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
     }else if (index == 109) {
         JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
