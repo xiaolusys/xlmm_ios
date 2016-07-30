@@ -587,44 +587,54 @@
     [manager POST:string parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
         if (!responseObject)return;
-        [SVProgressHUD dismiss];
+        
         NSError *parseError = nil;
-        NSDictionary *dic = responseObject[@"charge"];
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         
-        
-        
-        JMOrderDetailController * __weak weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code != 0) {
+            [SVProgressHUD showErrorWithStatus:responseObject[@"info"]];
+        }else {
+            [SVProgressHUD dismiss];
+            NSDictionary *dic = responseObject[@"charge"];
             
-            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                NSLog(@"completion block: %@", result);
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+            NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            
+            
+            
+            JMOrderDetailController * __weak weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
                 
-                if (error == nil) {
-                    [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                    [MobClick event:@"buy_succ"];
-                    [self pushShareVC];
-                } else {
-                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                        [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
-                        [MobClick event:@"buy_cancel"];
-                        [self popview];
-                    } else {
-                        [SVProgressHUD showErrorWithStatus:@"支付失败"];
-                        NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",error.code]};
-                        [MobClick event:@"buy_fail" attributes:temp_dict];
-                        NSLog(@"%@",error);
-                        [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
-                    }
+                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+                    NSLog(@"completion block: %@", result);
                     
-                }
-            }];
-        });
+                    if (error == nil) {
+                        [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [MobClick event:@"buy_succ"];
+                        [self pushShareVC];
+                    } else {
+                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+                            [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                            [MobClick event:@"buy_cancel"];
+                            [self popview];
+                        } else {
+                            [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+                            [MobClick event:@"buy_fail" attributes:temp_dict];
+                            NSLog(@"%@",error);
+                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
+                        }
+                    }
+                }];
+            });
+
+        }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"%@",error);
     }];
+    
 }
 - (void)pushShareVC {
     JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
@@ -700,12 +710,14 @@
     [MobClick event:@"buy_succ"];
     [self pushShareVC];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
 }
 - (void)popview {
     [MobClick event:@"buy_cancel"];
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 101;
     [self.navigationController pushViewController:orderVC animated:YES];
+    
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
