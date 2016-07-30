@@ -56,7 +56,7 @@ static const NSUInteger ITEM_COUNT = 3;
     [self createHeaderView];
     [self loadDataSource];
     [self loadSelfInfoDataSource];
-    [self createRightButonItem];
+//    [self createRightButonItem];
 }
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
@@ -202,7 +202,7 @@ static const NSUInteger ITEM_COUNT = 3;
     JMSelecterButton *mamaRankButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [topView addSubview:mamaRankButton];
     self.mamaRankButton = mamaRankButton;
-    [self.mamaRankButton setSelecterBorderColor:[UIColor whiteColor] TitleColor:[UIColor whiteColor] Title:@"查看团队收益" TitleFont:14. CornerRadius:15.];
+    [self.mamaRankButton setSelecterBorderColor:[UIColor whiteColor] TitleColor:[UIColor whiteColor] Title:@"查看团队排名" TitleFont:14. CornerRadius:15.];
     [self.mamaRankButton addTarget:self action:@selector(mamaRankClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *buttonImage = [UIImageView new];
