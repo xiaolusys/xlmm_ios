@@ -149,7 +149,7 @@
     
     CGFloat buttonW = SCREENWIDTH / 2;
     NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal"];
-    NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的精选",@"每日推送",@"邀请1元开店",@"选品上架",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行"];
+    NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的精选",@"每日推送",@"邀请开店",@"选品上架",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行"];
     for (int i = 0; i < 10; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderColor = [UIColor countLabelColor].CGColor;
