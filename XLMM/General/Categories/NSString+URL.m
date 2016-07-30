@@ -27,9 +27,6 @@
     return string;
 }
 
-
-
-
 - (NSString *)imageMoreCompression{
     NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/50/format/jpg/quality/50",self];
     return string;

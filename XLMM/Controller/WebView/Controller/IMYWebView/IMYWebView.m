@@ -14,6 +14,7 @@
 #import <WebKit/WebKit.h>
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
+#import "SVProgressHUD.h"
 
 @interface IMYWebView()<UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
 
@@ -200,6 +201,7 @@
 //        
 //    }];
     [self callback_webViewDidFinishLoad];
+    [SVProgressHUD dismiss];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
 {

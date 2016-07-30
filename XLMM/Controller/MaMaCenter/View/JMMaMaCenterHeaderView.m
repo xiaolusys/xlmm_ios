@@ -13,6 +13,7 @@
 #import "FSLineChart.h"
 #import "UIColor+FSPalette.h"
 #import "DotLineView.h"
+#import "JMMaMaCenterModel.h"
 
 @interface JMMaMaCenterHeaderView ()<UIScrollViewDelegate>
 /**
@@ -106,6 +107,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor countLabelColor];
         self.visitorDate = [NSNumber numberWithInt:0];
         dataArray = [[NSMutableArray alloc] initWithCapacity:30];
         allDingdan = [[NSMutableArray alloc] init];
@@ -137,6 +139,12 @@
     self.mamaIDLabel.text = [NSString stringWithFormat:@"ID: %@",mamaCenterModel.mama_id];
     
     NSString *limtStr = self.extraModel.surplus_days;
+    
+    NSInteger limtCount = [limtStr integerValue];
+    if (limtCount > 15) {
+        self.renewButton.hidden = YES;
+    }
+    
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     NSInteger count = limtStr.length;
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
