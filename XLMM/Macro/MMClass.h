@@ -6,19 +6,19 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 #import "PosterModel.h"
-#import "JMLogInViewController.h"
-#import "RegisterViewController.h"
 #import "UIImageView+WebCache.h"
-#import "ChildViewController.h"
-#import "CollectionModel.h"
-#import "DetailsModel.h"
-#import "PeopleModel.h"
 #import "UIColor+RGBColor.h"
 #import "UIImage+ImageWithUrl.h"
 #import "NSArray+Log.h"
-
+#import "SVProgressHUD.h" 
+#import "AFNetworking.h"
+#import "MJExtension.h"
+#import "Masonry.h"
+#import "UIViewController+NavigationBar.h"
+#import "NSString+URL.h"
 
 #import "UMMobClick/MobClick.h"
+
 
 
 //#import "NSDictionary+Log.h"

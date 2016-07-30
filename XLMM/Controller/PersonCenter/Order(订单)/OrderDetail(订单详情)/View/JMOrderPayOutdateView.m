@@ -7,7 +7,6 @@
 //
 
 #import "JMOrderPayOutdateView.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "XlmmMall.h"

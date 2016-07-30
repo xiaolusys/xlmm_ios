@@ -7,17 +7,12 @@
 //
 
 #import "MaMaOrderListViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "MaMaOrderModel.h"
 #import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
-#import "SVProgressHUD.h"
 #import "JMMaMaOrderListCell.h"
-#import "Masonry.h"
-#import "MJExtension.h"
 
 
 @interface MaMaOrderListViewController ()

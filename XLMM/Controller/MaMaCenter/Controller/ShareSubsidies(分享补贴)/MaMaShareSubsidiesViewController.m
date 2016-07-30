@@ -7,15 +7,12 @@
 //
 
 #import "MaMaShareSubsidiesViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MaMaShareSubsidiesViewCell.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "ShareClickModel.h"
 #import "CarryLogModel.h"
 #import "CarryLogHeaderView.h"
 #import "MJRefresh.h"
-#import "SVProgressHUD.h"
 
 @interface MaMaShareSubsidiesViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;

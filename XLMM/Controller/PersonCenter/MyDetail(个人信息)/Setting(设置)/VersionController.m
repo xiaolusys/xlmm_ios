@@ -8,8 +8,6 @@
 
 #import "VersionController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
 #import "DebugSettingViewController.h"
 
 @interface VersionController (){

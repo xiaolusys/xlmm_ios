@@ -17,17 +17,14 @@
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
 
-#import "MJRefresh.h"
 #import "WXApi.h"
 #import "JMLogInViewController.h"
 
-#import "UIViewController+NavigationBar.h"
 
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
-#import "SVProgressHUD.h"
 #import "UIImage+ImageWithSelectedView.h"
-#import "Masonry.h"
+
 
 static NSString * ksimpleCell = @"simpleCell";
 

@@ -7,9 +7,7 @@
 //
 
 #import "RegisterViewController.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 
 
 @interface RegisterViewController ()

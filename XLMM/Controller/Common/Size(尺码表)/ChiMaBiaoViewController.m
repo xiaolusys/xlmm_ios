@@ -7,7 +7,6 @@
 //
 
 #import "ChiMaBiaoViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
 @interface ChiMaBiaoViewController (){

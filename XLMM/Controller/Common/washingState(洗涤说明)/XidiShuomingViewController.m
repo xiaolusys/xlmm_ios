@@ -7,7 +7,7 @@
 //
 
 #import "XidiShuomingViewController.h"
-#import "UIViewController+NavigationBar.h"
+#import "MMClass.h"
 
 @interface XidiShuomingViewController ()
 

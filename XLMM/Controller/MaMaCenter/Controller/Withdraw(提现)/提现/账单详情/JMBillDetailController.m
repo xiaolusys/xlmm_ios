@@ -7,10 +7,7 @@
 //
 
 #import "JMBillDetailController.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "TixianModel.h"
 #import "NSString+DeleteT.h"
 #import "TixianViewController.h"

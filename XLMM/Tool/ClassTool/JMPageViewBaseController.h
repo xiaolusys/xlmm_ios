@@ -10,4 +10,6 @@
 
 @interface JMPageViewBaseController : UIViewController
 
+@property (nonatomic, copy) NSString *fansUrlString;
+
 @end

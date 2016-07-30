@@ -20,43 +20,34 @@
 #import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "MMLoginStatus.h"
-#import "AFNetworking.h"
 #import "NSString+Encrypto.h"
 #import "PublishNewPdtViewController.h"
 #import "ActivityView.h"
-#import "NSString+URL.h"
-#import "TuihuoViewController.h"
 #import "MMAdvertiseView.h"
-#import "SVProgressHUD.h"
 #import "MMAdvertiseView.h"
 #import "WebViewController.h"
 #import "ActivityModel.h"
-#import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
 #import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
 #import "MJRefresh.h"
-#import "HomeViewController.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
 #import "JMRootScrolCell.h"
 #import "BrandGoodsModel.h"
 #import "XlmmMall.h"
 #import "MMDetailsViewController.h"
-#import "MJExtension.h"
 #import "JMFirstOpen.h"
 #import "AppDelegate.h"
 #import "UIView+RGSize.h"
 #import "JMRepopView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
-#import "Masonry.h"
 #import "JMHelper.h"
 #import "JMDBManager.h"
 #import "JMUpdataAppPopView.h"
+#import "JMMaMaPersonCenterController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -909,7 +900,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //        [oneBrandView addSubview:lineView1];
         
         //展示品牌入口
-        UIImageView *topicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH - 10, 145)];
+        UIImageView *topicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH, 145)];
         
         topicImageView.tag = TAG_COLLECTION_BRAND + index;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(brandTapAction:)];
@@ -1189,7 +1180,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     allActivityHeight = 0;
     //创建活动展示图
     for (int i = 0; i < self.activityDataArr.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+ACTIVITYHEIGHT * i, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10+ACTIVITYHEIGHT * i, SCREENWIDTH, ACTIVITYHEIGHT)];
         
         //        imageView.contentMode = UIViewContentModeScaleAspectFit;
         //        imageView.autoresizesSubviews = YES;
@@ -1982,8 +1973,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         // NSLog(@"json = %@", json);
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
-            MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-            [self.navigationController pushViewController:ma animated:YES];
+            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+//            MaMaPersonCenterViewController *mamaCenterVC= [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+            [self.navigationController pushViewController:mamaCenterVC animated:YES];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];

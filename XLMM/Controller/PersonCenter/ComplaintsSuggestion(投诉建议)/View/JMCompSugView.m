@@ -8,7 +8,6 @@
 
 
 #import "JMCompSugView.h"
-#import "Masonry.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MMClass.h"
 

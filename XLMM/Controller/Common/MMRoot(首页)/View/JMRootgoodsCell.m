@@ -7,13 +7,9 @@
 //
 
 #import "JMRootgoodsCell.h"
-#import "UIImageView+WebCache.h"
 #import "MMClass.h"
 #import "CollectionModel.h"
 #import "UIImage+ChangeGray.h"
-#import "NSString+URL.h"
-#import "SVProgressHUD.h"
-#import "Masonry.h"
 #import "PromoteModel.h"
 #import "CollectionModel.h"
 

@@ -7,26 +7,17 @@
 //
 
 #import "ShenQingTuikuanController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "UMMobClick/MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "MJExtension.h"
 #import "JMAppForRefundModel.h"
 #import "UIView+RGSize.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "JMOrderGoodsModel.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
-#import "Masonry.h"
 
 
 @interface ShenQingTuikuanController ()<JMRefundViewDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
@@ -148,7 +139,7 @@
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
-    self.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.myImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     number = [self.dingdanModel.num intValue];
     maxNumber = [self.dingdanModel.num intValue];
     

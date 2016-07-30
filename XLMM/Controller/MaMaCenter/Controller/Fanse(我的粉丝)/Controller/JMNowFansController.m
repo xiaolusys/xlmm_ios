@@ -7,15 +7,10 @@
 //
 
 #import "JMNowFansController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 #import "MJRefresh.h"
-#import "Masonry.h"
 #import "FanceModel.h"
 #import "FensiTableViewCell.h"
-#import "AFNetworking.h"
-#import "MJExtension.h"
 #import "JMFetureFansCell.h"
 
 
@@ -32,10 +27,13 @@
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
 
+@property (nonatomic, strong) UIView *emptyView;
+
 @end
 
 @implementation JMNowFansController {
     NSString *_urlStr;
+    
 }
 
 
@@ -58,7 +56,7 @@
     
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-    
+    [self displayDefaultView];
 }
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
@@ -137,16 +135,19 @@
     _urlStr = data[@"next"];
     
     NSArray *arr = data[@"results"];
-    for (NSDictionary *dic in arr) {
-        FanceModel *fetureModel = [FanceModel mj_objectWithKeyValues:dic];
-        [self.dataArray addObject:fetureModel];
+    if (arr.count == 0) {
+        self.emptyView.hidden = NO;
+    }else {
+        self.emptyView.hidden = YES;
+        for (NSDictionary *dic in arr) {
+            FanceModel *fetureModel = [FanceModel mj_objectWithKeyValues:dic];
+            [self.dataArray addObject:fetureModel];
+        }
     }
-    
 }
 
 #pragma mark --- 没有粉丝展示
 -(void)displayDefaultView{
-    
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FansEmpty" owner:nil options:nil];
     UIView *defaultView = views[0];
     UIButton *button = [defaultView viewWithTag:100];
@@ -154,13 +155,19 @@
     button.layer.borderWidth = 1;
     button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
     defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, SCREENWIDTH, SCREENHEIGHT);
-    
+    self.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    self.emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
+    self.emptyView.hidden = YES;
+    [self.view addSubview:self.emptyView];
+    [self.emptyView addSubview:defaultView];
     [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:defaultView];
 }
+
 -(void)gotoLandingPage{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 
 #pragma mark --UITableViewDelegate
 

@@ -8,10 +8,7 @@
 
 #import "WXLoginController.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
-#import "UIViewController+NavigationBar.h"
 #import "SetPasswordController.h"
-#import "AFNetworking.h"
 
 
 @interface WXLoginController ()<UITextFieldDelegate, UIAlertViewDelegate>
@@ -213,7 +210,7 @@
  //   timeLabel.text = text;
     self.buttonLabel.text = text;
     self.buttonLabel.textColor = [UIColor cartViewBackGround];
-    self.codeButton.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.codeButton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
 //#warning change timeLabel
     

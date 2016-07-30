@@ -7,21 +7,15 @@
 //
 
 #import "WebViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "UIImage+ImageWithSelectedView.h"
 #import "YoumengShare.h"
-#import "NSString+URL.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "MMDetailsViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "UUID.h"
@@ -32,9 +26,7 @@
 #import "JMShareViewController.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "MJExtension.h"
 #import "JMShareModel.h"
-#import "UMMobClick/MobClick.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -154,9 +146,10 @@
     }else {
         self.navigationController.navigationBarHidden = YES;
     }
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -169,7 +162,7 @@
     
     IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
     super.baseWebView = baseWebView1;
-    self.baseWebView.delegate = self;
+    
     [self.view addSubview:super.baseWebView];
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
@@ -182,10 +175,12 @@
     {
         NSLog(@"7.0 UIWebView");
         [self registerJsBridge];
+        self.baseWebView.delegate = self;
     }
     else
     {
         NSLog(@"bigger than8.0 WKWebView");
+//        self.baseWebView.delegate = self;
     }
     
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
@@ -315,10 +310,18 @@
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
 
-    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-        [self resolveProductShareParam:data];
-    }
-    self.shareView.model = self.share_model;
+//    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+//        [self resolveProductShareParam:data];
+//    }
+    self.shareView.model = [[JMShareModel alloc] init];
+    self.shareView.model.share_type = [data objectForKey:@"share_type"];
+    
+    self.shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
+    self.shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+    
+    self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
+    self.shareView.model.share_link = [data objectForKey:@"link"];
+//    self.shareView.model = self.share_model;
     
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
@@ -476,7 +479,7 @@
      */
     [self.bridge registerHandler:@"showLoading" handler:^(id data, WVJBResponseCallback responseCallback) {
 
-        BOOL isLoading = data[@"isLoading"];
+        BOOL isLoading = [data[@"isLoading"] boolValue];
         if (!isLoading) {
             [SVProgressHUD dismiss];
         }

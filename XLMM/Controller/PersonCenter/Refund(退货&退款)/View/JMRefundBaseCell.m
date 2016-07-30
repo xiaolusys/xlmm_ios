@@ -9,9 +9,6 @@
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "NSString+URL.h"
-#import "MJExtension.h"
 #import "XlmmMall.h"
 
 @interface JMRefundBaseCell ()
@@ -207,7 +204,7 @@
     }
     
     NSInteger status = [refundModel.status integerValue];
-    if (isGoodsReturn == NO) {
+    if (!isGoodsReturn) {
         // 退货
         refundImageStr = @"refund_tuihuoImage";
         self.refundWayLabel.text = @"退货退款";

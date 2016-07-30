@@ -7,12 +7,10 @@
 //
 
 #import "FensiTableViewCell.h"
-#import "UIImageView+WebCache.h"
 #import "NSString+Encrypto.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
 #import "FanceModel.h"
 #import "VisitorModel.h"
+#import "MMClass.h"
 
 @implementation FensiTableViewCell
 
@@ -31,7 +29,7 @@
     
     self.picImageView.layer.cornerRadius = 30;
     self.picImageView.layer.borderWidth = 0.5;
-    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.picImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.picImageView.layer.masksToBounds = YES;
     self.name.text = model.fans_nick;
     
@@ -49,7 +47,7 @@
     
     self.picImageView.layer.cornerRadius = 30;
     self.picImageView.layer.borderWidth = 0.5;
-    self.picImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.picImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.picImageView.layer.masksToBounds = YES;
     self.name.text = model.visitor_nick;
     

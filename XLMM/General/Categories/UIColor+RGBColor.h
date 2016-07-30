@@ -19,7 +19,7 @@
 + (UIColor *)buttonDisabledBorderColor;
 + (UIColor *)buttonEmptyBorderColor;
 + (UIColor *)settingBackgroundColor;
-+ (UIColor *)imageViewBorderColor;
++ (UIColor *)mamaCenterBorderColor;
 + (UIColor *)textDarkGrayColor;
 + (UIColor *)pothoViewBackgroundColor;
 + (UIColor *)pagecontrolBackgroundColor;
@@ -43,4 +43,6 @@
 + (UIColor *)titleDarkGrayColor;
 + (UIColor *)sectionViewColor;
 + (UIColor *)couponValueColor;
+//蓝色
++ (UIColor *)colorWithBlueColor;
 @end

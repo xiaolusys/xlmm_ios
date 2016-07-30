@@ -24,9 +24,7 @@
 - (NSInteger)couponCount {
     return 3;
 }
-- (NSString *)urlStr {
-    return [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=3",Root_URL];
-}
+
 @end
 
 

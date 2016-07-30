@@ -7,14 +7,10 @@
 //
 
 #import "JMWithdrawShortController.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMCouponCell.h"
 #import "JMCouponView.h"
-#import "AFNetworking.h"
 #import "JMCouponSuccessController.h"
-#import "SVProgressHUD.h"
 #import "TixianHistoryViewController.h"
 
 @interface JMWithdrawShortController ()<JMCouponViewDelegate,UIAlertViewDelegate>

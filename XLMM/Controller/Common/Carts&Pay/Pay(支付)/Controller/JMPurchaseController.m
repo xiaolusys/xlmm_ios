@@ -8,22 +8,17 @@
 
 #import "JMPurchaseController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMPurchaseHeaderView.h"
 #import "JMPurchaseFooterView.h"
 #import "JMBaseGoodsCell.h"
 #import "CartListModel.h"
 #import "MJRefresh.h"
-#import "AFNetworking.h"
-#import "SVProgressHUD.h"
 #import "JMShareView.h"
 #import "JMChoiseLogisController.h"
 #import "JMPopView.h"
 #import "JMPopLogistcsModel.h"
 #import "AddressViewController.h"
 #import "AddressModel.h"
-#import "YouHuiQuanViewController.h"
-#import "YHQModel.h"
 #import "GoodsInfoModel.h"
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
@@ -31,10 +26,14 @@
 #import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "JMPayShareController.h"
+#import "JMSegmentController.h"
+#import "JMCouponModel.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
-@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,YouhuiquanDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate,JMShareViewDelegate>
+@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate,JMShareViewDelegate> {
+    NSDictionary *_couponData;
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -75,7 +74,7 @@
 /**
  *  优惠券模型
  */
-@property (nonatomic, strong) YHQModel *yhqModel;
+@property (nonatomic, strong) JMCouponModel *yhqModel;
 /**
  *  判断小鹿钱包是否足够支付->如果不足则调用微信或者支付宝，传payment。否则传budget。
  */
@@ -131,6 +130,7 @@ static BOOL isAgreeTerms = YES;
     [self createTableFooterView];
     [self loadAddressInfo];
     [self loadDataSource];
+    
     
     self.isCanCoupon = NO;
     self.isUseXLW = NO;
@@ -265,7 +265,6 @@ static BOOL isAgreeTerms = YES;
     _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
-    
     [self calculationLabelValue];
 }
 #pragma mark 计算最终选需要付款的金额
@@ -390,16 +389,23 @@ static BOOL isAgreeTerms = YES;
 - (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
     // 100->优惠券  101->钱包  102->条款  103->结算
     if (button.tag == 100) {
-        if (!self.isCanCoupon) {
-            [SVProgressHUD showInfoWithStatus:@"当前优惠券不能使用!"];
-            return ;
-        }
-        YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        vc.isSelectedYHQ = YES;
-        vc.payment = _totalfee;
-        vc.delegate = self;
-        vc.selectedModelID = _yhqModelID;
-        [self.navigationController pushViewController:vc animated:YES];
+        JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
+        segmentVC.cartID = _cartIDs;
+        segmentVC.isSelectedYHQ = YES;
+        segmentVC.selectedModelID = _yhqModelID;
+//        segmentVC.couponData = _couponData;
+        segmentVC.delegate = self;
+        [self.navigationController pushViewController:segmentVC animated:YES];
+//        if (!self.isCanCoupon) {
+//            [SVProgressHUD showInfoWithStatus:@"当前优惠券不能使用!"];
+//            return ;
+//        }
+//        YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+//        vc.isSelectedYHQ = YES;
+//        vc.payment = _totalfee;
+//        vc.delegate = self;
+//        vc.selectedModelID = _yhqModelID;
+//        [self.navigationController pushViewController:vc animated:YES];
     }else if (button.tag == 101) {
         if (_availableFloat > 0) {
             button.selected = !button.selected;
@@ -503,12 +509,12 @@ static BOOL isAgreeTerms = YES;
     if (self.isUserCoupon && self.isEnoughCoupon && self.isCouponEnoughPay) {
         _totalPayment = 0.00;
         _discountfee = _discountfee + _couponValue;
-        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  _couponInfo[@"pid"], self.yhqModel.ID, _couponValue];
+        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  _couponInfo[@"pid"], self.yhqModel.couponID, _couponValue];
         _parmsStr = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",_parmsStr,_discount,[NSNumber numberWithFloat:_totalPayment], @"budget", parms];
         [self submitBuyGoods];
     }else {
         if (self.isUserCoupon && self.isEnoughCoupon) {//使用不足
-            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms, _couponInfo[@"pid"], self.yhqModel.ID, _couponValue];
+            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms, _couponInfo[@"pid"], self.yhqModel.couponID, _couponValue];
             _discountfee = _discountfee + _couponValue;
         }else {//未使用
             if (!self.isUseXLW && _payMethod.length == 0) {
@@ -616,8 +622,8 @@ static BOOL isAgreeTerms = YES;
         [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
     }];
 }
-#pragma mark ------ 选择优惠券回调过来的代理方法
-- (void)updateYouhuiquanWithmodel:(YHQModel *)model {
+#pragma mark  选择优惠券回调过来的代理方法
+- (void)updateYouhuiquanWithmodel:(JMCouponModel *)model {
     self.yhqModel = model;
     _couponValue = [model.coupon_value floatValue];
     if (model == nil) {
@@ -630,7 +636,7 @@ static BOOL isAgreeTerms = YES;
     }else {
         self.isUserCoupon = YES;
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.ID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
         [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             NSString *couponMessage = goodsModel.coupon_message;
@@ -638,7 +644,7 @@ static BOOL isAgreeTerms = YES;
                 self.isEnoughCoupon = YES;
                 self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
                 self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-                _yhqModelID = [NSString stringWithFormat:@"%@", model.ID];
+                _yhqModelID = [NSString stringWithFormat:@"%@", model.couponID];
                 [self calculationLabelValue];
             }else {
                 [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];

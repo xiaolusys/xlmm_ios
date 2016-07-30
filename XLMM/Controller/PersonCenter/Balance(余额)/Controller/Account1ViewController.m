@@ -7,15 +7,12 @@
 //
 
 #import "Account1ViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
-#import "SVProgressHUD.h"
 #import "JMWithdrawCashController.h"
-#import "Masonry.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -66,6 +63,8 @@ static NSString *identifier = @"AccountCell";
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"BlanceAccount"];
+    
+
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -166,6 +165,7 @@ static NSString *identifier = @"AccountCell";
         [accountM setValuesForKeysWithDictionary:account];
         [self.dataArr addObject:accountM];
     }
+    
 }
 
 
@@ -248,6 +248,9 @@ static NSString *identifier = @"AccountCell";
     JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
     drawCash.personCenterDict = self.personCenterDict;
     
+    drawCash.block=^(CGFloat money){
+        self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
+    };
 //    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
 //    CGFloat money = [self.moneyLabel.text floatValue];
 //    NSNumber *number = [NSNumber numberWithFloat:money];

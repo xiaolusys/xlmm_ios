@@ -8,9 +8,6 @@
 
 #import "JMWithdrawCashController.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "TixianSucceedViewController.h"
 
 @interface JMWithdrawCashController ()<UITextFieldDelegate>
@@ -320,6 +317,7 @@
 }
 
 - (void)backClick:(UIButton *)btn {
+    self.block(_withDrawMoney);
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated{

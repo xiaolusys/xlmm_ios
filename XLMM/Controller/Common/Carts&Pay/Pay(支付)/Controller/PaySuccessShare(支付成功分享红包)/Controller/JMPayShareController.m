@@ -8,18 +8,13 @@
 
 #import "JMPayShareController.h"
 #import "JMPaySucTitleView.h"
-#import "UIColor+RGBColor.h"
 #import "JMSelecterButton.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMSharePackView.h"
 #import "JMShareView.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 
 @interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMShareViewDelegate,JMSharePackViewDelegate>
 

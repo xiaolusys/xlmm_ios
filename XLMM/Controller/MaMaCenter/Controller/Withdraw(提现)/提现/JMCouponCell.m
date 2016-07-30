@@ -8,7 +8,6 @@
 
 #import "JMCouponCell.h"
 #import "MMClass.h"
-#import "Masonry.h"
 
 @interface JMCouponCell ()
 

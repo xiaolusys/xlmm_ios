@@ -43,7 +43,7 @@
 //  imageMogr2/thumbnail/289/format/jpg/quality/90
 
 - (NSString *)imageShareCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/png/quality/90",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/jpg/quality/90",self];
     return string;
 }
 //http://image.xiaolu.so/MG_1460339008848%E5%A4%B4%E5%9B%BE%E8%83%8C%E6%99%AF.png?imageMogr2/thumbnail/200/format/png/quality/90
@@ -53,7 +53,7 @@
 }
 
 - (NSString *)imageShareNinePicture {
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/png/quality/30",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/jpg/quality/30",self];
     return string;
 }
 

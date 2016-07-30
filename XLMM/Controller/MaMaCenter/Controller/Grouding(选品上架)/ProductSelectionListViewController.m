@@ -7,14 +7,10 @@
 //
 
 #import "ProductSelectionListViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "YixuanTableViewController.h"
 #import "MJRefresh.h"
 #import "JMProductSelectionListModel.h"
-#import "MJExtension.h"
 #import "JMProductSelectListCell.h"
 
 
@@ -170,7 +166,7 @@
 }
 
 - (NSString *)numbersOfSelected{
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=1", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=1", Root_URL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     if(data != nil){
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];

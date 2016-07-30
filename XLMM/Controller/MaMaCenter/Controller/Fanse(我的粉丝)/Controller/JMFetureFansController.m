@@ -7,15 +7,10 @@
 //
 
 #import "JMFetureFansController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
-#import "MJRefresh.h"
-#import "AFNetworking.h"
 #import "JMFetureFansModel.h"
-#import "MJExtension.h"
 #import "JMFetureFansCell.h"
-#import "Masonry.h"
+#import "MJRefresh.h"
 
 
 @interface JMFetureFansController ()<UITableViewDataSource,UITableViewDelegate>
@@ -31,10 +26,13 @@
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
 
+@property (nonatomic, strong) UIView *emptyView;
+
 @end
 
 @implementation JMFetureFansController {
     NSString *_urlStr;
+
 }
 - (NSMutableArray *)dataArray {
     if (_dataArray == nil) {
@@ -53,7 +51,7 @@
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     [self createButton];
-    
+    [self displayDefaultView];
 }
 
 #pragma mrak 刷新界面
@@ -128,11 +126,15 @@
     
     _urlStr = data[@"next"];
     NSArray *arr = data[@"results"];
-    for (NSDictionary *dic in arr) {
-        JMFetureFansModel *fetureModel = [JMFetureFansModel mj_objectWithKeyValues:dic];
-        [self.dataArray addObject:fetureModel];
+    if (arr.count == 0) {
+        self.emptyView.hidden = NO;
+    }else {
+        self.emptyView.hidden = YES;
+        for (NSDictionary *dic in arr) {
+            JMFetureFansModel *fetureModel = [JMFetureFansModel mj_objectWithKeyValues:dic];
+            [self.dataArray addObject:fetureModel];
+        }
     }
-    
 }
 #pragma mark --UITableViewDelegate
 
@@ -153,6 +155,25 @@
     [cell fillData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+-(void)displayDefaultView{
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FansEmpty" owner:nil options:nil];
+    UIView *defaultView = views[0];
+    UIButton *button = [defaultView viewWithTag:100];
+    button.layer.cornerRadius = 15;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, SCREENWIDTH, SCREENHEIGHT);
+    self.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    self.emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
+    self.emptyView.hidden = YES;
+    [self.view addSubview:self.emptyView];
+    [self.emptyView addSubview:defaultView];
+    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)gotoLandingPage{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark 返回顶部  image == >backTop
 - (void)createButton {

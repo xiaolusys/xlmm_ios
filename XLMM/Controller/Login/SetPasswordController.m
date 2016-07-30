@@ -7,9 +7,6 @@
 //
 
 #import "SetPasswordController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 
 @interface SetPasswordController ()<UITextFieldDelegate>

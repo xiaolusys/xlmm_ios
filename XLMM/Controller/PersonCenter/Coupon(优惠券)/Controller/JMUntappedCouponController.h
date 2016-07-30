@@ -6,7 +6,7 @@
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "JMPageViewBaseController.h"
+#import <UIKit/UIKit.h>
 
 //@class JMCouponModel;
 //@protocol JMUsableCouponControllerDelegate <NSObject>
@@ -16,13 +16,15 @@
 //
 //@end
 
-@interface JMUntappedCouponController : JMPageViewBaseController
+@interface JMUntappedCouponController : UIViewController
 
 //@property (weak, nonatomic) id <JMUsableCouponControllerDelegate> delegate;
 
 - (NSInteger)couponCount;
+//
+//- (NSString *)urlStr;
 
-- (NSString *)urlStr;
+@property (nonatomic, strong) NSArray *couponArray;
 
 //- (void)createUsedButton;
 

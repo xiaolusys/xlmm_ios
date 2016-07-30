@@ -7,8 +7,6 @@
 //
 
 #import "JMOrderPayView.h"
-#import "UIColor+RGBColor.h"
-#import "Masonry.h"
 #import "MMClass.h"
 
 @interface JMOrderPayView ()

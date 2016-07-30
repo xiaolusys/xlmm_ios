@@ -11,23 +11,17 @@
 #import "JMLogInViewController.h"
 #import "MMClass.h"
 #import "CartViewController.h"
-#import "AFNetworking.h"
 #import "ChiMaBiaoViewController.h"
 #import "XidiShuomingViewController.h"
 #import "WXApi.h"
 #import "UIImage+UIImageExt.h"
-#import "NSString+URL.h"
 #import "UIImage+ImageWithUrl.h"
-#import "UIColor+RGBColor.h"
 #import "UIImageView+WebCache.h"
-#import "SVProgressHUD.h"
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
-//#import "MMLoadingAnimation.h"
-#import "AFNetworking.h"
-//#import "MobClick.h"
 #import "MJRefresh.h"
+
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -879,7 +873,7 @@
         [button.layer setMasksToBounds:YES];
         [button.layer setBorderWidth:1];
         button.layer.cornerRadius = 3;
-        [button.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+        [button.layer setBorderColor:[UIColor buttonDisabledBorderColor].CGColor];
         //[button.layer setCornerRadius:8];
         
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -939,7 +933,7 @@
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
-                [btn.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+                [btn.layer setBorderColor:[UIColor buttonDisabledBorderColor].CGColor];
                 [btn setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
 
             }
@@ -1041,7 +1035,7 @@
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
               label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
               label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor imageViewBorderColor];
+              label.textColor = [UIColor buttonDisabledBorderColor];
               label.font = [UIFont systemFontOfSize:14];
               [view addSubview:label];
               [self.view addSubview:view];

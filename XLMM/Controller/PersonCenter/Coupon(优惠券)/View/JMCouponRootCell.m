@@ -8,7 +8,6 @@
 
 #import "JMCouponRootCell.h"
 #import "MMClass.h"
-#import "Masonry.h"
 #import "JMCouponModel.h"
 
 
@@ -58,6 +57,7 @@
     [self.couponBackImage addSubview:rightImage];
     self.rightImage = rightImage;
     self.rightImage.image = [UIImage imageNamed:@"icon-jiantouyou2"];
+    self.rightImage.hidden = YES;
     
     UILabel *couponValueLabel = [UILabel new];
     [self.couponBackImage addSubview:couponValueLabel];
@@ -157,26 +157,23 @@
         //未使用优惠券
         imageStr = @"noUsed_coupon";
         self.couponValueLabel.textColor = [UIColor redColor];
+        self.rightImage.hidden = NO;
     }else if (index == 1) {
         //已使用
         imageStr = @"used_coupon";
         self.couponValueLabel.textColor = [UIColor timeLabelColor];
-        self.rightImage.hidden = YES;
     }else if (index == 2) {
         //不可使用
         //未使用优惠券
         imageStr = @"noUsed_coupon";
         self.couponValueLabel.textColor = [UIColor redColor];
-        self.rightImage.hidden = YES;
     }else if (index == 3) {
         //已过期
         imageStr = @"outDate_coupon";
         self.couponValueLabel.textColor = [UIColor timeLabelColor];
-        self.rightImage.hidden = YES;
     }else {
         imageStr = @"noUsed_coupon";
         self.couponValueLabel.textColor = [UIColor redColor];
-        self.rightImage.hidden = YES;
     }
     self.couponBackImage.image = [UIImage imageNamed:imageStr];
     
@@ -189,6 +186,25 @@
     self.couponDeadLineLabel.text = [self composeString:couponModel.deadline];
     
 }
+- (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID {
+    NSString *imageStr = @"";
+    if (isselectedYHQ == YES) {
+        if ([selectedID isEqualToString:couponModel.couponID]) {
+            imageStr = @"used_nomalcoupon";
+            self.couponValueLabel.textColor = [UIColor redColor];
+        }else {
+            imageStr = @"noUsed_coupon";
+            self.couponValueLabel.textColor = [UIColor redColor];
+        }
+    }
+    self.couponBackImage.image = [UIImage imageNamed:imageStr];
+    self.couponValueLabel.text = [NSString stringWithFormat:@"¥%@",couponModel.coupon_value];
+    self.couponUsefeeLabel.text = couponModel.use_fee_des;
+    self.couponProsdescLabel.text = couponModel.pros_desc;
+    self.couponCreatedTimeLabel.text = [self composeString:couponModel.created];
+    self.couponDeadLineLabel.text = [self composeString:couponModel.deadline];
+}
+
 - (NSString *)composeString:(NSString *)str {
     NSArray *arr = [str componentsSeparatedByString:@"T"];
     NSString *string1 = [arr componentsJoinedByString:@" "];

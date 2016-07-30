@@ -8,15 +8,9 @@
 
 #import "JMReturnedGoodsController.h"
 #import "JMReGoodsAddView.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 #import "JMChooseLogisticsController.h"
-#import "UIViewController+NavigationBar.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
-#import "TuihuoModel.h"
 #import "JMRefundModel.h"
 
 @interface JMReturnedGoodsController ()<JMChooseLogisticsControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate> {
