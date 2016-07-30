@@ -204,7 +204,7 @@
     }
     
     NSInteger status = [refundModel.status integerValue];
-    if (isGoodsReturn == NO) {
+    if (!isGoodsReturn) {
         // 退货
         refundImageStr = @"refund_tuihuoImage";
         self.refundWayLabel.text = @"退货退款";

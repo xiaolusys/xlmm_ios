@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JMMaMaCenterModel.h"
 
+@class JMMaMaCenterModel;
 @class JMMaMaCenterHeaderView;
 @protocol JMMaMaCenterHeaderViewDelegate <NSObject>
 
 @optional
 - (void)composeMaMaCenterHeaderView:(JMMaMaCenterHeaderView *)headerView Index:(NSInteger)index;
+
 
 @end
 
