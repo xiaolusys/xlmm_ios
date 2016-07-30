@@ -92,6 +92,7 @@
     self.nameLabel.text = selfInfoDic[@"mama_nick"];
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[selfInfoDic[@"thumbnail"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
     if ([selfInfoDic[@"rank"] integerValue] == 0) {
+        self.rankLabel.text = @"";
     }else {
         self.rankLabel.text = [NSString stringWithFormat:@"第%@名",selfInfoDic[@"rank"]];
     }
@@ -108,10 +109,10 @@
         self.earningsLabel.text = [NSString stringWithFormat:@"收益%.2f元",total];
         NSInteger rankChange = [selfInfoDic[@"rank_add"] integerValue];
         NSInteger rankAdd = labs(rankChange);
-        if (rankChange > 0) {
-            self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"比上周上升%ld名",rankAdd];
+        if (rankChange >= 0) {
+            self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"比上周上升%ld名",(long)rankAdd];
         }else {
-            self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"比上周下降%ld名",rankAdd];
+            self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"比上周下降%ld名",(long)rankAdd];
         }
     }
 
@@ -244,7 +245,7 @@
     }];
     
     [self.rankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(mamaIconBackImage.mas_right).offset(30);
+        make.left.equalTo(mamaIconBackImage.mas_right).offset(15);
         make.top.equalTo(mamaIconBackImage).offset(5);
     }];
     

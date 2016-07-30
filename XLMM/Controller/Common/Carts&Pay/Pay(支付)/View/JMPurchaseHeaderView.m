@@ -51,7 +51,7 @@
 }
 - (void)setAddressModel:(AddressModel *)addressModel {
     _addressModel = addressModel;
-    
+    self.nomalLabel.hidden = YES;
     self.addressNameLabel.text = addressModel.buyerName;
     self.addressPhoneLabel.text = addressModel.phoneNumber;
     self.addressDetailLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.provinceName,addressModel.cityName,addressModel.countyName,addressModel.streetName];

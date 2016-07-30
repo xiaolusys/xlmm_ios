@@ -65,9 +65,6 @@
 @property (nonatomic, copy) NSString *renewWebUrl;
 @property (nonatomic, strong)NSString *eventLink;
 
-
-
-
 @end
 
 @implementation JMMaMaPersonCenterController {
@@ -263,8 +260,6 @@
     }else {
     
     }
-
-
 }
 /*
  100 === > 小鹿大学(精品活动)
@@ -349,9 +344,6 @@
     }else {
     
     }
-    
-    
-    
 }
 @end
 
