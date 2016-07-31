@@ -158,13 +158,17 @@
     
     [SVProgressHUD showWithStatus:@"正在加载..."];
     //网络请求
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
-    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage GET:requestURL parameters:self
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         //未登录处理
 //        [self showDefaultView];
         [SVProgressHUD dismiss];

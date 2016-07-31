@@ -232,13 +232,17 @@
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
     NSLog(@"Shareview _urlStr=%@ self.activityId=%@", string, self.activityId);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return;
         
         [self resolveActivityShareParam:responseObject];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
@@ -493,7 +497,7 @@
 }
 //- (void)myInvite:(id )data {
 //    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, data[@"id"]];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        if (!responseObject) return;
 //        [self resolveActivityShareParam:responseObject];
@@ -546,8 +550,12 @@
     }
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
     shareType = data[@"share_to"];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         shareTitle = [responseObject objectForKey:@"share_desc"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
         newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
@@ -622,7 +630,7 @@
 
         } else{}
     }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
          }];
 }
 - (void)dealloc {
@@ -667,7 +675,7 @@
 //    
 //    shareType = data[@"share_to"];
 //    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        
 //        shareTitle = [responseObject objectForKey:@"share_desc"];

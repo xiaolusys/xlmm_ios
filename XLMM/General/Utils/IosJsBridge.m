@@ -186,8 +186,12 @@
     }
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
     NSString *shareType = data[@"share_to"];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *shareTitle = [responseObject objectForKey:@"share_desc"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
         UIImage *newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
@@ -268,7 +272,7 @@
             
         } else{}
     }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
          }];
 }
 

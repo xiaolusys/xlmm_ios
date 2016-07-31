@@ -221,7 +221,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1234) {
         if (buttonIndex == 1) {
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
             NSLog(@"urlstring = %@", urlString);
@@ -237,7 +237,10 @@
             NSLog(@"parameters = %@", parameters);
             
             [manager POST:urlString parameters:parameters
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 progress:^(NSProgress * _Nonnull downloadProgress) {
+                     //数据请求的进度
+                 }
+                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                       
                       NSLog(@"JSON: %@", responseObject);
                       if (!responseObject) {
@@ -257,10 +260,9 @@
                       //                      [self.navigationController popViewControllerAnimated:YES];
                       
                   }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                       NSLog(@"Error: %@", error);
                       NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-                      NSLog(@"perration = %@", operation);
                       [SVProgressHUD showErrorWithStatus:@"提交退货快递信息失败，请检查网络后重试！"];
                   }];
         }

@@ -45,11 +45,15 @@
     if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-        [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+        [manage GET:urlString parameters:nil
+           progress:^(NSProgress * _Nonnull downloadProgress) {
+               //数据请求的进度
+           }
+            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (!responseObject) return;
             [self updateUserInfo:responseObject];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
     }

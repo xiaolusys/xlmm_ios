@@ -78,12 +78,16 @@
     //网络请求
     [SVProgressHUD showWithStatus:@"正在加载..."];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/activevalue", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject)return;
         [self fetchListDic:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 
@@ -120,12 +124,16 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:self.nextPage parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self fetchListDic:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
 }
 

@@ -112,7 +112,7 @@
 //- (void)loadData {
 //    
 //    NSLog(@"Shareview _urlStr=%@ _activeID=%@", _urlStr, _activeID);
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        if (!responseObject) return;
 //        

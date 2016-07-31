@@ -54,7 +54,7 @@
     
         NSLog(@"取消");
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         //  http://192.168.1.31:9000/rest/v1/cashout
         
@@ -62,7 +62,10 @@
         NSDictionary *paramters = @{@"id":cancelModel.ID};
         NSLog(@"paramters = %@", paramters);
         [manager POST:string parameters:paramters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   NSLog(@"response = %@", responseObject);
                   if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -73,7 +76,7 @@
                   }
                   
               }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   
                   NSLog(@"Error: %@", error);
                   
