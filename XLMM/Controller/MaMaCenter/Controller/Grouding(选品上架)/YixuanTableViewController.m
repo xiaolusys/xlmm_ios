@@ -59,9 +59,13 @@ static NSString *const cellIdentifier = @"YixuanCell";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/shop_product?page_size=200", Root_URL];
-    [[AFHTTPRequestOperationManager manager] GET:url parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[AFHTTPSessionManager manager] GET:url parameters:self
+                               progress:^(NSProgress * _Nonnull downloadProgress) {
+                                   //数据请求的进度
+                               }
+                                success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self dealData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
@@ -243,7 +247,7 @@ static NSString *const cellIdentifier = @"YixuanCell";
     //[self.dataArr exchangeObjectAtIndex:newPath.row withObjectAtIndex:oldPath.row];
     ///rest/v1/pmt/cushoppros/change_pro_position
     NSString  *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/change_pro_position", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
   
     
     
@@ -255,7 +259,10 @@ static NSString *const cellIdentifier = @"YixuanCell";
    // NSLog(@"params = %@", parameters);
     
     [manager POST:string parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               //  NSError *error;
          //     NSLog(@"JSON: %@", responseObject);
              NSLog(@"%@", [responseObject objectForKey:@"message"]);
@@ -277,7 +284,11 @@ static NSString *const cellIdentifier = @"YixuanCell";
                   // NSLog(@"params = %@", parameters);
                   
                   [manager POST:string parameters:parameters
-                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                       progress:^(NSProgress * _Nonnull downloadProgress) {
+                           //数据请求的进度
+                       }
+
+                        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                             //  NSError *error;
                             //     NSLog(@"JSON: %@", responseObject);
                             NSLog(@"%@", [responseObject objectForKey:@"message"]);
@@ -285,7 +296,7 @@ static NSString *const cellIdentifier = @"YixuanCell";
                             
                             
                         }
-                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                             //    NSLog(@"Error: %@", error);
                             //
                             
@@ -294,7 +305,7 @@ static NSString *const cellIdentifier = @"YixuanCell";
 
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
           //    NSLog(@"Error: %@", error);
           //
               
@@ -327,10 +338,14 @@ static NSString *const cellIdentifier = @"YixuanCell";
     [self.dataArr removeObject:cell.model];
     [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
     
-    [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[AFHTTPSessionManager manager] POST:url parameters:parameters
+     
+    progress:^(NSProgress * _Nonnull downloadProgress) {
+        //数据请求的进度
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"res = %@", responseObject);
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"店铺－－Error: %@", error);
     }];
 

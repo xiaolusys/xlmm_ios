@@ -174,24 +174,32 @@ static BOOL isAgreeTerms = YES;
     self.paramstring = paramstring;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,paramstring,@"app"];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
         [self fetchedCartsData:responseObject];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
 }
 #pragma mark 地址信息网络请求
 - (void)loadAddressInfo {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:kAddress_List_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:kAddress_List_URL parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return ;
         [self fetchedAddressData:responseObject];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
 }
@@ -562,8 +570,12 @@ static BOOL isAgreeTerms = YES;
     NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
     JMPurchaseController * __weak weakSelf = self;
 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:payurlStr parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:payurlStr parameters:params
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return ;
         [SVProgressHUD dismiss];
         NSDictionary *dict = responseObject[@"trade"];
@@ -618,7 +630,7 @@ static BOOL isAgreeTerms = YES;
             });
         }
         [SVProgressHUD dismiss];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
     }];
 }
@@ -635,9 +647,13 @@ static BOOL isAgreeTerms = YES;
         [self calculationLabelValue];
     }else {
         self.isUserCoupon = YES;
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
-        [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:urlString parameters:nil
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             NSString *couponMessage = goodsModel.coupon_message;
             if (couponMessage.length == 0) {
@@ -654,7 +670,7 @@ static BOOL isAgreeTerms = YES;
                 _couponValue = 0;
                 [self calculationLabelValue];
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             self.isEnoughCoupon = NO;
             [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
         }];

@@ -208,12 +208,16 @@
 #pragma mark 分享红包接口数据
 - (void)loadShareRedpage:(NSString *)orderTid {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,orderTid];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:string parameters:nil
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject) return;
         [self shareRedpageData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
     }];
 }
@@ -230,14 +234,18 @@
 - (void)loadDataSource {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"device"] = @"app";
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:self.urlString parameters:params
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return ;
         [self.orderGoodsDataSource removeAllObjects];
         [self refetchData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     }];
@@ -480,8 +488,12 @@
     }else if (button.tag == 101) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
         NSLog(@"url string = %@", string);
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager POST:string parameters:nil
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (responseObject == nil) return;
             NSDictionary *dic = responseObject;
             UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -494,7 +506,7 @@
             }
             [alterView show];
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         }];
     }else if (button.tag == 102) {
         ShenQingTuiHuoController *tuiHuoVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
@@ -583,8 +595,12 @@
             return;
         }
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:string parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:string parameters:params
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@", responseObject);
         if (!responseObject)return;
         
@@ -630,7 +646,7 @@
 
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
         NSLog(@"%@",error);
     }];

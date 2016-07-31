@@ -120,7 +120,7 @@
 - (void)deleteAddress{
     NSLog(@"%@", self.addressModel.addressID);
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //  http://m.xiaolu.so/rest/v1/address
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL, self.addressModel.addressID];
     NSLog(@"string = %@",  string);
@@ -129,14 +129,17 @@
 //    NSDictionary *parameters = @{@"vmobile": phoneNumber};
     
     [manager POST:string parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               [self.navigationController popViewControllerAnimated:YES];
               
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               
@@ -191,18 +194,21 @@
       
             
             
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
         
             
             [manager POST:string parameters:nil
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 progress:^(NSProgress * _Nonnull downloadProgress) {
+                     //数据请求的进度
+                 }
+                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                       
                       NSLog(@"JSON: %@", responseObject);
                       
                       
                   }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                       
                       NSLog(@"Error: %@", error);
                       
@@ -399,7 +405,7 @@
 
     NSLog(@"save succeed!");
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     if (_isAdd == YES) {
         NSDictionary *parameters = @{
@@ -416,14 +422,17 @@
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/create_address?format=json", Root_URL];
         NSLog(@"url = %@", string);
         [manager POST:string parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   
                   NSLog(@"JSON: %@", responseObject);
                   [self.navigationController popViewControllerAnimated:YES];
                
                   
               }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   
                   NSLog(@"Error: %@", error);
                   
@@ -447,13 +456,13 @@
         NSLog(@"modifyUrlStr = %@", modifyUrlStr);
         
         [manager POST:modifyUrlStr parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   
                   NSLog(@"JSON: %@", responseObject);
                   [self.navigationController popViewControllerAnimated:YES];
                   NSLog(@"修改成功");
               }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   NSLog(@"Error: %@", error);
               }];
 
