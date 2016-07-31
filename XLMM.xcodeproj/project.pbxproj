@@ -781,7 +781,6 @@
 		321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857BD1CA109550085FF21 /* WKWebViewJavascriptBridge.m */; };
 		321857C31CA109990085FF21 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321857C21CA109990085FF21 /* WebKit.framework */; };
 		321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */; };
-		321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
 		3226D2E61C9932210095D766 /* xuanpinshangjiaright.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E51C9932210095D766 /* xuanpinshangjiaright.png */; };
 		3226D2E81C9932240095D766 /* xuanpinshangjiajia.png in Resources */ = {isa = PBXBuildFile; fileRef = 3226D2E71C9932240095D766 /* xuanpinshangjiajia.png */; };
 		3234739E1CA3E3DF00BDE172 /* DotLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3234739D1CA3E3DF00BDE172 /* DotLineView.m */; };
@@ -940,6 +939,7 @@
 		3A662F901D4DED8C00A08EA6 /* QNUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A662F791D4DED8C00A08EA6 /* QNUploadManager.m */; };
 		3A662F911D4DED8C00A08EA6 /* QNUploadOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A662F7C1D4DED8C00A08EA6 /* QNUploadOption.m */; };
 		3A662F921D4DED8C00A08EA6 /* QNUpToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A662F7E1D4DED8C00A08EA6 /* QNUpToken.m */; };
+		3A662F931D4E014900A08EA6 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 321952CE1BFC7BE500AA0AB8 /* libresolv.tbd */; };
 		3A69686A1CEDC0A500358EEC /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6968691CEDC0A500358EEC /* LogisticsModel.m */; };
 		3A7BCCF41CD9E1E6000212B0 /* BrandCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF31CD9E1E6000212B0 /* BrandCollectionCell.m */; };
 		3A7BCCF61CD9E2E0000212B0 /* BrandCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7BCCF51CD9E2E0000212B0 /* BrandCollectionCell.xib */; };
@@ -2378,6 +2378,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A662F931D4E014900A08EA6 /* libresolv.tbd in Frameworks */,
 				32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */,
 				3A2BC1E21D2D146600F6F54B /* UMMobClick.framework in Frameworks */,
 				3A2BC1771D2CE64A00F6F54B /* libsqlite3.tbd in Frameworks */,
@@ -2405,7 +2406,6 @@
 				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
 				1830744A1C97D17900B7665E /* libWeChatSDK.a in Frameworks */,
 				3A2BC1CA1D2CFF6D00F6F54B /* libSocialSinaSSO.a in Frameworks */,
-				321952CF1BFC7BE500AA0AB8 /* libresolv.tbd in Frameworks */,
 				326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */,
 				183073E91C97D17800B7665E /* libpingpp.a in Frameworks */,
 				183073E51C97D17800B7665E /* libpingpp+up.a in Frameworks */,
