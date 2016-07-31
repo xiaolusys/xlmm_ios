@@ -137,9 +137,13 @@
     }else {
         nextStr = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager GET:nextStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:nextStr parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -152,7 +156,7 @@
                 [self createNoActive:dict];
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 
@@ -658,7 +662,7 @@
     
     //取消提现的操作 --
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     //  http://192.168.1.31:9000/rest/v1/cashout
     
@@ -670,7 +674,10 @@
     
     NSLog(@"paramters = %@", paramters);
     [manager POST:string parameters:paramters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               NSLog(@"response = %@", responseObject);
               if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
                   
@@ -682,7 +689,7 @@
               }
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               
               

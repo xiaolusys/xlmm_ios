@@ -77,7 +77,7 @@
 
 /* ======= 老数据 ===
  //需要查物流信息，查询到信息后
- AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+ AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
  NSString *str = [NSString stringWithFormat:@"%@/rest/packageskuitem?sale_trade_id=%@", Root_URL,[dicJson objectForKey:@"tid"]];
  [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
  if(!responseObject) return;

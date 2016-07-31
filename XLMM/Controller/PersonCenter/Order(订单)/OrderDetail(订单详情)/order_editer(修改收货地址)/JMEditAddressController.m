@@ -146,7 +146,7 @@
     
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:dic];
     [dict setObject:referal_trade_id forKey:@"id"];  // === > 地址信息ID
@@ -159,7 +159,11 @@
     
     [dict setObject:_editDict[@"id"] forKey:@"referal_trade_id"]; // == > 订单ID
     
-    [manage POST:urlStr parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage POST:urlStr parameters:dict
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if (!responseObject) return;
 //        
@@ -172,7 +176,7 @@
         [self.navigationController popViewControllerAnimated:YES];
 
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
     
 }

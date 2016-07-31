@@ -199,12 +199,16 @@
         return;
     }
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password,
                                  @"devtype":LOGINDEVTYPE};
     
-    [manager POST:TPasswordLogin_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:TPasswordLogin_URL parameters:parameters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
 //            [self alertMessage:[responseObject objectForKey:@"msg"]];
@@ -238,7 +242,7 @@
         
 
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         [SVProgressHUD showErrorWithStatus:@"登录失败，请重试"];
         
@@ -251,7 +255,7 @@
 
 - (void)setDevice{
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     
@@ -259,7 +263,10 @@
     NSLog(@"params = %@", params);
     
     [manager POST:urlString parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
               NSString *user_account = [responseObject objectForKey:@"user_account"];
@@ -270,7 +277,7 @@
                   [MiPushSDK setAccount:user_account];
               }
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Error: %@", error);
               
               

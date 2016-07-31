@@ -218,7 +218,7 @@
 
     NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
     if (num == 1 && phoneNumber.length == 11) { 
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         NSDictionary *parameters = nil;
         NSString *stringurl = TSendCode_URL;;
@@ -246,8 +246,10 @@
         }
         
         [manager POST:stringurl parameters:parameters
-         
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   
                   NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
                   
@@ -259,7 +261,7 @@
                       [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
                   }
                   
-              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   
                   [SVProgressHUD showErrorWithStatus:@"获取失败！"];
                   
@@ -317,7 +319,7 @@
     
     [SVProgressHUD showWithStatus:@"登录中....."];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
     }
@@ -331,10 +333,14 @@
 //    }
     
     
-    [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:TVerifyCode_URL parameters:parameters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"-------%@", error);
         
         [SVProgressHUD showErrorWithStatus:@"登录失败！"];

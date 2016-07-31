@@ -335,7 +335,7 @@
         return;
     }
     //   http://192.168.1.31:9000/rest/v1/refunds
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
@@ -348,7 +348,10 @@
     NSLog(@"string = %@", string);
     
     [manager POST:string parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"apply_fee"];
@@ -357,7 +360,7 @@
               self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
           }
      
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Error: %@", error);
           }];
 }
@@ -407,7 +410,7 @@
     //   http://192.168.1.31:9000/rest/v1/refunds
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
@@ -420,7 +423,10 @@
     NSLog(@"string = %@", string);
     
     [manager POST:string parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"apply_fee"];
@@ -430,7 +436,7 @@
               
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               
@@ -482,8 +488,12 @@
                                  @"refund_channel":refundChannel
                                  };
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:urlString parameters:parameters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSDictionary *dic = responseObject;
         if (dic.count == 0) return;
         NSInteger code = [dic[@"code"] integerValue];
@@ -494,7 +504,7 @@
         }else {
             [SVProgressHUD showErrorWithStatus:dic[@"info"]];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
     }];
 
