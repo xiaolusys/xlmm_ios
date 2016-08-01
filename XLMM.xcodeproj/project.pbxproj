@@ -949,6 +949,7 @@
 		3A8D5E121CE47C83008730EF /* confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8D5E101CE47C83008730EF /* confirm.png */; };
 		3A8D5E131CE47C83008730EF /* confirm2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A8D5E111CE47C83008730EF /* confirm2.png */; };
 		3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */; };
+		A38F3AA3A6E06ED6EE005C85 /* libPods-XLMM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 547B15569A9B859E71787C5A /* libPods-XLMM.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -962,6 +963,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11BDF525A4EFEC4ED4E58900 /* Pods-XLMM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLMM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XLMM/Pods-XLMM.debug.xcconfig"; sourceTree = "<group>"; };
 		1808FAC41C8AA3860090EC17 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		181ABB121CA136C3001307C0 /* VisitorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisitorModel.h; sourceTree = "<group>"; };
 		181ABB131CA136C3001307C0 /* VisitorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VisitorModel.m; sourceTree = "<group>"; };
@@ -2374,6 +2376,8 @@
 		3A8D5E111CE47C83008730EF /* confirm2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confirm2.png; sourceTree = "<group>"; };
 		3ABCA54C1CD8F42E007D5145 /* ImageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageUtils.m; sourceTree = "<group>"; };
 		3ABCA54E1CD8F468007D5145 /* ImageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageUtils.h; sourceTree = "<group>"; };
+		547B15569A9B859E71787C5A /* libPods-XLMM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XLMM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		54DC25606C45BC77CFB66FE7 /* Pods-XLMM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLMM.release.xcconfig"; path = "Pods/Target Support Files/Pods-XLMM/Pods-XLMM.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2420,6 +2424,7 @@
 				32E329611B708A3600A6F0BC /* UIKit.framework in Frameworks */,
 				32F3D9761B6CCF83008530BA /* CoreLocation.framework in Frameworks */,
 				32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */,
+				A38F3AA3A6E06ED6EE005C85 /* libPods-XLMM.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2433,6 +2438,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1463567F77B797326B629CFA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				547B15569A9B859E71787C5A /* libPods-XLMM.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		18306F6A1C97AA1600B7665E /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -5463,6 +5476,8 @@
 				325BA0EF1B68B18A006D64BD /* Products */,
 				328422B81B84217100C4EA76 /* framework */,
 				329E8A901BB574B1008AA0B6 /* XLMM copy-Info.plist */,
+				42EF31FB582A395EC3CCE9DE /* Pods */,
+				1463567F77B797326B629CFA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5853,6 +5868,15 @@
 			name = Order;
 			sourceTree = "<group>";
 		};
+		42EF31FB582A395EC3CCE9DE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				11BDF525A4EFEC4ED4E58900 /* Pods-XLMM.debug.xcconfig */,
+				54DC25606C45BC77CFB66FE7 /* Pods-XLMM.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5860,9 +5884,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 325BA1111B68B18A006D64BD /* Build configuration list for PBXNativeTarget "XLMM" */;
 			buildPhases = (
+				1F899077EEC98E826895AEB3 /* [CP] Check Pods Manifest.lock */,
 				325BA0EA1B68B18A006D64BD /* Sources */,
 				325BA0EB1B68B18A006D64BD /* Frameworks */,
 				325BA0EC1B68B18A006D64BD /* Resources */,
+				74EE48AB47FA0E6969B65F77 /* [CP] Embed Pods Frameworks */,
+				031F3F03BD670C6482DAD5BE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -6458,6 +6485,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		031F3F03BD670C6482DAD5BE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLMM/Pods-XLMM-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1F899077EEC98E826895AEB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		74EE48AB47FA0E6969B65F77 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XLMM/Pods-XLMM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		325BA0EA1B68B18A006D64BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -6933,7 +7008,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -6973,7 +7048,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6981,6 +7056,7 @@
 		};
 		325BA1121B68B18A006D64BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 11BDF525A4EFEC4ED4E58900 /* Pods-XLMM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -7040,13 +7116,14 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		325BA1131B68B18A006D64BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54DC25606C45BC77CFB66FE7 /* Pods-XLMM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -7106,7 +7183,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
