@@ -117,11 +117,15 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/complain",Root_URL];
     NSDictionary *dic = @{@"com_content":self.textView.text};
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:urlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:urlStr parameters:dic
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (responseObject == nil)return;
             [self successCommit];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
 }
 #pragma mark -- textViewDelegate 协议方法

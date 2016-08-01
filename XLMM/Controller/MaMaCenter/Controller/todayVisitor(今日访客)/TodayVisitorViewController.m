@@ -81,11 +81,15 @@
     }else {
         str = self.nextPage;
     }
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:str parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:str parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self fetchedData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }

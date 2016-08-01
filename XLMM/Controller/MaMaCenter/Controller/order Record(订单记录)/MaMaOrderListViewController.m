@@ -187,15 +187,19 @@
 #pragma mark -- 请求数据
 - (void)loadDate {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self.dataArr removeAllObjects];
         [self.dataDic removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
 
@@ -207,14 +211,18 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:self.nextPage parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
 }

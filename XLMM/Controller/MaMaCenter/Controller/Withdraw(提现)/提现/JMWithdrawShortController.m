@@ -199,9 +199,13 @@
             
         }else if (buttonIndex == 1) {
             NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/exchange_coupon?template_id=%ld&exchange_num=1", Root_URL,_choiseMoney];
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
-            [manager GET:stringurl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [manager GET:stringurl parameters:nil
+                progress:^(NSProgress * _Nonnull downloadProgress) {
+                    //数据请求的进度
+                }
+                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 if (responseObject == nil) {
                     return ;
                 }else {
@@ -221,7 +225,7 @@
                     }
                     
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];
 

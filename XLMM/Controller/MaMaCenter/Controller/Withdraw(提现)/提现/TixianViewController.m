@@ -420,9 +420,13 @@
     }
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager POST:stringurl parameters:paramters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:stringurl parameters:paramters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if (responseObject == nil) {
             return ;
@@ -452,7 +456,7 @@
                 break;
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         
     }];

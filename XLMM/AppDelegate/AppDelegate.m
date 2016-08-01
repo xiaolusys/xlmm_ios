@@ -7,11 +7,10 @@
 //
 #import "MiPushSDK.h"
 #import "AppDelegate.h"
-#import "Reachability.h"
+//#import "Reachability.h"
 #import "Pingpp.h"
 #import "MMRootViewController.h"
 #import "MMClass.h"
-#import "Reachability.h"
 #import "NewLeftViewController.h"
 #import "MMDetailsViewController.h"
 #import "ActivityView.h"
@@ -54,26 +53,76 @@
     
 }
 
-- (NSString *)stringFromStatus:(NetworkStatus)status{
-    NSString *string;
-    switch (status) {
-        case NotReachable:
-            string = @"无网络连接，请检查您的网络";
-            break;
-        case ReachableViaWiFi:
-            string = @"wifi";
-            break;
-        case ReachableViaWWAN:
-            string = @"wwan";
-            break;
-            
-        default:
-            
-            string = @"unknown";
-            break;
-    }
-    return string;
+//监测当前网络状态（网络监听）
+- (void)AFNetworkStatus{
+    
+    //1.创建网络监测者
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    
+    /*枚举里面四个状态  分别对应 未知 无网络 数据 WiFi
+     typedef NS_ENUM(NSInteger, AFNetworkReachabilityStatus) {
+     AFNetworkReachabilityStatusUnknown          = -1,      未知
+     AFNetworkReachabilityStatusNotReachable     = 0,       无网络
+     AFNetworkReachabilityStatusReachableViaWWAN = 1,       蜂窝数据网络
+     AFNetworkReachabilityStatusReachableViaWiFi = 2,       WiFi
+     };
+     */
+    
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        //这里是监测到网络改变的block  可以写成switch方便
+        //在里面可以随便写事件
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+            {
+                NSLog(@"未知网络状态");
+                break;
+            }
+            case AFNetworkReachabilityStatusNotReachable:
+            {
+                NSLog(@"无网络");
+                UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:@"无网络连接，请检查您的网络" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alterView show];
+
+                break;
+            }
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            {
+                NSLog(@"蜂窝数据网");
+                break;
+            }
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+            {
+                NSLog(@"WiFi网络");
+                
+                break;
+            }
+            default:
+                break;
+        }
+        
+    }] ;
 }
+
+//- (NSString *)stringFromStatus:(NetworkStatus)status{
+//    NSString *string;
+//    switch (status) {
+//        case NotReachable:
+//            string = @"无网络连接，请检查您的网络";
+//            break;
+//        case ReachableViaWiFi:
+//            string = @"wifi";
+//            break;
+//        case ReachableViaWWAN:
+//            string = @"wwan";
+//            break;
+//            
+//        default:
+//            
+//            string = @"unknown";
+//            break;
+//    }
+//    return string;
+//}
 
 - (void)ActivityTimeUpdate {
     self.timeCount++;
@@ -105,12 +154,16 @@
     self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
     
     NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:activityUrl parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return;
         if (responseObject[@"picture"] == nil)return;
         [self startDeal:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
@@ -268,8 +321,12 @@
     
     // http://m.xiaolu.so/rest/v1/users/profile
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:urlString parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return;
         NSDictionary *result = responseObject;
         if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
@@ -284,7 +341,7 @@
         }
         
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
         NSLog(@"maybe cookie timeout,need login");
@@ -362,7 +419,7 @@
         
         self.miRegid = [data objectForKey:@"regid"];
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         
         
@@ -382,7 +439,10 @@
         NSLog(@"urlStr = %@", urlString);
         
         [manager POST:urlString parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   //  NSError *error;
                   if (!responseObject) return ;
                   NSLog(@"JSON: %@", responseObject);
@@ -395,7 +455,7 @@
                       [user setObject:user_account forKey:@"user_account"];
                       [user synchronize];
                   }
-              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   NSLog(@"Error: %@-------", error);
               }];
         //
@@ -688,13 +748,13 @@
         }
     }
     
-    
-    Reachability *reach = [Reachability reachabilityForInternetConnection];
-    NetworkStatus status = [reach currentReachabilityStatus];
-    if (status == NotReachable) {
-        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alterView show];
-    }
+//    [self AFNetworkStatus];
+//    Reachability *reach = [Reachability reachabilityForInternetConnection];
+//    NetworkStatus status = [reach currentReachabilityStatus];
+//    if (status == NotReachable) {
+//        UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:[self stringFromStatus:status] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alterView show];
+//    }
     
     
 }

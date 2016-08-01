@@ -145,7 +145,7 @@
 */
 
 - (IBAction)commitClicked:(id)sender {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *password1 = self.passwordTextField.text;
     NSString *password2 = self.confirmTextField.text;
 
@@ -168,7 +168,10 @@
     MMLOG(string);
     
     [manager POST:string parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               NSLog(@"JSON: %@", responseObject);
               //isVerifyPsd
               if ([self.config[@"isVerifyPsd"] boolValue]) {
@@ -188,7 +191,7 @@
               }
               //修改密码成功，要怎么做。。。。
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Error: %@", error);
           }];
 

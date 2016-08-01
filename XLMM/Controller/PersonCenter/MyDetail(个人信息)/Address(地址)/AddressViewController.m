@@ -105,14 +105,17 @@
 - (void)downloadAddressData{
 //    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
     //2016.7.13 modify to afn
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:kAddress_List_URL parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               if (!responseObject)return ;
               [self fatchedAddressData:responseObject];              
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               
@@ -308,9 +311,12 @@
     NSLog(@"address id = %@", model.addressID);
     NSString *deleteurlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL,model.addressID];
     NSLog(@"deleteURL = %@", deleteurlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:deleteurlString parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               [dataArray removeAllObjects];
@@ -318,7 +324,7 @@
               
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               

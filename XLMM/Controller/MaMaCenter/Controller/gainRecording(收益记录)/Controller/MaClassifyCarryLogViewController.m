@@ -274,12 +274,16 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)requestAction {
     [SVProgressHUD showWithStatus:@"正在加载..."];
     NSString *url = self.urlArr[self.currentIndex];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }
@@ -288,14 +292,18 @@ static NSString *cellIdentifier = @"carryLogCell";
     
     NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
     NSString *url = [self.nextdic objectForKey:number];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         UITableView *table = [self.tableViewArr objectAtIndex:self.currentIndex];
         [table.mj_footer endRefreshing];
         
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
 }
 
