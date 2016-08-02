@@ -34,7 +34,6 @@
 #import "JMPayShareController.h"
 #import "WXApi.h"
 #import "PersonOrderViewController.h"
-#import "JMBaseNavigationController.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 

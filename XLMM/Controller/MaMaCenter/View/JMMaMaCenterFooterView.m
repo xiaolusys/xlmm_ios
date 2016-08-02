@@ -44,13 +44,13 @@
     
     self.label0.text = [NSString stringWithFormat:@"%@个",mamaCenterModel.order_num];                    // 订单记录
     self.label1.text = [NSString stringWithFormat:@"%.2f元",[mamaCenterModel.carry_value floatValue]];   // 收益记录
-    self.label2.text = @"我的店铺";
-    self.label3.text = @"精选商品,每日推送";
+    self.label2.text = @"精选商品,妈妈店铺";
+    self.label3.text = @"精心挑选,每日推送";
     self.label4.text = [NSString stringWithFormat:@"%@位",mamaCenterModel.invite_num];                   // 我的邀请
-    self.label5.text = @"热门商品,选品上架";
-    self.label6.text = @"小鹿大学";
+    self.label5.text = @"选品上架,佣金到手";
+    self.label6.text = @"课堂与活动";
     self.label7.text = [NSString stringWithFormat:@"%@人",mamaCenterModel.fans_num];                     // 我的粉丝
-    self.label8.text = @"我的团队";
+    self.label8.text = @"团队协作,互利共赢";
     self.label9.text = @"个人收益排行";
     
     
@@ -149,7 +149,7 @@
     
     CGFloat buttonW = SCREENWIDTH / 2;
     NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal"];
-    NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的精选",@"每日推送",@"邀请开店",@"选品上架",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行"];
+    NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的精选",@"每日推送",@"邀请开店",@"选品佣金",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行"];
     for (int i = 0; i < 10; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderColor = [UIColor countLabelColor].CGColor;
