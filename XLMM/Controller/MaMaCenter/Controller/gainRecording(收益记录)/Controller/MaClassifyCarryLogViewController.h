@@ -10,4 +10,5 @@
 
 @interface MaClassifyCarryLogViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong)NSString *earningsRecord;
+@property (nonatomic, strong)NSString *historyEarningsRecord;
 @end

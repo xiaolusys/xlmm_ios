@@ -9,7 +9,6 @@
 #import "JMPersonAllOrderController.h"
 #import "MMClass.h"
 #import "JMBaseGoodsCell.h"
-#import "MJRefresh.h"
 #import "JMFetureFansModel.h"
 #import "JMOrderGoodsModel.h"
 #import "JMAllOrderModel.h"
@@ -201,8 +200,17 @@
     orderDetailVC.allOrderModel = self.orderDetailModel;
     orderDetailVC.orderTid = self.orderDetailModel.tid;
     orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, self.orderDetailModel.goodsID];
-    
+ 
     [self.navigationController pushViewController:orderDetailVC animated:YES];
+//    NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
+//    for (UIViewController *vc in marr) {
+//        if ([vc isKindOfClass:[JMOrderDetailController class]]) {
+//            [marr removeObject:vc];
+//            break;
+//        }
+//    }
+//    self.navigationController.viewControllers = marr;
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;

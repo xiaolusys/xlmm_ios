@@ -8,7 +8,6 @@
 
 #import "JMUntappedCouponController.h"
 #import "MMClass.h"
-#import "MJRefresh.h"
 #import "JMCouponModel.h"
 #import "JMCouponRootCell.h"
 //#import "JMSelecterButton.h"

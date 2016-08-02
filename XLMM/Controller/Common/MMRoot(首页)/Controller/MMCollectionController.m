@@ -11,7 +11,6 @@
 #import "MMClass.h"
 #import "JMRootgoodsCell.h"
 #import "MMDetailsViewController.h"
-#import "MJRefresh.h"
 #import "LoadingAnimation.h"
 #import "MMLoadingAnimation.h"
 #import "CollectionModel.h"

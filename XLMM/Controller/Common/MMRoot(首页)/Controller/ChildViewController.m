@@ -16,7 +16,6 @@
 #import "MJPullGifHeader.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
-#import "MJRefresh.h"
 #import "XlmmMall.h"
 #import "WebViewController.h"
 

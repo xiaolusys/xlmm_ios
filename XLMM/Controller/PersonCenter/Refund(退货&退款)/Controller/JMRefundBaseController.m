@@ -8,7 +8,6 @@
 
 #import "JMRefundBaseController.h"
 #import "MMClass.h"
-#import "MJRefresh.h"
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "RefundDetailsViewController.h"

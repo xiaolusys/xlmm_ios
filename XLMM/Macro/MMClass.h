@@ -6,16 +6,19 @@
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
 #import "PosterModel.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 #import "UIColor+RGBColor.h"
 #import "UIImage+ImageWithUrl.h"
 #import "NSArray+Log.h"
-#import "SVProgressHUD.h" 
-#import "AFNetworking.h"
-#import "MJExtension.h"
-#import "Masonry.h"
+#import <SVProgressHUD.h>
+#import <AFNetworking.h>
+#import <MJExtension.h>
+#import <Masonry.h>
 #import "UIViewController+NavigationBar.h"
 #import "NSString+URL.h"
+#import <MJRefresh.h>
+#import <FMDB.h>
+
 
 #import "UMMobClick/MobClick.h"
 
