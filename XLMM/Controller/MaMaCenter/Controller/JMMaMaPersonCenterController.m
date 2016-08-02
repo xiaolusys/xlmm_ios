@@ -271,6 +271,7 @@
         NSLog(@"105 == > 收益");
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
         carry.earningsRecord = self.earningsRecord;
+        carry.historyEarningsRecord = self.historyEarningsRecord;
         [self.navigationController pushViewController:carry animated:YES];
     }else if (index == 106) {
         NSLog(@"106 == > 考试");
