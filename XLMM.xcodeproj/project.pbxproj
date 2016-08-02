@@ -586,6 +586,7 @@
 		1F916A4A1D506A1000327408 /* 圈圈加载0043@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F916A1C1D506A1000327408 /* 圈圈加载0043@2x.png */; };
 		1F916A4B1D506A1000327408 /* 圈圈加载0044@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F916A1D1D506A1000327408 /* 圈圈加载0044@2x.png */; };
 		1F916A4D1D506AA200327408 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F916A4C1D506AA200327408 /* libFMDB.a */; };
+		1F916A5B1D5097BE00327408 /* JMHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F916A5A1D5097BE00327408 /* JMHttpRequest.m */; };
 		1F9238D91CF46305000AD0EF /* isApp_orderList@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */; };
 		1F98FE5E1D1934B00043FA32 /* pay_successTopIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F98FE5D1D1934B00043FA32 /* pay_successTopIcon@2x.png */; };
 		1F98FE661D1A1EC20043FA32 /* get_fivteen_redpack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F98FE651D1A1EC20043FA32 /* get_fivteen_redpack@2x.png */; };
@@ -1664,6 +1665,8 @@
 		1F916A1C1D506A1000327408 /* 圈圈加载0043@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0043@2x.png"; sourceTree = "<group>"; };
 		1F916A1D1D506A1000327408 /* 圈圈加载0044@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圈圈加载0044@2x.png"; sourceTree = "<group>"; };
 		1F916A4C1D506AA200327408 /* libFMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFMDB.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/FMDB/libFMDB.a"; sourceTree = "<group>"; };
+		1F916A591D5097BE00327408 /* JMHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHttpRequest.h; sourceTree = "<group>"; };
+		1F916A5A1D5097BE00327408 /* JMHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHttpRequest.m; sourceTree = "<group>"; };
 		1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "isApp_orderList@2x.png"; sourceTree = "<group>"; };
 		1F98FE5D1D1934B00043FA32 /* pay_successTopIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pay_successTopIcon@2x.png"; sourceTree = "<group>"; };
 		1F98FE651D1A1EC20043FA32 /* get_fivteen_redpack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "get_fivteen_redpack@2x.png"; sourceTree = "<group>"; };
@@ -3472,6 +3475,7 @@
 		1F27A61F1D275A6300A0F80B /* ClassTool */ = {
 			isa = PBXGroup;
 			children = (
+				1F916A4E1D508BEC00327408 /* HttpTool */,
 				1FDD07461D477B000010231F /* HMSegmentedControl.h */,
 				1FDD07471D477B000010231F /* HMSegmentedControl.m */,
 				1F56E2711D33D1580092EC91 /* JMPageViewBaseController.h */,
@@ -4501,6 +4505,15 @@
 				1F916A1D1D506A1000327408 /* 圈圈加载0044@2x.png */,
 			);
 			path = Refresh;
+			sourceTree = "<group>";
+		};
+		1F916A4E1D508BEC00327408 /* HttpTool */ = {
+			isa = PBXGroup;
+			children = (
+				1F916A591D5097BE00327408 /* JMHttpRequest.h */,
+				1F916A5A1D5097BE00327408 /* JMHttpRequest.m */,
+			);
+			path = HttpTool;
 			sourceTree = "<group>";
 		};
 		1FC2B56C1D30AD1300CA01AB /* plistsPath */ = {
@@ -5850,6 +5863,7 @@
 				1F27A5E81D2520E200A0F80B /* JMMaMaOrderListCell.m in Sources */,
 				1F498C6A1D2772D0007E77FC /* JMChooseLogisticsController.m in Sources */,
 				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
+				1F916A5B1D5097BE00327408 /* JMHttpRequest.m in Sources */,
 				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				1FDD07291D45BA910010231F /* JMDisableCouponController.m in Sources */,

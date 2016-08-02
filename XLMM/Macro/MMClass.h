@@ -18,7 +18,7 @@
 #import "NSString+URL.h"
 #import <MJRefresh.h>
 #import <FMDB.h>
-
+#import "JMHttpRequest.h"
 
 #import "UMMobClick/MobClick.h"
 
@@ -63,6 +63,8 @@
 #define kWeiXinauthorize @"kWeiXinauthorize"
 #define kPhoneNumberUserInfo @"phoneUserInfo"
 #define kWeiXinUserInfo @"weixinUserInfo"
+
+#define kUserAgent @"userAgent"
 
 #define LOGINDEVTYPE @"ios"
 

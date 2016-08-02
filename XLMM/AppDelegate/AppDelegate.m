@@ -16,6 +16,7 @@
 #import "ActivityView.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
+#import "sys/utsname.h"
 
 #define login @"login"
 #import "JMFirstOpen.h"
@@ -50,7 +51,7 @@
 @end
 
 @implementation AppDelegate{
-    
+    NSString *httpStatus;
 }
 
 //监测当前网络状态（网络监听）
@@ -74,11 +75,13 @@
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
             {
+                httpStatus = @"other";
                 NSLog(@"未知网络状态");
                 break;
             }
             case AFNetworkReachabilityStatusNotReachable:
             {
+                httpStatus = @"noNet";
                 NSLog(@"无网络");
                 UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:@"无网络连接，请检查您的网络" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alterView show];
@@ -87,20 +90,33 @@
             }
             case AFNetworkReachabilityStatusReachableViaWWAN:
             {
+                httpStatus = @"2G";
                 NSLog(@"蜂窝数据网");
                 break;
             }
             case AFNetworkReachabilityStatusReachableViaWiFi:
             {
                 NSLog(@"WiFi网络");
-                
+                httpStatus = @"wifi";
                 break;
             }
             default:
                 break;
         }
+        NSDictionary* infoDict =[[NSBundle mainBundle] infoDictionary];
+        NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];                          // 手机系统版本
+        NSString *appCurVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];            // 当前应用版本
+        NSString* phoneModel = [self phoneDeviceVersion];                                           // 手机型号
+        
+        NSString *userAgent = [NSString stringWithFormat:@"iOS/%@ XLMM/%@ Mobile/(%@) NetType/%@",phoneVersion,appCurVersion,phoneModel,httpStatus];
+        NSLog(@"%@",userAgent);
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:userAgent forKey:kUserAgent];
+        [defaults synchronize];
         
     }] ;
+    [manager startMonitoring];
 }
 
 //- (NSString *)stringFromStatus:(NetworkStatus)status{
@@ -139,8 +155,15 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self AFNetworkStatus];
     
 //    self.isApinPayGo = YES;
+    /**
+     *  User-Agent:Android/4.4.2 xlmmApp/20160718 Mobile/PE-CL00 NetType/Wifi
+     */
+    
+    
+    
     
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
@@ -872,7 +895,10 @@
     // 删除缓存
     [[SDWebImageManager sharedManager].imageCache clearMemory];
 }
-
+- (void)dealloc
+{
+    [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+}
 #pragma mark -
 #pragma mark RESideMenu Delegate
 
@@ -895,4 +921,32 @@
 {
     // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
+- (NSString*)phoneDeviceVersion
+{
+    // 需要#import "sys/utsname.h"
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString * deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    //iPhone
+    if ([deviceString isEqualToString:@"iPhone1,1"])    return @"iPhone 1G";
+    if ([deviceString isEqualToString:@"iPhone1,2"])    return @"iPhone 3G";
+    if ([deviceString isEqualToString:@"iPhone2,1"])    return @"iPhone 3GS";
+    if ([deviceString isEqualToString:@"iPhone3,1"])    return @"iPhone 4";
+    if ([deviceString isEqualToString:@"iPhone3,2"])    return @"Verizon iPhone 4";
+    if ([deviceString isEqualToString:@"iPhone4,1"])    return @"iPhone 4S";
+    if ([deviceString isEqualToString:@"iPhone5,1"])    return @"iPhone 5";
+    if ([deviceString isEqualToString:@"iPhone5,2"])    return @"iPhone 5";
+    if ([deviceString isEqualToString:@"iPhone5,3"])    return @"iPhone 5C";
+    if ([deviceString isEqualToString:@"iPhone5,4"])    return @"iPhone 5C";
+    if ([deviceString isEqualToString:@"iPhone6,1"])    return @"iPhone 5S";
+    if ([deviceString isEqualToString:@"iPhone6,2"])    return @"iPhone 5S";
+    if ([deviceString isEqualToString:@"iPhone7,1"])    return @"iPhone 6 Plus";
+    if ([deviceString isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
+    if ([deviceString isEqualToString:@"iPhone8,1"])    return @"iPhone 6s";
+    if ([deviceString isEqualToString:@"iPhone8,2"])    return @"iPhone 6s Plus";
+    
+    return deviceString;
+}
+
+
 @end
