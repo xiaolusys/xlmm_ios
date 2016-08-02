@@ -13,6 +13,8 @@
 #import "JMExpiredCouponController.h"
 #import "JMUntappedCouponController.h"
 
+
+
 @interface JMCouponController ()
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -53,7 +55,6 @@
 
 //    self.dataSource = [NSMutableArray arrayWithObjects:@"0",@"0",@"0", nil];
     
-    
     _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"已过期",@"已使用", nil];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     [self loadCouponData];
@@ -69,54 +70,52 @@
     }
 }
 - (void)loadData:(NSString *)statusCount {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%ld",Root_URL,[statusCount integerValue]];
-    [manager GET:string parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+    [JMHttpRequest createGETRequest:string WithParaments:nil withSuccess:^(id responseObject) {
         if (responseObject) {
             if ([statusCount isEqualToString:@"0"]) {
                 flageArr[0] = @1;
                 untappedArr = [NSArray arrayWithArray:responseObject];
                 _titleArr[0] = [NSString stringWithFormat:@"未使用(%ld)",untappedArr.count];
-
             }else if ([statusCount isEqualToString:@"3"]) {
                 flageArr[1] = @1;
                 expiredArr = [NSArray arrayWithArray:responseObject];
-//                self.dataSource[1] = responseObject;
+                //                self.dataSource[1] = responseObject;
                 _titleArr[1] = [NSString stringWithFormat:@"已过期(%ld)",expiredArr.count];
-
             }else {
                 flageArr[2] = @1;
                 usedArr = [NSArray arrayWithArray:responseObject];
                 _titleArr[2] = [NSString stringWithFormat:@"已使用(%ld)",usedArr.count];
-                
             }
             BOOL isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment == YES) {
-                //            NSMutableArray *titleArr = [NSMutableArray array];
-                //            [titleArr addObject:untappedArr];
-                //            [titleArr addObject:expiredArr];
-                //            [titleArr addObject:usedArr];
-                
-                
-                
                 [self createSegmentView];
-                //            self.segmentedControl.sectionTitles = _titleArr;
                 [self createSegement];
-//                [SVProgressHUD dismiss];
             }else{}
             
         }else {
             
         }
-        
-
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Failure:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"优惠券加载失败,请稍后重试~!"];
+    } showProgress:^(float progress) {
+        
     }];
+    
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    
+//    [manager GET:string parameters:nil
+//        progress:^(NSProgress * _Nonnull downloadProgress) {
+//            //数据请求的进度
+//        }
+//         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        
+//        
+//
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//    }];
 }
 - (void)createSegmentView {
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];

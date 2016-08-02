@@ -47,7 +47,7 @@
     self.tableView.delegate = self;
     
     self.tableView.rowHeight = 110;
-    self.tableView.tableFooterView = nil;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIView *bottomView = [UIView new];
     [self.view addSubview:bottomView];

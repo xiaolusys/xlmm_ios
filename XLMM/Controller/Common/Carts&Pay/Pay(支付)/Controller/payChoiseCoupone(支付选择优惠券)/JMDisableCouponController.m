@@ -42,8 +42,8 @@
     self.tableView.delegate = self;
     
     self.tableView.rowHeight = 110;
-    self.tableView.tableFooterView = nil;
-
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
