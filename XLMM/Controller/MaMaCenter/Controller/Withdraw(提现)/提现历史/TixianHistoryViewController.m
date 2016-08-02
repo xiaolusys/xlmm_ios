@@ -10,7 +10,6 @@
 #import "MMClass.h"
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
-#import "MJRefresh.h"
 
 
 static NSString *CellIdentify = @"TixianCellIdentify";

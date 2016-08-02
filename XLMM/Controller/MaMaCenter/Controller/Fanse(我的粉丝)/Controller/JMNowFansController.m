@@ -8,7 +8,6 @@
 
 #import "JMNowFansController.h"
 #import "MMClass.h"
-#import "MJRefresh.h"
 #import "FanceModel.h"
 #import "FensiTableViewCell.h"
 #import "JMFetureFansCell.h"

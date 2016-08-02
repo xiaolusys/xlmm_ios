@@ -12,7 +12,6 @@
 #import "JMPurchaseFooterView.h"
 #import "JMBaseGoodsCell.h"
 #import "CartListModel.h"
-#import "MJRefresh.h"
 #import "JMShareView.h"
 #import "JMChoiseLogisController.h"
 #import "JMPopView.h"

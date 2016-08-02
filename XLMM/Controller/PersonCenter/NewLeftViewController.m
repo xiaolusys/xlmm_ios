@@ -7,7 +7,7 @@
 //
 
 #import "NewLeftViewController.h"
-#import "RESideMenu.h"
+#import <RESideMenu.h>
 #import "JifenViewController.h"
 #import "MMUserCoupons.h"
 #import "AddressViewController.h"

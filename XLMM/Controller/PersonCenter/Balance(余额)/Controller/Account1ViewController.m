@@ -8,7 +8,6 @@
 
 #import "Account1ViewController.h"
 #import "MMClass.h"
-#import "MJRefresh.h"
 #import "AFHTTPSessionManager.h"
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"

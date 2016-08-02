@@ -44,6 +44,11 @@
  *  妈妈头像
  */
 @property (nonatomic, copy) NSString *thumbnail;
+/**
+ *  2016.3.24号系统升级之前的收益
+ */
+@property (nonatomic, copy) NSString *his_confirmed_cash_out;
+
 @end
 
 /**

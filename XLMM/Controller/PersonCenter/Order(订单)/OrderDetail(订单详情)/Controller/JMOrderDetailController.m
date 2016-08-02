@@ -15,7 +15,6 @@
 #import "JMEditAddressModel.h"
 #import "JMPackAgeModel.h"
 #import "XlmmMall.h"
-#import "MJRefresh.h"
 #import "JMBaseGoodsCell.h"
 #import "JMQueryLogInfoController.h"
 #import "ShenQingTuikuanController.h"

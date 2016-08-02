@@ -11,7 +11,6 @@
 #import "MaMaOrderModel.h"
 #import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
-#import "MJRefresh.h"
 #import "JMMaMaOrderListCell.h"
 
 

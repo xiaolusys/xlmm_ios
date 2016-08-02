@@ -7,7 +7,7 @@
 //
 
 #import "MMRootViewController.h"
-#import "RESideMenu.h"
+#import <RESideMenu.h>
 #import "ChildViewController.h"
 #import "MMClass.h"
 #import "JMLogInViewController.h"
@@ -31,7 +31,6 @@
 #import "PromoteModel.h"
 #import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
-#import "MJRefresh.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
 #import "JMRootScrolCell.h"

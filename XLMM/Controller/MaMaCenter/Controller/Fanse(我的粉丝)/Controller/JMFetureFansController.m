@@ -10,7 +10,7 @@
 #import "MMClass.h"
 #import "JMFetureFansModel.h"
 #import "JMFetureFansCell.h"
-#import "MJRefresh.h"
+
 
 
 @interface JMFetureFansController ()<UITableViewDataSource,UITableViewDelegate>

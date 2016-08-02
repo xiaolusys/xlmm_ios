@@ -12,7 +12,6 @@
 #import "HuoyuezhiModel.h"
 #import "NSString+DeleteT.h"
 #import "CarryLogHeaderView.h"
-#import "MJRefresh.h"
 
 @interface MaMaHuoyueduViewController ()
 

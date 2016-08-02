@@ -9,7 +9,6 @@
 #import "JMPersonAllOrderController.h"
 #import "MMClass.h"
 #import "JMBaseGoodsCell.h"
-#import "MJRefresh.h"
 #import "JMFetureFansModel.h"
 #import "JMOrderGoodsModel.h"
 #import "JMAllOrderModel.h"
