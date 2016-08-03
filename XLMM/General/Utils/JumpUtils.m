@@ -87,11 +87,7 @@
         ProductSelectionListViewController *mamachoiceVC = [[ProductSelectionListViewController alloc] init];
         [vc.navigationController pushViewController:mamachoiceVC animated:YES];
         
-    }else {
-        
-    }
-    
-    if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
         
         if (login == NO) {
@@ -109,96 +105,17 @@
         //经过跟秀清讨论，直接跳转商品列表的需求还需要整理，暂时屏蔽
         //[self jumpToBrand:target_url viewController:vc];
     }
-    else if([target_url rangeOfString:@"?"].length > 0){
-        NSArray *components = [target_url componentsSeparatedByString:@"?"];
-        NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
-
-        NSArray *params = [parameter componentsSeparatedByString:@"&"];
-        NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
-        NSString *firstparam = [firstparams firstObject];
-        NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
-        NSLog(@"firstparams %@  %@", firstparam, firstvalue);
-        if ([firstparam isEqualToString:@"model_id"]) {
-            //跳到集合页面
-            NSLog(@"model_id = %@", firstvalue);
-            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:firstvalue forKey:@"web_url"];
-            [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
-            
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.webDiction = web_dic;
-            webView.isShowNavBar =false;
-            webView.isShowRightShareBtn=false;
-            [vc.navigationController pushViewController:webView animated:YES];
-            
-        } else if ([firstparam isEqualToString:@"product_id"]){
-            //跳到商品详情
-            NSLog(@"product_id = %@", firstvalue);
-            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            [web_dic setValue:firstvalue forKey:@"web_url"];
-            [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
-            
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.webDiction = web_dic;
-            webView.isShowNavBar =false;
-            webView.isShowRightShareBtn=false;
-            [vc.navigationController pushViewController:webView animated:YES];
-            
-            
-        } else if ([firstparam isEqualToString:@"trade_id"]){
-            //跳到订单详情
-            NSLog(@"trade_id = %@", firstvalue);
-            JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
-//            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
-            
-            // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-            orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
-            [vc.navigationController pushViewController:orderDetailVC animated:YES];
-        } else if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
-            NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
-            
-            NSString *secondparam = [secondparams firstObject];
-            NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
-            NSLog(@"secondparams %@  %@", secondparam, secondvalue);
-            NSLog(@"跳到H5首页 url= %@", secondvalue);
-            
-            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            if ([firstparam isEqualToString:@"is_native"]){
-                [web_dic setValue:secondvalue forKey:@"web_url"];
-            }
-            else{
-                [web_dic setValue:firstvalue forKey:@"web_url"];
-            }
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.webDiction = web_dic;
-            webView.isShowNavBar =true;
-            webView.isShowRightShareBtn=true;
-            [vc.navigationController pushViewController:webView animated:YES];
-        } else if([firstparam isEqualToString:@"activity_id"] || [firstparam isEqualToString:@"url"]){
-            NSArray *secondparams = [params[1] componentsSeparatedByString:@"="];
-            NSString *secondparam = [secondparams firstObject];
-            NSString *secondvalue = [params[1] substringFromIndex:([[secondparams firstObject] length] + 1)];
-            NSLog(@"secondparams %@  %@", secondparam, secondvalue);
-            NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-            
-            [web_dic setValue:@"active" forKey:@"type_title"];
-            if ([firstparam isEqualToString:@"activity_id"]){
-                [web_dic setValue:firstvalue forKey:@"activity_id"];
-                [web_dic setValue:secondvalue forKey:@"web_url"];
-            }
-            else{
-                [web_dic setValue:secondvalue forKey:@"activity_id"];
-                [web_dic setValue:firstvalue forKey:@"web_url"];
-            }
-            NSLog(@"跳到activity_id id=%@ url= %@", firstvalue, secondvalue);
-            
-            WebViewController *webView = [[WebViewController alloc] init];
-            webView.webDiction = web_dic;
-            webView.isShowNavBar =true;
-            webView.isShowRightShareBtn=true;
-            [vc.navigationController pushViewController:webView animated:YES];
-        }
-        
+    else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/products/modellist?"]){
+        [self jumpToModelProduct:target_url viewController:vc];
+    }
+    else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/products?"]){
+        [self jumpToProduct:target_url viewController:vc];
+    }
+    else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/trades/details?"]){
+        [self jumpToTrade:target_url viewController:vc];
+    }
+    else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/webview?"]){
+        [self jumpToWebview:target_url viewController:vc];
     }
     
 }
@@ -221,6 +138,144 @@
         }
     }
 
+}
+
++(void) jumpToModelProduct:(NSString *)target_url viewController:(UIViewController *)vc{
+    NSArray *components = [target_url componentsSeparatedByString:@"?"];
+    NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+    
+    NSArray *params = [parameter componentsSeparatedByString:@"&"];
+    NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+    NSString *firstparam = [firstparams firstObject];
+    NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+    if ([firstparam isEqualToString:@"model_id"]) {
+        //跳到集合页面
+        NSLog(@"model_id = %@", firstvalue);
+        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+        [web_dic setValue:firstvalue forKey:@"web_url"];
+        [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
+        
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = web_dic;
+        webView.isShowNavBar =false;
+        webView.isShowRightShareBtn=false;
+        [vc.navigationController pushViewController:webView animated:YES];
+        
+    }
+
+}
+
++(void) jumpToProduct:(NSString *)target_url viewController:(UIViewController *)vc{
+    NSArray *components = [target_url componentsSeparatedByString:@"?"];
+    NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+    
+    NSArray *params = [parameter componentsSeparatedByString:@"&"];
+    NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+    NSString *firstparam = [firstparams firstObject];
+    NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+    
+    if ([firstparam isEqualToString:@"product_id"]){
+        //跳到商品详情
+        NSLog(@"product_id = %@", firstvalue);
+        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+        [web_dic setValue:firstvalue forKey:@"web_url"];
+        [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
+        
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = web_dic;
+        webView.isShowNavBar =false;
+        webView.isShowRightShareBtn=false;
+        [vc.navigationController pushViewController:webView animated:YES];
+    }
+
+}
+
++(void) jumpToTrade:(NSString *)target_url viewController:(UIViewController *)vc{
+    NSArray *components = [target_url componentsSeparatedByString:@"?"];
+    NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+    
+    NSArray *params = [parameter componentsSeparatedByString:@"&"];
+    NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+    NSString *firstparam = [firstparams firstObject];
+    NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+    if ([firstparam isEqualToString:@"trade_id"]){
+        //跳到订单详情
+        NSLog(@"trade_id = %@", firstvalue);
+        JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
+        //            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
+        
+        // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
+        orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
+        [vc.navigationController pushViewController:orderDetailVC animated:YES];
+    }
+
+}
+
++(void) jumpToWebview:(NSString *)target_url viewController:(UIViewController *)vc{
+    NSArray *components = [target_url componentsSeparatedByString:@"?"];
+    NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+    
+    NSArray *params = [parameter componentsSeparatedByString:@"&"];
+    NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+    NSString *firstparam = [firstparams firstObject];
+    NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+    if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
+        NSString *secondvalue = nil;
+        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+        if ([firstparam isEqualToString:@"is_native"]){
+            params = [parameter componentsSeparatedByString:@"url="];
+            secondvalue = params[1];
+            
+            [web_dic setValue:secondvalue forKey:@"web_url"];
+        }
+        else{
+            params = [parameter componentsSeparatedByString:@"&is_native="];
+            firstvalue = [[params firstObject] substringFromIndex:([@"url=" length])];
+            secondvalue = [params lastObject];
+            
+            [web_dic setValue:firstvalue forKey:@"web_url"];
+        }
+
+        NSLog(@"跳到H5首页 firstvalue= %@ secondvalue=%@", firstvalue, secondvalue);
+        
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = web_dic;
+        webView.isShowNavBar =true;
+        webView.isShowRightShareBtn=true;
+        [vc.navigationController pushViewController:webView animated:YES];
+    } else if([firstparam isEqualToString:@"activity_id"] || [firstparam isEqualToString:@"url"]){
+
+        NSString *secondvalue = nil;
+        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+        
+        [web_dic setValue:@"active" forKey:@"type_title"];
+        if ([firstparam isEqualToString:@"activity_id"]){
+            params = [parameter componentsSeparatedByString:@"url="];
+            secondvalue = params[1];
+            
+            [web_dic setValue:firstvalue forKey:@"activity_id"];
+            [web_dic setValue:secondvalue forKey:@"web_url"];
+        }
+        else{
+            params = [parameter componentsSeparatedByString:@"&activity_id="];
+            firstvalue = [[params firstObject] substringFromIndex:([@"url=" length])];
+            secondvalue = [params lastObject];
+            
+            [web_dic setValue:secondvalue forKey:@"activity_id"];
+            [web_dic setValue:firstvalue forKey:@"web_url"];
+        }
+        NSLog(@"跳到activity_id firstvalue=%@ secondvalue= %@", firstvalue, secondvalue);
+        
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = web_dic;
+        webView.isShowNavBar =true;
+        webView.isShowRightShareBtn=true;
+        [vc.navigationController pushViewController:webView animated:YES];
+    }
 }
 
 @end

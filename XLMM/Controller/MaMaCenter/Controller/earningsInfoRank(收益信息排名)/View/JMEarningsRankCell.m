@@ -97,6 +97,7 @@
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
     }];
     
     [self.numLabel mas_makeConstraints:^(MASConstraintMaker *make) {

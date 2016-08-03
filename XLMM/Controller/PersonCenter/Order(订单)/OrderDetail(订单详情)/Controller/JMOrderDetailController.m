@@ -15,7 +15,6 @@
 #import "JMEditAddressModel.h"
 #import "JMPackAgeModel.h"
 #import "XlmmMall.h"
-#import "MJRefresh.h"
 #import "JMBaseGoodsCell.h"
 #import "JMQueryLogInfoController.h"
 #import "ShenQingTuikuanController.h"
@@ -733,6 +732,14 @@
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 101;
     [self.navigationController pushViewController:orderVC animated:YES];
+    NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
+    for (UIViewController *vc in marr) {
+        if ([vc isKindOfClass:[PersonOrderViewController class]]) {
+            [marr removeObject:vc];
+            break;
+        }
+    }
+    self.navigationController.viewControllers = marr;
     
 }
 - (void)viewWillAppear:(BOOL)animated {

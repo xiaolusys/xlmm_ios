@@ -12,7 +12,6 @@
 #import "CarryLogModel.h"
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
-#import "MJRefresh.h"
 
 
 @interface MaMaCarryLogViewController ()

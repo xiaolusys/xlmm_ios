@@ -20,7 +20,6 @@
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
-#import "MJRefresh.h"
 
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{

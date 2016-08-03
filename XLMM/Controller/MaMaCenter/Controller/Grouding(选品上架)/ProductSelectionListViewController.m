@@ -9,7 +9,6 @@
 #import "ProductSelectionListViewController.h"
 #import "MMClass.h"
 #import "YixuanTableViewController.h"
-#import "MJRefresh.h"
 #import "JMProductSelectionListModel.h"
 #import "JMProductSelectListCell.h"
 

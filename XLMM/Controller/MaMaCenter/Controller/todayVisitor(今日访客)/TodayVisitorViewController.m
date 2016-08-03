@@ -8,7 +8,6 @@
 
 #import "TodayVisitorViewController.h"
 #import "MMClass.h"
-#import "MJRefresh.h"
 #import "JMFetureFansCell.h"
 #import "VisitorModel.h"
 

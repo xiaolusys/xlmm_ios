@@ -12,7 +12,6 @@
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "JMMaMaEarningsRankController.h"
-#import "MJRefresh.h"
 
 #define BTNWIDTH (SCREENWIDTH * 0.25)
 
@@ -158,11 +157,11 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 - (void)createHeader {
     self.headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 105)];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 25, 100, 20)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 15, 100, 20)];
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"累计收益";
-    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH, 50)];
+    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 50)];
     moneyLabel.textColor = [UIColor orangeThemeColor];
     moneyLabel.font = [UIFont systemFontOfSize:35];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
@@ -170,6 +169,13 @@ static NSString *cellIdentifier = @"carryLogCell";
     [self.headerV addSubview:titleLabel];
     [self.headerV addSubview:moneyLabel];
 //    self.headerV.backgroundColor = [UIColor greenColor];
+    
+    UILabel *otherEaringsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, 20)];
+    [self.headerV addSubview:otherEaringsLabel];
+    otherEaringsLabel.font = [UIFont systemFontOfSize:14.];
+    otherEaringsLabel.textColor = [UIColor dingfanxiangqingColor];
+    otherEaringsLabel.textAlignment = NSTextAlignmentCenter;
+    otherEaringsLabel.text = [NSString stringWithFormat:@"2016.3.24号系统升级之前的收益%@",self.historyEarningsRecord];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 1)];
     lineView.backgroundColor = [UIColor lightGrayColor];

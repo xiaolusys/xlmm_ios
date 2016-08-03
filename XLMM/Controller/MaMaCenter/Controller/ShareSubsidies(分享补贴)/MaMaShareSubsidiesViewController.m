@@ -12,7 +12,6 @@
 #import "ShareClickModel.h"
 #import "CarryLogModel.h"
 #import "CarryLogHeaderView.h"
-#import "MJRefresh.h"
 
 @interface MaMaShareSubsidiesViewController ()
 @property (nonatomic, strong)NSMutableArray *dataArr;

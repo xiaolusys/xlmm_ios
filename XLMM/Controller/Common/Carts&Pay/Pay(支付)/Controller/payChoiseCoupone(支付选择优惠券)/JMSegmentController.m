@@ -124,29 +124,24 @@
                 JMCouponModel *couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
                 [self.disableCouponArr addObject:couponModel];
             }
-        }else if (usableArr.count != 0) {
+        }else {
+        }
+        if (usableArr.count != 0) {
             for (NSDictionary *dic in usableArr) {
                 JMCouponModel *couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
                 [self.usableCouponArr addObject:couponModel];
             }
         }else {
-            return ;
         }
     }else {
         [SVProgressHUD showInfoWithStatus:couponData[@"info"]];
     }
-    
-    
 }
 - (void)updateYouhuiquanmodel:(JMCouponModel *)model {
-    
     if (_delegate && [_delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
         [_delegate updateYouhuiquanWithmodel:model];
     }
-    
 }
-
-
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
 }

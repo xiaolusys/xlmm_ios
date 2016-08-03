@@ -25,6 +25,7 @@
 #import "TixianViewController.h"
 #import "MaMaHuoyueduViewController.h"
 #import "JMMaMaEarningsRankController.h"
+#import "JMWithdrawShortController.h"
 
 
 
@@ -54,10 +55,11 @@
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 /**
- *  订单记录,收益记录,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口
+ *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口
  */
 @property (nonatomic, strong)NSString *orderRecord;
 @property (nonatomic, strong)NSString *earningsRecord;
+@property (nonatomic, strong)NSString *historyEarningsRecord;
 @property (nonatomic, copy)NSString *myInvitation;
 @property (nonatomic, copy) NSString *examWebUrl;
 @property (nonatomic, copy) NSString *fansWebUrl;
@@ -123,7 +125,7 @@
     self.fansNum = [NSNumber numberWithInteger:[self.mamaCenterModel.fans_num integerValue]];
     self.orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];
     self.earningsRecord = [NSString stringWithFormat:@"%.2f", [self.mamaCenterModel.carry_value floatValue]];
-    
+    self.historyEarningsRecord = [NSString stringWithFormat:@"%.2f", [self.extraModel.his_confirmed_cash_out floatValue]];
     //精选活动链接
     self.eventLink = self.mamaCenterModel.mama_event_link;
     
@@ -231,10 +233,23 @@
 - (void)composeMaMaCenterHeaderView:(JMMaMaCenterHeaderView *)headerView Index:(NSInteger)index {
     if (index == 100) {
         NSLog(@"100 == > 账户余额");
-        TixianViewController *vc = [[TixianViewController alloc] init];
-        vc.cantixianjine = self.carryValue;
-        vc.activeValue = [self.activeValueNum integerValue];
-        [self.navigationController pushViewController:vc animated:YES];
+        NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
+        if (code == 1) {
+            TixianViewController *vc = [[TixianViewController alloc] init];
+            vc.cantixianjine = self.carryValue;
+            vc.activeValue = [self.activeValueNum integerValue];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            if (self.carryValue - 20 < 0.000001) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"余额不足" message:@"余额不足,不可提现" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+            }else {
+                JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
+                shortVC.myBalance = self.carryValue;
+                shortVC.descStr = self.extraModel.cashout_reason;
+                [self.navigationController pushViewController:shortVC animated:YES];
+            }
+        }
     }else if (index == 101) {
         NSLog(@"101 == > 累计收益");
     }else if (index == 102) {
@@ -256,6 +271,7 @@
         NSLog(@"105 == > 收益");
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
         carry.earningsRecord = self.earningsRecord;
+        carry.historyEarningsRecord = self.historyEarningsRecord;
         [self.navigationController pushViewController:carry animated:YES];
     }else if (index == 106) {
         NSLog(@"106 == > 考试");
@@ -316,6 +332,7 @@
     }else if (index == 102) {
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
         carry.earningsRecord = self.earningsRecord;
+        carry.historyEarningsRecord = self.historyEarningsRecord;
         [self.navigationController pushViewController:carry animated:YES];
     }else if (index == 103) {
         ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
