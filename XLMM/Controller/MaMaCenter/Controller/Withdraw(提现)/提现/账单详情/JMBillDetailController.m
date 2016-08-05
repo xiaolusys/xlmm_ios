@@ -137,13 +137,7 @@
     }else {
         nextStr = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    [manager GET:nextStr parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:nextStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -156,11 +150,11 @@
                 [self createNoActive:dict];
             }
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-
-
 }
 - (void)createNoActive:(NSDictionary *)dict {
     _iceTimeLabel.text = dict[@"budget_date"];
@@ -655,52 +649,25 @@
 }
 
 - (void)rightClicked:(UIButton *)button{
-    
     _cancleButton.enabled = NO;
     [_cancleButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
 
-    
     //取消提现的操作 --
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    //  http://192.168.1.31:9000/rest/v1/cashout
-    
-    
     NSString *cancleStr = _dict[@"id"];
-    
-    
     NSDictionary *paramters = @{@"id":cancleStr};
-    
-    NSLog(@"paramters = %@", paramters);
-    [manager POST:string parameters:paramters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              NSLog(@"response = %@", responseObject);
-              if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
-                  
-                  [self toolTipSuccess];
-                  
-              } else if ([[responseObject objectForKey:@"code"] integerValue] == 1){
-                 
-                  [self toolTipFaile];
-              }
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-    
-    
-    
-    
-    
+
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:paramters WithSuccess:^(id responseObject) {
+        if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
+            [self toolTipSuccess];
+        } else if ([[responseObject objectForKey:@"code"] integerValue] == 1){
+            [self toolTipFaile];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 #pragma mark ---- UIAlertView的点击事件

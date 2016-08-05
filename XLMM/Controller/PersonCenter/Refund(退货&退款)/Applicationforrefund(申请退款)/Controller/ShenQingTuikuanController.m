@@ -346,23 +346,16 @@
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     
     NSLog(@"string = %@", string);
-    
-    [manager POST:string parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"apply_fee"];
-              refundPrice = [string floatValue];
-              self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", refundPrice];
-              self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
-          }
-     
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Error: %@", error);
-          }];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSString *string = [responseObject objectForKey:@"apply_fee"];
+        refundPrice = [string floatValue];
+        self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", refundPrice];
+        self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 #pragma mark --TextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView{
@@ -421,27 +414,15 @@
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     
     NSLog(@"string = %@", string);
-    
-    [manager POST:string parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"apply_fee"];
-              self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", [string floatValue]];
-              self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
-              
-              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSString *string = [responseObject objectForKey:@"apply_fee"];
+        self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", [string floatValue]];
+        self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 - (IBAction)yuanyinClicked:(id)sender {
     
@@ -487,13 +468,7 @@
                                  @"description":descStr,
                                  @"refund_channel":refundChannel
                                  };
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:parameters WithSuccess:^(id responseObject) {
         NSDictionary *dic = responseObject;
         if (dic.count == 0) return;
         NSInteger code = [dic[@"code"] integerValue];
@@ -504,11 +479,11 @@
         }else {
             [SVProgressHUD showErrorWithStatus:dic[@"info"]];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
+    } Progress:^(float progress) {
+        
     }];
-
-
 }
 
 #pragma mark -- 弹出视图

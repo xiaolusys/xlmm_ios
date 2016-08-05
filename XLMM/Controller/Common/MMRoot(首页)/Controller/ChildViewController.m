@@ -135,17 +135,14 @@ static NSString * ksimpleCell = @"simpleCell";
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:nextUrl parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:nextUrl WithParaments:nil WithSuccess:^(id responseObject) {
         [self stopFooterRefresh];
         if (!responseObject)return ;
         [self fetchedMorePageData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
     
 }
@@ -272,18 +269,15 @@ static NSString * ksimpleCell = @"simpleCell";
     
     //[self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
     [SVProgressHUD show];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.urlString parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [self stopHeaderRefresh];
         [SVProgressHUD dismiss];
         if (!responseObject)return ;
         [self fatchedSuggestListData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD dismiss];
+    } Progress:^(float progress) {
+        
     }];
 }
 
@@ -313,18 +307,15 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)downloadOrderData{
     [SVProgressHUD show];
 //    [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderListData:)];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.orderUrlString parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.orderUrlString WithParaments:nil WithSuccess:^(id responseObject) {
         [SVProgressHUD dismiss];
         [self stopHeaderRefresh];
         if (!responseObject)return ;
         [self fatchedOrderListData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD dismiss];
+    } Progress:^(float progress) {
+        
     }];
 }
 

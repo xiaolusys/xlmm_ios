@@ -221,59 +221,37 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1234) {
         if (buttonIndex == 1) {
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-            NSLog(@"urlstring = %@", urlString);
-            
-            
-            
             NSDictionary *parameters = @{@"id":self.refundModelr.order_id,
                                          @"modify":@2,
                                          @"company":_expressName,
                                          @"sid":_expressNum
                                          };
-            
-            NSLog(@"parameters = %@", parameters);
-            
-            [manager POST:urlString parameters:parameters
-                 progress:^(NSProgress * _Nonnull downloadProgress) {
-                     //数据请求的进度
-                 }
-                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                      
-                      NSLog(@"JSON: %@", responseObject);
-                      if (!responseObject) {
-                          return ;
-                      }else {
-                          NSString *info = responseObject[@"info"];
-                          
-                          UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:info delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                          alterView.tag = 4321;
-                          alterView.delegate = self;
-                          [alterView show];
-                          
-                      }
-                      
-                      //                      [self.navigationController popToRootViewControllerAnimated:YES];
-                      //                      NSLog(@"perration = %@", operation);
-                      //                      [self.navigationController popViewControllerAnimated:YES];
-                      
-                  }
-                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                      NSLog(@"Error: %@", error);
-                      NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-                      [SVProgressHUD showErrorWithStatus:@"提交退货快递信息失败，请检查网络后重试！"];
-                  }];
+            [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:parameters WithSuccess:^(id responseObject) {
+                if (!responseObject) {
+                    return ;
+                }else {
+                    NSString *info = responseObject[@"info"];
+                    
+                    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:info delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                    alterView.tag = 4321;
+                    alterView.delegate = self;
+                    [alterView show];
+                    
+                }
+            } WithFail:^(NSError *error) {
+                NSLog(@"Error: %@", error);
+                NSLog(@"erro = %@\n%@", error.userInfo, error.description);
+                [SVProgressHUD showErrorWithStatus:@"提交退货快递信息失败，请检查网络后重试！"];
+            } Progress:^(float progress) {
+                
+            }];
         }
         
     }
-    
     if (alertView.tag == 4321) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    
-    
 }
 #pragma mark ==== 输入框协议方法
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {

@@ -14,7 +14,7 @@
 
 @optional
 - (void)composeMaMaCenterFooterView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index;
-
+- (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index;
 
 @end
 
@@ -26,6 +26,7 @@
 
 @property (nonatomic, weak) id<JMMaMaCenterFooterViewDelegate>delegate;
 
+@property (nonatomic, strong) NSDictionary *messageDic;
 
 
 @end

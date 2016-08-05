@@ -68,21 +68,17 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,_currentPage];
     NSLog(@"string = %@", self.nextString);
-
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:self.nextString parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [SVProgressHUD dismiss];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextString WithParaments:nil WithSuccess:^(id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject) return;
-
+        
         [self fetchedHistoryData:responseObject];
         [self.tableView reloadData];
         [self endRefreshing];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
+    } WithFail:^(NSError *error) {
+        [SVProgressHUD dismiss];
+    } Progress:^(float progress) {
+        
     }];
 }
 #pragma mark ---- 字典转模型

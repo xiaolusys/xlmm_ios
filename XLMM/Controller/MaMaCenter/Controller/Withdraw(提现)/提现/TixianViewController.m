@@ -418,22 +418,13 @@
         }
         stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
     }
-    
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    [manager POST:stringurl parameters:paramters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringurl WithParaments:paramters WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }
         NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
         TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
-
+        
         switch (code) {
             case 0:
                 vc.tixianjine = tixianjine;
@@ -455,9 +446,9 @@
             default:
                 break;
         }
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+    } Progress:^(float progress) {
         
     }];
 

@@ -9,8 +9,11 @@
 #import "JMMaMaCenterFooterView.h"
 #import "MMClass.h"
 #import "JMMaMaCenterModel.h"
+#import "JMContentRollView.h"
+#import "JMAutoLoopScrollView.h"
 
-@interface JMMaMaCenterFooterView ()
+
+@interface JMMaMaCenterFooterView ()<JMAutoLoopScrollViewDatasource, JMAutoLoopScrollViewDelegate>
 
 @property (nonatomic, strong) UILabel *label0;
 @property (nonatomic, strong) UILabel *label1;
@@ -23,6 +26,10 @@
 @property (nonatomic, strong) UILabel *label8;
 @property (nonatomic, strong) UILabel *label9;
 
+@property (nonatomic, strong) UILabel *messagePromptLabel;
+
+@property (nonatomic, strong) JMAutoLoopScrollView *scrollView;
+@property (nonatomic, strong) NSMutableArray *titlesArray;
 
 @end
 
@@ -30,11 +37,18 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
+        self.titlesArray = [NSMutableArray array];
         [self createMaMaCenterView];
+        
     }
     return self;
 }
-
+- (NSMutableArray *)titlesArray {
+    if (_titlesArray == nil) {
+        _titlesArray = [NSMutableArray array];
+    }
+    return _titlesArray;
+}
 + (instancetype)enterFooterView {
     JMMaMaCenterFooterView *headView = [[JMMaMaCenterFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 460)];
     headView.backgroundColor = [UIColor whiteColor];
@@ -53,7 +67,22 @@
     self.label8.text = @"团队协作,互利共赢";
     self.label9.text = @"个人收益排行";
     
-    
+}
+- (void)setMessageDic:(NSDictionary *)messageDic {
+    NSArray *resultsArr = messageDic[@"results"];
+    if (resultsArr.count == 0) {
+        self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
+    }else {
+        for (NSDictionary *dic in resultsArr) {
+            [self.titlesArray addObject:dic[@"title"]];
+            if ([dic[@"read"] boolValue]) {
+                self.messagePromptLabel.hidden = NO;
+            }else {
+                
+            }
+        }
+    }
+    [self.scrollView jm_reloadData];
 }
 - (void)createMaMaCenterView {
     
@@ -61,27 +90,35 @@
     [self addSubview:oneSectionView];
     oneSectionView.backgroundColor = [UIColor countLabelColor];
     
-    UIButton *xlUniversityView = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIView *xlUniversityView = [UIView new];
     [self addSubview:xlUniversityView];
-    xlUniversityView.tag = 100;
-    [xlUniversityView addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    xlUniversityView.tag = 100;
+//    [xlUniversityView addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *promptImage = [UIImageView new];
     [xlUniversityView addSubview:promptImage];
     promptImage.image = [UIImage imageNamed:@"messageImage"];
     
-    UILabel *xlUniversityLabel = [UILabel new];
-    [xlUniversityView addSubview:xlUniversityLabel];
-    xlUniversityLabel.text = @"小鹿大学分享营销的科技殿堂";
-    xlUniversityLabel.textColor = [UIColor buttonTitleColor];
-    xlUniversityLabel.font = [UIFont systemFontOfSize:12.];
+    UILabel *unReadMessageLabel = [UILabel new];
+    [promptImage addSubview:unReadMessageLabel];
+    unReadMessageLabel.backgroundColor = [UIColor redColor];
+    unReadMessageLabel.layer.cornerRadius = 5.;
+    unReadMessageLabel.layer.masksToBounds = YES;
+    self.messagePromptLabel = unReadMessageLabel;
+    self.messagePromptLabel.hidden = YES;
     
-    UILabel *seeLabel = [UILabel new];
-    [xlUniversityView addSubview:seeLabel];
-    seeLabel.text = @"马上看看";
-    seeLabel.textColor = [UIColor colorWithBlueColor];
-    seeLabel.font = [UIFont systemFontOfSize:12.];
+    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleVertical];
+    self.scrollView = scrollView;
+    //代理和数据源
+    scrollView.jm_scrollDataSource = self;
+    scrollView.jm_scrollDelegate = self;
+    //数据数组为1时是否关闭滚动
+    scrollView.jm_isStopScrollForSingleCount = YES;
+    scrollView.jm_autoScrollInterval = 2.;
+    [scrollView jm_registerClass:[JMContentRollView class]];
     
+    [xlUniversityView addSubview:scrollView];
+
     UIView *twoSectionView = [UIView new];
     [self addSubview:twoSectionView];
     twoSectionView.backgroundColor = [UIColor countLabelColor];
@@ -97,7 +134,7 @@
     UIView *bottomView = [UIView new];
     [self addSubview:bottomView];
     bottomView.backgroundColor = [UIColor countLabelColor];
-    
+
     kWeakSelf
     
     [oneSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,13 +151,16 @@
         make.width.height.mas_equalTo(@18);
         make.centerY.equalTo(xlUniversityView.mas_centerY);
     }];
-    [xlUniversityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(promptImage.mas_right).offset(10);
-        make.centerY.equalTo(xlUniversityView.mas_centerY);
+    [unReadMessageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(promptImage).offset(-5);
+        make.right.equalTo(promptImage).offset(5);
+        make.width.height.mas_equalTo(10);
     }];
-    [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(xlUniversityView).offset(-15);
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(promptImage.mas_right).offset(15);
         make.centerY.equalTo(xlUniversityView.mas_centerY);
+        make.height.mas_equalTo(@40);
+        make.width.mas_equalTo(SCREENWIDTH - 60);
     }];
 
     [twoSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -233,6 +273,30 @@
     }
     
 }
+
+
+#pragma mark - LPAutoScrollViewDatasource
+
+- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
+    return self.titlesArray.count;
+}
+/**
+ *  类似UITableVIew
+ */
+- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMContentRollView *)rollView {
+    rollView.title = self.titlesArray[index];
+}
+#pragma mark LPAutoScrollViewDelegate
+- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
+    NSLog(@"%@", self.titlesArray[index]);
+    if (_delegate && [_delegate respondsToSelector:@selector(composeFooterViewScrollView:Index:)]) {
+        [_delegate composeFooterViewScrollView:self Index:index];
+    }
+    
+}
+
+
+
 
 @end
 

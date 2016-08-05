@@ -232,20 +232,14 @@
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
     NSLog(@"Shareview _urlStr=%@ self.activityId=%@", string, self.activityId);
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:string parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        
         [self resolveActivityShareParam:responseObject];
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Progress:^(float progress) {
         
     }];
-    
 }
 //#pragma mark IMYWebView代理方法
 //- (void)webViewDidStartLoad:(IMYWebView *)webView {
@@ -550,12 +544,7 @@
     }
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
     shareType = data[@"share_to"];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:string parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         shareTitle = [responseObject objectForKey:@"share_desc"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
         newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
@@ -595,7 +584,7 @@
             }
             [SVProgressHUD showWithStatus:@"正在下载二维码..."];
             //            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
-//            [self createKuaiZhaoImage];
+            //            [self createKuaiZhaoImage];
         } else if ([platform isEqualToString:@"qqspa"]){
             [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
             [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
@@ -610,28 +599,30 @@
                 }];
             } else {
                 [SVProgressHUD showWithStatus:@"正在生成快照..."];
-//                [self createKuaiZhaoImage];
+                //                [self createKuaiZhaoImage];
             }
         }  else if ([platform isEqualToString:@"pyq"]){
-
+            
             NSLog(@"friends");
-
+            
             if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
                 [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
                 [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
                 [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 }];
             } else{
-
+                
                 [SVProgressHUD showWithStatus:@"正在生成快照..."];
                 //                  isWXFriends = NO;
-//                [self createKuaiZhaoImage];
+                //                [self createKuaiZhaoImage];
             }
-
+            
         } else{}
-    }
-         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         }];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 - (void)dealloc {
     self.shareWebView = nil;

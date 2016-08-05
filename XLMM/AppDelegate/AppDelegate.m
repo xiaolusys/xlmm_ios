@@ -22,6 +22,8 @@
 #import "JMFirstOpen.h"
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
+static BOOL isNetPrompt;
+
 @interface AppDelegate ()<UIAlertViewDelegate, MiPushSDKDelegate>
 
 @property (nonatomic ,copy) NSString *wxCode;
@@ -83,8 +85,14 @@
             {
                 httpStatus = @"noNet";
                 NSLog(@"无网络");
-                UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:@"无网络连接，请检查您的网络" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alterView show];
+                if (isNetPrompt) {
+                    isNetPrompt = NO;
+                    UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:@"无网络连接，请检查您的网络" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alterView show];
+                }else {
+                    
+                }
+                
 
                 break;
             }
@@ -154,17 +162,9 @@
     }
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    isNetPrompt = YES;
     [self AFNetworkStatus];
-    
-//    self.isApinPayGo = YES;
-    /**
-     *  User-Agent:Android/4.4.2 xlmmApp/20160718 Mobile/PE-CL00 NetType/Wifi
-     */
-    
-    
-    
-    
+
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
     
@@ -177,20 +177,15 @@
     self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
     
     NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:activityUrl parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:activityUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         if (responseObject[@"picture"] == nil)return;
         [self startDeal:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         
+    } Progress:^(float progress) {
     }];
-    
-    
+
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     NSInteger count = [userDefaults integerForKey:@"StartCount"];
@@ -339,17 +334,10 @@
 
 - (void)updateLoginState{
     //get /customer/user_profile to check has logined
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
     // http://m.xiaolu.so/rest/v1/users/profile
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:urlString parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         NSDictionary *result = responseObject;
         if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
@@ -362,14 +350,12 @@
             [defaults setBool:NO forKey:kIsLogin];
             NSLog(@"maybe cookie timeout,need login");
         }
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
         NSLog(@"maybe cookie timeout,need login");
+    } Progress:^(float progress) {
     }];
-    
     
 }
 
@@ -442,9 +428,6 @@
         
         self.miRegid = [data objectForKey:@"regid"];
         
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        
-        
         
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
         
@@ -461,27 +444,23 @@
         NSLog(@"parameters = %@", parameters);
         NSLog(@"urlStr = %@", urlString);
         
-        [manager POST:urlString parameters:parameters
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                  //  NSError *error;
-                  if (!responseObject) return ;
-                  NSLog(@"JSON: %@", responseObject);
-                  NSString *user_account = [responseObject objectForKey:@"user_account"];
-                  
-                  if (![user_account isEqualToString:@""]){
-                      [MiPushSDK setAccount:user_account];
-                      //保存user_account
-                      NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-                      [user setObject:user_account forKey:@"user_account"];
-                      [user synchronize];
-                  }
-              }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                  NSLog(@"Error: %@-------", error);
-              }];
-        //
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:parameters WithSuccess:^(id responseObject) {
+            if (!responseObject) return ;
+            NSLog(@"JSON: %@", responseObject);
+            NSString *user_account = [responseObject objectForKey:@"user_account"];
+            
+            if (![user_account isEqualToString:@""]){
+                [MiPushSDK setAccount:user_account];
+                //保存user_account
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                [user setObject:user_account forKey:@"user_account"];
+                [user synchronize];
+            }
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
+            
+        }];
         
     }
     

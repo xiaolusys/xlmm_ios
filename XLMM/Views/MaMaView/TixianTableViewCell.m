@@ -49,40 +49,25 @@
 }
 
 - (void)cancelButtonClicked:(UIButton *)button{
-    NSLog(@"quxiao");
     NSLog(@"model id = %@", cancelModel.ID);
-    
         NSLog(@"取消");
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cancal_cashout", Root_URL];
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        
         //  http://192.168.1.31:9000/rest/v1/cashout
-        
-        NSLog(@"url = %@", string);
         NSDictionary *paramters = @{@"id":cancelModel.ID};
         NSLog(@"paramters = %@", paramters);
-        [manager POST:string parameters:paramters
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                  NSLog(@"response = %@", responseObject);
-                  if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
-                      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                      [alertView show];
-                  } else if ([[responseObject objectForKey:@"code"] integerValue] == 1){
-                      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                      [alertView show];
-                  }
-                  
-              }
-              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                  
-                  NSLog(@"Error: %@", error);
-                  
-              }];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:paramters WithSuccess:^(id responseObject) {
+        if ([[responseObject objectForKey:@"code"] integerValue] == 0) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[responseObject objectForKey:@"code"] integerValue] == 1){
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"取消失败" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+    } WithFail:^(NSError *error) {
         
-   
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -92,3 +77,40 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -105,21 +105,14 @@
 - (void)downloadAddressData{
 //    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
     //2016.7.13 modify to afn
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:kAddress_List_URL parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              if (!responseObject)return ;
-              [self fatchedAddressData:responseObject];              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
+    
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kAddress_List_URL WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject)return ;
+        [self fatchedAddressData:responseObject];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+    }];
 
 }
 - (void)fatchedAddressData:(NSArray *)dic{
@@ -306,40 +299,20 @@
 #pragma mark --AddressDelegate--
 
 - (void)deleteAddress:(AddressModel*)model{
-    NSLog(@"删除地址-----");
-    
-    NSLog(@"address id = %@", model.addressID);
+
     NSString *deleteurlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL,model.addressID];
-    NSLog(@"deleteURL = %@", deleteurlString);
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:deleteurlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              [dataArray removeAllObjects];
-              [self downloadAddressData];
-              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
+
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:deleteurlString WithParaments:nil WithSuccess:^(id responseObject) {
+        [dataArray removeAllObjects];
+        [self downloadAddressData];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
-
-
-
 - (void)modifyAddress:(AddressModel*)model{
-    NSLog(@"修改地址-----");
-    
-    
-    NSLog(@"address id = %@", model.addressID);
-
     AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addAdVC.isAdd = NO;
     addAdVC.addressModel = model;
@@ -347,15 +320,7 @@
     
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)addButtonClicked:(id)sender {
     
@@ -364,3 +329,47 @@
     [self.navigationController pushViewController:addVC animated:YES];
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

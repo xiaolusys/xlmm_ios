@@ -73,12 +73,10 @@
 
     UILabel *backLabel = [UILabel new];
     [self.backView addSubview:backLabel];
-    backLabel.tag = 100;
     self.backLabel = backLabel;
     self.backLabel.textColor = [UIColor whiteColor];
     self.backLabel.font = [UIFont systemFontOfSize:13.];
-    self.backLabel.text = @"已抢光";
-//    self.backLabel = backLabel;    
+    
 }
 - (void)layoutUI {
     kWeakSelf
@@ -215,23 +213,20 @@
     self.backView.layer.cornerRadius = 30;
     
     if ([model.isSaleopen boolValue]) {
-
         if ([model.isSaleout boolValue]) {
             self.backView.hidden = NO;
+            self.backLabel.text = @"已抢光";
         }
         else {
             self.backView.hidden = YES;
         }
         
-    }
-    else {
+    }else {
         self.backView.hidden = NO;
         //NSLog(@"isnew %d", [model.isNewgood boolValue]);
         if([model.isNewgood boolValue]){
-            UILabel *label = [self.backView viewWithTag:100];
-            label.text = @"即将开售";
+            self.backLabel.text = @"即将开售";
         }
-        
     }
 }
 

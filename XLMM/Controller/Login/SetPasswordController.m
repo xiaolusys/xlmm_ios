@@ -110,74 +110,49 @@
         return;
     }
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile", Root_URL];
-    NSLog(@"url = %@", urlString);
-    
-    
-    
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    
     NSDictionary *parameters = @{@"username": self.phone,
                                  @"password1": self.passwordTF.text,
                                  @"password2": self.confirmTextField.text,
                                  @"valid_code":self.code
                                  };
-    NSLog(@"parameters = %@", parameters);
-    
-    
-    
-    
-    
-    [manager POST:urlString parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"result"];
-              NSLog(@"result = %@", string);
-              //  string = @"0";
-              if ([string isEqualToString:@"0"]) {
-                  
-                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已成功绑定手机号" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                  [alertView show];
-                  
-                  [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.0];
-                  //                  [self.navigationController popViewControllerAnimated:YES];
-              }
-              if ([string isEqualToString:@"1"]) {
-                  
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"手机号已绑定" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"2"]) {
-                  
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"参数错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"3"]) {
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"4"]) {
-                  UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码过期" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
-                  [alterView show];
-              }
-              if ([string isEqualToString:@"5"]) {
-                  [self.navigationController popViewControllerAnimated:YES];
-              }
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-    
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        NSString *string = [responseObject objectForKey:@"result"];
+        NSLog(@"result = %@", string);
+        //  string = @"0";
+        if ([string isEqualToString:@"0"]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已成功绑定手机号" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alertView show];
+            
+            [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.0];
+            //                  [self.navigationController popViewControllerAnimated:YES];
+        }
+        if ([string isEqualToString:@"1"]) {
+            
+            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"手机号已绑定" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alterView show];
+        }
+        if ([string isEqualToString:@"2"]) {
+            
+            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"参数错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alterView show];
+        }
+        if ([string isEqualToString:@"3"]) {
+            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码错误" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alterView show];
+        }
+        if ([string isEqualToString:@"4"]) {
+            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"验证码过期" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil];
+            [alterView show];
+        }
+        if ([string isEqualToString:@"5"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (void) dimissAlert:(UIAlertView *)alert {
@@ -189,3 +164,33 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -71,18 +71,14 @@ static const NSUInteger ITEM_COUNT = 3;
 }
 - (void)loadDataSource {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/%@/get_team_members",Root_URL,self.mamaID];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlStr parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchTeamData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
-   
 }
 - (void)fetchTeamData:(NSArray *)teamArr {
     for (NSDictionary *dic in teamArr) {
@@ -93,18 +89,14 @@ static const NSUInteger ITEM_COUNT = 3;
 }
 - (void)loadSelfInfoDataSource {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlStr parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchSelfTeamInfoData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-    }];
-   
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];   
 }
 - (void)fetchSelfTeamInfoData:(NSDictionary *)teamInfoDic {
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[teamInfoDic[@"thumbnail"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];

@@ -280,16 +280,13 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)requestAction {
     [SVProgressHUD showWithStatus:@"正在加载..."];
     NSString *url = self.urlArr[self.currentIndex];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }
@@ -298,18 +295,16 @@ static NSString *cellIdentifier = @"carryLogCell";
     
     NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
     NSString *url = [self.nextdic objectForKey:number];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         UITableView *table = [self.tableViewArr objectAtIndex:self.currentIndex];
         [table.mj_footer endRefreshing];
         
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 
