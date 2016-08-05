@@ -34,6 +34,8 @@
 
 @property (nonatomic, assign) BOOL isEnoughBudgetPay;
 
+@property (nonatomic, strong) UILabel *descLabel;
+
 @end
 
 @implementation JMVipRenewController {
@@ -48,7 +50,7 @@
     NSString *_discounefee; // 优惠金额
     NSString *_orderID;     // 订单编号
     NSString *_totalfee;    // 实际支付
-    
+    CGFloat _descLabelValue;// 抵扣金额
     NSInteger _numCount;
     
     CGFloat _walletCash;     // 小鹿钱包的金额
@@ -111,14 +113,14 @@
     _skuID = renewDict[@"id"];
     if (_walletCash - paument > 0.000001) {
         self.isEnoughBudgetPay = YES;
+        _descLabelValue = paument;
         _exchangeType = @"half";
     }else {
         _wxOraliPayment = paument - _walletCash;
+        _descLabelValue = _wxOraliPayment;
         self.isEnoughBudgetPay = NO;
     }
-    
-    
-    
+    self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
 }
 
 - (void)initView {
@@ -134,6 +136,7 @@
 
 }
 - (void)createRenewView {
+
     UIScrollView *baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     [self.view addSubview:baseScrollView];
     self.baseScrollView = baseScrollView;
@@ -226,7 +229,7 @@
     descLabel.textColor = [UIColor buttonTitleColor];
     descLabel.numberOfLines = 0;
     descLabel.textAlignment = NSTextAlignmentCenter;
-    descLabel.text = @"默认使用小鹿妈妈钱包金额抵扣 \n\n 为确保您的权利和权益，请尽快续费。";
+    self.descLabel = descLabel;
     
     UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomView addSubview:sureButton];
@@ -453,13 +456,14 @@
         if (_walletCash - paument > 0.000001) {
             self.isEnoughBudgetPay = YES;
             _exchangeType = @"half";
-            
+            _descLabelValue = paument;
         }else {
             self.isEnoughBudgetPay = NO;
             _wxOraliPayment = paument - _walletCash;
+            _descLabelValue = _wxOraliPayment;
         }
         
-        
+        self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else if (button.tag == 101) {
         self.allyearButton.selected = !self.allyearButton.selected;
         self.allyearButton.selected = YES;
@@ -474,12 +478,13 @@
         if (_walletCash - paument > 0.000001) {
             self.isEnoughBudgetPay = YES;
             _exchangeType = @"full";
-            
+            _descLabelValue = paument;
         }else {
             self.isEnoughBudgetPay = NO;
             _wxOraliPayment = paument - _walletCash;
+            _descLabelValue = _wxOraliPayment;
         }
-        
+        self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else {
         if (self.isEnoughBudgetPay) {
             _channel = @"budget";
