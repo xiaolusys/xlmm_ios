@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) UILabel *titleLabel;
 
+
+
 @end
 
 @implementation JMContentRollView
@@ -38,15 +40,28 @@
     titleLabel.numberOfLines = 0;
     self.titleLabel= titleLabel;
     
+    UILabel *seeLabel = [UILabel new];
+    seeLabel.font = [UIFont systemFontOfSize:13];
+    seeLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    seeLabel.text = @"马上查看";
+    [baseView addSubview:seeLabel];
+    self.seeLabel = seeLabel;
+    
     kWeakSelf
     
     [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.equalTo(weakSelf);
     }];
     
+    [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(baseView).offset(-10);
+        make.centerY.equalTo(baseView.mas_centerY);
+    }];
+    
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(baseView.mas_centerY);
-        make.left.right.equalTo(baseView);
+        make.left.equalTo(baseView);
+        make.right.equalTo(seeLabel.mas_left).offset(-10);
         make.height.mas_equalTo(@40);
     }];
     

@@ -225,7 +225,8 @@
     descLabel.font = [UIFont systemFontOfSize:13.];
     descLabel.textColor = [UIColor buttonTitleColor];
     descLabel.numberOfLines = 0;
-    descLabel.text = @"为确保您的权利和权益，请尽快续费。";
+    descLabel.textAlignment = NSTextAlignmentCenter;
+    descLabel.text = @"默认使用小鹿妈妈钱包金额抵扣 \n\n 为确保您的权利和权益，请尽快续费。";
     
     UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomView addSubview:sureButton];
