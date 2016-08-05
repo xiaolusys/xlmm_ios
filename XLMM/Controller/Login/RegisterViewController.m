@@ -7,9 +7,7 @@
 //
 
 #import "RegisterViewController.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 
 
 @interface RegisterViewController ()
@@ -79,7 +77,7 @@
     
     
     NSLog(@"注册");
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *phoneNumber = _numberTextField.text;
     NSString *validCode = _passwordTextField.text;
     NSString *password1 = _setPasswordTextField.text;
@@ -97,7 +95,10 @@
     NSString *stringUrl = [NSString stringWithFormat:@"%@/rest/v1/register/check_code_user", Root_URL];
     NSLog(@"url = %@", stringUrl);
     [manager POST:stringUrl parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
                           // [self.navigationController popViewControllerAnimated:YES];
@@ -143,7 +144,7 @@
               }
              
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               
@@ -178,7 +179,7 @@
         return;
     }
 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSLog(@"phoneNumber = %@\n", _numberTextField.text);
     NSDictionary *parameters = @{@"mobile": phoneNumber, @"action":@"register"};
@@ -188,7 +189,10 @@
 //    NSLog(@"url = %@", stringurl);
     
     [manager POST:TSendCode_URL parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
              
              NSLog(@"JSON: %@", responseObject);
              NSString *string = [responseObject objectForKey:@"result"];
@@ -209,7 +213,7 @@
              //[self.navigationController popViewControllerAnimated:YES];
              
          }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              
              NSLog(@"Error: %@", error);
              

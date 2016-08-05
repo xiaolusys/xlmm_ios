@@ -8,14 +8,10 @@
 
 #import "MaMaHuoyueduViewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "HuoyuezhiTableViewCell.h"
 #import "HuoyuezhiModel.h"
-#import "MJRefresh.h"
 #import "NSString+DeleteT.h"
-#import "AFNetworking.h"
 #import "CarryLogHeaderView.h"
-#import "SVProgressHUD.h"
 
 @interface MaMaHuoyueduViewController ()
 
@@ -23,6 +19,9 @@
 @property (nonatomic, strong)NSMutableDictionary *dataDic;
 
 @property (nonatomic, strong)NSString *nextPage;
+
+
+@property (nonatomic, strong) UIButton *topButton;
 
 @end
 
@@ -63,6 +62,7 @@
     [self.tableView registerClass:[HuoyuezhiTableViewCell class] forCellReuseIdentifier:@"HuoyueZhiCell"];
     self.tableView.rowHeight = 80;
     
+    [self createButton];
     [self createHeaderView];
     
     //添加上拉加载
@@ -77,12 +77,16 @@
     //网络请求
     [SVProgressHUD showWithStatus:@"正在加载..."];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/activevalue", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject)return;
         [self fetchListDic:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 
@@ -119,12 +123,16 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:self.nextPage parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self fetchListDic:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
 }
 
@@ -225,14 +233,64 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark 返回顶部  image == >backTop
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
 }
-*/
+- (void)topButtonClick:(UIButton *)btn {
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
+}
+#pragma mark -- 添加滚动的协议方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
+}
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,11 +7,9 @@
 //
 
 #import "JMChooseLogisticsController.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMGroupLogistics.h"
 #import "MMClass.h"
 #import "JMLogistics.h"
-#import "AFNetworking.h"
 
 @interface JMChooseLogisticsController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 

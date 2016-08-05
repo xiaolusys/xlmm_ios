@@ -7,16 +7,12 @@
 //
 
 #import "RefundDetailsViewController.h"
-#import "TuihuoModel.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "XlmmMall.h"
 #import "MMClass.h"
 #import "JMReturnedGoodsController.h"
 #import "JMTimeLineView.h"
-#import "UIColor+RGBColor.h"
 #import "JMRefundModel.h"
+#import "JMSelecterButton.h"
 
 
 @interface RefundDetailsViewController (){
@@ -47,7 +43,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *createdLabel;
 
-
+@property (nonatomic, strong) JMSelecterButton *refundOperateButton;
 
 
 @end
@@ -91,9 +87,90 @@
 //    }
     
     NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.refundModelr.status, [self.refundModelr.good_status integerValue], self.refundModelr.return_address);
+    [self createShowRefundView];
     [self timeLine];
 }
+- (void)createShowRefundView {
+    UIView *currentView = [UIView new];
+    [self.showRefundView addSubview:currentView];
+    currentView.backgroundColor = [UIColor lineGrayColor];
+    
+    UIView *refundInfoView = [UIView new];
+    [self.showRefundView addSubview:refundInfoView];
+    refundInfoView.backgroundColor = [UIColor whiteColor];
+    refundInfoView.layer.borderWidth = 1.;
+    refundInfoView.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    
+    UILabel *afterServiceLabel = [UILabel new];
+    [refundInfoView addSubview:afterServiceLabel];
+    afterServiceLabel.text = @"小鹿售后  021-50939326";
+    afterServiceLabel.textColor = [UIColor buttonTitleColor];
+    afterServiceLabel.font = [UIFont systemFontOfSize:14.];
+    
+    UILabel *addressLabel = [UILabel new];
+    [refundInfoView addSubview:addressLabel];
+    addressLabel.userInteractionEnabled = YES;
+    addressLabel.textColor = [UIColor dingfanxiangqingColor];
+    addressLabel.font = [UIFont systemFontOfSize:12.];
+    addressLabel.text = @"收货地址: 上海杨市松江区佘山镇吉业路245号5号楼";
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressInfoTap:)];
+    [addressLabel addGestureRecognizer:tap];
+    
+    [refundInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self.showRefundView);
+        make.height.mas_equalTo(@75);
+    }];
+    [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(refundInfoView.mas_bottom);
+        make.left.right.equalTo(self.showRefundView);
+        make.height.mas_equalTo(@17);
+    }];
+    [afterServiceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(refundInfoView).offset(15);
+        make.top.equalTo(refundInfoView).offset(15);
+        make.width.mas_equalTo(@180);
+    }];
+    [addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(refundInfoView).offset(15);
+        make.top.equalTo(afterServiceLabel.mas_bottom).offset(10);
+        make.width.mas_equalTo(@180);
+    }];
+    self.refundOperateButton = [[JMSelecterButton alloc] init];
+    [self.refundOperateButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"填写快递单" TitleFont:13. CornerRadius:15];
+    [refundInfoView addSubview:self.refundOperateButton];
+    [self.refundOperateButton addTarget:self action:@selector(refundOperateClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.refundOperateButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(refundInfoView).offset(-15);
+        make.centerY.equalTo(refundInfoView.mas_centerY);
+        make.width.mas_equalTo(@90);
+        make.height.mas_equalTo(@30);
+    }];
+}
+- (void)addressInfoTap:(UITapGestureRecognizer *)tap {
+    NSLog(@"退货地址信息");
+    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"RefundAddressInfoView" owner:nil options:nil];
+    UIView *infoView = views[0];
+    infoView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+    UIView *bgView = [infoView viewWithTag:100];
+    bgView.layer.cornerRadius = 10;
+    
+    self.navigationController.navigationBarHidden = YES;
+    backView.hidden = NO;
+    backView.alpha = 0.6;
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
+    [infoView addGestureRecognizer:tap1];
+    
+    UILabel *addressLabel = [infoView viewWithTag:500];
+    UIButton *kefuButton = [infoView viewWithTag:800];
+    [kefuButton addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
+    
+    addressLabel.text = self.refundModelr.return_address;
+    
+    [self.view addSubview:infoView];
+    
 
+}
 - (void)setHeadInfo{
     self.bianhaoLabel.text = self.refundModelr.refund_no;
 
@@ -114,9 +191,9 @@
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = 5;
     self.imageView.layer.borderWidth = 0.5;
-    self.imageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.imageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.circleView.layer.cornerRadius = 5;
-    if (self.refundModelr.has_good_return == 0) {
+    if ([self.refundModelr.has_good_return integerValue] == 0) {
         self.createdLabel.text = @"申请退款";
     }else{
         self.createdLabel.text = @"申请退货";
@@ -146,34 +223,10 @@
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
-    
-}
-- (IBAction)addressInfoClicked:(id)sender {
-    NSLog(@"退货地址信息");
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"RefundAddressInfoView" owner:nil options:nil];
-    UIView *infoView = views[0];
-    infoView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-    UIView *bgView = [infoView viewWithTag:100];
-    bgView.layer.cornerRadius = 10;
-    
-    self.navigationController.navigationBarHidden = YES;
-    backView.hidden = NO;
-    backView.alpha = 0.6;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeInfoView:)];
-    [infoView addGestureRecognizer:tap];    
-    
-    UILabel *addressLabel = [infoView viewWithTag:500];
-    UIButton *kefuButton = [infoView viewWithTag:800];
-    [kefuButton addTarget:self action:@selector(lianxikefu:) forControlEvents:UIControlEventTouchUpInside];
-    
-    addressLabel.text = self.refundModelr.return_address;
-    
-    [self.view addSubview:infoView];
-    
 }
 
 - (void)lianxikefu:(UIButton *)button{
-//    NSLog(@"客服");
+
 }
 - (void)removeInfoView:(UIGestureRecognizer *)recognizer{
 //    NSLog(@"move");
@@ -182,24 +235,14 @@
     [recognizer.view removeFromSuperview];
     
 }
-
-- (IBAction)wuliuInfoClicked:(id)sender {
-//    NSLog(@"填写物流信息");
-//    FillWuliuController *wuliuVC = [[FillWuliuController alloc] initWithNibName:@"FillWuliuController" bundle:nil];
-//    wuliuVC.model = self.model;
-//    
+- (void)refundOperateClick:(UIButton *)button {
     
     JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
     reGoodsVC.refundModelr = self.refundModelr;
     
-    
-    
     [self.navigationController pushViewController:reGoodsVC animated:YES];
-    
-    
-    
-    
 }
+
 
 - (void)timeLine {
     NSInteger countNum = [self.refundModelr.status integerValue];
@@ -218,7 +261,7 @@
         
         count = desArr.count;
     }else {
-        if (self.refundModelr.has_good_return == 0) {
+        if ([self.refundModelr.has_good_return integerValue] == 0) {
 //            self.createdLabel.text = @"申请退款";
             desArr = @[@"申请退款",@"同意申请",@"等待返款",@"退款成功"];
             countNum -= 3;

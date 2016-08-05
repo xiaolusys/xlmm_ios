@@ -7,17 +7,11 @@
 //
 
 #import "JMQueryLogInfoController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMPopView.h"
 #import "JMGoodsListController.h"
 #import "JMLogTimeListController.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMOrderGoodsModel.h"
-#import "MJExtension.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
-#import "UIColor+RGBColor.h"
 #import "JMCleanView.h"
 #import "JMPackAgeModel.h"
 
@@ -126,8 +120,12 @@
     NSLog(@"%@", _urlStr);
     
     [SVProgressHUD showWithStatus:@"获取物流信息"];
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:_urlStr parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         if(responseObject == nil) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -138,7 +136,7 @@
         [self fetchedWuliuData:info];
         
         //        [self.wuliuInfoChainView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
         NSLog(@"wuliu info get failed.");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"查询失败,您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -366,6 +364,7 @@
     UILabel *logNameLabel = [UILabel new];
     [topBackView addSubview:logNameLabel];
     self.logNameLabel = logNameLabel;
+    self.logNameLabel.text = self.logName;
     
     UILabel *logNumLabel = [UILabel new];
     [topBackView addSubview:logNumLabel];

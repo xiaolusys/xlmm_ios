@@ -8,10 +8,9 @@
 
 #import "PersonOrderViewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
-#import "PersonCenterViewController1.h"
-#import "PersonCenterViewController2.h"
-#import "PersonCenterViewController3.h"
+#import "JMPersonAllOrderController.h"
+#import "JMPersonWaitPayController.h"
+#import "JMPersonWaitGoodsController.h"
 
 #define BTNWIDTH (SCREENWIDTH/3)
 
@@ -67,10 +66,13 @@ static NSString *identifier = @"orderStatic";
     self.pageControll.view.userInteractionEnabled = YES;
     self.pageControll.dataSource = self;
     self.pageControll.delegate = self;
-    PersonCenterViewController3 *allOrder = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
-    PersonCenterViewController2 *waitReceive = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
-    PersonCenterViewController1 *noPay = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:[NSBundle mainBundle]];
-    self.pageContent = @[allOrder, noPay, waitReceive];
+    JMPersonAllOrderController *allOrder = [[JMPersonAllOrderController alloc] init];
+//    PersonCenterViewController3 *allOrder = [[PersonCenterViewController3 alloc] initWithNibName:@"PersonCenterViewController3" bundle:nil];
+    JMPersonWaitPayController *waitPayOrder = [[JMPersonWaitPayController alloc] init];
+    JMPersonWaitGoodsController *waitGoodsOrder = [[JMPersonWaitGoodsController alloc] init];
+//    PersonCenterViewController2 *waitReceive = [[PersonCenterViewController2 alloc] initWithNibName:@"PersonCenterViewController2" bundle:nil];
+//    PersonCenterViewController1 *noPay = [[PersonCenterViewController1 alloc] initWithNibName:@"PersonCenterViewController1" bundle:[NSBundle mainBundle]];
+    self.pageContent = @[allOrder, waitPayOrder, waitGoodsOrder];
     [self.pageControll setViewControllers:@[allOrder] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
     [self addChildViewController:self.pageControll];
     [self.view addSubview:self.pageControll.view];

@@ -32,8 +32,7 @@
 #define REFUND_STATUS_REFUND_SUCCESS 7
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
-#import "UIColor+RGBColor.h"
-#import "UMMobClick/MobClick.h"
+
 
 
 #endif /* XlmmMall_h */

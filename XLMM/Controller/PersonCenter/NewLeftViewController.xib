@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -68,22 +68,6 @@
                                 <constraint firstItem="Hw2-nb-tlK" firstAttribute="leading" secondItem="Xex-8j-n6p" secondAttribute="leading" id="kAX-Gh-6j4"/>
                                 <constraint firstItem="Kg8-HT-Uxd" firstAttribute="top" secondItem="Xex-8j-n6p" secondAttribute="top" id="nxj-co-4JR"/>
                                 <constraint firstAttribute="trailing" secondItem="Hw2-nb-tlK" secondAttribute="trailing" id="rls-W6-q5T"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2g2-xy-oxG">
-                            <rect key="frame" x="0.0" y="100" width="375" height="40"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小鹿美美" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-uF-B8y">
-                                    <rect key="frame" x="106" y="12" width="48" height="14.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstItem="gQb-uF-B8y" firstAttribute="centerY" secondItem="2g2-xy-oxG" secondAttribute="centerY" id="hQV-ls-YWb"/>
-                                <constraint firstAttribute="height" constant="40" id="u98-jx-SMe"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Od-kF-BEs">
@@ -242,6 +226,22 @@
                                 <constraint firstAttribute="height" constant="10" id="rXn-Pp-Qzt"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2g2-xy-oxG">
+                            <rect key="frame" x="0.0" y="100" width="375" height="40"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小鹿美美" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-uF-B8y">
+                                    <rect key="frame" x="106" y="12" width="48" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="gQb-uF-B8y" firstAttribute="centerY" secondItem="2g2-xy-oxG" secondAttribute="centerY" id="hQV-ls-YWb"/>
+                                <constraint firstAttribute="height" constant="40" id="u98-jx-SMe"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -276,12 +276,6 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w87-ch-QDq">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                    <connections>
-                                        <action selector="waitPayClicked:" destination="-1" eventType="touchUpInside" id="DLz-aW-M6v"/>
-                                    </connections>
-                                </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="waitpay.png" translatesAutoresizingMaskIntoConstraints="NO" id="X7C-bL-8JA">
                                     <rect key="frame" x="14" y="21.5" width="18" height="16"/>
                                     <constraints>
@@ -299,6 +293,12 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w87-ch-QDq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <connections>
+                                        <action selector="waitPayClicked:" destination="-1" eventType="touchUpInside" id="DLz-aW-M6v"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>

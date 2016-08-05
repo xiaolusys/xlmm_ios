@@ -8,9 +8,6 @@
 
 #import "JMBaseGoodsCell.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "JMSelecterButton.h"
 #import "XlmmMall.h"
 #import "JMOrderGoodsModel.h"
@@ -150,6 +147,7 @@
 //    }];
     
 }
+
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 
@@ -167,7 +165,7 @@
     
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
-    CGFloat payment = [goodsModel.payment floatValue];
+    CGFloat payment = [goodsModel.total_fee floatValue];
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
 
@@ -183,6 +181,7 @@
             [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
             self.optionButton.tag = 100;
         }else {
+            self.optionButton.hidden = YES;
             self.refundLabel.text = refundDisplay;
         }
     }else if (orderStatus == ORDER_STATUS_SENDED) {
@@ -197,6 +196,8 @@
                 self.optionButton.tag = 103;
                 self.optionButton.enabled = NO;
             }
+        }else {
+            self.optionButton.hidden = YES;
         }
     }else {
         self.optionButton.hidden = YES;
@@ -213,6 +214,42 @@
     
     
 }
+- (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel {
+    NSString *string = goodsModel.pic_path;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
+    
+    self.titleLabel.text = goodsModel.title;
+    self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
+    CGFloat payment = [goodsModel.total_fee floatValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
+    
+}
+/**
+ *  支付订单数据源赋值
+ */
+- (void)configPurchaseModel:(CartListModel *)cartModel {
+    NSString *string = cartModel.pic_path;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[string JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
+    
+    self.titleLabel.text = cartModel.title;
+    self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",cartModel.sku_name];
+    CGFloat payment = [cartModel.total_fee floatValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    self.numLabel.text = [NSString stringWithFormat:@"x%@",cartModel.num];
+    
+}
+
 - (void)optionButtonClick:(UIButton *)button {
     if (_delegate && [_delegate respondsToSelector:@selector(composeOptionClick:Button:Section:Row:)]) {
         [_delegate composeOptionClick:self Button:button Section:_sectionCount Row:_rowCount];

@@ -15,8 +15,6 @@
 //
 
 #import "JMNORefundView.h"
-#import "UIColor+RGBColor.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
 

@@ -7,9 +7,6 @@
 //
 
 #import "SetPasswordController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 
 @interface SetPasswordController ()<UITextFieldDelegate>
@@ -118,7 +115,7 @@
     
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     
     NSDictionary *parameters = @{@"username": self.phone,
@@ -133,7 +130,10 @@
     
     
     [manager POST:urlString parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"result"];
@@ -170,7 +170,7 @@
               }
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               
               

@@ -7,14 +7,10 @@
 //
 
 #import "Account1ViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "MJRefresh.h"
-#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
 #import "AccountTableViewCell.h"
-#import "WithdrawCashViewController.h"
 #import "AccountModel.h"
-#import "SVProgressHUD.h"
 #import "JMWithdrawCashController.h"
 
 @interface Account1ViewController ()
@@ -27,7 +23,10 @@
 @property (nonatomic, assign)CGFloat headerH;
 
 @property (nonatomic, strong)UILabel *moneyLabel;
-
+/**
+ *  返回顶部按钮
+ */
+@property (nonatomic,strong) UIButton *topButton;
 /**
  *  下拉刷新的标志
  */
@@ -64,6 +63,8 @@ static NSString *identifier = @"AccountCell";
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"BlanceAccount"];
     
+
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -88,7 +89,7 @@ static NSString *identifier = @"AccountCell";
     
     [self createRightbutton];
     [self createTableView];
-
+    [self createButton];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     
@@ -122,14 +123,18 @@ static NSString *identifier = @"AccountCell";
 #pragma mark 数据请求
 - (void)loadDataSource {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self.dataArr removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
 
@@ -140,14 +145,18 @@ static NSString *identifier = @"AccountCell";
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:self.nextPage parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
 }
@@ -163,6 +172,7 @@ static NSString *identifier = @"AccountCell";
         [accountM setValuesForKeysWithDictionary:account];
         [self.dataArr addObject:accountM];
     }
+    
 }
 
 
@@ -245,6 +255,9 @@ static NSString *identifier = @"AccountCell";
     JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
     drawCash.personCenterDict = self.personCenterDict;
     
+    drawCash.block=^(CGFloat money){
+        self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
+    };
 //    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
 //    CGFloat money = [self.moneyLabel.text floatValue];
 //    NSNumber *number = [NSNumber numberWithFloat:money];
@@ -252,7 +265,45 @@ static NSString *identifier = @"AccountCell";
     
     [self.navigationController pushViewController:drawCash animated:YES];
 }
-
+#pragma mark 返回顶部  image == >backTop
+- (void)createButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+}
+- (void)topButtonClick:(UIButton *)btn {
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
+}
+#pragma mark -- 添加滚动的协议方法
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
+}
 #pragma mark ---UItableView的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;

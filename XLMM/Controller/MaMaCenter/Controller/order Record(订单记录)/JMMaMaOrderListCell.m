@@ -7,12 +7,9 @@
 //
 
 #import "JMMaMaOrderListCell.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
 #import "MaMaOrderModel.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIColor+RGBColor.h"
+
 
 
 @interface JMMaMaOrderListCell ()
@@ -222,7 +219,7 @@
     /**
      *  实际支付
      */
-    self.actualPay.text = [NSString stringWithFormat:@"实付 %.f", [orderM.order_value floatValue]];
+    self.actualPay.text = [NSString stringWithFormat:@"实付 %.2f", [orderM.order_value floatValue]];
     //    self.actualPay.text = orderM.carry_type_name;
     
     self.timeLabel.text = [self dealDate:orderM.created];

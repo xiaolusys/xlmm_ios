@@ -7,7 +7,6 @@
 //
 
 #import "JMOrderPayOutdateView.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "XlmmMall.h"
@@ -17,13 +16,20 @@
 @property (nonatomic, strong) UILabel *orderOutdateTime;
 @property (nonatomic, strong) JMSelecterButton *canelOrderButton;
 @property (nonatomic, strong) JMSelecterButton *sureOrderButton;
+@property (nonatomic, strong) JMSelecterButton *shareButton;
 @property (nonatomic, strong) UIView *bottomView;
+
+@property (nonatomic, strong) UIView *sharBottom;
+@property (nonatomic, strong) UIImageView *shareImage;
+@property (nonatomic, strong) UILabel *descLabel;
+
 @end
 
 @implementation JMOrderPayOutdateView {
     NSTimer *_orderOutTimer;
     NSString *_dateStr;
     BOOL _isShow;
+    BOOL _isShowShare;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -39,24 +45,43 @@
     }else {
         _isShow = NO;
     }
+    if ((statusCount >= ORDER_STATUS_PAYED) && (statusCount <= ORDER_STATUS_TRADE_SUCCESS)) {
+        _isShowShare = YES;
+    }else {
+        _isShowShare = NO;
+    }
+    
+    
+    
 }
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
     if (_isShow) {
         _dateStr = @"";
-        self.sureOrderButton.hidden = NO;
-        self.canelOrderButton.hidden = NO;
+//        self.sureOrderButton.hidden = NO;
+//        self.canelOrderButton.hidden = NO;
+        self.bottomView.hidden = NO;
         _createTimeStr = createTimeStr;
         _dateStr = [self formatterTimeString:createTimeStr];
         _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-//        self.bottomView.hidden = NO;
     }else {
-//        self.bottomView.hidden = YES;
+        if (_isShowShare == YES) {
+            self.shareImage.hidden = NO;
+            self.descLabel.hidden = NO;
+            self.shareButton.hidden = NO;
+            self.sharBottom.hidden = NO;
+        }else {
+        
+        }
         self.sureOrderButton.hidden = YES;
         self.canelOrderButton.hidden = YES;
         self.bottomView.hidden = YES;
+
+        
     }
     
+
 }
+
 - (void)setUpTopUI {
     
     UIView *bottomView = [UIView new];
@@ -91,6 +116,11 @@
     self.sureOrderButton.tag = 101;
     [self.sureOrderButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.canelOrderButton.hidden = YES;
+    self.sureOrderButton.hidden = YES;
+    self.orderOutdateTime.hidden = YES;
+    self.outDateTitleLabel.hidden = YES;
+    self.bottomView.hidden = YES;
     kWeakSelf
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -121,6 +151,62 @@
         make.width.mas_equalTo(@90);
         make.height.mas_equalTo(@40);
     }];
+    // === 显示红包 === //
+    UIView *sharBottom = [UIView new];
+    [self addSubview:sharBottom];
+    self.sharBottom = sharBottom;
+    self.sharBottom.backgroundColor = [UIColor blackColor];
+    self.sharBottom.alpha = 0.8;
+    
+    UIImageView *shareImage = [UIImageView new];
+    [self.sharBottom addSubview:shareImage];
+    shareImage.image = [UIImage imageNamed:@"show_RedpageImage"];
+    self.shareImage = shareImage;
+    
+    UILabel *descLabel = [UILabel new];
+    [self.sharBottom addSubview:descLabel];
+    self.descLabel = descLabel;
+    self.descLabel.font = [UIFont systemFontOfSize:13.];
+    self.descLabel.textColor = [UIColor whiteColor];
+    self.descLabel.text = @"您获得一个红包可以分享给好友";
+    
+    JMSelecterButton *shareButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.sharBottom addSubview:shareButton];
+    self.shareButton = shareButton;
+    [self.shareButton setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:10.];
+    [self.shareButton setTitle:@"立即分享" forState:UIControlStateNormal];
+    self.shareButton.titleLabel.font = [UIFont systemFontOfSize:13.];
+    self.shareButton.tag = 102;
+    [self.shareButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.sharBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(weakSelf);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@60);
+    }];
+    
+    self.sharBottom.hidden = YES;
+    self.shareImage.hidden = YES;
+    self.descLabel.hidden = YES;
+    self.shareButton.hidden = YES;
+    
+    [shareImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.sharBottom).offset(10);
+        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+        make.width.height.mas_equalTo(@28);
+    }];
+    
+    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(shareImage.mas_right).offset(10);
+        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+    }];
+    
+    [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.sharBottom).offset(-10);
+        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+        make.width.mas_equalTo(@70);
+        make.height.mas_equalTo(@25);
+    }];
     
     
 }
@@ -133,18 +219,20 @@
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     //  2015-10-29T15:50:19
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    [formatter setDateFormat:[NSString stringWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
     NSDate *date = [formatter dateFromString:_dateStr];
     //  NSLog(@"date = %@", date);
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSInteger unitFlags = NSCalendarUnitYear |
+    unsigned int unitFlags = NSCalendarUnitYear |
     NSCalendarUnitMonth |
     NSCalendarUnitDay |
     NSCalendarUnitHour |
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDate *todate = [NSDate dateWithTimeInterval:20 * 60 sinceDate:date];
+    
     // NSLog(@"todate = %@", todate);
     //把目标时间装载入date
     //用来得到具体的时差
@@ -156,17 +244,18 @@
     self.orderOutdateTime.text = string;
     if ([d minute] < 0 || [d second] < 0) {
         self.orderOutdateTime.text = @"00:00";
-        self.canelOrderButton.hidden = YES;
-        self.sureOrderButton.hidden = YES;
-        self.bottomView.hidden = YES;
+
+//        self.shareImage.hidden = NO;
+//        self.descLabel.hidden = NO;
+//        self.shareButton.hidden = NO;
+//        self.sharBottom.hidden = NO;
     }else {
+        self.bottomView.hidden = NO;
         self.canelOrderButton.hidden = NO;
         self.sureOrderButton.hidden = NO;
-        self.bottomView.hidden = NO;
-        
+        self.orderOutdateTime.hidden = NO;
+        self.outDateTitleLabel.hidden = NO;
     }
-
-    
 }
 - (NSString *)formatterTimeString:(NSString *)timeString{
     if (timeString == nil) {

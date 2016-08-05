@@ -7,21 +7,16 @@
 //
 
 #import "JMLogInViewController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMPhonenumViewController.h"
 #import "JMAuthcodeViewController.h"
 #import "RegisterViewController.h"
 #import "NSString+Encrypto.h"
 #import "MiPushSDK.h"
 //#import "MobClick.h"
-#import "AFNetworking.h"
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
-#import "SVProgressHUD.h"
-#import "UIColor+RGBColor.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -74,10 +69,10 @@
     
     if ([WXApi isWXAppInstalled]) {
         self.wechatBtn.enabled = YES;
-        //        self.wechatBtn.hidden = NO;
+        self.wechatBtn.hidden = NO;
     }else {
+        self.wechatBtn.hidden = YES;
         self.wechatBtn.enabled = NO;
-        //        self.wechatBtn.hidden = YES;
     }
     
 }
@@ -231,8 +226,12 @@
                              @"unionid":[dic objectForKey:@"unionid"],
                              @"devtype":LOGINDEVTYPE};
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:urlString parameters:newDic
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         
         
@@ -249,7 +248,7 @@
         [userdefaults setBool:YES forKey:@"login"];
         [userdefaults synchronize];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
@@ -329,7 +328,7 @@
 #pragma mark ---- 登录成功后获取Device
 - (void)setDevice{
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     
@@ -337,7 +336,10 @@
     NSLog(@"params = %@", params);
     
     [manager POST:urlString parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               //  NSError *error;
               NSLog(@"JSON: %@", responseObject);
               NSString *user_account = [responseObject objectForKey:@"user_account"];
@@ -348,7 +350,7 @@
                   [MiPushSDK setAccount:user_account];
               }
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Error: %@", error);
           }];
 }
@@ -430,6 +432,7 @@
     
     [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.lineView.mas_bottom);
+        make.left.equalTo(weakSelf.bottomView);
         make.width.mas_equalTo(SCREENWIDTH);
         //        make.bottom.equalTo(weakSelf.view.mas_bottom);
         make.height.mas_equalTo(@40);
@@ -465,7 +468,7 @@
 - (void)backApointInterface {
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
+    if (count > 2) {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
 //        [self.navigationController popViewControllerAnimated:YES];
     }else {

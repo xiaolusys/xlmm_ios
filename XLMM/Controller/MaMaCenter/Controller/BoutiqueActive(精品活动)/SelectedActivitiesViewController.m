@@ -7,7 +7,6 @@
 //
 
 #import "SelectedActivitiesViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 
 @interface SelectedActivitiesViewController ()

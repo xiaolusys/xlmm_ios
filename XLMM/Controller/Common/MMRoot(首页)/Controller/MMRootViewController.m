@@ -7,7 +7,7 @@
 //
 
 #import "MMRootViewController.h"
-#import "RESideMenu.h"
+#import <RESideMenu.h>
 #import "ChildViewController.h"
 #import "MMClass.h"
 #import "JMLogInViewController.h"
@@ -20,41 +20,33 @@
 #import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "MaMaViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "XiangQingViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "MMLoginStatus.h"
-#import "AFNetworking.h"
 #import "NSString+Encrypto.h"
 #import "PublishNewPdtViewController.h"
 #import "ActivityView.h"
-#import "NSString+URL.h"
-#import "TuihuoViewController.h"
 #import "MMAdvertiseView.h"
-#import "SVProgressHUD.h"
 #import "MMAdvertiseView.h"
 #import "WebViewController.h"
 #import "ActivityModel.h"
-#import "UIImageView+WebCache.h"
 #import "PromoteModel.h"
 #import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
-#import "MJRefresh.h"
-#import "HomeViewController.h"
 #import "JumpUtils.h"
 #import "ImageUtils.h"
 #import "JMRootScrolCell.h"
 #import "BrandGoodsModel.h"
 #import "XlmmMall.h"
 #import "MMDetailsViewController.h"
-#import "MJExtension.h"
 #import "JMFirstOpen.h"
 #import "AppDelegate.h"
 #import "UIView+RGSize.h"
 #import "JMRepopView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
-#import "Masonry.h"
+#import "JMHelper.h"
+#import "JMDBManager.h"
+#import "JMUpdataAppPopView.h"
+#import "JMMaMaPersonCenterController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -84,10 +76,11 @@
 #define TAG_IMG_YESTODAY (TAG_ROOT_VIEW_BASE+8)
 #define TAG_IMG_TODAY (TAG_ROOT_VIEW_BASE+9)
 #define TAG_IMG_TOMORROW (TAG_ROOT_VIEW_BASE+10)
-//因为可能有多个品牌,那么先预留10个
+//因为可能有多个品牌,那么先预留500个
 #define TAG_COLLECTION_BRAND (TAG_ROOT_VIEW_BASE+11)
+#define TAG_COLLECTION_BRAND_END (TAG_ROOT_VIEW_BASE+11+500)
 
-@interface MMRootViewController ()<JMRepopViewDelegate,MMNavigationDelegate, WXApiDelegate>{
+@interface MMRootViewController ()<JMRepopViewDelegate,MMNavigationDelegate, WXApiDelegate,JMUpdataAppPopViewDelegate>{
     UIView *_view;
     UIPageViewController *_pageVC;
     NSArray *_pageContentVC;
@@ -110,8 +103,11 @@
     UIView *backView;
     NSDictionary *huodongJson;
     float allActivityHeight;
+    float allBrandHeight;
     
     NSMutableDictionary *_diction;
+    
+    NSString *_releaseNotes;
 }
 
 @property (nonatomic, strong)ActivityView *startV;
@@ -159,7 +155,14 @@
 @property (nonatomic,strong) JMRepopView *popView;
 
 @property (nonatomic, strong) UIButton *topButton;
-
+/**
+ *  版本更新弹出视图
+ */
+@property (nonatomic, strong) JMUpdataAppPopView *updataPopView;
+/**
+ *  是否弹出更新视图
+ */
+@property (nonatomic, assign) BOOL isPopUpdataView;
 @end
 
 
@@ -168,6 +171,11 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 @implementation MMRootViewController {
     BOOL _isFirstOpenApp;
+    
+    BOOL _isStartDownload;
+    
+    NSString *_hash;
+    NSString *_downloadURLString;
 }
 
 //- (UIScrollView *)backScrollview {
@@ -184,13 +192,15 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //    return _aboveView;
 //}
 //
-//- (UIView *)goodsView {
-//    if (!_goodsView) {
-//        self.goodsView = [[UIView alloc] initWithFrame:CGRectMake(0, ABOVEHIGHT, SCREENWIDTH, SCREENHEIGHT - ABOVEHIGHT)];
-//    }
-//    return _goodsView;
-//}
-//
+- (UIView *)maskView {
+    if (!_maskView) {
+        _maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _maskView.backgroundColor = [UIColor blackColor];
+        _maskView.alpha = 0.3;
+    }
+    return _maskView;
+}
+
 
 - (NSMutableArray *)activityDataArr {
     if (!_activityDataArr) {
@@ -286,8 +296,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSLog(@"loginUpdateIsXiaoluMaMa ");
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:string parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:string parameters:self
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
         NSDictionary *dic = responseObject;
         if (!responseObject){
@@ -307,7 +321,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             self.navigationItem.rightBarButtonItem = nil;
             [users setBool:NO forKey:@"isXLMM"];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
         NSLog(@"get user profile failed.");
         self.navigationItem.rightBarButtonItem = nil;
@@ -336,6 +350,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [rightBtn addSubview:rightImageView];
         rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
         self.navigationItem.rightBarButtonItem = rightItem;
+    }else {
+        
     }
 }
 
@@ -498,15 +514,19 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     [self createTopButton];
     
+    
+    [self loadAddressInfo];
+
+    self.session = [self backgroundSession];
 }
 #pragma mark --- 第一次打开程序
 - (void)returnPopView {
     /**
      判断是否为第一次打开 -- 选择弹出优惠券弹窗
      */
-    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0.3;
+//    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    self.maskView.backgroundColor = [UIColor blackColor];
+//    self.maskView.alpha = 0.3;
     [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidepopView)]];
     JMRepopView *popView = [JMRepopView defaultPopView];
     self.popView = popView;
@@ -520,9 +540,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self hidepopView];
         BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
         if (islogin) {
-                AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+                AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
                 NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-                [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [manage GET:string parameters:nil
+                   progress:^(NSProgress * _Nonnull downloadProgress) {
+                       //数据请求的进度
+                   }
+                    success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     if (responseObject == nil) {
                         return ;
                     }else {
@@ -538,7 +562,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                             [SVProgressHUD showErrorWithStatus:@"请登录"];
                         }
                     }
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     
                     
                 }];
@@ -555,9 +579,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 #pragma mark -- 判断用户是否领取优惠券
 - (void)isGetCoupon {
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage GET:string parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -576,16 +604,20 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         }
         
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         
     }];
     
 }
 - (void)pickCoupon {
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
-    [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage GET:string parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -596,7 +628,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                 [SVProgressHUD showErrorWithStatus:@"领取失败"];
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }
@@ -615,6 +647,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if([self checkNeedRefresh]){
         [self refreshView];
     }
+    if (self.isPopUpdataView == YES) {
+        [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
+    }else {
+        
+    }
+    
 }
 
 - (void)createRequestURL {
@@ -632,13 +670,17 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)showPromotion{
     //网络请求海报
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
-    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage GET:requestURL parameters:self
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.backScrollview.mj_header endRefreshing];
         if (!responseObject) return;
         [self fetchedPromotionData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         //未登录处理
         //        [self showDefaultView];
         NSLog(@"get poster failed.");
@@ -671,8 +713,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         flowLayout.minimumInteritemSpacing = 5;
         flowLayout.minimumLineSpacing = 5;
         
-        
-        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-70) collectionViewLayout:flowLayout];
+        //高度需要去掉导航bar高度64+昨今明和倒计时时间80=144
+        UICollectionView *homeCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT-144) collectionViewLayout:flowLayout];
         
         homeCollectionView.backgroundColor = [UIColor whiteColor];
         homeCollectionView.tag = TAG_GOODS_YESTODAY_SCROLLVIEW + i;
@@ -814,75 +856,101 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSArray *brands = [jsonDic objectForKey:@"promotion_brands"];
     NSLog(@"initBrand count=%lu",(unsigned long)brands.count );
     
+    self.brandArr = brands;
+    [self.brandDataArr removeAllObjects];
+    
     if (brands.count ==0){
         self.brandViewHeight.constant = 0;
         [self.view layoutIfNeeded];
         return;
     }
+    
+    for (NSDictionary *brandDic in brands) {
+        ActivityModel *brandM = [[ActivityModel alloc] init];
+        [brandM setValuesForKeysWithDictionary:brandDic];
+        [self.brandDataArr addObject:brandM];
+    }
+    
     self.brandViewHeight.constant = BRAND_HEIGHT * brands.count;
     
     [self.view layoutIfNeeded];
     
+    allBrandHeight = 0;
     NSInteger index = 0;
     for(NSDictionary *brand in brands){
-        NSLog(@"x=%f y=%f url=%@",self.brandView.frame.origin.x,
+        NSLog(@"x=%f y=%f url=%@, allBrandHeight=%f",self.brandView.frame.origin.x,
               self.brandView.frame.origin.y,
-              [brand objectForKey:@"brand_pic"]);
+              [brand objectForKey:@"act_logo"], allBrandHeight);
         
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 + BRAND_HEIGHT * index, WIDTH, 1)];
+        UIView *oneBrandView = [[UIView alloc] initWithFrame:CGRectMake(0, allBrandHeight, WIDTH, BRAND_HEIGHT)];
+        [self.brandView addSubview:oneBrandView];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, allBrandHeight, WIDTH, 1)];
         lineView.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
-        [self.brandView addSubview:lineView];
+        [oneBrandView addSubview:lineView];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10 + BRAND_HEIGHT * index, 80, 20)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 80, 20)];
+        [ImageUtils loadImage:imageView url:[brand objectForKey:@"act_logo"]];
+        [oneBrandView addSubview:imageView];
         
-        [ImageUtils loadImage:imageView url:[brand objectForKey:@"brand_pic"]];
-        
-        [self.brandView addSubview:imageView];
-        
-        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 + BRAND_HEIGHT * index, 50, 20)];
-        textView.text = [brand objectForKey:@"brand_desc"];
-        textView.font
-        = [UIFont fontWithName:@"Arial" size:10.0];
+        NSString *tail_title;
+        if([brand objectForKey:@"extras"] != NULL){
+            if([[brand objectForKey:@"extras"] objectForKey:@"brandinfo"] != NULL){
+                tail_title= [[[brand objectForKey:@"extras"] objectForKey:@"brandinfo"] objectForKey:@"tail_title"];
+            }
+        }
+        UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(WIDTH -60, 10 , 50, 20)];
+        NSLog(@"tail_title=%@", tail_title);
+        if(tail_title != NULL){
+            textView.text = tail_title;
+        }
+        textView.font = [UIFont fontWithName:@"Arial" size:14.0];
         textView.textColor = [UIColor blackColor];
-        textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        [self.brandView addSubview:textView];
+//        textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [oneBrandView addSubview:textView];
         
-        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15 + BRAND_HEIGHT * index, 10, 10)];
+        UIImageView *arrowView = [[UIImageView alloc] initWithFrame:CGRectMake(WIDTH - 20, 15, 10, 10)];
         UIImage *image = [UIImage imageNamed:@"icon-jiantouyou"];
         arrowView.image = image;
-        [self.brandView addSubview:arrowView];
+        [oneBrandView addSubview:arrowView];
         
-        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 40 + BRAND_HEIGHT * index, WIDTH, 1)];
-        lineView1.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
-        [self.brandView addSubview:lineView1];
+//        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 40, WIDTH, 1)];
+//        lineView1.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+//        [oneBrandView addSubview:lineView1];
         
-        //展示品牌商品
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
-        flowLayout.minimumInteritemSpacing = 5;
-        flowLayout.minimumLineSpacing = 5;
-        flowLayout.scrollDirection= UICollectionViewScrollDirectionHorizontal;
+        //展示品牌入口
+        UIImageView *topicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 45, SCREENWIDTH, 145)];
         
-        UICollectionView *brandCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(5, 45 + BRAND_HEIGHT * index, SCREENWIDTH - 15, 145) collectionViewLayout:flowLayout];
+        topicImageView.tag = TAG_COLLECTION_BRAND + index;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(brandTapAction:)];
+        topicImageView.userInteractionEnabled = YES;
+        [topicImageView addGestureRecognizer:tap];
         
-        brandCollectionView.backgroundColor = [UIColor whiteColor];
-        brandCollectionView.tag = TAG_COLLECTION_BRAND + index;
-        brandCollectionView.scrollEnabled = YES;
-        brandCollectionView.showsHorizontalScrollIndicator = FALSE;
+        ActivityModel *acM = self.brandDataArr[index];
+        [topicImageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                //通过加载图片得到其高度
+                                float h;
+                                if((image == nil) || (image.size.width == 0)){
+                                    h = BRAND_HEIGHT;
+                                }
+                                else{
+                                    h = image.size.height * (WIDTH /image.size.width);
+                                }
+                                NSLog(@"topic height %f %f allBrandHeight=%f", image.size.height, h, allBrandHeight);
+                                topicImageView.frame = CGRectMake(0, 45, SCREENWIDTH, h);
+                                oneBrandView.frame = CGRectMake(0, allBrandHeight, SCREENWIDTH, h+55);
+                                allBrandHeight += h + 55;
+                                
+                                NSLog(@"all topicHeight %f", allBrandHeight);
+                                
+                                self.brandViewHeight.constant = allBrandHeight;
+                            }];
+        [oneBrandView addSubview:topicImageView];
         
-        brandCollectionView.delegate = self;
-        brandCollectionView.dataSource = self;
-        
-        [brandCollectionView registerClass:[JMRootScrolCell class] forCellWithReuseIdentifier:kbrandCell];
-//        [brandCollectionView registerNib:[UINib nibWithNibName:@"JMRootScrolCell" bundle:nil] forCellWithReuseIdentifier:kbrandCell];
-        [self.brandView addSubview:brandCollectionView];
-        [self.brandArr addObject:brandCollectionView];
-        
-        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, BRAND_HEIGHT - 1 + BRAND_HEIGHT * index, WIDTH, 1)];
-        lineView2.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
-        [self.brandView addSubview:lineView2];
-        
-        [self getBrandGoods:[brand objectForKey:@"id"] index:index];
+//        UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, BRAND_HEIGHT - 1 + BRAND_HEIGHT * index, WIDTH, 1)];
+//        lineView2.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.5];
+//        [self.brandView addSubview:lineView2];
         
         index++;
     }
@@ -1001,13 +1069,21 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)goodsRequest{
     NSString *currentUrl = self.urlArr[self.currentIndex];
+    NSInteger requestIndex = self.currentIndex;
     NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,(long)self.currentIndex);
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:currentUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:currentUrl parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return;
-        
+        if(requestIndex != self.currentIndex){
+            NSLog(@"user change currentindex %ld %ld", requestIndex, self.currentIndex);
+            return;
+        }
         [self goodsResult:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 }
@@ -1087,18 +1163,32 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     self.collectionViewScrollview.scrollEnabled = NO;
     
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSInteger requestIndex = self.currentIndex;
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
         //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
-        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1
-        UICollectionView *collection = self.collectionArr[self.currentIndex];
+        //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1 2结合
+        UICollectionView *collection = self.collectionArr[requestIndex];
         [collection.mj_footer endRefreshing];
-        if (!responseObject)return ;
+        
+        if (!responseObject){
+            self.collectionViewScrollview.scrollEnabled = YES;
+            return;
+        }
+        if(requestIndex != self.currentIndex){
+            NSLog(@"user change index %ld %ld", requestIndex, self.currentIndex);
+            self.collectionViewScrollview.scrollEnabled = YES;
+            return;
+        }
+        
         [self goodsResult:responseObject];
         self.collectionViewScrollview.scrollEnabled = YES;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
         self.collectionViewScrollview.scrollEnabled = YES;
@@ -1117,7 +1207,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     allActivityHeight = 0;
     //创建活动展示图
     for (int i = 0; i < self.activityDataArr.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10+ACTIVITYHEIGHT * i, SCREENWIDTH - 10, ACTIVITYHEIGHT)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10+ACTIVITYHEIGHT * i, SCREENWIDTH, ACTIVITYHEIGHT)];
         
         //        imageView.contentMode = UIViewContentModeScaleAspectFit;
         //        imageView.autoresizesSubviews = YES;
@@ -1274,49 +1364,112 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 
 #pragma mark --品牌信息处理
--(void)getBrandGoods:(NSString*)brandId index:(NSInteger)index{
-    NSLog(@"getBrandGoods %@", brandId);
-    //网络请求
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/brands/%@/products", Root_URL, brandId];
-    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (!responseObject) return;
-        [self fetchedBrandData:responseObject index:index];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //未登录处理
-        //        [self showDefaultView];
-        NSLog(@"get brand goods failed.");
-    }];
+//-(void)getBrandGoods:(NSString*)brandId index:(NSInteger)index{
+//    NSLog(@"getBrandGoods %@", brandId);
+//    //网络请求
+//    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+//    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/brands/%@/products", Root_URL, brandId];
+//    [manage GET:requestURL parameters:self success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        [self fetchedBrandData:responseObject index:index];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        //未登录处理
+//        //        [self showDefaultView];
+//        NSLog(@"get brand goods failed.");
+//    }];
+//}
+//
+//- (void)fetchedBrandData:(NSDictionary *)jsonDic index:(NSInteger)index{
+//    if (jsonDic.count == 0) return;
+//    
+//    NSArray *goodsArray = [jsonDic objectForKey:@"results"];
+//    NSMutableArray *goods = [[NSMutableArray alloc] init];
+//    
+//    if (goodsArray.count == 0)return;
+//    for (NSDictionary *product in goodsArray) {
+//        BrandGoodsModel *goodsModel = [BrandGoodsModel new];
+//        
+//        goodsModel.brandID = [product objectForKey:@"id"];
+//        goodsModel.product_id = [product objectForKey:@"product_id"];
+//        goodsModel.product_name = [product objectForKey:@"product_name"] ;
+//        goodsModel.product_img = [product objectForKey:@"product_img"];
+//        goodsModel.product_lowest_price = [product objectForKey:@"product_lowest_price"];
+//        goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
+//        
+//        [goods addObject:goodsModel];
+//        
+//        
+//        
+//    }
+//    [self.brandDataArr addObject:goods];
+//    
+//    UICollectionView *collection = self.brandArr[index];
+//    [collection reloadData];
+//    
+//    
+//}
+
+- (void)brandTapAction:(UITapGestureRecognizer *)tap {
+    NSLog(@"点击了 brandTapAction。。。。。");
+    //判断点击的活动
+    UIImageView *imageV = (UIImageView *)tap.view;
+    NSInteger imageTag = imageV.tag - TAG_COLLECTION_BRAND;
+    
+    [self brandClick:self.brandArr[imageTag]];
 }
 
-- (void)fetchedBrandData:(NSDictionary *)jsonDic index:(NSInteger)index{
-    if (jsonDic.count == 0) return;
+- (void)brandClick:(NSDictionary *)dic {
+    [MobClick event:@"brand_click"];
     
-    NSArray *goodsArray = [jsonDic objectForKey:@"results"];
-    NSMutableArray *goods = [[NSMutableArray alloc] init];
-    
-    if (goodsArray.count == 0)return;
-    for (NSDictionary *product in goodsArray) {
-        BrandGoodsModel *goodsModel = [BrandGoodsModel new];
-        
-        goodsModel.brandID = [product objectForKey:@"id"];
-        goodsModel.product_id = [product objectForKey:@"product_id"];
-        goodsModel.product_name = [product objectForKey:@"product_name"] ;
-        goodsModel.product_img = [product objectForKey:@"product_img"];
-        goodsModel.product_lowest_price = [product objectForKey:@"product_lowest_price"];
-        goodsModel.product_std_sale_price = [product objectForKey:@"product_std_sale_price"];
-        
-        [goods addObject:goodsModel];
-        
-        
-        
+    login_required = [[dic objectForKey:@"login_required"] boolValue];
+    NSString *app_link = [dic objectForKey:@"act_applink"];
+    NSLog(@"Activity login required %d", login_required);
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if(app_link == NULL){
+            WebViewController *huodongVC = [[WebViewController alloc] init];
+            
+            _diction = nil;
+            NSString *active = @"active";
+            _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
+            [_diction setValue:active forKey:@"type_title"];
+            [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
+            [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
+            huodongVC.webDiction = _diction;
+            huodongVC.isShowNavBar = true;
+            huodongVC.isShowRightShareBtn = true;
+            huodongVC.titleName = [dic objectForKey:@"title"];
+            [self.navigationController pushViewController:huodongVC animated:YES];
+        }
+        else{
+            [JumpUtils jumpToLocation:app_link viewController:self];
+        }
+    } else{
+        if (login_required) {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else{
+            if(app_link == NULL){
+                WebViewController *huodongVC = [[WebViewController alloc] init];
+                
+                _diction = nil;
+                NSString *active = @"active";
+                _diction = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [_diction setValue:active forKey:@"type_title"];
+                [_diction setValue:[dic objectForKey:@"id"] forKey:@"activity_id"];
+                [_diction setValue:[dic objectForKey:@"act_link"] forKey:@"web_url"];
+                
+                huodongVC.webDiction = _diction;
+                huodongVC.isShowNavBar = true;
+                huodongVC.isShowRightShareBtn = true;
+                huodongVC.titleName = [dic objectForKey:@"title"];
+                [self.navigationController pushViewController:huodongVC animated:YES];
+            }
+            else{
+                [JumpUtils jumpToLocation:app_link viewController:self];
+            }
+
+        }
     }
-    [self.brandDataArr addObject:goods];
-    
-    UICollectionView *collection = self.brandArr[index];
-    [collection reloadData];
-    
-    
 }
 
 #pragma mark --点击
@@ -1434,17 +1587,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark --collection的代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         NSLog(@"brand collection");
-        int index = 0;
-        for(NSMutableArray *obj in self.brandDataArr)
-        {
-            //NSLog(@"%@",obj);
-            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-                return obj.count;
-            }
-            index++;
-        }
         return 0;
     }
     else{
@@ -1458,25 +1602,25 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         //NSLog(@"brand collection cellForItemAtIndexPath");
         JMRootScrolCell *cell = (JMRootScrolCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
         
-        int index = 0;//JMRootgoodsCell
-        for(NSMutableArray *obj in self.brandDataArr)
-        {
-            //NSLog(@"%@",obj);
-            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-                NSArray *goods = [obj copy];
-                if(goods.count > indexPath.row){
-                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
-                    [cell fillDataWithModel:model];
-                }
-                return cell;
-                
-            }
-            index++;
-        }
+//        int index = 0;//JMRootgoodsCell
+//        for(NSMutableArray *obj in self.brandDataArr)
+//        {
+//            //NSLog(@"%@",obj);
+//            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+//                NSArray *goods = [obj copy];
+//                if(goods.count > indexPath.row){
+//                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+//                    [cell fillDataWithModel:model];
+//                }
+//                return cell;
+//                
+//            }
+//            index++;
+//        }
         return cell;
     }
     else{
@@ -1510,7 +1654,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         //        NSLog(@"brand collection sizeForItemAtIndexPath");
         return CGSizeMake(110, 145);
     }
@@ -1528,25 +1672,25 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     
     if((collectionView.tag >= TAG_COLLECTION_BRAND)
-       && (collectionView.tag <= TAG_COLLECTION_BRAND + 10)){
-        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
-        
-        int index = 0;
-        for(NSMutableArray *obj in self.brandDataArr)
-        {
-            //NSLog(@"%@",obj);
-            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-                NSArray *goods = [obj copy];
-                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
-                
-            }
-            index++;
-        }
-        
-        
-        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
-        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
-        [self.navigationController pushViewController:collectionVC animated:YES];
+       && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
+//        MMCollectionController *collectionVC = [[MMCollectionController alloc] initWithNibName:@"MMCollectionController" bundle:nil ];
+//        
+//        int index = 0;
+//        for(NSMutableArray *obj in self.brandDataArr)
+//        {
+//            //NSLog(@"%@",obj);
+//            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+//                NSArray *goods = [obj copy];
+//                collectionVC.dataArray = [NSMutableArray arrayWithArray:goods];
+//                
+//            }
+//            index++;
+//        }
+//        
+//        
+//        NSLog(@"Brand COUNT is %lu", (unsigned long)collectionVC.dataArray.count);
+//        NSLog(@"Brand pic is %@", ((BrandGoodsModel *)[collectionVC.dataArray objectAtIndex:0]).product_img);
+//        [self.navigationController pushViewController:collectionVC animated:YES];
         
     }
     else{
@@ -1702,9 +1846,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                              @"unionid":[dic objectForKey:@"unionid"],
                              @"devtype":LOGINDEVTYPE};
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager POST:urlString parameters:newDic success:^(AFHTTPRequestOperation *operation, id responseObject){
+    [manager POST:urlString parameters:newDic
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         
         NSDictionary *result = responseObject;
         if (result.count == 0) return;
@@ -1714,7 +1862,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
         [userdefaults setBool:YES forKey:@"login"];
         [userdefaults synchronize];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
@@ -1727,7 +1875,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSString *username = [defaults objectForKey:kUserName];
     NSString *password = [defaults objectForKey:kPassWord];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     
     //  NSLog(@"userName : %@, password : %@", username, password);
@@ -1738,14 +1886,17 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                                  };
     
     [manager POST:kLOGIN_URL parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               //  NSError *error;
               //   NSLog(@"JSON: %@", responseObject);
               //     NSLog(@"手机自动登录成功。。。。");
               
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               //     NSLog(@"Error: %@", error);
               
               
@@ -1856,8 +2007,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         // NSLog(@"json = %@", json);
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
-            MaMaPersonCenterViewController *ma = [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
-            [self.navigationController pushViewController:ma animated:YES];
+            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+//            MaMaPersonCenterViewController *mamaCenterVC= [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+            [self.navigationController pushViewController:mamaCenterVC animated:YES];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];
@@ -1935,8 +2087,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) {
             label.text = @"0";
             dotView.hidden = YES;
@@ -1950,7 +2106,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             [self cartViewUpdate:responseObject];
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
@@ -2033,6 +2189,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }
+//    JMShoppingCartController *cartVC = [[JMShoppingCartController alloc] init];
     CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
     [self.navigationController pushViewController:cartVC animated:YES];
 }
@@ -2044,25 +2201,16 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
 #pragma mark UIscrollViewDelegate  滚动视图代理方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+
     //NSLog(@"scrollViewWillBeginDragging");
     CGPoint offset = scrollView.contentOffset;
-//    CGRect bounds = scrollView.bounds;
-//    CGSize size = scrollView.contentSize;
-//    UIEdgeInsets inset = scrollView.contentInset;
+    //    CGRect bounds = scrollView.bounds;
+    //    CGSize size = scrollView.contentSize;
+    //    UIEdgeInsets inset = scrollView.contentInset;
     CGFloat currentOffset = offset.y;
-//    CGFloat maximunOffset = size.height;
+    //    CGFloat maximunOffset = size.height;
     
     if (currentOffset > SCREENHEIGHT) {
         self.topButton.hidden = NO;
@@ -2074,6 +2222,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView;
 {
+    
     return YES;
     //返回NO   关闭此功能
 }
@@ -2095,12 +2244,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //    brandMaxY = brandMaxY - 1;
     //    NSLog(@"-scrollViewDidScroll-brandView %f", brandMaxY);
-    //    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
-    //NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
+//    NSLog(@"=scrollViewDidScroll==tag=%ld x=%f y=%f ", scrollView.tag,scrollView.contentOffset.x,scrollView.contentOffset.y);
+//    NSLog(@"backScrollview x = %f y=%f %d",currentContentOffset.x,currentContentOffset.y,self.homeCollectionView.scrollEnabled );
     if ((scrollView.tag == 110 && scrollView.contentOffset.y < brandMaxY) || scrollView.tag == 111)return;
     
-    //NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
-    //self.brandView.frame.size.height,self.activityView.frame.size.height);
+//    NSLog(@"post height = %f %f %f",self.aboveView.frame.size.height,
+//    self.brandView.frame.size.height,self.activityView.frame.size.height);
     
     //在最外层back scrollview上进行滑动
     if (scrollView.tag == TAG_BACK_SCROLLVIEW
@@ -2185,7 +2334,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         else if( scrollView.contentOffset.y > 0) {
             //            NSLog(@"today scroll up");
             [UIView animateWithDuration:1 animations:^{
-                self.lefttimeViewHeight.constant = 0;
+                self.lefttimeViewHeight.constant = 45;
                 
             }];
         }
@@ -2260,14 +2409,17 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark 版本 自动升级
 - (void)autoUpdateVersion{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:UPDATE_URLSTRING parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:UPDATE_URLSTRING parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self fetchedUpdateData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Get app version fail.");
     }];
-    
 }
 
 - (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
@@ -2280,10 +2432,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     self.latestVersion = [infoDic objectForKey:@"version"];
     self.trackViewUrl1 = [infoDic objectForKey:@"trackViewUrl"];//地址trackViewUrl
     self.trackName = [infoDic objectForKey:@"trackName"];//trackName
-    NSString *releaseNotes = [infoDic objectForKey:@"releaseNotes"];
-    
-    releaseNotes = [NSString stringWithFormat:@"新版本升级信息：\n%@",releaseNotes];
-    
+    _releaseNotes = [infoDic objectForKey:@"releaseNotes"];
+
+    _releaseNotes = [NSString stringWithFormat:@"新版本升级信息：\n%@",_releaseNotes];
+
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Version = [infoDict objectForKey:@"CFBundleShortVersionString"];
     double doubleCurrentVersion = [app_Version doubleValue];
@@ -2292,42 +2444,150 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     NSLog(@"Get app version store=%@ %f appversion=%@ %f ",self.latestVersion, doubleUpdateVersion,app_Version, doubleCurrentVersion);
     
-    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending)
-    {
-        NSLog(@"%@ is bigger",self.latestVersion);
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-                                           message:releaseNotes
-                                          delegate: self
-                                 cancelButtonTitle:@"取消"
-                                 otherButtonTitles: @"升级", nil];
-        alert.tag = 1001;
-        [alert show];
-        
+    if ([self.latestVersion compare:app_Version options:NSNumericSearch] == NSOrderedDescending) {
+        self.isPopUpdataView = YES;
     }else
     {
-        NSLog(@"%@ is bigger",app_Version);
+        self.isPopUpdataView = NO;
     }
-    //    if (doubleCurrentVersion < doubleUpdateVersion) {
-    //
-    //        UIAlertView *alert;
-    //        alert = [[UIAlertView alloc] initWithTitle:self.trackName
-    //                                           message:@"有新版本，是否升级！"
-    //                                          delegate: self
-    //                                 cancelButtonTitle:@"取消"
-    //                                 otherButtonTitles: @"升级", nil];
-    //        alert.tag = 1001;
-    //        [alert show];
-    //    }
-    
 }
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1001) {
-        if (buttonIndex == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+- (void)updataAppPopView {
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideUpdataView)]];
+    JMUpdataAppPopView *updataPopView = [JMUpdataAppPopView defaultUpdataPopView];
+    self.updataPopView = updataPopView;
+    self.updataPopView.releaseNotes = _releaseNotes;
+    self.updataPopView.delegate = self;
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.updataPopView];
+    [JMPopViewAnimationSpring showView:self.updataPopView overlayView:self.maskView];
+}
+- (void)composeUpdataAppButton:(JMUpdataAppPopView *)updataButton didClick:(NSInteger)index {
+    if (index == 100) {
+        [self hideUpdataView];
+    }else if (index == 101) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.trackViewUrl1]];
+        [self hideUpdataView];
+    }else {
+    }
+}
+- (void)hideUpdataView {
+    [JMPopViewAnimationSpring dismissView:self.updataPopView overlayView:self.maskView];
+}
+#pragma mark 网络请求得到地址信息
+- (void)loadAddressInfo {
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:urlStr parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (!responseObject) {
+            return ;
+        }else {
+            [self addressData:responseObject];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+- (void)addressData:(NSDictionary *)addressDic {
+    _hash = addressDic[@"hash"];
+    _downloadURLString = addressDic[@"download_url"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *oldVersion = [defaults stringForKey:@"hash"];
+    if (oldVersion == nil) {
+        [self startDownload:_downloadURLString];
+    }else {
+        if ([oldVersion isEqualToString:_hash]) {
+        }else {
+            [self startDownload:_downloadURLString];
         }
     }
+    [defaults setObject:_hash forKey:@"hash"];
+    [defaults synchronize];
+}
+#pragma mark -- 开始下载地址文件
+- (void)startDownload:(id)downloadURLString {
+    
+    if (self.downloadTask) {
+        return ;
+    }
+    NSURL *downloadURL = [NSURL URLWithString:downloadURLString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
+    self.downloadTask = [self.session downloadTaskWithRequest:request];
+    [self.downloadTask resume];
+    
+}
+- (NSURLSession *)backgroundSession {
+    static NSURLSession *session = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,^{
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:@"so.xiaolu.m.xiaolumeimei"];
+        session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    });
+    return session;
+}
+//这个方法用来跟踪下载数据并且根据进度刷新ProgressView
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+}
+//下载任务完成,这个方法在下载完成时触发，它包含了已经完成下载任务得 Session Task,Download Task和一个指向临时下载文件得文件路径
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+    
+//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *desPath = [path stringByAppendingPathComponent:@"addressInfo.json"];
+    NSString *addressPath = [JMHelper getFullPathWithFile];
+    NSURL *pathUrl = [NSURL fileURLWithPath:addressPath];
+    NSError *errorCopy;
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    [fileManager removeItemAtURL:pathUrl error:NULL];
+    
+    BOOL success = [fileManager copyItemAtURL:location toURL:pathUrl error:nil];
+    
+//    
+//    NSArray *URLs = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+//    NSURL *documentsDirectory = [URLs objectAtIndex:0];
+//    NSURL *originalURL = [[downloadTask originalRequest] URL];
+//    NSURL *destinationURL = [documentsDirectory URLByAppendingPathComponent:[originalURL lastPathComponent]];
+//    NSError *errorCopy;
+//
+//    [fileManager removeItemAtURL:destinationURL error:NULL];
+//    BOOL success = [fileManager copyItemAtURL:location toURL:destinationURL error:&errorCopy];
+    if (success) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //播放音乐
+            self.player = [AVPlayer playerWithURL:pathUrl];
+            [self.player play];
+        });
+    } else {
+        NSLog(@"复制文件发生错误: %@", [errorCopy localizedDescription]);
+    }
+}
+
+#pragma mark - NSURLSessionTaskDelegate
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    if (error == nil) {
+        NSLog(@"任务: %@ 成功完成", task);
+    } else {
+        NSLog(@"任务: %@ 发生错误: %@", task, [error localizedDescription]);
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+    });
+    self.downloadTask = nil;
+}
+
+#pragma mark - NSURLSessionDelegate
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.backgroundSessionCompletionHandler) {
+        void (^completionHandler)() = appDelegate.backgroundSessionCompletionHandler;
+        appDelegate.backgroundSessionCompletionHandler = nil;
+        completionHandler();
+    }
+    NSLog(@"所有任务已完成!");
 }
 
 #pragma mark 返回顶部  image == >backTop
@@ -2340,11 +2600,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         make.right.equalTo(self.view).offset(-20);
         make.bottom.equalTo(self.view).offset(-20);
         make.width.height.mas_equalTo(@50);
-    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
 }
 - (void)topButtonClick:(UIButton *)btn {
+    [self disableAllGoodsCollectionScroll];
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
     self.backScrollview.scrollEnabled = YES;

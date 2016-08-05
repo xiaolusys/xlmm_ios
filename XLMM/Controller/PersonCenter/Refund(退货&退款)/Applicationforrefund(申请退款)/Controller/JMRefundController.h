@@ -14,11 +14,15 @@
 
 - (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic;
 
+- (void)Clickrefund:(JMRefundController *)click ContinuePay:(NSDictionary *)continueDic;
+
 @end
 
 @interface JMRefundController : UIViewController
 
 @property (nonatomic,strong) NSDictionary *refundDic;
+
+@property (nonatomic, strong) NSDictionary *continuePayDic;
 
 @property (nonatomic, strong) JMOrderGoodsModel *ordergoodsModel;
 

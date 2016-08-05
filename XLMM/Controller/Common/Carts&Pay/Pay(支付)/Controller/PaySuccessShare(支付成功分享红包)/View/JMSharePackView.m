@@ -8,9 +8,7 @@
 
 #import "JMSharePackView.h"
 #import "MMClass.h"
-#import "Masonry.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 
 #define JMSHAREPROPORTION 0.62
 
@@ -71,6 +69,7 @@
     
     kWeakSelf
     [self.payShareImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf);
         make.bottom.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@230);
@@ -96,11 +95,13 @@
 - (void)setLimitStr:(NSString *)limitStr {
     _limitStr = limitStr;
     NSString *numStr = [NSString stringWithFormat:@"恭喜您获得%@个红包",limitStr];
+    NSInteger numStrLength = numStr.length;
+    NSInteger limtStrLength = limitStr.length;
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,10)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,numStrLength)];
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(0, 5)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0] range:NSMakeRange(5, 2)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(7, 3)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0] range:NSMakeRange(5, limtStrLength)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(5 + limtStrLength, 3)];
     self.getRedpake.attributedText = str;
     
 }

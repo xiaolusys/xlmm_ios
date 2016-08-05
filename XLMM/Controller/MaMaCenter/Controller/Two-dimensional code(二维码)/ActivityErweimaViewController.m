@@ -8,7 +8,6 @@
 
 #import "ActivityErweimaViewController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "WXApi.h"
 
 

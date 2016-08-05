@@ -12,5 +12,14 @@
 
 @property (nonatomic, strong)NSNumber *fansNum; 
 
+@property (nonatomic, strong)UIPageViewController *pageControll;
+
+@property (nonatomic, assign) NSInteger index;
+
+@property (nonatomic, copy) NSString *fansUrlStr;
+
+- (NSArray *)titleArr;
+
+- (NSArray *)classArr;
 
 @end

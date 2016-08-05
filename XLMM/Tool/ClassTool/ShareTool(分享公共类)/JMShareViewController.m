@@ -7,24 +7,18 @@
 //
 
 #import "JMShareViewController.h"
-#import "Masonry.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 #import "MMClass.h"
 #import "JMShareButtonView.h"
 #import "JMShareView.h"
 #import "JMShareModel.h"
-#import "MJExtension.h"
 #import "UMSocial.h"
 #import "WXApi.h"
 #import "YoumengShare.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 #import "SendMessageToWeibo.h"
-#import "SVProgressHUD.h"
 #import "JMPopView.h"
-#import "AFNetworking.h"
-#import "NSString+URL.h"
 
 @interface JMShareViewController ()<JMShareButtonViewDelegate>
 
@@ -118,7 +112,7 @@
 //- (void)loadData {
 //    
 //    NSLog(@"Shareview _urlStr=%@ _activeID=%@", _urlStr, _activeID);
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        if (!responseObject) return;
 //        
@@ -157,7 +151,7 @@
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {
     NSLog(@"composeShareBtn Index=%ld", index);
-    if (index == 0) {
+    if (index == 100) {
         //微信分享
         if (_url == nil) {
             [self createPrompt];
@@ -181,7 +175,7 @@
 
         }
         [self cancelBtnClick];
-    }else if (index == 1) {
+    }else if (index == 101) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -202,7 +196,7 @@
             }];
             [self cancelBtnClick];
         }
-    }else if (index == 2) {
+    }else if (index == 102) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -214,7 +208,7 @@
         }];
         
         [self cancelBtnClick];
-    }else if (index == 3) {
+    }else if (index == 103) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -227,7 +221,7 @@
         }];
         [self cancelBtnClick];
 
-    }else if (index == 4) {
+    }else if (index == 104) {
         if (_url == nil) {
             [self createPrompt];
             return;
@@ -236,7 +230,7 @@
         [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_imageData)];
         [self cancelBtnClick];
 
-    }else if (index == 5) {
+    }else if (index == 105) {
         _isCopy = YES;
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
         NSString *str = _url;

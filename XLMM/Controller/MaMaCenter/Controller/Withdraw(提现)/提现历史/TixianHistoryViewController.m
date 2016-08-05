@@ -7,14 +7,9 @@
 //
 
 #import "TixianHistoryViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
-#import "SVProgressHUD.h"
-#import "MJRefresh.h"
-#import "Masonry.h"
 
 
 static NSString *CellIdentify = @"TixianCellIdentify";
@@ -74,15 +69,19 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,_currentPage];
     NSLog(@"string = %@", self.nextString);
 
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:self.nextString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:self.nextString parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [SVProgressHUD dismiss];
         if (!responseObject) return;
 
         [self fetchedHistoryData:responseObject];
         [self.tableView reloadData];
         [self endRefreshing];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [SVProgressHUD dismiss];
     }];
 }

@@ -8,15 +8,10 @@
 
 #import "JMAuthcodeViewController.h"
 #import "JMAuthcodeViewController.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "WXApi.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMLineView.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
-#import "SVProgressHUD.h"
 
 
 #define PHONE_NUM_LIMIT 11
@@ -26,7 +21,9 @@
 
 
 @interface JMAuthcodeViewController ()<UITextFieldDelegate> {
-    //    NSUInteger secondsCountDown;
+//    NSTimer *countDownTimer;
+//    NSInteger secondsCountDown;
+    
 }
 
 @property (nonatomic,strong) JMLineView *lineView;
@@ -64,6 +61,7 @@
     [self prepareUI];
     [self prepareInitUI];
 
+    
 }
 
 #pragma mark ------ 初始化UI
@@ -220,7 +218,7 @@
 
     NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
     if (num == 1 && phoneNumber.length == 11) { 
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         NSDictionary *parameters = nil;
         NSString *stringurl = TSendCode_URL;;
@@ -243,13 +241,15 @@
 //        }
 //authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
         
-        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == YES) {
+        if ([self.config[@"isMessageLogin"] boolValue] == YES) {
             parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
         }
         
         [manager POST:stringurl parameters:parameters
-         
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   
                   NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
                   
@@ -261,7 +261,7 @@
                       [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
                   }
                   
-              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   
                   [SVProgressHUD showErrorWithStatus:@"获取失败！"];
                   
@@ -286,19 +286,19 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
-                [_selButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-                _selButton.enabled = NO;
+                [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
+                _selButton.enabled = YES;
                 _selButton.selected = YES;
             });
         }else{
             int seconds = secondsCountDown % 60;
-            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+//            NSString *strTime = [NSString stringWithFormat:@"%02d", seconds];
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 //NSLog(@"____%@",strTime);
                 [UIView beginAnimations:nil context:nil];
                 [UIView setAnimationDuration:1];
-                [_selButton setTitle:[NSString stringWithFormat:@"%@秒",strTime] forState:UIControlStateNormal];
+                self.selButton.titleLabel.text = [NSString stringWithFormat:@" 剩余%02d秒",seconds];
                 [UIView commitAnimations];
                 _selButton.enabled = NO;
                 _selButton.selected = NO;
@@ -319,7 +319,7 @@
     
     [SVProgressHUD showWithStatus:@"登录中....."];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
     }
@@ -333,10 +333,14 @@
 //    }
     
     
-    [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:TVerifyCode_URL parameters:parameters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"-------%@", error);
         
         [SVProgressHUD showErrorWithStatus:@"登录失败！"];

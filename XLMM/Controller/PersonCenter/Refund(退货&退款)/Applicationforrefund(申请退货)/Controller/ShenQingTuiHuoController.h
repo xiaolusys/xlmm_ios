@@ -74,5 +74,9 @@ typedef void(^changeBtnBlock) (BOOL btnStatus);
 - (IBAction)deleteButtonThr:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteImageThree;
+/**
+ *  显示顶部显示退货选择显示
+ */
+@property (weak, nonatomic) IBOutlet UIView *topShowRefundView;
 
 @end

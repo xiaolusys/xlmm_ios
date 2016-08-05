@@ -7,11 +7,8 @@
 //
 
 #import "JMProductSelectListCell.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMLevelinfoModel.h"
-#import "MJExtension.h"
-#import "NSString+URL.h"
 #import "NSString+Encrypto.h"
 
 @interface JMProductSelectListCell ()
@@ -150,8 +147,8 @@
     }];
     
     [self.saleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.salePriceLabel.mas_right).offset(10);
-        make.bottom.equalTo(weakSelf.agentPriceLabel);
+        make.top.equalTo(weakSelf.agentPriceLabel.mas_bottom).offset(5);
+        make.left.equalTo(weakSelf.agentPriceLabel);
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -197,15 +194,17 @@
     self.iconImage.layer.cornerRadius = 8;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
     self.nameLabtl.text = model.name;
     self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.agent_price floatValue]];
     self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.std_sale_price floatValue]];
     self.saleNumLabel.text = self.leveModel.sale_num_des;
     
-    self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  %@",self.leveModel.rebet_amount_des];
-    self.nextRebetLabtl.text = self.leveModel.next_rebet_amount_des;
+    CGFloat rebetAmount = [self.leveModel.rebet_amount floatValue];
+    CGFloat nextRebetAmount = [self.leveModel.next_rebet_amount floatValue];
+    self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
+    self.nextRebetLabtl.text = [NSString stringWithFormat:@"  ¥%.2f",nextRebetAmount];
     self.vipLabel.text = self.leveModel.next_agencylevel_desc;
     
     self.pdtID = [NSString stringWithFormat:@"%@", model.goodsID];
@@ -246,7 +245,7 @@
     self.iconImage.layer.cornerRadius = 8;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
     self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
     self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];

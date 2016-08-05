@@ -7,10 +7,7 @@
 //
 
 #import "TixianSucceedViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "PublishNewPdtViewController.h"
-#import "UIColor+RGBColor.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMBillDetailController.h"
 
@@ -104,7 +101,7 @@
     [self.headView addSubview:promptLabel];
     self.promptLabel = promptLabel;
     self.promptLabel.font = [UIFont systemFontOfSize:12.];
-    self.promptLabel.text = @"提现金额已冻结，24小时之内到账";
+    self.promptLabel.text = @"提现成功，24小时之内到账";
     self.promptLabel.textAlignment = NSTextAlignmentCenter;
 
     

@@ -8,15 +8,11 @@
 
 #import "JMPopLogistcsController.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "JMPopLogistcsCell.h"
 #import "JMPopLogistcsModel.h"
-#import "MJExtension.h"
 
 @interface JMPopLogistcsController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -49,9 +45,13 @@
 - (void)loadData {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/get_logistic_companys",Root_URL];
 
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     
-    [manage GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage GET:urlStr parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
         self.dataSource = [NSMutableArray array];
         
@@ -63,7 +63,7 @@
 
         [self.dataSource addObjectsFromArray:dataSourceArr];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 
@@ -106,7 +106,7 @@
     }
     
     JMPopLogistcsModel *model = self.dataSource[indexPath.row];
-    [cell configWithModel:model];
+    [cell configWithModel:model Index:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //选中cell时无色
     return cell;
 }
@@ -128,13 +128,17 @@
     [dic setObject:self.logisticsStr forKey:@"referal_trade_id"];
     [dic setObject:model.code forKey:@"logistic_company_code"];
     
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     
-    [manage POST:urlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manage POST:urlStr parameters:dic
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"%@",responseObject);
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         
     }];

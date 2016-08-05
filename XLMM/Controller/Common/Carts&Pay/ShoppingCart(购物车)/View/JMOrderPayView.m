@@ -7,13 +7,11 @@
 //
 
 #import "JMOrderPayView.h"
-#import "UIColor+RGBColor.h"
-#import "Masonry.h"
 #import "MMClass.h"
 
 @interface JMOrderPayView ()
 
-@property (nonatomic,strong) UIButton *leftButton;
+@property (nonatomic,strong) UIImageView *leftButton;
 
 @property (nonatomic,strong) UILabel *moneyL;
 
@@ -29,9 +27,9 @@
 
 @property (nonatomic,strong) UILabel *aliPayL;
 
-@property (nonatomic,strong) UIButton *wechatButton;
+@property (nonatomic,strong) UIView *wechatButton;
 
-@property (nonatomic,strong) UIButton *aliPayButton;
+@property (nonatomic,strong) UIView *aliPayButton;
 
 @end
 
@@ -46,25 +44,43 @@
     return self;
 }
 - (void)initUI {
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImageView *leftButton = [UIImageView new];
     [self addSubview:leftButton];
     self.leftButton = leftButton;
-    self.leftButton.tag = 100;
-    [self.leftButton addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.leftButton setBackgroundImage:[UIImage imageNamed:@"leftArrowIcon"] forState:UIControlStateNormal];
+//    self.leftButton.tag = 100;
+//    [self.leftButton addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.leftButton setBackgroundImage:[UIImage imageNamed:@"leftArrowIcon"] forState:UIControlStateNormal];
+    self.leftButton.image = [UIImage imageNamed:@"leftArrowIcon"];
+    self.leftButton.userInteractionEnabled = YES;
+    UITapGestureRecognizer *leftTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(payTapClick:)];
+    [self.leftButton addGestureRecognizer:leftTap];
+    UIView *leftView = [leftTap view];
+    leftView.tag = 100;
+    leftTap.numberOfTapsRequired = 1;
     
-    UIButton *wechatButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    UIView *wechatButton = [UIView new];
     [self addSubview:wechatButton];
     self.wechatButton = wechatButton;
-    self.wechatButton.tag = 101;
-    [self.wechatButton addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    self.wechatButton.tag = 101;
+//    [self.wechatButton addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *wechatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(payTapClick:)];
+    [self.wechatButton addGestureRecognizer:wechatTap];
+    UIView *weChatView = [wechatTap view];
+    weChatView.tag = 101;
+    wechatTap.numberOfTapsRequired = 1;
     
-    UIButton *aliPayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    UIView *aliPayButton = [UIView new];
     [self addSubview:aliPayButton];
     self.aliPayButton = aliPayButton;
-    self.aliPayButton.tag = 102;
-    [self.aliPayButton addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
+//    self.aliPayButton.tag = 102;
+//    [self.aliPayButton addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *aliPayTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(payTapClick:)];
+    [self.aliPayButton addGestureRecognizer:aliPayTap];
+    UIView *aliPayView = [aliPayTap view];
+    aliPayView.tag = 102;
+    aliPayTap.numberOfTapsRequired = 1;
     
     
     UILabel *moneyL = [UILabel new];
@@ -178,9 +194,10 @@
     
     self.moneyL.text = [NSString stringWithFormat:@"应付金额%@",_payMent];
 }
-- (void)payBtnClick:(UIButton *)button {
+- (void)payTapClick:(UITapGestureRecognizer *)tap {
+    UIView *tapView = [tap view];
     if (_delegate && [_delegate respondsToSelector:@selector(composePayButton:didClick:)]) {
-        [_delegate composePayButton:self didClick:button.tag];
+        [_delegate composePayButton:self didClick:tapView.tag];
     }
 }
 

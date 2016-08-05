@@ -7,15 +7,9 @@
 //
 
 #import "JMRefundBaseController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "SVProgressHUD.h"
-#import "MJRefresh.h"
-#import "AFNetworking.h"
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
-#import "MJExtension.h"
 #import "RefundDetailsViewController.h"
 
 @interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource>
@@ -55,7 +49,6 @@
     [self createTableView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-
 }
 
 - (void)createTableView {
@@ -78,7 +71,7 @@
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
@@ -96,17 +89,21 @@
 #pragma mark 数据请求
 - (void)loadDataSource {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self.dataSource removeAllObjects];
         [self fetchedRefundData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
-    
+
 }
 - (void)loadMore {
     if ([_nextPage class] == [NSNull class]) {
@@ -114,13 +111,17 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:_nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:_nextPage parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self fetchedRefundData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
 }

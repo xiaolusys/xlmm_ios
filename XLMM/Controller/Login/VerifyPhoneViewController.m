@@ -8,11 +8,7 @@
 
 #import "SetPasswordViewController.h"
 #import "VerifyPhoneViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
 
 #define PHONE_NUM_LIMIT 11
 #define VERIFY_CODE_LIMIT 6
@@ -196,7 +192,7 @@
     NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
 
     if (num == 1 && phoneNumber.length == 11) {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         
         NSDictionary *parameters = nil;
         
@@ -220,7 +216,10 @@
         NSLog(@"paramters = %@", parameters);
         
         [manager POST:stringurl parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                   
                   NSInteger nums = [[responseObject objectForKey:@"rcode"] integerValue];
                   
@@ -231,7 +230,7 @@
                   }
                   
                   
-              }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                   [SVProgressHUD showErrorWithStatus:@"登录失败"];
                   NSLog(@"Error: %@", error);
               }];
@@ -293,7 +292,7 @@
 
 - (IBAction)nextButtonClicked:(id)sender {
     //NSLog(@"验证验证码是否正确");
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    
 //    NSString *phoneNumber = self.phoneNumberTextField.text;
 //    NSString *vcode = self.codeTextField.text;
@@ -378,7 +377,7 @@
     NSString *vcode = self.codeTextField.text;
 
     NSDictionary *parameters = nil;
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
     }else if ([self.config[@"isRegister"] boolValue]){
@@ -390,10 +389,14 @@
     }
     
     
-    [manager POST:TVerifyCode_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:TVerifyCode_URL parameters:parameters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"-------%@", error);
     }];
     

@@ -7,8 +7,8 @@
 //
 
 #import "PicCollectionViewCell.h"
-#import "NSString+URL.h"
-#import "UIImageView+WebCache.h"
+#import "MMClass.h"
+
 
 @interface PicCollectionViewCell ()
 

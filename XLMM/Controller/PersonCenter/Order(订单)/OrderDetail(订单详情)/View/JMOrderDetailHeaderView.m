@@ -8,7 +8,6 @@
 
 #import "JMOrderDetailHeaderView.h"
 #import "MMClass.h"
-#import "Masonry.h"
 #import "XlmmMall.h"
 #import "JMOrderGoodsModel.h"
 #import "JMTimeLineView.h"
@@ -89,8 +88,10 @@
     
     NSDictionary *logisticsDic = orderDetailModel.logistics_company;
     if (logisticsDic.count == 0) {
+        self.logisticsStr = @"小鹿推荐";
         self.logisticsLabel.text = @"小鹿推荐";
     }else {
+        self.logisticsStr = logisticsDic[@"name"];
         self.logisticsLabel.text = logisticsDic[@"name"];
     }
     NSDictionary *dic = [orderDetailModel.orders[0] mj_keyValues];
@@ -128,6 +129,7 @@
     UIScrollView *timeLineView = [[UIScrollView alloc] init];
     [self addSubview:timeLineView];
     self.timeLineView = timeLineView;
+    self.timeLineView.backgroundColor = [UIColor countLabelColor];
     // == 第一行视图 == //
     UIView *oneView = [UIView new];
     [self addSubview:oneView];
@@ -165,11 +167,11 @@
     UIView *threeView = [UIView new];
     [self addSubview:threeView];
     self.addressView = threeView;
-    threeView.backgroundColor = [UIColor whiteColor];
-    threeView.userInteractionEnabled = NO;
+    self.addressView.backgroundColor = [UIColor whiteColor];
+    self.addressView.userInteractionEnabled = NO;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [threeView addGestureRecognizer:tap];
+    [self.addressView addGestureRecognizer:tap];
     UIView *threeTapView = [tap view];
     threeTapView.tag = 100;
     
@@ -199,11 +201,11 @@
     UIView *fourView = [UIView new];
     [self addSubview:fourView];
     self.logisticsView = fourView;
-    fourView.backgroundColor = [UIColor whiteColor];
-    fourView.userInteractionEnabled = NO;
+    self.logisticsView.backgroundColor = [UIColor whiteColor];
+    self.logisticsView.userInteractionEnabled = NO;
     
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [fourView addGestureRecognizer:tap1];
+    [self.logisticsView addGestureRecognizer:tap1];
     UIView *fourTapView = [tap1 view];
     fourTapView.tag = 101;
     

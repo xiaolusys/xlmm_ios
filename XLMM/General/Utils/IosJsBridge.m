@@ -8,7 +8,6 @@
 
 #import "IosJsBridge.h"
 #import <UIKit/UIKit.h>
-#import "SVProgressHUD.h"
 #import "JumpUtils.h"
 #import "JMLogInViewController.h"
 #import "JMShareViewController.h"
@@ -16,12 +15,10 @@
 #import "JMPopView.h"
 #import "MMClass.h"
 #import "WebViewController.h"
-#import "AFNetworking.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
 #import "YoumengShare.h"
-#import "NSString+URL.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 
@@ -83,17 +80,28 @@
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     ((WebViewController *)vc).shareView = shareView;
     
-    if([((WebViewController *)vc).webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-        ((WebViewController *)vc).share_model.share_type = [data objectForKey:@"share_type"];
-        
-        ((WebViewController *)vc).share_model.share_img = [data objectForKey:@"share_icon"]; //图片
-        ((WebViewController *)vc).share_model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-        
-        ((WebViewController *)vc).share_model.title = [data objectForKey:@"share_title"]; //标题
-        ((WebViewController *)vc).share_model.share_link = [data objectForKey:@"link"];
-    }
-    shareView.model = ((WebViewController *)vc).share_model;
+//    if([((WebViewController *)vc).webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+//    ((WebViewController *)vc).share_model.share_type = [data objectForKey:@"share_type"];
+//    
+//    ((WebViewController *)vc).share_model.share_img = [data objectForKey:@"share_icon"]; //图片
+//    ((WebViewController *)vc).share_model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+//    
+//    ((WebViewController *)vc).share_model.title = [data objectForKey:@"share_title"]; //标题
+//    ((WebViewController *)vc).share_model.share_link = [data objectForKey:@"link"];
+//
+//    }
+//    shareView.model = ((WebViewController *)vc).share_model;
     
+    shareView.model = [[JMShareModel alloc] init];
+    shareView.model.share_type = [data objectForKey:@"share_type"];
+    
+    shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
+    shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+    
+    shareView.model.title = [data objectForKey:@"share_title"]; //标题
+    shareView.model.share_link = [data objectForKey:@"link"];
+    
+    NSLog(@"%@ %@", shareView.model, data);
     JMShareView *cover = [JMShareView show];
     cover.delegate = ((WebViewController *)vc);
     //弹出视图
@@ -150,6 +158,7 @@
 }
 
 + (void)getNativeMobileSNCode{
+
     NSString *device = [self getMobileSNCode];
 
 
@@ -177,8 +186,12 @@
     }
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
     NSString *shareType = data[@"share_to"];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *shareTitle = [responseObject objectForKey:@"share_desc"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
         UIImage *newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
@@ -259,7 +272,7 @@
             
         } else{}
     }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
          }];
 }
 
@@ -267,7 +280,7 @@
  *  详情界面加载
  */
 + (void)showLoading:(NSDictionary *)data{
-    BOOL isLoading = data[@"isLoading"];
+    BOOL isLoading = [data[@"isLoading"] boolValue];
     if (!isLoading) {
         [SVProgressHUD dismiss];
     }

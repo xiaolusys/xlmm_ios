@@ -8,13 +8,9 @@
 
 #import "JMComplaintSuggestController.h"
 #import "JMTextView.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMCompSugView.h"
-#import "UIColor+RGBColor.h"
 #import "JMSelecterButton.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "AFNetworking.h"
 #import "WebViewController.h"
 
 
@@ -121,11 +117,15 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/complain",Root_URL];
     NSDictionary *dic = @{@"com_content":self.textView.text};
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:urlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:urlStr parameters:dic
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (responseObject == nil)return;
             [self successCommit];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
     }];
 }
 #pragma mark -- textViewDelegate 协议方法

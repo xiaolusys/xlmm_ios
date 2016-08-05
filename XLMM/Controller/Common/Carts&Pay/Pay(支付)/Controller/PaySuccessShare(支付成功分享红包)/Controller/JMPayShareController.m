@@ -8,18 +8,13 @@
 
 #import "JMPayShareController.h"
 #import "JMPaySucTitleView.h"
-#import "UIColor+RGBColor.h"
 #import "JMSelecterButton.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMSharePackView.h"
 #import "JMShareView.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 
 @interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMShareViewDelegate,JMSharePackViewDelegate>
 
@@ -93,8 +88,12 @@
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,_ordNum];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:string parameters:nil
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         
         if (!responseObject) return;
@@ -102,7 +101,7 @@
         [self resolveActivityShareParam:responseObject];
         
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     

@@ -7,14 +7,9 @@
 //
 
 #import "ProductSelectionListViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "YixuanTableViewController.h"
-#import "MJRefresh.h"
 #import "JMProductSelectionListModel.h"
-#import "MJExtension.h"
 #import "JMProductSelectListCell.h"
 
 
@@ -170,7 +165,7 @@
 }
 
 - (NSString *)numbersOfSelected{
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/products/my_choice_pro?page_size=1", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=1", Root_URL];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     if(data != nil){
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -356,14 +351,18 @@
     
 }
 - (void)loadDataSource {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:_urlStr parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return ;
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
     
@@ -374,14 +373,18 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:self.nextUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:self.nextUrl parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return;
         
         [self fetchedDatalist:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self endRefresh];
     }];
 
@@ -477,7 +480,11 @@
         NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
         NSDictionary *parameters = @{@"product":selectList.pdtID};
         
-        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] POST:url parameters:parameters
+                                    progress:^(NSProgress * _Nonnull downloadProgress) {
+                                        //数据请求的进度
+                                    }
+                                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [SVProgressHUD showSuccessWithStatus:@"下架成功"];
             [button setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];
             selectList.statusLabel.text = @"加入精选";
@@ -487,7 +494,7 @@
             selectList.listModel.in_customer_shop = @0;
             
             self.numberLabel.text = self.numbersOfSelected;
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"上下架－－Error: %@", error);
         }];
         
@@ -495,7 +502,11 @@
         //网络请求
         NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/add_pro_to_shop", Root_URL];
         NSDictionary *parameters = @{@"product":selectList.pdtID};
-        [[AFHTTPRequestOperationManager manager] POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[AFHTTPSessionManager manager] POST:url parameters:parameters
+            progress:^(NSProgress * _Nonnull downloadProgress) {
+                //数据请求的进度
+            }
+             success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             //已上架
             [SVProgressHUD showSuccessWithStatus:@"上架成功"];
             //[btn setTitle:@"下架" forState:UIControlStateNormal];
@@ -509,7 +520,7 @@
             
             self.numberLabel.text = self.numbersOfSelected;
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"上下架－－Error: %@", error);
         }];
         

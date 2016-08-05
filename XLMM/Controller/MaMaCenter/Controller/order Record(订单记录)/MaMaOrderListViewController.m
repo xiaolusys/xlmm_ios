@@ -7,16 +7,11 @@
 //
 
 #import "MaMaOrderListViewController.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
 #import "MaMaOrderModel.h"
 #import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
-#import "MJRefresh.h"
-#import "SVProgressHUD.h"
 #import "JMMaMaOrderListCell.h"
-#import "Masonry.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -27,7 +22,10 @@
 @property (nonatomic, strong)NSString *nextPage;
 
 @property (nonatomic,strong) UIButton *topButton;
-
+//下拉的标志
+@property (nonatomic) BOOL isPullDown;
+//上拉的标志
+@property (nonatomic) BOOL isLoadMore;
 @end
 
 @implementation MaMaOrderListViewController
@@ -48,6 +46,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"MaMaOrderListViewController"];
     
 }
@@ -69,12 +68,38 @@
     
     [self createTableView];
     [self createButton];
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
 }
 
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+#pragma mrak 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        _isPullDown = YES;
+        [weakSelf loadDate];
+    }];
+}
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
@@ -106,35 +131,14 @@
     
     self.tableView.tableHeaderView = headerV;
 //    self.tableView.estimatedRowHeight = 80;
-    
-    //添加上拉加载
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if([self.nextPage class] == [NSNull class]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return ;
-        }
-        [self loadMore];
-    }];
-    
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadNew];
-    }];
-    
-    [self loadDate];
-    
-    
-    
+
 }
-
-
-
 #pragma mark ---数据处理
 - (void)dataAnalysis:(NSDictionary *)data {
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     for (NSDictionary *order in results) {
-        MaMaOrderModel *orderM = [[MaMaOrderModel alloc] init];
-        [orderM setValuesForKeysWithDictionary:order];
+        MaMaOrderModel *orderM = [MaMaOrderModel mj_objectWithKeyValues:order];
         NSString *date = [self dateDeal:orderM.date_field];
         self.dataArr = [[self.dataDic allKeys] mutableCopy];
         //判断对应键值的数组是否存在
@@ -149,7 +153,6 @@
     }
     self.dataArr = [[self.dataDic allKeys] mutableCopy];
     self.dataArr = [self sortAllKeyArray:self.dataArr];
-    [self.tableView reloadData];
 }
 
 //将日期去掉－
@@ -182,44 +185,45 @@
 }
 #pragma mark -- 请求数据
 - (void)loadDate {
-    //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
-    
-//    [SVProgressHUD showWithStatus:@"正在加载..."];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [SVProgressHUD dismiss];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:url parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject)return;
+        [self.dataArr removeAllObjects];
+        [self.dataDic removeAllObjects];
         [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error:   %@", error);
+        [self endRefresh];
+        [self.tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self endRefresh];
     }];
 
 }
 //加载更多
 - (void)loadMore {
     if ([self.nextPage class] == [NSNull class]) {
-        [self.tableView.mj_footer endRefreshing];
+        [self endRefresh];
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:self.nextPage parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:self.nextPage parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self endRefresh];
+        [self.tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self endRefresh];
     }];
-}
-- (void)loadNew {
-    [self.tableView.mj_header performSelector:@selector(endRefreshing) withObject:nil afterDelay:2.0];
-    if (self.nextPage == nil || [self.nextPage class] == [NSNull class]) {
-        [self.tableView.mj_header endRefreshing];
-        
-        return ;
-    }
-    [self loadDate];
 }
 
 #pragma mark ---UItableView的代理
@@ -277,9 +281,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
 }
-
-
-#pragma mark -- 添加返回顶部按钮
+#pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:topButton];
@@ -289,33 +291,80 @@
         make.right.equalTo(self.view).offset(-20);
         make.bottom.equalTo(self.view).offset(-20);
         make.width.height.mas_equalTo(@50);
-    }];    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    }];
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
 }
 - (void)topButtonClick:(UIButton *)btn {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+}
+- (void)searchScrollViewInWindow:(UIView *)view {
+    for (UIScrollView *scrollView in view.subviews) {
+        if ([scrollView isKindOfClass:[UIScrollView class]]) {
+            CGPoint offect = scrollView.contentOffset;
+            offect.y = -scrollView.contentInset.top;
+            [scrollView setContentOffset:offect animated:YES];
+        }
+        [self searchScrollViewInWindow:scrollView];
+    }
 }
 #pragma mark -- 添加滚动的协议方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [UIView animateWithDuration:0.5 animations:^{
-        if (self.dataDic.count == 0) {
-            self.topButton.hidden = YES;
-        }else {
-            self.topButton.hidden = NO;
-        }
-        
-    }];
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat currentOffset = offset.y;
+    if (currentOffset > SCREENHEIGHT) {
+        self.topButton.hidden = NO;
+    }else {
+        self.topButton.hidden = YES;
+    }
 }
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
-//}
-//- (void)hiddenBackTopBtn {
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.topButton.hidden = YES;
-//    }];
-//}
-
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

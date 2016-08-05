@@ -11,7 +11,7 @@
 //  1051166985
 
 #import <UIKit/UIKit.h>
-#import "RESideMenu.h"
+#import <RESideMenu.h>
 #import "WXApi.h"
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
@@ -27,6 +27,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (copy) void (^backgroundSessionCompletionHandler)();
 
 @end
 

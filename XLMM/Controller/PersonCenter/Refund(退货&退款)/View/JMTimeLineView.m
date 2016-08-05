@@ -7,9 +7,10 @@
 //
 
 #import "JMTimeLineView.h"
-#import "Masonry.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MASViewAttribute.h"
+#import "MMClass.h"
+
 
 @interface JMTimeLineView () {
     BOOL didStopAnimation;

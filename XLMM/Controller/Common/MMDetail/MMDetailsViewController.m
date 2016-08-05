@@ -11,23 +11,16 @@
 #import "JMLogInViewController.h"
 #import "MMClass.h"
 #import "CartViewController.h"
-#import "AFNetworking.h"
 #import "ChiMaBiaoViewController.h"
 #import "XidiShuomingViewController.h"
 #import "WXApi.h"
 #import "UIImage+UIImageExt.h"
-#import "NSString+URL.h"
 #import "UIImage+ImageWithUrl.h"
-#import "UIColor+RGBColor.h"
 #import "UIImageView+WebCache.h"
-#import "SVProgressHUD.h"
 #import "YoumengShare.h"
 #import "SendMessageToWeibo.h"
 #import "UIImage+ImageWithSelectedView.h"
-//#import "MMLoadingAnimation.h"
-#import "AFNetworking.h"
-//#import "MobClick.h"
-#import "MJRefresh.h"
+
 
 @interface MMDetailsViewController ()<UIGestureRecognizerDelegate, UIScrollViewDelegate, UIWebViewDelegate>{
     CGFloat headImageOrigineHeight;
@@ -319,8 +312,12 @@
 //        [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
 //    });
     
-    AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-    [manage GET:self.urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+    [manage GET:self.urlString parameters:nil
+       progress:^(NSProgress * _Nonnull downloadProgress) {
+           //数据请求的进度
+       }
+        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //        NSLog(@"-----------------%@", responseObject);
 //        [self createContentView];
         if (!responseObject)  {
@@ -329,7 +326,7 @@
             return;
         }
         [self fetchedDetailsData:responseObject];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 //    [self createContentView];
@@ -487,14 +484,18 @@
         
         //异步进行网络请求
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
-        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-        [manage GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+        [manage GET:string parameters:nil
+           progress:^(NSProgress * _Nonnull downloadProgress) {
+               //数据请求的进度
+           }
+            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             shareDic = responseObject;
             self.titleStr = [shareDic objectForKey:@"title"];
             self.des = [shareDic objectForKey:@"desc"];
             self.url = [shareDic objectForKey:@"share_link"];
 
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 //            NSLog(@"error-------%@", error);
         }];
                                                 
@@ -879,7 +880,7 @@
         [button.layer setMasksToBounds:YES];
         [button.layer setBorderWidth:1];
         button.layer.cornerRadius = 3;
-        [button.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+        [button.layer setBorderColor:[UIColor buttonDisabledBorderColor].CGColor];
         //[button.layer setCornerRadius:8];
         
         [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -939,7 +940,7 @@
         }else{
             UIButton *btn = (UIButton *)[self.sizeView viewWithTag:i];
             if ([btn isUserInteractionEnabled]) {
-                [btn.layer setBorderColor:[UIColor imageViewBorderColor].CGColor];
+                [btn.layer setBorderColor:[UIColor buttonDisabledBorderColor].CGColor];
                 [btn setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
 
             }
@@ -1001,7 +1002,7 @@
       //  NSLog(@"item_id = %@", itemID);
       //  NSLog(@"sku_id = %@", skusID);
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSDictionary *parameters = @{@"item_id": itemID,
                                      @"sku_id":skusID};
         //统计加入购物车的次数
@@ -1010,12 +1011,15 @@
         
         
         [manager POST:kCart_URL parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                  NSLog(@"JSON: %@", responseObject);
                   [self myAnimation];
 
             }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
          //   NSLog(@"Error: %@", error);
          //     NSLog(@"error:, --.>>>%@", error.description);
               NSDictionary *dic = [error userInfo];
@@ -1041,7 +1045,7 @@
               UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
               label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
               label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor imageViewBorderColor];
+              label.textColor = [UIColor buttonDisabledBorderColor];
               label.font = [UIFont systemFontOfSize:14];
               [view addSubview:label];
               [self.view addSubview:view];
@@ -1089,8 +1093,12 @@
      } completion:^(BOOL finished) {
         [view removeFromSuperview];
          
-         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-         [manager GET:kCart_Number_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+         [manager GET:kCart_Number_URL parameters:nil
+             progress:^(NSProgress * _Nonnull downloadProgress) {
+                 //数据请求的进度
+             }
+              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
              if (!responseObject) {
                  NSLog(@"kCart_Number_URL response nil");
                  [self createTimeCartView];
@@ -1108,7 +1116,7 @@
                  [self createTimeCartView];
              }
              
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              NSLog(@"kCart_Number_URL response error");
              [self createTimeCartView];
          }];
@@ -1132,8 +1140,12 @@
 
 - (void)createTimeCartView{
 //    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:kCart_Number_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:kCart_Number_URL parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) {
             NSLog(@"kCart_Number_URL response nil");
         }else {
@@ -1170,7 +1182,7 @@
 
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"kCart_Number_URL response error");
     }];
 

@@ -7,9 +7,8 @@
 //
 
 #import "YixuanTableViewCell.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
+#import "MMClass.h"
+
 
 @implementation YixuanTableViewCell
 
@@ -32,7 +31,7 @@
     [self.headImageView sd_setImageWithURL:[ NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
     self.headImageView.layer.cornerRadius = 4;
     self.headImageView.layer.borderWidth = 1;
-    self.headImageView.layer.borderColor   = [UIColor imageViewBorderColor].CGColor;
+    self.headImageView.layer.borderColor   = [UIColor buttonDisabledBorderColor].CGColor;
     self.nameLabel.text = model.name;
     self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.agent_price floatValue]];
     self.stdPriceLabel.text = [NSString stringWithFormat:@"/¥%.0f", [model.std_sale_price floatValue]];

@@ -14,6 +14,7 @@
 #import <WebKit/WebKit.h>
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
+#import "SVProgressHUD.h"
 
 @interface IMYWebView()<UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
 
@@ -24,6 +25,7 @@
 @property (nonatomic, copy) NSString *title;
 
 @property (nonatomic, strong) IMY_NJKWebViewProgress* njkWebViewProgress;
+
 @end
 
 @implementation IMYWebView
@@ -83,8 +85,8 @@
     configuration.preferences = [NSClassFromString(@"WKPreferences") new];
     configuration.userContentController = [NSClassFromString(@"WKUserContentController") new];
     configuration.preferences.javaScriptEnabled = true;
-    [self registerWkwebviewJsBridge:configuration];
     configuration.preferences.javaScriptCanOpenWindowsAutomatically = NO;
+    [self registerWkwebviewJsBridge:configuration];
     
     WKWebView* webView = [[NSClassFromString(@"WKWebView") alloc] initWithFrame:self.bounds configuration:configuration];
     webView.UIDelegate = self;
@@ -100,9 +102,12 @@
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    NSLog(@"new == %@",change[@"new"]);
+    NSLog(@"old == %@",change[@"old"]);
     if([keyPath isEqualToString:@"estimatedProgress"])
     {
         self.estimatedProgress = [change[NSKeyValueChangeNewKey] doubleValue];
+        
     }
     else if([keyPath isEqualToString:@"title"])
     {
@@ -192,7 +197,11 @@
 }
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
+//    [webView evaluateJavaScript:@"getNativeMobileSNCode" completionHandler:^(id _Nullable value, NSError * _Nullable error) {
+//        
+//    }];
     [self callback_webViewDidFinishLoad];
+    [SVProgressHUD dismiss];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
 {
@@ -211,7 +220,7 @@
 //                                                                      preferredStyle:UIAlertControllerStyleAlert];
 //    [alertController addAction:[UIAlertAction actionWithTitle:@"OK"
 //                                                        style:UIAlertActionStyleCancel
-//                                                      handler:^(UIAlertAction *action) {
+//                                                       handler:^(UIAlertAction *action) {
 //                                                          completionHandler();
 //                                                      }]];
 //    [self presentViewController:alertController animated:YES completion:^{}];
@@ -220,7 +229,7 @@
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
-{
+ {
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
     [self updateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
@@ -617,7 +626,9 @@
 }
 
 #pragma mark - WKScriptMessageHandler
-
+/**
+ *  OC在JS调用方法做的处理
+ */
 - (void)userContentController:(WKUserContentController *)userContentController
 
       didReceiveScriptMessage:(WKScriptMessage *)message {
@@ -625,14 +636,17 @@
     NSLog(@"WKScriptMessageHandler %@ %@",message.name, message.body);
     [IosJsBridge dispatchJsBridgeFunc:self.viewController name:message.name para:message.body];
     
-        
+//    IosJsBridge *ios = [IosJsBridge new];
+//    ios.deviceBlock = ^(NSString *uuid) {
+//        message(uuid);
+//    };
+    
 }
 
 - (void)registerWkwebviewJsBridge:(WKWebViewConfiguration*) configuration{
     
     NSLog(@"registerWkwebviewJsBridge!");
-    
-    
+
     [configuration.userContentController  addScriptMessageHandler:self name:@"jumpToNativeLocation"];
     
     /**
@@ -661,8 +675,27 @@
      */
     [configuration.userContentController addScriptMessageHandler:self name:@"showLoading"];
     
+    /**
+     *  我的邀请
+     */
+    [configuration.userContentController addScriptMessageHandler:self name:@"changeId"];
+    
+    
 }
-
+#pragma mark js调OC
+- (void)getNativeMobileSNCode:(id)body {
+    if ([body isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dict = (NSDictionary *)body;
+        
+        NSString *jsStr = [NSString stringWithFormat:@"postNativeMobileSNCode('%@')",[dict objectForKey:@"data"]];
+        
+        [self.realWebView evaluateJavaScript:jsStr completionHandler:^(id _Nullable data, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"错误 : %@",error.localizedDescription);
+            }
+        }];
+    }
+}
 //从webview获得浏览器中的useragent，并进行更新
 - (void)updateUserAgent{
     NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];

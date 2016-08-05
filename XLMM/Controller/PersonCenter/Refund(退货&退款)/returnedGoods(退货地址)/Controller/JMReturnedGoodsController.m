@@ -8,15 +8,9 @@
 
 #import "JMReturnedGoodsController.h"
 #import "JMReGoodsAddView.h"
-#import "Masonry.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
 #import "JMChooseLogisticsController.h"
-#import "UIViewController+NavigationBar.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
-#import "TuihuoModel.h"
 #import "JMRefundModel.h"
 
 @interface JMReturnedGoodsController ()<JMChooseLogisticsControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate> {
@@ -45,7 +39,10 @@
 
 @end
 
-@implementation JMReturnedGoodsController
+@implementation JMReturnedGoodsController {
+    NSString *_expressName;
+    NSString *_expressNum;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,8 +50,7 @@
     [self createNavigationBarWithTitle:@"填写快递单" selecotr:@selector(backClicked:)];
     [self createUI];
     [self createRightButonItem];
-    //注册键盘的通知
-    [self monitorKeyboard];
+
 }
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
@@ -187,7 +183,7 @@
 
 #pragma mark --- 选择物流公司
 - (void)choiseClick:(UIButton *)btn {
-    
+    [self.expressListTF resignFirstResponder];
     JMChooseLogisticsController *logisticsVC = [[JMChooseLogisticsController alloc] init];
     logisticsVC.delegate = self;
     [self.navigationController pushViewController:logisticsVC animated:YES];
@@ -198,13 +194,17 @@
 }
 #pragma mark --- 提交按钮点击
 - (void)sureButtonClick:(UIButton *)btn {
+    _expressName = self.expressL.text;
+    _expressNum = self.expressListTF.text;
+    
+    [self.expressListTF resignFirstResponder];
     NSLog(@"提交。。。。");
-    if([self.expressL.text isEqualToString:@"请选择快递公司"]){
+    if([_expressName isEqualToString:@"请选择快递公司"]){
         [SVProgressHUD showErrorWithStatus:@"请填写快递公司信息"];
         return;
     }
     
-    if([[self.expressListTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
+    if([[_expressNum stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
         [SVProgressHUD showErrorWithStatus:@"请填写快递单号信息"];
         return;
     }
@@ -221,39 +221,49 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1234) {
         if (buttonIndex == 1) {
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
             NSLog(@"urlstring = %@", urlString);
             
             
             
-            NSDictionary *parameters = @{@"id":[NSString stringWithFormat:@"%ld", (long)self.refundModelr.order_id],
+            NSDictionary *parameters = @{@"id":self.refundModelr.order_id,
                                          @"modify":@2,
-                                         @"company":self.expressL.text,
-                                         @"sid":self.expressListTF.text
+                                         @"company":_expressName,
+                                         @"sid":_expressNum
                                          };
             
             NSLog(@"parameters = %@", parameters);
             
             [manager POST:urlString parameters:parameters
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 progress:^(NSProgress * _Nonnull downloadProgress) {
+                     //数据请求的进度
+                 }
+                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                       
                       NSLog(@"JSON: %@", responseObject);
-                      UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退货成功，去看看其他商品吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-                      alterView.tag = 4321;
-                      alterView.delegate = self;
-                      [alterView show];
+                      if (!responseObject) {
+                          return ;
+                      }else {
+                          NSString *info = responseObject[@"info"];
+                          
+                          UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:info delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                          alterView.tag = 4321;
+                          alterView.delegate = self;
+                          [alterView show];
+                          
+                      }
+                      
                       //                      [self.navigationController popToRootViewControllerAnimated:YES];
                       //                      NSLog(@"perration = %@", operation);
                       //                      [self.navigationController popViewControllerAnimated:YES];
                       
                   }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                       NSLog(@"Error: %@", error);
                       NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-                      NSLog(@"perration = %@", operation);
-                      [SVProgressHUD showErrorWithStatus:@"退货失败，请检查网络后重试！"];
+                      [SVProgressHUD showErrorWithStatus:@"提交退货快递信息失败，请检查网络后重试！"];
                   }];
         }
         
@@ -265,79 +275,34 @@
     
     
 }
-
-#pragma mark - 监听键盘
-
-- (void)monitorKeyboard
-{
-    //添加监听键盘弹出
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
-    //添加监听键盘隐藏
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)keyboardShow:(NSNotification *)notification
-{
-    if (_isPopup) {
-        return;
-    }
-    _isPopup = YES;
-    self.expressBtn.enabled = NO;
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
-    NSValue *frameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect frame = [frameValue CGRectValue];
-    CGFloat height = frame.size.height;
-    CGPoint center = self.baseScrollV.center;
-    center.y -= height;
-    self.baseScrollV.center = center;
-//        CGFloat maxY = CGRectGetMaxY(self.sureButton.frame) + self.baseScrollV.frame.origin.y;
-//    
-//        CGRect kbEndFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//        CGFloat kbY = kbEndFrame.origin.y;
-//    
-//        CGFloat delta = kbY - maxY;
-//        if (delta < 0) {
-//            [UIView animateWithDuration:0.3 animations:^{
-//                self.baseScrollV.transform = CGAffineTransformMakeTranslation(0, delta);
-//            }];
-//        }
-}
-
-- (void)keyboardHide:(NSNotification *)notification
-{
-    if (!_isPopup) {
-        return;
-    }
-    _isPopup = NO;
-    self.expressBtn.enabled = YES;
-
-    NSValue *frameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect frame = [frameValue CGRectValue];
-    CGFloat height = frame.size.height;
-    
-    CGPoint center = self.baseScrollV.center;
-    center.y += height;
-    self.baseScrollV.center = center;
-//        [UIView animateWithDuration:0.25 animations:^{
-//            self.baseScrollV.transform = CGAffineTransformIdentity;
-//        }];
-
-}
-
 #pragma mark ==== 输入框协议方法
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
+    if (!_isPopup) {
+    }else {
+        _isPopup = NO;
+        self.expressBtn.enabled = YES;
+        CGPoint center = self.baseScrollV.center;
+        center.y += 260;
+        self.baseScrollV.center = center;
+    }
+    
+    
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    self.expressListTF = textField;
-//    if ([textField.text isEqualToString:@""]) {
-//        CGRect frame = CGRectMake(0, self.baseScrollV.contentSize.height - 216, self.baseScrollV.frame.size.width, 216);
-//        textField.frame = frame;
-//    }
+    if (_isPopup) {
+        return;
+    }
+    _isPopup = YES;
+    self.expressBtn.enabled = NO;
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    CGPoint center = self.baseScrollV.center;
+    center.y -= 260;
+    self.baseScrollV.center = center;
     [textField becomeFirstResponder];
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
@@ -370,7 +335,15 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
-//    [self.expressListTF resignFirstResponder];
+    if (!_isPopup) {
+    }else {
+        _isPopup = NO;
+        self.expressBtn.enabled = YES;
+        CGPoint center = self.baseScrollV.center;
+        center.y += 260;
+        self.baseScrollV.center = center;
+    }
+
     [self.baseScrollV endEditing:YES];
     NSLog(@"点击了");
 }

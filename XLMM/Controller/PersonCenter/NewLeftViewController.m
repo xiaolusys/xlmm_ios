@@ -7,28 +7,20 @@
 //
 
 #import "NewLeftViewController.h"
-#import "PersonCenterViewController1.h"
-#import "RESideMenu.h"
-#import "PersonCenterViewController2.h"
-#import "PersonCenterViewController3.h"
-#import "TuihuoViewController.h"
+#import <RESideMenu.h>
 #import "JifenViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "UIImageView+WebCache.h"
 #import "MMUserCoupons.h"
-
 #import "AddressViewController.h"
 #import "SettingViewController.h"
 #import "JMLogInViewController.h"
 #import "Account1ViewController.h"
 #import "PersonOrderViewController.h"
-#import "UIColor+RGBColor.h"
-
-#import "AFHTTPRequestOperationManager.h"
 #import "CommonWebViewViewController.h"
 #import "JMComplaintSuggestController.h"
 #import "JMReturnedGoodsController.h"
 #import "JMRefundBaseController.h"
+#import "JMCouponController.h"
+#import "MMClass.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -53,11 +45,15 @@
     if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        AFHTTPRequestOperationManager *manage = [AFHTTPRequestOperationManager manager];
-        [manage GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
+        [manage GET:urlString parameters:nil
+           progress:^(NSProgress * _Nonnull downloadProgress) {
+               //数据请求的进度
+           }
+            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (!responseObject) return;
             [self updateUserInfo:responseObject];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
         }];
     }
@@ -220,22 +216,6 @@
     self.redCircle.layer.masksToBounds = YES;
     self.redCircle.hidden = NO;
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)jifenClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -252,17 +232,14 @@
         [self displayLoginView];
         return;
     }
-  
-    
 }
-
 - (IBAction)youhuquanClicked:(id)sender {
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-        youhuiVC.isSelectedYHQ = NO;
+        JMCouponController *couponVC = [[JMCouponController alloc] init];
+//        YouHuiQuanViewController *youhuiVC = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
+//        youhuiVC.isSelectedYHQ = NO;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:youhuiVC];
+            [self.pushVCDelegate rootVCPushOtherVC:couponVC];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{
@@ -273,12 +250,9 @@
         return;
     }
 }
-
 - (IBAction)yueClicked:(id)sender {
-    
     NSLog(@"查看余额详情");
 }
-
 #pragma mark -- 投诉建议
 - (IBAction)suggestionClicked:(id)sender {
     
@@ -296,10 +270,7 @@
         [self displayLoginView];
         return;
     }
-
-    
 }
-
 - (IBAction)waitPayClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -321,11 +292,7 @@
         [self displayLoginView];
         return;
     }
-
-   
-
 }
-
 - (IBAction)waitSendClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -346,11 +313,7 @@
         [self displayLoginView];
         return;
     }
-    
-    
-    
 }
-
 - (IBAction)tuihuoClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -370,10 +333,7 @@
         [self displayLoginView];
         return;
     }
-    
-  
 }
-
 - (IBAction)allDingdanClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -393,10 +353,7 @@
         [self displayLoginView];
         return;
     }
-    
- 
 }
-
 - (void)quitLogin {
     self.touxiangImageView.image = nil;
     self.nameLabel.text = @"未登录";
@@ -490,3 +447,43 @@
     self.accountLabel.text = str;
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

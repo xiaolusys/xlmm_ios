@@ -7,14 +7,11 @@
 //
 
 #import "ShopPreviousViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "MamaShareView.h"
 #import "UMSocial.h"
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"
-#import "SVProgressHUD.h"
-#import "NSString+URL.h"
 
 @interface ShopPreviousViewController ()
 @property (nonatomic, strong)UIWebView *webView;
@@ -299,9 +296,7 @@
         
         backView.hidden = YES;
     }];
-    
-    
-    
+
 }
 
 
@@ -327,10 +322,10 @@
         NSLog(@"shop_info = null");
         return;
     }
+    NSDictionary *shopInfoDict = dic[@"shop_info"];
+    self.shopShareName = shopInfoDict[@"name"];
     
-    self.shopShareName = dic[@"shop_info"][@"name"];
-    
-    NSString *urlString = [[dic objectForKey:@"shop_info"] objectForKey:@"thumbnail"];
+    NSString *urlString = shopInfoDict[@"thumbnail"];
     if(urlString != nil){
         self.shopShareImage = [UIImage imagewithURLString:[urlString imageShareCompression]];
     }
@@ -360,19 +355,28 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

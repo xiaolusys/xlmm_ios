@@ -7,26 +7,17 @@
 //
 
 #import "ShenQingTuikuanController.h"
-#import "UIViewController+NavigationBar.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
 #import "MMClass.h"
-#import "UMMobClick/MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "MJExtension.h"
 #import "JMAppForRefundModel.h"
 #import "UIView+RGSize.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "JMOrderGoodsModel.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
-#import "Masonry.h"
 
 
 @interface ShenQingTuikuanController ()<JMRefundViewDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
@@ -148,7 +139,7 @@
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;
     self.myImageView.layer.borderWidth = 0.5;
-    self.myImageView.layer.borderColor = [UIColor imageViewBorderColor].CGColor;
+    self.myImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     number = [self.dingdanModel.num intValue];
     maxNumber = [self.dingdanModel.num intValue];
     
@@ -344,7 +335,7 @@
         return;
     }
     //   http://192.168.1.31:9000/rest/v1/refunds
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
@@ -357,7 +348,10 @@
     NSLog(@"string = %@", string);
     
     [manager POST:string parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"apply_fee"];
@@ -366,7 +360,7 @@
               self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
           }
      
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Error: %@", error);
           }];
 }
@@ -416,7 +410,7 @@
     //   http://192.168.1.31:9000/rest/v1/refunds
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
@@ -429,7 +423,10 @@
     NSLog(@"string = %@", string);
     
     [manager POST:string parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               NSString *string = [responseObject objectForKey:@"apply_fee"];
@@ -439,7 +436,7 @@
               
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               
@@ -469,56 +466,51 @@
 }
 
 - (IBAction)commitClicked:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"小鹿极速退款说明" message:@"小鹿急速退款，款项将快速返回至小鹿账户。该退款14天内只能用于购买，不可提现。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同意", nil];
-    alertView.tag = 100;
-    [alertView show];
-
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 100) {
-        if (buttonIndex == 0) {
-            
-        }else if (buttonIndex == 1) {
-            [MobClick event:@"refund"];
-            
-            [SVProgressHUD showWithStatus:@"退款处理中....."];
-            //budget
-            NSString *refundChannel = self.refundDic[@"refund_channel"];
-            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-            NSString *descStr;
-            descStr = self.inputTextView.text;
-            if ([self.inputTextView.text isEqualToString:@""]) {
-                descStr = @"七天无理由退货";
-            }
-            NSDictionary *parameters = @{@"id":self.oid,
-                                         @"reason":[NSNumber numberWithInt:reasonCode],
-                                         @"num":self.refundNumLabel.text,
-                                         @"sum_price":[NSNumber numberWithFloat:refundPrice],
-                                         @"description":descStr,
-                                         @"refund_channel":refundChannel
-                                         };
-
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-            [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSDictionary *dic = responseObject;
-                if (dic.count == 0) return;
-                NSInteger code = [dic[@"code"] integerValue];
-                if (code == 0) {
-                    [SVProgressHUD dismiss];
-                    [self returnPopView];
-                    
-                }else {
-                    [SVProgressHUD showErrorWithStatus:dic[@"info"]];
-                }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
-            }];
-
-        }else {
-            
-        }
+    [SVProgressHUD showWithStatus:@"退款处理中....."];
+    //budget
+    NSString *refundChannel = self.refundDic[@"refund_channel"];
+    if ([refundChannel isEqualToString:@"budget"]) {
+        [MobClick event:@"refundChannel_budget"];
+    }else {
+        [MobClick event:@"refundChannel_audit"];
     }
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
+    NSString *descStr;
+    descStr = self.inputTextView.text;
+    if ([self.inputTextView.text isEqualToString:@""]) {
+        descStr = @"七天无理由退货";
+    }
+    NSDictionary *parameters = @{@"id":self.oid,
+                                 @"reason":[NSNumber numberWithInt:reasonCode],
+                                 @"num":self.refundNumLabel.text,
+                                 @"sum_price":[NSNumber numberWithFloat:refundPrice],
+                                 @"description":descStr,
+                                 @"refund_channel":refundChannel
+                                 };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:urlString parameters:parameters
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *dic = responseObject;
+        if (dic.count == 0) return;
+        NSInteger code = [dic[@"code"] integerValue];
+        if (code == 0) {
+            [SVProgressHUD dismiss];
+            [self returnPopView];
+            
+        }else {
+            [SVProgressHUD showErrorWithStatus:dic[@"info"]];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
+    }];
+
+
 }
+
 #pragma mark -- 弹出视图
 - (void)returnPopView {
     

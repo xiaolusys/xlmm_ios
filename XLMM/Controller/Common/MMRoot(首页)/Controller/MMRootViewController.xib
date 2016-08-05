@@ -192,6 +192,32 @@
                                 </mask>
                             </variation>
                         </view>
+                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
+                            <rect key="frame" x="0.0" y="128" width="320" height="300"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="90" id="qeY-6g-9tx">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                                </constraint>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2T6-Xw-5MS">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="3uQ-P2-81f">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                                </constraint>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="3uQ-P2-81f"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="3uQ-P2-81f"/>
+                                </mask>
+                            </variation>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDK-Oo-Z7L">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <subviews>
@@ -643,32 +669,6 @@
                                 </mask>
                             </variation>
                         </view>
-                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbE-SI-q4D">
-                            <rect key="frame" x="0.0" y="128" width="320" height="300"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="90" id="qeY-6g-9tx">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
-                                </constraint>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2T6-Xw-5MS">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="200" id="3uQ-P2-81f">
-                                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
-                                </constraint>
-                            </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="3uQ-P2-81f"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=compact">
-                                <mask key="constraints">
-                                    <include reference="3uQ-P2-81f"/>
-                                </mask>
-                            </variation>
-                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="lbE-SI-q4D" secondAttribute="trailing" id="1ez-MU-V69"/>
@@ -699,8 +699,8 @@
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
-                            <exclude reference="YDK-Oo-Z7L"/>
                             <exclude reference="2T6-Xw-5MS"/>
+                            <exclude reference="YDK-Oo-Z7L"/>
                         </mask>
                         <mask key="constraints">
                             <exclude reference="LBA-Sa-vXK"/>
@@ -715,8 +715,8 @@
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="subviews">
-                            <include reference="YDK-Oo-Z7L"/>
                             <include reference="2T6-Xw-5MS"/>
+                            <include reference="YDK-Oo-Z7L"/>
                         </mask>
                         <mask key="constraints">
                             <include reference="LBA-Sa-vXK"/>

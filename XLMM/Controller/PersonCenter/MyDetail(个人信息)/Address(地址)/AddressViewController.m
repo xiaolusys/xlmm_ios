@@ -11,9 +11,6 @@
 #import "AddressModel.h"
 #import "MMClass.h"
 #import "AddressTableCell.h"
-#import "AFNetworking.h"
-#import "AFNetworking.h"
-#import "UIViewController+NavigationBar.h"
 
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
@@ -94,29 +91,40 @@
 }
 
 //下载数据
-- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data == nil) {
-            return ;
-        }
-        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
-        
-    });
-}
+//- (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data == nil) {
+//            return ;
+//        }
+//        [self performSelectorOnMainThread:aSeletor withObject:data waitUntilDone:YES];
+//        
+//    });
+//}
 
 - (void)downloadAddressData{
-    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
-    
-    
+//    [self downLoadWithURLString:kAddress_List_URL andSelector:@selector(fatchedAddressData:)];
+    //2016.7.13 modify to afn
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:kAddress_List_URL parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              if (!responseObject)return ;
+              [self fatchedAddressData:responseObject];              
+              
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              
+              NSLog(@"Error: %@", error);
+              
+          }];
+
 }
-- (void)fatchedAddressData:(NSData *)responsedata{
-    NSError *error = nil;
-    
-    NSArray *addressArray = [NSJSONSerialization JSONObjectWithData:responsedata options:kNilOptions error:&error];
-    if (error != nil) {
-        return;
-    }
+- (void)fatchedAddressData:(NSArray *)dic{
+    NSArray *addressArray = dic;
+
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
@@ -303,9 +311,12 @@
     NSLog(@"address id = %@", model.addressID);
     NSString *deleteurlString = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL,model.addressID];
     NSLog(@"deleteURL = %@", deleteurlString);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:deleteurlString parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         progress:^(NSProgress * _Nonnull downloadProgress) {
+             //数据请求的进度
+         }
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               
               NSLog(@"JSON: %@", responseObject);
               [dataArray removeAllObjects];
@@ -313,7 +324,7 @@
               
               
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               
               NSLog(@"Error: %@", error);
               

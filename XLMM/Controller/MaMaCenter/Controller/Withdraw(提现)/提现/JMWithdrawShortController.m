@@ -7,17 +7,15 @@
 //
 
 #import "JMWithdrawShortController.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMCouponCell.h"
 #import "JMCouponView.h"
-#import "AFNetworking.h"
 #import "JMCouponSuccessController.h"
-#import "SVProgressHUD.h"
 #import "TixianHistoryViewController.h"
 
 @interface JMWithdrawShortController ()<JMCouponViewDelegate,UIAlertViewDelegate>
+
+@property (nonatomic, strong) UIScrollView *baseScrollView;
 
 /*
  我的余额
@@ -52,7 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor lineGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
 
     [self createCoupon];
@@ -68,8 +66,16 @@
 #pragma mark --- 取现金额不足100显示领取优惠券视图
 - (void)createCoupon {
     
-    JMCouponView *couponView = [[JMCouponView alloc] initWithFrame:CGRectMake(0, 200 , SCREENWIDTH, 220)];
-    [self.view addSubview:couponView];
+    UIScrollView *baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60)];
+    [self.view addSubview:baseScrollView];
+    baseScrollView.backgroundColor = [UIColor countLabelColor];
+    baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 520);
+    baseScrollView.showsVerticalScrollIndicator = NO;
+    baseScrollView.showsHorizontalScrollIndicator = NO;
+    self.baseScrollView = baseScrollView;
+    
+    JMCouponView *couponView = [[JMCouponView alloc] initWithFrame:CGRectMake(0, 300 , SCREENWIDTH, 220)];
+    [baseScrollView addSubview:couponView];
     self.couponView = couponView;
     self.couponView.myCouponBlance = _mywithBlance;
     couponView.delegate = self;
@@ -78,7 +84,7 @@
      我的余额
      */
     UIView *myBlanceView = [[UIView alloc] init];
-    [self.view addSubview:myBlanceView];
+    [self.baseScrollView addSubview:myBlanceView];
     self.myBlanceView = myBlanceView;
     self.myBlanceView.backgroundColor = [UIColor whiteColor];
     
@@ -95,19 +101,27 @@
     self.blanceMoneyLabel.text = [NSString stringWithFormat:@"%.2f元",_mywithBlance];
     
     UIView *headView = [UIView new];
-    [self.view addSubview:headView];
+    [baseScrollView addSubview:headView];
     
     UILabel *notEngouthLabel = [UILabel new];
-    [self.view addSubview:notEngouthLabel];
+    [headView addSubview:notEngouthLabel];
     notEngouthLabel.textColor = [UIColor redColor];
     notEngouthLabel.font = [UIFont systemFontOfSize:11.];
     notEngouthLabel.text = self.descStr;
     
     UILabel *convertCouponLabel = [UILabel new];
-    [self.view addSubview:convertCouponLabel];
+    [headView addSubview:convertCouponLabel];
     convertCouponLabel.text = @"兑换现金券";
     convertCouponLabel.font = [UIFont systemFontOfSize:12.];
     convertCouponLabel.textColor = [UIColor buttonTitleColor];
+    
+    UILabel *exchangeInfo = [UILabel new];
+    [headView addSubview:exchangeInfo];
+    exchangeInfo.font = [UIFont systemFontOfSize:12.];
+    exchangeInfo.textColor = [UIColor dingfanxiangqingColor];
+    exchangeInfo.textAlignment = NSTextAlignmentLeft;
+    exchangeInfo.numberOfLines = 0;
+    exchangeInfo.text = @"兑换说明 \n 1.为了方便妈妈在金额不能提现时使用妈妈钱包金额购买商品，可以使用兑换现金券功能。\n\n 2.兑换现金券后会扣除妈妈钱包里的金额，兑换的优惠券可以用来购物，有效期为1个月，兑换后不能退回。\n\n 3.使用现金券可以购买低于现金券金额的商品，不会找零。使用现金券购买高于现金券金额的商品，需要补差价。";
     
     UIView *bottomView = [UIView new];
     [self.view addSubview:bottomView];
@@ -130,16 +144,14 @@
     kWeakSelf
     //我的余额
     [self.myBlanceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view).offset(64);
-        make.left.equalTo(weakSelf.view);
+        make.top.left.equalTo(weakSelf.baseScrollView);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@60);
     }];
     
     [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.myBlanceView).offset(20);
-        make.left.equalTo(weakSelf.myBlanceView.mas_left).offset(11);
-        make.height.mas_equalTo(@20);
+        make.centerY.equalTo(weakSelf.myBlanceView.mas_centerY);
+        make.left.equalTo(weakSelf.myBlanceView.mas_left).offset(10);
     }];
     
     [self.blanceMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -149,8 +161,9 @@
     
     [headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.myBlanceView.mas_bottom);
-        make.left.right.equalTo(weakSelf.view);
-        make.height.mas_equalTo(@80);
+        make.centerX.equalTo(weakSelf.baseScrollView.mas_centerX);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@220);
     }];
     
     [notEngouthLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -160,7 +173,13 @@
     
     [convertCouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headView).offset(10);
-        make.bottom.equalTo(headView).offset(-20);
+        make.bottom.equalTo(exchangeInfo.mas_top).offset(-10);
+    }];
+    
+    [exchangeInfo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(headView).offset(-5);
+        make.centerX.equalTo(headView.mas_centerX);
+        make.width.mas_equalTo(@(SCREENWIDTH - 20));
     }];
     
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -170,7 +189,7 @@
     
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(bottomView.mas_centerX);
-        make.top.equalTo(bottomView).offset(10);
+        make.centerY.equalTo(bottomView.mas_centerY);
         make.width.mas_equalTo(SCREENWIDTH - 30);
     }];
     
@@ -203,9 +222,13 @@
             
         }else if (buttonIndex == 1) {
             NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/exchange_coupon?template_id=%ld&exchange_num=1", Root_URL,_choiseMoney];
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
             
-            [manager GET:stringurl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [manager GET:stringurl parameters:nil
+                progress:^(NSProgress * _Nonnull downloadProgress) {
+                    //数据请求的进度
+                }
+                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 if (responseObject == nil) {
                     return ;
                 }else {
@@ -225,7 +248,7 @@
                     }
                     
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];
 
@@ -301,7 +324,9 @@
     self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"JMWithdrawShortController"];
 }
-
+- (void)viewDidLayoutSubviews {
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 520);
+}
 
 @end
 

@@ -8,14 +8,12 @@
 
 #import "JMRefundController.h"
 #import "JMAppForRefundModel.h"
-#import "MJExtension.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "SVProgressHUD.h"
 #import "JMRefundCell.h"
-#import "Masonry.h"
+#import "JMContinuePayModel.h"
 
 @interface JMRefundController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
@@ -27,27 +25,40 @@
 
 @end
 
-@implementation JMRefundController
-
-- (NSMutableArray *)dataSource {
-    if (_dataSource == nil) {
-        _dataSource = [NSMutableArray array];
-    }
-    return _dataSource;
+@implementation JMRefundController {
+    BOOL _isRefund;
 }
+
+//- (NSMutableArray *)dataSource {
+//    if (_dataSource == nil) {
+//        _dataSource = [NSMutableArray array];
+//    }
+//    return _dataSource;
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self crateTableView];
 }
 - (void)setRefundDic:(NSDictionary *)refundDic {
     _refundDic = refundDic;
+    _isRefund = YES;
+    self.dataSource = [NSMutableArray array];
     NSArray *refundArr = _refundDic[@"refund_choices"];
     for (NSDictionary *dic in refundArr) {
         JMAppForRefundModel *refundModel = [JMAppForRefundModel mj_objectWithKeyValues:dic];
         [self.dataSource addObject:refundModel];
     }
 }
-
+- (void)setContinuePayDic:(NSDictionary *)continuePayDic {
+    _continuePayDic = continuePayDic;
+    _isRefund = NO;
+    self.dataSource = [NSMutableArray array];
+    NSArray *channelsArr = _continuePayDic[@"channels"];
+    for (NSDictionary *dict in channelsArr) {
+        JMContinuePayModel *continueModel = [JMContinuePayModel mj_objectWithKeyValues:dict];
+        [self.dataSource addObject:continueModel];
+    }
+}
 - (void)crateTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(10, 0, SCREENWIDTH - 20, 200) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
@@ -84,7 +95,12 @@
     [headView addSubview:headLabel];
     headLabel.font = [UIFont systemFontOfSize:16.];
     headLabel.textColor = [UIColor buttonTitleColor];
-    headLabel.text = @"退款方式";
+    if (_isRefund == YES) {
+        headLabel.text = @"退款方式";
+    }else {
+        headLabel.text = @"支付方式";
+    }
+    
     [headLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headView.mas_centerX);
         make.centerY.equalTo(headView.mas_centerY);
@@ -114,20 +130,35 @@
     if (!cell) {
         cell = [[JMRefundCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
+    if (_isRefund == YES) {
+        JMAppForRefundModel *model = self.dataSource[indexPath.row];
+        [cell configWithModel:model Index:indexPath.row];
+    }else {
+        JMContinuePayModel *continueModel = self.dataSource[indexPath.row];
+        [cell configWithPayModel:continueModel Index:indexPath.row];
+    }
     
-    JMAppForRefundModel *model = self.dataSource[indexPath.row];
-    [cell configWithModel:model];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone; //选中cell时无色
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    JMAppForRefundModel *model = self.dataSource[indexPath.row];
-    NSDictionary *dic = [model mj_keyValues];
-    [self cancelBtnClick];
-
-    if (_delegate && [_delegate respondsToSelector:@selector(Clickrefund:OrderGoods:Refund:)]) {
-        [_delegate Clickrefund:self OrderGoods:self.ordergoodsModel Refund:dic];
+    if (_isRefund == YES) {
+        JMAppForRefundModel *model = self.dataSource[indexPath.row];
+        NSDictionary *dic = [model mj_keyValues];
+        [self cancelBtnClick];
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(Clickrefund:OrderGoods:Refund:)]) {
+            [_delegate Clickrefund:self OrderGoods:self.ordergoodsModel Refund:dic];
+        }
+    }else {
+        JMContinuePayModel *continueModel = self.dataSource[indexPath.row];
+        [self cancelBtnClick];
+        if (_delegate && [_delegate respondsToSelector:@selector(Clickrefund:ContinuePay:)]) {
+            [_delegate Clickrefund:self ContinuePay:[continueModel mj_keyValues]];
+        }
     }
+    
     
 }
 

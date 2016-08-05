@@ -7,11 +7,9 @@
 //
 
 #import "JMRootScrolCell.h"
-#import "UIImageView+WebCache.h"
-#import "NSString+URL.h"
+
 #import "BrandGoodsModel.h"
 #import "ImageUtils.h"
-#import "Masonry.h"
 #import "MMClass.h"
 
 @interface JMRootScrolCell ()

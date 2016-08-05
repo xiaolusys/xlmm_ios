@@ -31,7 +31,7 @@
     return [UIColor colorWithR:217 G:140 B:13 alpha:1];
 }
 + (UIColor *)buttonDisabledBorderColor{
-    return [UIColor colorWithR:218 G:218 B:218 alpha:1];
+    return [UIColor colorWithR:216 G:216 B:216 alpha:1];
 }
 
 + (UIColor *)buttonEmptyBorderColor{
@@ -46,8 +46,8 @@
     return [UIColor colorWithR:38 G:38 B:46 alpha:1];
 }
 
-+ (UIColor *)imageViewBorderColor{
-   return [UIColor colorWithR:216 G:216 B:216 alpha:1];
++ (UIColor *)mamaCenterBorderColor{
+   return [UIColor colorWithR:252 G:215 B:82 alpha:1];
 }
 // -- 灰色
 + (UIColor *)titleDarkGrayColor{
@@ -61,7 +61,14 @@
 + (UIColor *)wechatBackColor {
     return [UIColor colorWithR:68 G:173 B:53 alpha:1];
 }
-
+// 红色
++ (UIColor *)couponValueColor {
+    return [UIColor colorWithR:197 G:79 B:79 alpha:1];
+}
+//蓝色
++ (UIColor *)colorWithBlueColor {
+    return [UIColor colorWithR:71 G:155 B:256 alpha:1];
+}
 + (UIColor *)randomColor{
     return [UIColor colorWithR:arc4random()%256 G:arc4random()%256 B:arc4random()%256 alpha:1];
 }

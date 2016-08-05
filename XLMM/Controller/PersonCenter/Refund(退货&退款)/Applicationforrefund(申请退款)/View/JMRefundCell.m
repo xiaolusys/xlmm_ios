@@ -7,9 +7,7 @@
 //
 
 #import "JMRefundCell.h"
-#import "Masonry.h"
 #import "MMClass.h"
-#import "UIColor+RGBColor.h"
 
 @interface JMRefundCell ()
 
@@ -17,7 +15,7 @@
 
 @property (nonatomic,strong) UILabel *decLabel;
 
-
+@property (nonatomic, strong) UIImageView *iconImage;
 
 @end
 
@@ -31,6 +29,10 @@
 }
 
 - (void)createUI {
+    UIImageView *iconImage = [UIImageView new];
+    [self.contentView addSubview:iconImage];
+    self.iconImage = iconImage;
+    
     UILabel *nameLabel = [UILabel new];
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
@@ -44,8 +46,15 @@
     self.decLabel.textColor = [UIColor titleDarkGrayColor];
     
     kWeakSelf
-    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.contentView).offset(10);
+        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.width.height.mas_equalTo(@30);
+    }];
+    
+    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
     }];
     
@@ -59,13 +68,31 @@
     
     
 }
-- (void)configWithModel:(JMAppForRefundModel *)model {
+- (void)configWithModel:(JMAppForRefundModel *)model Index:(NSInteger)index {
     
     self.nameLabel.text = model.name;
     self.decLabel.text = model.desc;
     
+    if (index == 0) {
+        self.iconImage.image = [UIImage imageNamed:@"refund_xiaolutuikuanImage"];
+    }else if (index == 1) {
+        self.iconImage.image = [UIImage imageNamed:@"refund_othertuikuan"];
+    }else {
+        
+    }
+    
 }
-
+- (void)configWithPayModel:(JMContinuePayModel *)model Index:(NSInteger)index {
+    self.nameLabel.text = model.name;
+    self.decLabel.text = model.msg;
+    if (index == 0) {
+        self.iconImage.image = [UIImage imageNamed:@"weixinzhifu"];
+    }else if (index == 1) {
+        self.iconImage.image = [UIImage imageNamed:@"zhifubao"];
+    }else {
+        
+    }
+}
 @end
 
 

@@ -7,22 +7,15 @@
 //
 
 #import "WebViewController.h"
-#import "UIViewController+NavigationBar.h"
 #import "MMClass.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
 #import "UIImage+ImageWithSelectedView.h"
 #import "YoumengShare.h"
-#import "NSString+URL.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "MMDetailsViewController.h"
-#import "YouHuiQuanViewController.h"
-#import "XiangQingViewController.h"
-#import "MaMaPersonCenterViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "UUID.h"
@@ -33,9 +26,7 @@
 #import "JMShareViewController.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "MJExtension.h"
 #import "JMShareModel.h"
-#import "UMMobClick/MobClick.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -45,7 +36,7 @@
 
 //static BOOL isLogin;
 
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 
@@ -155,9 +146,10 @@
     }else {
         self.navigationController.navigationBarHidden = YES;
     }
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -170,6 +162,7 @@
     
     IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
     super.baseWebView = baseWebView1;
+    
     [self.view addSubview:super.baseWebView];
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
@@ -182,10 +175,12 @@
     {
         NSLog(@"7.0 UIWebView");
         [self registerJsBridge];
+        self.baseWebView.delegate = self;
     }
     else
     {
         NSLog(@"bigger than8.0 WKWebView");
+//        self.baseWebView.delegate = self;
     }
     
     UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
@@ -196,19 +191,19 @@
     NSString *loadStr = nil;
     NSString *active = _webDiction[@"type_title"];
     if ([active isEqualToString:@"myInvite"]) {
-        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         self.activityId = _webDiction[@"activity_id"];
         loadStr = _webDiction[@"web_url"];
         [self loadData];
     }else if ([active isEqualToString:@"active"]){
-        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
         loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
         [self loadData];
     }else {
         statusBarView.hidden = NO;
         if (_isShowNavBar) {
-            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT);
+            super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
         }else {
             super.baseWebView.frame = CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20);
         }
@@ -237,18 +232,30 @@
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
     NSLog(@"Shareview _urlStr=%@ self.activityId=%@", string, self.activityId);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) return;
         
         [self resolveActivityShareParam:responseObject];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
     
 }
-
+//#pragma mark IMYWebView代理方法
+//- (void)webViewDidStartLoad:(IMYWebView *)webView {
+////    [WebViewJavascriptBridge enableLogging];
+//    
+//    [_bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        [self myInvite:data];
+//    }];
+//    
+//}
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
     //    NSDictionary *dic = _model.mj_keyValues;
@@ -303,14 +310,22 @@
     menu.contentView = self.shareView.view;
 }
 
-- (void) universeShare:(NSDictionary *)data {
+- (void)universeShare:(NSDictionary *)data {
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
 
-    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-        [self resolveProductShareParam:data];
-    }
-    self.shareView.model = self.share_model;
+//    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
+//        [self resolveProductShareParam:data];
+//    }
+    self.shareView.model = [[JMShareModel alloc] init];
+    self.shareView.model.share_type = [data objectForKey:@"share_type"];
+    
+    self.shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
+    self.shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+    
+    self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
+    self.shareView.model.share_link = [data objectForKey:@"link"];
+//    self.shareView.model = self.share_model;
     
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
@@ -468,13 +483,28 @@
      */
     [self.bridge registerHandler:@"showLoading" handler:^(id data, WVJBResponseCallback responseCallback) {
 
-        BOOL isLoading = data[@"isLoading"];
+        BOOL isLoading = [data[@"isLoading"] boolValue];
         if (!isLoading) {
             [SVProgressHUD dismiss];
         }
     }];
+    /**
+     *  我的邀请加载
+     */
+//    [self.bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
+//        [self myInvite:data callBack:responseCallback];
+//    }];
 }
-
+//- (void)myInvite:(id )data {
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, data[@"id"]];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if (!responseObject) return;
+//        [self resolveActivityShareParam:responseObject];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//}
 
 
 /**
@@ -520,8 +550,12 @@
     }
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
     shareType = data[@"share_to"];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:string parameters:nil
+        progress:^(NSProgress * _Nonnull downloadProgress) {
+            //数据请求的进度
+        }
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         shareTitle = [responseObject objectForKey:@"share_desc"];
         NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
         newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
@@ -596,7 +630,7 @@
 
         } else{}
     }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
          }];
 }
 - (void)dealloc {
@@ -641,7 +675,7 @@
 //    
 //    shareType = data[@"share_to"];
 //    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        
 //        shareTitle = [responseObject objectForKey:@"share_desc"];

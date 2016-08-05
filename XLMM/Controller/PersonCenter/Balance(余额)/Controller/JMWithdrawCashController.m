@@ -8,9 +8,6 @@
 
 #import "JMWithdrawCashController.h"
 #import "MMClass.h"
-#import "Masonry.h"
-#import "UIViewController+NavigationBar.h"
-#import "AFNetworking.h"
 #import "TixianSucceedViewController.h"
 
 @interface JMWithdrawCashController ()<UITextFieldDelegate>
@@ -243,9 +240,11 @@
     _textFieldMoney = [self.moneyTextF.text floatValue];
     NSNumber *withdrawNum = [NSNumber numberWithFloat:_textFieldMoney];
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users/budget_cash_out", Root_URL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *param = @{@"cashout_amount":withdrawNum};
-    [manager POST:urlStr parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlStr parameters:param progress:^(NSProgress * _Nonnull uploadProgress) {
+         //数据请求的进度
+     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (!responseObject) {
             return ;
         }else {
@@ -263,7 +262,7 @@
             }
             self.moneyTextF.text = @"";
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
 
@@ -320,6 +319,7 @@
 }
 
 - (void)backClick:(UIButton *)btn {
+    self.block(_withDrawMoney);
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated{

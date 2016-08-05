@@ -8,12 +8,11 @@
 
 #import "JMMaMaCenterFansController.h"
 #import "MMClass.h"
-#import "UIViewController+NavigationBar.h"
 #import "JMNowFansController.h"
 #import "JMFetureFansController.h"
 #import "JMAboutFansController.h"
 
-#define BTNWIDTH (SCREENWIDTH/3)
+
 
 @interface JMMaMaCenterFansController () 
 
@@ -23,8 +22,8 @@
 @property (nonatomic, strong)NSMutableArray *tableViewArr;
 @property (nonatomic, strong)NSMutableArray *urlArr;
 
-@property (nonatomic, strong)UIPageViewController *pageControll;
-@property (nonatomic, strong)NSArray *pageContent;
+
+@property (nonatomic, strong)NSMutableArray *pageContent;
 @property (nonatomic, strong)NSMutableArray *btnArr;
 
 @end
@@ -32,12 +31,19 @@
 @implementation JMMaMaCenterFansController {
     NSInteger _pageCurrentIndex;
     NSInteger _currentIndex;
+    NSString *_badgeValue;
 }
 - (NSMutableArray *)btnArr {
     if (!_btnArr) {
         self.btnArr = [NSMutableArray arrayWithCapacity:0];
     }
     return _btnArr;
+}
+- (NSMutableArray *)pageContent {
+    if (_pageContent == nil) {
+        _pageContent = [NSMutableArray array];
+    }
+    return _pageContent;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -56,10 +62,10 @@
     
     [self createPageView];
     [self createFansBtn];
-    
+    _badgeValue = @"";
     //判断页数
     for (UIButton *btn in self.btnArr) {
-        if (btn.tag == 100) {
+        if (btn.tag == self.index) {
             [self titleBtnClickAction:btn];
             break;
         }
@@ -67,17 +73,27 @@
 
     
 }
+
 - (void)createPageView {
     self.pageControll = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageControll.view.frame = CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99);
     self.pageControll.view.userInteractionEnabled = YES;
     self.pageControll.dataSource = self;
     self.pageControll.delegate = self;
-    JMNowFansController *newFans = [[JMNowFansController alloc] init];
-    JMFetureFansController *fetureFans = [[JMFetureFansController alloc] init];
-    JMAboutFansController *aboutFans = [[JMAboutFansController alloc] init];
-    self.pageContent = @[newFans, fetureFans, aboutFans];
-    [self.pageControll setViewControllers:@[newFans] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
+    NSArray *classArr = [self classArr];
+    for (int i = 0; i < classArr.count; i++) {
+        NSString *className = [NSString stringWithFormat:@"%@",classArr[i]];
+        Class cls = NSClassFromString(className);
+        JMPageViewBaseController *VC = [[cls alloc] init];
+        VC.fansUrlString = self.fansUrlStr;
+        [self.pageContent addObject:VC];
+        
+    }
+//    JMNowFansController *newFans = [[JMNowFansController alloc] init];
+//    JMFetureFansController *fetureFans = [[JMFetureFansController alloc] init];
+//    JMAboutFansController *aboutFans = [[JMAboutFansController alloc] init];
+//    self.pageContent = @[newFans, fetureFans, aboutFans];
+    [self.pageControll setViewControllers:@[self.pageContent[0]] direction:(UIPageViewControllerNavigationDirectionForward) animated:YES completion:nil];
     [self addChildViewController:self.pageControll];
     [self.view addSubview:self.pageControll.view];
     [self.pageControll didMoveToParentViewController:self];
@@ -86,6 +102,15 @@
             ((UIScrollView *)v).delegate = self;
         }
     }
+    
+    
+    
+}
+- (NSArray *)classArr {
+    return @[@"JMNowFansController",@"JMFetureFansController",@"JMAboutFansController"];
+}
+- (NSArray *)titleArr {
+    return @[@"粉丝列表", @"未来粉丝", @"关于粉丝"];
 }
 - (void)createFansBtn {
     self.headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 35)];
@@ -98,10 +123,12 @@
     [self.btnView addSubview:btnlineView];
     [self.headerV addSubview:self.btnView];
     
-    NSArray *nameArr = @[@"粉丝列表", @"未来粉丝", @"关于粉丝"];
-    for (int i = 0; i < 3; i++) {
+    
+    NSArray *nameArr = [self titleArr];
+    CGFloat buttonW = SCREENWIDTH / nameArr.count;
+    for (int i = 0; i < nameArr.count; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(i * BTNWIDTH, 0, BTNWIDTH, 34);
+        btn.frame = CGRectMake(i * buttonW, 0, buttonW, 34);
         btn.titleLabel.font =  [UIFont systemFontOfSize: 14];
         [btn setTitle:nameArr[i] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor textDarkGrayColor] forState:UIControlStateNormal];
@@ -110,8 +137,12 @@
         [btn addTarget:self action:@selector(titleBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.btnView addSubview:btn];
         [self.btnArr addObject:btn];
+        
     }
     [self.view addSubview:self.headerV];
+}
+- (void)loadData {
+    
 }
 - (void)titleBtnClickAction:(UIButton *)btn {
     
