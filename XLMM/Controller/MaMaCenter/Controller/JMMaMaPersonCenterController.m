@@ -95,6 +95,13 @@
     }
     return _diction;
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [self loadfoldLineData];
+    [self loadDataSource];
+//    [self loadMaMaWeb];
+    [self loadMaMaMessage];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -103,9 +110,9 @@
     [self createHeaderView];
     [self createFooterView];
     [self loadfoldLineData];
-    [self loadDataSource];
+//    [self loadDataSource];
     [self loadMaMaWeb];
-    [self loadMaMaMessage];
+//    [self loadMaMaMessage];
 
 }
 - (void)loadDataSource {
@@ -136,7 +143,8 @@
     self.mamaCenterFooterView.mamaCenterModel = self.mamaCenterModel;
     
     // 账户金额
-    self.carryValue = [self.mamaCenterModel.cash_value floatValue];
+    NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[self.mamaCenterModel.cash_value floatValue]];
+    self.carryValue = [carryValueStr floatValue];
     self.activeValueNum = [NSNumber numberWithInteger:[self.mamaCenterModel.active_value_num integerValue]];
     self.fansNum = [NSNumber numberWithInteger:[self.mamaCenterModel.fans_num integerValue]];
     self.orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];
@@ -340,6 +348,7 @@
         [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 107) {
         JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+        renewVC.cashValue = self.carryValue;
         [self.navigationController pushViewController:renewVC animated:YES];
     }else {
     

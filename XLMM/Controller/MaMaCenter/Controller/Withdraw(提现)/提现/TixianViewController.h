@@ -26,7 +26,7 @@
 
 //- (IBAction)fabuClicked:(id)sender;
 
-@property (nonatomic, assign) float cantixianjine;
+@property (nonatomic, assign) CGFloat cantixianjine;
 @property (nonatomic, copy) NSString *name;
 
 @property (nonatomic, strong)NSNumber *carryNum;

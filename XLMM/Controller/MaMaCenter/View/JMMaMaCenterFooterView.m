@@ -70,12 +70,16 @@
 }
 - (void)setMessageDic:(NSDictionary *)messageDic {
     NSArray *resultsArr = messageDic[@"results"];
-    for (NSDictionary *dic in resultsArr) {
-        [self.titlesArray addObject:dic[@"title"]];
-        if ([dic[@"read"] boolValue]) {
-            self.messagePromptLabel.hidden = NO;
-        }else {
-            
+    if (resultsArr.count == 0) {
+        self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
+    }else {
+        for (NSDictionary *dic in resultsArr) {
+            [self.titlesArray addObject:dic[@"title"]];
+            if ([dic[@"read"] boolValue]) {
+                self.messagePromptLabel.hidden = NO;
+            }else {
+                
+            }
         }
     }
     [self.scrollView jm_reloadData];
@@ -105,31 +109,16 @@
     
     JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleVertical];
     self.scrollView = scrollView;
-    
     //代理和数据源
     scrollView.jm_scrollDataSource = self;
     scrollView.jm_scrollDelegate = self;
     //数据数组为1时是否关闭滚动
     scrollView.jm_isStopScrollForSingleCount = YES;
-    
     scrollView.jm_autoScrollInterval = 2.;
     [scrollView jm_registerClass:[JMContentRollView class]];
     
     [xlUniversityView addSubview:scrollView];
-//    self.scrollView.backgroundColor = [UIColor orangeColor];
-    
-//    UILabel *xlUniversityLabel = [UILabel new];
-//    [xlUniversityView addSubview:xlUniversityLabel];
-//    xlUniversityLabel.text = @"小鹿大学分享营销的科技殿堂";
-//    xlUniversityLabel.textColor = [UIColor buttonTitleColor];
-//    xlUniversityLabel.font = [UIFont systemFontOfSize:12.];
-//    
-//    UILabel *seeLabel = [UILabel new];
-//    [xlUniversityView addSubview:seeLabel];
-//    seeLabel.text = @"马上看看";
-//    seeLabel.textColor = [UIColor colorWithBlueColor];
-//    seeLabel.font = [UIFont systemFontOfSize:12.];
-    
+
     UIView *twoSectionView = [UIView new];
     [self addSubview:twoSectionView];
     twoSectionView.backgroundColor = [UIColor countLabelColor];
@@ -145,11 +134,7 @@
     UIView *bottomView = [UIView new];
     [self addSubview:bottomView];
     bottomView.backgroundColor = [UIColor countLabelColor];
-    
-    
-    
-    
-    
+
     kWeakSelf
     
     [oneSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -177,15 +162,6 @@
         make.height.mas_equalTo(@40);
         make.width.mas_equalTo(SCREENWIDTH - 60);
     }];
-    
-//    [xlUniversityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(promptImage.mas_right).offset(10);
-//        make.centerY.equalTo(xlUniversityView.mas_centerY);
-//    }];
-//    [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(xlUniversityView).offset(-15);
-//        make.centerY.equalTo(xlUniversityView.mas_centerY);
-//    }];
 
     [twoSectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(weakSelf);
@@ -305,8 +281,7 @@
     return self.titlesArray.count;
 }
 /**
- *
- *  @param contentView 更改为你自己创建的view类型，使用模型赋值，类似UITableView
+ *  类似UITableVIew
  */
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMContentRollView *)rollView {
     rollView.title = self.titlesArray[index];
@@ -314,7 +289,6 @@
 #pragma mark LPAutoScrollViewDelegate
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
     NSLog(@"%@", self.titlesArray[index]);
-    
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterViewScrollView:Index:)]) {
         [_delegate composeFooterViewScrollView:self Index:index];
     }

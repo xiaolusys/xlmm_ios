@@ -1573,22 +1573,24 @@ static NSString *kbrandCell = @"JMRootScrolCell";
        && (collectionView.tag <= TAG_COLLECTION_BRAND_END)){
         //NSLog(@"brand collection cellForItemAtIndexPath");
         JMRootScrolCell *cell = (JMRootScrolCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kbrandCell forIndexPath:indexPath];
+        // == 有问题 ????? == //
+        int index = 0;//JMRootgoodsCell
+        for(NSMutableArray *obj in self.brandDataArr)
+        {
+            //NSLog(@"%@",obj);
+            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
+                NSArray *goods = [obj copy];
+                if(goods.count > indexPath.row){
+                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
+                    [cell fillDataWithModel:model];
+                }
+                return cell;
+                
+            }
+            index++;
+        }
+        // == 有问题 ????? == //
         
-//        int index = 0;//JMRootgoodsCell
-//        for(NSMutableArray *obj in self.brandDataArr)
-//        {
-//            //NSLog(@"%@",obj);
-//            if(index == collectionView.tag - TAG_COLLECTION_BRAND){
-//                NSArray *goods = [obj copy];
-//                if(goods.count > indexPath.row){
-//                    BrandGoodsModel *model = [goods objectAtIndex:indexPath.row];
-//                    [cell fillDataWithModel:model];
-//                }
-//                return cell;
-//                
-//            }
-//            index++;
-//        }
         return cell;
     }
     else{

@@ -100,10 +100,10 @@
     _productID = productDic[@"id"];
     _orderID = renewDic[@"uuid"];
     
-    NSArray *payinfosArr = renewDic[@"payinfos"];
-    NSDictionary *walletCashDic = payinfosArr[0];
-    _walletCash = [walletCashDic[@"wallet_cash"] floatValue];
-    
+//    NSArray *payinfosArr = renewDic[@"payinfos"];
+//    NSDictionary *walletCashDic = payinfosArr[0];
+//    _walletCash = [walletCashDic[@"wallet_cash"] floatValue];
+    _walletCash = self.cashValue;
     
     NSArray *skusArr = _renewDic[@"normal_skus"];
     NSDictionary *renewDict = skusArr[_numCount];
