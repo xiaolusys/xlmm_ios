@@ -54,14 +54,14 @@
     }];
     
     [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(baseView).offset(-10);
+        make.right.equalTo(baseView).offset(-5);
         make.centerY.equalTo(baseView.mas_centerY);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(baseView.mas_centerY);
         make.left.equalTo(baseView);
-        make.right.equalTo(seeLabel.mas_left).offset(-10);
+        make.right.equalTo(seeLabel.mas_left).offset(-5);
         make.height.mas_equalTo(@40);
     }];
     
