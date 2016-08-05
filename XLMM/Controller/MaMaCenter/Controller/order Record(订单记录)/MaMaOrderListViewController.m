@@ -186,22 +186,18 @@
 #pragma mark -- 请求数据
 - (void)loadDate {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self.dataArr removeAllObjects];
         [self.dataDic removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
-
 }
 //加载更多
 - (void)loadMore {
@@ -210,19 +206,16 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.nextPage parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
 }
 

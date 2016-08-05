@@ -98,20 +98,17 @@
 }
 - (void)loadDataSource{
     NSString *string = [self urlStr];
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:string parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self.dataSource removeAllObjects];
         [self.sectionDataSource removeAllObjects];
         [self refetch:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)loadMore
@@ -121,19 +118,16 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:_urlStr parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         
         [self refetch:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)refetch:(NSDictionary *)data {
@@ -199,7 +193,7 @@
     JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
     orderDetailVC.allOrderModel = self.orderDetailModel;
     orderDetailVC.orderTid = self.orderDetailModel.tid;
-    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, self.orderDetailModel.goodsID];
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, self.orderDetailModel.goodsID];
  
     [self.navigationController pushViewController:orderDetailVC animated:YES];
 //    NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
@@ -210,7 +204,6 @@
 //        }
 //    }
 //    self.navigationController.viewControllers = marr;
-    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;

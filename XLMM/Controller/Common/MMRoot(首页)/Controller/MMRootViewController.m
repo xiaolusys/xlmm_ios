@@ -296,12 +296,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSLog(@"loginUpdateIsXiaoluMaMa ");
     
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:string parameters:self
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:self WithSuccess:^(id responseObject) {
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
         NSDictionary *dic = responseObject;
         if (!responseObject){
@@ -321,11 +316,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             self.navigationItem.rightBarButtonItem = nil;
             [users setBool:NO forKey:@"isXLMM"];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
         NSLog(@"get user profile failed.");
         self.navigationItem.rightBarButtonItem = nil;
         [users setBool:NO forKey:@"isXLMM"];
+    } Progress:^(float progress) {
+        
     }];
     [self isGetCoupon];
     
@@ -440,7 +437,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     frame = self.view.frame;
 }
 
-
 - (void)viewDidLoad
 {
     NSLog(@"MMRoot viewDidLoad");
@@ -540,33 +536,28 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self hidepopView];
         BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
         if (islogin) {
-                AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-                NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-                [manage GET:string parameters:nil
-                   progress:^(NSProgress * _Nonnull downloadProgress) {
-                       //数据请求的进度
-                   }
-                    success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    if (responseObject == nil) {
-                        return ;
-                    }else {
-                        NSInteger code = [responseObject[@"code"] integerValue];
-                        NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
-                        if (code == 0) {
-                            if (isPicked == 1) {
-                                [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
-                            }else {
-                                [self pickCoupon];
-                            }
+            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
+            [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+                if (responseObject == nil) {
+                    return ;
+                }else {
+                    NSInteger code = [responseObject[@"code"] integerValue];
+                    NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
+                    if (code == 0) {
+                        if (isPicked == 1) {
+                            [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                         }else {
-                            [SVProgressHUD showErrorWithStatus:@"请登录"];
+                            [self pickCoupon];
                         }
+                    }else {
+                        [SVProgressHUD showErrorWithStatus:@"请登录"];
                     }
-                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    
-                    
-                }];
-            
+                }
+            } WithFail:^(NSError *error) {
+                
+            } Progress:^(float progress) {
+                
+            }];
         }else {
             JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:logVC animated:YES];
@@ -579,13 +570,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 #pragma mark -- 判断用户是否领取优惠券
 - (void)isGetCoupon {
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-    [manage GET:string parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -595,29 +581,22 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                 if (isPicked == 0) {
                     [self returnPopView];
                 }else {
-//                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                    //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
                 [SVProgressHUD showErrorWithStatus:@"请登录"];
             }
             
         }
+    } WithFail:^(NSError *error) {
         
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+    } Progress:^(float progress) {
         
     }];
-    
 }
 - (void)pickCoupon {
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
-    [manage GET:string parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -628,7 +607,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                 [SVProgressHUD showErrorWithStatus:@"领取失败"];
             }
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }
@@ -670,23 +651,16 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)showPromotion{
     //网络请求海报
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
-    [manage GET:requestURL parameters:self
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:requestURL WithParaments:self WithSuccess:^(id responseObject) {
         [self.backScrollview.mj_header endRefreshing];
         if (!responseObject) return;
         [self fetchedPromotionData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //未登录处理
-        //        [self showDefaultView];
-        NSLog(@"get poster failed.");
+    } WithFail:^(NSError *error) {
         [self.backScrollview.mj_header endRefreshing];
+    } Progress:^(float progress) {
+        
     }];
-    
     //活动
     /*NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys", Root_URL];
      [manage GET:activityUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -1071,19 +1045,16 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSString *currentUrl = self.urlArr[self.currentIndex];
     NSInteger requestIndex = self.currentIndex;
     NSLog(@"goodsRequest currentUrl=%@ index=%ld",currentUrl ,(long)self.currentIndex);
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:currentUrl parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:currentUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         if(requestIndex != self.currentIndex){
             NSLog(@"user change currentindex %ld %ld", requestIndex, self.currentIndex);
             return;
         }
         [self goodsResult:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }
@@ -1164,12 +1135,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     self.collectionViewScrollview.scrollEnabled = NO;
     
     NSInteger requestIndex = self.currentIndex;
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         //在这个地方会有个异步场景，可能我在currentindex＝0时正在loadmore，此处应答还未回来时用户又做了横向滑动，currentindex改变了；
         //然后再回到这个回调，获得的currentidnex已经不是0了，导致刷新的是其它的collection。这里有2个修改方法：1是刷新时禁止横向滑动；
         //2是刷新时可以横向滑动，但是记录是刷新的哪个currentindex，如果当前的index和记录的不一致的话，此次刷新不做;使用方法1 2结合
@@ -1188,10 +1154,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         
         [self goodsResult:responseObject];
         self.collectionViewScrollview.scrollEnabled = YES;
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
         self.collectionViewScrollview.scrollEnabled = YES;
+    } Progress:^(float progress) {
+        
     }];
 }
 
@@ -1845,15 +1813,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                              @"openid":[dic objectForKey:@"openid"],
                              @"unionid":[dic objectForKey:@"unionid"],
                              @"devtype":LOGINDEVTYPE};
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    [manager POST:urlString parameters:newDic
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-        
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:newDic WithSuccess:^(id responseObject) {
         NSDictionary *result = responseObject;
         if (result.count == 0) return;
         if ([[result objectForKey:@"rcode"]integerValue] != 0) {
@@ -1862,10 +1822,11 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
         [userdefaults setBool:YES forKey:@"login"];
         [userdefaults synchronize];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-    
 }
 
 - (void)shoujizidongdenglu{
@@ -1875,33 +1836,19 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSString *username = [defaults objectForKey:kUserName];
     NSString *password = [defaults objectForKey:kPassWord];
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    
     //  NSLog(@"userName : %@, password : %@", username, password);
     
     
     NSDictionary *parameters = @{@"username":username,
                                  @"password":password
                                  };
-    
-    [manager POST:kLOGIN_URL parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              //  NSError *error;
-              //   NSLog(@"JSON: %@", responseObject);
-              //     NSLog(@"手机自动登录成功。。。。");
-              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              //     NSLog(@"Error: %@", error);
-              
-              
-          }];
-    
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kLOGIN_URL WithParaments:parameters WithSuccess:^(id responseObject) {
+          //     NSLog(@"手机自动登录成功。。。。");
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (void)autologin{
@@ -2087,12 +2034,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlString parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             label.text = @"0";
             dotView.hidden = YES;
@@ -2105,13 +2047,11 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         }else {
             [self cartViewUpdate:responseObject];
         }
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Progress:^(float progress) {
         
     }];
-    
-    
-    
 }
 
 - (void)cartViewUpdate:(NSDictionary *)dic {
@@ -2409,16 +2349,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 #pragma mark 版本 自动升级
 - (void)autoUpdateVersion{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:UPDATE_URLSTRING parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:UPDATE_URLSTRING WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self fetchedUpdateData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"Get app version fail.");
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 
@@ -2476,18 +2413,15 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark 网络请求得到地址信息
 - (void)loadAddressInfo {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:urlStr parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             return ;
         }else {
             [self addressData:responseObject];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }

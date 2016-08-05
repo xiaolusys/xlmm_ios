@@ -80,15 +80,12 @@
     }else {
         str = self.nextPage;
     }
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:str parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self fetchedData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }

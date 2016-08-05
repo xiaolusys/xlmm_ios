@@ -166,7 +166,7 @@
 #pragma mark --- 注册微信登录的通知
 - (void)viewWillAppear:(BOOL)animated {
     
-    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:@"login"];
+    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
     if (islogin) {
         // [self.navigationController popViewControllerAnimated:NO];
         // test ying's change
@@ -225,38 +225,25 @@
                              @"openid":[dic objectForKey:@"openid"],
                              @"unionid":[dic objectForKey:@"unionid"],
                              @"devtype":LOGINDEVTYPE};
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:newDic
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        
-        
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:newDic WithSuccess:^(id responseObject) {
         NSDictionary *result = responseObject;
         if (result.count == 0) return;
         if ([[result objectForKey:@"rcode"]integerValue] != 0) {
             [self alertMessage:[result objectForKey:@"msg"]];
             return;
         }
+        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+        [userdefaults setBool:YES forKey:kIsLogin];
+        [userdefaults synchronize];
         
         [self loginSuccessful];
         
-        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-        [userdefaults setBool:YES forKey:@"login"];
-        [userdefaults synchronize];
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-    
-    
-    
-    
-    
-    
 }
 #pragma mark --- 移除通知
 - (void)dealloc {
@@ -319,6 +306,8 @@
 - (void) loginSuccessful {
     [SVProgressHUD dismiss];
 //    [MobClick profileSignInWithPUID:@"playerID"];
+    
+    
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
@@ -328,31 +317,18 @@
 #pragma mark ---- 登录成功后获取Device
 - (void)setDevice{
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-    
-    NSLog(@"urlStr = %@", urlString);
-    NSLog(@"params = %@", params);
-    
-    [manager POST:urlString parameters:params
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              //  NSError *error;
-              NSLog(@"JSON: %@", responseObject);
-              NSString *user_account = [responseObject objectForKey:@"user_account"];
-              NSLog(@"user_account = %@", user_account);
-              if ([user_account isEqualToString:@""]) {
-                  
-              } else {
-                  [MiPushSDK setAccount:user_account];
-              }
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Error: %@", error);
-          }];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
+        NSString *user_account = [responseObject objectForKey:@"user_account"];
+        if ([user_account isEqualToString:@""]) {
+        } else {
+            [MiPushSDK setAccount:user_account];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (void)btnClick:(UIButton *)btn {

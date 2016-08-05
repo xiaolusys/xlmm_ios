@@ -480,29 +480,16 @@
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     
     NSLog(@"string = %@", string);
-    
-    [manager POST:string parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"apply_fee"];
-              self.refundPrice = [string floatValue];
-              self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", self.refundPrice];
-              self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
-              
-              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-    
-    
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSString *string = [responseObject objectForKey:@"apply_fee"];
+        self.refundPrice = [string floatValue];
+        self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", self.refundPrice];
+        self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 #pragma mark --TextViewDelegate
@@ -549,42 +536,20 @@
         number--;
         return;
     }
-    
-    //   http://192.168.1.31:9000/rest/v1/refunds
-    
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
                                  @"num": [NSNumber numberWithInt:number]
                                  };
-    NSLog(@"params = %@", parameters);
-    
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-    
-    NSLog(@"string = %@", string);
-    
-    [manager POST:string parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              NSString *string = [responseObject objectForKey:@"apply_fee"];
-              self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", [string floatValue]];
-              self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
-              
-              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-    
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSString *string = [responseObject objectForKey:@"apply_fee"];
+        self.refundPriceLabel.text = [NSString stringWithFormat:@"%.02f", [string floatValue]];
+        self.refundNumLabel.text = [NSString stringWithFormat:@"%d", number];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 - (IBAction)yuanyinClicked:(id)sender {
     
@@ -596,11 +561,7 @@
     [self performSelector:@selector(showReasonView) withObject:nil afterDelay:0.3f];
     
 //    [self showReasonView];
-    
-    
-    
-    
-    
+
 }
 
 #pragma mark - 保存图片至沙盒
@@ -763,13 +724,7 @@
                                  @"description":descStr,
                                  @"proof_pic":linkstr,
                                  };
-    
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage POST:urlString parameters:parameters
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:parameters WithSuccess:^(id responseObject) {
         NSDictionary *dic = responseObject;
         isChangeBtn = YES;
         if (dic.count == 0) return;
@@ -785,12 +740,13 @@
             [SVProgressHUD showErrorWithStatus:dic[@"info"]];
         }
         NSLog(@"refund return ok end");
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         isChangeBtn = NO;
         NSLog(@"refund return failed %@", error);
         [SVProgressHUD dismiss];
+    } Progress:^(float progress) {
+        
     }];
-
 }
 
 #pragma mark -- 弹出视图

@@ -35,25 +35,27 @@
     [self setUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentLeftMenuVC:) name:@"presentLeftMenuVC" object:nil];
+    
 }
-
+- (void)presentLeftMenuVC:(NSNotification *)sender {
+    [self setUserInfo];
+}
 - (void)setUserInfo{
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-        [manage GET:urlString parameters:nil
-           progress:^(NSProgress * _Nonnull downloadProgress) {
-               //数据请求的进度
-           }
-            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
             if (!responseObject) return;
             [self updateUserInfo:responseObject];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
             
         }];
     }
@@ -441,10 +443,10 @@
     }
 }
 
-- (void)updateMoneyLabel {
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    NSString *str = [user objectForKey:@"DrawCashM"];
-    self.accountLabel.text = str;
+- (void)updateMoneyLabel:(NSNotification *)center {
+//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//    NSString *str = [user objectForKey:@"DrawCashM"];
+    self.accountLabel.text = center.object;
 }
 @end
 

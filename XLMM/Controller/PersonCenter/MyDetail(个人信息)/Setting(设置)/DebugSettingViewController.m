@@ -280,13 +280,8 @@
     
     [serverip stringByAppendingString:@"/rest/v1/users/open_debug_for_app"];
     NSDictionary *newDic = @{@"debug_secret":pwd};
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:[NSString stringWithFormat:@"%@/rest/v1/users/open_debug_for_app", Root_URL] parameters:newDic
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/open_debug_for_app", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:newDic WithSuccess:^(id responseObject) {
         NSDictionary *dic = responseObject;
         NSString *rcode = [dic objectForKey:@"rcode"];
         if([rcode integerValue] == 0){
@@ -294,9 +289,9 @@
             [self logout];
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+            
             [defaults setBool:NO forKey:kIsLogin];
-
+            
             Root_URL = serverip;
             
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"switch to server %@", serverip]];
@@ -308,12 +303,11 @@
             NSLog(@"debug check failed");
             [SVProgressHUD showErrorWithStatus:@"debug check failed"];
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"debug check failed"];
+    } Progress:^(float progress) {
+        
     }];
-
-    
 }
 
 
@@ -329,13 +323,7 @@
     
     //   http://m.xiaolu.so/rest/v1/users/customer_logout
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) return;
         //注销账号
@@ -345,21 +333,58 @@
             [MiPushSDK unsetAccount:user_account];
             [user setObject:@"" forKey:@"user_account"];
         }
-        
         //发送通知修改NewLeft中的用户信息
         [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
+    } WithFail:^(NSError *error) {
         
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-//        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
-//        
-//        [alterView show];
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Progress:^(float progress) {
         
     }];
+
     
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

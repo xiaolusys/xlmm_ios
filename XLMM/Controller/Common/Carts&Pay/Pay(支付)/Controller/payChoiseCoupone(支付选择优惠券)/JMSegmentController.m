@@ -53,18 +53,15 @@
 - (void)loadCouponData {
     [SVProgressHUD showWithStatus:@"小鹿正在加载优惠券,稍等片刻哦~!"];
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/coupon_able?cart_ids=%@",Root_URL,self.cartID];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlStr parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchData:responseObject];
         [self createSegement];
         [SVProgressHUD dismiss];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"优惠券加载失败,请稍后重试~!"];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)createSegement {

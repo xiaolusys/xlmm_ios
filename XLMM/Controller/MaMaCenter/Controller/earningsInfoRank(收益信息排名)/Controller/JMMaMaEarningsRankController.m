@@ -56,18 +56,14 @@
     
 }
 - (void)loadDataSource {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.rankInfoUrl parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.rankInfoUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-
 }
 - (void)fetchData:(NSArray *)teamArr {
     if (self.isTeamEarningsRank == YES) {
@@ -84,15 +80,13 @@
     [self.tableView reloadData];
 }
 - (void)loadSelfInfoDataSource {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.selfInfoUrl parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.selfInfoUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchSelfInfoData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)fetchSelfInfoData:(NSDictionary *)selfInfoDic {

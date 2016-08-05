@@ -224,7 +224,11 @@
     
     button.selected = !button.selected;
     if (button.selected) {
-        self.moneyTextF.text = @"200.00";
+        if (200.00 - _withDrawMoney > 0.000001) {
+            self.moneyTextF.text = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
+        }else {
+            self.moneyTextF.text = @"200.00";
+        }
     }else {
         self.moneyTextF.text = @"";
     }
@@ -239,18 +243,18 @@
 - (void)withdrawSureButton:(UIButton *)button {
     _textFieldMoney = [self.moneyTextF.text floatValue];
     NSNumber *withdrawNum = [NSNumber numberWithFloat:_textFieldMoney];
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users/budget_cash_out", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *param = @{@"cashout_amount":withdrawNum};
-    [manager POST:urlStr parameters:param progress:^(NSProgress * _Nonnull uploadProgress) {
-         //数据请求的进度
-     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users/budget_cash_out", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:param WithSuccess:^(id responseObject) {
         if (!responseObject) {
             return ;
+            
         }else {
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
                 _withDrawMoney -= _textFieldMoney;
+                NSString *str = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"drawCashMoeny" object:str];
                 self.myBlanceLabel.text = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
                 TixianSucceedViewController *successVC = [[TixianSucceedViewController alloc] init];
                 successVC.tixianjine = _textFieldMoney;
@@ -262,10 +266,11 @@
             }
             self.moneyTextF.text = @"";
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-
 }
 
 - (void)showDrawResults:(NSDictionary *)results {
@@ -273,7 +278,6 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:desc delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
-
 
 #pragma mark -----UITextFieldDelegate
 //是否允许本字段结束编辑，允许-->文本字段会失去firse responder

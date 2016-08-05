@@ -59,16 +59,13 @@ static NSString *const cellIdentifier = @"YixuanCell";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/shop_product?page_size=200", Root_URL];
-    [[AFHTTPSessionManager manager] GET:url parameters:self
-                               progress:^(NSProgress * _Nonnull downloadProgress) {
-                                   //数据请求的进度
-                               }
-                                success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         [self dealData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-    
     [self.tableView setEditing:YES animated:YES];
 
     [self createRightItem];
@@ -247,75 +244,42 @@ static NSString *const cellIdentifier = @"YixuanCell";
     //[self.dataArr exchangeObjectAtIndex:newPath.row withObjectAtIndex:oldPath.row];
     ///rest/v1/pmt/cushoppros/change_pro_position
     NSString  *string = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/change_pro_position", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-  
-    
-    
-    
     NSDictionary *parameters = @{@"change_id":change_id,
                                  @"target_id":target_id
                                  };
     
    // NSLog(@"params = %@", parameters);
-    
-    [manager POST:string parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              //  NSError *error;
-         //     NSLog(@"JSON: %@", responseObject);
-             NSLog(@"%@", [responseObject objectForKey:@"message"]);
-              
-              if (newPath.row == self.dataArr.count - 1) {
-                  
-                  
-                  for (JMAlreadyChooseModel *model in self.dataArr) {
-                      NSLog(@"id = %@", model.goodsID);
-                  }
-                  //一个不需要交换位置。。0
-                  if (self.dataArr.count == 1) {
-                      return ;
-                  }
-                  NSDictionary *parameters = @{@"change_id":((JMAlreadyChooseModel *)self.dataArr[newPath.row - 1]).goodsID,
-                                               @"target_id":((JMAlreadyChooseModel *)self.dataArr[newPath.row]).goodsID
-                                               };
-                  
-                  // NSLog(@"params = %@", parameters);
-                  
-                  [manager POST:string parameters:parameters
-                       progress:^(NSProgress * _Nonnull downloadProgress) {
-                           //数据请求的进度
-                       }
-
-                        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                            //  NSError *error;
-                            //     NSLog(@"JSON: %@", responseObject);
-                            NSLog(@"%@", [responseObject objectForKey:@"message"]);
-                            
-                            
-                            
-                        }
-                        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                            //    NSLog(@"Error: %@", error);
-                            //
-                            
-                        }];
-              }
-
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-          //    NSLog(@"Error: %@", error);
-          //
-              
-          }];
-    
-    
-    
-   
-    
-  
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSLog(@"%@", [responseObject objectForKey:@"message"]);
+        
+        if (newPath.row == self.dataArr.count - 1) {
+            
+            
+            for (JMAlreadyChooseModel *model in self.dataArr) {
+                NSLog(@"id = %@", model.goodsID);
+            }
+            //一个不需要交换位置。。0
+            if (self.dataArr.count == 1) {
+                return ;
+            }
+            NSDictionary *parameters = @{@"change_id":((JMAlreadyChooseModel *)self.dataArr[newPath.row - 1]).goodsID,
+                                         @"target_id":((JMAlreadyChooseModel *)self.dataArr[newPath.row]).goodsID
+                                         };
+            
+            // NSLog(@"params = %@", parameters);
+            [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+                NSLog(@"%@", [responseObject objectForKey:@"message"]);
+            } WithFail:^(NSError *error) {
+                
+            } Progress:^(float progress) {
+                
+            }];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -337,18 +301,13 @@ static NSString *const cellIdentifier = @"YixuanCell";
     NSArray *rows = [NSArray arrayWithObject:indexPath];
     [self.dataArr removeObject:cell.model];
     [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationRight];
-    
-    [[AFHTTPSessionManager manager] POST:url parameters:parameters
-     
-    progress:^(NSProgress * _Nonnull downloadProgress) {
-        //数据请求的进度
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:url WithParaments:parameters WithSuccess:^(id responseObject) {
         NSLog(@"res = %@", responseObject);
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         NSLog(@"店铺－－Error: %@", error);
+    } Progress:^(float progress) {
+        
     }];
-
 }
 
 
