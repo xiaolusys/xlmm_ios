@@ -311,25 +311,18 @@
 //        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.urlString]];
 //        [self performSelectorOnMainThread:@selector(fetchedDetailsData:)withObject:data waitUntilDone:YES];
 //    });
-    
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:self.urlString parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"-----------------%@", responseObject);
-//        [self createContentView];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)  {
-//            [MMLoadingAnimation dismissLoadingView];
+            //            [MMLoadingAnimation dismissLoadingView];
             cartsButton.hidden = NO;
             return;
         }
         [self fetchedDetailsData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-//    [self createContentView];
 }
 
 - (void)fetchedDetailsData:(NSDictionary *)dic{
@@ -484,53 +477,17 @@
         
         //异步进行网络请求
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/share/product?product_id=%@", Root_URL, itemID];
-        AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-        [manage GET:string parameters:nil
-           progress:^(NSProgress * _Nonnull downloadProgress) {
-               //数据请求的进度
-           }
-            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
             shareDic = responseObject;
             self.titleStr = [shareDic objectForKey:@"title"];
             self.des = [shareDic objectForKey:@"desc"];
             self.url = [shareDic objectForKey:@"share_link"];
-
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"error-------%@", error);
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
+            
         }];
-                                                
-        
-//        self.titleStr = [shareDic objectForKey:@"title"];
-//        self.des = [shareDic objectForKey:@"desc"];
-//        self.url = [shareDic objectForKey:@"share_link"];
-        
-        /**
-         *  {
-         "active_at" = "2015-12-19";
-         created = "2015-12-19T13:30:19";
-         desc = "
-         \n\U5546\U54c1\U5165\U53e3\Uff1a\U3000http://m.xiaolumeimei.com/pages/shangpinxq.html?id=12955&mm_linkid=44";
-         id = 2;
-         "share_img" = "https://mmbiz.qlogo.cn/mmbiz/ZYmW1WlFwHyRiawU1eHrcIrl43QWOrIAuib4Tdp8qnFRRHMPkgln5kluuSeMQWHvz5Cyd1ic8A1sMI81lH2yWJaLA/0?wx_fmt=png%3FimageMogr2%2Fthumbnail%2F108%2Fquality%2F80%2Fformat%2Fjpg%2Fcrop%2F108x108%2F";
-         "share_link" = "http://m.xiaolumeimei.com/m/44?next=/pages/shangpinxq.html%3Fid%3D12955%26mm_linkid%3D44";
-         status = 1;
-         title = "\U79d2\U6740 \U5927\U5634\U7334\U7eaf\U68c9\U6bdb\U5708\U8fde\U5e3d\U5f00\U886b\U5916\U5957/\U7070\U8272";
-         url = "http://m.xiaolumeimei.com/rest/v1/share/2";
-         }
-         
-         {
-         "active_dec" = "\U56e4\U793c\U597d\U65f6\U673a\Uff0c\U5c16\U8d27\U63d0\U524d\U8d2d\Uff0c\U5907\U597d\U516d\U4e00\U793c\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U6211\U7231\U4f60\Uff5e";
-         id = 9;
-         "qrcode_link" = "http://m.xiaolumeimei.com/sale/promotion/ercode/?mama_id=44";
-         "share_icon" = "http://7xrst8.com1.z0.glb.clouddn.com/fx.png";
-         "share_link" = "http://m.xiaolumeimei.com/sale/promotion/join/9/";
-         "share_type" = link;
-         title = "\U516d\U4e00\U63d0\U524d\U8d2d\Uff01\U6b22\U4e50\U5927Fun\U9001\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U7231\U4f60~";
-         }
-         
-         *
-         *  @return
-         */
+
     }
 }
 - (void)createKuaiZhaoImage{
@@ -1009,53 +966,45 @@
         NSDictionary *dict = @{@"item_id": itemID};
 //        [MobClick event:@"purchase" attributes:dict];
         
-        
-        [manager POST:kCart_URL parameters:parameters
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                 NSLog(@"JSON: %@", responseObject);
-                  [self myAnimation];
-
-            }
-            failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-         //   NSLog(@"Error: %@", error);
-         //     NSLog(@"error:, --.>>>%@", error.description);
-              NSDictionary *dic = [error userInfo];
-              NSLog(@"dic = %@", dic);
-              NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
-              
-              __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
-              NSLog(@"%@",str);
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
+            [self myAnimation];
+        } WithFail:^(NSError *error) {
+            NSDictionary *dic = [error userInfo];
+            NSLog(@"dic = %@", dic);
+            NSLog(@"error = %@", [dic objectForKey:@"com.alamofire.serialization.response.error.data"]);
+            
+            __unused NSString *str = [[NSString alloc] initWithData:[dic objectForKey:@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",str);
+            
+            NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *detail = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSString *detailString = [detail objectForKey:@"detail"];
+            if ([detailString isEqualToString:@"Authentication credentials were not provided."]) {
+                NSLog(@"login");
+                JMLogInViewController *login = [[JMLogInViewController alloc] init];
+                [self.navigationController pushViewController:login animated:YES];
                 
-                NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-                NSDictionary *detail = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                NSString *detailString = [detail objectForKey:@"detail"];
-                if ([detailString isEqualToString:@"Authentication credentials were not provided."]) {
-                    NSLog(@"login");
-                    JMLogInViewController *login = [[JMLogInViewController alloc] init];
-                    [self.navigationController pushViewController:login animated:YES];
-                    
-                    return ;
-                }
-              UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 30)];
-              view.backgroundColor = [UIColor darkGrayColor];
-              view.layer.cornerRadius = 4;
-              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
-              label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
-              label.textAlignment = NSTextAlignmentCenter;
-              label.textColor = [UIColor buttonDisabledBorderColor];
-              label.font = [UIFont systemFontOfSize:14];
-              [view addSubview:label];
-              [self.view addSubview:view];
-              
-              
-              [UIView animateWithDuration:1.0 animations:^{
-                  view.alpha = 0;
-              } completion:^(BOOL finished) {
-                  [view removeFromSuperview];
-              }];
+                return ;
+            }
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH/2 - 80, 200, 160, 30)];
+            view.backgroundColor = [UIColor darkGrayColor];
+            view.layer.cornerRadius = 4;
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 30)];
+            label.text = @"加入购物车失败，请检查网络或者注销后重新登录。";
+            label.textAlignment = NSTextAlignmentCenter;
+            label.textColor = [UIColor buttonDisabledBorderColor];
+            label.font = [UIFont systemFontOfSize:14];
+            [view addSubview:label];
+            [self.view addSubview:view];
+            
+            
+            [UIView animateWithDuration:1.0 animations:^{
+                view.alpha = 0;
+            } completion:^(BOOL finished) {
+                [view removeFromSuperview];
+            }];
+        } Progress:^(float progress) {
+            
         }];
     }
 }
@@ -1092,13 +1041,7 @@
          //view.frame = CGRectMake(30, height-80, 16, 16);
      } completion:^(BOOL finished) {
         [view removeFromSuperview];
-         
-         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-         [manager GET:kCart_Number_URL parameters:nil
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+         [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_Number_URL WithParaments:nil WithSuccess:^(id responseObject) {
              if (!responseObject) {
                  NSLog(@"kCart_Number_URL response nil");
                  [self createTimeCartView];
@@ -1112,16 +1055,14 @@
                      NSString *strNum = [NSString stringWithFormat:@"%ld", (long)goodsCount];
                      countLabel.text = strNum;
                  }
-
+                 
                  [self createTimeCartView];
              }
-             
-         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             NSLog(@"kCart_Number_URL response error");
+         } WithFail:^(NSError *error) {
              [self createTimeCartView];
+         } Progress:^(float progress) {
+             
          }];
-
-         
 //         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
 //         if (data != nil) {
 //             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -1140,12 +1081,7 @@
 
 - (void)createTimeCartView{
 //    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:kCart_Number_URL parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_Number_URL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             NSLog(@"kCart_Number_URL response nil");
         }else {
@@ -1179,13 +1115,13 @@
                     }];
                 }
             }
-
+            
         }
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"kCart_Number_URL response error");
+    } Progress:^(float progress) {
+        
     }];
-
 }
 
 - (void)createTimeLabel{
@@ -1438,6 +1374,40 @@
 
 @end
 
+/**
+ *
+ 
+ //        self.titleStr = [shareDic objectForKey:@"title"];
+ //        self.des = [shareDic objectForKey:@"desc"];
+ //        self.url = [shareDic objectForKey:@"share_link"];
+ 
+ 
+ *  {
+ "active_at" = "2015-12-19";
+ created = "2015-12-19T13:30:19";
+ desc = "
+ \n\U5546\U54c1\U5165\U53e3\Uff1a\U3000http://m.xiaolumeimei.com/pages/shangpinxq.html?id=12955&mm_linkid=44";
+ id = 2;
+ "share_img" = "https://mmbiz.qlogo.cn/mmbiz/ZYmW1WlFwHyRiawU1eHrcIrl43QWOrIAuib4Tdp8qnFRRHMPkgln5kluuSeMQWHvz5Cyd1ic8A1sMI81lH2yWJaLA/0?wx_fmt=png%3FimageMogr2%2Fthumbnail%2F108%2Fquality%2F80%2Fformat%2Fjpg%2Fcrop%2F108x108%2F";
+ "share_link" = "http://m.xiaolumeimei.com/m/44?next=/pages/shangpinxq.html%3Fid%3D12955%26mm_linkid%3D44";
+ status = 1;
+ title = "\U79d2\U6740 \U5927\U5634\U7334\U7eaf\U68c9\U6bdb\U5708\U8fde\U5e3d\U5f00\U886b\U5916\U5957/\U7070\U8272";
+ url = "http://m.xiaolumeimei.com/rest/v1/share/2";
+ }
+ 
+ {
+ "active_dec" = "\U56e4\U793c\U597d\U65f6\U673a\Uff0c\U5c16\U8d27\U63d0\U524d\U8d2d\Uff0c\U5907\U597d\U516d\U4e00\U793c\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U6211\U7231\U4f60\Uff5e";
+ id = 9;
+ "qrcode_link" = "http://m.xiaolumeimei.com/sale/promotion/ercode/?mama_id=44";
+ "share_icon" = "http://7xrst8.com1.z0.glb.clouddn.com/fx.png";
+ "share_link" = "http://m.xiaolumeimei.com/sale/promotion/join/9/";
+ "share_type" = link;
+ title = "\U516d\U4e00\U63d0\U524d\U8d2d\Uff01\U6b22\U4e50\U5927Fun\U9001\Uff0c\U5bf9\U5b9d\U5b9d\U8bf4\U7231\U4f60~";
+ }
+ 
+ *
+ *  @return
+ */
 
 
 

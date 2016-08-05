@@ -26,10 +26,12 @@
 #import "MaMaHuoyueduViewController.h"
 #import "JMMaMaEarningsRankController.h"
 #import "JMWithdrawShortController.h"
+#import "JMShareView.h"
+#import "JMPopView.h"
+#import "JMNewcomerTaskController.h"
+#import "JMPopViewAnimationSpring.h"
 
-
-
-@interface JMMaMaPersonCenterController ()<UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate>
+@interface JMMaMaPersonCenterController ()<JMNewcomerTaskControllerDelegate,JMShareViewDelegate,UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) JMMaMaCenterHeaderView *mamaCenterHeaderView;
@@ -55,7 +57,7 @@
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 /**
- *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口
+ *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口,妈妈消息滚动视图
  */
 @property (nonatomic, strong)NSString *orderRecord;
 @property (nonatomic, strong)NSString *earningsRecord;
@@ -66,17 +68,39 @@
 @property (nonatomic, copy) NSString *boutiqueActiveWebUrl;
 @property (nonatomic, copy) NSString *renewWebUrl;
 @property (nonatomic, strong)NSString *eventLink;
+@property (nonatomic, strong)NSString *messageUrl;
+
+@property (nonatomic, strong) JMNewcomerTaskController *newcomerTask;
+
+@property (nonatomic, strong) JMShareView *cover;
+@property (nonatomic, strong) JMPopView *menu;
+
 
 @end
 
+
 @implementation JMMaMaPersonCenterController {
     NSString *_mamaID;
+}
+- (JMNewcomerTaskController *)newcomerTask {
+    if (_newcomerTask == nil) {
+        _newcomerTask = [[JMNewcomerTaskController alloc] init];
+        _newcomerTask.delegate = self;
+    }
+    return _newcomerTask;
 }
 - (NSMutableDictionary *)diction {
     if (!_diction) {
         _diction = [NSMutableDictionary dictionary];
     }
     return _diction;
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [self loadfoldLineData];
+    [self loadDataSource];
+//    [self loadMaMaWeb];
+    [self loadMaMaMessage];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,25 +110,24 @@
     [self createHeaderView];
     [self createFooterView];
     [self loadfoldLineData];
-    [self loadDataSource];
+//    [self loadDataSource];
     [self loadMaMaWeb];
-}
+//    [self loadMaMaMessage];
 
+}
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:str parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
             [self updateMaMaHome:responseObject];
             [self.tableView reloadData];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 //新接口数据
@@ -120,7 +143,8 @@
     self.mamaCenterFooterView.mamaCenterModel = self.mamaCenterModel;
     
     // 账户金额
-    self.carryValue = [self.mamaCenterModel.cash_value floatValue];
+    NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[self.mamaCenterModel.cash_value floatValue]];
+    self.carryValue = [carryValueStr floatValue];
     self.activeValueNum = [NSNumber numberWithInteger:[self.mamaCenterModel.active_value_num integerValue]];
     self.fansNum = [NSNumber numberWithInteger:[self.mamaCenterModel.fans_num integerValue]];
     self.orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];
@@ -129,39 +153,75 @@
     //精选活动链接
     self.eventLink = self.mamaCenterModel.mama_event_link;
     
+    [self newcomerTaskData:_mamaID];
+    
 }
-
+- (void)newcomerTaskData:(NSString *)mamaID {
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.31:9000/rest/v1/pmt/xlmm/%@/new_mama_task_info",mamaID];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        [self newcomerData:responseObject];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+    
+}
+- (void)newcomerData:(NSDictionary *)newcomerDic {
+    NSDictionary *configDic = newcomerDic[@"config"];
+    BOOL isPOP = [configDic[@"page_pop"] boolValue];
+    if (isPOP) {
+        // 测试弹出框
+        JMShareView *cover = [JMShareView show];
+        self.cover = cover;
+        cover.delegate = self;
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, 0, SCREENWIDTH * 0.9, SCREENWIDTH * 1.35)];
+        self.menu = menu;
+        menu.contentView = self.newcomerTask.view;
+        self.newcomerTask.newsTaskArr = newcomerDic[@"data"];
+        [JMPopViewAnimationSpring showView:menu overlayView:cover];
+    }else {
+    }
+}
 - (void)loadfoldLineData {
     NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/dailystats?from=0&days=14", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:chartUrl parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:chartUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
         NSArray *arr = responseObject[@"results"];
         if (arr.count == 0)return;
         self.mamaCenterHeaderView.mamaResults = arr;
-//        [self endRefresh];
+        //        [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)loadMaMaWeb {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:str parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
             [self mamaWebViewData:responseObject];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+}
+- (void)loadMaMaMessage {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/message/self_list",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        [self mamaMesageData:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
     }];
 }
 // MaMaWebView跳转链接
@@ -178,8 +238,11 @@
     self.fansWebUrl = extraDict[@"fans_explain"];         // --> 粉丝二维码
     self.boutiqueActiveWebUrl = extraDict[@"act_info"];   // --> 精品活动
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
+    self.messageUrl = extraDict[@"notice"];
     
-    
+}
+- (void)mamaMesageData:(NSDictionary *)messageDic {
+    self.mamaCenterFooterView.messageDic = messageDic;
 }
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
@@ -201,6 +264,7 @@
     self.mamaCenterFooterView = mamaCenterFooterView;
     self.tableView.tableFooterView = self.mamaCenterFooterView;
     self.mamaCenterFooterView.delegate = self;
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 0;
@@ -284,6 +348,7 @@
         [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 107) {
         JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+        renewVC.cashValue = self.carryValue;
         [self.navigationController pushViewController:renewVC animated:YES];
     }else {
     
@@ -303,28 +368,9 @@
  110 === > 访客记录
  */
 - (void)composeMaMaCenterFooterView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
-
-    if (index == 100 || index == 107) {
-        if (self.boutiqueActiveWebUrl == nil || self.boutiqueActiveWebUrl.length == 0) {
-            [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
-            return;
-        }
-        WebViewController *activity = [[WebViewController alloc] init];
-        //    _diction = nil;
-        NSString *active = @"myInvite";
-        NSString *titleName = @"精品活动";
-        [self.diction setValue:self.boutiqueActiveWebUrl forKey:@"web_url"];
-        [self.diction setValue:active forKey:@"type_title"];
-        [self.diction setValue:titleName forKey:@"name_title"];
-        activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
-        activity.isShowNavBar = true;
-        activity.isShowRightShareBtn = true;
-        activity.share_model.share_link = self.boutiqueActiveWebUrl;
-        activity.share_model.title = @"精品活动";
-        activity.share_model.desc = @"更多精选活动,尽在小鹿美美~~";
-        activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
-        activity.share_model.share_type = @"link";
-        [self.navigationController pushViewController:activity animated:YES];
+    // index == 100 || 
+    if (index == 107) {
+        [self xiaoluUniversity];
     }else if (index == 101) {
         MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
         orderList.orderRecord = self.orderRecord;
@@ -375,6 +421,52 @@
     
     }
 }
+- (void)coverDidClickCover:(JMShareView *)cover {
+    [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
+    [JMPopView hide];
+    
+}
+#pragma mark MaMa新手任务弹出框
+- (void)composeNewcomerTask:(JMNewcomerTaskController *)taskVC Index:(NSInteger)index {
+    if (index == 100) {
+        [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
+        [JMPopView hide];
+    }else if (index == 101) {
+        [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
+        [JMPopView hide];
+        [self xiaoluUniversity];
+    }else {
+        
+    }
+}
+#pragma mark 妈妈消息列表点击事件
+- (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
+    NSLog(@"%ld=========index",index);
+    [self xiaoluUniversity];
+}
+- (void)xiaoluUniversity {
+    if (self.boutiqueActiveWebUrl == nil || self.boutiqueActiveWebUrl.length == 0) {
+        [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
+        return;
+    }
+    WebViewController *activity = [[WebViewController alloc] init];
+    //    _diction = nil;
+    NSString *active = @"myInvite";
+    NSString *titleName = @"精品活动";
+    [self.diction setValue:self.boutiqueActiveWebUrl forKey:@"web_url"];
+    [self.diction setValue:active forKey:@"type_title"];
+    [self.diction setValue:titleName forKey:@"name_title"];
+    activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
+    activity.isShowNavBar = true;
+    activity.isShowRightShareBtn = true;
+    activity.share_model.share_link = self.boutiqueActiveWebUrl;
+    activity.share_model.title = @"精品活动";
+    activity.share_model.desc = @"更多精选活动,尽在小鹿美美~~";
+    activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
+    activity.share_model.share_type = @"link";
+    [self.navigationController pushViewController:activity animated:YES];
+}
+
 @end
 
 

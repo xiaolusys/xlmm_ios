@@ -180,23 +180,19 @@
 //    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/bang_mobile_code", Root_URL];
     NSLog(@"TSendCode_URL = %@", TSendCode_URL);
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *parameters = @{@"mobile":phoneStr, @"action":@"bind"};
     NSLog(@"parameters = %@", parameters);
-    
-    [manager POST:TSendCode_URL parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        //数据请求的进度
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              if (!responseObject) return;
-              
-              UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-              [alterView show];
-              if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) return;
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Error: %@", error);
-              
-          }];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TSendCode_URL WithParaments:parameters WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alterView show];
+        if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) return;
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
     NSLog(@"phoneNumber = %@", phoneStr);
     self.codeButton.enabled = NO;
     myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
@@ -246,11 +242,7 @@
 
     NSDictionary *parameters = @{@"mobile": self.phoneTextField.text, @"action":@"bind", @"verify_code":self.codeTextField.text};
     NSLog(@"parameters = %@", parameters);
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:TVerifyCode_URL parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        //数据请求的进度
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TVerifyCode_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -258,7 +250,9 @@
             return;
         }
         [self.navigationController popToRootViewControllerAnimated:YES];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }

@@ -192,8 +192,6 @@
     NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
 
     if (num == 1 && phoneNumber.length == 11) {
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        
         NSDictionary *parameters = nil;
         
         NSString *stringurl = TSendCode_URL;;
@@ -214,26 +212,19 @@
         
         NSLog(@"url = %@", stringurl);
         NSLog(@"paramters = %@", parameters);
-        
-        [manager POST:stringurl parameters:parameters
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                  
-                  NSInteger nums = [[responseObject objectForKey:@"rcode"] integerValue];
-                  
-                  if (nums == 0) {
-                      [self startCountingDown];
-                  }else {
-                      [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
-                  }
-                  
-                  
-              }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                  [SVProgressHUD showErrorWithStatus:@"登录失败"];
-                  NSLog(@"Error: %@", error);
-              }];
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringurl WithParaments:parameters WithSuccess:^(id responseObject) {
+            NSInteger nums = [[responseObject objectForKey:@"rcode"] integerValue];
+            
+            if (nums == 0) {
+                [self startCountingDown];
+            }else {
+                [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
+            }
+        } WithFail:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"登录失败"];
+        } Progress:^(float progress) {
+            
+        }];
     }else {
         [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
     }
@@ -377,7 +368,6 @@
     NSString *vcode = self.codeTextField.text;
 
     NSDictionary *parameters = nil;
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
     }else if ([self.config[@"isRegister"] boolValue]){
@@ -387,19 +377,14 @@
     }else if ([self.config[@"isUpdateMobile"] boolValue]) {
         parameters = @{@"mobile":phoneNumber, @"action":@"change_pwd", @"verify_code":vcode};
     }
-    
-    
-    [manager POST:TVerifyCode_URL parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TVerifyCode_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"-------%@", error);
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
-    
 }
 
 - (void)verifyAfter:(NSDictionary *)dic {

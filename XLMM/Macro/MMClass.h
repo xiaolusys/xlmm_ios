@@ -18,7 +18,7 @@
 #import "NSString+URL.h"
 #import <MJRefresh.h>
 #import <FMDB.h>
-#import "JMHttpRequest.h"
+#import "JMHTTPManager.h"
 
 #import "UMMobClick/MobClick.h"
 

@@ -208,7 +208,7 @@
         //            XiangQingViewController *xiangqingVC = [[XiangQingViewController alloc] initWithNibName:@"XiangQingViewController" bundle:nil];
         
         // xiangqingVC.dingdanModel = [dataArray objectAtIndex:indexPath.row];
-        orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@", Root_URL, firstvalue];
+        orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, firstvalue];
         [vc.navigationController pushViewController:orderDetailVC animated:YES];
     }
 

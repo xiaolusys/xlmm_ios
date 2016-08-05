@@ -8,7 +8,6 @@
 
 #import "Account1ViewController.h"
 #import "MMClass.h"
-#import "AFHTTPSessionManager.h"
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"
@@ -42,6 +41,7 @@ static NSString *identifier = @"AccountCell";
 @implementation Account1ViewController {
     NSMutableArray *_imageArray;
     UIView *emptyView;
+    CGFloat accountMoneyValue;
 }
 
 
@@ -74,7 +74,6 @@ static NSString *identifier = @"AccountCell";
 }
 
 
-
 - (void)updateMoneyLabel{
    NSUserDefaults *drawCashM = [NSUserDefaults standardUserDefaults];
     NSString *str = [drawCashM objectForKey:@"DrawCashM"];
@@ -93,7 +92,7 @@ static NSString *identifier = @"AccountCell";
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     
-    
+    accountMoneyValue = [self.accountMoney floatValue];
 }
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
@@ -123,21 +122,17 @@ static NSString *identifier = @"AccountCell";
 #pragma mark 数据请求
 - (void)loadDataSource {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/users/get_budget_detail", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self.dataArr removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
-
 }
 - (void)loadMore {
     if ([self.nextPage class] == [NSNull class]) {
@@ -145,19 +140,16 @@ static NSString *identifier = @"AccountCell";
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.nextPage parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+    
     }];
 }
 - (void)dataAnalysis:(NSDictionary *)data {
@@ -246,6 +238,7 @@ static NSString *identifier = @"AccountCell";
 
 #pragma mark --邀请好友
 - (void)backBtnClicked:(UIButton *)button{
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

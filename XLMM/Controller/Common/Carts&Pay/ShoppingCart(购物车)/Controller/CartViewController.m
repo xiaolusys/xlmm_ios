@@ -106,15 +106,13 @@
 }
 - (void)downloadData {
     [SVProgressHUD dismiss];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:kCart_URL parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchedCartData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)fetchedCartData:(NSArray *)careArr {
@@ -139,15 +137,13 @@
 }
 - (void)downloadHistoryData{
     [SVProgressHUD dismiss];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:kCart_History_URL parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchedHistoryCartData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)fetchedHistoryCartData:(NSArray *)array {
@@ -380,28 +376,19 @@
 - (void)deleteCatr{
     self.frontView.hidden = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,deleteModel.cartID];
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [self downloadData];
         [self downloadHistoryData];
-        
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
-        NSLog(@"data = %@", data);
         if (data != nil) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSLog(@"dic = %@", dic);
             __unused NSInteger count = [[dic objectForKey:@"result"] integerValue];
-            NSLog(@"count = %ld", (long)count);
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-
     
 }
 - (void)buyOneGood{
@@ -431,18 +418,13 @@
     [SVProgressHUD showWithStatus:@"加载中..."];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              [self downloadData];
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-          }
-     ];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        [self downloadData];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 /**
  *  添加一件商品
@@ -451,22 +433,14 @@
    [SVProgressHUD showWithStatus:@"加载中..."];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              [self downloadData];
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              [SVProgressHUD showErrorWithStatus:@"商品库存不足"];
-              [self downloadData];
-        }
-     ];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        [self downloadData];
+    } WithFail:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"商品库存不足"];
+        [self downloadData];
+    } Progress:^(float progress) {
+        
+    }];
 }
 - (void)deleteCartView:(CartListModel *)cartModel{
     deleteModel = cartModel;
@@ -492,12 +466,7 @@
     [self.myView removeFromSuperview];
     self.frontView.hidden = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,deleteModel.cartID];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [self downloadData];
         [self downloadHistoryData];
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:kCart_Number_URL]];
@@ -513,7 +482,9 @@
                 
             }
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
     
@@ -533,35 +504,27 @@
 #pragma mark ---- 重新购买按钮点击
 - (void)reBuyAddCarts:(CartListModel *)model{
     [MobClick event:@"buy_again_click"];
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
                                  @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID]
                                  };
-
-    [manager POST:kCart_URL parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              //[self myAnimation];
-              NSInteger codeNum = [responseObject[@"code"] integerValue];
-              if (codeNum == 0) {
-                  [self downloadData];
-                  [self downloadHistoryData];
-                  if (self.dataArray.count >= 18) {
-                      NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
-                      [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
-                  }
-              }else {
-                  [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
-              }
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              [SVProgressHUD showErrorWithStatus:@"加入购物车失败，请检查网络或者注销后重新登录。"];
-              
-          }];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSInteger codeNum = [responseObject[@"code"] integerValue];
+        if (codeNum == 0) {
+            [self downloadData];
+            [self downloadHistoryData];
+            if (self.dataArray.count >= 18) {
+                NSIndexPath *indexpath = [NSIndexPath indexPathForItem:0 inSection:0];
+                [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
+            }
+        }else {
+            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+        }
+    } WithFail:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"加入购物车失败，请检查网络或者注销后重新登录。"];
+    } Progress:^(float progress) {
+        
+    }];
 }
 #pragma mark == 点击进入商品详情
 - (void)composeImageTap:(CartListModel *)model {

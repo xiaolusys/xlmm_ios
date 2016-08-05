@@ -77,7 +77,6 @@
     
     
     NSLog(@"注册");
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *phoneNumber = _numberTextField.text;
     NSString *validCode = _passwordTextField.text;
     NSString *password1 = _setPasswordTextField.text;
@@ -94,64 +93,51 @@
     
     NSString *stringUrl = [NSString stringWithFormat:@"%@/rest/v1/register/check_code_user", Root_URL];
     NSLog(@"url = %@", stringUrl);
-    [manager POST:stringUrl parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            //  NSError *error;
-              NSLog(@"JSON: %@", responseObject);
-                          // [self.navigationController popViewControllerAnimated:YES];
-         
-              if (![self.setPasswordTextField.text isEqualToString:self.resetPasswordTextField.text]) {
-                  self.passwordLabel.text = @"两次密码输入不一样，请重新输入!";
-                  self.passwordLabel.hidden = NO;
-                  return ;
-              }
-              int result = [[responseObject objectForKey:@"result"] intValue];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringUrl WithParaments:parameters WithSuccess:^(id responseObject) {
+        if (![self.setPasswordTextField.text isEqualToString:self.resetPasswordTextField.text]) {
+            self.passwordLabel.text = @"两次密码输入不一样，请重新输入!";
+            self.passwordLabel.hidden = NO;
+            return ;
+        }
+        int result = [[responseObject objectForKey:@"result"] intValue];
+        
+        NSLog(@"result = %d", result);
+        if (result == 7) {
+            self.passwordLabel.text = @"恭喜你，注册成功!";
+            self.passwordLabel.hidden = NO;
+            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+            [userDefault setObject:self.numberTextField.text forKey:kUserName];
+            [userDefault setObject:self.setPasswordTextField.text forKey:kPassWord];
+            [userDefault synchronize];
             
-              NSLog(@"result = %d", result);
-              if (result == 7) {
-                  self.passwordLabel.text = @"恭喜你，注册成功!";
-                  self.passwordLabel.hidden = NO;
-                  NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-                  [userDefault setObject:self.numberTextField.text forKey:kUserName];
-                  [userDefault setObject:self.setPasswordTextField.text forKey:kPassWord];
-                  [userDefault synchronize];
-                  
-                  
-              } else if(result == 0){
-                  self.passwordLabel.text = @"该手机已注册，请输入新的手机号";
-                  self.passwordLabel.hidden = NO;
-              } else if(result == 1){
-                  self.passwordLabel.text = @"验证码输入错误，请重新输入";
-                  self.passwordLabel.hidden = NO;
-              } else if(result == 2){
-                  self.passwordLabel.text = @"表单填写有误，请重新输入";
-                  self.passwordLabel.hidden = NO;
-              } else if(result == 3){
-                  self.passwordLabel.text = @"未获取验证码，请先获取验证码";
-                  self.passwordLabel.hidden = NO;
-              } else if(result == 4){
-                  self.passwordLabel.text = @" ";
-                  self.passwordLabel.hidden = NO;
-              } else if(result == 5){
-                  self.passwordLabel.text = @" ";
-                  self.passwordLabel.hidden = NO;
-              } else if(result == 6){
-                  self.passwordLabel.text = @" ";
-                  self.passwordLabel.hidden = NO;
-              }
-             
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-              
-          }];
-
-
+            
+        } else if(result == 0){
+            self.passwordLabel.text = @"该手机已注册，请输入新的手机号";
+            self.passwordLabel.hidden = NO;
+        } else if(result == 1){
+            self.passwordLabel.text = @"验证码输入错误，请重新输入";
+            self.passwordLabel.hidden = NO;
+        } else if(result == 2){
+            self.passwordLabel.text = @"表单填写有误，请重新输入";
+            self.passwordLabel.hidden = NO;
+        } else if(result == 3){
+            self.passwordLabel.text = @"未获取验证码，请先获取验证码";
+            self.passwordLabel.hidden = NO;
+        } else if(result == 4){
+            self.passwordLabel.text = @" ";
+            self.passwordLabel.hidden = NO;
+        } else if(result == 5){
+            self.passwordLabel.text = @" ";
+            self.passwordLabel.hidden = NO;
+        } else if(result == 6){
+            self.passwordLabel.text = @" ";
+            self.passwordLabel.hidden = NO;
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (BOOL)isAllNum:(NSString *)string{
@@ -178,47 +164,31 @@
         self.infoLabel.hidden = NO;
         return;
     }
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     NSLog(@"phoneNumber = %@\n", _numberTextField.text);
     NSDictionary *parameters = @{@"mobile": phoneNumber, @"action":@"register"};
     
     NSLog(@"--------------%@", parameters);
 //    NSString *stringurl = [NSString stringWithFormat:@"%@/rest/v1/register", Root_URL];
 //    NSLog(@"url = %@", stringurl);
-    
-    [manager POST:TSendCode_URL parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-             
-             NSLog(@"JSON: %@", responseObject);
-             NSString *string = [responseObject objectForKey:@"result"];
-             if ([string isEqualToString:@"false"]) {
-                 self.infoLabel.text = @"请输入正确的手机号码!";
-                 self.infoLabel.hidden = NO;
-             } else if([string isEqualToString:@"0"]){
-                 self.infoLabel.hidden = NO;
-                 self.infoLabel.text = @"该手机号码已经注册过了!";
-             } else{
-                 self.infoLabel.hidden = YES;
-             }
-            countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
-             _getCodeBtn.userInteractionEnabled = NO;
-             [_getCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//             [_getCodeBtn setTitle:[NSString stringWithFormat:@"获取验证码%02d秒",secondsCountDown] forState:UIControlStateNormal];
-             
-             //[self.navigationController popViewControllerAnimated:YES];
-             
-         }
-         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             
-             NSLog(@"Error: %@", error);
-             
-         }];
-
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TSendCode_URL WithParaments:parameters WithSuccess:^(id responseObject) {
+        NSString *string = [responseObject objectForKey:@"result"];
+        if ([string isEqualToString:@"false"]) {
+            self.infoLabel.text = @"请输入正确的手机号码!";
+            self.infoLabel.hidden = NO;
+        } else if([string isEqualToString:@"0"]){
+            self.infoLabel.hidden = NO;
+            self.infoLabel.text = @"该手机号码已经注册过了!";
+        } else{
+            self.infoLabel.hidden = YES;
+        }
+        countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+        _getCodeBtn.userInteractionEnabled = NO;
+        [_getCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 - (void)timeFireMethod
 {

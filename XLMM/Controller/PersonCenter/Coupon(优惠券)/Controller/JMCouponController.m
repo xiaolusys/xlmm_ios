@@ -72,7 +72,7 @@
 - (void)loadData:(NSString *)statusCount {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%ld",Root_URL,[statusCount integerValue]];
     
-    [JMHttpRequest createGETRequest:string WithParaments:nil withSuccess:^(id responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject) {
             if ([statusCount isEqualToString:@"0"]) {
                 flageArr[0] = @1;
@@ -97,25 +97,12 @@
         }else {
             
         }
-    } Failure:^(NSError *error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"优惠券加载失败,请稍后重试~!"];
-    } showProgress:^(float progress) {
+    } Progress:^(float progress) {
         
     }];
-    
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    
-//    [manager GET:string parameters:nil
-//        progress:^(NSProgress * _Nonnull downloadProgress) {
-//            //数据请求的进度
-//        }
-//         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        
-//        
-//
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        
-//    }];
+
 }
 - (void)createSegmentView {
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
