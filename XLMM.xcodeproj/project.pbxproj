@@ -521,6 +521,9 @@
 		1F5AE2C31D535CB50022E6E4 /* JMTimerWeakTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2BE1D535CB50022E6E4 /* JMTimerWeakTarget.m */; };
 		1F5AE2C41D535CB50022E6E4 /* JMRollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2C01D535CB50022E6E4 /* JMRollView.m */; };
 		1F5AE2C51D535CB50022E6E4 /* JMAutoLoopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2C21D535CB50022E6E4 /* JMAutoLoopScrollView.m */; };
+		1F5AE2CF1D5594530022E6E4 /* JMGoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2C81D5594530022E6E4 /* JMGoodsDetailController.m */; };
+		1F5AE2D01D5594530022E6E4 /* JMGoodsExplainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2CC1D5594530022E6E4 /* JMGoodsExplainCell.m */; };
+		1F5AE2D11D5594530022E6E4 /* JMGoodsParameterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2CE1D5594530022E6E4 /* JMGoodsParameterCell.m */; };
 		1F6CEBFE1D332A7400E1F4DF /* MaMaViepLevel_66_37@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CEBFB1D332A7400E1F4DF /* MaMaViepLevel_66_37@2x.png */; };
 		1F6CEBFF1D332A7400E1F4DF /* MaMaViepLevel_88_64@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CEBFC1D332A7400E1F4DF /* MaMaViepLevel_88_64@2x.png */; };
 		1F6CEC001D332A7400E1F4DF /* MaMaViepLevel_132_74@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CEBFD1D332A7400E1F4DF /* MaMaViepLevel_132_74@2x.png */; };
@@ -1617,6 +1620,12 @@
 		1F5AE2C01D535CB50022E6E4 /* JMRollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRollView.m; sourceTree = "<group>"; };
 		1F5AE2C11D535CB50022E6E4 /* JMAutoLoopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAutoLoopScrollView.h; sourceTree = "<group>"; };
 		1F5AE2C21D535CB50022E6E4 /* JMAutoLoopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAutoLoopScrollView.m; sourceTree = "<group>"; };
+		1F5AE2C71D5594530022E6E4 /* JMGoodsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsDetailController.h; sourceTree = "<group>"; };
+		1F5AE2C81D5594530022E6E4 /* JMGoodsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsDetailController.m; sourceTree = "<group>"; };
+		1F5AE2CB1D5594530022E6E4 /* JMGoodsExplainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsExplainCell.h; sourceTree = "<group>"; };
+		1F5AE2CC1D5594530022E6E4 /* JMGoodsExplainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsExplainCell.m; sourceTree = "<group>"; };
+		1F5AE2CD1D5594530022E6E4 /* JMGoodsParameterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsParameterCell.h; sourceTree = "<group>"; };
+		1F5AE2CE1D5594530022E6E4 /* JMGoodsParameterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsParameterCell.m; sourceTree = "<group>"; };
 		1F6CEBFB1D332A7400E1F4DF /* MaMaViepLevel_66_37@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaViepLevel_66_37@2x.png"; sourceTree = "<group>"; };
 		1F6CEBFC1D332A7400E1F4DF /* MaMaViepLevel_88_64@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaViepLevel_88_64@2x.png"; sourceTree = "<group>"; };
 		1F6CEBFD1D332A7400E1F4DF /* MaMaViepLevel_132_74@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaViepLevel_132_74@2x.png"; sourceTree = "<group>"; };
@@ -3559,6 +3568,9 @@
 		1F27A62F1D275FB400A0F80B /* MMDetail(详情页) */ = {
 			isa = PBXGroup;
 			children = (
+				1F5AE2C61D5594530022E6E4 /* Controller */,
+				1F5AE2C91D5594530022E6E4 /* Model */,
+				1F5AE2CA1D5594530022E6E4 /* View */,
 				1F27A6301D275FB400A0F80B /* MMDetailsViewController.h */,
 				1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */,
 				1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */,
@@ -4475,6 +4487,33 @@
 				1F5AE2C21D535CB50022E6E4 /* JMAutoLoopScrollView.m */,
 			);
 			path = "autoLoopscrollView(滚动视图)";
+			sourceTree = "<group>";
+		};
+		1F5AE2C61D5594530022E6E4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F5AE2C71D5594530022E6E4 /* JMGoodsDetailController.h */,
+				1F5AE2C81D5594530022E6E4 /* JMGoodsDetailController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F5AE2C91D5594530022E6E4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1F5AE2CA1D5594530022E6E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F5AE2CB1D5594530022E6E4 /* JMGoodsExplainCell.h */,
+				1F5AE2CC1D5594530022E6E4 /* JMGoodsExplainCell.m */,
+				1F5AE2CD1D5594530022E6E4 /* JMGoodsParameterCell.h */,
+				1F5AE2CE1D5594530022E6E4 /* JMGoodsParameterCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		1F6CEC011D33849F00E1F4DF /* Cache */ = {
@@ -5926,6 +5965,7 @@
 				183070E61C97B83900B7665E /* JiFenModel.m in Sources */,
 				1F498C441D2772D0007E77FC /* JMEditAddressModel.m in Sources */,
 				1F27A6661D275FB400A0F80B /* XidiShuomingViewController.m in Sources */,
+				1F5AE2D01D5594530022E6E4 /* JMGoodsExplainCell.m in Sources */,
 				1F27A6551D275FB400A0F80B /* MMDetailsViewController.m in Sources */,
 				183072861C97C00900B7665E /* UIColor+RGBColor.m in Sources */,
 				3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */,
@@ -5934,6 +5974,7 @@
 				325B7A391C97E7530022F930 /* AccountTableViewCell.m in Sources */,
 				1F498B2D1D276450007E77FC /* JMChoiseLogisController.m in Sources */,
 				183071EE1C97BE3700B7665E /* RegisterViewController.m in Sources */,
+				1F5AE2CF1D5594530022E6E4 /* JMGoodsDetailController.m in Sources */,
 				183071F21C97BE3700B7665E /* SetPasswordViewController.m in Sources */,
 				183073D51C97D17800B7665E /* FSLineChart.m in Sources */,
 				183072831C97C00900B7665E /* NSString+DeleteT.m in Sources */,
@@ -5995,6 +6036,7 @@
 				1FD158D71D2F7FE4006C4B14 /* JMRefundModel.m in Sources */,
 				1F56E2861D348A0A0092EC91 /* JMCouponRootCell.m in Sources */,
 				325B7A101C97E73A0022F930 /* PicCollectionViewCell.m in Sources */,
+				1F5AE2D11D5594530022E6E4 /* JMGoodsParameterCell.m in Sources */,
 				1F27A65D1D275FB400A0F80B /* MMRootViewController.m in Sources */,
 				1F27A5E21D2520E200A0F80B /* JMProductSelectListCell.m in Sources */,
 				1FDD07451D463A6F0010231F /* JMMaMaCenterFooterView.m in Sources */,

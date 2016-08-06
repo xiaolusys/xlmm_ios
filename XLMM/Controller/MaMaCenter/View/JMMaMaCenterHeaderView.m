@@ -141,9 +141,9 @@
     NSString *limtStr = self.extraModel.surplus_days;
     
     NSInteger limtCount = [limtStr integerValue];
-//    if (limtCount > 15) {
-//        self.renewButton.hidden = YES;
-//    }
+    if (limtCount > 15) {
+        self.renewButton.hidden = YES;
+    }
     
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     NSInteger count = limtStr.length;

@@ -238,7 +238,7 @@
     self.fansWebUrl = extraDict[@"fans_explain"];         // --> 粉丝二维码
     self.boutiqueActiveWebUrl = extraDict[@"act_info"];   // --> 精品活动
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
-    self.messageUrl = extraDict[@"notice"];
+    self.messageUrl = extraDict[@"notice"];               // --> 小鹿妈妈消息
     
 }
 - (void)mamaMesageData:(NSDictionary *)messageDic {
