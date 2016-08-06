@@ -29,4 +29,7 @@
 @property (nonatomic, assign) id <PurchaseAddressDelegate>delegate;
 
 
+@property (nonatomic, assign) BOOL isButtonSelected;
+@property (nonatomic, copy) NSString *addressID;
+
 @end

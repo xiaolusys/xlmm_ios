@@ -31,7 +31,11 @@
 #import "JMNewcomerTaskController.h"
 #import "JMPopViewAnimationSpring.h"
 
+static NSUInteger popNum = 0;
+
 @interface JMMaMaPersonCenterController ()<JMNewcomerTaskControllerDelegate,JMShareViewDelegate,UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate>
+
+
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) JMMaMaCenterHeaderView *mamaCenterHeaderView;
@@ -153,17 +157,20 @@
     //精选活动链接
     self.eventLink = self.mamaCenterModel.mama_event_link;
     
-    [self newcomerTaskData:_mamaID];
+    if (popNum < 1) {
+        [self newcomerTaskData:_mamaID];
+    }
+    popNum ++;
     
 }
 - (void)newcomerTaskData:(NSString *)mamaID {
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.31:9000/rest/v1/pmt/xlmm/%@/new_mama_task_info",mamaID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/%@/new_mama_task_info",Root_URL,mamaID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
         [self newcomerData:responseObject];
     } WithFail:^(NSError *error) {
-        
+        NSLog(@"%@",error);
     } Progress:^(float progress) {
         
     }];

@@ -38,5 +38,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *morenLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *selectedButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectedLayout;
 
 @end
