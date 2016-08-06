@@ -28,5 +28,6 @@
 
 @property (nonatomic, weak) id<JMMaMaCenterHeaderViewDelegate>delegate;
 
+@property (nonatomic, strong) NSString *imageString;
 
 @end

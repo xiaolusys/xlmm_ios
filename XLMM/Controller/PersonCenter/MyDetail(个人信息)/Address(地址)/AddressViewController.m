@@ -201,7 +201,7 @@
             cell.morenLabel.hidden = NO;
             cell.morenLabel.layer.borderWidth = 0.5;
             cell.morenLabel.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-            
+            [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_selector"] forState:UIControlStateNormal];
         } else {
             cell.morenLabel.hidden = YES;
             cell.leadingWidth.constant = 8;

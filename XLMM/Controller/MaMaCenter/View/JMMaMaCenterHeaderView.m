@@ -96,6 +96,8 @@
 
 @property (nonatomic, strong) NSNumber *weekDay;
 
+@property (nonatomic, strong) UIImageView *vipExaminationImage;
+
 @end
 
 @implementation JMMaMaCenterHeaderView {
@@ -126,6 +128,12 @@
     JMMaMaCenterHeaderView *headView = [[JMMaMaCenterHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 380)];
     headView.backgroundColor = [UIColor whiteColor];
     return headView;
+}
+- (void)setImageString:(NSString *)imageString {
+    _imageString = imageString;
+    
+    [self.vipExaminationImage sd_setImageWithURL:[NSURL URLWithString:[imageString JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    
 }
 - (void)setMamaCenterModel:(JMMaMaCenterModel *)mamaCenterModel {
     _mamaCenterModel = mamaCenterModel;
@@ -211,9 +219,14 @@
     
     UIButton *vipExaminationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [selfInfoView addSubview:vipExaminationButton];
-    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
+//    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
     vipExaminationButton.tag = 106;
     [vipExaminationButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *vipExaminationImage = [UIImageView new];
+    [vipExaminationButton addSubview:vipExaminationImage];
+    self.vipExaminationImage = vipExaminationImage;
+    
     
 //    UIImageView *vipExamination = [UIImageView new];
 //    [vipExaminationButton addSubview:vipExamination];
@@ -330,6 +343,12 @@
     [vipExaminationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(selfInfoView).offset(-10);
         make.bottom.equalTo(lineView).offset(-15);
+        make.width.mas_equalTo(@60);
+        make.height.mas_equalTo(@45);
+    }];
+    [self.vipExaminationImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(vipExaminationButton.mas_centerX);
+        make.centerY.equalTo(vipExaminationButton.mas_centerY);
         make.width.mas_equalTo(@60);
         make.height.mas_equalTo(@45);
     }];
