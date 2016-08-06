@@ -240,6 +240,9 @@
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
     self.messageUrl = extraDict[@"notice"];               // --> 小鹿妈妈消息
     
+    NSDictionary *picturesDic = extraDict[@"pictures"];
+    self.mamaCenterHeaderView.imageString = picturesDic[@"exam_pic"];
+    
 }
 - (void)mamaMesageData:(NSDictionary *)messageDic {
     self.mamaCenterFooterView.messageDic = messageDic;
@@ -442,13 +445,13 @@
 #pragma mark 妈妈消息列表点击事件
 - (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
     NSLog(@"%ld=========index",index);
-    WebViewController *activity = [[WebViewController alloc] init];
+    WebViewController *message = [[WebViewController alloc] init];
     [self.diction setValue:self.messageUrl forKey:@"web_url"];
-    activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
-    activity.isShowNavBar = false;
-    activity.isShowRightShareBtn = false;
-
-    [self.navigationController pushViewController:activity animated:YES];
+    [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
+    message.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
+    message.isShowNavBar = true;
+    message.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:message animated:YES];
 }
 - (void)xiaoluUniversity {
     if (self.boutiqueActiveWebUrl == nil || self.boutiqueActiveWebUrl.length == 0) {

@@ -37,5 +37,6 @@
 @property (weak, nonatomic) IBOutlet UIView *lineView;
 @property (weak, nonatomic) IBOutlet UILabel *morenLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *selectedButton;
 
 @end
