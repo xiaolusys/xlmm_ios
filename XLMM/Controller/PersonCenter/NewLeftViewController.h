@@ -14,6 +14,7 @@
 
 @end
 
+
 @interface NewLeftViewController : UIViewController
 
 @property (nonatomic, assign)id<RootVCPushOtherVCDelegate>pushVCDelegate;

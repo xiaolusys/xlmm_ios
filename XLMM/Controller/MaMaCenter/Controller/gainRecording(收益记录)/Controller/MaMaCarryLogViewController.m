@@ -56,20 +56,16 @@ static NSString *cellIdentifier = @"carryLogCell";
     
     [self createNavigationBarWithTitle:@"收益记录" selecotr:@selector(backClickAction)];
     [self createTableView];
-    
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog", Root_URL];
     [SVProgressHUD showWithStatus:@"正在加载..."];
-    
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 
@@ -126,16 +122,14 @@ static NSString *cellIdentifier = @"carryLogCell";
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.nextPage parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 #pragma mark ---数据处理

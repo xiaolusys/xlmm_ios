@@ -89,21 +89,17 @@
 #pragma mark 数据请求
 - (void)loadDataSource {
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:url parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self.dataSource removeAllObjects];
         [self fetchedRefundData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
-
 }
 - (void)loadMore {
     if ([_nextPage class] == [NSNull class]) {
@@ -111,18 +107,15 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:_nextPage parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPage WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self fetchedRefundData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)fetchedRefundData:(NSDictionary *)data {

@@ -123,23 +123,31 @@ static BOOL isAgreeTerms = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backClick)];
     
+    self.isCanCoupon = NO;
+    self.isUseXLW = NO;
+    self.isEnoughRight = NO;
+    self.isEnoughBudget = NO;
+    self.isEnoughCoupon = NO;
+    self.isUserCoupon = NO;
+    self.isCouponEnoughPay = NO;
+    
+    _totalPayment = 0;              //应付款金额
+    _discountfee=0;               //优惠券金额
+    _rightAmount=0;               //app优惠
+    _availableFloat=0;            //小鹿钱包余额
+    
+    _totalfee=0;                  //总金额
+    _postfee=0;                   //运费金额
+    _amontPayment=0;              //总需支付金额
+    _couponValue=0;               //优惠券金额
+    _discount = 0;                  //计算金额
+    
     [self initView];
     [self createTableView];
     [self createTableHeaderView];
     [self createTableFooterView];
     [self loadAddressInfo];
     [self loadDataSource];
-    
-    
-    self.isCanCoupon = NO;
-    self.isUseXLW = NO;
-    
-    self.isEnoughRight = NO;
-    self.isEnoughBudget = NO;
-    self.isEnoughCoupon = NO;
-    
-    self.isUserCoupon = NO;
-
     
     if (isAgreeTerms) {
         self.purchaseFooterView.termsButton.selected = YES;
@@ -172,34 +180,27 @@ static BOOL isAgreeTerms = YES;
     [paramstring deleteCharactersInRange:rang];
     self.paramstring = paramstring;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,paramstring,@"app"];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlString parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
         [self fetchedCartsData:responseObject];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    } Progress:^(float progress) {
+        
     }];
 }
 #pragma mark 地址信息网络请求
 - (void)loadAddressInfo {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:kAddress_List_URL parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kAddress_List_URL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchedAddressData:responseObject];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)fetchedAddressData:(NSArray *)purchaseArr {
@@ -207,7 +208,7 @@ static BOOL isAgreeTerms = YES;
         _addressID = @"";
     }else {
         NSDictionary *dic = purchaseArr[0];
-        _addressID = dic[@"id"];
+        _addressID = [dic[@"id"] stringValue];
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
 }
@@ -225,6 +226,7 @@ static BOOL isAgreeTerms = YES;
     _totalPayment = [[purchaseDic objectForKey:@"total_payment"] floatValue];
     _discountfee = [[purchaseDic objectForKey:@"discount_fee"] floatValue];
     
+    //NSLog(@"purchaseDic %@", purchaseDic);
     // 优惠判断
     NSArray *extrasArr = purchaseDic[@"pay_extras"];
     for (NSDictionary *dicExtras in extrasArr) {
@@ -239,8 +241,8 @@ static BOOL isAgreeTerms = YES;
         // app立减
         if ([dicExtras[@"pid"] integerValue] == 1) {
             _rightReduce = dicExtras;
-            CGFloat appcut = [[dicExtras objectForKey:@"value"] floatValue];
-            if ([[purchaseDic objectForKey:@"total_payment"] compare:[dicExtras objectForKey:@"value"]] == NSOrderedDescending) {
+            float appcut = [[dicExtras objectForKey:@"value"] floatValue];
+            if (_totalPayment - appcut > 1e-6) {
                 _totalPayment = _totalPayment - appcut;
                 _discountfee = _discountfee + appcut;
             }else {
@@ -255,17 +257,17 @@ static BOOL isAgreeTerms = YES;
             continue;
         }
         // 余额
-        if ([[dicExtras objectForKey:@"pid"] integerValue] == 3 && _totalPayment > 0) {
+        if ([[dicExtras objectForKey:@"pid"] integerValue] == 3) {
             _xlWallet = dicExtras;
             _availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
 
-            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
-                //足够支付
-                self.isEnoughBudget = YES;
-            }else {
-                //不足支付
-                self.isEnoughBudget = NO;
-            }
+//            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
+//                //足够支付
+//                self.isEnoughBudget = YES;
+//            }else {
+//                //不足支付
+//                self.isEnoughBudget = NO;
+//            }
         }
     }
     _uuid = [purchaseDic objectForKey:@"uuid"];
@@ -292,12 +294,14 @@ static BOOL isAgreeTerms = YES;
             CGFloat surplus = _amontPayment - _couponValue - _rightAmount;
             if (_availableFloat - surplus > 0.000001 || (fabs(_availableFloat - surplus) < 0.000001 || fabs(surplus - _couponValue) < 0.000001)) {
                 //钱包金额够使用
+                self.isEnoughBudget = YES;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
                 self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
+                self.isEnoughBudget = NO;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
@@ -357,6 +361,8 @@ static BOOL isAgreeTerms = YES;
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
         AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        addVC.isButtonSelected = YES;
+        addVC.addressID = _addressID;
         addVC.isSelected = YES;
         addVC.delegate = self;
         [self.navigationController pushViewController:addVC animated:YES];
@@ -385,6 +391,7 @@ static BOOL isAgreeTerms = YES;
 #pragma mark 选择地址,选择物流回调
 - (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
+    _addressID = model.addressID;
 }
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
     [MobClick event:@"logistics_choose"];
@@ -568,13 +575,7 @@ static BOOL isAgreeTerms = YES;
     
     NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
     JMPurchaseController * __weak weakSelf = self;
-
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:payurlStr parameters:params
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [SVProgressHUD dismiss];
         NSDictionary *dict = responseObject[@"trade"];
@@ -629,8 +630,10 @@ static BOOL isAgreeTerms = YES;
             });
         }
         [SVProgressHUD dismiss];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
+    } Progress:^(float progress) {
+        
     }];
 }
 #pragma mark  选择优惠券回调过来的代理方法
@@ -646,13 +649,8 @@ static BOOL isAgreeTerms = YES;
         [self calculationLabelValue];
     }else {
         self.isUserCoupon = YES;
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
-        [manager POST:urlString parameters:nil
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             NSString *couponMessage = goodsModel.coupon_message;
             if (couponMessage.length == 0) {
@@ -669,9 +667,11 @@ static BOOL isAgreeTerms = YES;
                 _couponValue = 0;
                 [self calculationLabelValue];
             }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } WithFail:^(NSError *error) {
             self.isEnoughCoupon = NO;
             [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
+        } Progress:^(float progress) {
+            
         }];
     }
 }

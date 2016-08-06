@@ -119,32 +119,15 @@
 
 - (void)deleteAddress{
     NSLog(@"%@", self.addressModel.addressID);
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //  http://m.xiaolu.so/rest/v1/address
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/%@/delete_address", Root_URL, self.addressModel.addressID];
-    NSLog(@"string = %@",  string);
     
-//    NSLog(@"phoneNumber = %@\n", _numberTextField.text);
-//    NSDictionary *parameters = @{@"vmobile": phoneNumber};
-    
-    [manager POST:string parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              
-              NSLog(@"JSON: %@", responseObject);
-              [self.navigationController popViewControllerAnimated:YES];
-              
-              
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              
-              NSLog(@"Error: %@", error);
-              
-          }];
-
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
@@ -191,41 +174,18 @@
             NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/%@/change_default", Root_URL, self.addressModel.addressID];
             NSLog(@"string = %@", string);
             
-      
-            
-            
-            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-            
-        
-            
-            [manager POST:string parameters:nil
-                 progress:^(NSProgress * _Nonnull downloadProgress) {
-                     //数据请求的进度
-                 }
-                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                      
-                      NSLog(@"JSON: %@", responseObject);
-                      
-                      
-                  }
-                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                      
-                      NSLog(@"Error: %@", error);
-                      
-                  }];
+            [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+                
+            } WithFail:^(NSError *error) {
+                
+            } Progress:^(float progress) {
+                
+            }];
         }
-        
-        
         NSLog(@"%@", self.addressModel.addressID);
-        
-        
-        
+
     } else {
         NSLog(@"取消默认地址");
-        
-        
-        
-        
     }
 }
 
@@ -367,20 +327,6 @@
     [self cancelLocatePicker];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)saveBtnClicked:(id)sender {
 
@@ -405,7 +351,6 @@
 
     NSLog(@"save succeed!");
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     if (_isAdd == YES) {
         NSDictionary *parameters = @{
@@ -421,22 +366,14 @@
         
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/create_address?format=json", Root_URL];
         NSLog(@"url = %@", string);
-        [manager POST:string parameters:parameters
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                  
-                  NSLog(@"JSON: %@", responseObject);
-                  [self.navigationController popViewControllerAnimated:YES];
-               
-                  
-              }
-              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                  
-                  NSLog(@"Error: %@", error);
-                  
-              }];
+        
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
+            
+        }];
     }
     else{
         NSLog(@"修改地址");
@@ -455,16 +392,13 @@
         
         NSLog(@"modifyUrlStr = %@", modifyUrlStr);
         
-        [manager POST:modifyUrlStr parameters:parameters
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                  
-                  NSLog(@"JSON: %@", responseObject);
-                  [self.navigationController popViewControllerAnimated:YES];
-                  NSLog(@"修改成功");
-              }
-              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                  NSLog(@"Error: %@", error);
-              }];
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:modifyUrlStr WithParaments:parameters WithSuccess:^(id responseObject) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
+            
+        }];
 
     }
     

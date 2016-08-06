@@ -204,13 +204,7 @@
     
     //   http://m.xiaolu.so/rest/v1/users/customer_logout
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlString parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) return;
         //注销账号
@@ -230,11 +224,11 @@
         [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
         
         [alterView show];
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Progress:^(float progress) {
         
     }];
-    
 }
 
 -(void) performDismiss:(NSTimer *)timer

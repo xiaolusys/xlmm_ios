@@ -351,21 +351,17 @@
     
 }
 - (void)loadDataSource {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:_urlStr parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
-    
 }
 - (void)loadMore {
     if ([self.nextUrl class] == [NSNull class]) {
@@ -373,21 +369,16 @@
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    [manage GET:self.nextUrl parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        
         [self fetchedDatalist:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
+    } Progress:^(float progress) {
+        
     }];
-
 }
 /**
  *  全部
@@ -479,12 +470,7 @@
         //网络请求
         NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
         NSDictionary *parameters = @{@"product":selectList.pdtID};
-        
-        [[AFHTTPSessionManager manager] POST:url parameters:parameters
-                                    progress:^(NSProgress * _Nonnull downloadProgress) {
-                                        //数据请求的进度
-                                    }
-                                     success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:url WithParaments:parameters WithSuccess:^(id responseObject) {
             [SVProgressHUD showSuccessWithStatus:@"下架成功"];
             [button setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia.png"] forState:UIControlStateNormal];
             selectList.statusLabel.text = @"加入精选";
@@ -494,19 +480,17 @@
             selectList.listModel.in_customer_shop = @0;
             
             self.numberLabel.text = self.numbersOfSelected;
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } WithFail:^(NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
+        } Progress:^(float progress) {
+            
         }];
-        
+    
     }else {
         //网络请求
         NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/add_pro_to_shop", Root_URL];
         NSDictionary *parameters = @{@"product":selectList.pdtID};
-        [[AFHTTPSessionManager manager] POST:url parameters:parameters
-            progress:^(NSProgress * _Nonnull downloadProgress) {
-                //数据请求的进度
-            }
-             success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:url WithParaments:parameters WithSuccess:^(id responseObject) {
             //已上架
             [SVProgressHUD showSuccessWithStatus:@"上架成功"];
             //[btn setTitle:@"下架" forState:UIControlStateNormal];
@@ -519,11 +503,11 @@
             selectList.listModel.in_customer_shop = @1;
             
             self.numberLabel.text = self.numbersOfSelected;
-            
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } WithFail:^(NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
+        } Progress:^(float progress) {
+            
         }];
-        
     }
 
     

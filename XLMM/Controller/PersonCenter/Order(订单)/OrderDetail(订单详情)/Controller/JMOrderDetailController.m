@@ -207,17 +207,14 @@
 #pragma mark 分享红包接口数据
 - (void)loadShareRedpage:(NSString *)orderTid {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,orderTid];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:string parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject) return;
         [self shareRedpageData:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD dismiss];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)shareRedpageData:(NSDictionary *)shareDict {
@@ -231,22 +228,19 @@
 }
 #pragma mark 请求数据
 - (void)loadDataSource {
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"device"] = @"app";
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.urlString parameters:params
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    params[@"device"] = @"app";
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.orderGoodsDataSource removeAllObjects];
         [self refetchData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [self endRefresh];
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+    } Progress:^(float progress) {
+        
     }];
 }
 - (void)refetchData:(NSDictionary *)dicJson {
@@ -487,12 +481,7 @@
     }else if (button.tag == 101) {
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/order/%@/confirm_sign", Root_URL, model.orderGoodsID];
         NSLog(@"url string = %@", string);
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager POST:string parameters:nil
-             progress:^(NSProgress * _Nonnull downloadProgress) {
-                 //数据请求的进度
-             }
-              success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
             if (responseObject == nil) return;
             NSDictionary *dic = responseObject;
             UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"签收成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -504,8 +493,10 @@
                 alterView.message = @"签收失败";
             }
             [alterView show];
+        } WithFail:^(NSError *error) {
             
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        } Progress:^(float progress) {
+            
         }];
     }else if (button.tag == 102) {
         ShenQingTuiHuoController *tuiHuoVC = [[ShenQingTuiHuoController alloc] initWithNibName:@"ShenQingTuiHuoController" bundle:nil];
@@ -594,13 +585,7 @@
             return;
         }
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:string parameters:params
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         
         NSError *parseError = nil;
@@ -642,14 +627,13 @@
                     }
                 }];
             });
-
+            
         }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
         [SVProgressHUD dismiss];
-        NSLog(@"%@",error);
+    } Progress:^(float progress) {
+        
     }];
-    
 }
 - (void)pushShareVC {
     JMPayShareController *payShareVC = [[JMPayShareController alloc] init];

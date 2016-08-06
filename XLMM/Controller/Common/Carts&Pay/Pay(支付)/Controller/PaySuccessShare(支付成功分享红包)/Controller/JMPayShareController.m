@@ -87,24 +87,15 @@
 }
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,_ordNum];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:string parameters:nil
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         [SVProgressHUD dismiss];
-        
         if (!responseObject) return;
-        
         [self resolveActivityShareParam:responseObject];
+    } WithFail:^(NSError *error) {
         
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Progress:^(float progress) {
         
     }];
-    
 }
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
     //    NSDictionary *dic = _model.mj_keyValues;

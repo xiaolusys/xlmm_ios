@@ -141,13 +141,8 @@
         model.receiver_mobile = phoneStr ? phoneStr : _addressDic[@"receiver_mobile"];
         model.receiver_address = addStr ? addStr : _addressDic[@"receiver_address"];
         dic = model.mj_keyValues;
-    
-    
-    
-    
+
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:dic];
     [dict setObject:referal_trade_id forKey:@"id"];  // === > 地址信息ID
     
@@ -158,27 +153,15 @@
     }
     
     [dict setObject:_editDict[@"id"] forKey:@"referal_trade_id"]; // == > 订单ID
-    
-    [manage POST:urlStr parameters:dict
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:dict WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-//        
-//        if (self.delegate && [self.delegate respondsToSelector:@selector(updateEditerWithmodel:)]) {
-//        
-//            [self.delegate updateEditerWithmodel:dic];
-//            
-//        }
-//        
         [self.navigationController popViewControllerAnimated:YES];
-
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } Progress:^(float progress) {
+        
     }];
-    
+
 }
 //
 //#pragma mark ----  获取pickView的数据

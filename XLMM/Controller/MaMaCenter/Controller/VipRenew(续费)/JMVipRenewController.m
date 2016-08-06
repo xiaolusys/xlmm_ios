@@ -12,6 +12,7 @@
 #import "UIView+RGSize.h"
 #import "WXApi.h"
 #import "Pingpp.h"
+#import "PersonOrderViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -31,6 +32,10 @@
 
 @property (nonatomic, assign)BOOL isInstallWX;
 
+@property (nonatomic, assign) BOOL isEnoughBudgetPay;
+
+@property (nonatomic, strong) UILabel *descLabel;
+
 @end
 
 @implementation JMVipRenewController {
@@ -45,8 +50,14 @@
     NSString *_discounefee; // 优惠金额
     NSString *_orderID;     // 订单编号
     NSString *_totalfee;    // 实际支付
-    
+    CGFloat _descLabelValue;// 抵扣金额
     NSInteger _numCount;
+    
+    CGFloat _walletCash;     // 小鹿钱包的金额
+    
+    CGFloat _wxOraliPayment; // 如果钱包金额不足支付
+    
+    NSString *_exchangeType; // 选择续费的类型 --> 半年或者一年
     
 }
 
@@ -71,12 +82,7 @@
 }
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/get_register_pro_info",Root_URL];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:str parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
             return ;
         }else {
@@ -84,7 +90,9 @@
             _renewDic = responseObject[@"product"];
             [self upDataRenew:responseObject];
         }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
 }
@@ -93,7 +101,26 @@
     NSDictionary *productDic = renewDic[@"product"];
     _productID = productDic[@"id"];
     _orderID = renewDic[@"uuid"];
-
+    
+//    NSArray *payinfosArr = renewDic[@"payinfos"];
+//    NSDictionary *walletCashDic = payinfosArr[0];
+//    _walletCash = [walletCashDic[@"wallet_cash"] floatValue];
+    _walletCash = self.cashValue;
+    
+    NSArray *skusArr = _renewDic[@"normal_skus"];
+    NSDictionary *renewDict = skusArr[_numCount];
+    CGFloat paument = [renewDict[@"agent_price"] floatValue];
+    _skuID = renewDict[@"id"];
+    if (_walletCash - paument > 0.000001) {
+        self.isEnoughBudgetPay = YES;
+        _descLabelValue = paument;
+        _exchangeType = @"half";
+    }else {
+        _wxOraliPayment = paument - _walletCash;
+        _descLabelValue = _wxOraliPayment;
+        self.isEnoughBudgetPay = NO;
+    }
+    self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
 }
 
 - (void)initView {
@@ -109,6 +136,7 @@
 
 }
 - (void)createRenewView {
+
     UIScrollView *baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     [self.view addSubview:baseScrollView];
     self.baseScrollView = baseScrollView;
@@ -200,7 +228,8 @@
     descLabel.font = [UIFont systemFontOfSize:13.];
     descLabel.textColor = [UIColor buttonTitleColor];
     descLabel.numberOfLines = 0;
-    descLabel.text = @"为确保您的权利和权益，请尽快续费。";
+    descLabel.textAlignment = NSTextAlignmentCenter;
+    self.descLabel = descLabel;
     
     UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomView addSubview:sureButton];
@@ -310,26 +339,29 @@
     NSArray *skusArr = _renewDic[@"normal_skus"];
     NSDictionary *renewDic = skusArr[_numCount];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    params[@"product_id"] = _productID;
+//    params[@"sku_id"] = renewDic[@"id"];
+//    params[@"payment"] = renewDic[@"agent_price"];
+//    params[@"channel"] = _channel;
+//    params[@"num"] = @"1";
+//    params[@"post_fee"] = @"0.00";
+//    params[@"discount_fee"] = @"0.00";
+//    params[@"uuid"] = _orderID;
+//    params[@"total_fee"] = renewDic[@"std_sale_price"];
     params[@"product_id"] = _productID;
     params[@"sku_id"] = renewDic[@"id"];
-    params[@"payment"] = renewDic[@"agent_price"];
-    params[@"channel"] = _channel;
-    params[@"num"] = @"1";
+    params[@"uuid"] = _orderID;
     params[@"post_fee"] = @"0.00";
     params[@"discount_fee"] = @"0.00";
-    params[@"uuid"] = _orderID;
     params[@"total_fee"] = renewDic[@"std_sale_price"];
+    params[@"channel"] = _channel;
+    params[@"wallet_renew_deposit"] = [NSString stringWithFormat:@"%.2f",_walletCash];
+    params[@"payment"] = [NSString stringWithFormat:@"%.2f",_wxOraliPayment];
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/mama_register_pay",Root_URL];
     
     JMVipRenewController * __weak weakSelf = self;
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:urlStr parameters:params
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [SVProgressHUD dismiss];
         
@@ -356,13 +388,33 @@
             }];
         });
         [SVProgressHUD dismiss];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"续费失败,请稍后尝试 ~~(>_<)~~ !"];
+    } Progress:^(float progress) {
+        
+    }];
+}
+
+- (void)xiaoluPay:(NSString *)exchangeType {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/exchange_deposit",Root_URL];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"exchange_type"] = exchangeType;
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [SVProgressHUD showSuccessWithStatus:@"续费成功......"];
+        }else {
+            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
     
 }
+
 #pragma mark --- 支付成功的弹出框
 - (void)paySuccessful{
     [MobClick event:@"renewBuy_succ"];
@@ -371,8 +423,9 @@
 }
 - (void)popview{
     [MobClick event:@"renewBuy_cancel"];
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
 }
 /**
  *  / // 支付请求参数
@@ -386,7 +439,7 @@
  NSString *_orderID;     // 订单编号
  NSString *_totalfee;    // 实际支付
  *
- *  @param button <#button description#>
+ *  @param button
  */
 - (void)renewButton:(UIButton *)button {
     if (button.tag == 100) {
@@ -396,14 +449,53 @@
 
         _numCount = 1;
         
+        NSArray *skusArr = _renewDic[@"normal_skus"];
+        NSDictionary *renewDic = skusArr[_numCount];
+        CGFloat paument = [renewDic[@"agent_price"] floatValue];
+        _skuID = renewDic[@"id"];
+        if (_walletCash - paument > 0.000001) {
+            self.isEnoughBudgetPay = YES;
+            _exchangeType = @"half";
+            _descLabelValue = paument;
+        }else {
+            self.isEnoughBudgetPay = NO;
+            _wxOraliPayment = paument - _walletCash;
+            _descLabelValue = _wxOraliPayment;
+        }
+        
+        self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else if (button.tag == 101) {
         self.allyearButton.selected = !self.allyearButton.selected;
         self.allyearButton.selected = YES;
         self.halfyearButton.selected = NO;
 
         _numCount = 0;
+        
+        NSArray *skusArr = _renewDic[@"normal_skus"];
+        NSDictionary *renewDic = skusArr[_numCount];
+        CGFloat paument = [renewDic[@"agent_price"] floatValue];
+        _skuID = renewDic[@"id"];
+        if (_walletCash - paument > 0.000001) {
+            self.isEnoughBudgetPay = YES;
+            _exchangeType = @"full";
+            _descLabelValue = paument;
+        }else {
+            self.isEnoughBudgetPay = NO;
+            _wxOraliPayment = paument - _walletCash;
+            _descLabelValue = _wxOraliPayment;
+        }
+        self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else {
-        [self createPayPopView];
+        if (self.isEnoughBudgetPay) {
+            _channel = @"budget";
+            [self xiaoluPay:_exchangeType];
+        }else {
+            [self createPayPopView];
+            
+        }
+        
+        
+        
     }
 
 
@@ -489,9 +581,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end
-
-
-
 
 
 

@@ -44,15 +44,7 @@
 
 - (void)loadData {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/get_logistic_companys",Root_URL];
-
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    
-    [manage GET:urlStr parameters:nil
-       progress:^(NSProgress * _Nonnull downloadProgress) {
-           //数据请求的进度
-       }
-        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         self.dataSource = [NSMutableArray array];
         
         NSMutableArray *dataSourceArr = [[NSMutableArray alloc] init];
@@ -60,13 +52,14 @@
             JMPopLogistcsModel *model = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
             [dataSourceArr addObject:model];
         }
-
+        
         [self.dataSource addObjectsFromArray:dataSourceArr];
         [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
         
     }];
-
 }
 
 - (void)createUI {
@@ -127,28 +120,15 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:self.logisticsStr forKey:@"referal_trade_id"];
     [dic setObject:model.code forKey:@"logistic_company_code"];
-    
-    AFHTTPSessionManager *manage = [AFHTTPSessionManager manager];
-    
-    [manage POST:urlStr parameters:dic
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:dic WithSuccess:^(id responseObject) {
         
-        NSLog(@"%@",responseObject);
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+    } Progress:^(float progress) {
         
     }];
-    
     [self cancelBtnClick];
-    
-    
-    
-    
-    
+
 }
 
 //- (void)ClickLogistics:(JMPopLogistcsCell *)click Title:(NSString *)title {

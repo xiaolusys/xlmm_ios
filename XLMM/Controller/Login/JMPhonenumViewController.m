@@ -198,26 +198,16 @@
         [SVProgressHUD showInfoWithStatus:@"请输入正确的信息！"];
         return;
     }
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password,
                                  @"devtype":LOGINDEVTYPE};
-    
-    [manager POST:TPasswordLogin_URL parameters:parameters
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TPasswordLogin_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
-//            [self alertMessage:[responseObject objectForKey:@"msg"]];
-//            [SVProgressHUD dismiss];
+            //            [self alertMessage:[responseObject objectForKey:@"msg"]];
+            //            [SVProgressHUD dismiss];
             [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"msg"]];
             return ;
         }
-        
-        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         // 手机登录成功 ，保存用户信息以及登录途径
         [defaults setBool:YES forKey:kIsLogin];
@@ -228,63 +218,39 @@
         [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
-        
         [SVProgressHUD showInfoWithStatus:@"登录中....."];
-
-        
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
-        
         [self setDevice];
-       
-        
         [self backApointInterface];
-        
-
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+    } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"登录失败，请重试"];
-        
+    } Progress:^(float progress) {
         
     }];
-    
-    
-    
 }
 
 - (void)setDevice{
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     
     NSLog(@"urlStr = %@", urlString);
     NSLog(@"params = %@", params);
-    
-    [manager POST:urlString parameters:params
-         progress:^(NSProgress * _Nonnull downloadProgress) {
-             //数据请求的进度
-         }
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              //  NSError *error;
-              NSLog(@"JSON: %@", responseObject);
-              NSString *user_account = [responseObject objectForKey:@"user_account"];
-              NSLog(@"user_account = %@", user_account);
-              if ([user_account isEqualToString:@""]) {
-                  
-              } else {
-                  [MiPushSDK setAccount:user_account];
-              }
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Error: %@", error);
-              
-              
-          }];
-    
-    
-    
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        NSString *user_account = [responseObject objectForKey:@"user_account"];
+        NSLog(@"user_account = %@", user_account);
+        if ([user_account isEqualToString:@""]) {
+            
+        } else {
+            [MiPushSDK setAccount:user_account];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+
 }
 
 
@@ -296,14 +262,6 @@
     verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO,@"isVerifyPsd":@YES};
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
-
-
-
-
-
-
-
-
 
 #pragma mark ----- 是否显示密码明文或者暗文
 - (void)seePasswordButtonClicked:(UIButton *)sender {

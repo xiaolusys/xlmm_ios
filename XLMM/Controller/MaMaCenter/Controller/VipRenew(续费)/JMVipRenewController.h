@@ -10,4 +10,6 @@
 
 @interface JMVipRenewController : UIViewController
 
+@property (nonatomic, assign) CGFloat cashValue;
+
 @end

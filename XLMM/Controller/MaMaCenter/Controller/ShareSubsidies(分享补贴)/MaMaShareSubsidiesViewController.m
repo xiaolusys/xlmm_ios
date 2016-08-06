@@ -73,21 +73,14 @@ static NSString *cellIdentifier = @"shareSubsidies";
     
     //网络请求
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog/get_clk_list", Root_URL];
-    
-    [[AFHTTPSessionManager manager] GET:url parameters:nil
-                               progress:^(NSProgress * _Nonnull downloadProgress) {
-                                   //数据请求的进度
-                               }
-                                success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
-        
         [self dataAnalysis:responseObject];
+    } WithFail:^(NSError *error) {
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"error:%@", error);
+    } Progress:^(float progress) {
+        
     }];
-    
-    
 }
 
 - (void)createTableView {
@@ -178,16 +171,14 @@ static NSString *cellIdentifier = @"shareSubsidies";
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:self.nextPage parameters:nil
-        progress:^(NSProgress * _Nonnull downloadProgress) {
-            //数据请求的进度
-        }
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {
         [self.tableView.mj_footer endRefreshing];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
     }];
 }
 
