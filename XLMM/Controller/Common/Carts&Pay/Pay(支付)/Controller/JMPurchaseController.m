@@ -208,7 +208,7 @@ static BOOL isAgreeTerms = YES;
         _addressID = @"";
     }else {
         NSDictionary *dic = purchaseArr[0];
-        _addressID = dic[@"id"];
+        _addressID = [dic[@"id"] stringValue];
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
 }
@@ -361,6 +361,8 @@ static BOOL isAgreeTerms = YES;
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
         AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        addVC.isButtonSelected = YES;
+        addVC.addressID = _addressID;
         addVC.isSelected = YES;
         addVC.delegate = self;
         [self.navigationController pushViewController:addVC animated:YES];

@@ -138,6 +138,7 @@
                 <outlet property="morenLabel" destination="3K5-hY-f0i" id="Wcb-HX-kiR"/>
                 <outlet property="secondLabel" destination="lHv-Po-ST8" id="4qM-a2-8VP"/>
                 <outlet property="selectedButton" destination="wp0-7C-LJB" id="Qis-E8-PNR"/>
+                <outlet property="selectedLayout" destination="TkR-XL-qD5" id="Qxy-m9-jzT"/>
             </connections>
             <point key="canvasLocation" x="190" y="408"/>
         </tableViewCell>

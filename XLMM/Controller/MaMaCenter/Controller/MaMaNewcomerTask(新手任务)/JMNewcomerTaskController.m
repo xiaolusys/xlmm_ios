@@ -38,6 +38,7 @@
 
 - (void)setNewsTaskArr:(NSArray *)newsTaskArr {
     _newsTaskArr = newsTaskArr;
+    [self.dataSource removeAllObjects];
     for (NSDictionary *dic in newsTaskArr) {
         BOOL isShow = dic[@"show"];
         if (isShow) {
