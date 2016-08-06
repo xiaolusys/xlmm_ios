@@ -443,20 +443,11 @@
 - (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
     NSLog(@"%ld=========index",index);
     WebViewController *activity = [[WebViewController alloc] init];
-    //    _diction = nil;
-    NSString *active = @"myInvite";
-    NSString *titleName = @"精品活动";
     [self.diction setValue:self.messageUrl forKey:@"web_url"];
-    [self.diction setValue:active forKey:@"type_title"];
-    [self.diction setValue:titleName forKey:@"name_title"];
     activity.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
-    activity.isShowNavBar = true;
-    activity.isShowRightShareBtn = true;
-    activity.share_model.share_link = self.boutiqueActiveWebUrl;
-    activity.share_model.title = @"精品活动";
-    activity.share_model.desc = @"更多精选活动,尽在小鹿美美~~";
-    activity.share_model.share_img = @"http://7xogkj.com2.z0.glb.qiniucdn.com/1181123466.jpg";
-    activity.share_model.share_type = @"link";
+    activity.isShowNavBar = false;
+    activity.isShowRightShareBtn = false;
+
     [self.navigationController pushViewController:activity animated:YES];
 }
 - (void)xiaoluUniversity {
