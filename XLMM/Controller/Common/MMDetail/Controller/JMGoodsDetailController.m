@@ -82,15 +82,30 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"商品详情" selecotr:@selector(backClick:)];
+    self.navigationController.navigationBar.alpha = 0.0f;
     
     
+    [self createTableView];
     
-    self.detailWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64)];
+
+    
+}
+- (void)createTableView {
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60) style:UITableViewStylePlain];
+    self.tableView.backgroundColor = [UIColor countLabelColor];
+    [self.view addSubview:self.tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    UIView *dowmView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 60, SCREENWIDTH, 60)];
+    dowmView.backgroundColor = [UIColor purpleColor];
+    [self.view addSubview:dowmView];
+    
+    self.detailWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64 + 60, SCREENWIDTH, SCREENHEIGHT - 60)];
     [self.view addSubview:self.detailWebView];
     self.detailWebView.scrollView.delegate = self;
-    // 加载webView界面
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [self.detailWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]]];
     });
@@ -100,7 +115,7 @@
     [self.tableView registerClass:[JMGoodsParameterCell class] forCellReuseIdentifier:JMGoodsParameterCellIdentifier];
     
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, END_DRAG_SHOW_HEIGHT)];
-    UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0 , SCREENHEIGHT, END_DRAG_SHOW_HEIGHT)];
+    UILabel *descLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0 , SCREENWIDTH, END_DRAG_SHOW_HEIGHT)];
     [footView addSubview:descLabel];
     self.tableView.tableFooterView = footView;
     descLabel.text = @"继续拖动,查看图文详情";
@@ -109,7 +124,7 @@
     
     [self createHeaderView];
     
-    self.bottomMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -64, SCREENWIDTH, 64)];
+    self.bottomMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -60, SCREENWIDTH, 60)];
     self.bottomMessageLabel.font = [UIFont systemFontOfSize:13.0f];
     self.bottomMessageLabel.textAlignment = NSTextAlignmentCenter;
     self.bottomMessageLabel.text = @"下拉返回商品详情";
@@ -117,15 +132,6 @@
     [self.detailWebView.scrollView addSubview:self.bottomMessageLabel];
     
     
-}
-- (void)createTableView {
-    
-    
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60) style:UITableViewStylePlain];
-    [self.view addSubview:self.tableView];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
 }
 
 - (void)createHeaderView {
@@ -186,10 +192,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
-            return 260.0f;
+            return 360.0f;
             break;
         case 1:
-            return 200.0f;
+            return 300.0f;
             break;
         default:
             return 0.0f;
@@ -243,7 +249,7 @@
         if (maxY >= self.tableView.contentSize.height - SCREENHEIGHT + END_DRAG_SHOW_HEIGHT + BOTTOM_VIEW_HEIGHT) {
             isShowDetail = NO;
             [UIView animateWithDuration:0.4 animations:^{
-                self.view.transform = CGAffineTransformTranslate(self.view.transform, 0, - (SCREENHEIGHT + 0));
+                self.view.transform = CGAffineTransformTranslate(self.view.transform, 0, - (SCREENHEIGHT + BOTTOM_VIEW_HEIGHT));
             } completion:^(BOOL finished) {
                 maxY = 0.0f;
                 isShowDetail = YES;
