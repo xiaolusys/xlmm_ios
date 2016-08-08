@@ -123,23 +123,31 @@ static BOOL isAgreeTerms = YES;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backClick)];
     
+    self.isCanCoupon = NO;
+    self.isUseXLW = NO;
+    self.isEnoughRight = NO;
+    self.isEnoughBudget = NO;
+    self.isEnoughCoupon = NO;
+    self.isUserCoupon = NO;
+    self.isCouponEnoughPay = NO;
+    
+    _totalPayment = 0;              //应付款金额
+    _discountfee=0;               //优惠券金额
+    _rightAmount=0;               //app优惠
+    _availableFloat=0;            //小鹿钱包余额
+    
+    _totalfee=0;                  //总金额
+    _postfee=0;                   //运费金额
+    _amontPayment=0;              //总需支付金额
+    _couponValue=0;               //优惠券金额
+    _discount = 0;                  //计算金额
+    
     [self initView];
     [self createTableView];
     [self createTableHeaderView];
     [self createTableFooterView];
     [self loadAddressInfo];
     [self loadDataSource];
-    
-    
-    self.isCanCoupon = NO;
-    self.isUseXLW = NO;
-    
-    self.isEnoughRight = NO;
-    self.isEnoughBudget = NO;
-    self.isEnoughCoupon = NO;
-    
-    self.isUserCoupon = NO;
-
     
     if (isAgreeTerms) {
         self.purchaseFooterView.termsButton.selected = YES;
@@ -200,7 +208,7 @@ static BOOL isAgreeTerms = YES;
         _addressID = @"";
     }else {
         NSDictionary *dic = purchaseArr[0];
-        _addressID = dic[@"id"];
+        _addressID = [dic[@"id"] stringValue];
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
 }
@@ -218,6 +226,7 @@ static BOOL isAgreeTerms = YES;
     _totalPayment = [[purchaseDic objectForKey:@"total_payment"] floatValue];
     _discountfee = [[purchaseDic objectForKey:@"discount_fee"] floatValue];
     
+    //NSLog(@"purchaseDic %@", purchaseDic);
     // 优惠判断
     NSArray *extrasArr = purchaseDic[@"pay_extras"];
     for (NSDictionary *dicExtras in extrasArr) {
@@ -232,8 +241,8 @@ static BOOL isAgreeTerms = YES;
         // app立减
         if ([dicExtras[@"pid"] integerValue] == 1) {
             _rightReduce = dicExtras;
-            CGFloat appcut = [[dicExtras objectForKey:@"value"] floatValue];
-            if ([[purchaseDic objectForKey:@"total_payment"] compare:[dicExtras objectForKey:@"value"]] == NSOrderedDescending) {
+            float appcut = [[dicExtras objectForKey:@"value"] floatValue];
+            if (_totalPayment - appcut > 1e-6) {
                 _totalPayment = _totalPayment - appcut;
                 _discountfee = _discountfee + appcut;
             }else {
@@ -248,17 +257,17 @@ static BOOL isAgreeTerms = YES;
             continue;
         }
         // 余额
-        if ([[dicExtras objectForKey:@"pid"] integerValue] == 3 && _totalPayment > 0) {
+        if ([[dicExtras objectForKey:@"pid"] integerValue] == 3) {
             _xlWallet = dicExtras;
             _availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
 
-            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
-                //足够支付
-                self.isEnoughBudget = YES;
-            }else {
-                //不足支付
-                self.isEnoughBudget = NO;
-            }
+//            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
+//                //足够支付
+//                self.isEnoughBudget = YES;
+//            }else {
+//                //不足支付
+//                self.isEnoughBudget = NO;
+//            }
         }
     }
     _uuid = [purchaseDic objectForKey:@"uuid"];
@@ -285,12 +294,14 @@ static BOOL isAgreeTerms = YES;
             CGFloat surplus = _amontPayment - _couponValue - _rightAmount;
             if (_availableFloat - surplus > 0.000001 || (fabs(_availableFloat - surplus) < 0.000001 || fabs(surplus - _couponValue) < 0.000001)) {
                 //钱包金额够使用
+                self.isEnoughBudget = YES;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
                 self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
+                self.isEnoughBudget = NO;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
@@ -350,6 +361,8 @@ static BOOL isAgreeTerms = YES;
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
         AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        addVC.isButtonSelected = YES;
+        addVC.addressID = _addressID;
         addVC.isSelected = YES;
         addVC.delegate = self;
         [self.navigationController pushViewController:addVC animated:YES];

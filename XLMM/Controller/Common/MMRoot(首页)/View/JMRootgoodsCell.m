@@ -12,6 +12,7 @@
 #import "UIImage+ChangeGray.h"
 #import "PromoteModel.h"
 #import "CollectionModel.h"
+#import "JMStoreUpModel.h"
 
 @interface JMRootgoodsCell ()
 
@@ -20,7 +21,9 @@
 @end
 
 
-@implementation JMRootgoodsCell
+@implementation JMRootgoodsCell {
+    NSString *_storeID;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -34,6 +37,7 @@
     UIImageView *iconImage = [UIImageView new];
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
+    self.iconImage.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];
@@ -76,6 +80,16 @@
     self.backLabel = backLabel;
     self.backLabel.textColor = [UIColor whiteColor];
     self.backLabel.font = [UIFont systemFontOfSize:13.];
+    
+    self.storeUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.iconImage addSubview:self.storeUpButton];
+    [self.storeUpButton addTarget:self action:@selector(cacleStoreUpClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.storeUpButton.hidden = YES;
+    
+    self.storeUpImage = [UIImageView new];
+    [self.storeUpButton addSubview:self.storeUpImage];
+    self.storeUpImage.image = [UIImage imageNamed:@"MyCollection_Selected"];
+    self.storeUpImage.userInteractionEnabled = YES;
     
 }
 - (void)layoutUI {
@@ -125,6 +139,16 @@
     [self.backLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakSelf.backView.mas_centerX);
         make.centerY.equalTo(weakSelf.backView.mas_centerY);
+    }];
+    
+    [self.storeUpButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.bottom.equalTo(weakSelf.iconImage);
+        make.width.height.mas_equalTo(@40);
+    }];
+    [self.storeUpImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@20);
+        make.centerY.equalTo(weakSelf.storeUpButton.mas_centerY);
+        make.centerX.equalTo(weakSelf.storeUpButton.mas_centerX);
     }];
     
 }
@@ -227,6 +251,50 @@
         if([model.isNewgood boolValue]){
             self.backLabel.text = @"即将开售";
         }
+    }
+}
+
+- (void)fillStoreUpData:(JMStoreUpModel *)model {
+    self.backView.hidden = YES;
+    self.storeUpButton.hidden = NO;
+    
+    NSDictionary *dic = model.modelproduct;
+    
+    NSString *string = dic[@"head_img"];
+    
+    _storeID = model.storeUpID;
+    
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
+    [newImageUrl appendString:@"?"];
+    
+    if ([string hasPrefix:@"http:"]) {
+        
+    }else {
+        [newImageUrl insertString:@"http:" atIndex:0];
+    }
+    
+    
+    
+    
+    self.iconImage.alpha = 0.3;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.iconImage.alpha = 1.0;
+        }];
+    }];
+    
+    self.titleLabel.text = dic[@"name"];
+    
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [dic[@"lowest_agent_price"] floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[dic[@"lowest_std_sale_price"] floatValue]];
+    
+    
+    
+}
+
+- (void)cacleStoreUpClick:(UIButton *)button {
+    if (self.block) {
+        self.block(_storeID);
     }
 }
 

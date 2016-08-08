@@ -1,5 +1,5 @@
 //
-//  JMGoodsExplainCell.h
+//  JMGoodsAttributeCell.h
 //  XLMM
 //
 //  Created by zhang on 16/8/8.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const JMGoodsExplainCellIdentifier;
+extern NSString *const JMGoodsAttributeCellIdentifier;
 
-@interface JMGoodsExplainCell : UITableViewCell
+@interface JMGoodsAttributeCell : UITableViewCell
 
 @end

@@ -1,16 +1,16 @@
 //
-//  JMGoodsExplainCell.m
+//  JMGoodsAttributeCell.m
 //  XLMM
 //
 //  Created by zhang on 16/8/8.
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "JMGoodsExplainCell.h"
+#import "JMGoodsAttributeCell.h"
 
-NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
+NSString *const JMGoodsAttributeCellIdentifier = @"JMGoodsAttributeCellIdentifier";
 
-@implementation JMGoodsExplainCell
+@implementation JMGoodsAttributeCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -31,7 +31,11 @@
 #import "JMNewcomerTaskController.h"
 #import "JMPopViewAnimationSpring.h"
 
+static NSUInteger popNum = 0;
+
 @interface JMMaMaPersonCenterController ()<JMNewcomerTaskControllerDelegate,JMShareViewDelegate,UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate>
+
+
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) JMMaMaCenterHeaderView *mamaCenterHeaderView;
@@ -153,17 +157,20 @@
     //精选活动链接
     self.eventLink = self.mamaCenterModel.mama_event_link;
     
-    [self newcomerTaskData:_mamaID];
+    if (popNum < 1) {
+        [self newcomerTaskData:_mamaID];
+    }
+    popNum ++;
     
 }
 - (void)newcomerTaskData:(NSString *)mamaID {
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.1.31:9000/rest/v1/pmt/xlmm/%@/new_mama_task_info",mamaID];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/%@/new_mama_task_info",Root_URL,mamaID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
         [self newcomerData:responseObject];
     } WithFail:^(NSError *error) {
-        
+        NSLog(@"%@",error);
     } Progress:^(float progress) {
         
     }];
@@ -239,6 +246,9 @@
     self.boutiqueActiveWebUrl = extraDict[@"act_info"];   // --> 精品活动
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
     self.messageUrl = extraDict[@"notice"];               // --> 小鹿妈妈消息
+    
+    NSDictionary *picturesDic = extraDict[@"pictures"];
+    self.mamaCenterHeaderView.imageString = picturesDic[@"exam_pic"];
     
 }
 - (void)mamaMesageData:(NSDictionary *)messageDic {
@@ -442,7 +452,13 @@
 #pragma mark 妈妈消息列表点击事件
 - (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
     NSLog(@"%ld=========index",index);
-    [self xiaoluUniversity];
+    WebViewController *message = [[WebViewController alloc] init];
+    [self.diction setValue:self.messageUrl forKey:@"web_url"];
+    [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
+    message.webDiction = _diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
+    message.isShowNavBar = true;
+    message.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:message animated:YES];
 }
 - (void)xiaoluUniversity {
     if (self.boutiqueActiveWebUrl == nil || self.boutiqueActiveWebUrl.length == 0) {

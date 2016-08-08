@@ -67,7 +67,15 @@
             break;
         }
         case RequestTypeDELETE: {
-            
+            [[JMHTTPManager shareManager] DELETE:urlString parameters:paraments success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (success) {
+                    success(responseObject);
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                if (fail) {
+                    fail(error);
+                }
+            }];
             break;
         }
         case RequestTypePUT: {
