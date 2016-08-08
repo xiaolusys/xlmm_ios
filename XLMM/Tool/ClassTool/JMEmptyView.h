@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^backToRootBlock)(NSInteger index);
+
 @interface JMEmptyView : UIView
 
+@property (nonatomic, copy) backToRootBlock block;
 
 @property (nonatomic, copy) NSString *imageStr;
 

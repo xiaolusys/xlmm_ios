@@ -10,6 +10,7 @@
 
 @class CollectionModel;
 @class PromoteModel;
+@class JMStoreUpModel;
 @interface JMRootgoodsCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *iconImage;
@@ -31,5 +32,7 @@
 - (void)fillDataWithCollectionModel:(CollectionModel *)model;
 
 - (void)fillData:(PromoteModel *)model;
+
+- (void)fillStoreUpData:(JMStoreUpModel *)model;
 
 @end
