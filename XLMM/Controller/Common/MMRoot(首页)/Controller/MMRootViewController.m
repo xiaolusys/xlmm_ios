@@ -978,6 +978,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [currentArr removeAllObjects];
     
     UICollectionView *collection = self.collectionArr[self.currentIndex];
+    [collection.mj_footer resetNoMoreData];
     [collection reloadData];
     
     [self createRequestURL];
