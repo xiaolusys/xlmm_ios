@@ -64,7 +64,7 @@
 @property (nonatomic, strong) UIView *shareView;
 
 @property (nonatomic, strong) UIButton *backButton;
-
+@property (nonatomic, strong) UILabel *cartsLabel;
 /**
  *  数据源 --> 数组
  */
@@ -82,6 +82,8 @@
 
 @implementation JMGoodsDetailController {
     NSMutableArray *goodsArray;
+    
+    NSInteger _cartsGoodsNum;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -161,6 +163,7 @@
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     [self lodaDataSource];
+    [self loadCatrsNumData];
     
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
@@ -215,6 +218,13 @@
     [shopCartButton addSubview:shopCartImage];
     shopCartImage.image = [UIImage imageNamed:@"gouwucheicon2"];
     
+//    self.cartsLabel = [UILabel new];
+//    [shopCartImage addSubview:self.cartsLabel];
+//    self.cartsLabel.font = [UIFont systemFontOfSize:9.];
+//    self.cartsLabel.textColor = [UIColor whiteColor];
+//    self.cartsLabel.layer.cornerRadius = 5.;
+//    self.cartsLabel.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomView addSubview:addCartButton];
@@ -242,7 +252,11 @@
         make.height.mas_equalTo(@40);
         make.width.mas_equalTo(@(SCREENWIDTH - 85));
     }];
-    
+//    [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(shopCartImage.mas_right);
+//        make.bottom.equalTo(shopCartImage.mas_top);
+//        make.width.height.mas_equalTo(@10);
+//    }];
     
     
     
@@ -335,6 +349,20 @@
         make.width.height.mas_equalTo(NavigationMaskWH);
     }];
 
+}
+- (void)loadCatrsNumData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        _cartsGoodsNum = [responseObject[@"result"] integerValue];
+//        self.cartsLabel.text = responseObject[@"result"];
+    } WithFail:^(NSError *error) {
+        NSLog(@"%@",error);
+    } Progress:^(float progress) {
+        
+    }];
+    
 }
 - (void)lodaDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/%@",Root_URL,self.goodsID];
@@ -687,6 +715,9 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
+            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
+            NSLog(@"%ld",_cartsGoodsNum);
+//            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
         }else {
             [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
         }
