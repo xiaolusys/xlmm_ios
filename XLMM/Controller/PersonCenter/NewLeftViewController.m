@@ -21,6 +21,7 @@
 #import "JMRefundBaseController.h"
 #import "JMCouponController.h"
 #import "MMClass.h"
+#import "JMGoodsDetailController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -259,8 +260,8 @@
 - (IBAction)suggestionClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
-        
+//        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
+        JMGoodsDetailController *yijianVC = [[JMGoodsDetailController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
         }

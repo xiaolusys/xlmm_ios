@@ -12,6 +12,7 @@
 
 @property (nonatomic,copy) NSString *web_url;
 @property (nonatomic, copy)NSString *ID;
+@property (nonatomic, copy)NSString *modelID;
 @property (nonatomic, copy)NSString *Url;
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, copy)NSString *outerID;

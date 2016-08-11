@@ -47,6 +47,8 @@
 #import "JMDBManager.h"
 #import "JMUpdataAppPopView.h"
 #import "JMMaMaPersonCenterController.h"
+#import "JMStoreupController.h"
+#import "JMGoodsDetailController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -1669,17 +1671,22 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             return;
         
         PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-        _diction = [NSMutableDictionary dictionary];
-        _diction = model.mj_keyValues;
-        [_diction setValue:model.web_url forKey:@"web_url"];
-        [_diction setValue:@"ProductDetail" forKey:@"type_title"];
+//        _diction = [NSMutableDictionary dictionary];
+//        _diction = model.mj_keyValues;
+//        [_diction setValue:model.web_url forKey:@"web_url"];
+//        [_diction setValue:@"ProductDetail" forKey:@"type_title"];
+//        
+//        WebViewController *webView = [[WebViewController alloc] init];
+//        webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
+//        webView.isShowNavBar =false;
+//        webView.isShowRightShareBtn=false;
+//        [self.navigationController pushViewController:webView animated:YES];
         
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
-        webView.isShowNavBar =false;
-        webView.isShowRightShareBtn=false;
-        [self.navigationController pushViewController:webView animated:YES];
+        JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
         
+        detailVC.goodsID = model.modelID;
+        
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
     
 }
@@ -1976,7 +1983,23 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark 创建购物车按钮。。
 - (void)createCartsView{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 108, 44)];
+    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
+    [_view addSubview:collectionView];
+    collectionView.backgroundColor = [UIColor blackColor];
+    collectionView.alpha = 0.8;
+    collectionView.layer.cornerRadius = 22;
+
+    
+    UIButton *collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [collectionView addSubview:collectionButton];
+    [collectionButton setImage:[UIImage imageNamed:@"MyCollection_Nomal"] forState:UIControlStateNormal];
+    [collectionButton setImage:[UIImage imageNamed:@"MyCollection_Selected"] forState:UIControlStateHighlighted];
+    collectionButton.frame = CGRectMake(0, 0, 44, 44);
+    collectionButton.layer.cornerRadius = 22;
+    [collectionButton addTarget:self action:@selector(gotoCollection:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(60, SCREENHEIGHT - 64, 108, 44)];
     view.tag = 123;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
@@ -2136,7 +2159,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
     [self.navigationController pushViewController:cartVC animated:YES];
 }
-
+#pragma mark 点击按钮进入我的收藏界面
+- (void)gotoCollection:(UIButton *)sender {
+    JMStoreupController *storeVC = [[JMStoreupController alloc] init];
+    storeVC.index = 100;
+    [self.navigationController pushViewController:storeVC animated:YES];
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -53,15 +53,21 @@
 - (void)setReGoodsDic:(NSDictionary *)reGoodsDic {
     _reGoodsDic = reGoodsDic;
     
-    self.nameL.text = [NSString stringWithFormat:@"收件人:%@",reGoodsDic[@"buyer_nick"]];
-    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",reGoodsDic[@"mobile"]];
+//    self.nameL.text = [NSString stringWithFormat:@"收件人:%@",reGoodsDic[@"buyer_nick"]];
+//    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",reGoodsDic[@"mobile"]];
     NSArray *arr = [reGoodsDic[@"return_address"] componentsSeparatedByString:@"，"];
     NSString *addStr = @"";
+    NSString *nameStr = @"";
+    NSString *phoneStr = @"";
     if (arr.count > 0) {
         addStr = arr[0];
+        nameStr = arr[1];
+        phoneStr = arr[2];
     }else {
         return ;
     }
+    self.nameL.text = [NSString stringWithFormat:@"收件人:%@",nameStr];
+    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",phoneStr];
     self.addressL.text = [NSString stringWithFormat:@"退货地址:%@",addStr];
 }
 - (void)preporaUI {
