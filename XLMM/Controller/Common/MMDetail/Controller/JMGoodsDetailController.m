@@ -16,6 +16,11 @@
 #import "JMGoodsSafeGuardCell.h"
 #import "SVProgressHUD.h"
 #import "IMYWebView.h"
+#import "JMShareViewController.h"
+#import "JMPopView.h"
+#import "JMShareView.h"
+#import "JMShareModel.h"
+#import "CartViewController.h"
 
 #define BottomHeitht 60.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.7
@@ -24,7 +29,7 @@
 
 #define NavigationMaskWH 36
 
-@interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate> {
+@interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate> {
     CGFloat maxY;
     CGFloat minY;
     
@@ -44,6 +49,7 @@
     NSDictionary *_paramer;
     
 }
+@property (nonatomic, strong) JMShareViewController *goodsShareView;
 
 @property (nonatomic, strong) UIView *allContentView;
 
@@ -78,6 +84,8 @@
 
 @property (nonatomic, strong) NSMutableArray *attributeArray;
 
+@property (nonatomic, strong) JMShareModel *shareModel;
+
 @end
 
 @implementation JMGoodsDetailController {
@@ -94,6 +102,12 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
+}
+- (JMShareModel *)shareModel {
+    if (!_shareModel) {
+        _shareModel = [[JMShareModel alloc] init];
+    }
+    return _shareModel;
 }
 - (NSMutableArray *)attributeArray {
     if (!_attributeArray) {
@@ -164,6 +178,7 @@
     
     [self lodaDataSource];
     [self loadCatrsNumData];
+    [self loadShareData];
     
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
@@ -183,18 +198,15 @@
     
     //self.detailWebView.delegate = self;
     
-    NSString *loadStr = [NSString stringWithFormat:@"%@%@/%@", Root_URL, @"/mall/product/details/app", self.goodsID];
-    NSURL *url = [NSURL URLWithString:loadStr];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
-    [self.detailWebView loadRequest:request];
-    
-    
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//        // m.xiaolumeimei.com/mall/product/details/18203
-//        [self.detailWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.xiaolumeimei.com/mall/product/details/18203"]]];
-//    });
+//    NSString *loadStr = [NSString stringWithFormat:@"%@%@/%@", Root_URL, @"/mall/product/details/app", self.goodsID];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSString *loadStr = [NSString stringWithFormat:@"%@/mall/product/details/app/%@",Root_URL,self.goodsID];
+        NSURL *url = [NSURL URLWithString:loadStr];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
+        [self.detailWebView loadRequest:request];
+    });
     self.detailWebView.scrollView.delegate = self;
     
     [self.view addSubview:self.allContentView];
@@ -218,13 +230,14 @@
     [shopCartButton addSubview:shopCartImage];
     shopCartImage.image = [UIImage imageNamed:@"gouwucheicon2"];
     
-//    self.cartsLabel = [UILabel new];
-//    [shopCartImage addSubview:self.cartsLabel];
-//    self.cartsLabel.font = [UIFont systemFontOfSize:9.];
-//    self.cartsLabel.textColor = [UIColor whiteColor];
-//    self.cartsLabel.layer.cornerRadius = 5.;
-//    self.cartsLabel.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-    
+    self.cartsLabel = [UILabel new];
+    [shopCartImage addSubview:self.cartsLabel];
+    self.cartsLabel.font = [UIFont systemFontOfSize:12.];
+    self.cartsLabel.textColor = [UIColor whiteColor];
+    self.cartsLabel.backgroundColor = [UIColor redColor];
+    self.cartsLabel.textAlignment = NSTextAlignmentCenter;
+    self.cartsLabel.layer.cornerRadius = 10.;
+    self.cartsLabel.layer.masksToBounds = YES;
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomView addSubview:addCartButton];
@@ -252,11 +265,11 @@
         make.height.mas_equalTo(@40);
         make.width.mas_equalTo(@(SCREENWIDTH - 85));
     }];
-//    [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(shopCartImage.mas_right);
-//        make.bottom.equalTo(shopCartImage.mas_top);
-//        make.width.height.mas_equalTo(@10);
-//    }];
+    [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(shopCartImage.mas_right).offset(-5);
+        make.bottom.equalTo(shopCartImage.mas_top).offset(5);
+        make.width.height.mas_equalTo(@20);
+    }];
     
     
     
@@ -350,13 +363,30 @@
     }];
 
 }
+- (void)loadShareData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        self.shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
+        self.shareModel.share_type = @"link";
+    } WithFail:^(NSError *error) {
+        NSLog(@"%@",error);
+    } Progress:^(float progress) {
+        
+    }];
+}
 - (void)loadCatrsNumData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
         _cartsGoodsNum = [responseObject[@"result"] integerValue];
-//        self.cartsLabel.text = responseObject[@"result"];
+        if (_cartsGoodsNum == 0) {
+            self.cartsLabel.hidden = YES;
+        }else {
+            self.cartsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"result"]];
+        }
     } WithFail:^(NSError *error) {
         NSLog(@"%@",error);
     } Progress:^(float progress) {
@@ -413,9 +443,24 @@
         }
     }else {
         NSLog(@"navigationBarButton层  分享按钮 --------");
+        
+        JMShareViewController *shareView = [[JMShareViewController alloc] init];
+        self.goodsShareView = shareView;
+        self.goodsShareView.model = self.shareModel;
+        
+        JMShareView *cover = [JMShareView show];
+        cover.delegate = self;
+        //弹出视图
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+        menu.contentView = self.goodsShareView.view;
+        
     }
 }
-
+#pragma mark --- 点击隐藏弹出视图
+- (void)coverDidClickCover:(JMShareView *)cover {
+    //隐藏pop菜单
+    [JMPopView hide];
+}
 - (void)setupHeadView {
     JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
     self.goodsScrollView = scrollView;
@@ -641,8 +686,13 @@
 }
 - (void)cartButton:(UIButton *)button {
     
-    if (button.tag == 100 || button.tag == 101) {
+    if (button.tag == 100) {
+        CartViewController *cartVC = [[CartViewController alloc] init];
+        [self.navigationController pushViewController:cartVC animated:YES];
+    }else if (button.tag == 101) {
         [self showPopView];
+    }else {
+        
     }
     
 }
@@ -716,15 +766,17 @@
         if (code == 0) {
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
             _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
+            self.cartsLabel.hidden = NO;
             NSLog(@"%ld",_cartsGoodsNum);
-//            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
         }else {
+            self.cartsLabel.hidden = YES;
             [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
         }
         [self hideMaskView];
     } WithFail:^(NSError *error) {
         NSLog(@"%@",error);
-        
+        self.cartsLabel.hidden = YES;
     } Progress:^(float progress) {
         
     }];
@@ -747,32 +799,6 @@
     NSLog(@"%@", self.topImageArray[index]);
     
     
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
-    NSLog(@"完成加载 %ld",(long)webView.tag);
-
-
-    if (webView.isLoading) {
-        return;
-    }
-    
-}
-
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    
-    
-    
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"%@",error);
-}
-
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    return YES;
 }
 
 
