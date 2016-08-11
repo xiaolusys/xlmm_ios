@@ -12,6 +12,7 @@
 #import "WebViewController.h"
 #import "JMEmptyView.h"
 #import "SVProgressHUD.h"
+#import "JMGoodsDetailController.h"
 
 
 //static NSString *storeUpCell = @"JMHotGoodsController";
@@ -185,14 +186,20 @@
     
     NSDictionary *modelProductDic = model.modelproduct;
     
-    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
+//    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
     
-    [dictionDic setValue:modelProductDic[@"web_url"] forKey:@"web_url"];
-    WebViewController *webView = [[WebViewController alloc] init];
-    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:dictionDic];
-    webView.isShowNavBar =false;
-    webView.isShowRightShareBtn=false;
-    [self.navigationController pushViewController:webView animated:YES];
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    detailVC.goodsID = modelProductDic[@"id"];
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
+
+    
+//    [dictionDic setValue:modelProductDic[@"web_url"] forKey:@"web_url"];
+//    WebViewController *webView = [[WebViewController alloc] init];
+//    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:dictionDic];
+//    webView.isShowNavBar =false;
+//    webView.isShowRightShareBtn=false;
+//    [self.navigationController pushViewController:webView animated:YES];
     
     
 }
