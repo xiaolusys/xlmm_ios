@@ -37,7 +37,7 @@
     UIImageView *iconImage = [UIImageView new];
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
-    self.iconImage.userInteractionEnabled = YES;
+//    self.iconImage.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];
@@ -82,14 +82,14 @@
     self.backLabel.font = [UIFont systemFontOfSize:13.];
     
     self.storeUpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.iconImage addSubview:self.storeUpButton];
+    [self.contentView addSubview:self.storeUpButton];
     [self.storeUpButton addTarget:self action:@selector(cacleStoreUpClick:) forControlEvents:UIControlEventTouchUpInside];
     self.storeUpButton.hidden = YES;
     
     self.storeUpImage = [UIImageView new];
     [self.storeUpButton addSubview:self.storeUpImage];
     self.storeUpImage.image = [UIImage imageNamed:@"MyCollection_Selected"];
-    self.storeUpImage.userInteractionEnabled = YES;
+//    self.storeUpImage.userInteractionEnabled = YES;
     
 }
 - (void)layoutUI {
@@ -142,13 +142,13 @@
     }];
     
     [self.storeUpButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.bottom.equalTo(weakSelf.iconImage);
-        make.width.height.mas_equalTo(@40);
+        make.right.bottom.equalTo(weakSelf.contentView);
+        make.width.height.mas_equalTo(@60);
     }];
     [self.storeUpImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(@20);
-        make.centerY.equalTo(weakSelf.storeUpButton.mas_centerY);
-        make.centerX.equalTo(weakSelf.storeUpButton.mas_centerX);
+        make.centerY.equalTo(weakSelf.storeUpButton.mas_centerY).offset(5);
+        make.centerX.equalTo(weakSelf.storeUpButton.mas_centerX).offset(10);
     }];
     
 }
@@ -262,7 +262,7 @@
     
     NSString *string = dic[@"head_img"];
     
-    _storeID = model.storeUpID;
+    
     
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
     [newImageUrl appendString:@"?"];
@@ -288,7 +288,7 @@
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [dic[@"lowest_agent_price"] floatValue]];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[dic[@"lowest_std_sale_price"] floatValue]];
     
-    
+    _storeID = dic[@"id"];
     
 }
 

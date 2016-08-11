@@ -10,6 +10,13 @@
 
 extern NSString *const JMGoodsExplainCellIdentifier;
 
+typedef void(^storeUpBlock)(BOOL isSelected);
+
 @interface JMGoodsExplainCell : UITableViewCell
+
+@property (nonatomic, strong) NSDictionary *detailContentDic;
+@property (nonatomic, strong) NSDictionary *customInfoDic;
+
+@property (nonatomic, copy) storeUpBlock block;
 
 @end

@@ -48,6 +48,7 @@
 #import "JMUpdataAppPopView.h"
 #import "JMMaMaPersonCenterController.h"
 #import "JMStoreupController.h"
+#import "JMGoodsDetailController.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -1669,17 +1670,22 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             return;
         
         PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
-        _diction = [NSMutableDictionary dictionary];
-        _diction = model.mj_keyValues;
-        [_diction setValue:model.web_url forKey:@"web_url"];
-        [_diction setValue:@"ProductDetail" forKey:@"type_title"];
+//        _diction = [NSMutableDictionary dictionary];
+//        _diction = model.mj_keyValues;
+//        [_diction setValue:model.web_url forKey:@"web_url"];
+//        [_diction setValue:@"ProductDetail" forKey:@"type_title"];
+//        
+//        WebViewController *webView = [[WebViewController alloc] init];
+//        webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
+//        webView.isShowNavBar =false;
+//        webView.isShowRightShareBtn=false;
+//        [self.navigationController pushViewController:webView animated:YES];
         
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:_diction];
-        webView.isShowNavBar =false;
-        webView.isShowRightShareBtn=false;
-        [self.navigationController pushViewController:webView animated:YES];
+        JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
         
+        detailVC.goodsID = model.modelID;
+        
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
     
 }

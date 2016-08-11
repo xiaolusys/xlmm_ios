@@ -10,4 +10,7 @@
 
 @interface JMGoodsDetailController : UIViewController
 
+
+@property (nonatomic, copy) NSString *goodsID;
+
 @end

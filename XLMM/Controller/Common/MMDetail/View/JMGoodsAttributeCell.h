@@ -12,4 +12,10 @@ extern NSString *const JMGoodsAttributeCellIdentifier;
 
 @interface JMGoodsAttributeCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *bianmaLabel;
+@property (nonatomic, strong) UILabel *descBianmaLabel;
+
+
+//- (void)setIntroductionText:(NSString *)text;
+//
 @end

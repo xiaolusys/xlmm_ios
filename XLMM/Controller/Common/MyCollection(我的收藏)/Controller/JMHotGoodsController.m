@@ -181,18 +181,18 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    JMStoreUpModel *model = self.dataSource[indexPath.row];
-//    
-//    NSDictionary *modelProductDic = model.modelproduct;
-//    
-//    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
-//    
-//    [dictionDic setValue:modelProductDic[@"web_url"] forKey:@"web_url"];
-//    WebViewController *webView = [[WebViewController alloc] init];
-//    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:dictionDic];
-//    webView.isShowNavBar =false;
-//    webView.isShowRightShareBtn=false;
-//    [self.navigationController pushViewController:webView animated:YES];
+    JMStoreUpModel *model = self.dataSource[indexPath.row];
+    
+    NSDictionary *modelProductDic = model.modelproduct;
+    
+    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
+    
+    [dictionDic setValue:modelProductDic[@"web_url"] forKey:@"web_url"];
+    WebViewController *webView = [[WebViewController alloc] init];
+    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:dictionDic];
+    webView.isShowNavBar =false;
+    webView.isShowRightShareBtn=false;
+    [self.navigationController pushViewController:webView animated:YES];
     
     
 }

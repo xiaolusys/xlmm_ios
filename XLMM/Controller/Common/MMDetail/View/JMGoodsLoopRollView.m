@@ -37,7 +37,7 @@
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@300);
+        make.height.mas_equalTo(@(SCREENHEIGHT * 0.7));
     }];
     
     
