@@ -15,7 +15,7 @@
 #import "JMGoodsInfoPopView.h"
 #import "JMGoodsSafeGuardCell.h"
 #import "SVProgressHUD.h"
-
+#import "IMYWebView.h"
 
 #define BottomHeitht 60.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.7
@@ -24,7 +24,7 @@
 
 #define NavigationMaskWH 36
 
-@interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
+@interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate> {
     CGFloat maxY;
     CGFloat minY;
     
@@ -48,7 +48,7 @@
 @property (nonatomic, strong) UIView *allContentView;
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIWebView *detailWebView;
+@property (nonatomic, strong) IMYWebView *detailWebView;
 
 @property (nonatomic, strong) UILabel *upViewLabel;
 @property (nonatomic, strong) UILabel *downViewLabel;
@@ -178,23 +178,23 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.upViewLabel;
     
-    self.detailWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64 - BottomHeitht)];
+    self.detailWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64 - BottomHeitht)];
     self.detailWebView.backgroundColor = [UIColor countLabelColor];
     
-    self.detailWebView.delegate = self;
+    //self.detailWebView.delegate = self;
     
-//    NSString *loadStr = @"http://m.xiaolumeimei.com/mall/product/details/18203";
-//    NSURL *url = [NSURL URLWithString:loadStr];
-//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-//    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
-//    [self.detailWebView loadRequest:request];
+    NSString *loadStr = [NSString stringWithFormat:@"%@%@/%@", Root_URL, @"/mall/product/details/app", self.goodsID];
+    NSURL *url = [NSURL URLWithString:loadStr];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
+    [self.detailWebView loadRequest:request];
     
     
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        // m.xiaolumeimei.com/mall/product/details/18203
-        [self.detailWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//        // m.xiaolumeimei.com/mall/product/details/18203
+//        [self.detailWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.xiaolumeimei.com/mall/product/details/18203"]]];
+//    });
     self.detailWebView.scrollView.delegate = self;
     
     [self.view addSubview:self.allContentView];
