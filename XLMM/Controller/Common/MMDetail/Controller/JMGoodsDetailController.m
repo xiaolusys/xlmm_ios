@@ -97,11 +97,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-    
+    [MobClick beginLogPageView:@"JMGoodsDetailController"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    [MobClick endLogPageView:@"JMGoodsDetailController"];
 }
 - (JMShareModel *)shareModel {
     if (!_shareModel) {

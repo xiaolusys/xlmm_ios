@@ -83,7 +83,7 @@
 //        NSDictionary *wuliuInfo =  [self.dataSource objectAtIndex:indexPath.row];
 //        NSString *timeText = [wuliuInfo objectForKey:@"time"];
     NSString *timeText = timeModel.time;
-        timeText = [self spaceFormatTimeString:timeText];
+    timeText = [self spaceFormatTimeString:timeText];
         
 //        NSString *infoText = [wuliuInfo objectForKey:@"content"];
     NSString *infoText = timeModel.content;
@@ -98,7 +98,7 @@
 //    }
     return cell;
 }
--(NSString*) spaceFormatTimeString:(NSString*)timeString{
+-(NSString*)spaceFormatTimeString:(NSString*)timeString{
     NSMutableString *ms = [NSMutableString stringWithString:timeString];
     NSRange range = {10,1};
     [ms replaceCharactersInRange:range withString:@" "];

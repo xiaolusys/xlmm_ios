@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+NavigationBar.h"
+#import "UIButton+touch.h"
 
 @implementation UIViewController (NavigationBar)
 
@@ -24,9 +25,10 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
     imageView.frame = CGRectMake(0, 14, 16, 16);
     [button addSubview:imageView];
+    button.timeInterval = 1.0;
     [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-
+    
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 

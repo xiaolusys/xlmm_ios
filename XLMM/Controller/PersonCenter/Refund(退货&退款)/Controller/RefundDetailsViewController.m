@@ -13,6 +13,7 @@
 #import "JMTimeLineView.h"
 #import "JMRefundModel.h"
 #import "JMSelecterButton.h"
+#import "JMReturnProgressController.h"
 
 
 @interface RefundDetailsViewController (){
@@ -48,7 +49,9 @@
 
 @end
 
-@implementation RefundDetailsViewController
+@implementation RefundDetailsViewController {
+    BOOL _isChoiseLogistics;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -86,6 +89,8 @@
 //        self.topToRefundHeight.constant = 0;
 //    }
     
+    _isChoiseLogistics = ((self.refundModelr.sid.length != 0) && (self.refundModelr.company_name.length != 0));
+    
     NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.refundModelr.status, [self.refundModelr.good_status integerValue], self.refundModelr.return_address);
     [self createShowRefundView];
     [self timeLine];
@@ -110,7 +115,7 @@
     UILabel *addressLabel = [UILabel new];
     [refundInfoView addSubview:addressLabel];
     addressLabel.userInteractionEnabled = YES;
-    addressLabel.textColor = [UIColor dingfanxiangqingColor];
+    addressLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     addressLabel.font = [UIFont systemFontOfSize:12.];
     addressLabel.text = @"收货地址: 上海杨市松江区佘山镇吉业路245号5号楼";
     
@@ -136,8 +141,19 @@
         make.top.equalTo(afterServiceLabel.mas_bottom).offset(10);
         make.width.mas_equalTo(@180);
     }];
+    
+    NSInteger statusCount = [self.refundModelr.status integerValue];
+    NSString *buttonTitle = @"";
     self.refundOperateButton = [[JMSelecterButton alloc] init];
-    [self.refundOperateButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"填写快递单" TitleFont:13. CornerRadius:15];
+    
+    if (statusCount == REFUND_STATUS_SELLER_AGREED) {
+        buttonTitle = @"填写快递单";
+    }else if (statusCount == REFUND_STATUS_REFUND_SUCCESS) {
+        buttonTitle = @"已验收";
+    }else {
+        buttonTitle = @"查看进度";
+    }
+    [self.refundOperateButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:buttonTitle TitleFont:13. CornerRadius:15];
     [refundInfoView addSubview:self.refundOperateButton];
     [self.refundOperateButton addTarget:self action:@selector(refundOperateClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.refundOperateButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -197,8 +213,11 @@
         self.createdLabel.text = @"申请退款";
     }else{
         self.createdLabel.text = @"申请退货";
-        if([self.refundModelr.status integerValue] == REFUND_STATUS_SELLER_AGREED){
+        NSInteger statusCount = [self.refundModelr.status integerValue];
+        if(statusCount >= REFUND_STATUS_SELLER_AGREED){
             self.topToRefundHeight.constant = 0;
+        }else {
+            self.topToRefundHeight.constant = -90;
         }
     }
     
@@ -236,11 +255,19 @@
     
 }
 - (void)refundOperateClick:(UIButton *)button {
+    if (_isChoiseLogistics) {
+        JMReturnProgressController *progressVC = [[JMReturnProgressController alloc] init];
+        progressVC.refundModelr = self.refundModelr;
+        [self.navigationController pushViewController:progressVC animated:YES];
+    }else {
+        JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
+        reGoodsVC.refundModelr = self.refundModelr;
+        
+        [self.navigationController pushViewController:reGoodsVC animated:YES];
+    }
     
-    JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
-    reGoodsVC.refundModelr = self.refundModelr;
     
-    [self.navigationController pushViewController:reGoodsVC animated:YES];
+    
 }
 
 
