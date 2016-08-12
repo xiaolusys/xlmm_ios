@@ -1202,7 +1202,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                                     h = image.size.height * (WIDTH /image.size.width);
                                 }
                                 NSLog(@"activity height %f %f", image.size.height, h);
-                                imageView.frame = CGRectMake(10, 10+allActivityHeight, SCREENWIDTH - 10, h);
+                                imageView.frame = CGRectMake(0, 10+allActivityHeight, SCREENWIDTH, h);
                                 allActivityHeight += h + 10;
                                 
                                 NSLog(@"allActivityHeight %f", allActivityHeight);
