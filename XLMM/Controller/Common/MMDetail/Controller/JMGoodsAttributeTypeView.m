@@ -74,7 +74,7 @@
         [self addSubview:line];
         
         self.height = upY + 10.;
-        self.selectIndex = -1;
+//        self.selectIndex = -1;
 
         
         
@@ -94,7 +94,7 @@
 //        button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
         button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     }else {
-        self.selectIndex = -1;
+//        self.selectIndex = -1;
 //        button.selected = NO;
 //        button.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
 //        button.backgroundColor = [UIColor countLabelColor];

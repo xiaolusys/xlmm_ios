@@ -35,8 +35,9 @@
     couponeButton.tag = 100;
     couponeButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     couponeButton.layer.borderWidth = 1.;
+    couponeButton.timeInterval = 1.0;
     [couponeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     UILabel *couponL = [UILabel new];
     [couponeButton addSubview:couponL];
     couponL.font = [UIFont systemFontOfSize:14.];
@@ -162,6 +163,7 @@
     [goPayButton setTitle:@"去结算" forState:UIControlStateNormal];
     goPayButton.layer.cornerRadius = 20;
     goPayButton.tag = 103;
+    goPayButton.timeInterval = 1.0;
     [goPayButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.goPayButton = goPayButton;
     
