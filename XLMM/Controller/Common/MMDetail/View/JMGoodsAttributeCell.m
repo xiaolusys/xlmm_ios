@@ -13,6 +13,9 @@ NSString *const JMGoodsAttributeCellIdentifier = @"JMGoodsAttributeCellIdentifie
 
 @interface JMGoodsAttributeCell ()
 
+@property (nonatomic, strong) UILabel *bianmaLabel;
+@property (nonatomic, strong) UILabel *descBianmaLabel;
+
 @end
 
 @implementation JMGoodsAttributeCell
@@ -57,12 +60,22 @@ NSString *const JMGoodsAttributeCellIdentifier = @"JMGoodsAttributeCellIdentifie
         make.left.equalTo(bianmaLabel.mas_right).offset(10);
         make.width.mas_equalTo(@(SCREENWIDTH - 90));
         make.top.equalTo(bianmaLabel);
-        make.bottom.equalTo(weakSelf.contentView).offset(-15);
     }];
 
     
 }
+- (void)setDescModel:(JMDescLabelModel *)descModel {
+    
+    
+    if ([descModel.name isEqual:[NSNull null]]) {
+        self.bianmaLabel.text = @"使用事项";
+    }else {
+        self.bianmaLabel.text = descModel.name;
+    }
+    self.descBianmaLabel.text = descModel.value;
+    
 
+}
 
 @end
 
