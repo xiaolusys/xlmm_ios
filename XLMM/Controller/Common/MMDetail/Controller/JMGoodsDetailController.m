@@ -21,6 +21,7 @@
 #import "JMShareView.h"
 #import "JMShareModel.h"
 #import "CartViewController.h"
+#import "JMDescLabelModel.h"
 
 #define BottomHeitht 60.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.7
@@ -193,6 +194,7 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.upViewLabel;
+    
     
     self.detailWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64 - BottomHeitht)];
     self.detailWebView.backgroundColor = [UIColor countLabelColor];
@@ -416,12 +418,15 @@
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
     for (NSDictionary *dic in attributes) {
-        [self.attributeArray addObject:dic];
+        JMDescLabelModel *model = [JMDescLabelModel mj_objectWithKeyValues:dic];
+        [self.attributeArray addObject:model];
     }
     
     coustomInfoDic = [NSDictionary dictionary];
     coustomInfoDic = goodsDetailDic[@"custom_info"];
     goodsArray = goodsDetailDic[@"sku_info"];
+    
+    
     
     
     [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
@@ -489,21 +494,21 @@
         return self.attributeArray.count;;
     }
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.section == 0) {
-//        return 150;
-//    }else if (indexPath.section == 1) {
-//        return 110;
-//    }else if (indexPath.section == 2) {
-////        JMGoodsAttributeCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsAttributeCellIdentifier];
-////        
-////        return cell.frame.size.height;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 150;
+    }else if (indexPath.section == 1) {
+        return 110;
+    }else if (indexPath.section == 2) {
+//        JMGoodsAttributeCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsAttributeCellIdentifier];
+        JMDescLabelModel *model = self.attributeArray[indexPath.row];
+        return model.cellHeight;
 //        return 40;
-//    }else {
-//        return 0;
-//    }
-//
-//}
+    }else {
+        return 0;
+    }
+
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         JMGoodsExplainCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsExplainCellIdentifier];
@@ -558,14 +563,8 @@
         return cell;
     }else if (indexPath.section == 2){
         JMGoodsAttributeCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsAttributeCellIdentifier];
-        NSDictionary *dic = self.attributeArray[indexPath.row];
-        NSString *string = dic[@"name"];
-        if ([string isEqual:[NSNull null]]) {
-            cell.bianmaLabel.text = @"使用事项";
-        }else {
-            cell.bianmaLabel.text = dic[@"name"];
-        }
-        cell.descBianmaLabel.text = dic[@"value"];
+        JMDescLabelModel *model = self.attributeArray[indexPath.row];
+        cell.descModel = model;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else {
@@ -596,9 +595,9 @@
         return nil;
     }
 }
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
-}
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return 100;
+//}
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMDescLabelModel.h"
 
 extern NSString *const JMGoodsAttributeCellIdentifier;
 
 @interface JMGoodsAttributeCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *bianmaLabel;
-@property (nonatomic, strong) UILabel *descBianmaLabel;
 
+
+@property (nonatomic, strong) JMDescLabelModel *descModel;
 
 //- (void)setIntroductionText:(NSString *)text;
 //
