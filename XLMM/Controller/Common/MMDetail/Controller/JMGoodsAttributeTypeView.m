@@ -45,21 +45,30 @@
             
             UIButton *btn= [UIButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectMake(upX, upY, size.width + 30,25);
-            [btn setBackgroundColor:[UIColor countLabelColor]];
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//            [btn setBackgroundColor:[UIColor countLabelColor]];
+            [btn setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+            
             btn.titleLabel.font = [UIFont systemFontOfSize:13];
             [btn setTitle:[dataArray objectAtIndex:i] forState:UIControlStateNormal];
             btn.layer.masksToBounds = YES;
             btn.layer.cornerRadius = 5;
-            btn.layer.borderColor = [UIColor clearColor].CGColor;
+//            btn.layer.borderColor = [UIColor blackColor].CGColor;
             btn.layer.borderWidth = 0.5;
             
             [self addSubview:btn];
-            btn.tag = 100 + i;
+            btn.tag = 1 + i;
             [btn addTarget:self action:@selector(touchbtn:) forControlEvents:UIControlEventTouchUpInside];
             upX += size.width + 40;
             
+            if (btn.tag == 1) {
+//                btn.selected = YES;
+                btn.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+                [btn setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+            }else {
+//                btn.selected = NO;
+                btn.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+                [btn setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+            };
             
 //            if (btn.tag == 100) {
 //                btn.selected = YES;
@@ -87,21 +96,20 @@
 
 -(void)touchbtn:(UIButton *)button {
 
-    NSInteger index = button.tag - 100;
-    if (button.selected == NO) {
-        
-        self.selectIndex = (int)button.tag - 100;
-//        button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-        button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-    }else {
-//        self.selectIndex = -1;
-//        button.selected = NO;
-//        button.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-//        button.backgroundColor = [UIColor countLabelColor];
-    }
-
+//    NSInteger index = button.tag - 100;
+//    if (button.selected == NO) {
+//        
+//        self.selectIndex = (int)button.tag - 100;
+////        button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+//        button.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//    }else {
+////        self.selectIndex = -1;
+////        button.selected = NO;
+////        button.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+////        button.backgroundColor = [UIColor countLabelColor];
+//    }
     if (_delegate && [_delegate respondsToSelector:@selector(composeAttrubuteTypeView:Index:)]) {
-        [_delegate composeAttrubuteTypeView:self Index:index];
+        [_delegate composeAttrubuteTypeView:self Index:button.tag];
     }
     
     

@@ -8,6 +8,7 @@
 
 #import "JMGoodsExplainCell.h"
 #import "MMClass.h"
+#import "JMCountDownView.h"
 
 NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
@@ -22,6 +23,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 @property (nonatomic, strong) UILabel *timerLabel;
 
 @property (nonatomic, strong) UIButton *storeUpButton;
+
+@property (nonatomic, strong) JMCountDownView *countDownView;
 
 @end
 
@@ -51,6 +54,24 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }
     self.itemMask.text = [NSString stringWithFormat:@" %@  ",itemString];
     
+    // === 处理结束时间 === //
+    NSString *endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
+    self.countDownView = [JMCountDownView shareCountDown];
+    [self.countDownView initWithCountDownTime:endTime];
+    //    self.countDownView.delegate = self;
+    kWeakSelf
+    self.countDownView.timeBlock = ^(NSString *timeString) {
+        weakSelf.timerLabel.text = timeString;
+    };
+
+    
+    
+}
+-(NSString*)spaceFormatTimeString:(NSString*)timeString{
+    NSMutableString *ms = [NSMutableString stringWithString:timeString];
+    NSRange range = {10,1};
+    [ms replaceCharactersInRange:range withString:@" "];
+    return ms;
 }
 - (void)setCustomInfoDic:(NSDictionary *)customInfoDic {
     _customInfoDic = customInfoDic;
@@ -134,6 +155,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     timerLabel.textColor = [UIColor buttonTitleColor];
     self.timerLabel = timerLabel;
     
+
     kWeakSelf
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(weakSelf.contentView);
@@ -142,6 +164,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     [nameTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(contentView).offset(15);
         make.top.equalTo(contentView).offset(20);
+        make.width.mas_equalTo(@(SCREENWIDTH - 120));
     }];
     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(nameTitle);
@@ -196,16 +219,11 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         make.left.equalTo(timerView).offset(10);
         make.centerY.equalTo(timerView.mas_centerY);
     }];
-    [timerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.timerLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(timerView).offset(-10);
         make.centerY.equalTo(timerView.mas_centerY);
     }];
-    
-    
-    
-    
-    
-    
+
     
 }
 

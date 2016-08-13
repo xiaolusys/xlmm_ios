@@ -24,6 +24,7 @@
 #import "JMDescLabelModel.h"
 
 #define BottomHeitht 60.0
+#define RollHeight 20.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.7
 
 #define POPHeight SCREENHEIGHT * 0.6
@@ -65,8 +66,8 @@
  *  自定义导航栏视图
  */
 @property (nonatomic, strong) UIView *navigationView;
-
 @property (nonatomic, strong) UIView *backToRootView;
+@property (nonatomic, strong) UIView *bottomView;
 
 @property (nonatomic, strong) UIView *shareView;
 
@@ -86,13 +87,15 @@
 @property (nonatomic, strong) NSMutableArray *attributeArray;
 
 @property (nonatomic, strong) JMShareModel *shareModel;
-
+@property (nonatomic, strong) UIButton *addCartButton;
 @end
 
 @implementation JMGoodsDetailController {
     NSMutableArray *goodsArray;
     
     NSInteger _cartsGoodsNum;
+    BOOL _isAddcart;           // 判断商品是否即将开售
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,7 +154,7 @@
     if (_upViewLabel == nil) {
         _upViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
         //继续拖动,查看图文详情
-        _upViewLabel.font = [UIFont systemFontOfSize:13.0f];
+        _upViewLabel.font = [UIFont systemFontOfSize:14.0f];
         _upViewLabel.textAlignment = NSTextAlignmentCenter;
         _upViewLabel.backgroundColor = [UIColor countLabelColor];
         _upViewLabel.text = @"继续拖动,查看图文详情";
@@ -162,7 +165,7 @@
 - (UILabel *)downViewLabel {
     if (_downViewLabel == nil) {
         _downViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -60, SCREENWIDTH, 60)];
-        _downViewLabel.font = [UIFont systemFontOfSize:13.0f];
+        _downViewLabel.font = [UIFont systemFontOfSize:14.0f];
         _downViewLabel.textAlignment = NSTextAlignmentCenter;
         _downViewLabel.backgroundColor = [UIColor countLabelColor];
         _downViewLabel.text = @"下拉回到商品详情";
@@ -182,6 +185,14 @@
     [self loadCatrsNumData];
     [self loadShareData];
     
+    
+    [self createContentView];
+    [self setupHeadView];
+    [self createBottomView];
+    [self createNavigationView];
+
+}
+- (void)createContentView {
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
     self.allContentView.backgroundColor = [UIColor countLabelColor];
@@ -195,19 +206,14 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.upViewLabel;
     
-    
     self.detailWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64 - BottomHeitht)];
     self.detailWebView.backgroundColor = [UIColor countLabelColor];
-    
     //self.detailWebView.delegate = self;
     
-//    NSString *loadStr = [NSString stringWithFormat:@"%@%@/%@", Root_URL, @"/mall/product/details/app", self.goodsID];
-
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         NSString *loadStr = [NSString stringWithFormat:@"%@/mall/product/details/app/%@",Root_URL,self.goodsID];
         NSURL *url = [NSURL URLWithString:loadStr];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-        NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
         [self.detailWebView loadRequest:request];
     });
     self.detailWebView.scrollView.delegate = self;
@@ -216,155 +222,9 @@
     [self.allContentView addSubview:self.tableView];
     [self.allContentView addSubview:self.detailWebView];
     
-    UIView *bottomView = [UIView new];
-    [self.view addSubview:bottomView];
-    bottomView.frame = CGRectMake(0, SCREENHEIGHT - BottomHeitht, SCREENWIDTH, BottomHeitht);
-    bottomView.backgroundColor = [UIColor whiteColor];
-    
-    UIButton *shopCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [bottomView addSubview:shopCartButton];
-    shopCartButton.layer.cornerRadius = 20.;
-    shopCartButton.backgroundColor = [UIColor blackColor];
-    shopCartButton.alpha = 0.6;
-    shopCartButton.tag = 100;
-    [shopCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIImageView *shopCartImage = [UIImageView new];
-    [shopCartButton addSubview:shopCartImage];
-    shopCartImage.image = [UIImage imageNamed:@"gouwucheicon2"];
-    
-    self.cartsLabel = [UILabel new];
-    [shopCartImage addSubview:self.cartsLabel];
-    self.cartsLabel.font = [UIFont systemFontOfSize:12.];
-    self.cartsLabel.textColor = [UIColor whiteColor];
-    self.cartsLabel.backgroundColor = [UIColor redColor];
-    self.cartsLabel.textAlignment = NSTextAlignmentCenter;
-    self.cartsLabel.layer.cornerRadius = 10.;
-    self.cartsLabel.layer.masksToBounds = YES;
-    
-    UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [bottomView addSubview:addCartButton];
-    addCartButton.layer.cornerRadius = 20.;
-    addCartButton.tag = 101;
-    addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-    [addCartButton setTitle:@"加入购物车" forState:UIControlStateNormal];
-    [addCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    addCartButton.titleLabel.font = [UIFont systemFontOfSize:16.];
-    [addCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [shopCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(bottomView).offset(15);
-        make.width.height.mas_equalTo(@40);
-        make.centerY.equalTo(bottomView.mas_centerY);
-    }];
-    [shopCartImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(shopCartButton.mas_centerX);
-        make.centerY.equalTo(shopCartButton.mas_centerY);
-        make.width.height.mas_equalTo(@20);
-    }];
-    [addCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(shopCartButton.mas_right).offset(15);
-        make.centerY.equalTo(bottomView.mas_centerY);
-        make.height.mas_equalTo(@40);
-        make.width.mas_equalTo(@(SCREENWIDTH - 85));
-    }];
-    [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(shopCartImage.mas_right).offset(-5);
-        make.bottom.equalTo(shopCartImage.mas_top).offset(5);
-        make.width.height.mas_equalTo(@20);
-    }];
-    
-    
-    
     [self.tableView registerClass:[JMGoodsAttributeCell class] forCellReuseIdentifier:JMGoodsAttributeCellIdentifier];
     [self.tableView registerClass:[JMGoodsExplainCell class] forCellReuseIdentifier:JMGoodsExplainCellIdentifier];
     [self.tableView registerClass:[JMGoodsSafeGuardCell class] forCellReuseIdentifier:JMGoodsSafeGuardCellIdentifier];
-    
-    [self setupHeadView];
-    
-    self.navigationView = [UIView new];
-    self.navigationView.frame = CGRectMake(0, 0, SCREENWIDTH, 64);
-    [self.view addSubview:self.navigationView];
-    self.navigationView.backgroundColor = [UIColor whiteColor];
-    self.navigationView.alpha = 0;
-    
-    
-    kWeakSelf
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.navigationView addSubview:button];
-//    button.frame = CGRectMake(10, 17, 100, NavigationMaskWH);
-    [button setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateNormal];
-    button.tag = 100;
-    [button addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
-    self.backButton = button;
-    
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.navigationView).offset(10);
-        make.centerY.equalTo(weakSelf.navigationView.mas_centerY).offset(5);
-        make.width.height.mas_equalTo(NavigationMaskWH);
-    }];
-    UIButton *shareButtoncolor = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.navigationView addSubview:shareButtoncolor];
-    [shareButtoncolor setImage:[UIImage imageNamed:@"goodsDetailShareColorImage"] forState:UIControlStateNormal];
-    shareButtoncolor.layer.cornerRadius = NavigationMaskWH / 2;
-    shareButtoncolor.tag = 101;
-    [shareButtoncolor addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
-    [shareButtoncolor mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.navigationView).offset(-10);
-        make.centerY.equalTo(button.mas_centerY);
-        make.width.height.mas_equalTo(NavigationMaskWH);
-    }];
-
-    
-    UIView *backView = [UIView new];
-    [self.view addSubview:backView];
-    backView.backgroundColor = [UIColor blackColor];
-    backView.alpha = 0.7;
-    backView.layer.cornerRadius = NavigationMaskWH / 2;
-    self.backToRootView = backView;
-    [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.view).offset(10);
-        make.centerY.equalTo(weakSelf.navigationView.mas_centerY).offset(5);
-        make.width.height.mas_equalTo(NavigationMaskWH);
-    }];
-    
-    UIView *backView1 = [UIView new];
-    [self.view addSubview:backView1];
-    backView1.backgroundColor = [UIColor blackColor];
-    backView1.alpha = 0.7;
-    backView1.layer.cornerRadius = NavigationMaskWH / 2;
-    self.shareView = backView1;
-    [backView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.view).offset(-10);
-        make.centerY.equalTo(backView.mas_centerY);
-        make.width.height.mas_equalTo(NavigationMaskWH);
-    }];
-    
-    
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backView addSubview:backButton];
-    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackImage"] forState:UIControlStateNormal];
-    backButton.layer.cornerRadius = NavigationMaskWH / 2;
-    backButton.tag = 102;
-    [backButton addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
-    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(backView.mas_centerY);
-        make.centerX.equalTo(backView.mas_centerX);
-        make.width.height.mas_equalTo(NavigationMaskWH);
-    }];
-    
-    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backView1 addSubview:shareButton];
-    [shareButton setImage:[UIImage imageNamed:@"goodsDetailShareImage"] forState:UIControlStateNormal];
-    shareButton.layer.cornerRadius = NavigationMaskWH / 2;
-    shareButton.tag = 103;
-    [shareButton addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
-    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(backView1.mas_centerY);
-        make.centerX.equalTo(backView1.mas_centerX);
-        make.width.height.mas_equalTo(NavigationMaskWH);
-    }];
-
 }
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
@@ -425,9 +285,23 @@
     coustomInfoDic = [NSDictionary dictionary];
     coustomInfoDic = goodsDetailDic[@"custom_info"];
     goodsArray = goodsDetailDic[@"sku_info"];
-    
-    
-    
+
+    if ([detailContentDic[@"is_saleopen"] boolValue]) {
+        if ([detailContentDic[@"is_sale_out"] boolValue]) {
+            // == > 抢光
+            [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
+            self.addCartButton.enabled = NO;
+        }
+        else {
+        }
+    }else {
+        
+        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
+        if([detailContentDic[@"is_newsales"] boolValue]){
+            [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
+            self.addCartButton.enabled = NO;
+        }
+    }
     
     [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
 
@@ -500,10 +374,8 @@
     }else if (indexPath.section == 1) {
         return 110;
     }else if (indexPath.section == 2) {
-//        JMGoodsAttributeCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsAttributeCellIdentifier];
         JMDescLabelModel *model = self.attributeArray[indexPath.row];
         return model.cellHeight;
-//        return 40;
     }else {
         return 0;
     }
@@ -595,11 +467,6 @@
         return nil;
     }
 }
-//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return 100;
-//}
-
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offset = scrollView.contentOffset.y ;
     if (offset < 0) {
@@ -609,10 +476,6 @@
         self.goodsScrollView.contentOffset = CGPointMake(self.goodsScrollView.contentOffset.x, 0);
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
             self.goodsScrollView.contentOffset = CGPointMake(self.goodsScrollView.contentOffset.x, -offset / 2.0f);
-//            self.navigationController.navigationBar.hidden = NO;
-            
-            
-//            CGFloat offsetH = (offset + 80) * 2;
             CGFloat scrolHeight = HeaderScrolHeight;
             self.navigationView.alpha = (offset / scrolHeight) * 1.25;
             self.backToRootView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
@@ -626,7 +489,7 @@
 //            self.navigationView.alpha = 1.0;
         }
 
-        if (offset <= self.tableView.contentSize.height - SCREENHEIGHT + 60 + BottomHeitht) {
+        if (offset <= self.tableView.contentSize.height - SCREENHEIGHT + RollHeight + BottomHeitht) {
             self.upViewLabel.text = @"继续拖动,查看图文详情";
         }else {
             //            self.middleLab.text = @"上拉显示底部View";
@@ -646,22 +509,18 @@
     if (decelerate) {
         CGFloat offset = scrollView.contentOffset.y;
         NSLog(@"----offset=%f",offset);
-        if (scrollView == self.tableView)
-        {
-            if (offset < 0)
-            {
+        if (scrollView == self.tableView) {
+            if (offset < 0) {
                 minY = MIN(minY, offset);
             } else {
                 maxY = MAX(maxY, offset);
             }
         }
-        else
-        {
+        else {
             minY = MIN(minY, offset);
         }
         // 滚到底部视图
-        if (maxY >= self.tableView.contentSize.height - SCREENHEIGHT + 60 + BottomHeitht)
-        {
+        if (maxY >= self.tableView.contentSize.height - SCREENHEIGHT + RollHeight + BottomHeitht) {
             NSLog(@"----%@",NSStringFromCGRect(self.allContentView.frame));
             isShowGoodsDetail = NO;
             [UIView animateWithDuration:0.4 animations:^{
@@ -673,8 +532,7 @@
         }
         
         // 滚到中间视图
-        if (minY <= -60 && isShowGoodsDetail)
-        {
+        if (minY <= -60 && isShowGoodsDetail) {
             isShowGoodsDetail = NO;
             [UIView animateWithDuration:0.4 animations:^{
                 self.allContentView.transform = CGAffineTransformIdentity;
@@ -685,18 +543,14 @@
     }
 }
 - (void)cartButton:(UIButton *)button {
-    
     if (button.tag == 100) {
         CartViewController *cartVC = [[CartViewController alloc] init];
         [self.navigationController pushViewController:cartVC animated:YES];
     }else if (button.tag == 101) {
         [self showPopView];
     }else {
-        
     }
-    
 }
-
 - (void)showPopView {
     isTop = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.maskView];
@@ -712,11 +566,9 @@
         }];
     }];
 }
-
 - (void)hideMaskView {
     if (isTop) {
         isShowTop = NO;
-        
     }else {
         [UIView animateWithDuration:0.3 animations:^{
             self.view.layer.transform = [self firstStepTransform];
@@ -732,7 +584,6 @@
         }];
     }
 }
-
 // 动画1
 - (CATransform3D)firstStepTransform {
     CATransform3D transform = CATransform3DIdentity;
@@ -742,8 +593,6 @@
     transform = CATransform3DTranslate(transform, 0, 0, -30.0);
     return transform;
 }
-
-
 // 动画2
 - (CATransform3D)secondStepTransform {
     CATransform3D transform = CATransform3DIdentity;
@@ -752,7 +601,6 @@
     transform = CATransform3DScale(transform, 0.8, 0.8, 1.0);
     return transform;
 }
-
 #pragma mark -- 加入购物车
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSDictionary *)attrubuteDic {
     _paramer = [NSDictionary dictionary];
@@ -800,8 +648,151 @@
     
     
 }
-
-
+#pragma mark 自定义导航视图
+- (void)createNavigationView {
+    kWeakSelf
+    
+    self.navigationView = [UIView new];
+    self.navigationView.frame = CGRectMake(0, 0, SCREENWIDTH, 64);
+    [self.view addSubview:self.navigationView];
+    self.navigationView.backgroundColor = [UIColor whiteColor];
+    self.navigationView.alpha = 0;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.navigationView addSubview:button];
+    //    button.frame = CGRectMake(10, 17, 100, NavigationMaskWH);
+    [button setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateNormal];
+    button.tag = 100;
+    [button addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.backButton = button;
+    
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.navigationView).offset(10);
+        make.centerY.equalTo(weakSelf.navigationView.mas_centerY).offset(8);
+        make.width.height.mas_equalTo(NavigationMaskWH);
+    }];
+    UIButton *shareButtoncolor = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.navigationView addSubview:shareButtoncolor];
+    [shareButtoncolor setImage:[UIImage imageNamed:@"goodsDetailShareColorImage"] forState:UIControlStateNormal];
+    shareButtoncolor.layer.cornerRadius = NavigationMaskWH / 2;
+    shareButtoncolor.tag = 101;
+    [shareButtoncolor addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
+    [shareButtoncolor mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.navigationView).offset(-10);
+        make.centerY.equalTo(button.mas_centerY);
+        make.width.height.mas_equalTo(NavigationMaskWH);
+    }];
+    
+    UIView *backView = [UIView new];
+    [self.view addSubview:backView];
+    backView.backgroundColor = [UIColor blackColor];
+    backView.alpha = 0.7;
+    backView.layer.cornerRadius = NavigationMaskWH / 2;
+    self.backToRootView = backView;
+    [backView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.view).offset(10);
+        make.centerY.equalTo(weakSelf.navigationView.mas_centerY).offset(8);
+        make.width.height.mas_equalTo(NavigationMaskWH);
+    }];
+    
+    UIView *backView1 = [UIView new];
+    [self.view addSubview:backView1];
+    backView1.backgroundColor = [UIColor blackColor];
+    backView1.alpha = 0.7;
+    backView1.layer.cornerRadius = NavigationMaskWH / 2;
+    self.shareView = backView1;
+    [backView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.view).offset(-10);
+        make.centerY.equalTo(backView.mas_centerY);
+        make.width.height.mas_equalTo(NavigationMaskWH);
+    }];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backView addSubview:backButton];
+    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackImage"] forState:UIControlStateNormal];
+    backButton.layer.cornerRadius = NavigationMaskWH / 2;
+    backButton.tag = 102;
+    [backButton addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
+    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(backView.mas_centerY);
+        make.centerX.equalTo(backView.mas_centerX);
+        make.width.height.mas_equalTo(NavigationMaskWH);
+    }];
+    
+    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backView1 addSubview:shareButton];
+    [shareButton setImage:[UIImage imageNamed:@"goodsDetailShareImage"] forState:UIControlStateNormal];
+    shareButton.layer.cornerRadius = NavigationMaskWH / 2;
+    shareButton.tag = 103;
+    [shareButton addTarget:self action:@selector(navigationBarButton:) forControlEvents:UIControlEventTouchUpInside];
+    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(backView1.mas_centerY);
+        make.centerX.equalTo(backView1.mas_centerX);
+        make.width.height.mas_equalTo(NavigationMaskWH);
+    }];
+}
+#pragma mark 创建加入购物车视图
+- (void)createBottomView {
+    self.bottomView = [UIView new];
+    [self.view addSubview:self.bottomView];
+    self.bottomView.frame = CGRectMake(0, SCREENHEIGHT - BottomHeitht, SCREENWIDTH, BottomHeitht);
+    self.bottomView.backgroundColor = [UIColor whiteColor];
+    
+    UIButton *shopCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:shopCartButton];
+    shopCartButton.layer.cornerRadius = 20.;
+    shopCartButton.backgroundColor = [UIColor blackColor];
+    shopCartButton.alpha = 0.6;
+    shopCartButton.tag = 100;
+    [shopCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *shopCartImage = [UIImageView new];
+    [shopCartButton addSubview:shopCartImage];
+    shopCartImage.image = [UIImage imageNamed:@"gouwucheicon2"];
+    
+    self.cartsLabel = [UILabel new];
+    [shopCartImage addSubview:self.cartsLabel];
+    self.cartsLabel.font = [UIFont systemFontOfSize:12.];
+    self.cartsLabel.textColor = [UIColor whiteColor];
+    self.cartsLabel.backgroundColor = [UIColor redColor];
+    self.cartsLabel.textAlignment = NSTextAlignmentCenter;
+    self.cartsLabel.layer.cornerRadius = 10.;
+    self.cartsLabel.layer.masksToBounds = YES;
+    
+    UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:addCartButton];
+    addCartButton.layer.cornerRadius = 20.;
+    addCartButton.tag = 101;
+    addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    [addCartButton setTitle:@"加入购物车" forState:UIControlStateNormal];
+    [addCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    addCartButton.titleLabel.font = [UIFont systemFontOfSize:16.];
+    [addCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.addCartButton = addCartButton;
+    kWeakSelf
+    [shopCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.bottomView).offset(15);
+        make.width.height.mas_equalTo(@40);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+    }];
+    [shopCartImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(shopCartButton.mas_centerX);
+        make.centerY.equalTo(shopCartButton.mas_centerY);
+        make.width.height.mas_equalTo(@20);
+    }];
+    [addCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(shopCartButton.mas_right).offset(15);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.height.mas_equalTo(@40);
+        make.width.mas_equalTo(@(SCREENWIDTH - 85));
+    }];
+    [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(shopCartImage.mas_right).offset(-5);
+        make.bottom.equalTo(shopCartImage.mas_top).offset(5);
+        make.width.height.mas_equalTo(@20);
+    }];
+    
+}
 
 @end
 
