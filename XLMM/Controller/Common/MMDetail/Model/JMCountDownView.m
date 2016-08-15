@@ -23,7 +23,7 @@
 - (instancetype)initWithCountDownTime:(NSString *)endTime {
     if (self == [super init]) {
         self.ennTime = endTime;
-        [self currentDownTime];
+        [self currentDownTime];        
     }
     return self;
 }
@@ -35,9 +35,9 @@
     }
     return self;
 }
-//+ (instancetype)countDownWithCurrentTime:(NSString *)endTime {
-//    return [[self alloc] initWithCountDownTime:endTime];
-//}
++ (instancetype)countDownWithCurrentTime:(NSString *)endTime {
+    return [[self shareCountDown] initWithCountDownTime:endTime];
+}
 - (void)currentDownTime {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
@@ -55,6 +55,8 @@
     NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
     NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
     
+    
+    
     __block int timeout  = time;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
@@ -64,7 +66,7 @@
             //            dispatch_source_cancel(self.timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面显示
-                NSString *endTime = @"商品已下架";
+                NSString *endTime = @"即将上架";
 //                [self.delegate countDownEnd:djsArr];
                 if (self.timeBlock) {
                     self.timeBlock(endTime);

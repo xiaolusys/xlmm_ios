@@ -42,7 +42,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     self.nameTitle.text = detailContentDic[@"name"];
     self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[detailContentDic[@"lowest_agent_price"] floatValue]];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[detailContentDic[@"lowest_std_sale_price"] floatValue]];
-    self.timerLabel.text = detailContentDic[@"offshelf_time"];
+//    self.timerLabel.text = detailContentDic[@"offshelf_time"];
 
     NSArray *itemMask = detailContentDic[@"item_marks"];
     NSString *itemString = @"包邮";
@@ -55,8 +55,15 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     self.itemMask.text = [NSString stringWithFormat:@" %@  ",itemString];
     
     // === 处理结束时间 === //
-    NSString *endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
+    NSString *endTime = @"";
+    NSString *timeString = detailContentDic[@"offshelf_time"];
+    if ([timeString isKindOfClass:[NSNull class]]) {
+        self.timerLabel.text = @"即将上架";
+    }else {
+        endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
+    }
     self.countDownView = [JMCountDownView shareCountDown];
+//    [JMCountDownView countDownWithCurrentTime:endTime];
     [self.countDownView initWithCountDownTime:endTime];
     //    self.countDownView.delegate = self;
     kWeakSelf

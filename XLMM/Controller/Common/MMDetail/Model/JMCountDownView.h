@@ -32,7 +32,7 @@ typedef void(^countDownBlock)(NSString *timeString);
 
 
 - (instancetype)initWithCountDownTime:(NSString *)endTime;
-//+ (instancetype)countDownWithCurrentTime:(NSString *)endTime;
++ (instancetype)countDownWithCurrentTime:(NSString *)endTime;
 
 
 @end
