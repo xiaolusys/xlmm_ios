@@ -19,7 +19,6 @@
 #import <MJRefresh.h>
 #import <FMDB.h>
 #import "JMHTTPManager.h"
-#import "UIButton+touch.h"
 
 
 #import "UMMobClick/MobClick.h"
