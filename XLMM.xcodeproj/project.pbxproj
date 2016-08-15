@@ -545,8 +545,6 @@
 		1F6CEBFF1D332A7400E1F4DF /* MaMaViepLevel_88_64@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CEBFC1D332A7400E1F4DF /* MaMaViepLevel_88_64@2x.png */; };
 		1F6CEC001D332A7400E1F4DF /* MaMaViepLevel_132_74@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6CEBFD1D332A7400E1F4DF /* MaMaViepLevel_132_74@2x.png */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
-		1F7D99281D61F16600E18FD1 /* UIButton+Delay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D99251D61F16600E18FD1 /* UIButton+Delay.m */; };
-		1F7D99291D61F16600E18FD1 /* UIButton+touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D99271D61F16600E18FD1 /* UIButton+touch.m */; };
 		1F80FCDC1CE9D55B00E1BF86 /* back_ground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */; };
 		1F80FCE31CE9E68900E1BF86 /* back_image_selecter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */; };
 		1F80FCE41CE9E68900E1BF86 /* back_image_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */; };
@@ -1678,10 +1676,6 @@
 		1F6CEBFD1D332A7400E1F4DF /* MaMaViepLevel_132_74@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaViepLevel_132_74@2x.png"; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
-		1F7D99241D61F16600E18FD1 /* UIButton+Delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Delay.h"; sourceTree = "<group>"; };
-		1F7D99251D61F16600E18FD1 /* UIButton+Delay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Delay.m"; sourceTree = "<group>"; };
-		1F7D99261D61F16600E18FD1 /* UIButton+touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+touch.h"; sourceTree = "<group>"; };
-		1F7D99271D61F16600E18FD1 /* UIButton+touch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+touch.m"; sourceTree = "<group>"; };
 		1F80FCDB1CE9D55B00E1BF86 /* back_ground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_ground@2x.png"; sourceTree = "<group>"; };
 		1F80FCE11CE9E68900E1BF86 /* back_image_selecter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_image_selecter@2x.png"; sourceTree = "<group>"; };
 		1F80FCE21CE9E68900E1BF86 /* back_image_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_image_nomal@2x.png"; sourceTree = "<group>"; };
@@ -3572,7 +3566,6 @@
 		1F27A61E1D275A6300A0F80B /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				1F7D99231D61F16600E18FD1 /* UIButton-touch */,
 				1F6CEC011D33849F00E1F4DF /* Cache */,
 				1F6CEC021D33849F00E1F4DF /* fmdb */,
 				1F27A61F1D275A6300A0F80B /* ClassTool */,
@@ -4664,17 +4657,6 @@
 				1F56E2C51D3906120092EC91 /* JMDBManager.m */,
 			);
 			path = fmdb;
-			sourceTree = "<group>";
-		};
-		1F7D99231D61F16600E18FD1 /* UIButton-touch */ = {
-			isa = PBXGroup;
-			children = (
-				1F7D99241D61F16600E18FD1 /* UIButton+Delay.h */,
-				1F7D99251D61F16600E18FD1 /* UIButton+Delay.m */,
-				1F7D99261D61F16600E18FD1 /* UIButton+touch.h */,
-				1F7D99271D61F16600E18FD1 /* UIButton+touch.m */,
-			);
-			path = "UIButton-touch";
 			sourceTree = "<group>";
 		};
 		1F88D5901CB8E3460050A2E2 /* NewSetting */ = {
@@ -6140,7 +6122,6 @@
 				1F498C6A1D2772D0007E77FC /* JMChooseLogisticsController.m in Sources */,
 				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
 				1F916A5B1D5097BE00327408 /* JMHttpRequest.m in Sources */,
-				1F7D99291D61F16600E18FD1 /* UIButton+touch.m in Sources */,
 				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */,
@@ -6286,7 +6267,6 @@
 				18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */,
 				1FF533E81D2DFAB9003DEABF /* JMOrderDetailHeaderView.m in Sources */,
 				1F498C2D1D2772D0007E77FC /* BoundingNewPhoneController.m in Sources */,
-				1F7D99281D61F16600E18FD1 /* UIButton+Delay.m in Sources */,
 				1FF3FA201D4083C600FABBCE /* JMPurchaseHeaderView.m in Sources */,
 				1F498AED1D276197007E77FC /* JMShareModel.m in Sources */,
 				325B79E81C97E7160022F930 /* YoumengShare.m in Sources */,
