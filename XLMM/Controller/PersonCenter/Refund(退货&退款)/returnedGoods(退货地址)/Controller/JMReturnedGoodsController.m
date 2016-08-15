@@ -75,12 +75,12 @@
     JMReGoodsAddView *reGoodsV = [JMReGoodsAddView new];
     [self.baseScrollV addSubview:reGoodsV];
     self.reGoodsV =reGoodsV;
-    NSString *nameStr = self.refundModelr.buyer_nick;
-    NSString *phoneStr = self.refundModelr.mobile;
+//    NSString *nameStr = self.refundModelr.buyer_nick;
+//    NSString *phoneStr = self.refundModelr.mobile;
     NSString *addStr = self.refundModelr.return_address;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:nameStr forKey:@"buyer_nick"];
-    [dict setValue:phoneStr forKey:@"mobile"];
+//    [dict setValue:nameStr forKey:@"buyer_nick"];
+//    [dict setValue:phoneStr forKey:@"mobile"];
     [dict setValue:addStr forKey:@"return_address"];
     self.reGoodsV.reGoodsDic = dict;
     
