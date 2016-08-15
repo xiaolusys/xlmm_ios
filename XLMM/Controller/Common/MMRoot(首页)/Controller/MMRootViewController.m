@@ -49,6 +49,7 @@
 #import "JMMaMaPersonCenterController.h"
 #import "JMStoreupController.h"
 #import "JMGoodsDetailController.h"
+#import "PosterModel.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -475,7 +476,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //    [self creatPageData];
     
-    //[self islogin];
+//    [self islogin];
     NSLog(@"backScrollview %f", self.backScrollview.contentOffset.x);
     self.backScrollview.delegate = self;
     self.backScrollview.tag = TAG_BACK_SCROLLVIEW;

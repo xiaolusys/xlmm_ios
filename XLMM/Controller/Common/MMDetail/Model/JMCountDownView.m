@@ -66,7 +66,7 @@
             //            dispatch_source_cancel(self.timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面显示
-                NSString *endTime = @"即将上架";
+                NSString *endTime = @"商品已下架";
 //                [self.delegate countDownEnd:djsArr];
                 if (self.timeBlock) {
                     self.timeBlock(endTime);

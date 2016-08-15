@@ -479,8 +479,8 @@
     
 }
 - (void)buttonClick:(UIButton *)button {
-    if (_delegate && [_delegate respondsToSelector:@selector(composeMaMaCenterHeaderView:Index:)]) {
-        [_delegate composeMaMaCenterHeaderView:self Index:button.tag];
+    if (_delegate && [_delegate respondsToSelector:@selector(composeMaMaCenterHeaderView:Index:VisitorDay:)]) {
+        [_delegate composeMaMaCenterHeaderView:self Index:button.tag VisitorDay:self.visitorDate];
     }
 }
 

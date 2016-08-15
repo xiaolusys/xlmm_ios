@@ -61,15 +61,16 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         self.timerLabel.text = @"即将上架";
     }else {
         endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
+        self.countDownView = [JMCountDownView shareCountDown];
+        //    [JMCountDownView countDownWithCurrentTime:endTime];
+        [self.countDownView initWithCountDownTime:endTime];
+        //    self.countDownView.delegate = self;
+        kWeakSelf
+        self.countDownView.timeBlock = ^(NSString *timeString) {
+            weakSelf.timerLabel.text = timeString;
+        };
     }
-    self.countDownView = [JMCountDownView shareCountDown];
-//    [JMCountDownView countDownWithCurrentTime:endTime];
-    [self.countDownView initWithCountDownTime:endTime];
-    //    self.countDownView.delegate = self;
-    kWeakSelf
-    self.countDownView.timeBlock = ^(NSString *timeString) {
-        weakSelf.timerLabel.text = timeString;
-    };
+    
 
     
     
