@@ -25,7 +25,7 @@
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
-#define HeaderScrolHeight SCREENHEIGHT * 0.7
+#define HeaderScrolHeight SCREENHEIGHT * 0.65
 
 #define POPHeight SCREENHEIGHT * 0.6
 
@@ -311,16 +311,17 @@
 }
 - (void)navigationBarButton:(UIButton *)button {
     if (button.tag == 100 || button.tag == 102) {
-        NSLog(@"navigationBarButton层  返回按钮 --------");
-        if (isShowGoodsDetail) {
-            [UIView animateWithDuration:0.4 animations:^{
-                self.allContentView.transform = CGAffineTransformIdentity;
-            } completion:^(BOOL finished) {
-                isShowGoodsDetail = NO;
-            }];
-        }else {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
+//        NSLog(@"navigationBarButton层  返回按钮 --------");
+//        if (isShowGoodsDetail) {
+//            [UIView animateWithDuration:0.4 animations:^{
+//                self.allContentView.transform = CGAffineTransformIdentity;
+//            } completion:^(BOOL finished) {
+//                isShowGoodsDetail = NO;
+//            }];
+//        }else {
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
+        [self.navigationController popViewControllerAnimated:YES];
     }else {
         NSLog(@"navigationBarButton层  分享按钮 --------");
         

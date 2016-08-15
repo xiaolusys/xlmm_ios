@@ -48,18 +48,37 @@
 }
 - (void)setUserInfo{
     BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (islogin) {
+//    if (islogin) {
         // http://m.xiaolu.so/rest/v1/users/profile
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
         [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
             if (!responseObject) return;
-            [self updateUserInfo:responseObject];
-        } WithFail:^(NSError *error) {
+            if (islogin) {
+                [self updateUserInfo:responseObject];
+            }else {
+                NSLog(@"没有登录---");
+            }
             
+        } WithFail:^(NSError *error) {
+            NSLog(@"%@",error);
+            NSLog(@"%@",error.userInfo);
+            NSDictionary *errorDic = error.userInfo;
+            NSString *string = errorDic[@"NSLocalizedDescription"];
+            NSRange range1 = [string rangeOfString:@"("];
+            NSRange range2 = [string rangeOfString:@")"];
+            NSUInteger  location1 = range1.location + range1.length;
+            NSUInteger location2= range2.location;
+            NSString *string1 = [string substringWithRange:NSMakeRange(location1 , location2 - location1)];
+            if ([string1 integerValue] == 403) {
+                NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                [users removeObjectForKey:kIsLogin];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+           
         } Progress:^(float progress) {
             
         }];
-    }
+//    }
 }
 
 - (void)updateUserInfo:(NSDictionary *)dic {
@@ -458,7 +477,19 @@
 
 
 
+/**
+ *  - (void)clearAllUserDefaultsData
+ {
+ NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+ 
+ NSDictionary *dic = [userDefaults dictionaryRepresentation];
+ for (id  key in dic) {
+ [userDefaults removeObjectForKey:key];
+ }
+ [userDefaults synchronize];
+ }
 
+ */
 
 
 

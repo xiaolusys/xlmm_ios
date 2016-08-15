@@ -168,6 +168,8 @@ static BOOL isNetPrompt;
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [NSThread sleepForTimeInterval:2.0];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
+    
     [self getServerIP];
     [self updateLoginState];
     
@@ -207,7 +209,17 @@ static BOOL isNetPrompt;
     [JMFirstOpen recoderAppLoadNum];
     
     self.isFirst = YES;
-    [MiPushSDK registerMiPush:self type:0 connect:YES];
+    
+    
+    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
+    if ([string isEqualToString:@"1"] || string == nil) {
+        [MiPushSDK registerMiPush:self type:0 connect:YES];
+    }else {
+        
+    }
+    
+    
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -291,7 +303,9 @@ static BOOL isNetPrompt;
     [self createUserAgent];
     return YES;
 }
-
+- (void)openPushMessage {
+    [MiPushSDK registerMiPush:self type:0 connect:YES];
+}
 
 - (void)startDeal:(NSDictionary *)dic {
     self.imageUrl = [dic objectForKey:@"picture"];
@@ -400,9 +414,9 @@ static BOOL isNetPrompt;
     NSLog(@"Regist fail%@",error);
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
-    //    NSLog(@"UserInfo = %@", userInfo);
+    NSLog(@"UserInfo = %@", userInfo);
     [MiPushSDK handleReceiveRemoteNotification :userInfo];
     // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
     NSString *messageId = [userInfo objectForKey:@"_id_"];
@@ -927,5 +941,42 @@ static BOOL isNetPrompt;
     return deviceString;
 }
 
-
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

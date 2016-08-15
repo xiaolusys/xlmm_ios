@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface TSettingViewController : UIViewController<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *cacheLabel;
@@ -17,5 +18,8 @@
 
 - (IBAction)versionButtonClicked:(id)sender;
 - (IBAction)deleteButtonClicked:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIView *pushOnView;
+
 
 @end

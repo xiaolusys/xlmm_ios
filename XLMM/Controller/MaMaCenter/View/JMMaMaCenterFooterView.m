@@ -25,7 +25,9 @@
 @property (nonatomic, strong) UILabel *label7;
 @property (nonatomic, strong) UILabel *label8;
 @property (nonatomic, strong) UILabel *label9;
-
+/**
+ *  是否显示消息未读提示
+ */
 @property (nonatomic, strong) UILabel *messagePromptLabel;
 
 @property (nonatomic, strong) JMAutoLoopScrollView *scrollView;
@@ -70,16 +72,17 @@
 }
 - (void)setMessageDic:(NSDictionary *)messageDic {
     NSArray *resultsArr = messageDic[@"results"];
+    
     if (resultsArr.count == 0) {
         self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
     }else {
+        if ([messageDic[@"unread_cnt"] boolValue]) {
+            self.messagePromptLabel.hidden = NO;
+        }else {
+            self.messagePromptLabel.hidden = YES;
+        }
         for (NSDictionary *dic in resultsArr) {
             [self.titlesArray addObject:dic[@"title"]];
-            if ([dic[@"read"] boolValue]) {
-                self.messagePromptLabel.hidden = NO;
-            }else {
-                
-            }
         }
     }
     [self.scrollView jm_reloadData];
