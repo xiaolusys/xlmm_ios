@@ -66,9 +66,13 @@ NSString *const JMGoodsAttributeCellIdentifier = @"JMGoodsAttributeCellIdentifie
 }
 - (void)setDescModel:(JMDescLabelModel *)descModel {
     
-    
-    if ([descModel.name isEqual:[NSNull null]]) {
-        self.bianmaLabel.text = @"使用事项";
+    kWeakSelf
+    if (descModel.name.length == 0) {
+        [self.descBianmaLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.bianmaLabel);
+            make.left.equalTo(weakSelf.contentView).offset(15);
+            make.width.equalTo(@(SCREENWIDTH - 30));
+        }];
     }else {
         self.bianmaLabel.text = descModel.name;
     }
