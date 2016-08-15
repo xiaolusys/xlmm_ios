@@ -54,15 +54,27 @@
     self.descLabel.font = [UIFont systemFontOfSize:13.];
     self.descLabel.textColor = [UIColor timeLabelColor];
     
+    UIImageView *goinImage = [UIImageView new];
+    [baseView addSubview:goinImage];
+    goinImage.image = [UIImage imageNamed:@"rightArrow"];
+    
     [self.packageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(baseView).offset(10);
         make.centerY.equalTo(baseView.mas_centerY);
     }];
 
     [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(baseView).offset(-10);
+        make.right.equalTo(goinImage.mas_left).offset(-10);
         make.centerY.equalTo(baseView.mas_centerY);
     }];
+    
+    [goinImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(baseView).offset(-10);
+        make.centerY.equalTo(baseView.mas_centerY);
+        make.width.mas_equalTo(@16);
+        make.height.mas_equalTo(@25);
+    }];
+    
     
 }
 - (void)tapClick:(UITapGestureRecognizer *)tap {

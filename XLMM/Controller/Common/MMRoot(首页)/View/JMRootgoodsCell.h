@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^cacleStoreBlock)(NSString *storID);
+
 @class CollectionModel;
 @class PromoteModel;
+@class JMStoreUpModel;
 @interface JMRootgoodsCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *iconImage;
@@ -28,8 +31,16 @@
 
 @property (nonatomic, strong) UILabel *backLabel;
 
+@property (nonatomic, strong) UIButton *storeUpButton;
+
+@property (nonatomic, strong) UIImageView *storeUpImage;
+
+@property (nonatomic, copy)  cacleStoreBlock block;
+
 - (void)fillDataWithCollectionModel:(CollectionModel *)model;
 
 - (void)fillData:(PromoteModel *)model;
+
+- (void)fillStoreUpData:(JMStoreUpModel *)model;
 
 @end

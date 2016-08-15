@@ -87,6 +87,13 @@
 
 - (void)backBtnClicked:(UIButton *)button{
     NSLog(@"fanhui");
+    if (dataArray.count == 1) {
+        AddressModel *model = [dataArray objectAtIndex:0];
+        if (_delegate && [_delegate respondsToSelector:@selector(addressView:model:)]) {
+            [self.delegate addressView:self model:model];
+        }
+    }else {
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -183,9 +190,12 @@
         cell.modifyAddressButton.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
         cell.modifyAddressButton.layer.cornerRadius = 15;
         
+        
+        
     } else {
         cell.modifyAddressButton.hidden = YES;
-        
+        cell.selectedButton.hidden = YES;
+        cell.selectedLayout.constant = 8.;
     }
     if (indexPath.row == -1) {
         cell.leadingWidth.constant = 40;
@@ -201,7 +211,6 @@
             cell.morenLabel.hidden = NO;
             cell.morenLabel.layer.borderWidth = 0.5;
             cell.morenLabel.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-            
         } else {
             cell.morenLabel.hidden = YES;
             cell.leadingWidth.constant = 8;
@@ -214,6 +223,22 @@
     cell.secondLabel.text = address;
     cell.delegate = self;
     cell.addressModel = model;
+    
+    
+    
+    if (self.isButtonSelected) {
+        if ([self.addressID integerValue] == [model.addressID integerValue]) {
+            [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_selector"] forState:UIControlStateNormal];
+        }else {
+            [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_normal"] forState:UIControlStateNormal];
+        }
+        
+    }
+    if (dataArray.count == 1) {
+        [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_selector"] forState:UIControlStateNormal];
+    }
+    
+    
     
     NSString *buyerInfo = [NSString stringWithFormat:@"%@    %@", model.buyerName, model.phoneNumber];
     cell.firstLabel.text = buyerInfo;
@@ -233,6 +258,7 @@
     AddressModel *model = [dataArray objectAtIndex:indexPath.row];
     
     if (self.isSelected == YES) {
+        
         if (_delegate && [_delegate respondsToSelector:@selector(addressView:model:)]) {
             [self.delegate addressView:self model:model];
         }

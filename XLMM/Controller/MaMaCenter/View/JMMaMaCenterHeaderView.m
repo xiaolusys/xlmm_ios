@@ -96,6 +96,8 @@
 
 @property (nonatomic, strong) NSNumber *weekDay;
 
+@property (nonatomic, strong) UIImageView *vipExaminationImage;
+
 @end
 
 @implementation JMMaMaCenterHeaderView {
@@ -127,6 +129,12 @@
     headView.backgroundColor = [UIColor whiteColor];
     return headView;
 }
+- (void)setImageString:(NSString *)imageString {
+    _imageString = imageString;
+    
+    [self.vipExaminationImage sd_setImageWithURL:[NSURL URLWithString:[imageString JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    
+}
 - (void)setMamaCenterModel:(JMMaMaCenterModel *)mamaCenterModel {
     _mamaCenterModel = mamaCenterModel;
     
@@ -141,9 +149,9 @@
     NSString *limtStr = self.extraModel.surplus_days;
     
     NSInteger limtCount = [limtStr integerValue];
-//    if (limtCount > 15) {
-//        self.renewButton.hidden = YES;
-//    }
+    if (limtCount > 15) {
+        self.renewButton.hidden = YES;
+    }
     
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     NSInteger count = limtStr.length;
@@ -211,9 +219,15 @@
     
     UIButton *vipExaminationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [selfInfoView addSubview:vipExaminationButton];
-    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
+//    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
     vipExaminationButton.tag = 106;
     [vipExaminationButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    vipExaminationButton.timeInterval = 2.0f;
+    
+    UIImageView *vipExaminationImage = [UIImageView new];
+    [vipExaminationButton addSubview:vipExaminationImage];
+    self.vipExaminationImage = vipExaminationImage;
+    
     
 //    UIImageView *vipExamination = [UIImageView new];
 //    [vipExaminationButton addSubview:vipExamination];
@@ -330,6 +344,12 @@
     [vipExaminationButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(selfInfoView).offset(-10);
         make.bottom.equalTo(lineView).offset(-15);
+        make.width.mas_equalTo(@60);
+        make.height.mas_equalTo(@45);
+    }];
+    [self.vipExaminationImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(vipExaminationButton.mas_centerX);
+        make.centerY.equalTo(vipExaminationButton.mas_centerY);
         make.width.mas_equalTo(@60);
         make.height.mas_equalTo(@45);
     }];

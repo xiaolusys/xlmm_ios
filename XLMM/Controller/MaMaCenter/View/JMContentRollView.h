@@ -12,4 +12,6 @@
 
 @property (nonatomic, copy) NSString *title;
 
+@property (nonatomic, strong) UILabel *seeLabel;
+
 @end

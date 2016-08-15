@@ -20,6 +20,7 @@
         _Url = [dic objectForKey:@"url"];
         _agentPrice = [dic objectForKey:@"lowest_price"];
         _stdSalePrice = [dic objectForKey:@"std_sale_price"];
+        _modelID = [dic objectForKey:@"model_id"];
         _outerID = [dic objectForKey:@"outer_id"];
         _isSaleopen = [dic objectForKey:@"is_saleopen"];
         _isSaleout = [dic objectForKey:@"is_saleout"];

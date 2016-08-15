@@ -13,12 +13,15 @@
 #import "WXApi.h"
 #import "Pingpp.h"
 #import "PersonOrderViewController.h"
+#import "WebViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 @interface JMVipRenewController ()<JMOrderPayViewDelegate>
 
-@property (nonatomic, strong) UIScrollView *baseScrollView;
+@property (nonatomic, strong) UITableView *tableView;
+
+//@property (nonatomic, strong) UIScrollView *baseScrollView;
 
 @property (nonatomic, strong) UIButton *halfyearButton;
 
@@ -34,7 +37,11 @@
 
 @property (nonatomic, assign) BOOL isEnoughBudgetPay;
 
+@property (nonatomic, strong) UILabel *descLabel;
+
 @end
+
+
 
 @implementation JMVipRenewController {
     NSDictionary *_renewDic;
@@ -48,7 +55,7 @@
     NSString *_discounefee; // 优惠金额
     NSString *_orderID;     // 订单编号
     NSString *_totalfee;    // 实际支付
-    
+    CGFloat _descLabelValue;// 抵扣金额
     NSInteger _numCount;
     
     CGFloat _walletCash;     // 小鹿钱包的金额
@@ -56,7 +63,7 @@
     CGFloat _wxOraliPayment; // 如果钱包金额不足支付
     
     NSString *_exchangeType; // 选择续费的类型 --> 半年或者一年
-    
+    BOOL isAgreeTerms;
 }
 
 - (void)viewDidLoad {
@@ -94,7 +101,6 @@
         
     }];
 }
-
 - (void)upDataRenew:(NSDictionary *)renewDic {
     NSDictionary *productDic = renewDic[@"product"];
     _productID = productDic[@"id"];
@@ -111,14 +117,14 @@
     _skuID = renewDict[@"id"];
     if (_walletCash - paument > 0.000001) {
         self.isEnoughBudgetPay = YES;
+        _descLabelValue = paument;
         _exchangeType = @"half";
     }else {
         _wxOraliPayment = paument - _walletCash;
+        _descLabelValue = _wxOraliPayment;
         self.isEnoughBudgetPay = NO;
     }
-    
-    
-    
+    self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
 }
 
 - (void)initView {
@@ -134,20 +140,26 @@
 
 }
 - (void)createRenewView {
-    UIScrollView *baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    [self.view addSubview:baseScrollView];
-    self.baseScrollView = baseScrollView;
-    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
-    self.baseScrollView.showsHorizontalScrollIndicator = NO;
-    self.baseScrollView.showsVerticalScrollIndicator = NO;
     
-    UIView *headView = [UIView new];
-    [self.baseScrollView addSubview:headView];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:self.tableView];
+//    UIScrollView *baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+//    [self.view addSubview:baseScrollView];
+//    self.baseScrollView = baseScrollView;
+//    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
+//    self.baseScrollView.showsHorizontalScrollIndicator = NO;
+//    self.baseScrollView.showsVerticalScrollIndicator = NO;
+    
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 280)];
+//    [self.baseScrollView addSubview:headView];
     headView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableHeaderView = headView;
     
-    UIView *footView = [UIView new];
-    [self.baseScrollView addSubview:footView];
+    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 480)];
+//    [self.baseScrollView addSubview:footView];
     footView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableFooterView = footView;
     
     // headView //
     UIButton *halfyearButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -191,6 +203,47 @@
     [footView addSubview:image3];
     image3.image = [UIImage imageNamed:@"MaMaExplainThird"];
     
+    UILabel *notesLabel = [UILabel new];
+    [footView addSubview:notesLabel];
+    notesLabel.text = @"注意事项";
+    notesLabel.textColor = [UIColor buttonTitleColor];
+    notesLabel.font = [UIFont boldSystemFontOfSize:16.];
+    
+    UILabel *descNotesLabel = [UILabel new];
+    [footView addSubview:descNotesLabel];
+    descNotesLabel.numberOfLines = 0;
+    descNotesLabel.text = @"99元包含半年小鹿美美大数据系统使用权；188元包含一年小鹿美美大数据系统使用权，此外188元用户附加权限每活跃一天会员期限增加一天。";
+    descNotesLabel.textColor = [UIColor dingfanxiangqingColor];
+    descNotesLabel.font = [UIFont systemFontOfSize:13.];
+    
+    UIView *lineView = [UIView new];
+    [footView addSubview:lineView];
+    lineView.backgroundColor = [UIColor lineGrayColor];
+    
+    UILabel *termsLabel = [UILabel new];
+    [footView addSubview:termsLabel];
+    termsLabel.font = [UIFont systemFontOfSize:13.];
+    NSString *termStr = @"我已阅读并同意小鹿美美购买条款";
+    NSInteger termStrLength = termStr.length;
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:termStr];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,7)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(7, termStrLength - 7)];
+    termsLabel.attributedText = str;
+    termsLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *termsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(termsTapClick:)];
+    [termsLabel addGestureRecognizer:termsTap];
+    
+    UIButton *termsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [footView addSubview:termsButton];
+    [termsButton setImage:[UIImage imageNamed:@"right_button"] forState:UIControlStateNormal];
+    [termsButton setImage:[UIImage imageNamed:@"termsImage"] forState:UIControlStateSelected];
+    //    termsButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH + 40);
+    termsButton.tag = 103;
+    termsButton.selected = YES;
+    isAgreeTerms = YES;
+    [termsButton addTarget:self action:@selector(renewButton:) forControlEvents:UIControlEventTouchUpInside];
+
+    
     UILabel *titleLabel1 = [UILabel new];
     [footView addSubview:titleLabel1];
     titleLabel1.font = [UIFont systemFontOfSize:13.];
@@ -213,7 +266,7 @@
     titleLabel3.text = @"点击补贴:一份耕耘一分收获，每次基础点击0.1-1元。";
     
     UIView *bottomView = [UIView new];
-    [self.baseScrollView addSubview:bottomView];
+    [footView addSubview:bottomView];
     bottomView.backgroundColor = [UIColor whiteColor];
     
     UIView *view1 = [UIView new];
@@ -225,7 +278,8 @@
     descLabel.font = [UIFont systemFontOfSize:13.];
     descLabel.textColor = [UIColor buttonTitleColor];
     descLabel.numberOfLines = 0;
-    descLabel.text = @"为确保您的权利和权益，请尽快续费。";
+    descLabel.textAlignment = NSTextAlignmentCenter;
+    self.descLabel = descLabel;
     
     UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomView addSubview:sureButton];
@@ -242,12 +296,12 @@
     
     kWeakSelf
 
-    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(weakSelf.baseScrollView);
-        make.top.equalTo(weakSelf.baseScrollView);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@280);
-    }];
+//    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.top.equalTo(weakSelf.baseScrollView);
+//        make.top.equalTo(weakSelf.baseScrollView);
+//        make.width.mas_equalTo(SCREENWIDTH);
+//        make.height.mas_equalTo(@280);
+//    }];
     [self.halfyearButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(headView).offset(space);
         make.top.equalTo(headView).offset(66);
@@ -266,12 +320,12 @@
         make.bottom.equalTo(headView).offset(-1);
     }];
     
-    [footView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headView.mas_bottom);
-        make.left.equalTo(weakSelf.baseScrollView);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@210);
-    }];
+//    [footView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(headView.mas_bottom);
+//        make.left.equalTo(weakSelf.baseScrollView);
+//        make.width.mas_equalTo(SCREENWIDTH);
+//        make.height.mas_equalTo(@210);
+//    }];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(footView).offset(17);
         make.centerX.equalTo(footView.mas_centerX);
@@ -306,10 +360,32 @@
         make.right.equalTo(footView.mas_right).offset(-15);
         make.centerY.equalTo(image3.mas_centerY);
     }];
+    [notesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(image3.mas_bottom).offset(22);
+        make.left.equalTo(footView).offset(30);
+    }];
+    [descNotesLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(notesLabel);
+        make.top.equalTo(notesLabel.mas_bottom).offset(5);
+        make.right.equalTo(footView.mas_right).offset(-15);
+    }];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(descNotesLabel.mas_bottom).offset(10);
+        make.left.right.equalTo(footView);
+        make.height.mas_equalTo(@10);
+    }];
+    [termsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lineView.mas_bottom).offset(10);
+        make.left.equalTo(footView).offset(30);
+    }];
+    [termsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(footView).offset(-20);
+        make.centerY.equalTo(termsLabel.mas_centerY);
+    }];
+    
     
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.baseScrollView);
-        make.top.equalTo(footView.mas_bottom);
+        make.left.bottom.equalTo(footView);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@120);
     }];
@@ -331,6 +407,17 @@
     
     
 }
+- (void)termsTapClick:(UITapGestureRecognizer *)tap {
+    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
+    NSString *urlString = [NSString stringWithFormat:@"%@/static/tiaokuan.html",Root_URL];
+    [dictionDic setValue:urlString forKey:@"web_url"];
+    WebViewController *webView = [[WebViewController alloc] init];
+    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:dictionDic];
+    webView.isShowNavBar =true;
+    webView.isShowRightShareBtn=false;
+    [self.navigationController pushViewController:webView animated:YES];
+}
+
 - (void)payMoney {
     NSArray *skusArr = _renewDic[@"normal_skus"];
     NSDictionary *renewDic = skusArr[_numCount];
@@ -452,13 +539,14 @@
         if (_walletCash - paument > 0.000001) {
             self.isEnoughBudgetPay = YES;
             _exchangeType = @"half";
-            
+            _descLabelValue = paument;
         }else {
             self.isEnoughBudgetPay = NO;
             _wxOraliPayment = paument - _walletCash;
+            _descLabelValue = _wxOraliPayment;
         }
         
-        
+        self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else if (button.tag == 101) {
         self.allyearButton.selected = !self.allyearButton.selected;
         self.allyearButton.selected = YES;
@@ -473,23 +561,31 @@
         if (_walletCash - paument > 0.000001) {
             self.isEnoughBudgetPay = YES;
             _exchangeType = @"full";
-            
+            _descLabelValue = paument;
         }else {
             self.isEnoughBudgetPay = NO;
             _wxOraliPayment = paument - _walletCash;
+            _descLabelValue = _wxOraliPayment;
         }
-        
-    }else {
-        if (self.isEnoughBudgetPay) {
-            _channel = @"budget";
-            [self xiaoluPay:_exchangeType];
+        self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
+    }else if (button.tag == 102){
+        if (isAgreeTerms) {
+            if (self.isEnoughBudgetPay) {
+                _channel = @"budget";
+                [self xiaoluPay:_exchangeType];
+            }else {
+                [self createPayPopView];
+            }
         }else {
-            [self createPayPopView];
-            
+            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
         }
-        
-        
-        
+    }else {
+        button.selected = !button.selected;
+        if (button.selected) {
+            isAgreeTerms = YES;
+        }else {
+            isAgreeTerms = NO;
+        }
     }
 
 
@@ -551,9 +647,9 @@
     alterView.tag = 888;
     [alterView show];
 }
-- (void)viewDidLayoutSubviews {
-    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
-}
+//- (void)viewDidLayoutSubviews {
+//    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, 610);
+//}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
