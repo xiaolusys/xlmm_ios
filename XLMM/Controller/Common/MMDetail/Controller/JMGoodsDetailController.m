@@ -22,6 +22,7 @@
 #import "JMShareModel.h"
 #import "CartViewController.h"
 #import "JMDescLabelModel.h"
+#import "JMLogInViewController.h"
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
@@ -240,7 +241,7 @@
     }];
 }
 - (void)loadCatrsNumData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
@@ -251,11 +252,10 @@
             self.cartsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"result"]];
         }
     } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
+        
     } Progress:^(float progress) {
         
     }];
-    
 }
 - (void)lodaDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/%@",Root_URL,self.goodsID];
@@ -544,11 +544,23 @@
     }
 }
 - (void)cartButton:(UIButton *)button {
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == 100) {
-        CartViewController *cartVC = [[CartViewController alloc] init];
-        [self.navigationController pushViewController:cartVC animated:YES];
+        if (isLogin) {
+            CartViewController *cartVC = [[CartViewController alloc] init];
+            [self.navigationController pushViewController:cartVC animated:YES];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     }else if (button.tag == 101) {
-        [self showPopView];
+        if (isLogin) {
+            [self showPopView];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     }else {
     }
 }
@@ -759,6 +771,7 @@
     self.cartsLabel.textAlignment = NSTextAlignmentCenter;
     self.cartsLabel.layer.cornerRadius = 10.;
     self.cartsLabel.layer.masksToBounds = YES;
+    self.cartsLabel.hidden = YES;
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];
