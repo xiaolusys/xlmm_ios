@@ -30,6 +30,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 
+
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
     NSLog(@"downLoadWithURLString %@", url);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){

@@ -403,6 +403,8 @@ static BOOL isAgreeTerms = YES;
 - (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
     // 100->优惠券  101->钱包  102->条款  103->结算
     if (button.tag == 100) {
+        button.enabled = NO;
+        [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
         segmentVC.cartID = _cartIDs;
         segmentVC.isSelectedYHQ = YES;
@@ -441,6 +443,8 @@ static BOOL isAgreeTerms = YES;
             isAgreeTerms = NO;
         }
     }else if (button.tag == 103) {
+        button.enabled = NO;
+        [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (!isAgreeTerms) {
             [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
             return ;
@@ -464,6 +468,10 @@ static BOOL isAgreeTerms = YES;
             }
         }
     }else {}
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
 }
 - (void)composeFooterTapView:(JMPurchaseFooterView *)headerView {
     NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，订单向外贸工厂订货后无法退款，需要收货后走退货流程或者换货。质量问题退货会以现金券或小鹿余额形式补偿10元邮费。给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
