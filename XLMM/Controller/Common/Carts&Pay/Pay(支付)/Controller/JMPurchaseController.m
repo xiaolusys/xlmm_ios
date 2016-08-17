@@ -27,11 +27,15 @@
 #import "JMPayShareController.h"
 #import "JMSegmentController.h"
 #import "JMCouponModel.h"
+#import "JMDelayPopView.h"
+#import "JMPopViewAnimationSpring.h"
+#import "MBProgressHUD.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
 @interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate,JMShareViewDelegate> {
     NSDictionary *_couponData;
+    NSTimer *_timer;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -40,6 +44,7 @@
 
 @property (nonatomic, strong) JMPurchaseFooterView *purchaseFooterView;
 @property (nonatomic,strong) UIView *maskView;
+@property (nonatomic, strong) JMDelayPopView *delayView;
 @property (nonatomic,strong) JMOrderPayView *payView;
 /**
  *  获取商品购买商品ID
@@ -79,16 +84,17 @@
  */
 @property (nonatomic,assign) BOOL isXLWforAlipay;
 
+@property (nonatomic, strong) MBProgressHUD *hud;
 @end
 
 static BOOL isAgreeTerms = YES;
 
 @implementation JMPurchaseController {
     
-    NSString *_logisticsID;         // 选择物流的ID
-    NSDictionary *_couponInfo;       // 优惠券
-    NSDictionary *_rightReduce;      // app立减
-    NSDictionary *_xlWallet;         // 钱包
+    NSString *_logisticsID;           // 选择物流的ID
+    NSDictionary *_couponInfo;        // 优惠券
+    NSDictionary *_rightReduce;       // app立减
+    NSDictionary *_xlWallet;          // 钱包
     
     NSString *_payMethod;             //支付方式
     float _totalPayment;              //应付款金额
@@ -110,7 +116,8 @@ static BOOL isAgreeTerms = YES;
     
     NSString *_limitStr;              //分享红包数量
     NSString *_orderTidNum;           //订单编号
-
+    
+    NSInteger _flagCount;             //标志是否弹出延迟框
 }
 - (NSMutableArray *)logisticsArr {
     if (!_logisticsArr) {
@@ -132,15 +139,16 @@ static BOOL isAgreeTerms = YES;
     self.isCouponEnoughPay = NO;
     
     _totalPayment = 0;              //应付款金额
-    _discountfee=0;               //优惠券金额
-    _rightAmount=0;               //app优惠
-    _availableFloat=0;            //小鹿钱包余额
+    _discountfee = 0;               //优惠券金额
+    _rightAmount = 0;               //app优惠
+    _availableFloat = 0;            //小鹿钱包余额
     
-    _totalfee=0;                  //总金额
-    _postfee=0;                   //运费金额
-    _amontPayment=0;              //总需支付金额
-    _couponValue=0;               //优惠券金额
+    _totalfee = 0;                  //总金额
+    _postfee = 0;                   //运费金额
+    _amontPayment = 0;              //总需支付金额
+    _couponValue = 0;               //优惠券金额
     _discount = 0;                  //计算金额
+    _flagCount = 0;                 //标志是否弹出延迟框
     
     [self initView];
     [self createTableView];
@@ -280,7 +288,7 @@ static BOOL isAgreeTerms = YES;
 - (void)calculationLabelValue {
     self.purchaseFooterView.postLabel.text = [NSString stringWithFormat:@"¥%.2f",_postfee];
     _discount = _couponValue + _rightAmount;
-    if (_discount - _amontPayment > 0.000001) {
+    if (_discount - _amontPayment > 0.000001 || fabs(_discount - _amontPayment) <= 0.000001) {
         self.isCouponEnoughPay = YES;
         _discount = _amontPayment;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
@@ -292,7 +300,7 @@ static BOOL isAgreeTerms = YES;
         self.isCouponEnoughPay = NO;
         if (self.isUseXLW) {
             CGFloat surplus = _amontPayment - _couponValue - _rightAmount;
-            if (_availableFloat - surplus > 0.000001 || (fabs(_availableFloat - surplus) < 0.000001 || fabs(surplus - _couponValue) < 0.000001)) {
+            if (_availableFloat - surplus > 0.000001 || fabs(_availableFloat - surplus) <= 0.000001) {
                 //钱包金额够使用
                 self.isEnoughBudget = YES;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
@@ -310,7 +318,7 @@ static BOOL isAgreeTerms = YES;
             }
         }else {
             CGFloat surplus = _amontPayment - _couponValue - _rightAmount;
-            if (_availableFloat - surplus > 0.000001 || (fabs(_availableFloat - surplus) < 0.000001 || fabs(surplus - _couponValue) < 0.000001)) {
+            if (_availableFloat - surplus > 0.000001 || fabs(_availableFloat - surplus) <= 0.000001) {
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
@@ -503,6 +511,7 @@ static BOOL isAgreeTerms = YES;
     if (index == 100) { //点击后弹出选择放弃或者继续支付
         [self payBackAlter];
     }else if (index == 101) { // 选择了微信支付
+        _flagCount ++;
         [SVProgressHUD showWithStatus:@"正在支付中....."];
         if (!self.isInstallWX) {
             [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
@@ -603,6 +612,8 @@ static BOOL isAgreeTerms = YES;
         }
         if ([responseObject[@"channel"] isEqualToString:@"budget"] && [responseObject[@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self.hud hideAnimated:YES];
+                [_timer invalidate];
                 [MobClick event:@"buy_succ"];
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [self pushShareVC];
@@ -618,15 +629,21 @@ static BOOL isAgreeTerms = YES;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
+                        [self.hud hideAnimated:YES];
+                        [_timer invalidate];
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                         [MobClick event:@"buy_succ"];
                         [self pushShareVC];
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+                            [self.hud hideAnimated:YES];
+                            [_timer invalidate];
                             [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
                             [MobClick event:@"buy_cancel"];
                             [self popview];
                         } else {
+                            [self.hud hideAnimated:YES];
+                            [_timer invalidate];
                             [SVProgressHUD showErrorWithStatus:@"支付失败"];
                             NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
                             [MobClick event:@"buy_fail" attributes:temp_dict];
@@ -639,6 +656,8 @@ static BOOL isAgreeTerms = YES;
         }
         [SVProgressHUD dismiss];
     } WithFail:^(NSError *error) {
+        [self.hud hideAnimated:YES];
+        [_timer invalidate];
         [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
     } Progress:^(float progress) {
         
@@ -697,7 +716,12 @@ static BOOL isAgreeTerms = YES;
         }else {}
     }else if (alertView.tag == 101) {
         [self backClick];
-    }
+    }else if (alertView.tag == 102) {
+        [MobClick event:@"buy_cancel"];
+        PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+        orderVC.index = 101;
+        [self.navigationController pushViewController:orderVC animated:YES];
+    }else {}
 }
 #pragma mark 支付成功或取消后续操作
 - (void)pushShareVC {
@@ -706,6 +730,8 @@ static BOOL isAgreeTerms = YES;
     [self.navigationController pushViewController:payShareVC animated:YES];
 }
 - (void)popview{
+    [self.hud hideAnimated:YES];
+    [_timer invalidate];
     [MobClick event:@"buy_cancel"];
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 101;
@@ -713,6 +739,8 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark 支付成功的弹出框
 - (void)paySuccessful{
+    [self.hud hideAnimated:YES];
+    [_timer invalidate];
     [MobClick event:@"buy_succ"];
     [self pushShareVC];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
@@ -747,6 +775,8 @@ static BOOL isAgreeTerms = YES;
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isAppinPayGo) name:@"isAppinPayGo" object:nil];
+    
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(purchaseViewWillEnterForeground:)
@@ -772,7 +802,22 @@ static BOOL isAgreeTerms = YES;
     //进入前台时调用此函数
     NSLog(@"purchaseViewWillEnterForeground ");
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
+    if (_flagCount > 0) {
+        self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(doSomeWork) userInfo:nil repeats:NO];
+    }
+    _flagCount --;
 }
+
+- (void)doSomeWork {
+    [self.hud hideAnimated:YES];
+    // Simulate by just waiting.
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    alterView.tag = 102;
+    [alterView show];
+    
+}
+
 @end
 
 

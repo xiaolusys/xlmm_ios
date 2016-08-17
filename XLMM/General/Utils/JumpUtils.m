@@ -21,6 +21,7 @@
 #import "JMSegmentController.h"
 #import "JMRefundBaseController.h"
 #import "JMLogInViewController.h"
+#import "JMGoodsDetailController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -175,19 +176,28 @@
     NSString *firstparam = [firstparams firstObject];
     NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
     NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+    //  "target_url" = "com.jimei.xlmm://app/v1/products?product_id=http://m.xiaolumeimei.com/mall/product/details/17716";
     
     if ([firstparam isEqualToString:@"product_id"]){
         //跳到商品详情
-        NSLog(@"product_id = %@", firstvalue);
-        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-        [web_dic setValue:firstvalue forKey:@"web_url"];
-        [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
+        NSArray *denghaoArr = [target_url componentsSeparatedByString:@"="];
+        NSString *denghaoStr = [denghaoArr lastObject];
+        NSArray *xiahuaxianArr = [denghaoStr componentsSeparatedByString:@"/"];
+        NSString *goodsID = [xiahuaxianArr lastObject];
         
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.webDiction = web_dic;
-        webView.isShowNavBar =false;
-        webView.isShowRightShareBtn=false;
-        [vc.navigationController pushViewController:webView animated:YES];
+        JMGoodsDetailController *goodsDetailVC = [[JMGoodsDetailController alloc] init];
+        goodsDetailVC.goodsID = goodsID;
+        [vc.navigationController pushViewController:goodsDetailVC animated:YES];
+//        NSLog(@"product_id = %@", firstvalue);
+//        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+//        [web_dic setValue:firstvalue forKey:@"web_url"];
+//        [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
+//        
+//        WebViewController *webView = [[WebViewController alloc] init];
+//        webView.webDiction = web_dic;
+//        webView.isShowNavBar =false;
+//        webView.isShowRightShareBtn=false;
+//        [vc.navigationController pushViewController:webView animated:YES];
     }
 
 }

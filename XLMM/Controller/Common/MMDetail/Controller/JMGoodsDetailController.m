@@ -302,8 +302,12 @@
             self.addCartButton.enabled = NO;
         }
     }
-    
-    [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+    if (goodsArray.count == 0) {
+        return ;
+        
+    }else {
+        [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+    }
 
     [self.goodsScrollView jm_reloadData];
     [self.tableView reloadData];
@@ -626,12 +630,13 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
-            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
-            self.cartsLabel.hidden = NO;
-            NSLog(@"%ld",_cartsGoodsNum);
-            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+//            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
+//            self.cartsLabel.hidden = NO;
+//            NSLog(@"%ld",_cartsGoodsNum);
+//            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+            [self loadCatrsNumData];
         }else {
-            self.cartsLabel.hidden = YES;
+//            self.cartsLabel.hidden = YES;
             [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
         }
         [self hideMaskView];
@@ -771,7 +776,7 @@
     self.cartsLabel.textAlignment = NSTextAlignmentCenter;
     self.cartsLabel.layer.cornerRadius = 10.;
     self.cartsLabel.layer.masksToBounds = YES;
-    self.cartsLabel.hidden = YES;
+//    self.cartsLabel.hidden = YES;
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];

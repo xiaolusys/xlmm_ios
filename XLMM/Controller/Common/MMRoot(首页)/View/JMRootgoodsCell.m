@@ -13,6 +13,7 @@
 #import "PromoteModel.h"
 #import "CollectionModel.h"
 #import "JMStoreUpModel.h"
+#import "JMRootGoodsModel.h"
 
 @interface JMRootgoodsCell ()
 
@@ -196,14 +197,14 @@
     } else{
         self.backView.hidden = NO;
         //NSLog(@"isnew %d", [model.isNewgood boolValue]);
-        if([model.isNewgood boolValue]){
+        if([model.isSaleout boolValue]){
             UILabel *label = [self.backView viewWithTag:100];
             label.text = @"即将开售";
         }
     }
 }
-- (void)fillData:(PromoteModel*)model{
-    NSString *string = model.picPath;
+- (void)fillData:(JMRootGoodsModel *)model{
+    NSString *string = model.head_img;
     
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
     if (![model.watermark_op isEqualToString:@""]) {
@@ -227,31 +228,46 @@
     
     self.titleLabel.text = model.name;
     
-    if ([model.agentPrice integerValue]!=[model.agentPrice floatValue]) {
-        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
+    if ([model.lowest_agent_price integerValue]!=[model.lowest_agent_price floatValue]) {
+        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.lowest_agent_price floatValue]];
     } else {
-        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.agentPrice floatValue]];
+        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [model.lowest_agent_price floatValue]];
     }
 
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.stdSalePrice floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.lowest_std_sale_price floatValue]];
     self.backView.layer.cornerRadius = 30;
     
-    if ([model.isSaleopen boolValue]) {
-        if ([model.isSaleout boolValue]) {
+    
+    if ([model.sale_state isEqual:@"will"]) {
+        self.backView.hidden = NO;
+        self.backLabel.text = @"即将开售";
+    }else {
+        if ([model.is_saleout boolValue]) {
             self.backView.hidden = NO;
             self.backLabel.text = @"已抢光";
-        }
-        else {
-            self.backView.hidden = YES;
+        }else {
+        	self.backView.hidden = YES;
         }
         
-    }else {
-        self.backView.hidden = NO;
-        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
-        if([model.isNewgood boolValue]){
-            self.backLabel.text = @"即将开售";
-        }
     }
+
+    
+//    if ([model.sale_state boolValue]) {
+//        if ([model.is_saleout boolValue]) {
+//            self.backView.hidden = NO;
+//            self.backLabel.text = @"已抢光";
+//        }
+//        else {
+//            self.backView.hidden = YES;
+//        }
+//        
+//    }else {
+//        self.backView.hidden = NO;
+//        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
+//        if([model.sale_state boolValue]){
+//            self.backLabel.text = @"即将开售";
+//        }
+//    }
 }
 
 - (void)fillStoreUpData:(JMStoreUpModel *)model {
@@ -291,7 +307,32 @@
     _storeID = dic[@"id"];
     
 }
-
+- (void)setItemDict:(NSDictionary *)itemDict {
+    self.backView.hidden = YES;
+    
+    NSString *string = itemDict[@"head_img"];
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
+    [newImageUrl appendString:@"?"];
+    
+    if ([string hasPrefix:@"http:"]) {
+        
+    }else {
+        [newImageUrl insertString:@"http:" atIndex:0];
+    }
+    self.iconImage.alpha = 0.3;
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.iconImage.alpha = 1.0;
+        }];
+    }];
+    
+    self.titleLabel.text = itemDict[@"name"];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [itemDict[@"lowest_agent_price"] floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[itemDict[@"lowest_std_sale_price"] floatValue]];
+    _storeID = itemDict[@"id"];
+    
+    
+}
 - (void)cacleStoreUpClick:(UIButton *)button {
     if (self.block) {
         self.block(_storeID);

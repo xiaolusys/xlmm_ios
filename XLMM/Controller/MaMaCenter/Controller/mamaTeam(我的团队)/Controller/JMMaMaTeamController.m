@@ -276,7 +276,10 @@ static const NSUInteger ITEM_COUNT = 3;
 - (void)mamaRankClick:(UIButton *)button {
     JMMaMaEarningsRankController *earningsVC = [[JMMaMaEarningsRankController alloc] init];
     earningsVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
-    earningsVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/carry_total_rank",Root_URL];
+    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/teamrank/carry_total_rank",@"/rest/v2/mama/teamrank/carry_duration_rank", nil];
+    earningsVC.urlArray = array;
+//    earningsVC.urlArray = @[@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_total_rank",@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_duration_rank"];
+//    earningsVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/carry_total_rank",Root_URL];
     earningsVC.isTeamEarningsRank = YES;
     [self.navigationController pushViewController:earningsVC animated:YES];
 }

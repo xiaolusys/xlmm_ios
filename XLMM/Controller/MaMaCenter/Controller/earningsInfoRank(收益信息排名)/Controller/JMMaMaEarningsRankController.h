@@ -16,4 +16,6 @@
 
 @property (nonatomic, assign) BOOL isTeamEarningsRank;
 
+@property (nonatomic, strong) NSMutableArray *urlArray;
+
 @end

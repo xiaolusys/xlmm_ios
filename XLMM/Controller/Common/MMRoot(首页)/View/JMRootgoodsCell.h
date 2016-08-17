@@ -10,9 +10,7 @@
 
 typedef void(^cacleStoreBlock)(NSString *storID);
 
-@class CollectionModel;
-@class PromoteModel;
-@class JMStoreUpModel;
+@class CollectionModel,JMRootGoodsModel,JMStoreUpModel;
 @interface JMRootgoodsCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *iconImage;
@@ -39,8 +37,10 @@ typedef void(^cacleStoreBlock)(NSString *storID);
 
 - (void)fillDataWithCollectionModel:(CollectionModel *)model;
 
-- (void)fillData:(PromoteModel *)model;
+- (void)fillData:(JMRootGoodsModel *)model;
 
 - (void)fillStoreUpData:(JMStoreUpModel *)model;
+
+@property (nonatomic, strong) NSDictionary *itemDict;
 
 @end
