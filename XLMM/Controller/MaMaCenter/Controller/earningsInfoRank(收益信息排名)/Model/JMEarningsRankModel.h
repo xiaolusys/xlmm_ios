@@ -11,15 +11,11 @@
 @interface JMEarningsRankModel : NSObject
 
 
-@property (nonatomic, copy) NSString *duration_total;
 
-@property (nonatomic, copy) NSString *history_total;
 
 @property (nonatomic, copy) NSString *mama;
 
 @property (nonatomic, copy) NSString *mama_nick;
-
-@property (nonatomic, copy) NSString *mobile;
 
 @property (nonatomic, copy) NSString *num;
 
@@ -41,11 +37,8 @@
 /**
  *  <__NSCFArray 0x14e9da680>(
  {
- "duration_total" = 0;
- "history_total" = 2370512;
  mama = 2;
  "mama_nick" = "\U6728\U6728@\U5c0f\U9e7f\U7f8e\U7f8e";
- mobile = 18521388592;
  num = 0;
  phone = "";
  rank = 1;

@@ -423,7 +423,7 @@ static NSUInteger popNum = 0;
     }else if (index == 110) {
         JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
         earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
-        NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank ",@"/rest/v2/mama/rank/carry_duration_rank", nil];
+        NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank", nil];
         earningsRankVC.urlArray = array;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];

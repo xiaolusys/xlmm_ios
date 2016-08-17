@@ -143,7 +143,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
     earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
     
-    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank ",@"/rest/v2/mama/rank/carry_duration_rank", nil];
+    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank", nil];
     earningsRankVC.urlArray = array;
     //    earningsRankVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/carry_total_rank",Root_URL];
     earningsRankVC.isTeamEarningsRank = NO;

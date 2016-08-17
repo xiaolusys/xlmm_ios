@@ -122,14 +122,14 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
     
 }
 - (void)loadNoTeamData {
-    NSArray *urlArr = @[@"http://s18.xiaolumm.com/rest/v2/mama/rank/carry_total_rank",@"http://s18.xiaolumm.com/rest/v2/mama/rank/carry_duration_rank"];
+    NSArray *urlArr = @[@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank"];
     for (int i = 0; i < urlArr.count; i++) {
         [self loadDataSource:urlArr[i]];
     }
 }
 
 - (void)loadTeamData {
-    NSArray *urlArr = @[@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_total_rank",@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_duration_rank"];
+    NSArray *urlArr = @[@"/rest/v2/mama/teamrank/carry_total_rank",@"/rest/v2/mama/teamrank/carry_duration_rank"];
     for (int i = 0; i < urlArr.count; i++) {
         [self loadDataSource:urlArr[i]];
     }
@@ -139,17 +139,17 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
     // 接口数组 -- > (团队周排名,团队总排名) 根据点击的按钮来判断选择了那个接口
     NSArray *urlArray = [NSArray array];
     if (self.isTeamEarningsRank) {
-        urlArray = @[@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_total_rank",@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_duration_rank"];
+        urlArray = @[@"/rest/v2/mama/teamrank/carry_total_rank",@"/rest/v2/mama/teamrank/carry_duration_rank"];
     }else {
-        urlArray = @[@"http://s18.xiaolumm.com/rest/v2/mama/rank/carry_total_rank",@"http://s18.xiaolumm.com/rest/v2/mama/rank/carry_duration_rank"];
+        urlArray = @[@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank"];
     }
     return urlArray;
 }
 
 
 - (void)loadDataSource:(NSString *)string{
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",Root_URL,string];
-    NSString *urlString = [NSString stringWithFormat:@"%@",string];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",Root_URL,string];
+//    NSString *urlString = [NSString stringWithFormat:@"%@",string];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         if ([string isEqualToString:[self urlArray][0]]) {
@@ -202,11 +202,12 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
 }
 
 - (void)loadSelfInfoDataSource {
+//    NSString *urlString = @"http://192.168.1.56:8000/rest/v2/mama/rank/self_rank";
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.selfInfoUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchSelfInfoData:responseObject];
     } WithFail:^(NSError *error) {
-        
+        NSLog(@"%@",error);
     } Progress:^(float progress) {
         
     }];
@@ -222,6 +223,7 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
     }
     
     if (self.isTeamEarningsRank == YES) {
+        
         CGFloat total = [selfInfoDic[@"total"] floatValue] / 100.00;
         self.earningsLabel.text = [NSString stringWithFormat:@"总收益额%.2f元",total];
 //        NSInteger rankChange = [selfInfoDic[@"rank"] integerValue];
