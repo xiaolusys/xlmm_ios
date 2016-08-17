@@ -374,7 +374,7 @@ static NSUInteger popNum = 0;
  107 === > 小鹿大学(精品活动)
  108 === > 我的粉丝
  109 === > 我的团队
- 110 === > 访客记录
+ 110 === > 收益排行
  */
 - (void)composeMaMaCenterFooterView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
     // index == 100 || 
@@ -423,7 +423,8 @@ static NSUInteger popNum = 0;
     }else if (index == 110) {
         JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
         earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
-        earningsRankVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/carry_total_rank",Root_URL];
+        NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank ",@"/rest/v2/mama/rank/carry_duration_rank", nil];
+        earningsRankVC.urlArray = array;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else {

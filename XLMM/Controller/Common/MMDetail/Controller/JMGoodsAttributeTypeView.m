@@ -31,7 +31,7 @@
         CGFloat upX = 15;
         CGFloat upY = 40;
         for (int i = 0; i< dataArray.count; i++) {
-            NSString *str = [dataArray objectAtIndex:i] ;
+            NSString *str = [dataArray objectAtIndex:i];
             
             NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:14] forKey:NSFontAttributeName];
             CGSize size = [str sizeWithAttributes:dic];

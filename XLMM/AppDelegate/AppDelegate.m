@@ -48,7 +48,7 @@ static BOOL isNetPrompt;
 /**
  *  判断是否为支付页面跳转过来的
  */
-//@property (nonatomic,assign) BOOL isApinPayGo;
+@property (nonatomic,assign) BOOL isAppinPayGo;
 
 @end
 
@@ -212,8 +212,11 @@ static BOOL isNetPrompt;
     
     
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
-    if ([string isEqualToString:@"1"] || string == nil) {
+    
+    if ([string isEqual:@"1"] || string == nil) {
+        
         [MiPushSDK registerMiPush:self type:0 connect:YES];
+    
     }else {
         
     }
@@ -341,7 +344,6 @@ static BOOL isNetPrompt;
         [userDefaults synchronize];
         
     }
-    
     
     
 }
@@ -720,23 +722,25 @@ static BOOL isNetPrompt;
     
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    self.isAppinPayGo = NO;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    self.isAppinPayGo = NO;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    
+    self.isAppinPayGo = YES;
     /**
      *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
      */
-//    if (self.isApinPayGo) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"isApinPayGo" object:nil];
+    if (self.isAppinPayGo) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"isAppinPayGo" object:nil];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"isShareApinPayGo" object:nil];
-//    }
+    }
     
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");
