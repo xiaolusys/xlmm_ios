@@ -18,6 +18,7 @@
 #import "MMCollectionController.h"
 #import "XlmmMall.h"
 #import "WebViewController.h"
+#import "JMGoodsDetailController.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -440,11 +441,18 @@ static NSString * ksimpleCell = @"simpleCell";
     [_childDic setValue:model.web_url forKey:@"web_url"];
     [_childDic setValue:@"ProductDetail" forKey:@"type_title"];
     
-    WebViewController *webView = [[WebViewController alloc] init];
-    webView.webDiction = _childDic;
-    webView.isShowNavBar =false;
-    webView.isShowRightShareBtn=false;
-    [self.navigationController pushViewController:webView animated:YES];
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    
+    detailVC.goodsID = model.modelID;
+    
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
+
+//    WebViewController *webView = [[WebViewController alloc] init];
+//    webView.webDiction = _childDic;
+//    webView.isShowNavBar =false;
+//    webView.isShowRightShareBtn=false;
+//    [self.navigationController pushViewController:webView animated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {

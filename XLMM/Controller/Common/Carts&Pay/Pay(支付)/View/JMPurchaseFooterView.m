@@ -36,7 +36,7 @@
     couponeButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     couponeButton.layer.borderWidth = 1.;
     [couponeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     UILabel *couponL = [UILabel new];
     [couponeButton addSubview:couponL];
     couponL.font = [UIFont systemFontOfSize:14.];

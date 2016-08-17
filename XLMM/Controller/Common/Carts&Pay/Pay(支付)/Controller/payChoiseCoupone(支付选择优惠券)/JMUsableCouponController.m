@@ -92,13 +92,17 @@
 }
 
 - (void)disableButtonClick:(UIButton *)button {
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanmodel:)]) {
         [self.delegate updateYouhuiquanmodel:nil];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
+}
 - (void)displayEmptyView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];
     UIView *empty = views[0];

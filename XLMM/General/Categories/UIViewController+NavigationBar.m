@@ -26,9 +26,10 @@
     [button addSubview:imageView];
     [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-
+    
     self.navigationItem.leftBarButtonItem = leftItem;
 }
+
 
 - (void)downLoadWithURLString:(NSString *)url andSelector:(SEL)aSeletor{
     NSLog(@"downLoadWithURLString %@", url);

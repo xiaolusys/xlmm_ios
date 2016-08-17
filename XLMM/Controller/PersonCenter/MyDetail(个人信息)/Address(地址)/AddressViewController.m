@@ -87,6 +87,13 @@
 
 - (void)backBtnClicked:(UIButton *)button{
     NSLog(@"fanhui");
+    if (dataArray.count == 1) {
+        AddressModel *model = [dataArray objectAtIndex:0];
+        if (_delegate && [_delegate respondsToSelector:@selector(addressView:model:)]) {
+            [self.delegate addressView:self model:model];
+        }
+    }else {
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -217,14 +224,21 @@
     cell.delegate = self;
     cell.addressModel = model;
     
+    
+    
     if (self.isButtonSelected) {
-        if ([self.addressID isEqual:model.addressID]) {
+        if ([self.addressID integerValue] == [model.addressID integerValue]) {
             [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_selector"] forState:UIControlStateNormal];
         }else {
             [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_normal"] forState:UIControlStateNormal];
         }
         
     }
+    if (dataArray.count == 1) {
+        [cell.selectedButton setImage:[UIImage imageNamed:@"mamaNewcomer_selector"] forState:UIControlStateNormal];
+    }
+    
+    
     
     NSString *buyerInfo = [NSString stringWithFormat:@"%@    %@", model.buyerName, model.phoneNumber];
     cell.firstLabel.text = buyerInfo;

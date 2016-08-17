@@ -50,18 +50,21 @@
     kWeakSelf
     
     [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.bottom.equalTo(weakSelf);
+        make.top.left.equalTo(weakSelf);
+        make.width.mas_equalTo(SCREENWIDTH - 60);
+        make.height.mas_equalTo(@40);
     }];
     
     [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(baseView).offset(-5);
+        make.right.equalTo(baseView);
         make.centerY.equalTo(baseView.mas_centerY);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(baseView.mas_centerY);
         make.left.equalTo(baseView);
-        make.right.equalTo(seeLabel.mas_left).offset(-5);
+//        make.right.equalTo(baseView).offset(-60);
+        make.width.mas_equalTo(SCREENWIDTH - 60);
         make.height.mas_equalTo(@40);
     }];
     

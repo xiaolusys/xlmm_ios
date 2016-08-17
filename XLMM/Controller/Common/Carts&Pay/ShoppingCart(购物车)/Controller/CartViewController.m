@@ -15,6 +15,7 @@
 #import "WebViewController.h"
 #import "CartListModel.h"
 #import "JMPurchaseController.h"
+#import "JMGoodsDetailController.h"
 
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
     float allPrice;
@@ -532,6 +533,7 @@
     if (weiUrl == nil) {
         return ;
     }else {
+ 
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:weiUrl forKey:@"web_url"];
         WebViewController *webVC = [[WebViewController alloc] init];
@@ -544,6 +546,11 @@
     if (weiUrl == nil) {
         return ;
     }else {
+//        JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+//        
+//        detailVC.goodsID = [NSString stringWithFormat:@"%ld",model.cartID];
+//        [self.navigationController pushViewController:detailVC animated:YES];
+
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:weiUrl forKey:@"web_url"];
         WebViewController *webVC = [[WebViewController alloc] init];
