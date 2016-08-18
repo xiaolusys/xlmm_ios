@@ -939,8 +939,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
     
     if(self.endTime.count==0 ||
-       [self.endTime[1] isEqualToString:@""])
+       [self.endTime[1] isEqualToString:@""]){
+        NSLog(@"need refresh");
         return TRUE;
+    }
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     // NSDateComponents *comps =
@@ -1074,9 +1076,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], (long)self.currentIndex);
     }
     
-    NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
-    NSString *deadline = [dic objectForKey:@"downshelf_deadline"];
-    NSString *starttime = [dic objectForKey:@"upshelf_starttime"];
+    NSLog(@"Deadline=%@",[dic objectForKey:@"offshelf_deadline"]);
+    NSString *deadline = [dic objectForKey:@"offshelf_deadline"];
+    NSString *starttime = [dic objectForKey:@"onshelf_starttime"];
     if(self.currentIndex != 2){
         if(deadline != nil){
             [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
