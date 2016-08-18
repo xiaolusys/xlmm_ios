@@ -10,5 +10,7 @@
 
 @interface JMMaMaPersonCenterController : UIViewController
 
+@property (nonatomic, strong) NSDictionary *userInfoDic;
+
 
 @end

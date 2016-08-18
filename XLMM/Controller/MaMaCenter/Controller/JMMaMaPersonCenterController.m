@@ -30,6 +30,8 @@
 #import "JMPopView.h"
 #import "JMNewcomerTaskController.h"
 #import "JMPopViewAnimationSpring.h"
+#import "Udesk.h"
+
 
 static NSUInteger popNum = 0;
 
@@ -78,6 +80,10 @@ static NSUInteger popNum = 0;
 
 @property (nonatomic, strong) JMShareView *cover;
 @property (nonatomic, strong) JMPopView *menu;
+/**
+ *  MaMa客服入口
+ */
+@property (nonatomic, strong) UIButton *serViceButton;
 
 
 @end
@@ -86,6 +92,7 @@ static NSUInteger popNum = 0;
 @implementation JMMaMaPersonCenterController {
     NSString *_mamaID;
 }
+
 - (JMNewcomerTaskController *)newcomerTask {
     if (_newcomerTask == nil) {
         _newcomerTask = [[JMNewcomerTaskController alloc] init];
@@ -101,6 +108,8 @@ static NSUInteger popNum = 0;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveUdeskMessage:) name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
+    
 //    [self loadfoldLineData];
     [self loadDataSource];
 //    [self loadMaMaWeb];
@@ -113,11 +122,12 @@ static NSUInteger popNum = 0;
     [self createTableView];
     [self createHeaderView];
     [self createFooterView];
+    [self craeteNavRightButton];
     [self loadfoldLineData];
 //    [self loadDataSource];
     [self loadMaMaWeb];
 //    [self loadMaMaMessage];
-
+    [self customUserInfo];
 }
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
@@ -289,8 +299,6 @@ static NSUInteger popNum = 0;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-
-
 - (void)backClick:(UIButton *)btn {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -427,9 +435,22 @@ static NSUInteger popNum = 0;
         earningsRankVC.urlArray = array;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
+    }else if (index == 111){
+//        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
+//        WebViewController *webVC = [[WebViewController alloc] init];
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        [dict setValue:urlString forKey:@"web_url"];
+//        webVC.webDiction = dict;
+//        webVC.isShowNavBar = true;
+//        webVC.isShowRightShareBtn = false;
+//        [self.navigationController pushViewController:webVC animated:YES];
+//
+        [self showNewStatusCount:2];
     }else {
     
     }
+    
+    
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
@@ -482,25 +503,71 @@ static NSUInteger popNum = 0;
     activity.share_model.share_type = @"link";
     [self.navigationController pushViewController:activity animated:YES];
 }
+- (void)craeteNavRightButton {
+    UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [serViceButton setTitle:@"客服入口" forState:UIControlStateNormal];
+    [serViceButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    serViceButton.titleLabel.font = [UIFont systemFontOfSize:16.];
+    self.serViceButton = serViceButton;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:serViceButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+- (void)serViceButtonClick:(UIButton *)button {
+    [self.serViceButton setTitle:@"客服入口" forState:UIControlStateNormal];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
+    UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
+    [self.navigationController pushViewController:chat animated:YES];
+}
+- (void)customUserInfo {
+    NSString *nick_name = self.userInfoDic[@"nick"];
+    NSString *sdk_token = self.userInfoDic[@"user_id"];
+//    NSString *cellphone = self.userInfoDic[@"mobile"];
+    NSDictionary *parameters = @{
+                                 @"user": @{
+                                         @"sdk_token":sdk_token,
+                                         @"nick_name":nick_name,
+                                         }
+                                 };
+    [UdeskManager createCustomerWithCustomerInfo:parameters];
+}
+- (void)receiveUdeskMessage:(NSNotification *)notif {
+    [self.serViceButton setTitle:[NSString stringWithFormat:@"新消息(%ld)",[UdeskManager getLocalUnreadeMessagesCount]] forState:UIControlStateNormal];
+}
+
+- (void)showNewStatusCount:(int)count {
+    if (count == 0) {
+        return;
+    }
+    CGFloat h = 35.;
+    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - h;
+    CGFloat x = 0;
+    CGFloat w = SCREENWIDTH;
+    //    NSLog(@"%f",y);
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
+//    label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]];
+    label.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    label.textColor = [UIColor whiteColor];
+    label.text = [NSString stringWithFormat:@"测试数据-----%d",count];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    //插入导航控制器下导航条下面
+    [self.navigationController.view insertSubview:label belowSubview:self.navigationController.navigationBar];
+    //动画往下面平移
+    [UIView animateWithDuration:0.3 animations:^{
+        label.transform = CGAffineTransformMakeTranslation(0, h);
+    } completion:^(BOOL finished) {
+        //网上面平移
+        [UIView animateWithDuration:0.3 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
+            //还原
+            label.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            [label removeFromSuperview];
+        }];
+    }];
+}
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

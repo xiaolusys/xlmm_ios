@@ -93,7 +93,7 @@
     
     self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
     //判断是否为0
-    if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
+    if ([[dic objectForKey:@"user_budget"] isKindOfClass:[NSNull class]]) {
         self.accountLabel.text  = [NSString stringWithFormat:@"0.00"];
         self.accountMoney = [NSNumber numberWithFloat:0.00];
     }else {

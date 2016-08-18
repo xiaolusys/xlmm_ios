@@ -1968,6 +1968,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
             JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
 //            MaMaPersonCenterViewController *mamaCenterVC= [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+            mamaCenterVC.userInfoDic = json;
             [self.navigationController pushViewController:mamaCenterVC animated:YES];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -2541,7 +2542,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 #pragma mark - 获取商品分类列表
 //      /rest/v2/categorys/latest_version
 - (void)loadItemizeData {
-    NSString *urlString = [NSString stringWithFormat:@"http://staging.xiaolumeimei.com/rest/v2/categorys/latest_version"];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             return ;
