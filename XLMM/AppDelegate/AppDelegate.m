@@ -17,6 +17,7 @@
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
 #import "sys/utsname.h"
+#import "Udesk.h"
 
 #define login @"login"
 #import "JMFirstOpen.h"
@@ -126,27 +127,6 @@ static BOOL isNetPrompt;
     }] ;
     [manager startMonitoring];
 }
-
-//- (NSString *)stringFromStatus:(NetworkStatus)status{
-//    NSString *string;
-//    switch (status) {
-//        case NotReachable:
-//            string = @"无网络连接，请检查您的网络";
-//            break;
-//        case ReachableViaWiFi:
-//            string = @"wifi";
-//            break;
-//        case ReachableViaWWAN:
-//            string = @"wwan";
-//            break;
-//            
-//        default:
-//            
-//            string = @"unknown";
-//            break;
-//    }
-//    return string;
-//}
 
 - (void)ActivityTimeUpdate {
     self.timeCount++;
@@ -259,14 +239,14 @@ static BOOL isNetPrompt;
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
     [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
-    
+    //uDesk 客服
+    [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
     //微信分享
     [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
     
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
-    
-    
+
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     

@@ -10,7 +10,6 @@
 #import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "XlmmMall.h"
-#import "JMOrderGoodsModel.h"
 #import "JMPackAgeModel.h"
 
 @interface JMBaseGoodsCell ()
