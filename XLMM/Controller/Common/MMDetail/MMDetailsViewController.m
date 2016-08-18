@@ -773,7 +773,7 @@
         
         UIImageView *imageview = [self.contentView viewWithTag:i * 100 + 100];
 
-        NSString *imagelink = [[[imageArray objectAtIndex:i] imagePostersCompression] JMUrlEncodedString];
+        NSString *imagelink = [[[imageArray objectAtIndex:i] imageNormalCompression] JMUrlEncodedString];
         NSLog(@"imageLink = %@", imagelink);
    
         [imageview sd_setImageWithURL:[NSURL URLWithString:imagelink] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

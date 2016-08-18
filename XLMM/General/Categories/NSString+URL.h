@@ -18,6 +18,8 @@
 
 - (NSString *)ImageNoCompression;
 
+- (NSString *)imageOrderCompression;
+
 - (NSString *)imageShareCompression;
 
 - (NSString *)imagePostersCompression;

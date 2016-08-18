@@ -191,7 +191,7 @@
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
             cell.myImageView.layer.masksToBounds = YES;
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageOrderCompression] JMUrlEncodedString]]];
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             cell.nameLabel.text = model.title;
@@ -226,7 +226,7 @@
 
             cell.headImageView.layer.cornerRadius = 5;
             cell.headImageView.layer.masksToBounds = YES;
-            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageOrderCompression] JMUrlEncodedString]]];
             cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             

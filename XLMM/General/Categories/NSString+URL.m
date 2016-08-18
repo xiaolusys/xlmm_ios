@@ -21,15 +21,15 @@
     return encodedString;
 }
 //   http://image.xiaolu.so/MG-1448717389408-高腰蕾丝修身短裤01.png?imageMogr2/format/jpg/quality/80
-
+//首页浏览商品的参数
 - (NSString *)imageCompression{
-    NSString *string = [NSString stringWithFormat:@"%@imageMogr2/thumbnail/%.0f/format/jpg/quality/90",self, [self imageWidth]];
+    NSString *string = [NSString stringWithFormat:@"%@imageMogr2/thumbnail/%.0f/format/jpg/quality/70",self, [self imageWidth]];
     return string;
 }
 
 
 
-
+//购物车pop等使用参数
 - (NSString *)imageMoreCompression{
     NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/50/format/jpg/quality/50",self];
     return string;
@@ -41,9 +41,14 @@
 }
 
 //  imageMogr2/thumbnail/289/format/jpg/quality/90
+//订单里面展示的图片大小
+- (NSString *)imageOrderCompression{
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/jpg/quality/90",self];
+    return string;
+}
 
 - (NSString *)imageShareCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/jpg/quality/90",self];
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/100/format/jpg/quality/90",self];
     return string;
 }
 //http://image.xiaolu.so/MG_1460339008848%E5%A4%B4%E5%9B%BE%E8%83%8C%E6%99%AF.png?imageMogr2/thumbnail/200/format/png/quality/90
@@ -57,6 +62,7 @@
     return string;
 }
 
+//商品详情参数
 - (NSString *)imageNormalCompression{
     NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/640/format/jpg/quality/90",self];
     return string;
@@ -68,12 +74,12 @@
     float width;
     if (screenwidth < 400) {
         width = (screenwidth - 15);
-        // NSLog(@"width = %f", width);
+//        NSLog(@"imageWidth = %f", width);
         return width;
     }
     width = (screenwidth - 15)*1.3;
     
-    //NSLog(@"width = %f", width);
+//    NSLog(@"imageWidth = %f", width);
     
     return width;
 }
