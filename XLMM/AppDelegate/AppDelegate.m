@@ -183,6 +183,19 @@ static BOOL isNetPrompt;
         //        [alertView show];
         
     }
+    
+    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        NSArray *arr = responseObject[@"topics"];
+        for (NSString *str in arr) {
+            [MiPushSDK subscribe:str];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+    }];
+    
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -485,6 +498,16 @@ static BOOL isNetPrompt;
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
     NSLog(@"---------------data = %@", data);
+    NSDictionary *apsDic = data[@"aps"];
+    NSString *jsonString = apsDic[@"alert"];
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
+    if ([jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
+    }
+    
+    
     //
     //    // 长连接收到的消息。消息格式跟APNs格式一样
     //    // 返回数据
