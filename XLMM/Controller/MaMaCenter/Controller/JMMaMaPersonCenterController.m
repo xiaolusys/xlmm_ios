@@ -436,16 +436,16 @@ static NSUInteger popNum = 0;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else if (index == 111){
-//        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
-//        WebViewController *webVC = [[WebViewController alloc] init];
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        [dict setValue:urlString forKey:@"web_url"];
-//        webVC.webDiction = dict;
-//        webVC.isShowNavBar = true;
-//        webVC.isShowRightShareBtn = false;
-//        [self.navigationController pushViewController:webVC animated:YES];
+        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:urlString forKey:@"web_url"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = false;
+        [self.navigationController pushViewController:webVC animated:YES];
 //
-        [self showNewStatusCount:2];
+//        [self showNewStatusCount:2];
     }else {
     
     }

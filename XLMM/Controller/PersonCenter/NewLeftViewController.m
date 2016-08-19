@@ -22,6 +22,7 @@
 #import "JMCouponController.h"
 #import "MMClass.h"
 #import "JMGoodsDetailController.h"
+#import "WebViewController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -439,20 +440,30 @@
 }
 
 - (IBAction)commonProblemBtnAction:(id)sender {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
-        
-        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:common];
-        }
-        [self.sideMenuViewController hideMenuViewController];
-    }else{
-        
-        [self.sideMenuViewController hideMenuViewController];
-        
-        [self displayLoginView];
-        return;
-    }
+    
+    NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
+    WebViewController *webVC = [[WebViewController alloc] init];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:urlString forKey:@"web_url"];
+    webVC.webDiction = dict;
+    webVC.isShowNavBar = true;
+    webVC.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:webVC animated:YES];
+    
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
+//        
+//        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+//            [self.pushVCDelegate rootVCPushOtherVC:common];
+//        }
+//        [self.sideMenuViewController hideMenuViewController];
+//    }else{
+//        
+//        [self.sideMenuViewController hideMenuViewController];
+//        
+//        [self displayLoginView];
+//        return;
+//    }
 }
 
 - (void) displayLoginView{

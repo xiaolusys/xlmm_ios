@@ -274,7 +274,7 @@
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
     self.topImageArray = detailContentDic[@"head_imgs"];
-    
+    [self.goodsScrollView jm_reloadData];
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
     for (NSDictionary *dic in attributes) {
@@ -308,9 +308,9 @@
     }else {
         [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
     }
-
-    [self.goodsScrollView jm_reloadData];
+    
     [self.tableView reloadData];
+    
     
 }
 - (void)navigationBarButton:(UIButton *)button {
