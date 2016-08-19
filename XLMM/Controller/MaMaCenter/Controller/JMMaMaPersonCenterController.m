@@ -110,7 +110,7 @@ static NSUInteger popNum = 0;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveUdeskMessage:) name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SubscribeMes:) name:@"SubscribeMessage" object:nil];
 //    [self loadfoldLineData];
     [self loadDataSource];
 //    [self loadMaMaWeb];
@@ -537,37 +537,46 @@ static NSUInteger popNum = 0;
     [self.serViceButton setTitle:[NSString stringWithFormat:@"新消息(%ld)",(long)[UdeskManager getLocalUnreadeMessagesCount]] forState:UIControlStateNormal];
 }
 
-- (void)showNewStatusCount:(int)count {
-    if (count == 0) {
-        return;
-    }
+- (void)showNewStatusCount:(NSString *)message {
+    //    if (count == 0) {
+    //        return;
+    //    }
     CGFloat h = 35.;
     CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - h;
     CGFloat x = 0;
     CGFloat w = SCREENWIDTH;
     //    NSLog(@"%f",y);
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
-//    label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]];
-    label.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-    label.textColor = [UIColor whiteColor];
-    label.text = [NSString stringWithFormat:@"测试数据-----%d",count];
-    label.textAlignment = NSTextAlignmentCenter;
+    UILabel *label6 = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
+    //    label.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]];
+    label6.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    label6.alpha = 0.70f;
+    label6.textColor = [UIColor whiteColor];
+    label6.text = message;
+    label6.textAlignment = NSTextAlignmentCenter;
     
     //插入导航控制器下导航条下面
-    [self.navigationController.view insertSubview:label belowSubview:self.navigationController.navigationBar];
+    [self.navigationController.view insertSubview:label6 belowSubview:self.navigationController.navigationBar];
     //动画往下面平移
     [UIView animateWithDuration:0.3 animations:^{
-        label.transform = CGAffineTransformMakeTranslation(0, h);
+        label6.transform = CGAffineTransformMakeTranslation(0, h);
     } completion:^(BOOL finished) {
         //网上面平移
         [UIView animateWithDuration:0.3 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
             //还原
-            label.transform = CGAffineTransformIdentity;
+            label6.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
-            [label removeFromSuperview];
+            [label6 removeFromSuperview];
         }];
     }];
 }
+- (void)SubscribeMes:(NSNotification *)sender {
+    [self showNewStatusCount:sender.object];
+}
+
+
+
+
+
 
 @end
 

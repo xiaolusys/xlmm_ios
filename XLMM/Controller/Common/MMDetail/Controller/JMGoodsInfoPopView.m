@@ -242,7 +242,7 @@
         if (index == 100) {
             NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
             if (count > 1) {
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%ld",count - 1];
+                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count - 1];
                 _goodsNum -= 1;
             }else {
                 return ;
@@ -250,7 +250,7 @@
         }else {
             NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
             if (count < _stockValue) { //  == >>  这里是商品的数量
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%ld",count + 1];
+                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count + 1];
                 _goodsNum += 1;
             }else {
                 return ;
@@ -282,8 +282,9 @@
         CGFloat sizeViewH = self.sizeView.frame.size.height;
         
         self.buyNumView.frame = CGRectMake(0, sizeViewH + self.sizeView.frame.origin.y, SCREENWIDTH, 50);
-        CGFloat heanderViewH = headerView.frame.size.height;
-        headerView.contentSize = CGSizeMake(SCREENWIDTH, heanderViewH + headerView.frame.origin.y);
+//        CGFloat heanderViewH = headerView.frame.size.height;
+        CGFloat H = sizeViewH + self.sizeView.frame.origin.y + 50;
+        headerView.contentSize = CGSizeMake(SCREENWIDTH, H);
         
         
     }
@@ -305,7 +306,7 @@
     
     _goodsColorID = [colorD[@"product_id"] integerValue];
     _goodsSizeID = [sizeD[@"sku_id"] integerValue];
-    NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
     
 }
 - (void)composeAttrubuteTypeView:(JMGoodsAttributeTypeView *)typeView Index:(NSInteger)index {
@@ -339,7 +340,7 @@
         
         [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
         
-        NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
         
     }else if ([typeView isEqual:self.sizeView]) {
         for (int i = 1; i <= self.goodsSizeArray.count; i++) {
@@ -363,7 +364,7 @@
         self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
         _goodsSizeID = [sizeD[@"sku_id"] integerValue];
         _stockValue =  [sizeD[@"free_num"] integerValue];
-        NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
     }else {
         
     }
@@ -403,7 +404,7 @@
             NSDictionary *sizeDict = [sizeDic objectForKey:size];
             _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
             _stockValue =  [sizeDict[@"free_num"] integerValue];
-            NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
             self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"agent_price"] floatValue]];
             self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
             code = 1;
@@ -416,9 +417,10 @@
 
 - (void)sureButtonClick:(UIButton *)button {
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];
-    paramer[@"item_id"] = [NSString stringWithFormat:@"%ld",_goodsColorID];
-    paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",_goodsSizeID];
-    paramer[@"num"] = [NSString stringWithFormat:@"%ld",_goodsNum];
+    paramer[@"item_id"] =
+    [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
+    paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsSizeID];
+    paramer[@"num"] = [NSString stringWithFormat:@"%ld",(long)_goodsNum];
     
     
 //    if (self.block) {

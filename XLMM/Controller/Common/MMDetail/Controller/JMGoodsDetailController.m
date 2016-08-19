@@ -633,7 +633,7 @@
 //            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
 //            self.cartsLabel.hidden = NO;
 //            NSLog(@"%ld",_cartsGoodsNum);
-//            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
             [self loadCatrsNumData];
         }else {
 //            self.cartsLabel.hidden = YES;
@@ -759,22 +759,22 @@
     UIButton *shopCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:shopCartButton];
     shopCartButton.layer.cornerRadius = 20.;
-    shopCartButton.backgroundColor = [UIColor blackColor];
-    shopCartButton.alpha = 0.6;
+//    shopCartButton.backgroundColor = [UIColor blackColor];
+//    shopCartButton.alpha = 0.6;
     shopCartButton.tag = 100;
     [shopCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *shopCartImage = [UIImageView new];
     [shopCartButton addSubview:shopCartImage];
-    shopCartImage.image = [UIImage imageNamed:@"gouwucheicon2"];
+    shopCartImage.image = [UIImage imageNamed:@"goodsDetailCarts"];
     
     self.cartsLabel = [UILabel new];
     [shopCartImage addSubview:self.cartsLabel];
-    self.cartsLabel.font = [UIFont systemFontOfSize:12.];
+    self.cartsLabel.font = [UIFont systemFontOfSize:11.];
     self.cartsLabel.textColor = [UIColor whiteColor];
     self.cartsLabel.backgroundColor = [UIColor redColor];
     self.cartsLabel.textAlignment = NSTextAlignmentCenter;
-    self.cartsLabel.layer.cornerRadius = 10.;
+    self.cartsLabel.layer.cornerRadius = 8.;
     self.cartsLabel.layer.masksToBounds = YES;
 //    self.cartsLabel.hidden = YES;
     
@@ -797,7 +797,7 @@
     [shopCartImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(shopCartButton.mas_centerX);
         make.centerY.equalTo(shopCartButton.mas_centerY);
-        make.width.height.mas_equalTo(@20);
+        make.width.height.mas_equalTo(@40);
     }];
     [addCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(shopCartButton.mas_right).offset(15);
@@ -806,9 +806,9 @@
         make.width.mas_equalTo(@(SCREENWIDTH - 85));
     }];
     [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(shopCartImage.mas_right).offset(-5);
-        make.bottom.equalTo(shopCartImage.mas_top).offset(5);
-        make.width.height.mas_equalTo(@20);
+        make.left.equalTo(shopCartImage.mas_right).offset(-15);
+        make.bottom.equalTo(shopCartImage.mas_top).offset(15);
+        make.width.height.mas_equalTo(@16);
     }];
     
 }
