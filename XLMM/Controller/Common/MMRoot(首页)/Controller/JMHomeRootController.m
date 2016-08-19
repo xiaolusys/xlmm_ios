@@ -1,0 +1,270 @@
+//
+//  JMHomeRootController.m
+//  XLMM
+//
+//  Created by zhang on 16/8/19.
+//  Copyright © 2016年 上海己美. All rights reserved.
+//
+
+#import "JMHomeRootController.h"
+#import "MMClass.h"
+#import <RESideMenu.h>
+#import "JMAutoLoopScrollView.h"
+#import "JMHomeHeaderView.h"
+#import "JMHomeActiveCell.h"
+#import "JMHomeCategoryCell.h"
+
+@interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
+
+@end
+
+@implementation JMHomeRootController {
+    NSMutableArray *_topImageArray;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
+    
+    [self createNavigaView];
+    [self createTabelView];
+    
+}
+- (void)createTabelView {
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
+    
+    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
+    self.goodsScrollView = scrollView;
+    scrollView.jm_scrollDataSource = self;
+    scrollView.jm_scrollDelegate = self;
+    
+    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, 120);
+    
+    scrollView.jm_isStopScrollForSingleCount = YES;
+    scrollView.jm_autoScrollInterval = 3.;
+    [scrollView jm_registerClass:[JMHomeHeaderView class]];
+    self.tableView.tableHeaderView = scrollView;
+    
+    [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
+    [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
+    
+    
+}
+- (void)createNavigaView {
+//    UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 64)];
+//    naviView.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:naviView];
+    UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 83, 44)];
+    UIImageView *titleImage = [UIImageView new];
+    titleImage.image = [UIImage imageNamed:@"name"];
+    [naviView addSubview:titleImage];
+    self.navigationItem.titleView = naviView;
+    [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(naviView.mas_centerX);
+        make.centerY.equalTo(naviView.mas_centerY);
+        make.width.mas_equalTo(@83);
+        make.height.mas_equalTo(@20);
+    }];
+    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profiles"]];
+    leftImageview.frame = CGRectMake(0, 11, 26, 26);
+    [leftButton addSubview:leftImageview];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [rightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category"]];
+    rightImageview.frame = CGRectMake(18, 11, 26, 26);
+    [rightButton addSubview:rightImageview];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    
+}
+
+- (void)loadActiveData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:self WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchActive:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+    
+}
+- (void)fetchActive:(NSDictionary *)dic {
+    // 头部滚动视图
+    NSArray *postersArr = dic[@"posters"];
+    for (NSDictionary *dic in postersArr) {
+        [_topImageArray addObject:dic[@"pic_link"]];
+    }
+    
+    
+    
+}
+#pragma mark tableView 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }else {
+        return 2;
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0;
+    }else {
+        return 80;
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 120;
+    }else {
+        return 180;
+    }
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        JMHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeCategoryCellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else {
+        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+}
+
+
+#pragma mark 左滑进入个人中心界面
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if ((scrollView.contentInset.left < 0) && velocity.x < 0) {
+        [self performSelector:@selector(presentLeftMenuViewController:) withObject:nil withObject:self];
+    }
+}
+- (void)rightNavigationClick:(UIButton *)button {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark - LPAutoScrollViewDatasource
+- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
+    return _topImageArray.count;
+}
+- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMHomeHeaderView *)rollView {
+    rollView.imageString = _topImageArray[index];
+}
+#pragma mark LPAutoScrollViewDelegate
+- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
+    NSLog(@"%@", _topImageArray[index]);
+}
+- (void)backClick:(UIButton *)button {
+}
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

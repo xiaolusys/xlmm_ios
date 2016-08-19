@@ -688,6 +688,7 @@
 		1F99F8841D65AD6A00C6B79C /* iPhone6Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F87F1D65AD6A00C6B79C /* iPhone6Plus@2x.png */; };
 		1F99F8851D65AD6A00C6B79C /* iPhone6Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F8801D65AD6A00C6B79C /* iPhone6Plus@3x.png */; };
 		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
+		1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FC2B5731D30AD1300CA01AB /* Logistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B56F1D30AD1300CA01AB /* Logistics.plist */; };
 		1FC2B5741D30AD1300CA01AB /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B5701D30AD1300CA01AB /* provinces.plist */; };
@@ -752,6 +753,9 @@
 		1FDD07B61D49BAC90010231F /* TeamNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AC1D49BAC90010231F /* TeamNormal@2x.png */; };
 		1FDD07B71D49BAC90010231F /* VisitorRecordNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AD1D49BAC90010231F /* VisitorRecordNormal@2x.png */; };
 		1FDD07B81D49BAC90010231F /* xiaoluUniversityNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AE1D49BAC90010231F /* xiaoluUniversityNormal@2x.png */; };
+		1FDF7C8A1D66E2BD00C7456E /* JMHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */; };
+		1FDF7C8D1D66E64600C7456E /* JMHomeActiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */; };
+		1FDF7C931D66E6D000C7456E /* JMHomeCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */; };
 		1FF3F9991D3CB31500FABBCE /* MaMaExplainFirst@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */; };
 		1FF3F99A1D3CB31500FABBCE /* MaMaExplainSecond@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */; };
 		1FF3F99B1D3CB31500FABBCE /* MaMaExplainThird@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */; };
@@ -1939,6 +1943,8 @@
 		1F99F8801D65AD6A00C6B79C /* iPhone6Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@3x.png"; sourceTree = "<group>"; };
 		1F99F8861D65CA9000C6B79C /* MBProgressHUD+JMHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+JMHUD.h"; sourceTree = "<group>"; };
 		1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JMHUD.m"; sourceTree = "<group>"; };
+		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
+		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FC2B56F1D30AD1300CA01AB /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Logistics.plist; sourceTree = "<group>"; };
@@ -2029,6 +2035,12 @@
 		1FDD07AC1D49BAC90010231F /* TeamNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TeamNormal@2x.png"; sourceTree = "<group>"; };
 		1FDD07AD1D49BAC90010231F /* VisitorRecordNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VisitorRecordNormal@2x.png"; sourceTree = "<group>"; };
 		1FDD07AE1D49BAC90010231F /* xiaoluUniversityNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoluUniversityNormal@2x.png"; sourceTree = "<group>"; };
+		1FDF7C881D66E2BD00C7456E /* JMHomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeHeaderView.h; sourceTree = "<group>"; };
+		1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeHeaderView.m; sourceTree = "<group>"; };
+		1FDF7C8B1D66E64600C7456E /* JMHomeActiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeActiveCell.h; sourceTree = "<group>"; };
+		1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeActiveCell.m; sourceTree = "<group>"; };
+		1FDF7C911D66E6D000C7456E /* JMHomeCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCategoryCell.h; sourceTree = "<group>"; };
+		1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCategoryCell.m; sourceTree = "<group>"; };
 		1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainFirst@2x.png"; sourceTree = "<group>"; };
 		1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainSecond@2x.png"; sourceTree = "<group>"; };
 		1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainThird@2x.png"; sourceTree = "<group>"; };
@@ -3812,6 +3824,8 @@
 		1F27A6341D275FB400A0F80B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */,
+				1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */,
 				1F7D992A1D62C79F00E18FD1 /* childItems(分类) */,
 				1F27A63B1D275FB400A0F80B /* MMCollectionController.h */,
 				1F27A63C1D275FB400A0F80B /* MMCollectionController.m */,
@@ -3835,6 +3849,8 @@
 		1F27A6421D275FB400A0F80B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FDF7C881D66E2BD00C7456E /* JMHomeHeaderView.h */,
+				1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */,
 				1FDD07171D4303790010231F /* JMUpdataAppPopView.h */,
 				1FDD07181D4303790010231F /* JMUpdataAppPopView.m */,
 				1F27A6431D275FB400A0F80B /* JMRepopView.h */,
@@ -3843,6 +3859,10 @@
 				1F27A6461D275FB400A0F80B /* JMRootgoodsCell.m */,
 				1F27A6471D275FB400A0F80B /* JMRootScrolCell.h */,
 				1F27A6481D275FB400A0F80B /* JMRootScrolCell.m */,
+				1FDF7C8B1D66E64600C7456E /* JMHomeActiveCell.h */,
+				1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */,
+				1FDF7C911D66E6D000C7456E /* JMHomeCategoryCell.h */,
+				1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6659,6 +6679,7 @@
 				1F498C441D2772D0007E77FC /* JMEditAddressModel.m in Sources */,
 				1F27A6661D275FB400A0F80B /* XidiShuomingViewController.m in Sources */,
 				1F27A6551D275FB400A0F80B /* MMDetailsViewController.m in Sources */,
+				1FDF7C931D66E6D000C7456E /* JMHomeCategoryCell.m in Sources */,
 				183072861C97C00900B7665E /* UIColor+RGBColor.m in Sources */,
 				3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */,
 				1F498C601D2772D0007E77FC /* JMAppForRefundModel.m in Sources */,
@@ -6684,6 +6705,7 @@
 				1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */,
 				1F498C4D1D2772D0007E77FC /* JMTimeInfoModel.m in Sources */,
 				1F99F8741D6566E900C6B79C /* UdeskAlertController.m in Sources */,
+				1FDF7C8A1D66E2BD00C7456E /* JMHomeHeaderView.m in Sources */,
 				183070E01C97B83900B7665E /* ShoppingCartModel.m in Sources */,
 				1FD158E31D2F86C4006C4B14 /* JMRefundBaseCell.m in Sources */,
 				1F99F84F1D6566E900C6B79C /* UdeskRobotIMViewController.m in Sources */,
@@ -6738,6 +6760,7 @@
 				1F498B3C1D276450007E77FC /* JMOrderPayView.m in Sources */,
 				183070D01C97B83900B7665E /* AddressModel.m in Sources */,
 				1F498C5B1D2772D0007E77FC /* JMRefundController.m in Sources */,
+				1FDF7C8D1D66E64600C7456E /* JMHomeActiveCell.m in Sources */,
 				183070EA1C97B83900B7665E /* SharePicModel.m in Sources */,
 				1FD158D71D2F7FE4006C4B14 /* JMRefundModel.m in Sources */,
 				1F56E2861D348A0A0092EC91 /* JMCouponRootCell.m in Sources */,
@@ -6839,6 +6862,7 @@
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
 				1F498C3C1D2772D0007E77FC /* NewLeftViewController.m in Sources */,
 				1F99F85D1D6566E900C6B79C /* NSArray+UdeskSDK.m in Sources */,
+				1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */,
 				1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */,
 				325B7A0B1C97E73A0022F930 /* MaMaChartTableViewCell.m in Sources */,
 				1F99F86E1D6566E900C6B79C /* UdeskTopAlertView.m in Sources */,
