@@ -12,6 +12,7 @@ extern NSString *const JMHomeCategoryCellIdentifier;
 
 @interface JMHomeCategoryCell : UITableViewCell
 
-@property (nonatomic, copy) NSString *imageUrlString;
+//@property (nonatomic, copy) NSString *imageUrlString;
+@property (nonatomic, strong) NSMutableArray *imageArray;
 
 @end

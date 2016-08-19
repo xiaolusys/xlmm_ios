@@ -13,34 +13,50 @@
 #import "JMHomeHeaderView.h"
 #import "JMHomeActiveCell.h"
 #import "JMHomeCategoryCell.h"
+#import "JMHomeGoodsCell.h"
 
 @interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
 
+@property (nonatomic, strong) NSMutableArray *activeArray;
+
 @end
 
 @implementation JMHomeRootController {
     NSMutableArray *_topImageArray;
+    NSMutableArray *_categorysArray;
 }
-
+- (NSMutableArray *)activeArray {
+    if (_activeArray == nil) {
+        _activeArray = [NSMutableArray array];
+    }
+    return _activeArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
     
+    _topImageArray = [NSMutableArray array];
+    _categorysArray = [NSMutableArray array];
     [self createNavigaView];
     [self createTabelView];
+    [self loadActiveData];
     
 }
 - (void)createTabelView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+    
+    [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
+    [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
+    [self.tableView registerClass:[JMHomeGoodsCell class] forCellReuseIdentifier:JJMHomeGoodsCellIdentifier];
     
     JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
     self.goodsScrollView = scrollView;
@@ -54,8 +70,7 @@
     [scrollView jm_registerClass:[JMHomeHeaderView class]];
     self.tableView.tableHeaderView = scrollView;
     
-    [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
-    [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
+    
     
     
 }
@@ -105,23 +120,36 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic[@"pic_link"]];
     }
+    NSArray *categoryArr = dic[@"categorys"];
+    for (NSDictionary *dicts in categoryArr) {
+        [_categorysArray addObject:dicts[@"cat_img"]];
+    }
+    NSArray *activeArr = dic[@"activitys"];
+    for (NSDictionary *dict in activeArr) {
+        [self.activeArray addObject:dict[@"act_img"]];
+    }
     
-    
+    [self.goodsScrollView jm_reloadData];
+    [self.tableView reloadData];
     
 }
 #pragma mark tableView 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
+    }else if (section == 1){
+        return self.activeArray.count;
     }else {
-        return 2;
+        return 1;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
+        return 0;
+    }else if (section == 1){
         return 0;
     }else {
         return 80;
@@ -129,19 +157,26 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 120;
+        return 130;
+    }else if (indexPath.section == 1){
+        return 160;
     }else {
-        return 180;
+        return 600;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         JMHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeCategoryCellIdentifier];
+        cell.imageArray = _categorysArray;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    }else {
+    }else if (indexPath.section == 1){
         JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.imageUrlString = _activeArray[indexPath.row];
+        return cell;
+    }else {
+        JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JJMHomeGoodsCellIdentifier];
         return cell;
     }
 }
