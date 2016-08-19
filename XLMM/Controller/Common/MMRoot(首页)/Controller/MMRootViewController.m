@@ -66,7 +66,9 @@
 
 #define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
 
+//因为可能有多个activity,那么先预留500个
 #define TAG_ACTIVITY_BASE 120
+#define TAG_CART          620
 #define TAG_ROOT_VIEW_BASE 1000
 #define TAG_BACK_SCROLLVIEW  (TAG_ROOT_VIEW_BASE)
 #define TAG_GOODS_YESTODAY_SCROLLVIEW (TAG_ROOT_VIEW_BASE+1)
@@ -382,7 +384,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
     
-    UIView *cartView = [_view viewWithTag:123];
+    UIView *cartView = [_view viewWithTag:TAG_CART];
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 64;
     cartView.frame = rect;
@@ -906,7 +908,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [topicImageView addGestureRecognizer:tap];
         
         ActivityModel *acM = self.brandDataArr[index];
-        [topicImageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+        [topicImageView sd_setImageWithURL:[NSURL URLWithString:[[acM.act_img imageNormalCompression] JMUrlEncodedString]] placeholderImage:nil
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 //通过加载图片得到其高度
                                 float h;
@@ -1195,7 +1197,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self.activityView addSubview:imageView];
         
         ActivityModel *acM = self.activityDataArr[i];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[[acM.act_img imageNormalCompression] JMUrlEncodedString]] placeholderImage:nil
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 //通过加载图片得到其高度
                                 float h;
@@ -1729,7 +1731,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     self.startV.imageV.alpha = 1;
     
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[[self.imageUrl imageNormalCompression] JMUrlEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:.3 animations:^{
             self.startV.imageV.alpha = 1;
         }];
@@ -2005,7 +2007,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(60, SCREENHEIGHT - 64, 108, 44)];
-    view.tag = 123;
+    view.tag = TAG_CART;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.8;
@@ -2053,7 +2055,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSLog(@"Cart,not login,return");
         dotView.hidden = YES;
         countLabel.hidden = YES;
-        UIView *view = [_view viewWithTag:123];
+        UIView *view = [_view viewWithTag:TAG_CART];
         CGRect rect = view.frame;
         rect.size.width = 44;
         view.frame = rect;
@@ -2070,7 +2072,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             label.text = @"0";
             dotView.hidden = YES;
             countLabel.hidden = YES;
-            UIView *view = [_view viewWithTag:123];
+            UIView *view = [_view viewWithTag:TAG_CART];
             CGRect rect = view.frame;
             rect.size.width = 44;
             view.frame = rect;
@@ -2092,7 +2094,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if (goodsCount == 0) {
         dotView.hidden = YES;
         countLabel.hidden = YES;
-        UIView *view = [_view viewWithTag:123];
+        UIView *view = [_view viewWithTag:TAG_CART];
         CGRect rect = view.frame;
         rect.size.width = 44;
         view.frame = rect;
@@ -2101,7 +2103,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
     dotView.hidden = NO;
     countLabel.hidden = NO;
-    UIView *view = [_view viewWithTag:123];
+    UIView *view = [_view viewWithTag:TAG_CART];
     CGRect rect = view.frame;
     rect.size.width = 108;
     view.frame = rect;
@@ -2133,7 +2135,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if ([d minute] < 0 || [d second] < 0) {
         string = @"";
         
-        UIView *view = [_view viewWithTag:123];
+        UIView *view = [_view viewWithTag:TAG_CART];
         dotView.hidden = YES;
         
         CGRect rect = view.frame;
@@ -2351,7 +2353,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)hiddenNavigation{
     self.navigationController.navigationBarHidden = YES;
     self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
-    UIView *cartView = [_view viewWithTag:123];
+    UIView *cartView = [_view viewWithTag:TAG_CART];
     
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 112;
@@ -2363,7 +2365,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)showNavigation{
     self.navigationController.navigationBarHidden = NO;
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-    UIView *cartView = [_view viewWithTag:123];
+    UIView *cartView = [_view viewWithTag:TAG_CART];
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 156;
     cartView.frame = rect;
