@@ -102,16 +102,16 @@
     self.vipLabel.font = [UIFont systemFontOfSize:11.];
     self.vipLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     
-    UIButton *addOrCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.contentView addSubview:addOrCancelButton];
-    self.addOrCancelButton = addOrCancelButton;
-    [self.addOrCancelButton addTarget:self action:@selector(addButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *addOrCancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.contentView addSubview:addOrCancelButton];
+//    self.addOrCancelButton = addOrCancelButton;
+//    [self.addOrCancelButton addTarget:self action:@selector(addButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *statusLabel = [UILabel new];
-    [self.contentView addSubview:statusLabel];
-    self.statusLabel = statusLabel;
-    self.statusLabel.textColor = [UIColor cartViewBackGround];
-    self.statusLabel.font = [UIFont systemFontOfSize:12.];
+//    UILabel *statusLabel = [UILabel new];
+//    [self.contentView addSubview:statusLabel];
+//    self.statusLabel = statusLabel;
+//    self.statusLabel.textColor = [UIColor cartViewBackGround];
+//    self.statusLabel.font = [UIFont systemFontOfSize:12.];
     
     UIView *lineView = [UIView new];
     [self.contentView addSubview:lineView];
@@ -126,6 +126,7 @@
     [self.nameLabtl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImage).offset(5);
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(5);
+        make.width.mas_equalTo(@(SCREENWIDTH - 120));
     }];
     
     [self.agentPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,16 +172,16 @@
         make.centerY.equalTo(weakSelf.rebetLabel.mas_centerY);
     }];
     
-    [self.addOrCancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.contentView).offset(-15);
-        make.top.equalTo(weakSelf.contentView).offset(30);
-        make.width.height.mas_equalTo(@40);
-    }];
-    
-    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.addOrCancelButton.mas_centerX);
-        make.top.equalTo(weakSelf.addOrCancelButton.mas_bottom);
-    }];
+//    [self.addOrCancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakSelf.contentView).offset(-15);
+//        make.top.equalTo(weakSelf.contentView).offset(30);
+//        make.width.height.mas_equalTo(@40);
+//    }];
+//    
+//    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(weakSelf.addOrCancelButton.mas_centerX);
+//        make.top.equalTo(weakSelf.addOrCancelButton.mas_bottom);
+//    }];
     
 }
 
@@ -219,11 +220,11 @@
     }
 
 }
-- (void)addButtonClick:(UIButton *)button {
-    if (_delegate && [_delegate respondsToSelector:@selector(composeProductSelectionList:addButton:)]) {
-        [_delegate composeProductSelectionList:self addButton:button];
-    }
-}
+//- (void)addButtonClick:(UIButton *)button {
+//    if (_delegate && [_delegate respondsToSelector:@selector(composeProductSelectionList:addButton:)]) {
+//        [_delegate composeProductSelectionList:self addButton:button];
+//    }
+//}
 
 //我的精选
 - (void)fillMyChoice:(JMProductSelectionListModel *)product {

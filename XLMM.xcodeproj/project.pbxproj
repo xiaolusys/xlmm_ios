@@ -687,6 +687,7 @@
 		1F99F8831D65AD6A00C6B79C /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F87E1D65AD6A00C6B79C /* iPhone6@2x.png */; };
 		1F99F8841D65AD6A00C6B79C /* iPhone6Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F87F1D65AD6A00C6B79C /* iPhone6Plus@2x.png */; };
 		1F99F8851D65AD6A00C6B79C /* iPhone6Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F8801D65AD6A00C6B79C /* iPhone6Plus@3x.png */; };
+		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FC2B5731D30AD1300CA01AB /* Logistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B56F1D30AD1300CA01AB /* Logistics.plist */; };
 		1FC2B5741D30AD1300CA01AB /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B5701D30AD1300CA01AB /* provinces.plist */; };
@@ -1936,6 +1937,8 @@
 		1F99F87E1D65AD6A00C6B79C /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
 		1F99F87F1D65AD6A00C6B79C /* iPhone6Plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@2x.png"; sourceTree = "<group>"; };
 		1F99F8801D65AD6A00C6B79C /* iPhone6Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@3x.png"; sourceTree = "<group>"; };
+		1F99F8861D65CA9000C6B79C /* MBProgressHUD+JMHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+JMHUD.h"; sourceTree = "<group>"; };
+		1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JMHUD.m"; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FC2B56F1D30AD1300CA01AB /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Logistics.plist; sourceTree = "<group>"; };
@@ -2767,6 +2770,8 @@
 		1830725F1C97C00900B7665E /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				1F99F8861D65CA9000C6B79C /* MBProgressHUD+JMHUD.h */,
+				1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */,
 				1F3621D01CF92433004359B0 /* UIView+RGSize.h */,
 				1F3621D11CF92433004359B0 /* UIView+RGSize.m */,
 				183076AC1C97E31A00B7665E /* NSArray+Reverse.h */,
@@ -6934,6 +6939,7 @@
 				1F56E2701D33CDE00092EC91 /* JMCouponController.m in Sources */,
 				1F27A62D1D275CD600A0F80B /* JMShareView.m in Sources */,
 				1F99F8621D6566E900C6B79C /* UdeskAudioPlayerHelper.m in Sources */,
+				1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */,
 				1F27A60D1D261F5100A0F80B /* JMCouponSuccessController.m in Sources */,
 				1F498B001D2761BE007E77FC /* IMYWebView.m in Sources */,
 				1F2F9E7D1D5C1C3D00E3A68B /* JMGoodsSafeGuardCell.m in Sources */,
