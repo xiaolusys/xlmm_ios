@@ -941,7 +941,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
     
     if(self.endTime.count==0 ||
-       [self.endTime[1] isEqualToString:@""]){
+       (self.endTime[1]==nil || [self.endTime[1] isEqualToString:@""])){
         NSLog(@"need refresh");
         return TRUE;
     }
@@ -977,6 +977,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 
 - (void )refreshView{
+    NSLog(@"refresh");
+    [self comeToTop];
+    
     [self removeAllSubviews:self.bannerView];
     [self removeAllSubviews:self.activityView];
     [self removeAllSubviews:self.brandView];
@@ -1005,7 +1008,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)saleTimerCallback:(NSTimer*)theTimer
 {
     if(self.endTime.count==0 ||
-       [self.endTime[self.currentIndex] isEqualToString:@""])
+       (self.endTime[self.currentIndex]==nil) || [self.endTime[self.currentIndex] isEqualToString:@""])
         return;
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -2639,10 +2642,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [self.topButton bringSubviewToFront:self.view];
 }
 - (void)topButtonClick:(UIButton *)btn {
-    [self disableAllGoodsCollectionScroll];
-    self.topButton.hidden = YES;
-    [self searchScrollViewInWindow:self.view];
-    self.backScrollview.scrollEnabled = YES;
+    [self comeToTop];
 }
 - (void)searchScrollViewInWindow:(UIView *)view {
     for (UIScrollView *scrollView in view.subviews) {
@@ -2653,6 +2653,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         }
         [self searchScrollViewInWindow:scrollView];
     }
+}
+- (void)comeToTop{
+    [self disableAllGoodsCollectionScroll];
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+    self.backScrollview.scrollEnabled = YES;
+
 }
 
 
