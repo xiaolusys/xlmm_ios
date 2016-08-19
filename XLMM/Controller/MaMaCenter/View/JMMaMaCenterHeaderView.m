@@ -222,7 +222,7 @@
 //    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
     vipExaminationButton.tag = 106;
     [vipExaminationButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    vipExaminationButton.timeInterval = 2.0f;
+//    vipExaminationButton.timeInterval = 2.0f;
     
     UIImageView *vipExaminationImage = [UIImageView new];
     [vipExaminationButton addSubview:vipExaminationImage];
@@ -479,8 +479,8 @@
     
 }
 - (void)buttonClick:(UIButton *)button {
-    if (_delegate && [_delegate respondsToSelector:@selector(composeMaMaCenterHeaderView:Index:)]) {
-        [_delegate composeMaMaCenterHeaderView:self Index:button.tag];
+    if (_delegate && [_delegate respondsToSelector:@selector(composeMaMaCenterHeaderView:Index:VisitorDay:)]) {
+        [_delegate composeMaMaCenterHeaderView:self Index:button.tag VisitorDay:self.visitorDate];
     }
 }
 

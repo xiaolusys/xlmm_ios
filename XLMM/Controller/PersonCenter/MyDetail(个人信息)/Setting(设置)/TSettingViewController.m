@@ -9,8 +9,9 @@
 #import "TSettingViewController.h"
 #import "VersionController.h"
 #import "MMClass.h"
+#import "MiPushSDK.h"
 
-@interface TSettingViewController ()
+@interface TSettingViewController ()<MiPushSDKDelegate>
 
 @end
 
@@ -27,8 +28,6 @@
     self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"TSettingViewController"];
 }
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -41,6 +40,62 @@
     
     [self setcacheSize];
     [self setAppInfo];
+    
+    [self pushOn];
+}
+- (void)pushOn {
+    
+    UILabel *pushMessage = [UILabel new];
+    [self.pushOnView addSubview:pushMessage];
+    pushMessage.font = [UIFont systemFontOfSize:14.];
+    pushMessage.text = @"接收推送通知";
+    pushMessage.textColor = [UIColor buttonTitleColor];
+    
+    UISwitch *switchButton = [[UISwitch alloc] init];
+    [self.pushOnView addSubview:switchButton];
+    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
+    if ([string isEqualToString:@"1"] || string == nil) {
+        switchButton.on = YES;
+    }else {
+        switchButton.on = NO;
+    }
+    [switchButton addTarget:self action:@selector(pushMessageOn:) forControlEvents:UIControlEventValueChanged];
+//    if ([self isAllowedNotification]) {
+//        [switchButton addTarget:self action:@selector(pushMessageOn:) forControlEvents:UIControlEventValueChanged];
+//    }else {
+//        [MiPushSDK unregisterMiPush];
+//    }
+
+    kWeakSelf
+    [pushMessage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.pushOnView).offset(15);
+        make.centerY.equalTo(weakSelf.pushOnView.mas_centerY);
+    }];
+    
+    [switchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.pushOnView).offset(-15);
+        make.centerY.equalTo(weakSelf.pushOnView.mas_centerY);
+        make.width.mas_equalTo(@50);
+        make.height.mas_equalTo(@30);
+    }];
+
+}
+
+- (void)pushMessageOn:(id)sender {
+    UISwitch *switchButton = (UISwitch*)sender;
+    BOOL isButtonOn = [switchButton isOn];
+    if (isButtonOn) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:kIsReceivePushTZ];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+//        [MiPushSDK registerMiPush:self type:0 connect:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"openPushMessageSwitch" object:nil];
+    }else {
+        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:kIsReceivePushTZ];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [MiPushSDK unregisterMiPush];
+    }
+
+    
 }
 
 - (void)setcacheSize{
@@ -131,13 +186,170 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
+- (BOOL)isAllowedNotification {
+    if ([self isSystemVersioniOS8]) {
+        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        if (UIUserNotificationTypeNone != setting.types) {
+            return YES;
+        }
+        
+    }else {
+        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        if (UIRemoteNotificationTypeNone != type) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)isSystemVersioniOS8 {
+    UIDevice *device = [UIDevice currentDevice];
+    float sysVersion = [device.systemVersion floatValue];
+    if (sysVersion >= 8.0f) {
+        return YES;
+    }
+    return NO;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

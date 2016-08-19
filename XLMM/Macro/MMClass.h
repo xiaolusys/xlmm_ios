@@ -5,7 +5,7 @@
 //  Created by younishijie on 15/7/29.
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
-#import "PosterModel.h"
+
 #import <UIImageView+WebCache.h>
 #import "UIColor+RGBColor.h"
 #import "UIImage+ImageWithUrl.h"
@@ -19,8 +19,6 @@
 #import <MJRefresh.h>
 #import <FMDB.h>
 #import "JMHTTPManager.h"
-#import "UIButton+touch.h"
-
 
 #import "UMMobClick/MobClick.h"
 
@@ -66,10 +64,12 @@
 #define kWeiXinauthorize @"kWeiXinauthorize"
 #define kPhoneNumberUserInfo @"phoneUserInfo"
 #define kWeiXinUserInfo @"weixinUserInfo"
+#define kIsReceivePushTZ @"isReceivePush"
 
 #define kUserAgent @"userAgent"
 
 #define LOGINDEVTYPE @"ios"
+
 
 //#define Root_URL @"http://youni.huyi.so"
 //  Root_URL @"http://192.168.1.31:9000"

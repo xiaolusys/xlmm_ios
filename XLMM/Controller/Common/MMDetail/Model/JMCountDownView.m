@@ -23,7 +23,7 @@
 - (instancetype)initWithCountDownTime:(NSString *)endTime {
     if (self == [super init]) {
         self.ennTime = endTime;
-        [self currentDownTime];
+        [self currentDownTime];        
     }
     return self;
 }
@@ -35,9 +35,10 @@
     }
     return self;
 }
-//+ (instancetype)countDownWithCurrentTime:(NSString *)endTime {
-//    return [[self alloc] initWithCountDownTime:endTime];
-//}
+
++ (instancetype)countDownWithCurrentTime:(NSString *)endTime {
+    return [[self shareCountDown] initWithCountDownTime:endTime];
+}
 - (void)currentDownTime {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     

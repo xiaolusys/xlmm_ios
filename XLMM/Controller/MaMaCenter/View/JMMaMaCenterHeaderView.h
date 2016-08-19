@@ -13,7 +13,7 @@
 @protocol JMMaMaCenterHeaderViewDelegate <NSObject>
 
 @optional
-- (void)composeMaMaCenterHeaderView:(JMMaMaCenterHeaderView *)headerView Index:(NSInteger)index;
+- (void)composeMaMaCenterHeaderView:(JMMaMaCenterHeaderView *)headerView Index:(NSInteger)index VisitorDay:(NSNumber *)visitorNum;
 
 
 @end

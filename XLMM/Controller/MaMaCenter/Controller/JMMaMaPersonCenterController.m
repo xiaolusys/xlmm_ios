@@ -304,7 +304,7 @@ static NSUInteger popNum = 0;
  106 == > 考试
  107 == > 续费
  */
-- (void)composeMaMaCenterHeaderView:(JMMaMaCenterHeaderView *)headerView Index:(NSInteger)index {
+- (void)composeMaMaCenterHeaderView:(JMMaMaCenterHeaderView *)headerView Index:(NSInteger)index VisitorDay:(NSNumber *)visitorNum {
     if (index == 100) {
         NSLog(@"100 == > 账户余额");
         NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
@@ -314,18 +314,17 @@ static NSUInteger popNum = 0;
             vc.activeValue = [self.activeValueNum integerValue];
             [self.navigationController pushViewController:vc animated:YES];
         }else {
-            if (self.carryValue - 20 < 0.000001) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"余额不足" message:@"余额不足,不可提现" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alert show];
-            }else {
-                JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-                shortVC.myBalance = self.carryValue;
-                shortVC.descStr = self.extraModel.cashout_reason;
-                [self.navigationController pushViewController:shortVC animated:YES];
-            }
+            JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
+            shortVC.myBalance = self.carryValue;
+            shortVC.descStr = self.extraModel.cashout_reason;
+            [self.navigationController pushViewController:shortVC animated:YES];
         }
     }else if (index == 101) {
         NSLog(@"101 == > 累计收益");
+        MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+        carry.earningsRecord = self.earningsRecord;
+        carry.historyEarningsRecord = self.historyEarningsRecord;
+        [self.navigationController pushViewController:carry animated:YES];
     }else if (index == 102) {
         NSLog(@"102 == > 活跃度");
         MaMaHuoyueduViewController *VC = [[MaMaHuoyueduViewController alloc] init];
@@ -334,7 +333,7 @@ static NSUInteger popNum = 0;
     }else if (index == 103) {
         NSLog(@"103 == > 访客");
         TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-        today.visitorDate = self.visitorDate;
+        today.visitorDate = visitorNum;
         [self.navigationController pushViewController:today animated:YES];
     }else if (index == 104) {
         NSLog(@"104 == > 订单");

@@ -35,7 +35,7 @@
     couponeButton.tag = 100;
     couponeButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     couponeButton.layer.borderWidth = 1.;
-    couponeButton.timeInterval = 1.0;
+//    couponeButton.timeInterval = 1.0;
     [couponeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *couponL = [UILabel new];
@@ -163,7 +163,7 @@
     [goPayButton setTitle:@"去结算" forState:UIControlStateNormal];
     goPayButton.layer.cornerRadius = 20;
     goPayButton.tag = 103;
-    goPayButton.timeInterval = 1.0;
+//    goPayButton.timeInterval = 1.0;
     [goPayButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.goPayButton = goPayButton;
     
@@ -281,7 +281,13 @@
     }];
 
 }
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button ======= 222222222222");
+    button.enabled =YES;
+}
 - (void)buttonClick:(UIButton *)button {
+    button.enabled =NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];//防止重复点击
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterButtonView:UIButton:)]) {
         [_delegate composeFooterButtonView:self UIButton:button];
     }

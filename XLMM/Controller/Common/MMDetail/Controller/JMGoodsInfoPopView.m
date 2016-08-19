@@ -8,8 +8,6 @@
 
 #import "JMGoodsInfoPopView.h"
 #import "MMClass.h"
-#import "JMGoodsInfoModel.h"
-#import "JMgoodsSizeModel.h"
 #import "JMGoodsAttributeTypeView.h"
 #import "JMBuyNumberView.h"
 
@@ -32,16 +30,14 @@
 @property (nonatomic, strong) UILabel *PriceLabel;
 @property (nonatomic, strong) UILabel *oldPriceLabel;
 
-//@property (nonatomic, strong) NSMutableDictionary *goodsAttributeDic;
-
 @end
 
 @implementation JMGoodsInfoPopView {
-    NSMutableArray *_sizeArray;
-    NSMutableArray *_colorArray;
+
     NSMutableDictionary *_stockDict;
     NSMutableArray *_imageArray;
-    NSArray *goodsAllArray;
+    NSMutableArray *_goodsAllArray;
+    NSArray *_goodsArr;
     
     NSInteger _stockValue;
     NSString *_choiseGoodsColor;
@@ -53,12 +49,7 @@
     
     NSInteger _defaultChoiseSize;
 }
-//- (NSMutableDictionary *)goodsInfoArray {
-//    if (_goodsAttributeDic == nil) {
-//        _goodsAttributeDic = [NSMutableDictionary dictionary];
-//    }
-//    return _goodsAttributeDic;
-//}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
         
@@ -66,14 +57,9 @@
         
         
         [self topView];
-        
-        
-        
-        _sizeArray = [NSMutableArray array];
-        _colorArray = [NSMutableArray array];
         _stockDict = [NSMutableDictionary dictionary];
         _imageArray = [NSMutableArray array];
-        
+        _goodsAllArray = [NSMutableArray array];
         
         UIView *bottomView = [UIView new];
         bottomView.frame = CGRectMake(0, TableViewH - 60, SCREENWIDTH, 60);
@@ -105,65 +91,6 @@
     return self;
 }
 
-//- (void)viewDidLoad {
-//    [super viewDidLoad];
-//    self.backgroundColor = [UIColor whiteColor];
-//    
-//    
-//    
-//    
-//    [self createTableView];
-//    
-//    
-//    
-//}
-//- (void)setGoodsInfoArray:(NSMutableArray *)goodsInfoArray {
-//    _goodsInfoArray = goodsInfoArray;
-//    
-//    
-//    
-////    [self.tableView reloadData];
-//}
-/**
- *  po _stockDict
- {
- 120 =     {
- "\U7070\U8272" = 14;
- "\U9ed1\U8272" = 15;
- };
- 130 =     {
- "\U7070\U8272" = 14;
- "\U9ed1\U8272" = 15;
- };
- 140 =     {
- "\U7070\U8272" = 14;
- "\U9ed1\U8272" = 15;
- };
- 150 =     {
- "\U7070\U8272" = 14;
- "\U9ed1\U8272" = 15;
- };
- 160 =     {
- "\U7070\U8272" = 14;
- "\U9ed1\U8272" = 15;
- };
- "\U7070\U8272" =     {
- 120 = 15;
- 130 = 14;
- 140 = 15;
- 150 = 14;
- 160 = 13;
- };
- "\U9ed1\U8272" =     {
- 120 = 15;
- 130 = 14;
- 140 = 15;
- 150 = 14;
- 160 = 13;
- };
- }
-
- */
 - (NSMutableArray *)goodsColorArray {
     if (!_goodsColorArray) {
         _goodsColorArray = [NSMutableArray array];
@@ -176,15 +103,6 @@
     }
     return _goodsSizeArray;
 }
-//- (void)createTableView {
-//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, SCREENWIDTH , TableViewH - 150) style:UITableViewStylePlain];
-//    
-//    [self.view addSubview:self.tableView];
-//    self.tableView.dataSource = self;
-//    self.tableView.delegate = self;
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-//}
 
 - (void)topView {
     UIView *headerView = [UIView new];
@@ -259,40 +177,45 @@
 }
 
 - (void)initTypeSizeView:(NSArray *)goodsArray TitleString:(NSString *)titleString {
-    goodsAllArray = [NSArray array];
-    goodsAllArray = goodsArray;
+    _goodsArr = [NSArray array];
+    _goodsArr = goodsArray;
     NSMutableDictionary *sizeDict = [NSMutableDictionary dictionary];
     for (NSDictionary *goodsDic in goodsArray) {
-        JMGoodsInfoModel *infoModel = [JMGoodsInfoModel mj_objectWithKeyValues:goodsDic];
-        [self.goodsColorArray addObject:infoModel];
         NSArray *sizeArr = goodsDic[@"sku_items"];
-        NSDictionary *sizeDic = [NSDictionary dictionary];
         sizeDict = [NSMutableDictionary dictionary];
-        for (sizeDic in sizeArr) {
-            
+        for (NSDictionary *sizeDic in sizeArr) {
             [sizeDict setObject:sizeDic forKey:sizeDic[@"name"]];  // --> 需要展示价格 把整个字典包含进去
-            
-            JMgoodsSizeModel *sizeModel = [JMgoodsSizeModel mj_objectWithKeyValues:sizeDic];
-            [self.goodsSizeArray addObject:sizeModel];
-
-            [_sizeArray addObject:sizeDic[@"name"]];
-            int count = 0;
-            for (NSString *str in _sizeArray) {
-                if ([sizeDic[@"name"] isEqualToString:str]) {
-                    count ++;
-                    if (count > 1) {
-                        [_sizeArray removeObjectAtIndex:(_sizeArray.count - 1)];
-                    }
-                }else {
-                    
-                }
-            }
         }
-        [_colorArray addObject:goodsDic[@"name"]];
         [_imageArray addObject:goodsDic[@"product_img"]];
         [_stockDict setObject:sizeDict forKey:goodsDic[@"name"]];
+    }
+    
+    NSMutableDictionary *colorDict = [NSMutableDictionary dictionary];
+    
+    for (NSDictionary *colorDic in goodsArray) {
+        NSArray *sizeArr = colorDic[@"sku_items"];
+        for (NSDictionary *sizeDic in sizeArr) {
+            [colorDict setObject:colorDic[@"name"] forKey:@"color"];
+            [colorDict setObject:sizeDic[@"name"] forKey:@"size"];
+            [colorDict setObject:sizeDic[@"free_num"] forKey:@"stock"];
+            
+            [_goodsAllArray addObject:colorDict];
+            colorDict = [NSMutableDictionary dictionary];
+        }
+    }
+    
+    for (NSDictionary *dic in _goodsAllArray) {
+        if (![self.goodsColorArray containsObject:dic[@"color"]]) {
+            [self.goodsColorArray addObject:dic[@"color"]];
+        }
+        if (![self.goodsSizeArray containsObject:dic[@"size"]]) {
+            [self.goodsSizeArray addObject:dic[@"size"]];
+        }
         
     }
+    
+    
+    
     
     self.nameTitle.text = titleString;
     
@@ -326,13 +249,13 @@
     };
 
     
-    self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:_colorArray GoodsTypeName:@"颜色分类"];
+    self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色分类"];
     self.colorView.delegate = self;
     [headerView addSubview:self.colorView];
     self.colorView.frame = CGRectMake(0, 0, SCREENWIDTH, self.colorView.height);
     CGFloat colorViewH = self.colorView.frame.size.height;
     
-    self.sizeView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, colorViewH, SCREENWIDTH, 50) DataArray:_sizeArray GoodsTypeName:@"尺码"];
+    self.sizeView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, colorViewH, SCREENWIDTH, 50) DataArray:self.goodsSizeArray GoodsTypeName:@"尺码"];
     self.sizeView.delegate = self;
     [headerView addSubview:self.sizeView];
     self.sizeView.frame = CGRectMake(0, colorViewH, SCREENWIDTH, self.sizeView.height);
@@ -342,126 +265,127 @@
     CGFloat heanderViewH = headerView.frame.size.height;
     headerView.contentSize = CGSizeMake(SCREENWIDTH, heanderViewH + headerView.frame.origin.y);
     
+    _choiseGoodsColor = self.goodsColorArray[0];
+    NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
+    // --> 这里展示价格 与初始颜色与尺寸
+    self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDic[@"agent_price"] floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDic[@"std_sale_price"] floatValue]];
     
-    self.colorView.selectIndex = 0;
-    _defaultChoiseSize = 0;
+    [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
     
-    NSDictionary *colorDict = goodsArray[self.colorView.selectIndex];
-    NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
-    NSDictionary *dic = [_stockDict objectForKey:color];
-    
-    [self reloadTypeButton:dic DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
-    [self resumeBtn:_colorArray GoodsAttributeTypeView:self.colorView];
-    
-    _stockValue = 0;
-    _choiseGoodsColor = color;
-    _choiseGoodsSize = @"";
-    
-    NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:self.colorView.selectIndex]];
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
     [newImageUrl appendString:@"?"];
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    NSDictionary *colorD = _goodsArr[0];
+
+    _goodsColorID = [colorD[@"product_id"] integerValue];
+    NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
     
-    
-//    self.sizeView.selectIndex = _defaultChoiseSize;
-    
-    NSString *size = [_sizeArray objectAtIndex:_defaultChoiseSize];
-    _defaultChoiseSize = 0;
-    NSDictionary *stockDic = [[_stockDict objectForKey:color] objectForKey:size];
-    _stockValue = [stockDic[@"free_num"] integerValue];
-    _choiseGoodsColor = color;
-    _choiseGoodsSize = size;
-    
-    [self reloadTypeButton:[_stockDict objectForKey:color] DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
-    [self resumeBtn:_sizeArray GoodsAttributeTypeView:self.sizeView];
-    
-    
-    _goodsColorID = [colorDict[@"product_id"] integerValue];
-    _goodsSizeID = [stockDic[@"sku_id"] integerValue];
 }
 - (void)composeAttrubuteTypeView:(JMGoodsAttributeTypeView *)typeView Index:(NSInteger)index {
     
     if ([typeView isEqual:self.colorView]) {
-        NSDictionary *colorDic = goodsAllArray[self.colorView.selectIndex];
-        NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
-        NSDictionary *dic = [_stockDict objectForKey:color];
-        _goodsColorID = [colorDic[@"product_id"] integerValue];
+        // 点击了颜色按钮
+        for (int i = 1; i <= self.goodsColorArray.count; i++) {
+            UIButton *button = (UIButton *)[self.colorView viewWithTag:i];
+            if (i == index) {
+//                button.selected = YES;
+                button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+                [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+                
+            }else {
+//                button.selected = NO;
+                button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+                [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+            }
+        }
         
-        [self reloadTypeButton:dic DataArray:_sizeArray GoodsAttributeTypeView:self.colorView];
-        [self resumeBtn:_colorArray GoodsAttributeTypeView:self.colorView];
-        
-        _stockValue = 0;
-        _choiseGoodsColor = color;
-        _choiseGoodsSize = @"";
-        
-        NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:self.colorView.selectIndex]];
+        NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:index - 1]];
         [newImageUrl appendString:@"?"];
         [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
         
+        // -- > 在这里面给颜色 赋值
+        NSDictionary *colirD = _goodsArr[index - 1];
+        _goodsColorID = [colirD[@"product_id"] integerValue];
+        
+        _choiseGoodsColor = self.goodsColorArray[index - 1];
+        NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
+        
+        [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
+        
+        NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
         
     }else if ([typeView isEqual:self.sizeView]) {
-        NSString *size = [_sizeArray objectAtIndex:self.sizeView.selectIndex];
-        NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
-        
-        NSDictionary *stockDic = [[_stockDict objectForKey:color] objectForKey:size];
-        _goodsSizeID = [stockDic[@"sku_id"] integerValue];
-        
-        _stockValue = [stockDic[@"free_num"] integerValue];
-        _choiseGoodsColor = color;
-        _choiseGoodsSize = size;
-        
-        
-        [self reloadTypeButton:[_stockDict objectForKey:color] DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
-        [self resumeBtn:_sizeArray GoodsAttributeTypeView:self.sizeView];
+        for (int i = 1; i <= self.goodsSizeArray.count; i++) {
+            UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
+            if (i == index) {
+//                button.selected = YES;
+                button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+                [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+            }else {
+//                button.selected = NO;
+                button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+                [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+            }
+        }
+        // -- > 在这里面给尺码 赋值
+//        NSString *color = self.goodsColorArray[self.colorView.tag - 1];
+        NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
+        NSString *size = self.goodsSizeArray[index - 1];
+        NSDictionary *sizeD = sizeDic[size];
+        self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"agent_price"] floatValue]];
+        self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
+        _goodsSizeID = [sizeD[@"sku_id"] integerValue];
+        _stockValue =  [sizeD[@"free_num"] integerValue];
+        NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
     }else {
+        
     }
-}
--(void)resumeBtn:(NSArray *)typeArr GoodsAttributeTypeView:(JMGoodsAttributeTypeView *)typeView
-{
-    for (int i = 0; i< typeArr.count; i++) {
-        UIButton *btn =(UIButton *) [typeView viewWithTag:100+i];
-        if (typeView.selectIndex == i) {
-            btn.selected = YES;
-//            btn.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-            [btn setBackgroundColor:[UIColor buttonEnabledBackgroundColor]];
-        }else {
-            btn.selected = NO;
-            [btn setBackgroundColor:[UIColor countLabelColor]];
-        }
-    }
-}
-
-- (void)reloadTypeButton:(NSDictionary *)typeDic DataArray:(NSArray *)dataArray GoodsAttributeTypeView:(JMGoodsAttributeTypeView *)typeView {
     
-    for (int i = 0; i < dataArray.count; i++) {
-        NSDictionary *dic = [typeDic objectForKey:[dataArray objectAtIndex:i]];
-        int count = [dic[@"free_num"] intValue];
-        
-        self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"agent_price"] floatValue]];
-        self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"std_sale_price"] floatValue]];
-        
-        
-        UIButton *btn =(UIButton *)[typeView viewWithTag:100+i];
+}
+- (void)reloadTypeButton:(NSDictionary *)sizeDic SizeArr:(NSArray *)sizeArr TypeView:(JMGoodsAttributeTypeView *)typeView {
+    NSInteger code = 1;
+    for (int i = 1; i <= sizeArr.count; i++) {
+        NSString *size = sizeArr[i - 1];
+        NSDictionary *sizeDict = [sizeDic objectForKey:size];
+        NSInteger count = [sizeDict[@"free_num"] integerValue];
+        UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
+        // -- > 在这里面给尺码 赋值
 
-        //库存为零 不可点击
         if (count == 0) {
-            _defaultChoiseSize ++;
-            btn.enabled = NO;
-            [btn setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
-            [btn setBackgroundColor:[UIColor countLabelColor]];
-        }else
-        {
-            btn.enabled = YES;
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn setBackgroundColor:[UIColor countLabelColor]];
-        }
-        //根据seletIndex 确定用户当前点了那个按钮
-        if (typeView.selectIndex == i) {
-            btn.selected = YES;
-            [btn setBackgroundColor:[UIColor buttonEnabledBackgroundColor]];
+            button.enabled = NO;
+            button.layer.borderColor = [UIColor titleDarkGrayColor].CGColor;
+            [button setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
             
+        }else {
+            
+            button.enabled = YES;
+            button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+            [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+        }
+        
+        if (button.enabled == NO) {
+            code += 1;
+        }
+        
+        
+        if ((i - code) == 0) {
+            button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+            [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+            
+            NSString *size = sizeArr[i - 1];
+            NSDictionary *sizeDict = [sizeDic objectForKey:size];
+            _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
+            _stockValue =  [sizeDict[@"free_num"] integerValue];
+            NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+            self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"agent_price"] floatValue]];
+            self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
+            code = 1;
+        }else {
         }
     }
-
+    
+    
 }
 
 - (void)sureButtonClick:(UIButton *)button {
@@ -485,7 +409,120 @@
 
 
 
+/**
+ //    NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
+ //    NSDictionary *dic = [_stockDict objectForKey:color];
+ //
+ //    [self reloadTypeButton:dic DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
+ //    [self resumeBtn:_colorArray GoodsAttributeTypeView:self.colorView];
+ //
+ //    _stockValue = 0;
+ //    _choiseGoodsColor = color;
+ //    _choiseGoodsSize = @"";
+ //
+ //    NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:self.colorView.selectIndex]];
+ //    [newImageUrl appendString:@"?"];
+ //    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+ //
+ //
+ ////    self.sizeView.selectIndex = _defaultChoiseSize;
+ //
+ //    NSString *size = [_sizeArray objectAtIndex:_defaultChoiseSize];
+ //    _defaultChoiseSize = 0;
+ //    NSDictionary *stockDic = [[_stockDict objectForKey:color] objectForKey:size];
+ //    _stockValue = [stockDic[@"free_num"] integerValue];
+ //    _choiseGoodsColor = color;
+ //    _choiseGoodsSize = size;
+ //
+ //    [self reloadTypeButton:[_stockDict objectForKey:color] DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
+ //    [self resumeBtn:_sizeArray GoodsAttributeTypeView:self.sizeView];
+ //    
+ //
+ *  //    if ([typeView isEqual:self.colorView]) {
+ //        NSDictionary *colorDic = goodsAllArray[self.colorView.selectIndex];
+ //        NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
+ //        NSDictionary *dic = [_stockDict objectForKey:color];
+ //        _goodsColorID = [colorDic[@"product_id"] integerValue];
+ //
+ //        [self reloadTypeButton:dic DataArray:_sizeArray GoodsAttributeTypeView:self.colorView];
+ //        [self resumeBtn:_colorArray GoodsAttributeTypeView:self.colorView];
+ //
+ //        _stockValue = 0;
+ //        _choiseGoodsColor = color;
+ //        _choiseGoodsSize = @"";
+ //
+ //        NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:self.colorView.selectIndex]];
+ //        [newImageUrl appendString:@"?"];
+ //        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+ //
+ //
+ //    }else if ([typeView isEqual:self.sizeView]) {
+ //        NSString *size = [_sizeArray objectAtIndex:self.sizeView.selectIndex];
+ //        NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
+ //
+ //        NSDictionary *stockDic = [[_stockDict objectForKey:color] objectForKey:size];
+ //        _goodsSizeID = [stockDic[@"sku_id"] integerValue];
+ //
+ //        _stockValue = [stockDic[@"free_num"] integerValue];
+ //        _choiseGoodsColor = color;
+ //        _choiseGoodsSize = size;
+ //
+ //
+ //        [self reloadTypeButton:[_stockDict objectForKey:color] DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
+ //        [self resumeBtn:_sizeArray GoodsAttributeTypeView:self.sizeView];
+ //    }else {
+ //    }
+ 
+ //-(void)resumeBtn:(NSArray *)typeArr GoodsAttributeTypeView:(JMGoodsAttributeTypeView *)typeView
+ //{
+ //    for (int i = 0; i< typeArr.count; i++) {
+ //        UIButton *btn =(UIButton *) [typeView viewWithTag:100+i];
+ //        if (typeView.selectIndex == i) {
+ //            btn.selected = YES;
+ ////            btn.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+ //            [btn setBackgroundColor:[UIColor buttonEnabledBackgroundColor]];
+ //        }else {
+ //            btn.selected = NO;
+ //            [btn setBackgroundColor:[UIColor countLabelColor]];
+ //        }
+ //    }
+ //}
+ //
+ //- (void)reloadTypeButton:(NSDictionary *)typeDic DataArray:(NSArray *)dataArray GoodsAttributeTypeView:(JMGoodsAttributeTypeView *)typeView {
+ //
+ //    for (int i = 0; i < dataArray.count; i++) {
+ //        NSDictionary *dic = [typeDic objectForKey:[dataArray objectAtIndex:i]];
+ //        int count = [dic[@"free_num"] intValue];
+ //
+ //        self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"agent_price"] floatValue]];
+ //        self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"std_sale_price"] floatValue]];
+ //
+ //
+ //        UIButton *btn =(UIButton *)[typeView viewWithTag:100+i];
+ //
+ //        //库存为零 不可点击
+ //        if (count == 0) {
+ //            _defaultChoiseSize ++;
+ //            btn.enabled = NO;
+ //            [btn setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
+ //            [btn setBackgroundColor:[UIColor countLabelColor]];
+ //        }else
+ //        {
+ //            btn.enabled = YES;
+ //            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+ //            [btn setBackgroundColor:[UIColor countLabelColor]];
+ //        }
+ //        //根据seletIndex 确定用户当前点了那个按钮
+ //        if (typeView.selectIndex == i) {
+ //            btn.selected = YES;
+ //            [btn setBackgroundColor:[UIColor buttonEnabledBackgroundColor]];
+ //            
+ //        }
+ //    }
+ //
+ //}
 
+ */
 
 
 
