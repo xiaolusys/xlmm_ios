@@ -69,7 +69,8 @@ static NSString *identifier = @"AccountCell";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
 }
 
@@ -137,7 +138,8 @@ static NSString *identifier = @"AccountCell";
 - (void)loadMore {
     if ([self.nextPage class] == [NSNull class]) {
         [self endRefresh];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+//        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        [MBProgressHUD showMessage:@"加载完成,没有更多数据"];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {

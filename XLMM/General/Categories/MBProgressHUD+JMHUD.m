@@ -53,7 +53,7 @@
     [self showMessage:message ToView:nil];
 }
 + (void)showMessage:(NSString *)message ToView:(UIView *)view {
-    [self showMessage:message ToView:view RemainTime:2.f Model:MBProgressHUDModeText];
+    [self showMessage:message ToView:view RemainTime:1.f Model:MBProgressHUDModeText];
 }
 
 
@@ -72,8 +72,24 @@
     hud.mode = model;
     hud.removeFromSuperViewOnHide = YES;
     hud.dimBackground = YES;        // 蒙版效果
-    [hud hideAnimated:YES afterDelay:2.f];
+    [hud hideAnimated:YES afterDelay:time];
     
+}
+
+#pragma mark 文字+菊花提示,不自动消失
++ (MBProgressHUD *)showTitle:(NSString *)title ToView:(UIView *)view {
+    if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.label.text = title;
+    hud.removeFromSuperViewOnHide = YES;
+    hud.dimBackground = YES;
+    return hud;
+}
++ (void)showLoading:(NSString *)title {
+    [self showTitle:title ToView:nil];
+}
++ (void)showLoading:(NSString *)title ToView:(UIView *)view {
+    [self showTitle:title ToView:view];
 }
 
 

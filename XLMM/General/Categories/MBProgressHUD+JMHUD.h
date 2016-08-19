@@ -74,6 +74,27 @@
  */
 + (void)showMessage:(NSString *)message ToView:(UIView *)view WaitTime:(CGFloat)time;
 
+/**
+ *  不自动消失,带菊花
+ *
+ *  @param title 提示文字
+ *  @param view  添加的View
+ */
++ (void)showLoading:(NSString *)title ToView:(UIView *)view;
++ (void)showLoading:(NSString *)title;
+/**
+ *  不自动消失,带菊花
+ *
+ *  @param message 提示文字
+ *  @param view    添加的View
+ *
+ *  @return
+ */
++ (MBProgressHUD *)showTitle:(NSString *)title ToView:(UIView *)view;
+
+
+
+
 
 
 

@@ -22,7 +22,6 @@
 #import "JMCouponController.h"
 #import "MMClass.h"
 #import "JMGoodsDetailController.h"
-#import "WebViewController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -65,16 +64,21 @@
             NSLog(@"%@",error.userInfo);
             NSDictionary *errorDic = error.userInfo;
             NSString *string = errorDic[@"NSLocalizedDescription"];
-            NSRange range1 = [string rangeOfString:@"("];
-            NSRange range2 = [string rangeOfString:@")"];
-            NSUInteger  location1 = range1.location + range1.length;
-            NSUInteger location2= range2.location;
-            NSString *string1 = [string substringWithRange:NSMakeRange(location1 , location2 - location1)];
-            if ([string1 integerValue] == 403) {
-                NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-                [users removeObjectForKey:kIsLogin];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+            if ([string rangeOfString:@"("].location == NSNotFound) {
+                
+            } else {
+                NSRange range1 = [string rangeOfString:@"("];
+                NSRange range2 = [string rangeOfString:@")"];
+                NSUInteger  location1 = range1.location + range1.length;
+                NSUInteger location2= range2.location;
+                NSString *string1 = [string substringWithRange:NSMakeRange(location1 , location2 - location1)];
+                if ([string1 integerValue] == 403) {
+                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                    [users removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
             }
+            
            
         } Progress:^(float progress) {
             
@@ -440,30 +444,20 @@
 }
 
 - (IBAction)commonProblemBtnAction:(id)sender {
-    
-    NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
-    WebViewController *webVC = [[WebViewController alloc] init];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:urlString forKey:@"web_url"];
-    webVC.webDiction = dict;
-    webVC.isShowNavBar = true;
-    webVC.isShowRightShareBtn = false;
-    [self.navigationController pushViewController:webVC animated:YES];
-    
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
-//        
-//        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-//            [self.pushVCDelegate rootVCPushOtherVC:common];
-//        }
-//        [self.sideMenuViewController hideMenuViewController];
-//    }else{
-//        
-//        [self.sideMenuViewController hideMenuViewController];
-//        
-//        [self displayLoginView];
-//        return;
-//    }
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
+        
+        if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
+            [self.pushVCDelegate rootVCPushOtherVC:common];
+        }
+        [self.sideMenuViewController hideMenuViewController];
+    }else{
+        
+        [self.sideMenuViewController hideMenuViewController];
+        
+        [self displayLoginView];
+        return;
+    }
 }
 
 - (void) displayLoginView{

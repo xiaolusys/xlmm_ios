@@ -65,16 +65,17 @@ static NSUInteger popNum = 0;
 /**
  *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口,妈妈消息滚动视图
  */
-@property (nonatomic, strong)NSString *orderRecord;
-@property (nonatomic, strong)NSString *earningsRecord;
-@property (nonatomic, strong)NSString *historyEarningsRecord;
-@property (nonatomic, copy)NSString *myInvitation;
+@property (nonatomic, copy) NSString *orderRecord;
+@property (nonatomic, copy) NSString *earningsRecord;
+@property (nonatomic, copy) NSString *historyEarningsRecord;
+@property (nonatomic, copy) NSString *myInvitation;
 @property (nonatomic, copy) NSString *examWebUrl;
 @property (nonatomic, copy) NSString *fansWebUrl;
 @property (nonatomic, copy) NSString *boutiqueActiveWebUrl;
 @property (nonatomic, copy) NSString *renewWebUrl;
-@property (nonatomic, strong)NSString *eventLink;
-@property (nonatomic, strong)NSString *messageUrl;
+@property (nonatomic, copy) NSString *eventLink;
+@property (nonatomic, copy) NSString *messageUrl;
+@property (nonatomic, copy) NSString *bbsUrl;
 
 @property (nonatomic, strong) JMNewcomerTaskController *newcomerTask;
 
@@ -256,6 +257,7 @@ static NSUInteger popNum = 0;
     self.boutiqueActiveWebUrl = extraDict[@"act_info"];   // --> 精品活动
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
     self.messageUrl = extraDict[@"notice"];               // --> 小鹿妈妈消息
+    self.bbsUrl = extraDict[@"forum"];                    // --> 论坛入口
     
     NSDictionary *picturesDic = extraDict[@"pictures"];
     self.mamaCenterHeaderView.imageString = picturesDic[@"exam_pic"];
@@ -436,10 +438,10 @@ static NSUInteger popNum = 0;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else if (index == 111){
-        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
+//        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:urlString forKey:@"web_url"];
+        [dict setValue:self.bbsUrl forKey:@"web_url"];
         webVC.webDiction = dict;
         webVC.isShowNavBar = true;
         webVC.isShowRightShareBtn = false;
@@ -472,7 +474,6 @@ static NSUInteger popNum = 0;
 }
 #pragma mark 妈妈消息列表点击事件
 - (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
-    NSLog(@"%ld=========index",index);
     WebViewController *message = [[WebViewController alloc] init];
     [self.diction setValue:self.messageUrl forKey:@"web_url"];
     [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
@@ -514,6 +515,7 @@ static NSUInteger popNum = 0;
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)serViceButtonClick:(UIButton *)button {
+    [MobClick event:@"buy_cancel"];
     [self.serViceButton setTitle:@"客服入口" forState:UIControlStateNormal];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
     UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
@@ -532,7 +534,7 @@ static NSUInteger popNum = 0;
     [UdeskManager createCustomerWithCustomerInfo:parameters];
 }
 - (void)receiveUdeskMessage:(NSNotification *)notif {
-    [self.serViceButton setTitle:[NSString stringWithFormat:@"新消息(%ld)",[UdeskManager getLocalUnreadeMessagesCount]] forState:UIControlStateNormal];
+    [self.serViceButton setTitle:[NSString stringWithFormat:@"新消息(%ld)",(long)[UdeskManager getLocalUnreadeMessagesCount]] forState:UIControlStateNormal];
 }
 
 - (void)showNewStatusCount:(int)count {
