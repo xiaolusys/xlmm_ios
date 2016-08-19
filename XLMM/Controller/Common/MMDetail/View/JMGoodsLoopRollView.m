@@ -48,7 +48,7 @@
     _imageString = imageString;
     NSMutableString *newImageUrl = [NSMutableString stringWithString:imageString];
     [newImageUrl appendString:@"?"];
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageNormalCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
     
     
 }

@@ -939,8 +939,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
     
     if(self.endTime.count==0 ||
-       [self.endTime[1] isEqualToString:@""])
+       [self.endTime[1] isEqualToString:@""]){
+        NSLog(@"need refresh");
         return TRUE;
+    }
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     // NSDateComponents *comps =
@@ -1074,9 +1076,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], (long)self.currentIndex);
     }
     
-    NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
-    NSString *deadline = [dic objectForKey:@"downshelf_deadline"];
-    NSString *starttime = [dic objectForKey:@"upshelf_starttime"];
+    NSLog(@"Deadline=%@",[dic objectForKey:@"offshelf_deadline"]);
+    NSString *deadline = [dic objectForKey:@"offshelf_deadline"];
+    NSString *starttime = [dic objectForKey:@"onshelf_starttime"];
     if(self.currentIndex != 2){
         if(deadline != nil){
             [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
@@ -1204,7 +1206,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                                     h = image.size.height * (WIDTH /image.size.width);
                                 }
                                 NSLog(@"activity height %f %f", image.size.height, h);
-                                imageView.frame = CGRectMake(10, 10+allActivityHeight, SCREENWIDTH - 10, h);
+                                imageView.frame = CGRectMake(0, 10+allActivityHeight, SCREENWIDTH, h);
                                 allActivityHeight += h + 10;
                                 
                                 NSLog(@"allActivityHeight %f", allActivityHeight);
@@ -1727,7 +1729,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     self.startV.imageV.alpha = 1;
     
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:.3 animations:^{
             self.startV.imageV.alpha = 1;
         }];

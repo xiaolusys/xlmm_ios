@@ -234,7 +234,7 @@
     
     
     
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[refundModel.pic_path JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[refundModel.pic_path imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;

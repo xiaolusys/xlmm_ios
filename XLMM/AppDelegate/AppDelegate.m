@@ -304,7 +304,7 @@ static BOOL isNetPrompt;
     }
     self.startV.imageV.alpha = 1;
     
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:.3 animations:^{
             self.startV.imageV.alpha = 0;
         }];
@@ -404,6 +404,16 @@ static BOOL isNetPrompt;
     NSString *messageId = [userInfo objectForKey:@"_id_"];
     NSLog(@"messageID = %@", messageId);
     [MiPushSDK openAppNotify:messageId];
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.userInfo = userInfo;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+        localNotification.fireDate = [NSDate date];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 
