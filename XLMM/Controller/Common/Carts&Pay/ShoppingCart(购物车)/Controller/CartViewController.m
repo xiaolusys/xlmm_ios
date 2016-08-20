@@ -106,14 +106,15 @@
     youhuiquanValud = 0;
 }
 - (void)downloadData {
-    [SVProgressHUD dismiss];
+
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject) return ;
         [self fetchedCartData:responseObject];
     } WithFail:^(NSError *error) {
-        
+        [SVProgressHUD dismiss];
     } Progress:^(float progress) {
-        
+
     }];
 }
 - (void)fetchedCartData:(NSArray *)careArr {
@@ -137,14 +138,14 @@
     [self.cartTableView reloadData];
 }
 - (void)downloadHistoryData{
-    [SVProgressHUD dismiss];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
+        [SVProgressHUD dismiss];
         if (!responseObject) return ;
         [self fetchedHistoryCartData:responseObject];
     } WithFail:^(NSError *error) {
-        
+        [SVProgressHUD dismiss];
     } Progress:^(float progress) {
-        
+
     }];
 }
 - (void)fetchedHistoryCartData:(NSArray *)array {
@@ -422,9 +423,9 @@
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [self downloadData];
     } WithFail:^(NSError *error) {
-        
+        [SVProgressHUD dismiss];
     } Progress:^(float progress) {
-        
+
     }];
 }
 /**
@@ -440,7 +441,7 @@
         [SVProgressHUD showErrorWithStatus:@"商品库存不足"];
         [self downloadData];
     } Progress:^(float progress) {
-        
+
     }];
 }
 - (void)deleteCartView:(CartListModel *)cartModel{
