@@ -89,6 +89,7 @@
 
 @property (nonatomic, strong) JMShareModel *shareModel;
 @property (nonatomic, strong) UIButton *addCartButton;
+
 @end
 
 @implementation JMGoodsDetailController {
@@ -275,6 +276,7 @@
     detailContentDic = goodsDetailDic[@"detail_content"];
     self.topImageArray = detailContentDic[@"head_imgs"];
     [self.goodsScrollView jm_reloadData];
+
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
     for (NSDictionary *dic in attributes) {
@@ -295,7 +297,6 @@
         else {
         }
     }else {
-        
         //NSLog(@"isnew %d", [model.isNewgood boolValue]);
         if([detailContentDic[@"is_newsales"] boolValue]){
             [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
@@ -315,16 +316,6 @@
 }
 - (void)navigationBarButton:(UIButton *)button {
     if (button.tag == 100 || button.tag == 102) {
-//        NSLog(@"navigationBarButton层  返回按钮 --------");
-//        if (isShowGoodsDetail) {
-//            [UIView animateWithDuration:0.4 animations:^{
-//                self.allContentView.transform = CGAffineTransformIdentity;
-//            } completion:^(BOOL finished) {
-//                isShowGoodsDetail = NO;
-//            }];
-//        }else {
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         NSLog(@"navigationBarButton层  分享按钮 --------");
@@ -357,6 +348,7 @@
     scrollView.jm_isStopScrollForSingleCount = YES;
     scrollView.jm_autoScrollInterval = 3.;
     [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
+    
     self.tableView.tableHeaderView = scrollView;
     
 }
@@ -660,13 +652,9 @@
 
 
 #pragma mark - LPAutoScrollViewDatasource
-
 - (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
     return self.topImageArray.count;
 }
-/**
- *  类似UITableVIew
- */
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMGoodsLoopRollView *)rollView {
     rollView.imageString = self.topImageArray[index];
 }

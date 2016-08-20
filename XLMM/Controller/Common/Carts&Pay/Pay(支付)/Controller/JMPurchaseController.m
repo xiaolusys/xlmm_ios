@@ -812,7 +812,7 @@ static BOOL isAgreeTerms = YES;
 - (void)doSomeWork {
     [self.hud hideAnimated:YES];
     // Simulate by just waiting.
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付被您取消或支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     alterView.tag = 102;
     [alterView show];
     

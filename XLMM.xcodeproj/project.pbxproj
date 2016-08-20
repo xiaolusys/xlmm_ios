@@ -317,6 +317,11 @@
 		1F14D60E1CC6047200410EC0 /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D60D1CC6047200410EC0 /* ActivityModel.m */; };
 		1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79501CE730A60042701C /* JMRegisterViewController.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
+		1F23F9AC1D6838B500C78EAE /* serviceEnter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */; };
+		1F23F9B01D68399D00C78EAE /* JMServiceEnterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9AF1D68399D00C78EAE /* JMServiceEnterController.m */; };
+		1F23F9B31D683BA400C78EAE /* serviceHotLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9B11D683BA400C78EAE /* serviceHotLine@2x.png */; };
+		1F23F9B41D683BA400C78EAE /* serviceOnlineConsulting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9B21D683BA400C78EAE /* serviceOnlineConsulting@2x.png */; };
+		1F23F9B71D683C2D00C78EAE /* JMServiceEnterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9B61D683C2D00C78EAE /* JMServiceEnterCell.m */; };
 		1F27A5641D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */; };
 		1F27A5651D2516A000A0F80B /* vipGrade_Examination@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */; };
 		1F27A5CD1D2520E200A0F80B /* MaMaHuoyueduViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A56C1D2520E200A0F80B /* MaMaHuoyueduViewController.m */; };
@@ -1347,6 +1352,13 @@
 		1F1D79501CE730A60042701C /* JMRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegisterViewController.m; sourceTree = "<group>"; };
 		1F1D79521CE7310F0042701C /* JMPhonenumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhonenumViewController.h; sourceTree = "<group>"; };
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
+		1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "serviceEnter@2x.png"; sourceTree = "<group>"; };
+		1F23F9AE1D68399D00C78EAE /* JMServiceEnterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMServiceEnterController.h; sourceTree = "<group>"; };
+		1F23F9AF1D68399D00C78EAE /* JMServiceEnterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMServiceEnterController.m; sourceTree = "<group>"; };
+		1F23F9B11D683BA400C78EAE /* serviceHotLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "serviceHotLine@2x.png"; sourceTree = "<group>"; };
+		1F23F9B21D683BA400C78EAE /* serviceOnlineConsulting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "serviceOnlineConsulting@2x.png"; sourceTree = "<group>"; };
+		1F23F9B51D683C2D00C78EAE /* JMServiceEnterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMServiceEnterCell.h; sourceTree = "<group>"; };
+		1F23F9B61D683C2D00C78EAE /* JMServiceEnterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMServiceEnterCell.m; sourceTree = "<group>"; };
 		1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mamaUser_DiamondsIcon@2x.png"; sourceTree = "<group>"; };
 		1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vipGrade_Examination@2x.png"; sourceTree = "<group>"; };
 		1F27A56B1D2520E200A0F80B /* MaMaHuoyueduViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaHuoyueduViewController.h; sourceTree = "<group>"; };
@@ -3156,8 +3168,11 @@
 				1F9238D81CF46305000AD0EF /* isApp_orderList@2x.png */,
 				1F0AC6E41CB3A831001F21D7 /* defaultPig.png */,
 				18AC6C7F1CA2AF1000316E65 /* heart.png */,
+				1F23F9B11D683BA400C78EAE /* serviceHotLine@2x.png */,
+				1F23F9B21D683BA400C78EAE /* serviceOnlineConsulting@2x.png */,
 				1865CA4C1CAE4C4C00772458 /* mamanodata.png */,
 				18D862771CA1105C004A19BD /* aboutfans.png */,
+				1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */,
 			);
 			path = mama2;
 			sourceTree = "<group>";
@@ -3389,11 +3404,23 @@
 			path = NewHome;
 			sourceTree = "<group>";
 		};
+		1F23F9AD1D68397B00C78EAE /* servicesEnter(客服入口) */ = {
+			isa = PBXGroup;
+			children = (
+				1F23F9AE1D68399D00C78EAE /* JMServiceEnterController.h */,
+				1F23F9AF1D68399D00C78EAE /* JMServiceEnterController.m */,
+				1F23F9B51D683C2D00C78EAE /* JMServiceEnterCell.h */,
+				1F23F9B61D683C2D00C78EAE /* JMServiceEnterCell.m */,
+			);
+			path = "servicesEnter(客服入口)";
+			sourceTree = "<group>";
+		};
 		1F27A5691D2520E200A0F80B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				1FDD073D1D460CA90010231F /* JMMaMaPersonCenterController.h */,
 				1FDD073E1D460CA90010231F /* JMMaMaPersonCenterController.m */,
+				1F23F9AD1D68397B00C78EAE /* servicesEnter(客服入口) */,
 				1F916A821D51DC3D00327408 /* MaMaNewcomerTask(新手任务) */,
 				1FDD076F1D4892380010231F /* earningsInfoRank(收益信息排名) */,
 				1F27A56A1D2520E200A0F80B /* active value(活跃值) */,
@@ -6270,6 +6297,7 @@
 				1FDD073B1D46081E0010231F /* mamatuisong.png in Resources */,
 				1F4DE54B1CE4358800114BDA /* wallet_weixin@2x.png in Resources */,
 				325B7A111C97E73A0022F930 /* PicCollectionViewCell.xib in Resources */,
+				1F23F9AC1D6838B500C78EAE /* serviceEnter@2x.png in Resources */,
 				183075B01C97D49A00B7665E /* loading动画0018.png in Resources */,
 				325B79D31C97E7160022F930 /* HuodongCollectionViewCell.xib in Resources */,
 				183075C01C97D49A00B7665E /* 3lun@2x.png in Resources */,
@@ -6585,7 +6613,9 @@
 				1F0D905F1CEC8E9D00C2334D /* wexImage_wither@2x.png in Resources */,
 				1FDD07B11D49BAC90010231F /* FansNormal@2x.png in Resources */,
 				1FDD07041D40FDDF0010231F /* score@2x.png in Resources */,
+				1F23F9B31D683BA400C78EAE /* serviceHotLine@2x.png in Resources */,
 				183075971C97D49A00B7665E /* jifen-kv.png in Resources */,
+				1F23F9B41D683BA400C78EAE /* serviceOnlineConsulting@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6705,6 +6735,7 @@
 				1F99F8711D6566E900C6B79C /* UdeskVoiceRecordHelper.m in Sources */,
 				183070D71C97B83900B7665E /* HistoryCartsModel.m in Sources */,
 				1F99F86D1D6566E900C6B79C /* UdeskTools.m in Sources */,
+				1F23F9B71D683C2D00C78EAE /* JMServiceEnterCell.m in Sources */,
 				1F27A5E91D2520E200A0F80B /* MaMaOrderListViewController.m in Sources */,
 				325B799A1C97E6F10022F930 /* MJPullGifHeader.m in Sources */,
 				325B79991C97E6F10022F930 /* LoadingAnimation.m in Sources */,
@@ -6824,6 +6855,7 @@
 				1F498B321D276450007E77FC /* JMSharePackView.m in Sources */,
 				1FDD07141D41F0610010231F /* UUID.m in Sources */,
 				1F99F85B1D6566E900C6B79C /* UdeskVoiceRecordHUD.m in Sources */,
+				1F23F9B01D68399D00C78EAE /* JMServiceEnterController.m in Sources */,
 				1F27A65F1D275FB400A0F80B /* JMRepopView.m in Sources */,
 				1F27A5FE1D2524C000A0F80B /* JMAlreadyChooseModel.m in Sources */,
 				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,

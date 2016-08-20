@@ -58,32 +58,27 @@
             }else {
                 NSLog(@"没有登录---");
             }
-            
         } WithFail:^(NSError *error) {
-            NSLog(@"%@",error);
-            NSLog(@"%@",error.userInfo);
-            NSDictionary *errorDic = error.userInfo;
-            NSString *string = errorDic[@"NSLocalizedDescription"];
-            if ([string rangeOfString:@"("].location == NSNotFound) {
-                
-            } else {
-                NSRange range1 = [string rangeOfString:@"("];
-                NSRange range2 = [string rangeOfString:@")"];
-                NSUInteger  location1 = range1.location + range1.length;
-                NSUInteger location2= range2.location;
-                NSString *string1 = [string substringWithRange:NSMakeRange(location1 , location2 - location1)];
-                if ([string1 integerValue] == 403) {
-                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-                    [users removeObjectForKey:kIsLogin];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+            NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+            if (response) {
+                if (response.statusCode) {
+                    NSInteger statusCode = response.statusCode;
+                    if (statusCode == 403) {
+                        NSLog(@"%ld",statusCode);
+                        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                        [users removeObjectForKey:kIsLogin];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }else {
+                        
+                    }
                 }
             }
-            
-           
         } Progress:^(float progress) {
             
         }];
 //    }
+    
+    
 }
 
 - (void)updateUserInfo:(NSDictionary *)dic {
