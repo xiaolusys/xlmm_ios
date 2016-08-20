@@ -633,7 +633,7 @@
         if (code == 0) {
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
 //            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
-//            self.cartsLabel.hidden = NO;
+            self.cartsLabel.hidden = NO;
 //            NSLog(@"%ld",_cartsGoodsNum);
             self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
             [self loadCatrsNumData];
@@ -644,7 +644,7 @@
         [self hideMaskView];
     } WithFail:^(NSError *error) {
         NSLog(@"%@",error);
-        self.cartsLabel.hidden = YES;
+//        self.cartsLabel.hidden = YES;
     } Progress:^(float progress) {
         
     }];
