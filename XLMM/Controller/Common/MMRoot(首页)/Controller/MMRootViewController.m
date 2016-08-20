@@ -370,6 +370,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 #pragma mark 主界面初始化
@@ -2659,9 +2660,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
     self.backScrollview.scrollEnabled = YES;
-
 }
-
 
 
 @end

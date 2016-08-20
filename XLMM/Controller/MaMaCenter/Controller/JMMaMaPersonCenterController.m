@@ -516,9 +516,10 @@ static NSUInteger popNum = 0;
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)serViceButtonClick:(UIButton *)button {
-    [MobClick event:@"buy_cancel"];
-    JMServiceEnterController *enterVC = [[JMServiceEnterController alloc] init];
-    [self.navigationController pushViewController:enterVC animated:YES];
+//    [MobClick event:@"buy_cancel"];
+//    JMServiceEnterController *enterVC = [[JMServiceEnterController alloc] init];
+//    [self.navigationController pushViewController:enterVC animated:YES];
+    [self showNewStatusCount:@"测试消息"];
 }
 - (void)customUserInfo {
     NSString *nick_name = self.userInfoDic[@"nick"];
@@ -541,7 +542,7 @@ static NSUInteger popNum = 0;
     CGFloat x = 0;
     CGFloat w = SCREENWIDTH;
     UILabel *label6 = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
-    label6.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    label6.backgroundColor = [UIColor blackColor];
     label6.alpha = 0.70f;
     label6.textColor = [UIColor whiteColor];
     label6.text = message;
@@ -560,6 +561,9 @@ static NSUInteger popNum = 0;
 }
 - (void)SubscribeMes:(NSNotification *)sender {
     [self showNewStatusCount:sender.object];
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
