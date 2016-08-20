@@ -514,6 +514,7 @@ static BOOL isAgreeTerms = YES;
         _flagCount ++;
         [SVProgressHUD showWithStatus:@"正在支付中....."];
         if (!self.isInstallWX) {
+            _flagCount --;
             [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
             return ;
         }
@@ -521,6 +522,7 @@ static BOOL isAgreeTerms = YES;
         [self hidePickerView];
         [self payMoney];
     }else if (index == 102) { // 选择了支付宝支付
+        _flagCount ++;
         [SVProgressHUD showWithStatus:@"正在支付中....."];
         _payMethod = @"alipay";
         [self hidePickerView];
