@@ -12,6 +12,6 @@ extern NSString *const JMHomeActiveCellIdentifier;
 
 @interface JMHomeActiveCell : UITableViewCell
 
-@property (nonatomic, copy) NSString *imageUrlString;
+@property (nonatomic, strong) NSDictionary *activeDic;
 
 @end

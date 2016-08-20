@@ -16,6 +16,7 @@
 #import "JMHomeGoodsCell.h"
 #import "WebViewController.h"
 #import "JMLogInViewController.h"
+#import "JumpUtils.h"
 
 @interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
 
@@ -133,7 +134,7 @@
     }
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
-        [self.activeArray addObject:dict[@"act_img"]];
+        [self.activeArray addObject:dict];
     }
     
     [self.goodsScrollView jm_reloadData];
@@ -180,7 +181,7 @@
     }else if (indexPath.section == 1){
         JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.imageUrlString = _activeArray[indexPath.row];
+        cell.activeDic = _activeArray[indexPath.row];
         return cell;
     }else {
         JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JJMHomeGoodsCellIdentifier];
@@ -189,49 +190,35 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
+        [MobClick event:@"brand_click"];
         NSDictionary *activeDic = _activeArray[indexPath.row];
         _loginRequired = [activeDic[@"login_required"] boolValue];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            WebViewController *huodongVC = [[WebViewController alloc] init];
-//            NSString *active = @"active";
-            _webDiction = [NSMutableDictionary dictionary];
-            _webDiction[@"type_title"] = @"active";
-            _webDiction[@"activity_id"] = activeDic[@"id"];
-            _webDiction[@"web_url"] = activeDic[@"act_link"];
-//            [_webDiction setValue:active forKey:@"type_title"];
-//            [_webDiction setValue:[activeDic objectForKey:@"id"] forKey:@"activity_id"];
-//            [_webDiction setValue:[activeDic objectForKey:@"act_link"] forKey:@"web_url"];
-            huodongVC.webDiction = _webDiction;
-            huodongVC.isShowNavBar = true;
-            huodongVC.isShowRightShareBtn = true;
-            huodongVC.titleName = [activeDic objectForKey:@"title"];
-            [self.navigationController pushViewController:huodongVC animated:YES];
+            [self skipWebView:@"active" WebDic:activeDic];
         } else{
             if (_loginRequired) {
                 JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
                 [self.navigationController pushViewController:loginVC animated:YES];
             } else{
-                WebViewController *huodongVC = [[WebViewController alloc] init];
-//                NSString *active = @"active";
-                _webDiction = [NSMutableDictionary dictionary];
-                _webDiction[@"type_title"] = @"active";
-                _webDiction[@"activity_id"] = activeDic[@"id"];
-                _webDiction[@"web_url"] = activeDic[@"act_link"];
-//                [_webDiction setValue:active forKey:@"type_title"];
-//                [_webDiction setValue:[activeDic objectForKey:@"id"] forKey:@"activity_id"];
-//                [_webDiction setValue:[activeDic objectForKey:@"act_link"] forKey:@"web_url"];
-                huodongVC.webDiction = _webDiction;
-                huodongVC.isShowNavBar = true;
-                huodongVC.isShowRightShareBtn = true;
-                huodongVC.titleName = [activeDic objectForKey:@"title"];
-                [self.navigationController pushViewController:huodongVC animated:YES];
+                [self skipWebView:@"active" WebDic:activeDic];
             }
         }
     }else {
         
     }
 }
-
+- (void)skipWebView:(NSString *)title WebDic:(NSDictionary *)dic{
+    WebViewController *huodongVC = [[WebViewController alloc] init];
+    _webDiction = [NSMutableDictionary dictionary];
+    _webDiction[@"type_title"] = @"active";
+    _webDiction[@"activity_id"] = dic[@"id"];
+    _webDiction[@"web_url"] = dic[@"act_link"];
+    huodongVC.webDiction = _webDiction;
+    huodongVC.isShowNavBar = true;
+    huodongVC.isShowRightShareBtn = true;
+    huodongVC.titleName = dic[@"title"];
+    [self.navigationController pushViewController:huodongVC animated:YES];
+}
 
 #pragma mark 左滑进入个人中心界面
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
@@ -252,8 +239,9 @@
 #pragma mark LPAutoScrollViewDelegate
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
     NSLog(@"%@", _topImageArray[index]);
-    
-    
+    [MobClick event:@"banner_click"];
+    NSDictionary *topDic = _topImageArray[index];
+    [JumpUtils jumpToLocation:topDic[@"app_link"] viewController:self];
 }
 - (void)backClick:(UIButton *)button {
 }

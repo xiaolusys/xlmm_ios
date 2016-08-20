@@ -42,14 +42,12 @@ NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
     }];
     
 }
-
-- (void)setImageUrlString:(NSString *)imageUrlString {
-    _imageUrlString = imageUrlString;
-    
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[imageUrlString JMUrlEncodedString] imageNormalCompression]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
-    
-    
+- (void)setActiveDic:(NSDictionary *)activeDic {
+    _activeDic = activeDic;
+    NSString *imageString = activeDic[@"act_img"];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[imageString JMUrlEncodedString] imageNormalCompression]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
 }
+
 
 
 
