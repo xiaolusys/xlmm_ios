@@ -201,7 +201,8 @@ static BOOL isNetPrompt;
     }else {
         
     }
-    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
+//    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/topic",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         NSArray *arr = responseObject[@"topics"];

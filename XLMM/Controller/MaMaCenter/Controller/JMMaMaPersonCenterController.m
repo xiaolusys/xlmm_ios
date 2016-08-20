@@ -516,10 +516,9 @@ static NSUInteger popNum = 0;
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)serViceButtonClick:(UIButton *)button {
-//    [MobClick event:@"buy_cancel"];
-//    JMServiceEnterController *enterVC = [[JMServiceEnterController alloc] init];
-//    [self.navigationController pushViewController:enterVC animated:YES];
-    [self showNewStatusCount:@"测试消息"];
+    [MobClick event:@"buy_cancel"];
+    JMServiceEnterController *enterVC = [[JMServiceEnterController alloc] init];
+    [self.navigationController pushViewController:enterVC animated:YES];
 }
 - (void)customUserInfo {
     NSString *nick_name = self.userInfoDic[@"nick"];
