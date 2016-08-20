@@ -11,6 +11,6 @@
 
 @interface JMHomeHeaderView : JMRollView
 
-@property (nonatomic, copy) NSString *imageString;
+@property (nonatomic, strong) NSDictionary *topDic;
 
 @end

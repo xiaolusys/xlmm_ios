@@ -14,6 +14,8 @@
 #import "JMHomeActiveCell.h"
 #import "JMHomeCategoryCell.h"
 #import "JMHomeGoodsCell.h"
+#import "WebViewController.h"
+#import "JMLogInViewController.h"
 
 @interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
 
@@ -27,6 +29,11 @@
 @implementation JMHomeRootController {
     NSMutableArray *_topImageArray;
     NSMutableArray *_categorysArray;
+    
+    BOOL _loginRequired;                  // ??????
+    NSMutableDictionary *_webDiction;
+    
+    
 }
 - (NSMutableArray *)activeArray {
     if (_activeArray == nil) {
@@ -118,7 +125,7 @@
     // 头部滚动视图
     NSArray *postersArr = dic[@"posters"];
     for (NSDictionary *dic in postersArr) {
-        [_topImageArray addObject:dic[@"pic_link"]];
+        [_topImageArray addObject:dic];
     }
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
@@ -180,6 +187,50 @@
         return cell;
     }
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        NSDictionary *activeDic = _activeArray[indexPath.row];
+        _loginRequired = [activeDic[@"login_required"] boolValue];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            WebViewController *huodongVC = [[WebViewController alloc] init];
+//            NSString *active = @"active";
+            _webDiction = [NSMutableDictionary dictionary];
+            _webDiction[@"type_title"] = @"active";
+            _webDiction[@"activity_id"] = activeDic[@"id"];
+            _webDiction[@"web_url"] = activeDic[@"act_link"];
+//            [_webDiction setValue:active forKey:@"type_title"];
+//            [_webDiction setValue:[activeDic objectForKey:@"id"] forKey:@"activity_id"];
+//            [_webDiction setValue:[activeDic objectForKey:@"act_link"] forKey:@"web_url"];
+            huodongVC.webDiction = _webDiction;
+            huodongVC.isShowNavBar = true;
+            huodongVC.isShowRightShareBtn = true;
+            huodongVC.titleName = [activeDic objectForKey:@"title"];
+            [self.navigationController pushViewController:huodongVC animated:YES];
+        } else{
+            if (_loginRequired) {
+                JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+                [self.navigationController pushViewController:loginVC animated:YES];
+            } else{
+                WebViewController *huodongVC = [[WebViewController alloc] init];
+//                NSString *active = @"active";
+                _webDiction = [NSMutableDictionary dictionary];
+                _webDiction[@"type_title"] = @"active";
+                _webDiction[@"activity_id"] = activeDic[@"id"];
+                _webDiction[@"web_url"] = activeDic[@"act_link"];
+//                [_webDiction setValue:active forKey:@"type_title"];
+//                [_webDiction setValue:[activeDic objectForKey:@"id"] forKey:@"activity_id"];
+//                [_webDiction setValue:[activeDic objectForKey:@"act_link"] forKey:@"web_url"];
+                huodongVC.webDiction = _webDiction;
+                huodongVC.isShowNavBar = true;
+                huodongVC.isShowRightShareBtn = true;
+                huodongVC.titleName = [activeDic objectForKey:@"title"];
+                [self.navigationController pushViewController:huodongVC animated:YES];
+            }
+        }
+    }else {
+        
+    }
+}
 
 
 #pragma mark 左滑进入个人中心界面
@@ -196,11 +247,13 @@
     return _topImageArray.count;
 }
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMHomeHeaderView *)rollView {
-    rollView.imageString = _topImageArray[index];
+    rollView.topDic = _topImageArray[index];
 }
 #pragma mark LPAutoScrollViewDelegate
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
     NSLog(@"%@", _topImageArray[index]);
+    
+    
 }
 - (void)backClick:(UIButton *)button {
 }

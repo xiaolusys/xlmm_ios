@@ -42,13 +42,17 @@
     
     
 }
-- (void)setImageString:(NSString *)imageString {
-    _imageString = imageString;
+- (void)setTopDic:(NSDictionary *)topDic {
+    _topDic = topDic;
+    NSString *imageString = topDic[@"pic_link"];
     NSMutableString *newImageUrl = [NSMutableString stringWithString:imageString];
     [newImageUrl appendString:@"?"];
     [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageNormalCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
-    
-    
 }
+
+
+
+
+
 
 @end
