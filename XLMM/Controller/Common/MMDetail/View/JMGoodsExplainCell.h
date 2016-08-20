@@ -10,7 +10,7 @@
 
 extern NSString *const JMGoodsExplainCellIdentifier;
 
-typedef void(^storeUpBlock)(BOOL isSelected);
+typedef void(^storeUpBlock)(UIButton *button);
 
 @interface JMGoodsExplainCell : UITableViewCell
 

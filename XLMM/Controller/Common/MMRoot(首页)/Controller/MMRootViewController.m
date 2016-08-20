@@ -1692,7 +1692,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //        [self.navigationController pushViewController:webView animated:YES];
         
         JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
-        
+        detailVC.readImageUrl = model.head_img;
         detailVC.goodsID = model.goodsID;
         
         [self.navigationController pushViewController:detailVC animated:YES];
