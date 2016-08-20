@@ -32,13 +32,13 @@
     
     self.imageView = [UIImageView new];
     [self addSubview:self.imageView];
-     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     kWeakSelf
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(SCREENHEIGHT * 0.65));
+        make.height.mas_equalTo(@(SCREENWIDTH * 4 / 3));
     }];
     
     

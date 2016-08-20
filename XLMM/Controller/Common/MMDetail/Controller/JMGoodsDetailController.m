@@ -391,45 +391,56 @@
         JMGoodsExplainCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsExplainCellIdentifier];
         cell.detailContentDic = detailContentDic;
         cell.customInfoDic = coustomInfoDic;
-        cell.block = ^(BOOL isSelected) {
-            if (isSelected) {
-                // 收藏
-                NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-                NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                param[@"model_id"] = self.goodsID;
-                [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
-                    if (!responseObject) return ;
-                    NSLog(@"%@",responseObject);
-                    NSInteger code = [responseObject[@"code"] integerValue];
-                    if (code == 0) {
-                        [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
-                    }else {
-                        [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
-                    }
-                } WithFail:^(NSError *error) {
-                    
-                } Progress:^(float progress) {
-                    
-                }];
+        cell.block = ^(UIButton *button) {
+            BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+            if (login == NO) {
+                button.selected = NO;
+                JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+                [self.navigationController pushViewController:enterVC animated:YES];
+                return;
             }else {
-                // 取消收藏
-                NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-                NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                param[@"model_id"] = self.goodsID;
-                [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
-                    if (!responseObject) return ;
-                    NSLog(@"%@",responseObject);
-                    NSInteger code = [responseObject[@"code"] integerValue];
-                    if (code == 0) {
-                        [SVProgressHUD showSuccessWithStatus:@"取消成功"];
-                    }else {
-                        [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
-                    }
-                } WithFail:^(NSError *error) {
-                    
-                } Progress:^(float progress) {
-                    
-                }];
+                if (button.selected == NO) {
+                    // 收藏
+                    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
+                    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+                    param[@"model_id"] = self.goodsID;
+                    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
+                        if (!responseObject) return ;
+                        NSLog(@"%@",responseObject);
+                        NSInteger code = [responseObject[@"code"] integerValue];
+                        if (code == 0) {
+                            button.selected = YES;
+                            [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                        }else {
+                            button.selected = NO;
+                            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                        }
+                    } WithFail:^(NSError *error) {
+                        button.selected = NO;
+                    } Progress:^(float progress) {
+                        
+                    }];
+                }else {
+                    // 取消收藏
+                    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
+                    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+                    param[@"model_id"] = self.goodsID;
+                    [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
+                        if (!responseObject) return ;
+                        NSLog(@"%@",responseObject);
+                        NSInteger code = [responseObject[@"code"] integerValue];
+                        if (code == 0) {
+                            button.selected = NO;
+                            [SVProgressHUD showSuccessWithStatus:@"取消成功"];
+                        }else {
+                            button.selected = YES;
+                            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                        }
+                    } WithFail:^(NSError *error) {
+                        button.selected = YES;
+                    } Progress:^(float progress) {
+                    }];
+                }
             }
         };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -535,7 +546,6 @@
                 isShowGoodsDetail = YES;
             }];
         }
-        
         // 滚到中间视图
         if (minY <= -60 && isShowGoodsDetail) {
             isShowGoodsDetail = NO;

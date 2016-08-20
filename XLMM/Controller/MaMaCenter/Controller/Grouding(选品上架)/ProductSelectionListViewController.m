@@ -346,8 +346,8 @@
         return;
     }
 
-    for (NSDictionary *dic in array) {
-        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dic];
+    for (NSDictionary *dict in array) {
+        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dict];
         [self.dataArr addObject:self.listModel];
     }
     
@@ -466,7 +466,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMProductSelectionListModel *listModel = self.dataArr[indexPath.row];
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
-    detailVC.goodsID = listModel.goodsID;
+    detailVC.goodsID = listModel.model_id;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

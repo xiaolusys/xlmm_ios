@@ -130,7 +130,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     shoucangButton.titleLabel.font = [UIFont systemFontOfSize:16.];
     [shoucangButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     self.storeUpButton = shoucangButton;
-    shoucangButton.tag = 100;
+//    shoucangButton.tag = 100;
+//    shoucangButton.selected = NO;
     [shoucangButton addTarget:self action:@selector(storeUpClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *baoyou = [UILabel new];
@@ -237,9 +238,9 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 }
 
 - (void)storeUpClick:(UIButton *)button {
-    button.selected = !button.selected;
+//    button.selected = !button.selected;
     if (self.block) {
-        self.block(button.selected);
+        self.block(button);
     }
     
 }
