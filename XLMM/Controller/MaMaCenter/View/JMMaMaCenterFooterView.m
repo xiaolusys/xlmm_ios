@@ -193,7 +193,7 @@
     }];
     
     CGFloat buttonW = SCREENWIDTH / 2;
-    NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal",@"VisitorRecordNormal"];
+    NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal",@"FansNormal"];
     NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的精选",@"每日推送",@"邀请开店",@"选品佣金",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行",@"论坛"];
     for (int i = 0; i < 11; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
