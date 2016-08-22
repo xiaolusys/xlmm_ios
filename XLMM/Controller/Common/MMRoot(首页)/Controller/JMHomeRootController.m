@@ -301,19 +301,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         JMHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeCategoryCellIdentifier];
+        if (!cell) {
+            cell = [[JMHomeCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeCategoryCellIdentifier];
+        }
         cell.imageArray = _categorysArray;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.section == 1){
-        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
-        
+//        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
+        JMHomeActiveCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (!cell) {
+            cell = [[JMHomeActiveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeActiveCellIdentifier];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.activeDic = _activeArray[indexPath.row];
         return cell;
     }else {
         JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeGoodsCellIdentifier];
-//        cell.currentIndex = _currentIndex;
-        cell.backgroundColor = [UIColor orangeColor];
+        if (!cell) {
+            cell = [[JMHomeGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeGoodsCellIdentifier];
+        }
+        cell.currentIndex = _currentIndex;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
