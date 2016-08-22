@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const JJMHomeGoodsCellIdentifier;
+extern NSString *const JMHomeGoodsCellIdentifier;
 
 @interface JMHomeGoodsCell : UITableViewCell
 

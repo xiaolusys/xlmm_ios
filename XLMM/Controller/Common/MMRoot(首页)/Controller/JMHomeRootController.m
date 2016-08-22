@@ -89,8 +89,8 @@
     [self createNavigaView];
     [self createTabelView];
     [self loadActiveData];
-    [self loadDataSource];
-    [self createPullFooterRefresh];
+//    [self loadDataSource];
+//    [self createPullFooterRefresh];
     
 }
 - (void)loadDataSource {
@@ -138,7 +138,7 @@
     
     [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
     [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
-    [self.tableView registerClass:[JMHomeGoodsCell class] forCellReuseIdentifier:JJMHomeGoodsCellIdentifier];
+    [self.tableView registerClass:[JMHomeGoodsCell class] forCellReuseIdentifier:JMHomeGoodsCellIdentifier];
     
     JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
     self.goodsScrollView = scrollView;
@@ -239,6 +239,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+    sectionView.backgroundColor = [UIColor whiteColor];
     UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
     buttonView.layer.masksToBounds = YES;
     buttonView.layer.borderWidth = 0.5;
@@ -289,10 +290,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return 130;
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == 1) {
         return 160;
+    }else if (indexPath.section == 2) {
+        return SCREENHEIGHT;
     }else {
-        return SCREENHEIGHT - 154;
+        return 0;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -303,13 +306,14 @@
         return cell;
     }else if (indexPath.section == 1){
         JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.activeDic = _activeArray[indexPath.row];
         return cell;
     }else {
-        JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JJMHomeGoodsCellIdentifier];
-        cell.currentIndex = _currentIndex;
-        
+        JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeGoodsCellIdentifier];
+//        cell.currentIndex = _currentIndex;
+        cell.backgroundColor = [UIColor orangeColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
