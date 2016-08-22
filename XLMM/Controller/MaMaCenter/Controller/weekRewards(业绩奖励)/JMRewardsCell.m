@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UILabel *label4;
 @property (nonatomic, strong) UILabel *label5;
 
+@property (nonatomic, strong) UILabel *onelabel;
 
 @end
 
@@ -31,11 +32,11 @@
 
 
 - (void)createUI {
-    UILabel *oneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
-    [self.contentView addSubview:oneLabel];
-    oneLabel.textAlignment = NSTextAlignmentCenter;
-    oneLabel.font = [UIFont systemFontOfSize:12.];
-    oneLabel.text = @"奖励项目";
+    self.onelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+    [self.contentView addSubview:self.onelabel];
+    self.onelabel.textAlignment = NSTextAlignmentCenter;
+    self.onelabel.font = [UIFont systemFontOfSize:12.];
+    self.onelabel.text = @"奖励项目";
     
     UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(100, 0, SCREENWIDTH - 100, 60)];
     [self.contentView addSubview:rightView];
@@ -63,17 +64,38 @@
     self.label2 = (UILabel *)[self.contentView viewWithTag:101];
     self.label3 = (UILabel *)[self.contentView viewWithTag:102];
     self.label4 = (UILabel *)[self.contentView viewWithTag:103];
-    self.label5 = (UILabel *)[self.contentView viewWithTag:104];
     
     
+    self.label4.textColor = [UIColor buttonEnabledBackgroundColor];
     
     
     
 }
 
+- (void)setPersonDic:(NSDictionary *)personDic {
+    _personDic = personDic;
+    NSDictionary *missionDic = personDic[@"mission"];
+    self.onelabel.text = [NSString stringWithFormat:@"%@",missionDic[@"name"]];
+    self.label1.text = [NSString stringWithFormat:@"%@",missionDic[@"target_value"]];
+    self.label2.text = [NSString stringWithFormat:@"%@",personDic[@"finish_value"]];
+    CGFloat awardAmount = [missionDic[@"award_amount"] floatValue] / 100.00;
+    self.label3.text = [NSString stringWithFormat:@"%.2f",awardAmount];
+    self.label4.text = [NSString stringWithFormat:@"%@",personDic[@"status_name"]];
+    
+    
+}
 
-
-
+- (void)setTeamDic:(NSDictionary *)teamDic {
+    _teamDic = teamDic;
+    NSDictionary *missionDic = teamDic[@"mission"];
+    self.onelabel.text = [NSString stringWithFormat:@"%@",missionDic[@"name"]];
+    self.label1.text = [NSString stringWithFormat:@"%@",missionDic[@"target_value"]];
+    self.label2.text = [NSString stringWithFormat:@"%@",teamDic[@"finish_value"]];
+    CGFloat awardAmount = [missionDic[@"award_amount"] floatValue] / 100.00;
+    self.label3.text = [NSString stringWithFormat:@"%.2f",awardAmount];
+    self.label4.text = [NSString stringWithFormat:@"%@",teamDic[@"status_name"]];
+    
+}
 
 
 

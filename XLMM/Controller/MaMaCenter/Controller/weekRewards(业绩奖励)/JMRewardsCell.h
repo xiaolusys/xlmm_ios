@@ -10,4 +10,8 @@
 
 @interface JMRewardsCell : UITableViewCell
 
+@property (nonatomic, strong) NSDictionary *personDic;
+
+@property (nonatomic, strong) NSDictionary *teamDic;
+
 @end

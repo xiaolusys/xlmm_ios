@@ -38,6 +38,12 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     NSMutableArray *_tableArr;
     NSInteger _currentIndex;
     
+    NSArray *_personArray;
+    NSArray *_teamArray;
+    
+    NSString *_personStr;
+    NSString *_teamStr;
+    NSArray *_awardCountArr;
     
 }
 - (NSMutableDictionary *)oldDic {
@@ -59,7 +65,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     [self createNavigationBarWithTitle:@"周激励" selecotr:@selector(backClick:)];
     
     [self createHeaderView];
-    
+    [self loadDataSource];
     _currentIndex = 0;
     for (UIButton *btn in self.btnView.subviews) {
         if (btn.tag == 100) {
@@ -67,6 +73,31 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
         }
     }
 
+}
+- (void)loadDataSource {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/mission/weeklist",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        [self fetchData:responseObject];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+    }];
+}
+- (void)fetchData:(NSDictionary *)dic {
+//    _personStr = dic[@"staging_award_amount"];
+//    _teamStr = dic[@"staging_award_count"];
+    _awardCountArr = @[dic[@"staging_award_amount"],dic[@"staging_award_count"]];
+    
+    
+    _personArray = dic[@"personal_missions"];
+    _teamArray = dic[@"group_missions"];
+    
+    self.weekRewardValueLabel.text = [NSString stringWithFormat:@"%@",_awardCountArr[_currentIndex]];
+    
+    UITableView *table = _tableArr[_currentIndex];
+    [table reloadData];
 }
 
 
@@ -104,7 +135,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 224, SCREENWIDTH, SCREENHEIGHT - 224)];
     [self.view addSubview:self.contentView];
     
-    NSArray *nameArr = @[@"销售奖励", @"任务奖励"];
+    NSArray *nameArr = @[@"个人奖励", @"团队奖励"];
     self.btnView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 100)];
     self.btnView.backgroundColor = [UIColor whiteColor];
     self.btnView.layer.masksToBounds = YES;
@@ -128,14 +159,16 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     self.segmentTitleLabel.backgroundColor = [UIColor lineGrayColor];
     self.segmentTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.segmentTitleLabel.font = [UIFont systemFontOfSize:13.];
-    NSString *limtString = @"当前距离获得奖金任务还差  20%";
-    NSInteger count1 = limtString.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:limtString];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,12)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(12,count1 - 12)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0] range:NSMakeRange(0, 12)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0] range:NSMakeRange(12, count1 - 12)];
-    self.segmentTitleLabel.attributedText = str;
+    self.segmentTitleLabel.text = @"每周任务,多多益善.做任务还可以获得奖励哦~!";
+//    NSString *limtString = @"当前距离获得奖金任务还差  20%";
+    
+//    NSInteger count1 = limtString.length;
+//    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:limtString];
+//    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,12)];
+//    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(12,count1 - 12)];
+//    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0] range:NSMakeRange(0, 12)];
+//    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13.0] range:NSMakeRange(12, count1 - 12)];
+//    self.segmentTitleLabel.attributedText = str;
 
     UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, SCREENWIDTH, 35)];
     [self.btnView addSubview:sectionView];
@@ -201,7 +234,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
         self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH * btnTag, 0);
         [self changeBtnSelect:btnTag];
         _currentIndex = btnTag;
-        
+        self.weekRewardValueLabel.text = [NSString stringWithFormat:@"%@",_awardCountArr[_currentIndex]];
         UITableView *table = _tableArr[btnTag];
         [table reloadData];
     }
@@ -221,9 +254,9 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == _tableArr[0]) {
-        return 3;
+        return _personArray.count;
     }else {
-        return 4;
+        return _teamArray.count;
     }
     
 }
@@ -234,11 +267,10 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
         cell = [[JMRewardsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMRewardsCellIdfier];
     }
     if (tableView == _tableArr[0]) {
-        
+        cell.personDic = _personArray[indexPath.row];
     }else {
-       
+       cell.teamDic = _teamArray[indexPath.row];
     }
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -247,7 +279,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     if (scrollView == self.bottomScrollView) {
         NSInteger count = scrollView.contentOffset.x / SCREENWIDTH;
         _currentIndex = count;
-        
+        self.weekRewardValueLabel.text = [NSString stringWithFormat:@"%@",_awardCountArr[_currentIndex]];
     }
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
