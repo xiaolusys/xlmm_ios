@@ -122,7 +122,8 @@ static NSString *JMRootgoodsCellIdfier = @"JMRootgoodsCellIdfier";
     
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMRootgoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JMRootgoodsCellIdfier forIndexPath:indexPath];
+//    JMRootgoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JMRootgoodsCellIdfier forIndexPath:indexPath];
+    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:JMRootgoodsCellIdfier forIndexPath:indexPath];
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
     [cell fillData:model];
     return cell;

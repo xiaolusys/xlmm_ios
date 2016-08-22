@@ -326,25 +326,6 @@
         return cell;
     }
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1) {
-        [MobClick event:@"brand_click"];
-        NSDictionary *activeDic = _activeArray[indexPath.row];
-        _loginRequired = [activeDic[@"login_required"] boolValue];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            [self skipWebView:@"active" WebDic:activeDic];
-        } else{
-            if (_loginRequired) {
-                JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-                [self.navigationController pushViewController:loginVC animated:YES];
-            } else{
-                [self skipWebView:@"active" WebDic:activeDic];
-            }
-        }
-    }else {
-        
-    }
-}
 - (void)skipWebView:(NSString *)title WebDic:(NSDictionary *)dic{
     WebViewController *huodongVC = [[WebViewController alloc] init];
     _webDiction = [NSMutableDictionary dictionary];
