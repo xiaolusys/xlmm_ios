@@ -316,7 +316,14 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     }
 }
 
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMRewardsController"];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMRewardsController"];
+}
 - (void)backClick:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
 }
