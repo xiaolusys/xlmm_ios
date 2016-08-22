@@ -183,19 +183,7 @@ static BOOL isNetPrompt;
         //        [alertView show];
         
     }
-    
-    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        NSArray *arr = responseObject[@"topics"];
-        for (NSString *str in arr) {
-            [MiPushSDK subscribe:str];
-        }
-    } WithFail:^(NSError *error) {
-        
-    } Progress:^(float progress) {
-    }];
-    
+
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -213,7 +201,18 @@ static BOOL isNetPrompt;
     }else {
         
     }
-    
+//    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/topic",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        NSArray *arr = responseObject[@"topics"];
+        for (NSString *str in arr) {
+            [MiPushSDK subscribe:str];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+    }];
     
     
     
@@ -408,6 +407,11 @@ static BOOL isNetPrompt;
     // 注册APNS失败。。
     NSLog(@"Regist fail%@",error);
 }
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+    
+    
+    
+}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
@@ -495,7 +499,7 @@ static BOOL isNetPrompt;
     // 请求失败
 }
 
-- ( void )miPushReceiveNotification:( NSDictionary *)data
+- (void)miPushReceiveNotification:(NSDictionary *)data
 {
     NSLog(@"---------------data = %@", data);
     NSDictionary *apsDic = data[@"aps"];
@@ -506,9 +510,7 @@ static BOOL isNetPrompt;
     if ([jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
     }
-    
-    
-    //
+
     //    // 长连接收到的消息。消息格式跟APNs格式一样
     //    // 返回数据
     NSString *target_url = nil;
@@ -534,9 +536,6 @@ static BOOL isNetPrompt;
 
 
 #pragma mark --微信回调方法--
-
-
-
 -(void)onResp:(BaseResp *)resp
 {
     /*

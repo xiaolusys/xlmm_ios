@@ -52,7 +52,12 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         itemString = itemMask[0];
     
     }
-    self.itemMask.text = [NSString stringWithFormat:@" %@ ",itemString];
+    self.itemMask.text = [NSString stringWithFormat:@"%@",itemString];
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:14] forKey:NSFontAttributeName];
+    CGSize size = [itemString sizeWithAttributes:dic];
+    [self.itemMask mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(@(size.width + 20));
+    }];
 //    self.itemMask.textAlignment = NSTextAlignmentCenter;
     
     // === 处理结束时间 === //

@@ -100,8 +100,6 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
 //        self.urlArray = @[@"s18.xiaolumm.com/rest/v2/mama/rank/carry_total_rank ",@"s18.xiaolumm.com/rest/v2/mama/rank/carry_duration_rank"];
         [self loadNoTeamData];
     }
-    
-    
     _currentIndex = 0;
 
     _allDataArray = [NSMutableArray array];
@@ -285,7 +283,6 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
         tableView.rowHeight = 60.;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         //注册cell
-//        [table registerNib:[UINib nibWithNibName:@"CarryLogTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
         [tableView registerClass:[JMEarningsRankCell class] forCellReuseIdentifier:JMMaMaEarningsRankIdfier];
         [self.bottomScrollView addSubview:tableView];
         [_tableArr addObject:tableView];
@@ -300,12 +297,7 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
         self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH * btnTag, 0);
         [self changeBtnSelect:btnTag];
         _currentIndex = btnTag;
-//        NSMutableDictionary *dic = [self.tableViewDataArr objectAtIndex:_currentIndex];
-//        _allKeys = [[dic allKeys] mutableCopy];
-//        _allKeys = [self sortAllKeyArray:_allKeys];
-//        if (dic.count == 0) {
-//            [self loadDataSource];
-//        }
+
         UITableView *table = _tableArr[btnTag];
         [table reloadData];
     }
@@ -320,31 +312,7 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
         button.selected = NO;
     }
 }
-////将所有的key排序
-//- (NSMutableArray *)sortAllKeyArray:(NSMutableArray *)keyArr {
-//    for (int i = 0; i < keyArr.count; i++) {
-//        for (int j = 0; j < keyArr.count - i - 1; j++) {
-//            if ([keyArr[j] intValue] < [keyArr[j + 1] intValue]) {
-//                NSNumber *temp = keyArr[j + 1];
-//                keyArr[j + 1] = keyArr[j];
-//                keyArr[j] = temp;
-//            }
-//        }
-//    }
-//    return keyArr;
-//}
 
-//- (void)createTableView {
-//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
-//    [self.view addSubview:self.tableView];
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
-//    self.tableView.rowHeight = 60.;
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//}
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 1;
-//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == _tableArr[0]) {
         return _allDataArray.count;
@@ -377,74 +345,17 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
         }
     }
     
-//    if (self.isTeamEarningsRank == YES) {
-//        JMMaMaTeamModel *model = self.dataSource[indexPath.row];
-//        [cell configTeamModel:model Index:indexPath.row];
-//    }else {
-//        JMEarningsRankModel *model = self.dataSource[indexPath.row];
-//        [cell config:model Index:indexPath.row];
-//    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 60;
-//}
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *sectionView = [UIView new];
-//    sectionView.backgroundColor = [UIColor whiteColor];
-//    
-//    UIView *lineView = [UIView new];
-//    lineView.backgroundColor = [UIColor countLabelColor];
-//    [sectionView addSubview:lineView];
-//    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.right.equalTo(sectionView);
-//        make.bottom.equalTo(sectionView).offset(-35);
-//        make.height.mas_equalTo(@1);
-//    }];
-//    
-//    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mamaGoldCup"]];
-//    UILabel *label = [UILabel new];
-//    if (self.isTeamEarningsRank == YES) {
-//        label.text = @"团队收益排行榜TOP10";
-//    }else {
-//        label.text = @"个人收益排行榜TOP10";
-//    }
-//    
-//    [sectionView addSubview:image];
-//    [sectionView addSubview:label];
-//    
-//    [label mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(sectionView.mas_centerX);
-//        make.centerY.equalTo(sectionView.mas_centerY);
-//    }];
-//    [image mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(label.mas_centerY);
-//        make.right.equalTo(label.mas_left).offset(-10);
-//    }];
-//    
-//    UIView *segementView = [UIView new];
-//    [sectionView addSubview:segementView];
-//    
-//    
-//    
-//    return sectionView;
-//}
-//
+
 
 #pragma mark --scrollView的代理方法w
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == self.bottomScrollView) {
         NSInteger count = scrollView.contentOffset.x / SCREENWIDTH;
         _currentIndex = count;
-//        
-//        NSMutableDictionary *dic = [self.tableViewDataArr objectAtIndex:self.currentIndex];
-//        self.allkey = [[dic allKeys] mutableCopy];
-//        self.allkey = [self sortAllKeyArray:self.allkey];
-        
-//        if (dic.count == 0) {
-//            [self requestAction];
-//        }
+
     }
 }
 
@@ -454,13 +365,7 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
         NSNumber *contentOffY = [NSNumber numberWithInteger:scrollView.contentOffset.y];
         [self.contentOffsetYDic setObject:contentOffY forKey:number];
     }
-//    CGPoint offset = scrollView.contentOffset;
-//    CGFloat currentOffset = offset.y;
-//    if (currentOffset > SCREENHEIGHT) {
-////        self.topButton.hidden = NO;
-//    }else {
-////        self.topButton.hidden = YES;
-//    }
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -582,15 +487,6 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@60);
     }];
-    
-//    UIView *lineView = [UIView new];
-//    lineView.backgroundColor = [UIColor countLabelColor];
-//    [sectionView addSubview:lineView];
-//    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.right.equalTo(sectionView);
-//        make.bottom.equalTo(sectionView).offset(-35);
-//        make.height.mas_equalTo(@1);
-//    }];
     
     UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mamaGoldCup"]];
     UILabel *label = [UILabel new];

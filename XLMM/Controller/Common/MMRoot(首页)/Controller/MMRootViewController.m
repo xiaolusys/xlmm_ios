@@ -370,6 +370,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 #pragma mark 主界面初始化
@@ -2566,7 +2567,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //    NSString *isUpData = dic[@"sha1"];
 //    [[NSUserDefaults standardUserDefaults] setObject:isUpData forKey:@"itemHash"];
 //    NSString *downloadUrl = dic[@"download_url"];
-    
     NSString *isUpData = dic[@"sha1"];
     NSString *urlString = dic[@"download_url"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -2575,6 +2575,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self downLoadUrl:urlString];
     }else {
         if ([oldVersion isEqualToString:isUpData]) {
+            
         }else {
             [self downLoadUrl:urlString];
         }
@@ -2659,9 +2660,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
     self.backScrollview.scrollEnabled = YES;
-
 }
-
 
 
 @end
