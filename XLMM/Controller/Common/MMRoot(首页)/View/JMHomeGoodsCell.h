@@ -12,4 +12,8 @@ extern NSString *const JJMHomeGoodsCellIdentifier;
 
 @interface JMHomeGoodsCell : UITableViewCell
 
+@property (nonatomic, assign) NSInteger currentIndex;
+
+@property (nonatomic, strong) NSMutableArray *dataSource;
+
 @end

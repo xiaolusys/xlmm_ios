@@ -18,6 +18,7 @@
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "HMSegmentedControl.h"
+#import "JMRootGoodsModel.h"
 
 @interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
 
@@ -29,6 +30,10 @@
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
+@property (nonatomic, strong) NSMutableArray *DataSource;
+
+//上拉的标志
+@property (nonatomic) BOOL isLoadMore;
 
 @end
 
@@ -38,8 +43,20 @@
     
     BOOL _loginRequired;                  // ??????
     NSMutableDictionary *_webDiction;
+    NSArray *_buttonTitleArr;
+    NSInteger _currentIndex;              // 选择展示第几个视图 (昨,今,明)
+    NSString *_nextPage;                 // 下一页数据
     
+    NSArray *_yestodayArr;
+    NSArray *_todayArr;
+    NSArray *_tomorrowArr;
     
+}
+- (NSMutableArray *)DataSource {
+    if (_DataSource == nil) {
+        _DataSource = [NSMutableArray array];
+    }
+    return _DataSource;
 }
 - (NSMutableArray *)activeArray {
     if (_activeArray == nil) {
@@ -47,18 +64,70 @@
     }
     return _activeArray;
 }
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMoreData];
+    }];
+}
+- (void)endRefresh {
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
+    
+    _buttonTitleArr = @[@"昨日热卖",@"今日特卖",@"即将上新"];
     
     _topImageArray = [NSMutableArray array];
     _categorysArray = [NSMutableArray array];
     [self createNavigaView];
     [self createTabelView];
     [self loadActiveData];
+    [self loadDataSource];
+    [self createPullFooterRefresh];
     
 }
+- (void)loadDataSource {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/today?page=1&page_size=10",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchGoodsInfo:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+        
+    }];
+    
+}
+- (void)fetchGoodsInfo:(NSDictionary *)goodsDic {
+    _nextPage = goodsDic[@"next"];
+    NSArray *resultsArr = goodsDic[@"results"];
+    for (NSDictionary *dic in resultsArr) {
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
+//        [self.todayDataSource addObject:model];
+    }
+}
+- (void)loadMoreData {
+    if ([_nextPage class] == [NSNull class]) {
+        [self endRefresh];
+        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        return;
+    }
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPage WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchGoodsInfo:responseObject];
+        [self endRefresh];
+    } WithFail:^(NSError *error) {
+        [self endRefresh];
+    } Progress:^(float progress) {
+    }];
+}
+
 - (void)createTabelView {
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
@@ -169,6 +238,50 @@
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+    UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
+    buttonView.layer.masksToBounds = YES;
+    buttonView.layer.borderWidth = 0.5;
+    buttonView.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    
+    [sectionView addSubview:buttonView];
+    for (int i = 0; i < _buttonTitleArr.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(i * SCREENWIDTH / 3, 0, SCREENWIDTH / 3, 35);
+        button.titleLabel.font =  [UIFont systemFontOfSize: 14];
+        [button setTitle:_buttonTitleArr[i] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor textDarkGrayColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateSelected];
+        button.tag = 100 + i;
+        [button addTarget:self action:@selector(titleBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonView addSubview:button];
+        if (button.tag == 101) {
+            button.selected = YES;
+        }
+    }
+
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 45)];
+    timeLabel.font = [UIFont systemFontOfSize:13.];
+    timeLabel.textColor = [UIColor orangeColor];
+    timeLabel.textAlignment = NSTextAlignmentCenter;
+    timeLabel.text = @"距本场结束还有16时16分16秒";
+    [sectionView addSubview:timeLabel];
+    
+    return sectionView;
+}
+- (void)titleBtnClickAction:(UIButton *)button {
+    NSLog(@"%ld",button.tag);
+    NSInteger index = button.tag - 100;
+    
+    for (int i = 0 ; i < _buttonTitleArr.count; i++) {
+        NSInteger j = 100 + i;
+        UIButton *btni = (UIButton *)[self.view viewWithTag:j];
+        if (i == index) {
+            btni.selected = YES;
+        }else {
+            btni.selected = NO;
+        }
+    }
     
     
     
@@ -179,7 +292,7 @@
     }else if (indexPath.section == 1){
         return 160;
     }else {
-        return 600;
+        return SCREENHEIGHT - 154;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -195,6 +308,8 @@
         return cell;
     }else {
         JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JJMHomeGoodsCellIdentifier];
+        cell.currentIndex = _currentIndex;
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
