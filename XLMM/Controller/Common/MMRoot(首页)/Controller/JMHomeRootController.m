@@ -17,6 +17,7 @@
 #import "WebViewController.h"
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
+#import "HMSegmentedControl.h"
 
 @interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
 
@@ -24,6 +25,10 @@
 @property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
 
 @property (nonatomic, strong) NSMutableArray *activeArray;
+
+
+@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+
 
 @end
 
@@ -163,6 +168,11 @@
         return 80;
     }
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    
+    
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return 130;
@@ -185,6 +195,7 @@
         return cell;
     }else {
         JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JJMHomeGoodsCellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
 }
