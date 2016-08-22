@@ -18,8 +18,7 @@ NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 //NSString *Root_URL =  @"http://192.168.1.31:9000";
 #else
 
-//NSString *Root_URL = @"http://m.xiaolumeimei.com";
-NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
+NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
 #endif
 
