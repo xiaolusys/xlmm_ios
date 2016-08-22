@@ -389,6 +389,8 @@ static NSUInteger popNum = 0;
  108 === > 我的粉丝
  109 === > 我的团队
  110 === > 收益排行
+ 111 === > 论坛
+ 112 === > 任务奖励
  */
 - (void)composeMaMaCenterFooterView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
     // index == 100 || 
@@ -443,6 +445,7 @@ static NSUInteger popNum = 0;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else if (index == 111) {
+        [MobClick event:@"BBS"];
 //        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
