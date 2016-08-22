@@ -12,6 +12,7 @@
 #import "JMMaMaEarningsRankController.h"
 #import "JMMaMaSelfTeamModel.h"
 #import "JMSelecterButton.h"
+#import "WebViewController.h"
 
 static const NSUInteger ITEM_COUNT = 3;
 
@@ -56,7 +57,7 @@ static const NSUInteger ITEM_COUNT = 3;
     [self createHeaderView];
     [self loadDataSource];
     [self loadSelfInfoDataSource];
-//    [self createRightButonItem];
+    [self createRightButonItem];
 }
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
@@ -68,6 +69,13 @@ static const NSUInteger ITEM_COUNT = 3;
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)rightClicked:(UIButton *)button {
+    WebViewController *webVC = [[WebViewController alloc] init];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:self.explainUrl forKey:@"web_url"];
+    webVC.webDiction = dict;
+    webVC.isShowNavBar = true;
+    webVC.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 - (void)loadDataSource {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/%@/get_team_members",Root_URL,self.mamaID];
