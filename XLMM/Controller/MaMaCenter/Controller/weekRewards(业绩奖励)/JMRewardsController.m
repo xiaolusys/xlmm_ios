@@ -94,7 +94,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     _personArray = dic[@"personal_missions"];
     _teamArray = dic[@"group_missions"];
     
-    self.weekRewardValueLabel.text = [NSString stringWithFormat:@"%.2f",_awardValue];
+    self.weekRewardValueLabel.text = [NSString stringWithFormat:@"¥ %.2f",_awardValue];
     
     UITableView *table = _tableArr[_currentIndex];
     [table reloadData];
@@ -120,7 +120,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     [self.topView addSubview:self.weekRewardValueLabel];
     self.weekRewardValueLabel.font = [UIFont systemFontOfSize:36.];
     self.weekRewardValueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    self.weekRewardValueLabel.text = @"0.00";
+    self.weekRewardValueLabel.text = @"¥ 0.00";
     
     kWeakSelf
     [weekRewardsDescTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -234,7 +234,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
         self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH * btnTag, 0);
         [self changeBtnSelect:btnTag];
         _currentIndex = btnTag;
-        self.weekRewardValueLabel.text = [NSString stringWithFormat:@"%.2f",_awardValue];
+        self.weekRewardValueLabel.text = [NSString stringWithFormat:@"¥ %.2f",_awardValue];
         UITableView *table = _tableArr[btnTag];
         [table reloadData];
     }
@@ -279,7 +279,7 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     if (scrollView == self.bottomScrollView) {
         NSInteger count = scrollView.contentOffset.x / SCREENWIDTH;
         _currentIndex = count;
-        self.weekRewardValueLabel.text = [NSString stringWithFormat:@"%.2f",_awardValue];
+        self.weekRewardValueLabel.text = [NSString stringWithFormat:@"¥ %.2f",_awardValue];
     }
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
