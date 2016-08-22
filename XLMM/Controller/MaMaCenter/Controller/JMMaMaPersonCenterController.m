@@ -32,6 +32,7 @@
 #import "JMPopViewAnimationSpring.h"
 #import "Udesk.h"
 #import "JMServiceEnterController.h"
+#import "JMRewardsController.h"
 
 
 static NSUInteger popNum = 0;
@@ -64,7 +65,7 @@ static NSUInteger popNum = 0;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 /**
- *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口,妈妈消息滚动视图
+ *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口,妈妈消息滚动视图,论坛,团队说明
  */
 @property (nonatomic, copy) NSString *orderRecord;
 @property (nonatomic, copy) NSString *earningsRecord;
@@ -77,6 +78,7 @@ static NSUInteger popNum = 0;
 @property (nonatomic, copy) NSString *eventLink;
 @property (nonatomic, copy) NSString *messageUrl;
 @property (nonatomic, copy) NSString *bbsUrl;
+@property (nonatomic, copy) NSString *teamExplainUrl;
 
 @property (nonatomic, strong) JMNewcomerTaskController *newcomerTask;
 
@@ -259,6 +261,7 @@ static NSUInteger popNum = 0;
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
     self.messageUrl = extraDict[@"notice"];               // --> 小鹿妈妈消息
     self.bbsUrl = extraDict[@"forum"];                    // --> 论坛入口
+    self.teamExplainUrl = extraDict[@"team_explain"];     // --> 团队说明
     
     NSDictionary *picturesDic = extraDict[@"pictures"];
     self.mamaCenterHeaderView.imageString = picturesDic[@"exam_pic"];
@@ -430,6 +433,7 @@ static NSUInteger popNum = 0;
     }else if (index == 109) {
         JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
         teamVC.mamaID = _mamaID;
+        teamVC.explainUrl = self.teamExplainUrl;
         [self.navigationController pushViewController:teamVC animated:YES];
     }else if (index == 110) {
         JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
@@ -438,7 +442,7 @@ static NSUInteger popNum = 0;
         earningsRankVC.urlArray = array;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
-    }else if (index == 111){
+    }else if (index == 111) {
 //        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -447,10 +451,11 @@ static NSUInteger popNum = 0;
         webVC.isShowNavBar = true;
         webVC.isShowRightShareBtn = false;
         [self.navigationController pushViewController:webVC animated:YES];
-//
-//        [self showNewStatusCount:2];
+    }else if (index == 112) {
+        JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
+        [self.navigationController pushViewController:rewardsVC animated:YES];
     }else {
-    
+        
     }
     
     

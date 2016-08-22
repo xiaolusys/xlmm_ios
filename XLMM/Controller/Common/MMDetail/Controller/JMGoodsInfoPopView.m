@@ -119,11 +119,12 @@
     iconImage.backgroundColor = [UIColor orangeColor];
     [headerView addSubview:iconImage];
     self.iconImage = iconImage;
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5.;
-    
+    self.iconImage.layer.cornerRadius = 5;
+
     UILabel *goodsTitle = [UILabel new];
     [headerView addSubview:goodsTitle];
     self.nameTitle = goodsTitle;
@@ -301,7 +302,7 @@
     
     NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
     [newImageUrl appendString:@"?"];
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageMoreCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     NSDictionary *colorD = _goodsArr[0];
     
     _goodsColorID = [colorD[@"product_id"] integerValue];
@@ -329,8 +330,8 @@
         
         NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:index - 1]];
         [newImageUrl appendString:@"?"];
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageMoreCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
-        
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+
         // -- > 在这里面给颜色 赋值
         NSDictionary *colirD = _goodsArr[index - 1];
         _goodsColorID = [colirD[@"product_id"] integerValue];
