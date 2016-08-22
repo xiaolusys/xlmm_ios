@@ -11,6 +11,8 @@
 #import "JMRootgoodsCell.h"
 #import "JMGoodsDetailController.h"
 #import "JMSelecterButton.h"
+#import "JMEmptyView.h"
+#import "JMEmptyGoodsView.h"
 
 @interface JMClassifyListController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -78,7 +80,7 @@ static NSString * cellId = @"JMClassifyListController";
     }
 }
 - (void)loadDataSource {
-    NSString *urlString = [NSString stringWithFormat:@"http://staging.xiaolumeimei.com/rest/v2/modelproducts?cid=%@",self.cid];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@",Root_URL,self.cid];
     [self.dataSource removeAllObjects];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
@@ -169,34 +171,13 @@ static NSString * cellId = @"JMClassifyListController";
     
 }
 - (void)emptyView {
-    UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    [self.view addSubview:emptyView];
-    
-    UIImageView *imageView = [UIImageView new];
-    [emptyView addSubview:imageView];
-    
-    UILabel *titleLabel = [UILabel new];
-    [emptyView addSubview:titleLabel];
-    titleLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    titleLabel.font = [UIFont boldSystemFontOfSize:80.];
-    titleLabel.numberOfLines = 0;
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"暂无商品";
-    
-//    self.selectedButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-//    [emptyView addSubview:self.selectedButton];
-//    self.selectedButton.tag = 100;
-//    [self.selectedButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"继续逛逛" TitleFont:14. CornerRadius:15.];
-//    [self.selectedButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-
-    
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(@100);
-        make.centerX.equalTo(emptyView.mas_centerX);
-        make.top.equalTo(emptyView).offset(120);
-    }];
-    
-    
+    JMEmptyGoodsView *empty = [[JMEmptyGoodsView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99)];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
     
 }
 

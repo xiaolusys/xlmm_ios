@@ -343,21 +343,28 @@
 
         
     }else if ([typeView isEqual:self.sizeView]) {
+        NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         for (int i = 1; i <= self.goodsSizeArray.count; i++) {
             UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
             if (i == index) {
-//                button.selected = YES;
                 button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
                 [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
             }else {
-//                button.selected = NO;
-                button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
-                [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+                NSString *size = self.goodsSizeArray[i - 1];
+                NSDictionary *sizeD = sizeDic[size];
+                NSInteger count =  [sizeD[@"free_num"] integerValue];
+                if (count == 0) {
+                    button.enabled = NO;
+                    button.layer.borderColor = [UIColor titleDarkGrayColor].CGColor;
+                    [button setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
+                }else {
+                    button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+                    [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+                }
             }
         }
         // -- > 在这里面给尺码 赋值
 //        NSString *color = self.goodsColorArray[self.colorView.tag - 1];
-        NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         NSString *size = self.goodsSizeArray[index - 1];
         NSDictionary *sizeD = sizeDic[size];
         self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"agent_price"] floatValue]];
