@@ -2567,7 +2567,6 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //    NSString *isUpData = dic[@"sha1"];
 //    [[NSUserDefaults standardUserDefaults] setObject:isUpData forKey:@"itemHash"];
 //    NSString *downloadUrl = dic[@"download_url"];
-    
     NSString *isUpData = dic[@"sha1"];
     NSString *urlString = dic[@"download_url"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

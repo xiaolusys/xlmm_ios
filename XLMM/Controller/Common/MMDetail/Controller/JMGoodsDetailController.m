@@ -250,6 +250,7 @@
         if (_cartsGoodsNum == 0) {
             self.cartsLabel.hidden = YES;
         }else {
+            self.cartsLabel.hidden = NO;
             self.cartsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"result"]];
         }
     } WithFail:^(NSError *error) {
@@ -287,22 +288,25 @@
     coustomInfoDic = [NSDictionary dictionary];
     coustomInfoDic = goodsDetailDic[@"custom_info"];
     goodsArray = goodsDetailDic[@"sku_info"];
-
-    if ([detailContentDic[@"is_saleopen"] boolValue]) {
-        if ([detailContentDic[@"is_sale_out"] boolValue]) {
-            // == > 抢光
+    
+    NSString *saleStatus = detailContentDic[@"sale_state"];
+    if ([saleStatus isEqual:@"on"]) {
+        if ([detailContentDic[@"is_saleout"] boolValue]) {
             [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
             self.addCartButton.enabled = NO;
+        }else {
+            self.addCartButton.enabled = YES;
         }
-        else {
-        }
+    }else if ([saleStatus isEqual:@"off"]) {
+        [self.addCartButton setTitle:@"已下架" forState:UIControlStateNormal];
+        self.addCartButton.enabled = NO;
+    }else if ([saleStatus isEqual:@"will"]) {
+        [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
+        self.addCartButton.enabled = NO;
     }else {
-        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
-        if([detailContentDic[@"is_newsales"] boolValue]){
-            [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
-            self.addCartButton.enabled = NO;
-        }
+        
     }
+
     if (goodsArray.count == 0) {
         return ;
         
@@ -774,7 +778,7 @@
     self.cartsLabel.textAlignment = NSTextAlignmentCenter;
     self.cartsLabel.layer.cornerRadius = 8.;
     self.cartsLabel.layer.masksToBounds = YES;
-//    self.cartsLabel.hidden = YES;
+    self.cartsLabel.hidden = YES;
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];

@@ -238,16 +238,20 @@
     self.backView.layer.cornerRadius = 30;
     
     
-    if ([model.sale_state isEqual:@"will"]) {
-        self.backView.hidden = NO;
-        self.backLabel.text = @"即将开售";
-    }else {
+    if ([model.sale_state isEqual:@"on"]) {
         if ([model.is_saleout boolValue]) {
             self.backView.hidden = NO;
             self.backLabel.text = @"已抢光";
         }else {
-        	self.backView.hidden = YES;
+            self.backView.hidden = YES;
         }
+    }else if ([model.sale_state isEqual:@"off"]) {
+        self.backView.hidden = NO;
+        self.backLabel.text = @"已下架";
+    }else if ([model.sale_state isEqual:@"will"]) {
+        self.backView.hidden = NO;
+        self.backLabel.text = @"即将开售";
+    }else {
         
     }
 
