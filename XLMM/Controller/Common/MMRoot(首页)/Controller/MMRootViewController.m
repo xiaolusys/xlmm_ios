@@ -2575,6 +2575,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self downLoadUrl:urlString];
     }else {
         if ([oldVersion isEqualToString:isUpData]) {
+            
         }else {
             [self downLoadUrl:urlString];
         }
