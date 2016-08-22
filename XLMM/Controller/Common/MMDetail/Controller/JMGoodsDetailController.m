@@ -635,6 +635,7 @@
         NSLog(@"%@",responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
+            [SVProgressHUD setMinimumDismissTimeInterval:2];
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
 //            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
             self.cartsLabel.hidden = NO;
