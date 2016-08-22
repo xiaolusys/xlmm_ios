@@ -121,7 +121,7 @@
         _exchangeType = @"half";
     }else {
         _wxOraliPayment = paument - _walletCash;
-        _descLabelValue = _wxOraliPayment;
+        _descLabelValue = _walletCash;
         self.isEnoughBudgetPay = NO;
     }
     self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
@@ -543,7 +543,7 @@
         }else {
             self.isEnoughBudgetPay = NO;
             _wxOraliPayment = paument - _walletCash;
-            _descLabelValue = _wxOraliPayment;
+            _descLabelValue = _walletCash;
         }
         
         self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
@@ -565,7 +565,7 @@
         }else {
             self.isEnoughBudgetPay = NO;
             _wxOraliPayment = paument - _walletCash;
-            _descLabelValue = _wxOraliPayment;
+            _descLabelValue = _walletCash;
         }
         self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else if (button.tag == 102){

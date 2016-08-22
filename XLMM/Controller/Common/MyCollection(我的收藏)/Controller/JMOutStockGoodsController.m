@@ -112,7 +112,6 @@
     JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99)];
     [self.view addSubview:empty];
     
-    
     empty.block = ^(NSInteger index) {
         if (index == 100) {
             [self.navigationController popToRootViewControllerAnimated:YES];

@@ -29,7 +29,10 @@
  *  返现等级字典
  */
 @property (nonatomic, strong) NSDictionary *level_info;
-
+/**
+ *  商品ID
+ */
+@property (nonatomic, copy) NSString *model_id;
 
 @end
 

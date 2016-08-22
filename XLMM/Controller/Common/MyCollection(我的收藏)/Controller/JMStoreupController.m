@@ -31,7 +31,7 @@
     return @[@"JMHotGoodsController",@"JMOutStockGoodsController"];
 }
 - (NSArray *)titleArr {
-    return @[@"我的收藏",@"热销商品"];
+    return @[@"热销商品",@"未上架"];
 }
 
 

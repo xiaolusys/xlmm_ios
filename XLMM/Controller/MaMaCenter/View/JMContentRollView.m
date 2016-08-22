@@ -64,7 +64,7 @@
         make.centerY.equalTo(baseView.mas_centerY);
         make.left.equalTo(baseView);
 //        make.right.equalTo(baseView).offset(-60);
-        make.width.mas_equalTo(SCREENWIDTH - 60);
+        make.width.mas_equalTo(SCREENWIDTH - 110);
         make.height.mas_equalTo(@40);
     }];
     

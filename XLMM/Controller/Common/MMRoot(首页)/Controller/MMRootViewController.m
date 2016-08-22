@@ -28,7 +28,6 @@
 #import "MMAdvertiseView.h"
 #import "WebViewController.h"
 #import "ActivityModel.h"
-#import "PromoteModel.h"
 #import "JMRootgoodsCell.h"
 #import "MJPullGifHeader.h"
 #import "JumpUtils.h"
@@ -50,6 +49,7 @@
 #import "JMStoreupController.h"
 #import "JMGoodsDetailController.h"
 #import "PosterModel.h"
+#import "JMRootGoodsModel.h"
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 #define ABOVEHIGHT 300
@@ -66,7 +66,9 @@
 
 #define CELLWIDTH ([UIScreen mainScreen].bounds.size.width * 0.5)
 
+//因为可能有多个activity,那么先预留500个
 #define TAG_ACTIVITY_BASE 120
+#define TAG_CART          620
 #define TAG_ROOT_VIEW_BASE 1000
 #define TAG_BACK_SCROLLVIEW  (TAG_ROOT_VIEW_BASE)
 #define TAG_GOODS_YESTODAY_SCROLLVIEW (TAG_ROOT_VIEW_BASE+1)
@@ -368,6 +370,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 #pragma mark 主界面初始化
@@ -382,7 +385,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
     
-    UIView *cartView = [_view viewWithTag:123];
+    UIView *cartView = [_view viewWithTag:TAG_CART];
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 64;
     cartView.frame = rect;
@@ -490,6 +493,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     //商品请求链接
     [self createRequestURL];
+    //获取商品分类
+    [self loadItemizeData];
     //推荐商品展示
     [self createCollectionView];
     //设置商品scrollview的偏转
@@ -638,12 +643,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     
 }
-
+#pragma mark 商品查询接口 --> (昨,今,明)
 - (void)createRequestURL {
     [self.urlArr removeAllObjects];
-    NSArray *urlBefroe = @[@"/rest/v2/products/yesterday?page=1&page_size=10",
-                           @"/rest/v2/products?page=1&page_size=10",
-                           @"/rest/v2/products/tomorrow?page=1&page_size=10"];
+    NSArray *urlBefroe = @[@"/rest/v2/modelproducts/yesterday?page=1&page_size=10",
+                           @"/rest/v2/modelproducts/today?page=1&page_size=10",
+                           @"/rest/v2/modelproducts/tomorrow?page=1&page_size=10"];
     for (int i = 0; i < 3; i++) {
         NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
         [self.urlArr addObject:url];
@@ -904,7 +909,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [topicImageView addGestureRecognizer:tap];
         
         ActivityModel *acM = self.brandDataArr[index];
-        [topicImageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+        [topicImageView sd_setImageWithURL:[NSURL URLWithString:[[acM.act_img imageNormalCompression] JMUrlEncodedString]] placeholderImage:nil
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 //通过加载图片得到其高度
                                 float h;
@@ -937,8 +942,10 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     //判断上架deadline时间不一致那么就刷新，考虑场景是10点上新时自动刷新
     
     if(self.endTime.count==0 ||
-       [self.endTime[1] isEqualToString:@""])
+       (self.endTime[1]==nil || [self.endTime[1] isEqualToString:@""])){
+        NSLog(@"need refresh");
         return TRUE;
+    }
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     // NSDateComponents *comps =
@@ -971,6 +978,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 
 - (void )refreshView{
+    NSLog(@"refresh");
+    [self comeToTop];
+    
     [self removeAllSubviews:self.bannerView];
     [self removeAllSubviews:self.activityView];
     [self removeAllSubviews:self.brandView];
@@ -999,7 +1009,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)saleTimerCallback:(NSTimer*)theTimer
 {
     if(self.endTime.count==0 ||
-       [self.endTime[self.currentIndex] isEqualToString:@""])
+       (self.endTime[self.currentIndex]==nil) || [self.endTime[self.currentIndex] isEqualToString:@""])
         return;
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -1072,9 +1082,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSLog(@"goodsResult NEXT=%@ index=%ld",[dic objectForKey:@"next"], (long)self.currentIndex);
     }
     
-    NSLog(@"Deadline=%@",[dic objectForKey:@"downshelf_deadline"]);
-    NSString *deadline = [dic objectForKey:@"downshelf_deadline"];
-    NSString *starttime = [dic objectForKey:@"upshelf_starttime"];
+    NSLog(@"Deadline=%@",[dic objectForKey:@"offshelf_deadline"]);
+    NSString *deadline = [dic objectForKey:@"offshelf_deadline"];
+    NSString *starttime = [dic objectForKey:@"onshelf_starttime"];
     if(self.currentIndex != 2){
         if(deadline != nil){
             [self.endTime replaceObjectAtIndex: self.currentIndex  withObject: deadline];
@@ -1096,8 +1106,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSMutableArray *numArray = [[NSMutableArray alloc] init];
     NSMutableArray *currentArr = [self.categoryDic objectForKey:self.dickey[self.currentIndex]];
     for (NSDictionary *goods in results) {
-        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:goods];
-        
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:goods];
         
         NSIndexPath *index ;
         
@@ -1192,7 +1201,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self.activityView addSubview:imageView];
         
         ActivityModel *acM = self.activityDataArr[i];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:acM.act_img] placeholderImage:nil
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[[acM.act_img imageNormalCompression] JMUrlEncodedString]] placeholderImage:nil
                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                 //通过加载图片得到其高度
                                 float h;
@@ -1608,7 +1617,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSString *key = self.dickey[self.currentIndex];
         NSMutableArray *currentArr = [self.categoryDic objectForKey:key];
         if(currentArr.count > indexPath.row){
-            PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+            JMRootGoodsModel *model = [currentArr objectAtIndex:indexPath.row];
             [cell fillData:model];
         }
         return cell;
@@ -1671,7 +1680,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         if((currentArr == nil) || (currentArr.count == 0) || (indexPath.row >= currentArr.count))
             return;
         
-        PromoteModel *model = [currentArr objectAtIndex:indexPath.row];
+        JMRootGoodsModel *model = [currentArr objectAtIndex:indexPath.row];
 //        _diction = [NSMutableDictionary dictionary];
 //        _diction = model.mj_keyValues;
 //        [_diction setValue:model.web_url forKey:@"web_url"];
@@ -1684,8 +1693,8 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 //        [self.navigationController pushViewController:webView animated:YES];
         
         JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
-        
-        detailVC.goodsID = model.modelID;
+        detailVC.readImageUrl = model.head_img;
+        detailVC.goodsID = model.goodsID;
         
         [self.navigationController pushViewController:detailVC animated:YES];
     }
@@ -1726,7 +1735,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
     self.startV.imageV.alpha = 1;
     
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[[self.imageUrl imageNormalCompression] JMUrlEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:.3 animations:^{
             self.startV.imageV.alpha = 1;
         }];
@@ -1967,6 +1976,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
             JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
 //            MaMaPersonCenterViewController *mamaCenterVC= [[MaMaPersonCenterViewController alloc] initWithNibName:@"MaMaPersonCenterViewController" bundle:nil];
+            mamaCenterVC.userInfoDic = json;
             [self.navigationController pushViewController:mamaCenterVC animated:YES];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -2001,7 +2011,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(60, SCREENHEIGHT - 64, 108, 44)];
-    view.tag = 123;
+    view.tag = TAG_CART;
     [_view addSubview:view];
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.8;
@@ -2049,7 +2059,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSLog(@"Cart,not login,return");
         dotView.hidden = YES;
         countLabel.hidden = YES;
-        UIView *view = [_view viewWithTag:123];
+        UIView *view = [_view viewWithTag:TAG_CART];
         CGRect rect = view.frame;
         rect.size.width = 44;
         view.frame = rect;
@@ -2066,7 +2076,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
             label.text = @"0";
             dotView.hidden = YES;
             countLabel.hidden = YES;
-            UIView *view = [_view viewWithTag:123];
+            UIView *view = [_view viewWithTag:TAG_CART];
             CGRect rect = view.frame;
             rect.size.width = 44;
             view.frame = rect;
@@ -2088,7 +2098,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if (goodsCount == 0) {
         dotView.hidden = YES;
         countLabel.hidden = YES;
-        UIView *view = [_view viewWithTag:123];
+        UIView *view = [_view viewWithTag:TAG_CART];
         CGRect rect = view.frame;
         rect.size.width = 44;
         view.frame = rect;
@@ -2097,7 +2107,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     label.text = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"result"] stringValue]];
     dotView.hidden = NO;
     countLabel.hidden = NO;
-    UIView *view = [_view viewWithTag:123];
+    UIView *view = [_view viewWithTag:TAG_CART];
     CGRect rect = view.frame;
     rect.size.width = 108;
     view.frame = rect;
@@ -2129,7 +2139,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     if ([d minute] < 0 || [d second] < 0) {
         string = @"";
         
-        UIView *view = [_view viewWithTag:123];
+        UIView *view = [_view viewWithTag:TAG_CART];
         dotView.hidden = YES;
         
         CGRect rect = view.frame;
@@ -2150,7 +2160,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)gotoCarts:(id)sender{
     [MobClick event:@"cart_click"];
     
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     if (login == NO) {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
@@ -2162,6 +2172,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 }
 #pragma mark 点击按钮进入我的收藏界面
 - (void)gotoCollection:(UIButton *)sender {
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (login == NO) {
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+        [self.navigationController pushViewController:enterVC animated:YES];
+        return;
+    }
     JMStoreupController *storeVC = [[JMStoreupController alloc] init];
     storeVC.index = 100;
     [self.navigationController pushViewController:storeVC animated:YES];
@@ -2341,7 +2357,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)hiddenNavigation{
     self.navigationController.navigationBarHidden = YES;
     self.view.frame = CGRectMake(0, -44, SCREENWIDTH, SCREENHEIGHT);
-    UIView *cartView = [_view viewWithTag:123];
+    UIView *cartView = [_view viewWithTag:TAG_CART];
     
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 112;
@@ -2353,7 +2369,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
 - (void)showNavigation{
     self.navigationController.navigationBarHidden = NO;
     self.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-    UIView *cartView = [_view viewWithTag:123];
+    UIView *cartView = [_view viewWithTag:TAG_CART];
     CGRect rect = cartView.frame;
     rect.origin.y = SCREENHEIGHT - 156;
     cartView.frame = rect;
@@ -2531,6 +2547,61 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         NSLog(@"复制文件发生错误: %@", [errorCopy localizedDescription]);
     }
 }
+#pragma mark - 获取商品分类列表
+//      /rest/v2/categorys/latest_version
+- (void)loadItemizeData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) {
+            return ;
+        }else {
+            [self fetchItemize:responseObject];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+}
+- (void)fetchItemize:(NSDictionary *)dic {
+//    NSString *isUpData = dic[@"sha1"];
+//    [[NSUserDefaults standardUserDefaults] setObject:isUpData forKey:@"itemHash"];
+//    NSString *downloadUrl = dic[@"download_url"];
+    NSString *isUpData = dic[@"sha1"];
+    NSString *urlString = dic[@"download_url"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *oldVersion = [defaults stringForKey:@"itemHash"];
+    if (oldVersion == nil) {
+        [self downLoadUrl:urlString];
+    }else {
+        if ([oldVersion isEqualToString:isUpData]) {
+            
+        }else {
+            [self downLoadUrl:urlString];
+        }
+    }
+    [defaults setObject:isUpData forKey:@"itemHash"];
+    [defaults synchronize];
+    
+}
+- (void)downLoadUrl:(NSString *)urlStr {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"当前下载进度为:%lf", 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        NSLog(@"默认下载地址%@",targetPath);
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *path=[paths objectAtIndex:0];
+        NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+        return [NSURL fileURLWithPath:jsonPath]; // 返回的是文件存放在本地沙盒的地址
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        NSLog(@"%@---%@", response, filePath);
+    }];
+    // 5.启动下载任务
+    [task resume];
+}
 
 #pragma mark - NSURLSessionTaskDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
@@ -2572,10 +2643,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     [self.topButton bringSubviewToFront:self.view];
 }
 - (void)topButtonClick:(UIButton *)btn {
-    [self disableAllGoodsCollectionScroll];
-    self.topButton.hidden = YES;
-    [self searchScrollViewInWindow:self.view];
-    self.backScrollview.scrollEnabled = YES;
+    [self comeToTop];
 }
 - (void)searchScrollViewInWindow:(UIView *)view {
     for (UIScrollView *scrollView in view.subviews) {
@@ -2587,6 +2655,13 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         [self searchScrollViewInWindow:scrollView];
     }
 }
+- (void)comeToTop{
+    [self disableAllGoodsCollectionScroll];
+    self.topButton.hidden = YES;
+    [self searchScrollViewInWindow:self.view];
+    self.backScrollview.scrollEnabled = YES;
+}
+
 
 @end
 

@@ -13,4 +13,6 @@
 
 @property (nonatomic, copy) NSString *imageString;
 
+//@property (nonatomic, copy) NSString *readyImageUrl;
+
 @end

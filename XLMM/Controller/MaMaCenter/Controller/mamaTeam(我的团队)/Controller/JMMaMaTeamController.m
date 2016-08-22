@@ -12,6 +12,7 @@
 #import "JMMaMaEarningsRankController.h"
 #import "JMMaMaSelfTeamModel.h"
 #import "JMSelecterButton.h"
+#import "WebViewController.h"
 
 static const NSUInteger ITEM_COUNT = 3;
 
@@ -56,7 +57,7 @@ static const NSUInteger ITEM_COUNT = 3;
     [self createHeaderView];
     [self loadDataSource];
     [self loadSelfInfoDataSource];
-//    [self createRightButonItem];
+    [self createRightButonItem];
 }
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
@@ -68,6 +69,13 @@ static const NSUInteger ITEM_COUNT = 3;
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)rightClicked:(UIButton *)button {
+    WebViewController *webVC = [[WebViewController alloc] init];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:self.explainUrl forKey:@"web_url"];
+    webVC.webDiction = dict;
+    webVC.isShowNavBar = true;
+    webVC.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 - (void)loadDataSource {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/%@/get_team_members",Root_URL,self.mamaID];
@@ -89,6 +97,7 @@ static const NSUInteger ITEM_COUNT = 3;
 }
 - (void)loadSelfInfoDataSource {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
+//    NSString *urlStr = @"http://192.168.1.56:8000/rest/v2/mama/teamrank/self_rank";
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchSelfTeamInfoData:responseObject];
@@ -100,8 +109,14 @@ static const NSUInteger ITEM_COUNT = 3;
 }
 - (void)fetchSelfTeamInfoData:(NSDictionary *)teamInfoDic {
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[teamInfoDic[@"thumbnail"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
-    CGFloat total = [teamInfoDic[@"total"] floatValue] / 100.00;
-    self.earningsLabel.text = [NSString stringWithFormat:@"收益%.2f元",total];
+    if ([teamInfoDic[@"total"] isKindOfClass:[NSNull class]]) {
+        return ;
+    }else {
+        CGFloat total = [teamInfoDic[@"total"] floatValue] / 100.00;
+        self.earningsLabel.text = [NSString stringWithFormat:@"收益%.2f元",total];
+    }
+    
+    
 //    self.teamEarningsRankLabel.text = [NSString stringWithFormat:@"团队收益第%@",teamInfoDic[@"rank"]];
 
 }
@@ -276,7 +291,10 @@ static const NSUInteger ITEM_COUNT = 3;
 - (void)mamaRankClick:(UIButton *)button {
     JMMaMaEarningsRankController *earningsVC = [[JMMaMaEarningsRankController alloc] init];
     earningsVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/self_rank",Root_URL];
-    earningsVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/carry_total_rank",Root_URL];
+    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/teamrank/carry_total_rank",@"/rest/v2/mama/teamrank/carry_duration_rank", nil];
+    earningsVC.urlArray = array;
+//    earningsVC.urlArray = @[@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_total_rank",@"http://s18.xiaolumm.com/rest/v2/mama/teamrank/carry_duration_rank"];
+//    earningsVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/teamrank/carry_total_rank",Root_URL];
     earningsVC.isTeamEarningsRank = YES;
     [self.navigationController pushViewController:earningsVC animated:YES];
 }

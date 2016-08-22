@@ -11,6 +11,7 @@
 #import "YixuanTableViewController.h"
 #import "JMProductSelectionListModel.h"
 #import "JMProductSelectListCell.h"
+#import "JMGoodsDetailController.h"
 
 
 
@@ -111,7 +112,8 @@
     
     [self createHeadView];
    
-    [self createrightItem];
+    // --> 不需要删除,先注释掉
+//    [self createrightItem];
     
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
@@ -344,8 +346,8 @@
         return;
     }
 
-    for (NSDictionary *dic in array) {
-        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dic];
+    for (NSDictionary *dict in array) {
+        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dict];
         [self.dataArr addObject:self.listModel];
     }
     
@@ -461,7 +463,12 @@
     return cell;
     
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    JMProductSelectionListModel *listModel = self.dataArr[indexPath.row];
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    detailVC.goodsID = listModel.model_id;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
 
 #pragma mark ---cell的代理方法
 - (void)composeProductSelectionList:(JMProductSelectListCell *)selectList addButton:(UIButton *)button {

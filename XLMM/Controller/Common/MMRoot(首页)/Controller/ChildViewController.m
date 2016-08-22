@@ -9,16 +9,15 @@
 #import "ChildViewController.h"
 #import "JMRootgoodsCell.h"
 #import "MMClass.h"
-#import "CollectionModel.h"
 #import "DetailsModel.h"
 #import "CartViewController.h"
-#import "PromoteModel.h"
 #import "MJPullGifHeader.h"
 #import "MMDetailsViewController.h"
-#import "MMCollectionController.h"
 #import "XlmmMall.h"
 #import "WebViewController.h"
 #import "JMGoodsDetailController.h"
+#import "JMCategoryListController.h"
+#import "CollectionModel.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -44,10 +43,20 @@ static NSString * ksimpleCell = @"simpleCell";
 @property (nonatomic, strong) NSMutableArray *orderDataArray;
 @property (nonatomic,strong) UIButton *topButton;
 
+@property (nonatomic, strong) NSMutableArray *childArray;
+@property (nonatomic, strong) NSMutableArray *womenArray;
+
+
 @end
 
 @implementation ChildViewController
 
+- (NSMutableArray *)childArray {
+    if (_childArray == nil) {
+        _childArray = [NSMutableArray array];
+    }
+    return _childArray;
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -163,7 +172,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSMutableArray *numArray = [[NSMutableArray alloc] init];
     
     for (NSDictionary *ladyInfo in array) {
-        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        CollectionModel *model = [[CollectionModel alloc] initWithDiction:ladyInfo];
         NSIndexPath *index ;
         if(isOrder){
              index = [NSIndexPath indexPathForRow:_orderDataArray.count inSection:0];
@@ -190,7 +199,8 @@ static NSString * ksimpleCell = @"simpleCell";
     
     NSLog(@"Child vc viewDidLoad");
 
-    
+    [self itemDataSource];
+    [self craeteRight];
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _isFirst = YES;
@@ -235,6 +245,49 @@ static NSString * ksimpleCell = @"simpleCell";
     [self reloadGoods];
     NSLog(@"Child vc viewDidLoad end");
     [self createButton];
+    
+}
+- (void)itemDataSource {
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path=[paths objectAtIndex:0];
+    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+    //==Json数据
+    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
+    //==JsonObject
+    NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    
+    for (NSDictionary *dic in arr) {
+        if ([dic[@"cid"] integerValue] == 1) {
+            // 童装
+            self.childArray = dic[@"childs"];
+        }else if ([dic[@"cid"] integerValue] == 2) {
+            // 女装
+            self.womenArray = dic[@"childs"];
+        }else {}
+        
+    }
+    
+    
+}
+- (void)craeteRight {
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitle:@"分类" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16.];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+- (void)rightClicked:(UIButton *)button {
+    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
+    if(self.childClothing) {
+        catoryVC.titleString = @"童装专区";
+        catoryVC.dataSource = self.childArray;
+    }else {
+        catoryVC.titleString = @"女装专区";
+        catoryVC.dataSource = self.womenArray;
+    }
+    [self.navigationController pushViewController:catoryVC animated:YES];
 }
 
 - (void)saveCurrentState{
@@ -298,7 +351,7 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     [self.dataArray removeAllObjects];
     for (NSDictionary *ladyInfo in array) {
-        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        CollectionModel *model = [[CollectionModel alloc] initWithDiction:ladyInfo];
         [_dataArray addObject:model];
     }
     NSLog(@"_dataArray count %lu",(unsigned long)_dataArray.count);
@@ -334,7 +387,7 @@ static NSString * ksimpleCell = @"simpleCell";
     nextUrl = [json objectForKey:@"next"];
     [self.orderDataArray removeAllObjects];
     for (NSDictionary *ladyInfo in array) {
-        PromoteModel *model = [[PromoteModel alloc] initWithDictionary:ladyInfo];
+        CollectionModel *model = [[CollectionModel alloc] initWithDiction:ladyInfo];
         [self.orderDataArray addObject:model];
         
     }
@@ -400,18 +453,18 @@ static NSString * ksimpleCell = @"simpleCell";
     
     if (isOrder) {
         if (_orderDataArray.count > indexPath.row) {
-            PromoteModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+            CollectionModel *model = [_orderDataArray objectAtIndex:indexPath.row];
             
-            [cell fillData:model];
+            [cell fillDataWithCollectionModel:model];
         }
         
        
     }else{
         //NSLog(@"collectionView cell _dataArray.count=%lu indexPath.row=%ld", (unsigned long)_dataArray.count, (long)indexPath.row);
         if (_dataArray.count > indexPath.row) {
-            PromoteModel *model = [_dataArray objectAtIndex:indexPath.row];
+            CollectionModel *model = [_dataArray objectAtIndex:indexPath.row];
             
-            [cell fillData:model];
+            [cell fillDataWithCollectionModel:model];
         }
        
     }
@@ -422,7 +475,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
     _childDic = [NSMutableDictionary dictionary];
 
-    PromoteModel *model = nil;
+    CollectionModel *model = nil;
     if (isOrder) {
         if (_orderDataArray.count == 0) {
             return;
@@ -443,7 +496,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     
-    detailVC.goodsID = model.modelID;
+    detailVC.goodsID = model.model_id;
     
     [self.navigationController pushViewController:detailVC animated:YES];
     
@@ -618,15 +671,6 @@ static NSString * ksimpleCell = @"simpleCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
@@ -634,3 +678,40 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -30,6 +30,10 @@
 #import "JMPopView.h"
 #import "JMNewcomerTaskController.h"
 #import "JMPopViewAnimationSpring.h"
+#import "Udesk.h"
+#import "JMServiceEnterController.h"
+#import "JMRewardsController.h"
+
 
 static NSUInteger popNum = 0;
 
@@ -61,23 +65,29 @@ static NSUInteger popNum = 0;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 /**
- *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口,妈妈消息滚动视图
+ *  订单记录,收益记录,2016.3.24号系统升级之前的收益,我的邀请,MaMa等级考试入口,关于粉丝入口,精品活动入口,续费入口,妈妈消息滚动视图,论坛,团队说明
  */
-@property (nonatomic, strong)NSString *orderRecord;
-@property (nonatomic, strong)NSString *earningsRecord;
-@property (nonatomic, strong)NSString *historyEarningsRecord;
-@property (nonatomic, copy)NSString *myInvitation;
+@property (nonatomic, copy) NSString *orderRecord;
+@property (nonatomic, copy) NSString *earningsRecord;
+@property (nonatomic, copy) NSString *historyEarningsRecord;
+@property (nonatomic, copy) NSString *myInvitation;
 @property (nonatomic, copy) NSString *examWebUrl;
 @property (nonatomic, copy) NSString *fansWebUrl;
 @property (nonatomic, copy) NSString *boutiqueActiveWebUrl;
 @property (nonatomic, copy) NSString *renewWebUrl;
-@property (nonatomic, strong)NSString *eventLink;
-@property (nonatomic, strong)NSString *messageUrl;
+@property (nonatomic, copy) NSString *eventLink;
+@property (nonatomic, copy) NSString *messageUrl;
+@property (nonatomic, copy) NSString *bbsUrl;
+@property (nonatomic, copy) NSString *teamExplainUrl;
 
 @property (nonatomic, strong) JMNewcomerTaskController *newcomerTask;
 
 @property (nonatomic, strong) JMShareView *cover;
 @property (nonatomic, strong) JMPopView *menu;
+/**
+ *  MaMa客服入口
+ */
+@property (nonatomic, strong) UIButton *serViceButton;
 
 
 @end
@@ -86,6 +96,7 @@ static NSUInteger popNum = 0;
 @implementation JMMaMaPersonCenterController {
     NSString *_mamaID;
 }
+
 - (JMNewcomerTaskController *)newcomerTask {
     if (_newcomerTask == nil) {
         _newcomerTask = [[JMNewcomerTaskController alloc] init];
@@ -101,6 +112,8 @@ static NSUInteger popNum = 0;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveUdeskMessage:) name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SubscribeMes:) name:@"SubscribeMessage" object:nil];
 //    [self loadfoldLineData];
     [self loadDataSource];
 //    [self loadMaMaWeb];
@@ -113,11 +126,12 @@ static NSUInteger popNum = 0;
     [self createTableView];
     [self createHeaderView];
     [self createFooterView];
+    [self craeteNavRightButton];
     [self loadfoldLineData];
 //    [self loadDataSource];
     [self loadMaMaWeb];
 //    [self loadMaMaMessage];
-
+    [self customUserInfo];
 }
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
@@ -246,6 +260,8 @@ static NSUInteger popNum = 0;
     self.boutiqueActiveWebUrl = extraDict[@"act_info"];   // --> 精品活动
     self.renewWebUrl = extraDict[@"renew"];               // --> 续费
     self.messageUrl = extraDict[@"notice"];               // --> 小鹿妈妈消息
+    self.bbsUrl = extraDict[@"forum"];                    // --> 论坛入口
+    self.teamExplainUrl = extraDict[@"team_explain"];     // --> 团队说明
     
     NSDictionary *picturesDic = extraDict[@"pictures"];
     self.mamaCenterHeaderView.imageString = picturesDic[@"exam_pic"];
@@ -289,8 +305,6 @@ static NSUInteger popNum = 0;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-
-
 - (void)backClick:(UIButton *)btn {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -374,7 +388,9 @@ static NSUInteger popNum = 0;
  107 === > 小鹿大学(精品活动)
  108 === > 我的粉丝
  109 === > 我的团队
- 110 === > 访客记录
+ 110 === > 收益排行
+ 111 === > 论坛
+ 112 === > 任务奖励
  */
 - (void)composeMaMaCenterFooterView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
     // index == 100 || 
@@ -419,16 +435,33 @@ static NSUInteger popNum = 0;
     }else if (index == 109) {
         JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
         teamVC.mamaID = _mamaID;
+        teamVC.explainUrl = self.teamExplainUrl;
         [self.navigationController pushViewController:teamVC animated:YES];
     }else if (index == 110) {
         JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
         earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
-        earningsRankVC.rankInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/carry_total_rank",Root_URL];
+        NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank", nil];
+        earningsRankVC.urlArray = array;
         earningsRankVC.isTeamEarningsRank = NO;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
+    }else if (index == 111) {
+        [MobClick event:@"BBS"];
+//        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:self.bbsUrl forKey:@"web_url"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = false;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }else if (index == 112) {
+        JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
+        [self.navigationController pushViewController:rewardsVC animated:YES];
     }else {
-    
+        
     }
+    
+    
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
@@ -450,7 +483,6 @@ static NSUInteger popNum = 0;
 }
 #pragma mark 妈妈消息列表点击事件
 - (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
-    NSLog(@"%ld=========index",index);
     WebViewController *message = [[WebViewController alloc] init];
     [self.diction setValue:self.messageUrl forKey:@"web_url"];
     [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
@@ -481,25 +513,76 @@ static NSUInteger popNum = 0;
     activity.share_model.share_type = @"link";
     [self.navigationController pushViewController:activity animated:YES];
 }
+- (void)craeteNavRightButton {
+    UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *serviceImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 5, 30, 30)];
+    [serViceButton addSubview:serviceImage];
+    serviceImage.image = [UIImage imageNamed:@"serviceEnter"];
+    self.serViceButton = serViceButton;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:serViceButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+- (void)serViceButtonClick:(UIButton *)button {
+    [MobClick event:@"buy_cancel"];
+//    JMServiceEnterController *enterVC = [[JMServiceEnterController alloc] init];
+//    [self.navigationController pushViewController:enterVC animated:YES];
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
+    UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
+    [self.navigationController pushViewController:chat animated:YES];
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
+}
+- (void)customUserInfo {
+    NSString *nick_name = self.userInfoDic[@"nick"];
+    NSString *sdk_token = self.userInfoDic[@"user_id"];
+//    NSString *cellphone = self.userInfoDic[@"mobile"];
+    NSDictionary *parameters = @{
+                                 @"user": @{
+                                         @"sdk_token":sdk_token,
+                                         @"nick_name":nick_name,
+                                         }
+                                 };
+    [UdeskManager createCustomerWithCustomerInfo:parameters];
+}
+- (void)showNewStatusCount:(NSString *)message {
+    if (message.length == 0) {
+        return ;
+    }
+    CGFloat h = 35.;
+    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - h;
+    CGFloat x = 0;
+    CGFloat w = SCREENWIDTH;
+    UILabel *label6 = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
+    label6.backgroundColor = [UIColor blackColor];
+    label6.alpha = 0.70f;
+    label6.textColor = [UIColor whiteColor];
+    label6.text = message;
+    label6.textAlignment = NSTextAlignmentCenter;
+    //插入导航控制器下导航条下面
+    [self.navigationController.view insertSubview:label6 belowSubview:self.navigationController.navigationBar];
+    [UIView animateWithDuration:0.3 animations:^{
+        label6.transform = CGAffineTransformMakeTranslation(0, h);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
+            label6.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            [label6 removeFromSuperview];
+        }];
+    }];
+}
+- (void)SubscribeMes:(NSNotification *)sender {
+    [self showNewStatusCount:sender.object];
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
