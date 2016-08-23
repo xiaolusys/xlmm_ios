@@ -46,7 +46,7 @@ static NSString *JMRootgoodsCellIdfier = @"JMRootgoodsCellIdfier";
                                @"/rest/v2/modelproducts/today?page=1&page_size=10",
                                @"/rest/v2/modelproducts/tomorrow?page=1&page_size=10"];
         
-        [self createUI];
+//        [self createUI];
     }
     return self;
 }

@@ -49,7 +49,8 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
     }];
     
     [self.iconImage2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.right.equalTo(weakSelf.contentView).offset(5);
+        make.top.equalTo(weakSelf.contentView).offset(5);
+        make.right.equalTo(weakSelf.contentView).offset(-5);
         make.width.mas_equalTo(@((SCREENWIDTH - 15) / 2));
         make.height.mas_equalTo(@120);
     }];

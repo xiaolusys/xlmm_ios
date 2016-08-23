@@ -54,9 +54,9 @@
     
     BOOL _loginRequired;                  // ??????
     NSMutableDictionary *_webDiction;
-    NSArray *_buttonTitleArr;
+//    NSArray *_buttonTitleArr;
     NSInteger _currentIndex;              // 选择展示第几个视图 (昨,今,明)
-    NSString *_nextPage;                 // 下一页数据
+//    NSString *_nextPage;                 // 下一页数据
     
     NSArray *_yestodayArr;
     NSArray *_todayArr;
@@ -75,19 +75,19 @@
     }
     return _activeArray;
 }
-- (void)createPullFooterRefresh {
-    kWeakSelf
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _isLoadMore = YES;
-        [weakSelf loadMoreData];
-    }];
-}
-- (void)endRefresh {
-    if (_isLoadMore) {
-        _isLoadMore = NO;
-        [self.tableView.mj_footer endRefreshing];
-    }
-}
+//- (void)createPullFooterRefresh {
+//    kWeakSelf
+//    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        _isLoadMore = YES;
+//        [weakSelf loadMoreData];
+//    }];
+//}
+//- (void)endRefresh {
+//    if (_isLoadMore) {
+//        _isLoadMore = NO;
+//        [self.tableView.mj_footer endRefreshing];
+//    }
+//}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
@@ -98,7 +98,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
     
-    _buttonTitleArr = @[@"昨日热卖",@"今日特卖",@"即将上新"];
+//    _buttonTitleArr = @[@"昨日热卖",@"今日特卖",@"即将上新"];
     
     _topImageArray = [NSMutableArray array];
     _categorysArray = [NSMutableArray array];
@@ -109,43 +109,44 @@
 //    [self createPullFooterRefresh];
     
 }
-- (void)loadDataSource {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/today?page=1&page_size=10",Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        [self fetchGoodsInfo:responseObject];
-    } WithFail:^(NSError *error) {
-    } Progress:^(float progress) {
-        
-    }];
-    
-}
-- (void)fetchGoodsInfo:(NSDictionary *)goodsDic {
-    _nextPage = goodsDic[@"next"];
-    NSArray *resultsArr = goodsDic[@"results"];
-    for (NSDictionary *dic in resultsArr) {
-        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
-//        [self.todayDataSource addObject:model];
-    }
-}
-- (void)loadMoreData {
-    if ([_nextPage class] == [NSNull class]) {
-        [self endRefresh];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
-        return;
-    }
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPage WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        [self fetchGoodsInfo:responseObject];
-        [self endRefresh];
-    } WithFail:^(NSError *error) {
-        [self endRefresh];
-    } Progress:^(float progress) {
-    }];
-}
+
+//- (void)loadDataSource {
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/today?page=1&page_size=10",Root_URL];
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (!responseObject) return;
+//        [self fetchGoodsInfo:responseObject];
+//    } WithFail:^(NSError *error) {
+//    } Progress:^(float progress) {
+//        
+//    }];
+//    
+//}
+//- (void)fetchGoodsInfo:(NSDictionary *)goodsDic {
+//    _nextPage = goodsDic[@"next"];
+//    NSArray *resultsArr = goodsDic[@"results"];
+//    for (NSDictionary *dic in resultsArr) {
+//        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
+////        [self.todayDataSource addObject:model];
+//    }
+//}
+//- (void)loadMoreData {
+//    if ([_nextPage class] == [NSNull class]) {
+//        [self endRefresh];
+//        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+//        return;
+//    }
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPage WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (!responseObject) return;
+//        [self fetchGoodsInfo:responseObject];
+//        [self endRefresh];
+//    } WithFail:^(NSError *error) {
+//        [self endRefresh];
+//    } Progress:^(float progress) {
+//    }];
+//}
 
 - (void)createTabelView {
-    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -244,15 +245,15 @@
         return 1;
     }
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return 0;
-    }else if (section == 1){
-        return 0;
-    }else {
-        return 0;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return 0;
+//    }else if (section == 1){
+//        return 0;
+//    }else {
+//        return 0;
+//    }
+//}
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
 //    sectionView.backgroundColor = [UIColor whiteColor];
@@ -307,7 +308,7 @@
     if (indexPath.section == 0) {
         return 130;
     }else if (indexPath.section == 1) {
-        return 160;
+        return SCREENWIDTH * 0.5 + 10;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {
@@ -378,7 +379,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat tabOffsetY = [self.tableView rectForSection:2].origin.y;
+    CGFloat tabOffsetY = [self.tableView rectForSection:2].origin.y - 64;
     CGFloat offsetY = scrollView.contentOffset.y;
     
     _isTopIsCanNotMoveTabViewPre = _isTopIsCanNotMoveTabView;

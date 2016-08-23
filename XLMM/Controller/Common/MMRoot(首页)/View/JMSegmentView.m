@@ -30,7 +30,9 @@
 
 - (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC {
     if (self == [super initWithFrame:frame]) {
+        
         self.segmentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+        self.segmentView.backgroundColor = [UIColor greenColor];
         [self addSubview:self.segmentView];
         
         self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
@@ -39,28 +41,29 @@
         self.segmentedControl.backgroundColor = [UIColor whiteColor];
         self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
         self.segmentedControl.selectionIndicatorColor = [UIColor orangeColor];
-        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
-        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
+        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
         [self.segmentView addSubview:self.segmentedControl];
         
         // == 倒计时 == //
         UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 45)];;
-        timeLabel.backgroundColor = [UIColor redColor];
+        timeLabel.text = @"测试数据测试数据";
+        timeLabel.textAlignment = NSTextAlignmentCenter;
         [self.segmentView addSubview:timeLabel];
         
-        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80)];
+        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, frame.size.height - 64)];
         self.segmentScrollView.backgroundColor = [UIColor redColor];
         self.segmentScrollView.pagingEnabled = YES;
         self.segmentScrollView.showsHorizontalScrollIndicator = NO;
-        self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * 3, 0);
+        self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * controller.count, 0);
         self.segmentScrollView.delegate = self;
-        [self.segmentScrollView scrollRectToVisible:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) animated:NO];
+//        [self.segmentScrollView scrollRectToVisible:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT) animated:NO];
         [self addSubview:self.segmentScrollView];
         
         for (int i = 0 ; i < controller.count; i++) {
             UIViewController *control = controller[i];
             [self.segmentScrollView addSubview:control.view];
-            control.view.frame = CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT - 80);
+            control.view.frame = CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, frame.size.height - 64 - 80);
             [pageVC addChildViewController:control];
             [control didMoveToParentViewController:pageVC];
         }
