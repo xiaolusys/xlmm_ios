@@ -529,9 +529,12 @@ static NSUInteger popNum = 0;
 //    [self.navigationController pushViewController:enterVC animated:YES];
     button.enabled = NO;
     [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
-    UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
-    [self.navigationController pushViewController:chat animated:YES];
+
+    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
+    [self.navigationController pushViewController:robot animated:YES];
+    
+//    UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
+//    [self.navigationController pushViewController:chat animated:YES];
 }
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;
