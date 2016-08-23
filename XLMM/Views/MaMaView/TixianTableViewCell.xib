@@ -16,13 +16,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqK-eY-rSh">
-                        <rect key="frame" x="33" y="14" width="36" height="17"/>
+                        <rect key="frame" x="103" y="14" width="36" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-08-09 02:04:45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1p5-vE-iSd">
-                        <rect key="frame" x="33" y="51" width="144" height="17"/>
+                        <rect key="frame" x="23" y="51" width="144" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -50,26 +50,49 @@
                             <color key="titleColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="妈妈续费" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ft-uo-Iel">
+                        <rect key="frame" x="23" y="14" width="56" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="HqK-eY-rSh" firstAttribute="leading" secondItem="3ft-uo-Iel" secondAttribute="leading" constant="60" id="3h2-ln-deW"/>
                     <constraint firstAttribute="trailing" secondItem="pIw-0q-kyN" secondAttribute="trailing" id="42b-5C-yuo"/>
-                    <constraint firstItem="HqK-eY-rSh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="33" id="AEL-q4-Nsg"/>
+                    <constraint firstItem="HqK-eY-rSh" firstAttribute="trailing" secondItem="3ft-uo-Iel" secondAttribute="trailing" constant="60" id="9qK-QT-0fT"/>
+                    <constraint firstItem="HqK-eY-rSh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="135" id="AEL-q4-Nsg"/>
                     <constraint firstItem="HqK-eY-rSh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="ALd-dw-tgB"/>
+                    <constraint firstItem="HqK-eY-rSh" firstAttribute="trailing" secondItem="3ft-uo-Iel" secondAttribute="trailing" constant="60" id="CT5-Yu-24p"/>
                     <constraint firstItem="Aa1-xc-mNu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="FYw-Kp-77w"/>
-                    <constraint firstItem="1p5-vE-iSd" firstAttribute="leading" secondItem="HqK-eY-rSh" secondAttribute="leading" id="H9C-ZL-40y"/>
+                    <constraint firstItem="1p5-vE-iSd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="HYL-OW-DSK"/>
                     <constraint firstItem="pIw-0q-kyN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="PhY-yw-iNk"/>
                     <constraint firstItem="pIw-0q-kyN" firstAttribute="top" secondItem="Ine-Kx-Veg" secondAttribute="bottom" constant="8" id="QnY-B2-Rqj"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Aa1-xc-mNu" secondAttribute="trailing" constant="9" id="TsN-3c-YuK"/>
                     <constraint firstAttribute="bottom" secondItem="1p5-vE-iSd" secondAttribute="bottom" constant="11" id="Wdo-bk-1jM"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Ine-Kx-Veg" secondAttribute="trailing" constant="5" id="gw3-5v-xo8"/>
+                    <constraint firstItem="HqK-eY-rSh" firstAttribute="leading" secondItem="3ft-uo-Iel" secondAttribute="leading" id="jO3-sc-Fja"/>
+                    <constraint firstItem="3ft-uo-Iel" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="m0A-Ah-hi9"/>
                     <constraint firstAttribute="bottom" secondItem="pIw-0q-kyN" secondAttribute="bottom" id="nHC-nk-ENe"/>
+                    <constraint firstItem="3ft-uo-Iel" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="rpy-pg-7Ca"/>
+                    <constraint firstItem="1p5-vE-iSd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="33" id="yem-bi-2Lh"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="yem-bi-2Lh"/>
+                        <exclude reference="3h2-ln-deW"/>
+                        <exclude reference="AEL-q4-Nsg"/>
+                        <exclude reference="CT5-Yu-24p"/>
+                        <exclude reference="jO3-sc-Fja"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="cancelButton" destination="Ine-Kx-Veg" id="Sek-vG-hoR"/>
                 <outlet property="infoLabel" destination="Aa1-xc-mNu" id="Rba-C0-D7S"/>
                 <outlet property="jineLabel" destination="HqK-eY-rSh" id="Jyg-dK-f6A"/>
                 <outlet property="timeLabel" destination="1p5-vE-iSd" id="AKj-pP-UG8"/>
+                <outlet property="tixianTypeLabel" destination="3ft-uo-Iel" id="Sj2-4H-9vr"/>
             </connections>
             <point key="canvasLocation" x="521" y="250"/>
         </tableViewCell>

@@ -415,7 +415,7 @@
 
             self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"agent_price"] floatValue]];
             self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
-            code = 1;
+            code --;
         }else {
         }
     }

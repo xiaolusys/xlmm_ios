@@ -42,6 +42,8 @@
         self.cancelButton.hidden = YES;
     }
     
+    self.tixianTypeLabel.text = model.get_cash_out_type_display;
+    
    
     
     
