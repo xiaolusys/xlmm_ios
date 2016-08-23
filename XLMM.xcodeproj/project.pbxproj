@@ -6091,7 +6091,7 @@
 						DevelopmentTeam = QM2A85BC28;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
