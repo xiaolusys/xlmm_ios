@@ -17,7 +17,7 @@ NSString *const JMHomeGoodsCellIdentifier = @"JMHomeGoodsCellIdentifier";
 
 @property (nonatomic, strong) UIScrollView *baseScrollView;
 
-@property (nonatomic, strong) UICollectionView *collectionView;
+//@property (nonatomic, strong) UICollectionView *collectionView;
 
 
 
@@ -77,20 +77,18 @@ static NSString *JMRootgoodsCellIdfier = @"JMRootgoodsCellIdfier";
         [self.dataSource addObject:model];
     }
     
-    [self.collectionView reloadData];
+    UICollectionView *collection = _collectionArray[1];
+    [collection reloadData];
 }
 
 
 
 
 - (void)createUI {
-    CGFloat contentW = self.contentView.frame.size.width;
-    CGFloat contentH = SCREENHEIGHT;
-    
-    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, contentW, contentH)];
+    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.baseScrollView.pagingEnabled = YES;
     self.baseScrollView.delegate = self;
-    self.baseScrollView.contentSize = CGSizeMake(3 * contentW, contentH);
+    self.baseScrollView.contentSize = CGSizeMake(3 * SCREENWIDTH, SCREENHEIGHT);
     [self.contentView addSubview:self.baseScrollView];
     
     for (int i = 0; i < 3; i++) {
@@ -98,13 +96,13 @@ static NSString *JMRootgoodsCellIdfier = @"JMRootgoodsCellIdfier";
         layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
         layout.minimumInteritemSpacing = 5;
         layout.minimumLineSpacing = 5;
-        self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:layout];
-        self.collectionView.backgroundColor = [UIColor whiteColor];
-        self.collectionView.dataSource = self;
-        self.collectionView.delegate = self;
-        [self.baseScrollView addSubview:self.collectionView];
-        [self.collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:JMRootgoodsCellIdfier];
-        [_collectionArray addObject:self.collectionView];
+        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:layout];
+        collectionView.backgroundColor = [UIColor whiteColor];
+        collectionView.dataSource = self;
+        collectionView.delegate = self;
+        [collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:JMRootgoodsCellIdfier];
+        [self.baseScrollView addSubview:collectionView];
+        [_collectionArray addObject:collectionView];
         
     }
     
@@ -124,8 +122,12 @@ static NSString *JMRootgoodsCellIdfier = @"JMRootgoodsCellIdfier";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 //    JMRootgoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JMRootgoodsCellIdfier forIndexPath:indexPath];
     JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:JMRootgoodsCellIdfier forIndexPath:indexPath];
-    JMRootGoodsModel *model = self.dataSource[indexPath.row];
-    [cell fillData:model];
+    if (collectionView == _collectionArray[1]) {
+        JMRootGoodsModel *model = self.dataSource[indexPath.row];
+        [cell fillData:model];
+    }
+
+    
     return cell;
 }
 
