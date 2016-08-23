@@ -19,10 +19,15 @@
 #import "JumpUtils.h"
 #import "HMSegmentedControl.h"
 #import "JMRootGoodsModel.h"
+#import "JMSegmentView.h"
+#import "JMHomeCollectionController.h"
+#import "JMHomeYesterdayController.h"
+#import "JMHomeTomorrowController.h"
+#import "JMMainTableView.h"
 
 @interface JMHomeRootController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) JMMainTableView *tableView;
 @property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
 
 @property (nonatomic, strong) NSMutableArray *activeArray;
@@ -31,6 +36,12 @@
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
 @property (nonatomic, strong) NSMutableArray *DataSource;
+
+@property (nonatomic, strong) JMSegmentView *segmentView;
+
+@property (nonatomic, assign) BOOL canScroll;
+@property (nonatomic, assign) BOOL isTopIsCanNotMoveTabView;
+@property (nonatomic, assign) BOOL isTopIsCanNotMoveTabViewPre;
 
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
@@ -77,6 +88,11 @@
         [self.tableView.mj_footer endRefreshing];
     }
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -129,7 +145,7 @@
 }
 
 - (void)createTabelView {
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -234,66 +250,66 @@
     }else if (section == 1){
         return 0;
     }else {
-        return 80;
+        return 0;
     }
 }
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
-    sectionView.backgroundColor = [UIColor whiteColor];
-    UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
-    buttonView.layer.masksToBounds = YES;
-    buttonView.layer.borderWidth = 0.5;
-    buttonView.layer.borderColor = [UIColor lineGrayColor].CGColor;
-    
-    [sectionView addSubview:buttonView];
-    for (int i = 0; i < _buttonTitleArr.count; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(i * SCREENWIDTH / 3, 0, SCREENWIDTH / 3, 35);
-        button.titleLabel.font =  [UIFont systemFontOfSize: 14];
-        [button setTitle:_buttonTitleArr[i] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor textDarkGrayColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateSelected];
-        button.tag = 100 + i;
-        [button addTarget:self action:@selector(titleBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
-        [buttonView addSubview:button];
-        if (button.tag == 101) {
-            button.selected = YES;
-        }
-    }
-
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 45)];
-    timeLabel.font = [UIFont systemFontOfSize:13.];
-    timeLabel.textColor = [UIColor orangeColor];
-    timeLabel.textAlignment = NSTextAlignmentCenter;
-    timeLabel.text = @"距本场结束还有16时16分16秒";
-    [sectionView addSubview:timeLabel];
-    
-    return sectionView;
-}
-- (void)titleBtnClickAction:(UIButton *)button {
-    NSLog(@"%ld",button.tag);
-    NSInteger index = button.tag - 100;
-    
-    for (int i = 0 ; i < _buttonTitleArr.count; i++) {
-        NSInteger j = 100 + i;
-        UIButton *btni = (UIButton *)[self.view viewWithTag:j];
-        if (i == index) {
-            btni.selected = YES;
-        }else {
-            btni.selected = NO;
-        }
-    }
-    
-    
-    
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
+//    sectionView.backgroundColor = [UIColor whiteColor];
+//    UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
+//    buttonView.layer.masksToBounds = YES;
+//    buttonView.layer.borderWidth = 0.5;
+//    buttonView.layer.borderColor = [UIColor lineGrayColor].CGColor;
+//    
+//    [sectionView addSubview:buttonView];
+//    for (int i = 0; i < _buttonTitleArr.count; i++) {
+//        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//        button.frame = CGRectMake(i * SCREENWIDTH / 3, 0, SCREENWIDTH / 3, 35);
+//        button.titleLabel.font =  [UIFont systemFontOfSize: 14];
+//        [button setTitle:_buttonTitleArr[i] forState:UIControlStateNormal];
+//        [button setTitleColor:[UIColor textDarkGrayColor] forState:UIControlStateNormal];
+//        [button setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateSelected];
+//        button.tag = 100 + i;
+//        [button addTarget:self action:@selector(titleBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [buttonView addSubview:button];
+//        if (button.tag == 101) {
+//            button.selected = YES;
+//        }
+//    }
+//
+//    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, SCREENWIDTH, 45)];
+//    timeLabel.font = [UIFont systemFontOfSize:13.];
+//    timeLabel.textColor = [UIColor orangeColor];
+//    timeLabel.textAlignment = NSTextAlignmentCenter;
+//    timeLabel.text = @"距本场结束还有16时16分16秒";
+//    [sectionView addSubview:timeLabel];
+//    
+//    return sectionView;
+//}
+//- (void)titleBtnClickAction:(UIButton *)button {
+//    NSLog(@"%ld",(long)button.tag);
+//    NSInteger index = button.tag - 100;
+//    
+//    for (int i = 0 ; i < _buttonTitleArr.count; i++) {
+//        NSInteger j = 100 + i;
+//        UIButton *btni = (UIButton *)[self.view viewWithTag:j];
+//        if (i == index) {
+//            btni.selected = YES;
+//        }else {
+//            btni.selected = NO;
+//        }
+//    }
+//    
+//    
+//    
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return 130;
     }else if (indexPath.section == 1) {
         return 160;
     }else if (indexPath.section == 2) {
-        return SCREENHEIGHT;
+        return SCREENHEIGHT - 64;
     }else {
         return 0;
     }
@@ -321,7 +337,7 @@
         if (!cell) {
             cell = [[JMHomeGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeGoodsCellIdentifier];
         }
-        cell.currentIndex = _currentIndex;
+        [cell.contentView addSubview:self.setPageViewControllers];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -338,7 +354,54 @@
     huodongVC.titleName = dic[@"title"];
     [self.navigationController pushViewController:huodongVC animated:YES];
 }
+#pragma mark 添加pageViewController
+- (UIView *)setPageViewControllers {
+    if (!_segmentView) {
+        JMHomeYesterdayController *yesterdayVC = [[JMHomeYesterdayController alloc] init];
+        JMHomeCollectionController *todayVC = [[JMHomeCollectionController alloc] init];
+        JMHomeTomorrowController *tomorrowVC = [[JMHomeTomorrowController alloc] init];
+        
+        NSArray *controllers = @[yesterdayVC,todayVC,tomorrowVC];
+        NSArray *titleArray = @[@"昨日热卖",@"今日特卖",@"即将上新"];//@[@"yesterday",@"today",@"tomorrow"];
+        
+        self.segmentView = [[JMSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) Controllers:controllers TitleArray:titleArray PageController:self];
+    }
+    return _segmentView;
+}
 
+-(void)scrollMessage:(NSNotification *)notification{
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *canScroll = userInfo[@"isCanScroll"];
+    if ([canScroll isEqualToString:@"1"]) {
+        _canScroll = YES;
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat tabOffsetY = [self.tableView rectForSection:2].origin.y;
+    CGFloat offsetY = scrollView.contentOffset.y;
+    
+    _isTopIsCanNotMoveTabViewPre = _isTopIsCanNotMoveTabView;
+    if (offsetY>=tabOffsetY) {
+        scrollView.contentOffset = CGPointMake(0, tabOffsetY);
+        _isTopIsCanNotMoveTabView = YES;
+    }else{
+        _isTopIsCanNotMoveTabView = NO;
+    }
+    if (_isTopIsCanNotMoveTabView != _isTopIsCanNotMoveTabViewPre) {
+        if (!_isTopIsCanNotMoveTabViewPre && _isTopIsCanNotMoveTabView) {
+            //NSLog(@"滑动到顶端");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"gotoTop" object:nil userInfo:@{@"isCanScroll":@"1"}];
+            _canScroll = NO;
+        }
+        if(_isTopIsCanNotMoveTabViewPre && !_isTopIsCanNotMoveTabView){
+            //NSLog(@"离开顶端");
+            if (!_canScroll) {
+                scrollView.contentOffset = CGPointMake(0, tabOffsetY);
+            }
+        }
+    }
+}
 #pragma mark 左滑进入个人中心界面
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     if ((scrollView.contentInset.left < 0) && velocity.x < 0) {
