@@ -407,11 +407,11 @@ static BOOL isNetPrompt;
     // 注册APNS失败。。
     NSLog(@"Regist fail%@",error);
 }
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-    
-    
-    
-}
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+//    
+//    
+//    
+//}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
@@ -450,7 +450,8 @@ static BOOL isNetPrompt;
         
         
         self.miRegid = [data objectForKey:@"regid"];
-        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"regid" message:self.miRegid delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
         
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
         
@@ -471,7 +472,8 @@ static BOOL isNetPrompt;
             if (!responseObject) return ;
             NSLog(@"JSON: %@", responseObject);
             NSString *user_account = [responseObject objectForKey:@"user_account"];
-            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"user_account" message:user_account delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
             if (![user_account isEqualToString:@""]){
                 [MiPushSDK setAccount:user_account];
                 //保存user_account
@@ -509,8 +511,23 @@ static BOOL isNetPrompt;
     NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
     if ([jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
+    }else {
+        NSString *messageId = [data objectForKey:@"_id_"];
+        NSLog(@"messageID = %@", messageId);
+        [MiPushSDK openAppNotify:messageId];
+        
+        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.userInfo = data;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.alertBody = [[data objectForKey:@"aps"] objectForKey:@"alert"];
+        localNotification.fireDate = [NSDate date];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }
-
+    NSString *infoString = [NSString stringWithFormat:@"%@",data];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"content" message:infoString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    
     //    // 长连接收到的消息。消息格式跟APNs格式一样
     //    // 返回数据
     NSString *target_url = nil;
@@ -523,7 +540,7 @@ static BOOL isNetPrompt;
             return;
         }
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@ "Notification" object:nil userInfo:@{@"target_url":target_url}];
             return;
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];

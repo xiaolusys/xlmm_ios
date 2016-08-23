@@ -6091,7 +6091,7 @@
 						DevelopmentTeam = QM2A85BC28;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -7290,6 +7290,8 @@
 					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/XLMM/Venders/UdeskSDK/SDK",
 				);
+				MiSDKRun = debug;
+				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -7380,6 +7382,8 @@
 					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/XLMM/Venders/UdeskSDK/SDK",
 				);
+				MiSDKRun = online;
+				New_Setting = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-lxml2",

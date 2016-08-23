@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSInteger xlmm;
 @property (nonatomic, assign) float value_money;
 
+@property (nonatomic, copy) NSString *get_cash_out_type_display;
 @property (nonatomic, copy) NSString *get_status_display;
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *created;

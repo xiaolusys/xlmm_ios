@@ -17,6 +17,7 @@
         _xlmm = [[dic objectForKey:@"xlmm"] integerValue];
         _value_money = [[dic objectForKey:@"value_money"] floatValue];
         _get_status_display = [dic objectForKey:@"get_status_display"];
+        _get_cash_out_type_display = [dic objectForKey:@"get_cash_out_type_display"];
         _status = [dic objectForKey:@"status"];
         _created = [dic objectForKey:@"created"];
     

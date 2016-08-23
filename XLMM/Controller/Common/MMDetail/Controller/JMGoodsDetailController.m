@@ -23,14 +23,14 @@
 #import "CartViewController.h"
 #import "JMDescLabelModel.h"
 #import "JMLogInViewController.h"
+#import "JMSelecterButton.h"
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.65
-
 #define POPHeight SCREENHEIGHT * 0.6
-
 #define NavigationMaskWH 36
+#define kBottomViewTag 100
 
 @interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate> {
     CGFloat maxY;
@@ -88,7 +88,12 @@
 @property (nonatomic, strong) NSMutableArray *attributeArray;
 
 @property (nonatomic, strong) JMShareModel *shareModel;
+@property (nonatomic, strong) UIButton *shopCartButton;
 @property (nonatomic, strong) UIButton *addCartButton;
+
+@property (nonatomic, strong) JMSelecterButton *groupBuyPersonal;
+@property (nonatomic, strong) JMSelecterButton *groupBuyTeam;
+
 
 @end
 
@@ -104,6 +109,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
     [MobClick beginLogPageView:@"JMGoodsDetailController"];
+    [self loadCatrsNumData];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -138,7 +144,6 @@
 - (UIView *)popView {
     if (!_popView) {
         _popView = [[JMGoodsInfoPopView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, POPHeight)];
-//        _popView.backgroundColor = [UIColor orangeColor];
         _popView.delegate = self;
         _popView.backgroundColor = [UIColor whiteColor];
         
@@ -184,9 +189,8 @@
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     [self lodaDataSource];
-    [self loadCatrsNumData];
-    [self loadShareData];
     
+    [self loadShareData];
     
     [self createContentView];
     [self setupHeadView];
@@ -553,27 +557,6 @@
         }
     }
 }
-- (void)cartButton:(UIButton *)button {
-    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
-    BOOL isLogin = [defalts boolForKey:kIsLogin];
-    if (button.tag == 100) {
-        if (isLogin) {
-            CartViewController *cartVC = [[CartViewController alloc] init];
-            [self.navigationController pushViewController:cartVC animated:YES];
-        }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-    }else if (button.tag == 101) {
-        if (isLogin) {
-            [self showPopView];
-        }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-    }else {
-    }
-}
 - (void)showPopView {
     isTop = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.maskView];
@@ -672,7 +655,6 @@
 #pragma mark 自定义导航视图
 - (void)createNavigationView {
     kWeakSelf
-    
     self.navigationView = [UIView new];
     self.navigationView.frame = CGRectMake(0, 0, SCREENWIDTH, 64);
     [self.view addSubview:self.navigationView];
@@ -762,10 +744,9 @@
     UIButton *shopCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:shopCartButton];
     shopCartButton.layer.cornerRadius = 20.;
-//    shopCartButton.backgroundColor = [UIColor blackColor];
-//    shopCartButton.alpha = 0.6;
-    shopCartButton.tag = 100;
+    shopCartButton.tag = kBottomViewTag + 0;
     [shopCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.shopCartButton = shopCartButton;
     
     UIImageView *shopCartImage = [UIImageView new];
     [shopCartButton addSubview:shopCartImage];
@@ -784,7 +765,7 @@
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];
     addCartButton.layer.cornerRadius = 20.;
-    addCartButton.tag = 101;
+    addCartButton.tag = kBottomViewTag + 1;
     addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [addCartButton setTitle:@"加入购物车" forState:UIControlStateNormal];
     [addCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -813,6 +794,67 @@
         make.bottom.equalTo(shopCartImage.mas_top).offset(15);
         make.width.height.mas_equalTo(@16);
     }];
+
+    // === 如果是团购商品 === //
+    self.groupBuyPersonal = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.groupBuyPersonal];
+    [self.groupBuyPersonal setNomalBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"个人购 ¥ xxx" TitleFont:14. CornerRadius:20.];
+    self.groupBuyPersonal.backgroundColor = [UIColor whiteColor];
+    self.groupBuyPersonal.tag = kBottomViewTag + 2;
+    [self.groupBuyPersonal addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.groupBuyTeam = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.groupBuyTeam];
+    [self.groupBuyTeam setNomalBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"团购 ¥ xxx" TitleFont:14. CornerRadius:20.];
+    self.groupBuyTeam.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.groupBuyTeam.tag = kBottomViewTag + 3;
+    [self.groupBuyTeam addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.groupBuyPersonal mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.bottomView).offset(15);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
+        make.height.mas_equalTo(@40);
+    }];
+    
+    [self.groupBuyTeam mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.bottomView).offset(-15);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
+        make.height.mas_equalTo(@40);
+    }];
+    
+    self.groupBuyPersonal.hidden = YES;
+    self.groupBuyTeam.hidden = YES;
+    
+    
+}
+
+- (void)cartButton:(UIButton *)button {
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [defalts boolForKey:kIsLogin];
+    if (button.tag == kBottomViewTag + 0) {
+        if (isLogin) {
+            CartViewController *cartVC = [[CartViewController alloc] init];
+            [self.navigationController pushViewController:cartVC animated:YES];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+    }else if (button.tag == kBottomViewTag + 1) {
+        if (isLogin) {
+            [self showPopView];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+    }else if (button.tag == kBottomViewTag + 2) {
+        NSLog(@"button.tag == kBottomViewTag + 2");
+    }else if (button.tag == kBottomViewTag + 3) {
+        NSLog(@"button.tag == kBottomViewTag + 3");
+    }else {
+    
+    }
     
 }
 
