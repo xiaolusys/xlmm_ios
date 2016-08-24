@@ -10,18 +10,11 @@
 
 @interface JMSegmentView : UIView
 
+@property (nonatomic, strong) UIScrollView *segmentScrollView;
 
+@property (nonatomic, strong) NSArray *timeArray;
 
-
-- (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC;
-
-
-
-
-
-
-
-
+- (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC DataArray:(NSArray *)dataArray;
 
 
 @end

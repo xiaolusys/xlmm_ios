@@ -10,6 +10,7 @@
 
 @interface JMHomeTomorrowController ()
 
+
 @end
 
 @implementation JMHomeTomorrowController
@@ -26,7 +27,15 @@
 }
 
 
-
+//- (void)viewWillAppear:(BOOL)animated{
+//    [super viewWillAppear:animated];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(segmentSelectedIndexChange:) name:@"JMHomeTomorrowController" object:nil];
+//    [MobClick beginLogPageView:@"JMHomeTomorrowController"];
+//}
+//- (void)viewWillDisappear:(BOOL)animated{
+//    [MobClick endLogPageView:@"JMHomeTomorrowController"];
+//    [super viewWillDisappear:animated];
+//}
 
 @end
 

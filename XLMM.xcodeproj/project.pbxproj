@@ -3937,6 +3937,8 @@
 		1F27A6421D275FB400A0F80B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F23F9CA1D6C19EF00C78EAE /* JMSegmentView.h */,
+				1F23F9CB1D6C19EF00C78EAE /* JMSegmentView.m */,
 				1FDF7C881D66E2BD00C7456E /* JMHomeHeaderView.h */,
 				1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */,
 				1FDD07171D4303790010231F /* JMUpdataAppPopView.h */,
@@ -3953,8 +3955,6 @@
 				1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */,
 				1F23F9A81D6712C700C78EAE /* JMHomeGoodsCell.h */,
 				1F23F9A91D6712C700C78EAE /* JMHomeGoodsCell.m */,
-				1F23F9CA1D6C19EF00C78EAE /* JMSegmentView.h */,
-				1F23F9CB1D6C19EF00C78EAE /* JMSegmentView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";

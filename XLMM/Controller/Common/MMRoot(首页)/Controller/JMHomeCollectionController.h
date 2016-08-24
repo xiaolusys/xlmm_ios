@@ -14,6 +14,8 @@
 @interface JMHomeCollectionController : JMBaseScrollViewController
 
 
-- (NSString *)urlString;
+//- (NSString *)urlString;
+
+@property (nonatomic, strong) NSDictionary *dataDict;
 
 @end
