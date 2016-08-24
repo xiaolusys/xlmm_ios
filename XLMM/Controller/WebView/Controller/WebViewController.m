@@ -209,10 +209,13 @@
         }
         loadStr = _webDiction[@"web_url"];
     }
-    NSURL *url = [NSURL URLWithString:loadStr];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
-    [super.baseWebView loadRequest:request];
+//    NSURL *url = [NSURL URLWithString:loadStr];
+//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+//    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
+//    [super.baseWebView loadRequest:request];
+    
+    NSLog(@"webview url=%@", loadStr);
+    [self loadRequestWithCookie:loadStr];
     
     if(_isShowRightShareBtn){
         [self createTabBarButton];
@@ -227,6 +230,31 @@
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
 
+}
+
+- (void)loadRequestWithCookie:(NSString *)urlString {
+    
+    // 在此处获取返回的cookie
+    NSMutableDictionary *cookieDic = [NSMutableDictionary dictionary];
+    
+    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    
+    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+        [cookieDic setObject:cookie.value forKey:cookie.name];
+    }
+    
+    // cookie重复，先放到字典进行去重，再进行拼接
+    for (NSString *key in cookieDic) {
+        NSString *appendString = [NSString stringWithFormat:@"%@=%@;", key, [cookieDic valueForKey:key]];
+        [cookieValue appendString:appendString];
+    }
+    NSLog(@"webview cookie=%@", cookieDic);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [request addValue:cookieValue forHTTPHeaderField:@"Cookie"];
+    
+    [super.baseWebView loadRequest:request];
 }
 
 - (void)loadData {
