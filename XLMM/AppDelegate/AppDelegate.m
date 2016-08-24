@@ -416,7 +416,7 @@ static BOOL isNetPrompt;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     NSLog(@"UserInfo = %@", userInfo);
-    [MiPushSDK handleReceiveRemoteNotification :userInfo];
+    [MiPushSDK handleReceiveRemoteNotification:userInfo];
     // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
     NSString *messageId = [userInfo objectForKey:@"_id_"];
     NSLog(@"messageID = %@", messageId);
@@ -758,6 +758,9 @@ static BOOL isNetPrompt;
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     self.isAppinPayGo = NO;
+    
+    
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
