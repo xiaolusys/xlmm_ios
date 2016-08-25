@@ -486,6 +486,7 @@
         if (!responseObject) return ;
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
+            [SVProgressHUD setMinimumDismissTimeInterval:1];
             [SVProgressHUD showSuccessWithStatus:@"续费成功......"];
         }else {
             [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
@@ -572,7 +573,10 @@
         if (isAgreeTerms) {
             if (self.isEnoughBudgetPay) {
                 _channel = @"budget";
-                [self xiaoluPay:_exchangeType];
+
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确定要全部用妈妈钱包金额续费吗?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                [alertView show];
+                
             }else {
                 [self createPayPopView];
             }
@@ -614,6 +618,15 @@
         [self payMoney];
     }else {
         
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        NSLog(@"取消妈妈钱包全额支付");
+    } else if (buttonIndex == 1){
+        NSLog(@"妈妈钱包全额支付");
+        [self xiaoluPay:_exchangeType];
     }
 }
 
