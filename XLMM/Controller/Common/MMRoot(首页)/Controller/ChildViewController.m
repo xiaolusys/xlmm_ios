@@ -142,6 +142,7 @@ static NSString * ksimpleCell = @"simpleCell";
     if([nextUrl class] == [NSNull class]
        || [nextUrl isEqualToString:@""] ) {
         [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
+        [SVProgressHUD setMinimumDismissTimeInterval:1];
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
@@ -522,7 +523,7 @@ static NSString * ksimpleCell = @"simpleCell";
 //    CGPoint point = scrollView.contentOffset;
 //    CGFloat temp = oldScrollViewTop - point.y;
 //
-    NSLog(@"contentSize.height=%f y=%fl",scrollView.contentSize.height, scrollView.contentOffset.y );
+//    NSLog(@"contentSize.height=%f y=%fl",scrollView.contentSize.height, scrollView.contentOffset.y );
     if (scrollView.contentSize.height - scrollView.contentOffset.y < 2 * SCREENHEIGHT && _isupdate) {
             [self loadMore];
             _isupdate = NO;
