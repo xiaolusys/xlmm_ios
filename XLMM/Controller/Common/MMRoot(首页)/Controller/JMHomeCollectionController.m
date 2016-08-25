@@ -23,9 +23,9 @@
 
 @end
 
-static NSString * cellId = @"JMClassifyListController";
-static NSString * collectionHeaderView = @"JMClassifyListControllerHeaderId";
-static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
+static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
+//static NSString * collectionHeaderView = @"JMClassifyListControllerHeaderId";
+//static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
 
 @implementation JMHomeCollectionController {
     NSString *_nextPageUrl;
@@ -79,7 +79,6 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
     _dataDict = dataDict;
     [self.dataSource removeAllObjects];
     [self fetchData:dataDict];
-    [self.collectionView reloadData];
 }
 
 //- (void)segmentSelectedIndexChange:(NSNotification *)sender {
@@ -114,7 +113,6 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPageUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self fetchData:responseObject];
-        [self.collectionView reloadData];
         [self endRefresh];
     } WithFail:^(NSError *error) {
         [self endRefresh];
@@ -132,12 +130,18 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
         JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
         [self.dataSource addObject:model];
     }
+    NSLog(@"%@",self.dataSource);
+//    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+//    dispatch_async(dispatch_get_main_queue(), ^ {
+//        [self.collectionView reloadData];
+//    });
+
     
 }
 
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    layout.itemSize = CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH - 15) * 0.5 * 8/6 + 60);
+    layout.itemSize = CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH - 15) * 0.5 * 8/6 + 60);
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
@@ -148,9 +152,11 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
+//    [self.collectionView.collectionViewLayout invalidateLayout];
     [self.view addSubview:self.collectionView];
     
-    [self.collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:cellId];
+    [self.collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:homeCollectionIndefir];
+    
 //    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:collectionHeaderView];
 //    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:collectionFooterVIew];
     
@@ -163,14 +169,14 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
     return self.dataSource.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMRootgoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:homeCollectionIndefir forIndexPath:indexPath];
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
     [cell fillData:model];
     return cell;
 }
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH - 15) * 0.5 * 8/6 + 60);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    return CGSizeMake((SCREENWIDTH - 15) * 0.5, (SCREENWIDTH - 15) * 0.5 * 8/6 + 60);
+//}
 //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
 //    return (CGSize){SCREENWIDTH,44};
 //}

@@ -128,7 +128,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableView.mj_header beginRefreshing];
+//    [self.tableView.mj_header beginRefreshing];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -180,7 +180,7 @@
 //        [self loadData:_urlArray[i]];
 //    }
     [self createPullHeaderRefresh];
-    
+    [self.tableView.mj_header beginRefreshing];
     
     [self autoUpdateVersion];
     [self loadItemizeData];  // -- > 获取商品分类
