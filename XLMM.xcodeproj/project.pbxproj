@@ -315,7 +315,6 @@
 		1F1351441CE5DC5F00D6138D /* success_Withdraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1351431CE5DC5F00D6138D /* success_Withdraw@2x.png */; };
 		1F1351471CE7193700D6138D /* JMLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1351461CE7193600D6138D /* JMLogInViewController.m */; };
 		1F14D60E1CC6047200410EC0 /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D60D1CC6047200410EC0 /* ActivityModel.m */; };
-		1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79501CE730A60042701C /* JMRegisterViewController.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
 		1F23F9AC1D6838B500C78EAE /* serviceEnter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */; };
 		1F23F9B01D68399D00C78EAE /* JMServiceEnterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9AF1D68399D00C78EAE /* JMServiceEnterController.m */; };
@@ -1354,8 +1353,6 @@
 		1F1351461CE7193600D6138D /* JMLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLogInViewController.m; sourceTree = "<group>"; };
 		1F14D60C1CC6046C00410EC0 /* ActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityModel.h; sourceTree = "<group>"; };
 		1F14D60D1CC6047200410EC0 /* ActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModel.m; sourceTree = "<group>"; };
-		1F1D794F1CE730A60042701C /* JMRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegisterViewController.h; sourceTree = "<group>"; };
-		1F1D79501CE730A60042701C /* JMRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegisterViewController.m; sourceTree = "<group>"; };
 		1F1D79521CE7310F0042701C /* JMPhonenumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhonenumViewController.h; sourceTree = "<group>"; };
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
 		1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "serviceEnter@2x.png"; sourceTree = "<group>"; };
@@ -4053,8 +4050,6 @@
 				1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */,
 				1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */,
 				1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */,
-				1F1D794F1CE730A60042701C /* JMRegisterViewController.h */,
-				1F1D79501CE730A60042701C /* JMRegisterViewController.m */,
 			);
 			name = Login_phone;
 			sourceTree = "<group>";
@@ -6975,7 +6970,6 @@
 				1F27A5EB1D2520E200A0F80B /* MaMaShareSubsidiesViewController.m in Sources */,
 				325B79D91C97E7160022F930 /* MoreOrdersViewCell.m in Sources */,
 				1F498C671D2772D0007E77FC /* JMRefundView.m in Sources */,
-				1F1D79511CE730A60042701C /* JMRegisterViewController.m in Sources */,
 				1F99F86B1D6566E900C6B79C /* UdeskPhotographyHelper.m in Sources */,
 				1F27A5DD1D2520E200A0F80B /* ShopPreviousViewController.m in Sources */,
 				183071F61C97BE3700B7665E /* VerifyPhoneViewController.m in Sources */,
