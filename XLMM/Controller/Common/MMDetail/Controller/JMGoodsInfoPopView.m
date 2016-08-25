@@ -429,10 +429,16 @@
 //    if (self.block) {
 //        self.block(self.goodsAttributeDic);
 //    }
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:2.0f];
     if (_delegate && [_delegate respondsToSelector:@selector(composeGoodsInfoView:AttrubuteDic:)]) {
         [_delegate composeGoodsInfoView:self AttrubuteDic:paramer];
     }
     
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
 }
 
 @end
