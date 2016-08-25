@@ -308,7 +308,7 @@
     scrollView.jm_scrollDataSource = self;
     scrollView.jm_scrollDelegate = self;
     
-    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, 150);
+    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, 130);
     
     scrollView.jm_isStopScrollForSingleCount = YES;
     scrollView.jm_autoScrollInterval = 3.;

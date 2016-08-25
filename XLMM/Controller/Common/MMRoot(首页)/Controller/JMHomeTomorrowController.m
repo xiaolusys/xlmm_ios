@@ -22,9 +22,9 @@
 }
 
 
-- (NSString *)urlString {
-    return [NSString stringWithFormat:@"%@/rest/v2/modelproducts/tomorrow?page=1&page_size=10",Root_URL];
-}
+//- (NSString *)urlString {
+//    return [NSString stringWithFormat:@"%@/rest/v2/modelproducts/tomorrow?page=1&page_size=10",Root_URL];
+//}
 
 
 //- (void)viewWillAppear:(BOOL)animated{

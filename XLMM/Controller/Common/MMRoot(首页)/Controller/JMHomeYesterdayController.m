@@ -11,19 +11,13 @@
 
 @interface JMHomeYesterdayController ()
 
-@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end
 
-@implementation JMHomeYesterdayController {
-    NSString *_nextPageUrl;
-}
-- (NSMutableArray *)dataSource {
-    if (!_dataSource) {
-        _dataSource = [NSMutableArray array];
-    }
-    return _dataSource;
-}
+@implementation JMHomeYesterdayController
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 

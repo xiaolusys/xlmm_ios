@@ -79,6 +79,7 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
     _dataDict = dataDict;
     [self.dataSource removeAllObjects];
     [self fetchData:dataDict];
+    [self.collectionView reloadData];
 }
 
 //- (void)segmentSelectedIndexChange:(NSNotification *)sender {
@@ -106,15 +107,15 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
 - (void)loadMore
 {
     if ([_nextPageUrl class] == [NSNull class]) {
-        [self endRefresh];
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        [self endRefresh];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPageUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self fetchData:responseObject];
+        [self.collectionView reloadData];
         [self endRefresh];
-        
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -124,11 +125,14 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
 - (void)fetchData:(NSDictionary *)goodsDic {
     _nextPageUrl = goodsDic[@"next"];
     NSArray *resultsArr = goodsDic[@"results"];
+    if (resultsArr.count == 0) {
+        return ;
+    }
     for (NSDictionary *dic in resultsArr) {
         JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
         [self.dataSource addObject:model];
     }
-    [self.collectionView reloadData];
+    
 }
 
 - (void)createCollectionView {
@@ -152,9 +156,9 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
     
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+//    return 1;
+//}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
@@ -198,7 +202,6 @@ static NSString * collectionFooterVIew = @"JMClassifyListControllerFooterId";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
-    
     [MobClick beginLogPageView:@"JMHomeCollectionController"];
 }
 - (void)viewWillDisappear:(BOOL)animated{

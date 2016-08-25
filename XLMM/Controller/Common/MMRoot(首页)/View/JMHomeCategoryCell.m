@@ -34,11 +34,11 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 - (void)createUI {
     
     self.iconImage1 = [UIImageView new];
-    self.iconImage1.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage1.contentMode = UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:self.iconImage1];
     
     self.iconImage2 = [UIImageView new];
-    self.iconImage2.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage2.contentMode = UIViewContentModeScaleAspectFit;
     [self.contentView addSubview:self.iconImage2];
     
     kWeakSelf
@@ -65,8 +65,8 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
     if (imageArray.count == 0) {
         
     }else {
-        [self.iconImage1 sd_setImageWithURL:[NSURL URLWithString:[imageArray[0] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
-        [self.iconImage2 sd_setImageWithURL:[NSURL URLWithString:[imageArray[1] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+        [self.iconImage1 sd_setImageWithURL:[NSURL URLWithString:[imageArray[0] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+        [self.iconImage2 sd_setImageWithURL:[NSURL URLWithString:[imageArray[1] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
     }
     
     
