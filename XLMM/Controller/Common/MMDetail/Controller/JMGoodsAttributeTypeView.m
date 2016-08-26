@@ -44,6 +44,7 @@
             }
             
             UIButton *btn= [UIButton buttonWithType:UIButtonTypeCustom];
+            
             btn.frame = CGRectMake(upX, upY, size.width + 30,25);
 //            [btn setBackgroundColor:[UIColor countLabelColor]];
             [btn setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];

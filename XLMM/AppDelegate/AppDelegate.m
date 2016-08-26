@@ -18,6 +18,7 @@
 #import "IosJsBridge.h"
 #import "sys/utsname.h"
 #import "Udesk.h"
+#import "JMHomeRootController.h"
 
 #define login @"login"
 #import "JMFirstOpen.h"
@@ -250,12 +251,10 @@ static BOOL isNetPrompt;
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     //创建导航控制器，添加根视图控制器
-    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
-    
+//    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+    JMHomeRootController *root = [[JMHomeRootController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];

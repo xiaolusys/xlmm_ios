@@ -66,9 +66,12 @@
 #define kWeiXinUserInfo @"weixinUserInfo"
 #define kIsReceivePushTZ @"isReceivePush"
 
+#define kISXLMM @"isXLMM"
+
 #define kUserAgent @"userAgent"
 
 #define LOGINDEVTYPE @"ios"
+
 
 
 //#define Root_URL @"http://youni.huyi.so"

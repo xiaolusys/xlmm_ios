@@ -543,6 +543,7 @@ static NSUInteger popNum = 0;
     NSString *nick_name = self.userInfoDic[@"nick"];
     NSString *sdk_token = self.userInfoDic[@"user_id"];
 //    NSString *cellphone = self.userInfoDic[@"mobile"];
+
     NSDictionary *parameters = @{
                                  @"user": @{
                                          @"sdk_token":sdk_token,
@@ -550,6 +551,11 @@ static NSUInteger popNum = 0;
                                          }
                                  };
     [UdeskManager createCustomerWithCustomerInfo:parameters];
+    if (nick_name.length == 0 || sdk_token.length == 0) {
+        self.serViceButton.hidden = YES;
+    }else {
+        self.serViceButton.hidden = NO;
+    }
 }
 - (void)showNewStatusCount:(NSString *)message {
     if (message.length == 0) {

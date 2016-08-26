@@ -2656,7 +2656,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     }
 }
 - (void)comeToTop{
-    [self disableAllGoodsCollectionScroll];
+//    [self disableAllGoodsCollectionScroll];
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
     self.backScrollview.scrollEnabled = YES;

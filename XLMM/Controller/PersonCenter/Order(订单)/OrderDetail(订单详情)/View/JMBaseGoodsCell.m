@@ -51,6 +51,7 @@
     UIImageView *iconImage = [UIImageView new];
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
+    self.iconImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewClick:)];
     [self.iconImage addGestureRecognizer:tap];
     
@@ -156,11 +157,11 @@
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
     self.iconImage.layer.cornerRadius = 5;
-    if (packageModel) {
-        self.iconImage.userInteractionEnabled = YES;
-    }else {
-        self.iconImage.userInteractionEnabled = NO;
-    }
+//    if (packageModel) {
+//        self.iconImage.userInteractionEnabled = YES;
+//    }else {
+//        self.iconImage.userInteractionEnabled = NO;
+//    }
     
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
@@ -255,7 +256,6 @@
     }
 }
 - (void)tapViewClick:(UITapGestureRecognizer *)tap {
-
     if (_delegate && [_delegate respondsToSelector:@selector(composeOptionClick:Tap:Section:Row:)]) {
         [_delegate composeOptionClick:self Tap:tap Section:_sectionCount Row:_rowCount];
     }

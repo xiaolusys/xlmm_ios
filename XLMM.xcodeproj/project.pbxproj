@@ -316,6 +316,7 @@
 		1F1351471CE7193700D6138D /* JMLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1351461CE7193600D6138D /* JMLogInViewController.m */; };
 		1F14D60E1CC6047200410EC0 /* ActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14D60D1CC6047200410EC0 /* ActivityModel.m */; };
 		1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */; };
+		1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9A91D6712C700C78EAE /* JMHomeGoodsCell.m */; };
 		1F23F9AC1D6838B500C78EAE /* serviceEnter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */; };
 		1F23F9B01D68399D00C78EAE /* JMServiceEnterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9AF1D68399D00C78EAE /* JMServiceEnterController.m */; };
 		1F23F9B31D683BA400C78EAE /* serviceHotLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9B11D683BA400C78EAE /* serviceHotLine@2x.png */; };
@@ -327,6 +328,12 @@
 		1F23F9C21D6AA99100C78EAE /* yejiRewards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F23F9C11D6AA99100C78EAE /* yejiRewards@2x.png */; };
 		1F23F9C61D6AC0BE00C78EAE /* JMRewardsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9C51D6AC0BE00C78EAE /* JMRewardsController.m */; };
 		1F23F9C91D6AC4ED00C78EAE /* JMRewardsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9C81D6AC4ED00C78EAE /* JMRewardsCell.m */; };
+		1F23F9CC1D6C19EF00C78EAE /* JMSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9CB1D6C19EF00C78EAE /* JMSegmentView.m */; };
+		1F23F9CF1D6C1C4800C78EAE /* JMBaseScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9CE1D6C1C4800C78EAE /* JMBaseScrollViewController.m */; };
+		1F23F9D21D6C212300C78EAE /* JMHomeCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9D11D6C212300C78EAE /* JMHomeCollectionController.m */; };
+		1F23F9D51D6C225600C78EAE /* JMHomeYesterdayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9D41D6C225600C78EAE /* JMHomeYesterdayController.m */; };
+		1F23F9DB1D6C230500C78EAE /* JMHomeTomorrowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9DA1D6C230500C78EAE /* JMHomeTomorrowController.m */; };
+		1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9DD1D6C331100C78EAE /* JMMainTableView.m */; };
 		1F27A5641D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */; };
 		1F27A5651D2516A000A0F80B /* vipGrade_Examination@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */; };
 		1F27A5CD1D2520E200A0F80B /* MaMaHuoyueduViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A56C1D2520E200A0F80B /* MaMaHuoyueduViewController.m */; };
@@ -698,6 +705,7 @@
 		1F99F8841D65AD6A00C6B79C /* iPhone6Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F87F1D65AD6A00C6B79C /* iPhone6Plus@2x.png */; };
 		1F99F8851D65AD6A00C6B79C /* iPhone6Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F99F8801D65AD6A00C6B79C /* iPhone6Plus@3x.png */; };
 		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
+		1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FC2B5731D30AD1300CA01AB /* Logistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B56F1D30AD1300CA01AB /* Logistics.plist */; };
 		1FC2B5741D30AD1300CA01AB /* provinces.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FC2B5701D30AD1300CA01AB /* provinces.plist */; };
@@ -762,6 +770,9 @@
 		1FDD07B61D49BAC90010231F /* TeamNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AC1D49BAC90010231F /* TeamNormal@2x.png */; };
 		1FDD07B71D49BAC90010231F /* VisitorRecordNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AD1D49BAC90010231F /* VisitorRecordNormal@2x.png */; };
 		1FDD07B81D49BAC90010231F /* xiaoluUniversityNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD07AE1D49BAC90010231F /* xiaoluUniversityNormal@2x.png */; };
+		1FDF7C8A1D66E2BD00C7456E /* JMHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */; };
+		1FDF7C8D1D66E64600C7456E /* JMHomeActiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */; };
+		1FDF7C931D66E6D000C7456E /* JMHomeCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */; };
 		1FDF7C951D66EDA100C7456E /* goodsDetailCarts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FDF7C941D66EDA100C7456E /* goodsDetailCarts@2x.png */; };
 		1FF3F9991D3CB31500FABBCE /* MaMaExplainFirst@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */; };
 		1FF3F99A1D3CB31500FABBCE /* MaMaExplainSecond@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */; };
@@ -1355,6 +1366,8 @@
 		1F14D60D1CC6047200410EC0 /* ActivityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityModel.m; sourceTree = "<group>"; };
 		1F1D79521CE7310F0042701C /* JMPhonenumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhonenumViewController.h; sourceTree = "<group>"; };
 		1F1D79531CE7310F0042701C /* JMPhonenumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhonenumViewController.m; sourceTree = "<group>"; };
+		1F23F9A81D6712C700C78EAE /* JMHomeGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeGoodsCell.h; sourceTree = "<group>"; };
+		1F23F9A91D6712C700C78EAE /* JMHomeGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeGoodsCell.m; sourceTree = "<group>"; };
 		1F23F9AB1D6838B500C78EAE /* serviceEnter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "serviceEnter@2x.png"; sourceTree = "<group>"; };
 		1F23F9AE1D68399D00C78EAE /* JMServiceEnterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMServiceEnterController.h; sourceTree = "<group>"; };
 		1F23F9AF1D68399D00C78EAE /* JMServiceEnterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMServiceEnterController.m; sourceTree = "<group>"; };
@@ -1371,6 +1384,18 @@
 		1F23F9C51D6AC0BE00C78EAE /* JMRewardsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRewardsController.m; sourceTree = "<group>"; };
 		1F23F9C71D6AC4ED00C78EAE /* JMRewardsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRewardsCell.h; sourceTree = "<group>"; };
 		1F23F9C81D6AC4ED00C78EAE /* JMRewardsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRewardsCell.m; sourceTree = "<group>"; };
+		1F23F9CA1D6C19EF00C78EAE /* JMSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSegmentView.h; sourceTree = "<group>"; };
+		1F23F9CB1D6C19EF00C78EAE /* JMSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSegmentView.m; sourceTree = "<group>"; };
+		1F23F9CD1D6C1C4800C78EAE /* JMBaseScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMBaseScrollViewController.h; path = ../View/JMBaseScrollViewController.h; sourceTree = "<group>"; };
+		1F23F9CE1D6C1C4800C78EAE /* JMBaseScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMBaseScrollViewController.m; path = ../View/JMBaseScrollViewController.m; sourceTree = "<group>"; };
+		1F23F9D01D6C212300C78EAE /* JMHomeCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCollectionController.h; sourceTree = "<group>"; };
+		1F23F9D11D6C212300C78EAE /* JMHomeCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCollectionController.m; sourceTree = "<group>"; };
+		1F23F9D31D6C225600C78EAE /* JMHomeYesterdayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeYesterdayController.h; sourceTree = "<group>"; };
+		1F23F9D41D6C225600C78EAE /* JMHomeYesterdayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeYesterdayController.m; sourceTree = "<group>"; };
+		1F23F9D91D6C230500C78EAE /* JMHomeTomorrowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeTomorrowController.h; sourceTree = "<group>"; };
+		1F23F9DA1D6C230500C78EAE /* JMHomeTomorrowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeTomorrowController.m; sourceTree = "<group>"; };
+		1F23F9DC1D6C331100C78EAE /* JMMainTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMainTableView.h; sourceTree = "<group>"; };
+		1F23F9DD1D6C331100C78EAE /* JMMainTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMainTableView.m; sourceTree = "<group>"; };
 		1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mamaUser_DiamondsIcon@2x.png"; sourceTree = "<group>"; };
 		1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vipGrade_Examination@2x.png"; sourceTree = "<group>"; };
 		1F27A56B1D2520E200A0F80B /* MaMaHuoyueduViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaMaHuoyueduViewController.h; sourceTree = "<group>"; };
@@ -1964,6 +1989,8 @@
 		1F99F8801D65AD6A00C6B79C /* iPhone6Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@3x.png"; sourceTree = "<group>"; };
 		1F99F8861D65CA9000C6B79C /* MBProgressHUD+JMHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+JMHUD.h"; sourceTree = "<group>"; };
 		1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JMHUD.m"; sourceTree = "<group>"; };
+		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
+		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FC2B56F1D30AD1300CA01AB /* Logistics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Logistics.plist; sourceTree = "<group>"; };
@@ -2054,6 +2081,12 @@
 		1FDD07AC1D49BAC90010231F /* TeamNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TeamNormal@2x.png"; sourceTree = "<group>"; };
 		1FDD07AD1D49BAC90010231F /* VisitorRecordNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VisitorRecordNormal@2x.png"; sourceTree = "<group>"; };
 		1FDD07AE1D49BAC90010231F /* xiaoluUniversityNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xiaoluUniversityNormal@2x.png"; sourceTree = "<group>"; };
+		1FDF7C881D66E2BD00C7456E /* JMHomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeHeaderView.h; sourceTree = "<group>"; };
+		1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeHeaderView.m; sourceTree = "<group>"; };
+		1FDF7C8B1D66E64600C7456E /* JMHomeActiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeActiveCell.h; sourceTree = "<group>"; };
+		1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeActiveCell.m; sourceTree = "<group>"; };
+		1FDF7C911D66E6D000C7456E /* JMHomeCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCategoryCell.h; sourceTree = "<group>"; };
+		1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeCategoryCell.m; sourceTree = "<group>"; };
 		1FDF7C941D66EDA100C7456E /* goodsDetailCarts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodsDetailCarts@2x.png"; sourceTree = "<group>"; };
 		1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainFirst@2x.png"; sourceTree = "<group>"; };
 		1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainSecond@2x.png"; sourceTree = "<group>"; };
@@ -3866,6 +3899,18 @@
 		1F27A6341D275FB400A0F80B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F23F9DC1D6C331100C78EAE /* JMMainTableView.h */,
+				1F23F9DD1D6C331100C78EAE /* JMMainTableView.m */,
+				1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */,
+				1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */,
+				1F23F9CD1D6C1C4800C78EAE /* JMBaseScrollViewController.h */,
+				1F23F9CE1D6C1C4800C78EAE /* JMBaseScrollViewController.m */,
+				1F23F9D01D6C212300C78EAE /* JMHomeCollectionController.h */,
+				1F23F9D11D6C212300C78EAE /* JMHomeCollectionController.m */,
+				1F23F9D31D6C225600C78EAE /* JMHomeYesterdayController.h */,
+				1F23F9D41D6C225600C78EAE /* JMHomeYesterdayController.m */,
+				1F23F9D91D6C230500C78EAE /* JMHomeTomorrowController.h */,
+				1F23F9DA1D6C230500C78EAE /* JMHomeTomorrowController.m */,
 				1F7D992A1D62C79F00E18FD1 /* childItems(分类) */,
 				1F27A63B1D275FB400A0F80B /* MMCollectionController.h */,
 				1F27A63C1D275FB400A0F80B /* MMCollectionController.m */,
@@ -3889,6 +3934,10 @@
 		1F27A6421D275FB400A0F80B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F23F9CA1D6C19EF00C78EAE /* JMSegmentView.h */,
+				1F23F9CB1D6C19EF00C78EAE /* JMSegmentView.m */,
+				1FDF7C881D66E2BD00C7456E /* JMHomeHeaderView.h */,
+				1FDF7C891D66E2BD00C7456E /* JMHomeHeaderView.m */,
 				1FDD07171D4303790010231F /* JMUpdataAppPopView.h */,
 				1FDD07181D4303790010231F /* JMUpdataAppPopView.m */,
 				1F27A6431D275FB400A0F80B /* JMRepopView.h */,
@@ -3897,6 +3946,12 @@
 				1F27A6461D275FB400A0F80B /* JMRootgoodsCell.m */,
 				1F27A6471D275FB400A0F80B /* JMRootScrolCell.h */,
 				1F27A6481D275FB400A0F80B /* JMRootScrolCell.m */,
+				1FDF7C8B1D66E64600C7456E /* JMHomeActiveCell.h */,
+				1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */,
+				1FDF7C911D66E6D000C7456E /* JMHomeCategoryCell.h */,
+				1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */,
+				1F23F9A81D6712C700C78EAE /* JMHomeGoodsCell.h */,
+				1F23F9A91D6712C700C78EAE /* JMHomeGoodsCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6728,6 +6783,7 @@
 				1F498C441D2772D0007E77FC /* JMEditAddressModel.m in Sources */,
 				1F27A6661D275FB400A0F80B /* XidiShuomingViewController.m in Sources */,
 				1F27A6551D275FB400A0F80B /* MMDetailsViewController.m in Sources */,
+				1FDF7C931D66E6D000C7456E /* JMHomeCategoryCell.m in Sources */,
 				183072861C97C00900B7665E /* UIColor+RGBColor.m in Sources */,
 				3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */,
 				1F498C601D2772D0007E77FC /* JMAppForRefundModel.m in Sources */,
@@ -6753,6 +6809,7 @@
 				1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */,
 				1F498C4D1D2772D0007E77FC /* JMTimeInfoModel.m in Sources */,
 				1F99F8741D6566E900C6B79C /* UdeskAlertController.m in Sources */,
+				1FDF7C8A1D66E2BD00C7456E /* JMHomeHeaderView.m in Sources */,
 				183070E01C97B83900B7665E /* ShoppingCartModel.m in Sources */,
 				1FD158E31D2F86C4006C4B14 /* JMRefundBaseCell.m in Sources */,
 				1F99F84F1D6566E900C6B79C /* UdeskRobotIMViewController.m in Sources */,
@@ -6770,6 +6827,7 @@
 				325B799A1C97E6F10022F930 /* MJPullGifHeader.m in Sources */,
 				1F23F9C91D6AC4ED00C78EAE /* JMRewardsCell.m in Sources */,
 				325B79991C97E6F10022F930 /* LoadingAnimation.m in Sources */,
+				1F23F9D21D6C212300C78EAE /* JMHomeCollectionController.m in Sources */,
 				1FDD073F1D460CA90010231F /* JMMaMaPersonCenterController.m in Sources */,
 				325B7A121C97E73A0022F930 /* PicFooterCollectionReusableView.m in Sources */,
 				183070DB1C97B83900B7665E /* OrderModel.m in Sources */,
@@ -6793,6 +6851,7 @@
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				325B7A0A1C97E73A0022F930 /* CountdownView.m in Sources */,
 				1F498C461D2772D0007E77FC /* JMOrderGoodsModel.m in Sources */,
+				1F23F9CF1D6C1C4800C78EAE /* JMBaseScrollViewController.m in Sources */,
 				1F2F9E5F1D59A73900E3A68B /* JMGoodsInfoPopView.m in Sources */,
 				325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */,
 				1F99F8731D6566E900C6B79C /* UdeskMessageVoiceFactory.m in Sources */,
@@ -6809,6 +6868,7 @@
 				1F498B3C1D276450007E77FC /* JMOrderPayView.m in Sources */,
 				183070D01C97B83900B7665E /* AddressModel.m in Sources */,
 				1F498C5B1D2772D0007E77FC /* JMRefundController.m in Sources */,
+				1FDF7C8D1D66E64600C7456E /* JMHomeActiveCell.m in Sources */,
 				183070EA1C97B83900B7665E /* SharePicModel.m in Sources */,
 				1FD158D71D2F7FE4006C4B14 /* JMRefundModel.m in Sources */,
 				1F56E2861D348A0A0092EC91 /* JMCouponRootCell.m in Sources */,
@@ -6842,6 +6902,7 @@
 				1F498C521D2772D0007E77FC /* JMGoodsShowView.m in Sources */,
 				1F99F8791D6566E900C6B79C /* UdeskPhotoManeger.m in Sources */,
 				183070E71C97B83900B7665E /* MaMaOrderModel.m in Sources */,
+				1F23F9D51D6C225600C78EAE /* JMHomeYesterdayController.m in Sources */,
 				1F23F9BE1D6AA37600C78EAE /* JMEmptyGoodsView.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				1F99F8481D6566E900C6B79C /* UdeskNavigationView.m in Sources */,
@@ -6907,11 +6968,13 @@
 				1F498C361D2772D0007E77FC /* VersionController.m in Sources */,
 				183070D11C97B83900B7665E /* BuyModel.m in Sources */,
 				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
+				1F23F9CC1D6C19EF00C78EAE /* JMSegmentView.m in Sources */,
 				1FDD07631D488B3C0010231F /* MaClassifyCarryLogViewController.m in Sources */,
 				1F27A5F31D2520E200A0F80B /* JMBillDetailController.m in Sources */,
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
 				1F498C3C1D2772D0007E77FC /* NewLeftViewController.m in Sources */,
 				1F99F85D1D6566E900C6B79C /* NSArray+UdeskSDK.m in Sources */,
+				1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */,
 				1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */,
 				325B7A0B1C97E73A0022F930 /* MaMaChartTableViewCell.m in Sources */,
 				1F99F86E1D6566E900C6B79C /* UdeskTopAlertView.m in Sources */,
@@ -6929,6 +6992,9 @@
 				325B79E81C97E7160022F930 /* YoumengShare.m in Sources */,
 				1F498B011D2761BE007E77FC /* IMY_NJKWebViewProgress.m in Sources */,
 				1F99F8521D6566E900C6B79C /* UdeskAgentMenuModel.m in Sources */,
+				1F23F9DB1D6C230500C78EAE /* JMHomeTomorrowController.m in Sources */,
+				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
+				1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */,
 				1F99F86F1D6566E900C6B79C /* UdeskUtils.m in Sources */,
 				1F498C2A1D2772D0007E77FC /* AddressViewController.m in Sources */,
 				1F99F8781D6566E900C6B79C /* UdeskOneScrollView.m in Sources */,
