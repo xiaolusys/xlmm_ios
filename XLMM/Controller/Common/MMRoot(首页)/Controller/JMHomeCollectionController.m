@@ -11,11 +11,7 @@
 
 @interface JMHomeCollectionController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 
-
-
-
 @property (nonatomic, strong) NSMutableArray *dataSource;
-
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
 
@@ -36,22 +32,10 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(topButton:) name:@"topBUtton" object:nil];
     [self createCollectionView];
     [self createPullFooterRefresh];
 }
-//- (void)topButton:(NSNotification *)sender {
-//    self.collectionView.scrollEnabled = NO;
-//}
 #pragma mrak 刷新界面
-//- (void)createPullHeaderRefresh {
-//    kWeakSelf
-//    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        _isPullDown = YES;
-//        [weakSelf loadDataSource];
-//    }];
-//}
 - (void)createPullFooterRefresh {
     kWeakSelf
     self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -60,18 +44,11 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
     }];
 }
 - (void)endRefresh {
-//    if (_isPullDown) {
-//        _isPullDown = NO;
-//        [self.collectionView.mj_header endRefreshing];
-//    }
     if (_isLoadMore) {
         _isLoadMore = NO;
         [self.collectionView.mj_footer endRefreshing];
-        
-//        [self.collectionView.mj_footer resetNoMoreData];
     }
 }
-
 - (void)setDataDict:(NSDictionary *)dataDict {
     _dataDict = dataDict;
     [self.dataSource removeAllObjects];
@@ -93,10 +70,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 {
     if ([_nextPageUrl class] == [NSNull class]) {
         [self endRefresh];
-//        _isLoadMore = NO;
-//        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         [MBProgressHUD showMessage:@"加载完成,没有更多数据"];
-//        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPageUrl WithParaments:nil WithSuccess:^(id responseObject) {
@@ -124,9 +98,6 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
         [_numArray addObject:index];
         
     }
-//    if (!_isLoadMore) {
-//        [_numArray removeAllObjects];
-//    }
     if((_numArray != nil) && (_numArray.count > 0)){
         @try{
             [self.collectionView insertItemsAtIndexPaths:_numArray];
@@ -139,7 +110,6 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
         }
     }
     [self.collectionView reloadData];
-
 }
 
 - (void)createCollectionView {
