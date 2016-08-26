@@ -18,4 +18,7 @@
 
 @property (nonatomic, strong) NSDictionary *dataDict;
 
+@property (nonatomic, strong) UICollectionView *collectionView;
+
+
 @end

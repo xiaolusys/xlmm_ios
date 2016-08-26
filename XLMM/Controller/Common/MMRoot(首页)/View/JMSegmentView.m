@@ -41,24 +41,7 @@
 @end
 
 @implementation JMSegmentView
-/**
- *      NSString *endTime = @"";
- NSString *timeString = detailContentDic[@"offshelf_time"];
- if ([timeString isKindOfClass:[NSNull class]]) {
- self.timerLabel.text = @"即将上架";
- }else {
- endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
- self.countDownView = [JMCountDownView shareCountDown];
- //    [JMCountDownView countDownWithCurrentTime:endTime];
- [self.countDownView initWithCountDownTime:endTime];
- //    self.countDownView.delegate = self;
- kWeakSelf
- self.countDownView.timeBlock = ^(NSString *timeString) {
- weakSelf.timerLabel.text = timeString;
- };
- }
- 
- */
+
 - (void)setTimeArray:(NSArray *)timeArray {
     _timeArray = timeArray;
     
@@ -71,7 +54,7 @@
     [ms replaceCharactersInRange:range withString:@" "];
     return ms;
 }
-- (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC DataArray:(NSArray *)dataArray {
+- (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC {
     if (self == [super initWithFrame:frame]) {
         flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
         _controllersArray = controller;
@@ -97,7 +80,7 @@
         [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
         __weak typeof(self) weakSelf = self;
         [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
+//            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
         }];
         [self.segmentView addSubview:self.segmentedControl];
         
@@ -113,7 +96,6 @@
         
         self.timeLabel = [UILabel new];
         [timeView addSubview:self.timeLabel];
-        self.timeLabel.text = @"--:--:--:--";
         self.timeLabel.textColor = [UIColor buttonTitleColor];
         self.timeLabel.font = [UIFont systemFontOfSize:14.];
         
@@ -144,7 +126,7 @@
         for (int i = 0 ; i < controller.count; i++) {
             UIViewController *control = controller[i];
             [self.segmentScrollView addSubview:control.view];
-            control.view.frame = CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, frame.size.height - 64 - 80);
+            control.view.frame = CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, frame.size.height - 80); // 整理高度 - 64 --> 是否需要添加???
             [pageVC addChildViewController:control];
             [control didMoveToParentViewController:pageVC];
             
@@ -192,7 +174,7 @@
     NSString *todayTimeString = self.timeArray[num];
     if ([todayTimeString isKindOfClass:[NSNull class]]) {
         //        self.timerLabel.text = @"即将上架";
-        self.timeLabel.text = @"00:00:00";
+        self.timeLabel.text = @"--:--:--:--";
     }else {
         kWeakSelf
         

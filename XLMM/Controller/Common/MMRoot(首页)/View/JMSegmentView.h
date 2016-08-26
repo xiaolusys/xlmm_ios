@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) NSArray *timeArray;
 
-- (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC DataArray:(NSArray *)dataArray;
+- (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC;
 
 
 @end

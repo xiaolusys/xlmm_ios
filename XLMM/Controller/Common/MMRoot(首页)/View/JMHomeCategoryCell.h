@@ -10,9 +10,19 @@
 
 extern NSString *const JMHomeCategoryCellIdentifier;
 
+@class JMHomeCategoryCell;
+@protocol JMHomeCategoryCellDelegate <NSObject>
+
+- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView TapClick:(NSInteger)index;
+
+@end
+
 @interface JMHomeCategoryCell : UITableViewCell
 
 //@property (nonatomic, copy) NSString *imageUrlString;
 @property (nonatomic, strong) NSMutableArray *imageArray;
+
+@property (nonatomic, weak) id<JMHomeCategoryCellDelegate>delegate;
+
 
 @end

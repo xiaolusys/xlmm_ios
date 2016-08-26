@@ -17,7 +17,6 @@
 #import "WebViewController.h"
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
-#import "HMSegmentedControl.h"
 #import "JMRootGoodsModel.h"
 #import "JMSegmentView.h"
 #import "JMHomeCollectionController.h"
@@ -32,27 +31,24 @@
 #import "JMUpdataAppPopView.h"
 #import "JMHelper.h"
 #import "AppDelegate.h"
+#import "ChildViewController.h"
+#import "JMMaMaPersonCenterController.h"
 
 
-@interface JMHomeRootController ()<JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
-    NSTimer *_cartTimer;
-    NSString *_cartTimeString;
+@interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
+    NSTimer *_cartTimer;            // 购物定时器
+    NSString *_cartTimeString;      // 购物车时间
 }
-
-@property (nonatomic, strong) UIScrollView *baseScrollView;
-
+/**
+ *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
+ */
 @property (nonatomic, strong) JMMainTableView *tableView;
-@property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
-
 @property (nonatomic, strong) NSMutableArray *activeArray;
-
-
-@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
-
-@property (nonatomic, strong) NSMutableArray *DataSource;
-
+@property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
 @property (nonatomic, strong) JMSegmentView *segmentView;
-
+/**
+ *  主页视图滚动位置判断
+ */
 @property (nonatomic, assign) BOOL canScroll;
 @property (nonatomic, assign) BOOL isTopIsCanNotMoveTabView;
 @property (nonatomic, assign) BOOL isTopIsCanNotMoveTabViewPre;
@@ -62,12 +58,14 @@
 @property (nonatomic, strong) JMHomeCollectionController *todayVC;
 @property (nonatomic, strong) JMHomeTomorrowController *tomorrowVC;
 
+/**
+ *  返回顶部按钮,购物车视图,导航视图,弹出视图
+ */
 @property (nonatomic, strong) UIButton *topButton;
 @property (nonatomic, strong) UIButton *cartView;
 @property (nonatomic, strong) UILabel *cartsLabel;
 @property (nonatomic, strong) UILabel *cartsCountLabel;
 @property (nonatomic, strong) UIButton *navRightButton;
-
 @property (nonatomic,strong) UIView *maskView;
 @property (nonatomic,strong) JMRepopView *popView;
 /**
@@ -85,25 +83,17 @@
 @end
 
 @implementation JMHomeRootController {
-    NSMutableArray *_topImageArray;
-    NSMutableArray *_categorysArray;
-    
-    NSMutableDictionary *_webDiction;
-    
-    NSDictionary *yesterdayArr;
-    NSDictionary *todayArr;
-    NSDictionary *tomorrowArr;
-    NSMutableArray *flageArr;
-    NSArray *_urlArray;
-    BOOL isCreateSegment;
-    NSMutableArray *_allContentArray;
-    NSMutableArray *_timeArray;
-
-    NSMutableDictionary *_webDict;
+    NSMutableArray *_topImageArray;     // 主页头部滚动视图数据
+    NSMutableArray *_categorysArray;    // 主页分类数据
+    NSMutableArray *flageArr;           // 判断商品请求是否加载完成的标志
+    NSArray *_urlArray;                 // 商品url -> (昨天,今天,明天)
+    BOOL isCreateSegment;               // 商品请求是否全部完成
+    NSMutableArray *_timeArray;         // 商品结束(开始)时间参数
+    NSMutableDictionary *_webDict;      // webView需要的一些参数
     BOOL _isFirstOpenApp;               // 判断是否是第一次打开
-    NSString *_releaseNotes;
-    NSString *_hash;
-    NSString *_downloadURLString;
+    NSString *_releaseNotes;            // 版本升级信息
+    NSString *_hash;                    // 判断是否需要重新下载的哈希值
+    NSString *_downloadURLString;       // 地址下载链接
 }
 - (UIView *)maskView {
     if (!_maskView) {
@@ -112,13 +102,6 @@
         _maskView.alpha = 0.3;
     }
     return _maskView;
-}
-
-- (NSMutableArray *)DataSource {
-    if (_DataSource == nil) {
-        _DataSource = [NSMutableArray array];
-    }
-    return _DataSource;
 }
 - (NSMutableArray *)activeArray {
     if (_activeArray == nil) {
@@ -135,7 +118,6 @@
                                              selector:@selector(rootViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
-    
     [self loadCatrsNumData];
     [MobClick beginLogPageView:@"main"];
 }
@@ -147,19 +129,33 @@
         
     }
 }
+- (void)viewDidAppear:(BOOL)animated {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self autologin];
+    } else {
+        NSLog(@"no login");
+    }
+}
+- (void)autologin{
+    if ([self isXiaolumama]) {
+        [self createRightItem];
+    } else{
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+- (BOOL)isXiaolumama{
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:kISXLMM];
+    return isXLMM;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
-    yesterdayArr = [NSDictionary dictionary];
-    todayArr = [NSDictionary dictionary];
-    tomorrowArr = [NSDictionary dictionary];
-    _allContentArray = [NSMutableArray arrayWithObjects:yesterdayArr,todayArr,tomorrowArr, nil];
     _urlArray = @[@"yesterday",@"today",@"tomorrow"];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     _topImageArray = [NSMutableArray array];
     _categorysArray = [NSMutableArray array];
-    _allContentArray = [NSMutableArray arrayWithObjects:yesterdayArr,todayArr,tomorrowArr, nil];
     _timeArray = [NSMutableArray arrayWithObjects:@"00:00:00",@"00:00:00",@"00:00:00", nil];
     
     //订阅展示视图消息，将直接打开某个分支视图
@@ -167,32 +163,22 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    
-    
-    [self createNavigaView];
-    
-    [self createTabelView];
-    [self loadActiveData];
-    [self createTopButton];
-    [self createCartsView];
-    
-//    for (int i = 0; i < _urlArray.count; i++) {
-//        [self loadData:_urlArray[i]];
-//    }
-    [self createPullHeaderRefresh];
-    [self.tableView.mj_header beginRefreshing];
-    
-    [self autoUpdateVersion];
-    [self loadItemizeData];  // -- > 获取商品分类
-    [self loadAddressInfo];  // -- > 获得地址信息请求
-    self.session = [self backgroundSession];
-    
-    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];
+    [self createNavigaView];                           // 创建自定义导航控制器
+    [self createTabelView];                            // 创建tableView
+    [self createTopButton];                            // 创建返回顶部按钮
+    [self createCartsView];                            // 创建购物车
+    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
+    [self createPullHeaderRefresh];                    // 下拉刷新,重新获取商品展示数据
+    [self.tableView.mj_header beginRefreshing];        // 刚进入主页刷新数据
+    [self autoUpdateVersion];                          // 版本自动升级
+    [self loadItemizeData];                            // 获取商品分类
+    [self loadAddressInfo];                            // 获得地址信息请求
+    self.session = [self backgroundSession];           // 后台下载...
+    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开
     if (_isFirstOpenApp) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
     }
-
 }
 #pragma mark 通知事件
 - (void)presentView:(NSNotification *)notification{
@@ -220,16 +206,16 @@
             [users setBool:NO forKey:kISXLMM];
             return;
         }
-        if([[dic objectForKey:kISXLMM] isKindOfClass:[NSDictionary class]]){
-            self.navRightButton.hidden = NO;
+        if([[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
+            [self createRightItem];
             [users setBool:YES forKey:kISXLMM];
         }else {
-            self.navRightButton.hidden = YES;
+            self.navigationItem.rightBarButtonItem = nil;
             [users setBool:NO forKey:kISXLMM];
         }
     } WithFail:^(NSError *error) {
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-        self.navRightButton.hidden = YES;
+        self.navigationItem.rightBarButtonItem = nil;
         [users setBool:NO forKey:kISXLMM];
     } Progress:^(float progress) {
     }];
@@ -244,18 +230,15 @@
             if ([string isEqualToString:@"yesterday"]) {
                 flageArr[0] = @1;
                 self.yesterdayVC.dataDict = responseObject;
-                _allContentArray[0] = yesterdayArr;
                 _timeArray[0] = responseObject[@"offshelf_deadline"];
             }else if ([string isEqualToString:@"today"]) {
                 flageArr[1] = @1;
                 self.todayVC.dataDict = responseObject;
-                _allContentArray[1] = todayArr;
                 _timeArray[1] = responseObject[@"offshelf_deadline"];
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
-                _allContentArray[2] = tomorrowArr;
-                _timeArray[2] = responseObject[@"offshelf_deadline"];
+                _timeArray[2] = responseObject[@"onshelf_starttime"];
             }
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {
@@ -266,17 +249,15 @@
                 self.segmentView.timeArray = [NSArray arrayWithArray:_timeArray];
             }
         }else {
-            
         }
     } WithFail:^(NSError *error) {
+        [self endRefresh];
     } Progress:^(float progress) {
-        
     }];
-    
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
-    kWeakSelf
+//    kWeakSelf
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         for (int i = 0; i < _urlArray.count; i++) {
@@ -308,7 +289,7 @@
     scrollView.jm_scrollDataSource = self;
     scrollView.jm_scrollDelegate = self;
     
-    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, 130);
+    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4);
     
     scrollView.jm_isStopScrollForSingleCount = YES;
     scrollView.jm_autoScrollInterval = 3.;
@@ -335,12 +316,16 @@
     leftImageview.frame = CGRectMake(0, 11, 26, 26);
     [leftButton addSubview:leftImageview];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category"]];
-    rightImageview.frame = CGRectMake(18, 11, 26, 26);
-    [self.navRightButton addSubview:rightImageview];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
+}
+- (void)createRightItem {
+    if(self.navigationItem.rightBarButtonItem == nil) {
+        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category"]];
+        rightImageview.frame = CGRectMake(18, 11, 26, 26);
+        [self.navRightButton addSubview:rightImageview];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
+    }else {}
 }
 #pragma mark 获取活动,分类,滚动视图网络请求
 - (void)loadActiveData {
@@ -351,10 +336,8 @@
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
-    
 }
 - (void)fetchActive:(NSDictionary *)dic {
-    // 头部滚动视图
     NSArray *postersArr = dic[@"posters"];
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
@@ -367,10 +350,8 @@
     for (NSDictionary *dict in activeArr) {
         [self.activeArray addObject:dict];
     }
-    
     [self.goodsScrollView jm_reloadData];
     [self.tableView reloadData];
-    
 }
 #pragma mark UITableViewDataSource,UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -387,9 +368,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 130;
+        return SCREENWIDTH * 0.32 + 10;
     }else if (indexPath.section == 1) {
-        return SCREENWIDTH * 0.5 + 10;
+        return SCREENWIDTH / 2 + 10;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {
@@ -398,11 +379,12 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        JMHomeCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeCategoryCellIdentifier];
+        JMHomeCategoryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (!cell) {
             cell = [[JMHomeCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeCategoryCellIdentifier];
         }
         cell.imageArray = _categorysArray;
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.section == 1){
@@ -415,7 +397,7 @@
         cell.activeDic = _activeArray[indexPath.row];
         return cell;
     }else {
-        JMHomeGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeGoodsCellIdentifier];
+        JMHomeGoodsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (!cell) {
             cell = [[JMHomeGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeGoodsCellIdentifier];
         }
@@ -441,6 +423,24 @@
         }
     }else {}
 }
+#pragma mark 分类点击事件
+- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView TapClick:(NSInteger)index {
+    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
+    if (index == 100) {
+        [MobClick event:@"child_click"];
+        childVC.urlString = kCHILD_LIST_URL;
+        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
+        childVC.childClothing = YES;
+    }else if (index == 101) {
+        [MobClick event:@"women_click"];
+        childVC.urlString = kLADY_LIST_URL;
+        childVC.orderUrlString = kLADY_LIST_ORDER_URL;
+        childVC.childClothing = NO;
+    }else {
+    }
+    [self.navigationController pushViewController:childVC animated:YES];
+}
+#pragma mark 活动点击事件(跳转webView)
 - (void)skipWebView:(NSString *)appLink activeDic:(NSDictionary *)dic {
     if(appLink.length == 0){
         WebViewController *huodongVC = [[WebViewController alloc] init];
@@ -458,22 +458,18 @@
         [JumpUtils jumpToLocation:appLink viewController:self];
     }
 }
-#pragma mark 添加pageViewController
+#pragma mark 添加segmentViewController
 - (UIView *)setPageViewControllers {
     if (!_segmentView) {
         self.yesterdayVC = [[JMHomeYesterdayController alloc] init];
         self.todayVC = [[JMHomeCollectionController alloc] init];
         self.tomorrowVC = [[JMHomeTomorrowController alloc] init];
-
-        
-        NSArray *controllers = @[self.yesterdayVC,self.todayVC,self.tomorrowVC];
+        NSArray *collectionArr = @[self.yesterdayVC,self.todayVC,self.tomorrowVC];
         NSArray *titleArray = @[@"昨日热卖",@"今日特卖",@"即将上新"];//@[@"yesterday",@"today",@"tomorrow"];
-        
-        self.segmentView = [[JMSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) Controllers:controllers TitleArray:titleArray PageController:self DataArray:_allContentArray];
+        self.segmentView = [[JMSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) Controllers:collectionArr TitleArray:titleArray PageController:self];
     }
     return _segmentView;
 }
-
 -(void)scrollMessage:(NSNotification *)notification{
     NSDictionary *userInfo = notification.userInfo;
     NSString *canScroll = userInfo[@"isCanScroll"];
@@ -481,11 +477,9 @@
         _canScroll = YES;
     }
 }
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat tabOffsetY = [self.tableView rectForSection:2].origin.y - 64;
     CGFloat offsetY = scrollView.contentOffset.y;
-    
     _isTopIsCanNotMoveTabViewPre = _isTopIsCanNotMoveTabView;
     if (offsetY>=tabOffsetY) {
         scrollView.contentOffset = CGPointMake(0, tabOffsetY);
@@ -513,17 +507,41 @@
         [self performSelector:@selector(presentLeftMenuViewController:) withObject:nil withObject:self];
     }
 }
-- (void)rightNavigationClick:(UIButton *)button {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)rootVCPushOtherVC:(UIViewController *)vc{
+    [self.navigationController pushViewController:vc animated:YES];
 }
-#pragma mark - LPAutoScrollViewDatasource
+- (void)rightNavigationClick:(UIButton *)button {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL islogin = [defaults boolForKey:kIsLogin];
+    if (islogin == YES) {
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+        NSError *error = nil;
+        NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:string] encoding:NSUTF8StringEncoding error:&error];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        if (data == nil) {
+            return;
+        }
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
+            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+            mamaCenterVC.userInfoDic = json;
+            [self.navigationController pushViewController:mamaCenterVC animated:YES];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alertView show];
+        }
+    } else {
+        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+}
+#pragma mark 顶部视图滚动协议方法
 - (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
     return _topImageArray.count;
 }
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMHomeHeaderView *)rollView {
     rollView.topDic = _topImageArray[index];
 }
-#pragma mark LPAutoScrollViewDelegate
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
     NSLog(@"%@", _topImageArray[index]);
     [MobClick event:@"banner_click"];
@@ -543,7 +561,6 @@
         } Progress:^(float progress) {
         }];
     }else {
-        self.cartsCountLabel.hidden = YES;
         self.navigationItem.rightBarButtonItem = nil;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(@44);
@@ -665,7 +682,6 @@
     CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
     [self.navigationController pushViewController:cartVC animated:YES];
 }
-
 #pragma mark 点击按钮进入我的收藏界面
 - (void)gotoCollection:(UIButton *)sender {
     [MobClick event:@"storeUP_click"];
@@ -678,9 +694,8 @@
     JMStoreupController *storeVC = [[JMStoreupController alloc] init];
     storeVC.index = 100;
     [self.navigationController pushViewController:storeVC animated:YES];
-    
 }
-
+#pragma mark 返回顶部按钮
 - (void)createTopButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:topButton];
@@ -697,28 +712,25 @@
 }
 - (void)topButtonClick:(UIButton *)btn {
     [self comeToTop];
-    
+    [self performSelector:@selector(waitTopButton) withObject:nil afterDelay:0.1f];
+}
+- (void)waitTopButton {
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 - (void)searchScrollViewInWindow:(UIView *)view {
     for (UIScrollView *scrollView in view.subviews) {
         if ([scrollView isKindOfClass:[UIScrollView class]]) {
             CGPoint offect = scrollView.contentOffset;
-            offect.y = -scrollView.contentInset.top;
+            offect.y = -scrollView.contentInset.top - 1;
             [scrollView setContentOffset:offect animated:YES];
         }
         [self searchScrollViewInWindow:scrollView];
     }
-    
 }
 - (void)comeToTop{
-//    [self disableAllGoodsCollectionScroll];
-    
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
-//    self.backScrollview.scrollEnabled = YES;
-    
 }
-
 #pragma mark UIscrollViewDelegate  滚动视图代理方法
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
@@ -777,9 +789,6 @@
         
     }];
 }
-/**
- *  隐藏
- */
 - (void)hidepopView {
     [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
 }
@@ -823,7 +832,6 @@
             [self.navigationController pushViewController:logVC animated:YES];
         }
     }else {
-        //取消按钮
         [self hidepopView];
     }
 }
@@ -833,12 +841,9 @@
         if (!responseObject)return;
         [self fetchedUpdateData:responseObject];
     } WithFail:^(NSError *error) {
-        
     } Progress:^(float progress) {
-        
     }];
 }
-
 - (void)fetchedUpdateData:(NSDictionary *)appInfoDic{
     NSArray *reluts = [appInfoDic objectForKey:@"results"];
     if ([reluts count] == 0) return;
@@ -881,7 +886,53 @@
 - (void)hideUpdataView {
     [JMPopViewAnimationSpring dismissView:self.updataPopView overlayView:self.maskView];
 }
-
+#pragma mark - 获取商品分类列表
+- (void)loadItemizeData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) {
+            return ;
+        }else {
+            [self fetchItemize:responseObject];
+        }
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+- (void)fetchItemize:(NSDictionary *)dic {
+    NSString *isUpData = dic[@"sha1"];
+    NSString *urlString = dic[@"download_url"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *oldVersion = [defaults stringForKey:@"itemHash"];
+    if (oldVersion == nil) {
+        [self downLoadUrl:urlString];
+    }else {
+        if ([oldVersion isEqualToString:isUpData]) {
+        }else {
+            [self downLoadUrl:urlString];
+        }
+    }
+    [defaults setObject:isUpData forKey:@"itemHash"];
+    [defaults synchronize];
+}
+- (void)downLoadUrl:(NSString *)urlStr {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        NSLog(@"当前下载进度为:%lf", 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        NSLog(@"默认下载地址%@",targetPath);
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *path=[paths objectAtIndex:0];
+        NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+        return [NSURL fileURLWithPath:jsonPath]; // 返回的是文件存放在本地沙盒的地址
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        NSLog(@"%@---%@", response, filePath);
+    }];
+    // 5.启动下载任务
+    [task resume];
+}
 #pragma mark 网络请求得到地址信息
 - (void)loadAddressInfo {
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/districts/latest_version",Root_URL];
@@ -953,53 +1004,6 @@
     } else {
         NSLog(@"复制文件发生错误: %@", [errorCopy localizedDescription]);
     }
-}
-#pragma mark - 获取商品分类列表
-- (void)loadItemizeData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) {
-            return ;
-        }else {
-            [self fetchItemize:responseObject];
-        }
-    } WithFail:^(NSError *error) {
-    } Progress:^(float progress) {
-    }];
-}
-- (void)fetchItemize:(NSDictionary *)dic {
-    NSString *isUpData = dic[@"sha1"];
-    NSString *urlString = dic[@"download_url"];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *oldVersion = [defaults stringForKey:@"itemHash"];
-    if (oldVersion == nil) {
-        [self downLoadUrl:urlString];
-    }else {
-        if ([oldVersion isEqualToString:isUpData]) {
-        }else {
-            [self downLoadUrl:urlString];
-        }
-    }
-    [defaults setObject:isUpData forKey:@"itemHash"];
-    [defaults synchronize];
-}
-- (void)downLoadUrl:(NSString *)urlStr {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"当前下载进度为:%lf", 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
-    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        NSLog(@"默认下载地址%@",targetPath);
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *path=[paths objectAtIndex:0];
-        NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
-        return [NSURL fileURLWithPath:jsonPath]; // 返回的是文件存放在本地沙盒的地址
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        NSLog(@"%@---%@", response, filePath);
-    }];
-    // 5.启动下载任务
-    [task resume];
 }
 #pragma mark - NSURLSessionTaskDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
