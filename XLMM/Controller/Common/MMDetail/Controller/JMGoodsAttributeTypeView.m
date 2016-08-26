@@ -40,10 +40,11 @@
                 
                 isLineReturn = YES;
                 upX = 15;
-                upY += 30;
+                upY += 40;
             }
             
             UIButton *btn= [UIButton buttonWithType:UIButtonTypeCustom];
+            
             btn.frame = CGRectMake(upX, upY, size.width + 30,25);
 //            [btn setBackgroundColor:[UIColor countLabelColor]];
             [btn setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
@@ -58,7 +59,7 @@
             [self addSubview:btn];
             btn.tag = 1 + i;
             [btn addTarget:self action:@selector(touchbtn:) forControlEvents:UIControlEventTouchUpInside];
-            upX += size.width + 40;
+            upX += size.width + 45;
             
             if (btn.tag == 1) {
 //                btn.selected = YES;
@@ -77,7 +78,7 @@
             
         }
         
-        upY +=30;
+        upY += 40;
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, upY+10, self.frame.size.width, 0.5)];
         line.backgroundColor = [UIColor lineGrayColor];
         [self addSubview:line];

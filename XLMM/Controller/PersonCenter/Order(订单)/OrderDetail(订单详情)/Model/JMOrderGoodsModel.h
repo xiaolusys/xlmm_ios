@@ -21,6 +21,10 @@
 
 @property (nonatomic,assign) BOOL kill_title;
 /**
+ *  商品ID
+ */
+@property (nonatomic,copy) NSString *model_id;
+/**
  *  商品个数
  */
 @property (nonatomic,copy) NSString *num;
@@ -73,28 +77,31 @@
 @end
 
 /**
- *   {
- "discount_fee" = "15.1";
- id = 412740;
+ *  orders =     (
+ {
+ "discount_fee" = 2;
+ id = 454042;
  "is_seckill" = 0;
- "item_id" = 55697;
+ "item_id" = 61047;
  "kill_title" = 0;
+ "model_id" = 17716;
  num = 1;
- oid = xo16062857726e925fefc;
- "outer_id" = 819293150031;
- "package_order_id" = "";
- payment = "74.8";
- "pic_path" = "http://image.xiaolu.so/MG_14666752120661.jpg";
- "refund_id" = 48227;
+ oid = xo16081757b408b771078;
+ "outer_id" = 329294630091;
+ "package_order_id" = "1-134679-3-1";
+ payment = "36.02";
+ "pic_path" = "http://image.xiaolu.so/MG_1469628689550.jpg";
+ "refund_id" = 52255;
  "refund_status" = 7;
  "refund_status_display" = "\U9000\U6b3e\U6210\U529f";
- "sku_id" = 204086;
- "sku_name" = M;
+ "sku_id" = 227959;
+ "sku_name" = "\U6d1b\U795e\U82b1";
  status = 6;
  "status_display" = "\U9000\U6b3e\U5173\U95ed";
- title = "\U663e\U7626\U7f51\U7eb1\U5370\U82b1\U8fde\U8863\U88d9/\U9ed1\U8272";
- "total_fee" = "89.90000000000001";
+ title = "\U9b54\U5e7b\U4e4b\U7f8e\U73ab\U7470\U5473\U82b1\U679c\U8336";
+ "total_fee" = "38.02";
  }
+ );
 
  */
 

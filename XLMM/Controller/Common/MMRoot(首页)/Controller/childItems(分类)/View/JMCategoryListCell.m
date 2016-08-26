@@ -33,7 +33,6 @@
     [self.contentView addSubview:iconImage];
     self.iconImage = iconImage;
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImage.backgroundColor = [UIColor redColor];
     
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];

@@ -53,7 +53,12 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         itemString = itemMask[0];
     
     }
-    self.itemMask.text = [NSString stringWithFormat:@" %@ ",itemString];
+    self.itemMask.text = [NSString stringWithFormat:@"%@",itemString];
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:14] forKey:NSFontAttributeName];
+    CGSize size = [itemString sizeWithAttributes:dic];
+    [self.itemMask mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(@(size.width + 20));
+    }];
 //    self.itemMask.textAlignment = NSTextAlignmentCenter;
     
     // === 处理结束时间 === //
@@ -132,7 +137,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     shoucangButton.titleLabel.font = [UIFont systemFontOfSize:16.];
     [shoucangButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     self.storeUpButton = shoucangButton;
-    shoucangButton.tag = 100;
+//    shoucangButton.tag = 100;
+//    shoucangButton.selected = NO;
     [shoucangButton addTarget:self action:@selector(storeUpClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *baoyou = [UILabel new];
@@ -238,9 +244,9 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 }
 
 - (void)storeUpClick:(UIButton *)button {
-    button.selected = !button.selected;
+//    button.selected = !button.selected;
     if (self.block) {
-        self.block(button.selected);
+        self.block(button);
     }
     
 }

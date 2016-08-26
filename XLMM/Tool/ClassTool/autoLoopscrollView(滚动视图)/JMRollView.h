@@ -10,6 +10,6 @@
 
 @interface JMRollView : UIView
 
-
+//@property (nonatomic, copy) NSString *imageString;
 
 @end

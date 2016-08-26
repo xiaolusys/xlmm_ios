@@ -244,6 +244,10 @@
             
         } else {
             [MiPushSDK setAccount:user_account];
+            //保存user_account
+            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            [user setObject:user_account forKey:@"user_account"];
+            [user synchronize];
         }
     } WithFail:^(NSError *error) {
         

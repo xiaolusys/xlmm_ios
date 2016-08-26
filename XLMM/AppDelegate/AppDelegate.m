@@ -18,6 +18,7 @@
 #import "IosJsBridge.h"
 #import "sys/utsname.h"
 #import "Udesk.h"
+#import "JMHomeRootController.h"
 
 #define login @"login"
 #import "JMFirstOpen.h"
@@ -183,19 +184,7 @@ static BOOL isNetPrompt;
         //        [alertView show];
         
     }
-    
-    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        NSArray *arr = responseObject[@"topics"];
-        for (NSString *str in arr) {
-            [MiPushSDK subscribe:str];
-        }
-    } WithFail:^(NSError *error) {
-        
-    } Progress:^(float progress) {
-    }];
-    
+
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -207,14 +196,12 @@ static BOOL isNetPrompt;
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
     
     if ([string isEqual:@"1"] || string == nil) {
-        
-        [MiPushSDK registerMiPush:self type:0 connect:YES];
     
+        [MiPushSDK registerMiPush:self type:0 connect:YES];
+        
     }else {
         
     }
-    
-    
     
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -265,12 +252,10 @@ static BOOL isNetPrompt;
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
     //创建导航控制器，添加根视图控制器
-    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
-    
+//    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
+    JMHomeRootController *root = [[JMHomeRootController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    
     leftMenu.pushVCDelegate = root;
     RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
@@ -410,6 +395,33 @@ static BOOL isNetPrompt;
     NSLog(@"Regist fail%@",error);
 }
 
+
+//- (void)application:(UIApplication *)application
+//didReceiveRemoteNotification:(NSDictionary *)userInfo
+//fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//{
+//    NSLog(@"UserInfo = %@", userInfo);
+//    NSString *infoString = [NSString stringWithFormat:@"didReceiveRemoteNotification new %@",userInfo];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"content" message:infoString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [alert show];
+//    
+//    [MiPushSDK handleReceiveRemoteNotification :userInfo];
+//    // 使用此方法后，所有消息会进行去重，然后通过miPushReceiveNotification:回调返回给App
+//    NSString *messageId = [userInfo objectForKey:@"_id_"];
+//    [MiPushSDK openAppNotify:messageId];
+//    
+//    if (application.applicationState == UIApplicationStateActive) {
+//        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
+//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//        localNotification.userInfo = userInfo;
+//        localNotification.soundName = UILocalNotificationDefaultSoundName;
+//        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+//        localNotification.fireDate = [NSDate date];
+//        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//    }
+//
+//}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
     NSLog(@"UserInfo = %@", userInfo);
@@ -447,7 +459,8 @@ static BOOL isNetPrompt;
         
         
         self.miRegid = [data objectForKey:@"regid"];
-        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"regid" message:self.miRegid delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alert show];
         
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
         
@@ -468,13 +481,17 @@ static BOOL isNetPrompt;
             if (!responseObject) return ;
             NSLog(@"JSON: %@", responseObject);
             NSString *user_account = [responseObject objectForKey:@"user_account"];
-            
-            if (![user_account isEqualToString:@""]){
+            if ((user_account != nil) && ![user_account isEqualToString:@""]){
                 [MiPushSDK setAccount:user_account];
                 //保存user_account
                 NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
                 [user setObject:user_account forKey:@"user_account"];
                 [user synchronize];
+                
+//                NSString *infoString = [NSString stringWithFormat:@"--%@--",user_account];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"user_account" message:infoString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                [alert show];
+
             }
         } WithFail:^(NSError *error) {
             
@@ -482,9 +499,26 @@ static BOOL isNetPrompt;
             
         }];
         
+        //    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
+        NSString *urlString2 = [NSString stringWithFormat:@"%@/rest/v1/push/topic",Root_URL];
+        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString2 WithParaments:nil WithSuccess:^(id responseObject) {
+            if (!responseObject) return;
+            NSArray *arr = responseObject[@"topics"];
+            for (NSString *str in arr) {
+                [MiPushSDK subscribe:str];
+            }
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
+        }];
+
+        
+    }else if ([selector isEqualToString:@"setAccount:"]) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"user_account" message:@"setaccount succ" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alert show];
+
     }
-    
-    
+
     
 }
 
@@ -494,22 +528,39 @@ static BOOL isNetPrompt;
 {
     NSLog(@"请求失败");
     // 请求失败
+//    NSString *errString = [NSString stringWithFormat:@"mipush command error(%d|%@): %@", error, [self getOperateType:selector], data];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"content" message:errString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [alert show];
 }
 
-- ( void )miPushReceiveNotification:( NSDictionary *)data
+- (void)miPushReceiveNotification:(NSDictionary *)data
 {
     NSLog(@"---------------data = %@", data);
+    if(data == nil) return;
     NSDictionary *apsDic = data[@"aps"];
     NSString *jsonString = apsDic[@"alert"];
     
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
-    if ([jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
+    if ((jsonDic != nil) && (jsonDic[@"type"]!=nil) && [jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
+    }else {
+//        NSString *messageId = [data objectForKey:@"_id_"];
+//        NSLog(@"messageID = %@", messageId);
+//        [MiPushSDK openAppNotify:messageId];
+//        
+//        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
+//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//        localNotification.userInfo = data;
+//        localNotification.soundName = UILocalNotificationDefaultSoundName;
+//        localNotification.alertBody = [[data objectForKey:@"aps"] objectForKey:@"alert"];
+//        localNotification.fireDate = [NSDate date];
+//        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }
+//    NSString *infoString = [NSString stringWithFormat:@"miPushReceiveNotification %@",data];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"content" message:infoString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [alert show];
     
-    
-    //
     //    // 长连接收到的消息。消息格式跟APNs格式一样
     //    // 返回数据
     NSString *target_url = nil;
@@ -532,12 +583,41 @@ static BOOL isNetPrompt;
     
 }
 
-
+- (NSString*)getOperateType:(NSString*)selector
+{
+    NSString *ret = nil;
+    if ([selector hasPrefix:@"registerMiPush:"] ) {
+        ret = @"客户端注册设备";
+    }else if ([selector isEqualToString:@"unregisterMiPush"]) {
+        ret = @"客户端设备注销";
+    }else if ([selector isEqualToString:@"registerApp"]) {
+        ret = @"注册App";
+    }else if ([selector isEqualToString:@"bindDeviceToken:"]) {
+        ret = @"绑定 PushDeviceToken";
+    }else if ([selector isEqualToString:@"setAlias:"]) {
+        ret = @"客户端设置别名";
+    }else if ([selector isEqualToString:@"unsetAlias:"]) {
+        ret = @"客户端取消别名";
+    }else if ([selector isEqualToString:@"subscribe:"]) {
+        ret = @"客户端设置主题";
+    }else if ([selector isEqualToString:@"unsubscribe:"]) {
+        ret = @"客户端取消主题";
+    }else if ([selector isEqualToString:@"setAccount:"]) {
+        ret = @"客户端设置账号";
+    }else if ([selector isEqualToString:@"unsetAccount:"]) {
+        ret = @"客户端取消账号";
+    }else if ([selector isEqualToString:@"openAppNotify:"]) {
+        ret = @"统计客户端";
+    }else if ([selector isEqualToString:@"getAllAliasAsync"]) {
+        ret = @"获取Alias设置信息";
+    }else if ([selector isEqualToString:@"getAllTopicAsync"]) {
+        ret = @"获取Topic设置信息";
+    }
+    
+    return ret;
+}
 
 #pragma mark --微信回调方法--
-
-
-
 -(void)onResp:(BaseResp *)resp
 {
     /*
@@ -743,6 +823,9 @@ static BOOL isNetPrompt;
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     self.isAppinPayGo = NO;
+    
+    
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -772,7 +855,7 @@ static BOOL isNetPrompt;
     if (_isFirst == YES && self.isLaunchedByNotification == YES) {
         _isFirst = NO;
         
-        if ([self.pushInfo objectForKey:@"target_url"] == nil) {
+        if ((self.pushInfo == nil) || [self.pushInfo objectForKey:@"target_url"] == nil) {
             
             
         } else {

@@ -21,6 +21,8 @@
 
 @property (nonatomic, strong) UILabel *timeLabel;
 
+@property (nonatomic, strong) UILabel *phoneLabel;
+
 @end
 
 @implementation JMFetureFansCell
@@ -42,8 +44,15 @@
     [self.contentView addSubview:descLabel];
     self.descLabel = descLabel;
     self.descLabel.font = [UIFont systemFontOfSize:12.];
-    self.descLabel.textColor = [UIColor timeLabelColor];
+    self.descLabel.textColor = [UIColor dingfanxiangqingColor];
     self.descLabel.numberOfLines = 0;
+    
+    UILabel *phoneLabel = [UILabel new];
+    [self.contentView addSubview:phoneLabel];
+    self.phoneLabel = phoneLabel;
+    self.phoneLabel.font = [UIFont systemFontOfSize:12.];
+    self.phoneLabel.textColor = [UIColor dingfanxiangqingColor];
+    self.phoneLabel.numberOfLines = 0;
     
     UILabel *nameLabel = [UILabel new];
     [self.contentView addSubview:nameLabel];
@@ -71,10 +80,16 @@
         make.top.equalTo(weakSelf.iconImage).offset(5);
     }];
     
+    [self.phoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
+        make.width.mas_equalTo(SCREENWIDTH - 160);
+        make.top.equalTo(weakSelf.nameLabel.mas_bottom).offset(5);
+    }];
+    
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.nameLabel);
         make.right.equalTo(weakSelf.contentView).offset(-20);
-        make.top.equalTo(weakSelf.nameLabel.mas_bottom).offset(15);
+        make.top.equalTo(weakSelf.phoneLabel.mas_bottom).offset(5);
     }];
     
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,7 +101,7 @@
 }
 
 - (void)fillData:(JMFetureFansModel *)model {
-    
+    kWeakSelf
     if (model.headimgurl.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {
@@ -104,6 +119,17 @@
     }
     self.timeLabel.text = [self composeString:model.modified];
     self.descLabel.text = model.note;
+    
+    if (model.mobile == nil) {
+        [self.descLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(weakSelf.nameLabel);
+            make.right.equalTo(weakSelf.contentView).offset(-20);
+            make.top.equalTo(weakSelf.nameLabel.mas_bottom).offset(15);
+        }];
+    }else {
+        self.phoneLabel.text = [NSString stringWithFormat:@"TEL:%@",model.mobile];
+    }
+    
 }
 
 - (void)fillVisitorData:(VisitorModel *)model {
@@ -124,6 +150,7 @@
     self.timeLabel.text = [self composeString:model.created];
 }
 - (void)configNowFnas:(FanceModel *)model {
+    kWeakSelf
     if (model.fans_thumbnail.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {
@@ -138,6 +165,17 @@
     
     self.descLabel.text = model.fans_description;
     self.timeLabel.text = [self composeString:model.created];
+    
+    if (model.fans_mobile == nil) {
+        [self.descLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(weakSelf.nameLabel);
+            make.right.equalTo(weakSelf.contentView).offset(-20);
+            make.top.equalTo(weakSelf.nameLabel.mas_bottom).offset(15);
+        }];
+    }else {
+        self.phoneLabel.text = [NSString stringWithFormat:@"TEL:%@",model.fans_mobile];
+    }
+    
     
 }
 - (NSString *)dealTime:(NSString *)str {

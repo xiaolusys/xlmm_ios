@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UILabel *label8;
 @property (nonatomic, strong) UILabel *label9;
 @property (nonatomic, strong) UILabel *label10;
+@property (nonatomic, strong) UILabel *label11;
 /**
  *  是否显示消息未读提示
  */
@@ -69,7 +70,9 @@
     self.label7.text = [NSString stringWithFormat:@"%@人",mamaCenterModel.fans_num];                     // 我的粉丝
     self.label8.text = @"团队协作,互利共赢";
     self.label9.text = @"个人收益排行";
-    self.label10.text = @"小鹿热话题,每天都新鲜";
+    self.label10.text = @"小鹿话题,每天新鲜";
+    self.label11.text = @"业务奖励,多多益善";
+    
     
 }
 - (void)setMessageDic:(NSDictionary *)messageDic {
@@ -193,9 +196,9 @@
     }];
     
     CGFloat buttonW = SCREENWIDTH / 2;
-    NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal",@"VisitorRecordNormal"];
-    NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的精选",@"每日推送",@"邀请开店",@"选品佣金",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行",@"论坛"];
-    for (int i = 0; i < 11; i++) {
+    NSArray *imageArr = @[@"OrderListNormal",@"EarningsRecordNormal",@"SelectionNormal",@"EverydayPushNormal",@"inviteShopNormal",@"selectionShopNormal",@"xiaoluUniversityNormal",@"FansNormal",@"TeamNormal",@"VisitorRecordNormal",@"mamaBBS",@"yejiRewards"];
+    NSArray *titleArr = @[@"订单记录",@"收益记录",@"我的店铺",@"每日推送",@"邀请开店",@"选品佣金",@"小鹿大学",@"我的粉丝",@"我的团队",@"收益排行",@"论坛",@"业绩奖励"];
+    for (int i = 0; i < titleArr.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.layer.borderColor = [UIColor countLabelColor].CGColor;
         button.layer.borderWidth = 0.5;
@@ -216,7 +219,7 @@
                 make.width.mas_equalTo(@(buttonW));
                 make.height.mas_equalTo(@65);
             }];
-        }else if (i >= 6 && i <= 10) {
+        }else if (i >= 6 && i <= 11) {
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(twoSectionView.mas_bottom).offset(65 * ((i - 6) / 2) + 225);
                 make.left.equalTo(weakSelf).offset((i % 2) * buttonW);
@@ -271,7 +274,9 @@
     self.label8 = (UILabel *)[self viewWithTag:208];
     self.label9 = (UILabel *)[self viewWithTag:209];
     self.label10 = (UILabel *)[self viewWithTag:210];
-
+    self.label11 = (UILabel *)[self viewWithTag:211];
+    
+    
 }
 - (void)mamaButtonClick:(UIButton *)button {
     if (_delegate && [_delegate respondsToSelector:@selector(composeMaMaCenterFooterView:Index:)]) {

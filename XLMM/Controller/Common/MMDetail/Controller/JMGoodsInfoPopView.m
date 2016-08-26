@@ -119,11 +119,12 @@
     iconImage.backgroundColor = [UIColor orangeColor];
     [headerView addSubview:iconImage];
     self.iconImage = iconImage;
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5.;
-    
+    self.iconImage.layer.cornerRadius = 5;
+
     UILabel *goodsTitle = [UILabel new];
     [headerView addSubview:goodsTitle];
     self.nameTitle = goodsTitle;
@@ -301,7 +302,7 @@
     
     NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
     [newImageUrl appendString:@"?"];
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageMoreCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     NSDictionary *colorD = _goodsArr[0];
     
     _goodsColorID = [colorD[@"product_id"] integerValue];
@@ -329,35 +330,37 @@
         
         NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:index - 1]];
         [newImageUrl appendString:@"?"];
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageMoreCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
-        
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+
         // -- > 在这里面给颜色 赋值
         NSDictionary *colirD = _goodsArr[index - 1];
         _goodsColorID = [colirD[@"product_id"] integerValue];
-        
         _choiseGoodsColor = self.goodsColorArray[index - 1];
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
-        
         [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
-        
-
-        
     }else if ([typeView isEqual:self.sizeView]) {
+        NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         for (int i = 1; i <= self.goodsSizeArray.count; i++) {
             UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
             if (i == index) {
-//                button.selected = YES;
                 button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
                 [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
             }else {
-//                button.selected = NO;
-                button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
-                [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+                NSString *size = self.goodsSizeArray[i - 1];
+                NSDictionary *sizeD = sizeDic[size];
+                NSInteger count =  [sizeD[@"free_num"] integerValue];
+                if (count == 0) {
+                    button.enabled = NO;
+                    button.layer.borderColor = [UIColor titleDarkGrayColor].CGColor;
+                    [button setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
+                }else {
+                    button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+                    [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+                }
             }
         }
         // -- > 在这里面给尺码 赋值
 //        NSString *color = self.goodsColorArray[self.colorView.tag - 1];
-        NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         NSString *size = self.goodsSizeArray[index - 1];
         NSDictionary *sizeD = sizeDic[size];
         self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"agent_price"] floatValue]];
@@ -407,8 +410,9 @@
 
             self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"agent_price"] floatValue]];
             self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
-            code = 1;
+            code --;
         }else {
+            
         }
     }
     
@@ -426,132 +430,19 @@
 //    if (self.block) {
 //        self.block(self.goodsAttributeDic);
 //    }
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:2.0f];
     if (_delegate && [_delegate respondsToSelector:@selector(composeGoodsInfoView:AttrubuteDic:)]) {
         [_delegate composeGoodsInfoView:self AttrubuteDic:paramer];
     }
     
 }
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
+}
 
 @end
-
-
-
-
-/**
- //    NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
- //    NSDictionary *dic = [_stockDict objectForKey:color];
- //
- //    [self reloadTypeButton:dic DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
- //    [self resumeBtn:_colorArray GoodsAttributeTypeView:self.colorView];
- //
- //    _stockValue = 0;
- //    _choiseGoodsColor = color;
- //    _choiseGoodsSize = @"";
- //
- //    NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:self.colorView.selectIndex]];
- //    [newImageUrl appendString:@"?"];
- //    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
- //
- //
- ////    self.sizeView.selectIndex = _defaultChoiseSize;
- //
- //    NSString *size = [_sizeArray objectAtIndex:_defaultChoiseSize];
- //    _defaultChoiseSize = 0;
- //    NSDictionary *stockDic = [[_stockDict objectForKey:color] objectForKey:size];
- //    _stockValue = [stockDic[@"free_num"] integerValue];
- //    _choiseGoodsColor = color;
- //    _choiseGoodsSize = size;
- //
- //    [self reloadTypeButton:[_stockDict objectForKey:color] DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
- //    [self resumeBtn:_sizeArray GoodsAttributeTypeView:self.sizeView];
- //    
- //
- *  //    if ([typeView isEqual:self.colorView]) {
- //        NSDictionary *colorDic = goodsAllArray[self.colorView.selectIndex];
- //        NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
- //        NSDictionary *dic = [_stockDict objectForKey:color];
- //        _goodsColorID = [colorDic[@"product_id"] integerValue];
- //
- //        [self reloadTypeButton:dic DataArray:_sizeArray GoodsAttributeTypeView:self.colorView];
- //        [self resumeBtn:_colorArray GoodsAttributeTypeView:self.colorView];
- //
- //        _stockValue = 0;
- //        _choiseGoodsColor = color;
- //        _choiseGoodsSize = @"";
- //
- //        NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:self.colorView.selectIndex]];
- //        [newImageUrl appendString:@"?"];
- //        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
- //
- //
- //    }else if ([typeView isEqual:self.sizeView]) {
- //        NSString *size = [_sizeArray objectAtIndex:self.sizeView.selectIndex];
- //        NSString *color = [_colorArray objectAtIndex:self.colorView.selectIndex];
- //
- //        NSDictionary *stockDic = [[_stockDict objectForKey:color] objectForKey:size];
- //        _goodsSizeID = [stockDic[@"sku_id"] integerValue];
- //
- //        _stockValue = [stockDic[@"free_num"] integerValue];
- //        _choiseGoodsColor = color;
- //        _choiseGoodsSize = size;
- //
- //
- //        [self reloadTypeButton:[_stockDict objectForKey:color] DataArray:_sizeArray GoodsAttributeTypeView:self.sizeView];
- //        [self resumeBtn:_sizeArray GoodsAttributeTypeView:self.sizeView];
- //    }else {
- //    }
- 
- //-(void)resumeBtn:(NSArray *)typeArr GoodsAttributeTypeView:(JMGoodsAttributeTypeView *)typeView
- //{
- //    for (int i = 0; i< typeArr.count; i++) {
- //        UIButton *btn =(UIButton *) [typeView viewWithTag:100+i];
- //        if (typeView.selectIndex == i) {
- //            btn.selected = YES;
- ////            btn.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
- //            [btn setBackgroundColor:[UIColor buttonEnabledBackgroundColor]];
- //        }else {
- //            btn.selected = NO;
- //            [btn setBackgroundColor:[UIColor countLabelColor]];
- //        }
- //    }
- //}
- //
- //- (void)reloadTypeButton:(NSDictionary *)typeDic DataArray:(NSArray *)dataArray GoodsAttributeTypeView:(JMGoodsAttributeTypeView *)typeView {
- //
- //    for (int i = 0; i < dataArray.count; i++) {
- //        NSDictionary *dic = [typeDic objectForKey:[dataArray objectAtIndex:i]];
- //        int count = [dic[@"free_num"] intValue];
- //
- //        self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"agent_price"] floatValue]];
- //        self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"std_sale_price"] floatValue]];
- //
- //
- //        UIButton *btn =(UIButton *)[typeView viewWithTag:100+i];
- //
- //        //库存为零 不可点击
- //        if (count == 0) {
- //            _defaultChoiseSize ++;
- //            btn.enabled = NO;
- //            [btn setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
- //            [btn setBackgroundColor:[UIColor countLabelColor]];
- //        }else
- //        {
- //            btn.enabled = YES;
- //            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
- //            [btn setBackgroundColor:[UIColor countLabelColor]];
- //        }
- //        //根据seletIndex 确定用户当前点了那个按钮
- //        if (typeView.selectIndex == i) {
- //            btn.selected = YES;
- //            [btn setBackgroundColor:[UIColor buttonEnabledBackgroundColor]];
- //            
- //        }
- //    }
- //
- //}
-
- */
-
 
 
 

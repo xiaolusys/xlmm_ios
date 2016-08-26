@@ -23,14 +23,14 @@
 #import "CartViewController.h"
 #import "JMDescLabelModel.h"
 #import "JMLogInViewController.h"
+#import "JMSelecterButton.h"
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.65
-
 #define POPHeight SCREENHEIGHT * 0.6
-
 #define NavigationMaskWH 36
+#define kBottomViewTag 100
 
 @interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate> {
     CGFloat maxY;
@@ -88,7 +88,13 @@
 @property (nonatomic, strong) NSMutableArray *attributeArray;
 
 @property (nonatomic, strong) JMShareModel *shareModel;
+@property (nonatomic, strong) UIButton *shopCartButton;
 @property (nonatomic, strong) UIButton *addCartButton;
+
+@property (nonatomic, strong) JMSelecterButton *groupBuyPersonal;
+@property (nonatomic, strong) JMSelecterButton *groupBuyTeam;
+
+
 @end
 
 @implementation JMGoodsDetailController {
@@ -103,6 +109,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
     [MobClick beginLogPageView:@"JMGoodsDetailController"];
+    [self loadCatrsNumData];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -137,7 +144,6 @@
 - (UIView *)popView {
     if (!_popView) {
         _popView = [[JMGoodsInfoPopView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, POPHeight)];
-//        _popView.backgroundColor = [UIColor orangeColor];
         _popView.delegate = self;
         _popView.backgroundColor = [UIColor whiteColor];
         
@@ -183,9 +189,8 @@
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     [self lodaDataSource];
-    [self loadCatrsNumData];
-    [self loadShareData];
     
+    [self loadShareData];
     
     [self createContentView];
     [self setupHeadView];
@@ -249,6 +254,7 @@
         if (_cartsGoodsNum == 0) {
             self.cartsLabel.hidden = YES;
         }else {
+            self.cartsLabel.hidden = NO;
             self.cartsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"result"]];
         }
     } WithFail:^(NSError *error) {
@@ -275,6 +281,7 @@
     detailContentDic = goodsDetailDic[@"detail_content"];
     self.topImageArray = detailContentDic[@"head_imgs"];
     [self.goodsScrollView jm_reloadData];
+
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
     for (NSDictionary *dic in attributes) {
@@ -285,23 +292,25 @@
     coustomInfoDic = [NSDictionary dictionary];
     coustomInfoDic = goodsDetailDic[@"custom_info"];
     goodsArray = goodsDetailDic[@"sku_info"];
-
-    if ([detailContentDic[@"is_saleopen"] boolValue]) {
-        if ([detailContentDic[@"is_sale_out"] boolValue]) {
-            // == > 抢光
+    
+    NSString *saleStatus = detailContentDic[@"sale_state"];
+    if ([saleStatus isEqual:@"on"]) {
+        if ([detailContentDic[@"is_saleout"] boolValue]) {
             [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
             self.addCartButton.enabled = NO;
+        }else {
+            self.addCartButton.enabled = YES;
         }
-        else {
-        }
+    }else if ([saleStatus isEqual:@"off"]) {
+        [self.addCartButton setTitle:@"已下架" forState:UIControlStateNormal];
+        self.addCartButton.enabled = NO;
+    }else if ([saleStatus isEqual:@"will"]) {
+        [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
+        self.addCartButton.enabled = NO;
     }else {
         
-        //NSLog(@"isnew %d", [model.isNewgood boolValue]);
-        if([detailContentDic[@"is_newsales"] boolValue]){
-            [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
-            self.addCartButton.enabled = NO;
-        }
     }
+
     if (goodsArray.count == 0) {
         return ;
         
@@ -315,16 +324,6 @@
 }
 - (void)navigationBarButton:(UIButton *)button {
     if (button.tag == 100 || button.tag == 102) {
-//        NSLog(@"navigationBarButton层  返回按钮 --------");
-//        if (isShowGoodsDetail) {
-//            [UIView animateWithDuration:0.4 animations:^{
-//                self.allContentView.transform = CGAffineTransformIdentity;
-//            } completion:^(BOOL finished) {
-//                isShowGoodsDetail = NO;
-//            }];
-//        }else {
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         NSLog(@"navigationBarButton层  分享按钮 --------");
@@ -357,6 +356,7 @@
     scrollView.jm_isStopScrollForSingleCount = YES;
     scrollView.jm_autoScrollInterval = 3.;
     [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
+    
     self.tableView.tableHeaderView = scrollView;
     
 }
@@ -391,45 +391,56 @@
         JMGoodsExplainCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsExplainCellIdentifier];
         cell.detailContentDic = detailContentDic;
         cell.customInfoDic = coustomInfoDic;
-        cell.block = ^(BOOL isSelected) {
-            if (isSelected) {
-                // 收藏
-                NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-                NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                param[@"model_id"] = self.goodsID;
-                [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
-                    if (!responseObject) return ;
-                    NSLog(@"%@",responseObject);
-                    NSInteger code = [responseObject[@"code"] integerValue];
-                    if (code == 0) {
-                        [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
-                    }else {
-                        [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
-                    }
-                } WithFail:^(NSError *error) {
-                    
-                } Progress:^(float progress) {
-                    
-                }];
+        cell.block = ^(UIButton *button) {
+            BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+            if (login == NO) {
+                button.selected = NO;
+                JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+                [self.navigationController pushViewController:enterVC animated:YES];
+                return;
             }else {
-                // 取消收藏
-                NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-                NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                param[@"model_id"] = self.goodsID;
-                [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
-                    if (!responseObject) return ;
-                    NSLog(@"%@",responseObject);
-                    NSInteger code = [responseObject[@"code"] integerValue];
-                    if (code == 0) {
-                        [SVProgressHUD showSuccessWithStatus:@"取消成功"];
-                    }else {
-                        [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
-                    }
-                } WithFail:^(NSError *error) {
-                    
-                } Progress:^(float progress) {
-                    
-                }];
+                if (button.selected == NO) {
+                    // 收藏
+                    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
+                    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+                    param[@"model_id"] = self.goodsID;
+                    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
+                        if (!responseObject) return ;
+                        NSLog(@"%@",responseObject);
+                        NSInteger code = [responseObject[@"code"] integerValue];
+                        if (code == 0) {
+                            button.selected = YES;
+                            [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                        }else {
+                            button.selected = NO;
+                            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                        }
+                    } WithFail:^(NSError *error) {
+                        button.selected = NO;
+                    } Progress:^(float progress) {
+                        
+                    }];
+                }else {
+                    // 取消收藏
+                    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
+                    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+                    param[@"model_id"] = self.goodsID;
+                    [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
+                        if (!responseObject) return ;
+                        NSLog(@"%@",responseObject);
+                        NSInteger code = [responseObject[@"code"] integerValue];
+                        if (code == 0) {
+                            button.selected = NO;
+                            [SVProgressHUD showSuccessWithStatus:@"取消成功"];
+                        }else {
+                            button.selected = YES;
+                            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                        }
+                    } WithFail:^(NSError *error) {
+                        button.selected = YES;
+                    } Progress:^(float progress) {
+                    }];
+                }
             }
         };
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -535,7 +546,6 @@
                 isShowGoodsDetail = YES;
             }];
         }
-        
         // 滚到中间视图
         if (minY <= -60 && isShowGoodsDetail) {
             isShowGoodsDetail = NO;
@@ -545,27 +555,6 @@
                 minY = 0.0f;
             }];
         }
-    }
-}
-- (void)cartButton:(UIButton *)button {
-    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
-    BOOL isLogin = [defalts boolForKey:kIsLogin];
-    if (button.tag == 100) {
-        if (isLogin) {
-            CartViewController *cartVC = [[CartViewController alloc] init];
-            [self.navigationController pushViewController:cartVC animated:YES];
-        }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-    }else if (button.tag == 101) {
-        if (isLogin) {
-            [self showPopView];
-        }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
-        }
-    }else {
     }
 }
 - (void)showPopView {
@@ -629,9 +618,10 @@
         NSLog(@"%@",responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
+            [SVProgressHUD setMinimumDismissTimeInterval:2];
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
 //            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
-//            self.cartsLabel.hidden = NO;
+            self.cartsLabel.hidden = NO;
 //            NSLog(@"%ld",_cartsGoodsNum);
             self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
             [self loadCatrsNumData];
@@ -642,7 +632,7 @@
         [self hideMaskView];
     } WithFail:^(NSError *error) {
         NSLog(@"%@",error);
-        self.cartsLabel.hidden = YES;
+//        self.cartsLabel.hidden = YES;
     } Progress:^(float progress) {
         
     }];
@@ -650,13 +640,9 @@
 
 
 #pragma mark - LPAutoScrollViewDatasource
-
 - (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
     return self.topImageArray.count;
 }
-/**
- *  类似UITableVIew
- */
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMGoodsLoopRollView *)rollView {
     rollView.imageString = self.topImageArray[index];
 }
@@ -669,7 +655,6 @@
 #pragma mark 自定义导航视图
 - (void)createNavigationView {
     kWeakSelf
-    
     self.navigationView = [UIView new];
     self.navigationView.frame = CGRectMake(0, 0, SCREENWIDTH, 64);
     [self.view addSubview:self.navigationView];
@@ -759,10 +744,9 @@
     UIButton *shopCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:shopCartButton];
     shopCartButton.layer.cornerRadius = 20.;
-//    shopCartButton.backgroundColor = [UIColor blackColor];
-//    shopCartButton.alpha = 0.6;
-    shopCartButton.tag = 100;
+    shopCartButton.tag = kBottomViewTag + 0;
     [shopCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.shopCartButton = shopCartButton;
     
     UIImageView *shopCartImage = [UIImageView new];
     [shopCartButton addSubview:shopCartImage];
@@ -776,12 +760,12 @@
     self.cartsLabel.textAlignment = NSTextAlignmentCenter;
     self.cartsLabel.layer.cornerRadius = 8.;
     self.cartsLabel.layer.masksToBounds = YES;
-//    self.cartsLabel.hidden = YES;
+    self.cartsLabel.hidden = YES;
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];
     addCartButton.layer.cornerRadius = 20.;
-    addCartButton.tag = 101;
+    addCartButton.tag = kBottomViewTag + 1;
     addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [addCartButton setTitle:@"加入购物车" forState:UIControlStateNormal];
     [addCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -810,6 +794,67 @@
         make.bottom.equalTo(shopCartImage.mas_top).offset(15);
         make.width.height.mas_equalTo(@16);
     }];
+
+    // === 如果是团购商品 === //
+    self.groupBuyPersonal = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.groupBuyPersonal];
+    [self.groupBuyPersonal setNomalBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"个人购 ¥ xxx" TitleFont:14. CornerRadius:20.];
+    self.groupBuyPersonal.backgroundColor = [UIColor whiteColor];
+    self.groupBuyPersonal.tag = kBottomViewTag + 2;
+    [self.groupBuyPersonal addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.groupBuyTeam = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.groupBuyTeam];
+    [self.groupBuyTeam setNomalBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"团购 ¥ xxx" TitleFont:14. CornerRadius:20.];
+    self.groupBuyTeam.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.groupBuyTeam.tag = kBottomViewTag + 3;
+    [self.groupBuyTeam addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.groupBuyPersonal mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.bottomView).offset(15);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
+        make.height.mas_equalTo(@40);
+    }];
+    
+    [self.groupBuyTeam mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.bottomView).offset(-15);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
+        make.height.mas_equalTo(@40);
+    }];
+    
+    self.groupBuyPersonal.hidden = YES;
+    self.groupBuyTeam.hidden = YES;
+    
+    
+}
+
+- (void)cartButton:(UIButton *)button {
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [defalts boolForKey:kIsLogin];
+    if (button.tag == kBottomViewTag + 0) {
+        if (isLogin) {
+            CartViewController *cartVC = [[CartViewController alloc] init];
+            [self.navigationController pushViewController:cartVC animated:YES];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+    }else if (button.tag == kBottomViewTag + 1) {
+        if (isLogin) {
+            [self showPopView];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+    }else if (button.tag == kBottomViewTag + 2) {
+        NSLog(@"button.tag == kBottomViewTag + 2");
+    }else if (button.tag == kBottomViewTag + 3) {
+        NSLog(@"button.tag == kBottomViewTag + 3");
+    }else {
+    
+    }
     
 }
 

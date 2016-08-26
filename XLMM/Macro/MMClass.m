@@ -20,6 +20,5 @@ NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 
 NSString *Root_URL = @"http://m.xiaolumeimei.com";
 
-
 #endif
 

@@ -9,6 +9,7 @@
 #import "SetPasswordViewController.h"
 #import "VerifyPhoneViewController.h"
 #import "MMClass.h"
+#import "MiPushSDK.h"
 
 #define PHONE_NUM_LIMIT 11
 #define VERIFY_CODE_LIMIT 6
@@ -399,6 +400,26 @@
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
 //        [self alertMessage:[dic objectForKey:@"msg"]];
         [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"msg"]];
+        
+        NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
+            NSString *user_account = [responseObject objectForKey:@"user_account"];
+            if ([user_account isEqualToString:@""]) {
+            } else {
+                [MiPushSDK setAccount:user_account];
+                //保存user_account
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                [user setObject:user_account forKey:@"user_account"];
+                [user synchronize];
+            }
+        } WithFail:^(NSError *error) {
+            
+        } Progress:^(float progress) {
+            
+        }];
+
+        
         //设置用户名在newLeft中使用
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         [user setObject:phoneNumber forKey:kUserName];

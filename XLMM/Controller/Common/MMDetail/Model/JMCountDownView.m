@@ -44,9 +44,9 @@
     
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
     
-    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    
-    [dateFormatter setTimeZone:timeZone]; //设置时区 ＋8:00
+//    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+//    
+//    [dateFormatter setTimeZone:timeZone]; //设置时区 ＋8:00
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
