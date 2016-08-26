@@ -163,8 +163,8 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
-    [self createTopButton];                            // 创建返回顶部按钮
     [self createCartsView];                            // 创建购物车
+    [self createTopButton];                            // 创建返回顶部按钮
     [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
     [self createPullHeaderRefresh];                    // 下拉刷新,重新获取商品展示数据
     [self.tableView.mj_header beginRefreshing];        // 刚进入主页刷新数据
@@ -640,7 +640,7 @@
     [self.view addSubview:self.cartView];
     [self.cartView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view).offset(60);
-        make.bottom.equalTo(weakSelf.view).offset(-20);
+        make.centerY.equalTo(collectionView.mas_centerY);
         make.width.mas_equalTo(@108);
         make.height.mas_equalTo(@44);
     }];
@@ -703,7 +703,7 @@
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-20);
-        make.bottom.equalTo(self.view).offset(-20);
+        make.centerY.equalTo(self.cartView.mas_centerY);
         make.width.height.mas_equalTo(@50);
     }];
     [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
