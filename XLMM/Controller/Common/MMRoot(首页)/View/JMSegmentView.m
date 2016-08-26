@@ -14,12 +14,7 @@
 @interface JMSegmentView ()<UIScrollViewDelegate> {
     NSArray *_controllersArray;
     NSArray *_urlArray;
-    
-    NSArray *yesterdayArr;
-    NSArray *todayArr;
-    NSArray *tomorrowArr;
-    
-    NSMutableArray *flageArr;
+
     BOOL isCreateSegment;
 }
 
@@ -44,7 +39,6 @@
 
 - (void)setTimeArray:(NSArray *)timeArray {
     _timeArray = timeArray;
-    
     [self countTime:1];
 }
 
@@ -56,14 +50,7 @@
 }
 - (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC {
     if (self == [super initWithFrame:frame]) {
-        flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
         _controllersArray = controller;
-//        _controllersArray = @[@"JMHomeCollectionController",
-//                              @"JMHomeYesterdayController",
-//                              @"JMHomeTomorrowController"];
-//        _urlArray = @[@"/rest/v2/modelproducts/yesterday?page=1&page_size=10",
-//                      @"/rest/v2/modelproducts/today?page=1&page_size=10",
-//                      @"/rest/v2/modelproducts/tomorrow?page=1&page_size=10"];
         _urlArray = @[@"yesterday",@"today",@"tomorrow"];
         self.segmentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 80)];
         [self addSubview:self.segmentView];
@@ -71,7 +58,6 @@
         self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
         self.segmentedControl.sectionTitles = titleArray;
         self.segmentedControl.selectedSegmentIndex = 1;
-//        [[NSNotificationCenter defaultCenter] postNotificationName:_controllersArray[1] object:_urlArray[1]];
         self.segmentedControl.backgroundColor = [UIColor whiteColor];
         self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:13.]};
         self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
@@ -112,7 +98,7 @@
             make.left.equalTo(weakSelf.Label1.mas_right);
         }];
         
-        
+        [MobClick event:_urlArray[1]];
         
         self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, frame.size.height - 64)];
         self.segmentScrollView.pagingEnabled = YES;
@@ -140,11 +126,8 @@
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
     NSInteger page = segmentedControl.selectedSegmentIndex;
-//    NSString *string = [NSString stringWithFormat:@"%@",_controllersArray[code]];
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",Root_URL,_urlArray[code]];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:string object:urlString];
     self.segmentScrollView.contentOffset = CGPointMake(page * SCREENWIDTH, 0);
-    
+    [MobClick event:_urlArray[page]];
     [self countTime:page];
     
 }
@@ -156,10 +139,7 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     NSInteger page = scrollView.contentOffset.x / pageWidth;
     [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
-    
-//    NSString *string = [NSString stringWithFormat:@"%@",_controllersArray[page]];
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",Root_URL,_urlArray[page]];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:string object:urlString];
+    [MobClick event:_urlArray[page]];
     [self countTime:page];
     
 }

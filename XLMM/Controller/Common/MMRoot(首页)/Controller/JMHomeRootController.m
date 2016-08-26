@@ -120,12 +120,15 @@
     [self loadCatrsNumData];
     [MobClick beginLogPageView:@"main"];
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"main"];
+}
 - (void)rootViewWillEnterForeground:(NSNotification *)notification {
     [self autoUpdateVersion];
     if (self.isPopUpdataView == YES) {
         [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
     }else {
-        
     }
 }
 - (void)viewDidAppear:(BOOL)animated {
@@ -757,7 +760,7 @@
                 if (isPicked == 0) {
                     [self returnPopView];
                 }else {
-                    //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+//                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
                 [SVProgressHUD showErrorWithStatus:@"请登录"];

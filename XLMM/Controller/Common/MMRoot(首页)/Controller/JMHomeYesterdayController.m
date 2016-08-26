@@ -17,6 +17,14 @@
 @implementation JMHomeYesterdayController
 
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMHomeYesterdayController"];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMHomeYesterdayController"];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,21 +32,6 @@
 
 
 }
-
-
-
-//- (NSString *)urlString {
-//    return [NSString stringWithFormat:@"%@/rest/v2/modelproducts/yesterday?page=1&page_size=10",Root_URL];
-//}
-//- (void)viewWillAppear:(BOOL)animated{
-//    [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(segmentSelectedIndexChange:) name:@"JMHomeYesterdayController" object:nil];
-//    [MobClick beginLogPageView:@"JMHomeYesterdayController"];
-//}
-//- (void)viewWillDisappear:(BOOL)animated{
-//    [MobClick endLogPageView:@"JMHomeYesterdayController"];
-//    [super viewWillDisappear:animated];
-//}
 
 
 

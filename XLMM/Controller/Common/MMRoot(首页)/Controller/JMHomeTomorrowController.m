@@ -15,6 +15,15 @@
 
 @implementation JMHomeTomorrowController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMHomeTomorrowController"];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMHomeTomorrowController"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -22,20 +31,7 @@
 }
 
 
-//- (NSString *)urlString {
-//    return [NSString stringWithFormat:@"%@/rest/v2/modelproducts/tomorrow?page=1&page_size=10",Root_URL];
-//}
 
-
-//- (void)viewWillAppear:(BOOL)animated{
-//    [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(segmentSelectedIndexChange:) name:@"JMHomeTomorrowController" object:nil];
-//    [MobClick beginLogPageView:@"JMHomeTomorrowController"];
-//}
-//- (void)viewWillDisappear:(BOOL)animated{
-//    [MobClick endLogPageView:@"JMHomeTomorrowController"];
-//    [super viewWillDisappear:animated];
-//}
 
 @end
 
