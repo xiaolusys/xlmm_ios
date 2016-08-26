@@ -440,10 +440,8 @@
 }
 
 - (IBAction)commonProblemBtnAction:(id)sender {
-
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
-        JMHomeRootController *common = [[JMHomeRootController alloc] init];
+        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:common];
         }

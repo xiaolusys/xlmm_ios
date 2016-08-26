@@ -33,7 +33,7 @@
 #import "AppDelegate.h"
 #import "ChildViewController.h"
 #import "JMMaMaPersonCenterController.h"
-
+#import "MJPullGifHeader.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -111,7 +111,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [self.tableView.mj_header beginRefreshing];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -157,7 +156,6 @@
     _topImageArray = [NSMutableArray array];
     _categorysArray = [NSMutableArray array];
     _timeArray = [NSMutableArray arrayWithObjects:@"00:00:00",@"00:00:00",@"00:00:00", nil];
-    
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
@@ -257,13 +255,15 @@
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
-//    kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _isPullDown = YES;
-        for (int i = 0; i < _urlArray.count; i++) {
-            [self loadData:_urlArray[i]];
-        }
-    }];
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.tableView.mj_header = header;
+}
+- (void)refreshView {
+    _isPullDown = YES;
+    for (int i = 0; i < _urlArray.count; i++) {
+        [self loadData:_urlArray[i]];
+    }
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -388,8 +388,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.section == 1){
-//        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
-        JMHomeActiveCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
         if (!cell) {
             cell = [[JMHomeActiveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeActiveCellIdentifier];
         }
@@ -573,6 +572,7 @@
     NSInteger cartNum = [dic[@"result"] integerValue];
     if (cartNum == 0) {
         self.cartsLabel.hidden = YES;
+        self.cartsCountLabel.hidden = YES;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(@44);
         }];
@@ -582,7 +582,7 @@
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(@108);
         }];
-        [self.cartView addSubview:self.cartsCountLabel];
+        self.cartsCountLabel.hidden = NO;
         [self.cartsCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(weakSelf.cartView).offset(-15);
             make.centerY.equalTo(weakSelf.cartView.mas_centerY);

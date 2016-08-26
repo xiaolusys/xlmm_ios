@@ -15,7 +15,6 @@
 - (void)prepare
 {
     [super prepare];
-    
     // 设置普通状态的动画图片
     NSMutableArray *idleImages = [NSMutableArray array];
     for (int i = 1; i<45; i++) {
