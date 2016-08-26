@@ -222,11 +222,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [MobClick beginLogPageView:@"JMHotGoodsController"];
     [self.collection.mj_header beginRefreshing];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMHotGoodsController"];
 }
 
 

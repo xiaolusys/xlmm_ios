@@ -191,7 +191,7 @@
             cell.myImageView.layer.borderColor = [UIColor lineGrayColor].CGColor;
             cell.myImageView.layer.cornerRadius = 5;
             cell.myImageView.layer.masksToBounds = YES;
-            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
+            [cell.myImageView sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageOrderCompression] JMUrlEncodedString]]];
             cell.myImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             cell.nameLabel.text = model.title;
@@ -226,7 +226,7 @@
 
             cell.headImageView.layer.cornerRadius = 5;
             cell.headImageView.layer.masksToBounds = YES;
-            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]]];
+            [cell.headImageView sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageOrderCompression] JMUrlEncodedString]]];
             cell.headImageView.contentMode = UIViewContentModeScaleAspectFill;
 
             
@@ -529,34 +529,40 @@
 }
 #pragma mark == 点击进入商品详情
 - (void)composeImageTap:(CartListModel *)model {
-    NSString *weiUrl = model.item_weburl;
-    if (weiUrl == nil) {
-        return ;
-    }else {
- 
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:weiUrl forKey:@"web_url"];
-        WebViewController *webVC = [[WebViewController alloc] init];
-        webVC.webDiction = dic;
-        [self.navigationController pushViewController:webVC animated:YES];
-    }
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    detailVC.goodsID = model.model_id;
+    [self.navigationController pushViewController:detailVC animated:YES];
+//    NSString *weiUrl = model.item_weburl;
+//    if (weiUrl == nil) {
+//        return ;
+//    }else {
+// 
+//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//        [dic setValue:weiUrl forKey:@"web_url"];
+//        WebViewController *webVC = [[WebViewController alloc] init];
+//        webVC.webDiction = dic;
+//        [self.navigationController pushViewController:webVC animated:YES];
+//    }
 }
 - (void)tapClick:(CartListModel *)model {
-    NSString *weiUrl = model.item_weburl;
-    if (weiUrl == nil) {
-        return ;
-    }else {
-//        JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
-//        
-//        detailVC.goodsID = [NSString stringWithFormat:@"%ld",model.cartID];
-//        [self.navigationController pushViewController:detailVC animated:YES];
-
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:weiUrl forKey:@"web_url"];
-        WebViewController *webVC = [[WebViewController alloc] init];
-        webVC.webDiction = dic;
-        [self.navigationController pushViewController:webVC animated:YES];
-    }
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    detailVC.goodsID = model.model_id;
+    [self.navigationController pushViewController:detailVC animated:YES];
+//    NSString *weiUrl = model.item_weburl;
+//    if (weiUrl == nil) {
+//        return ;
+//    }else {
+////        JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+////        
+////        detailVC.goodsID = [NSString stringWithFormat:@"%ld",model.cartID];
+////        [self.navigationController pushViewController:detailVC animated:YES];
+//
+//        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+//        [dic setValue:weiUrl forKey:@"web_url"];
+//        WebViewController *webVC = [[WebViewController alloc] init];
+//        webVC.webDiction = dic;
+//        [self.navigationController pushViewController:webVC animated:YES];
+//    }
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

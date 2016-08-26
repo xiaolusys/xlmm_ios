@@ -14,6 +14,7 @@
 @property (nonatomic, copy)NSString *agentPrice;
 @property (nonatomic, strong)NSDictionary * category;
 @property (nonatomic, copy)NSString *ID;
+@property (nonatomic, copy) NSString *model_id;
 @property (nonatomic, copy)NSString *isNewgood;
 @property (nonatomic, copy)NSString *isSaleopen;
 @property (nonatomic, copy)NSString *isSaleout;

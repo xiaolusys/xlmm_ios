@@ -32,12 +32,13 @@
     
     self.imageView = [UIImageView new];
     [self addSubview:self.imageView];
+     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     kWeakSelf
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@(SCREENHEIGHT * 0.7));
+        make.height.mas_equalTo(@(SCREENHEIGHT * 0.65));
     }];
     
     
@@ -47,7 +48,7 @@
     _imageString = imageString;
     NSMutableString *newImageUrl = [NSMutableString stringWithString:imageString];
     [newImageUrl appendString:@"?"];
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageNormalCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
     
     
 }

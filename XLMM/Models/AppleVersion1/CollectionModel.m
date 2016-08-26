@@ -17,6 +17,7 @@
         _agentPrice = [dic objectForKey:@"product_lowest_price"];
         _category = [dic objectForKey:@"category"];
         _ID = [dic objectForKey:@"id"];
+        _model_id = [dic objectForKey:@"model_id"];
         _isNewgood = [dic objectForKey:@"is_newgood"];
         _isSaleopen = [dic objectForKey:@"is_saleopen"];
         _isSaleout = [dic objectForKey:@"is_saleout"];

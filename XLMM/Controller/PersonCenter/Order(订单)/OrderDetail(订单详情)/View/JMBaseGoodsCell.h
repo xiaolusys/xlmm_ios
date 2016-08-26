@@ -21,7 +21,7 @@
 
 @end
 
-@class JMOrderGoodsModel;
+//@class JMOrderGoodsModel;
 @class JMPackAgeModel;
 @interface JMBaseGoodsCell : UITableViewCell
 

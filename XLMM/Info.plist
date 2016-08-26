@@ -126,7 +126,7 @@
 	<key>MiSDKAppKey</key>
 	<string>5841742390405</string>
 	<key>MiSDKRun</key>
-	<string>debug</string>
+	<string>Online</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -256,6 +256,10 @@
 	</array>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

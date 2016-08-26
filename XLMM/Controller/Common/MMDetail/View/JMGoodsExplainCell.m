@@ -53,7 +53,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         itemString = itemMask[0];
     
     }
-    self.itemMask.text = [NSString stringWithFormat:@" %@  ",itemString];
+    self.itemMask.text = [NSString stringWithFormat:@" %@ ",itemString];
+//    self.itemMask.textAlignment = NSTextAlignmentCenter;
     
     // === 处理结束时间 === //
 

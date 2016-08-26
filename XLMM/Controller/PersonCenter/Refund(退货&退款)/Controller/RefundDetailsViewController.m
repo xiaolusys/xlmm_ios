@@ -46,6 +46,8 @@
 
 @property (nonatomic, strong) JMSelecterButton *refundOperateButton;
 
+@property (nonatomic, copy) NSString *afterServiceLabel;
+@property (nonatomic, copy) NSString *addressLabel;
 
 @end
 
@@ -108,16 +110,17 @@
     
     UILabel *afterServiceLabel = [UILabel new];
     [refundInfoView addSubview:afterServiceLabel];
-    afterServiceLabel.text = @"小鹿售后  021-50939326";
+    afterServiceLabel.text = self.afterServiceLabel;
     afterServiceLabel.textColor = [UIColor buttonTitleColor];
-    afterServiceLabel.font = [UIFont systemFontOfSize:14.];
+    afterServiceLabel.font = [UIFont systemFontOfSize:13.];
     
     UILabel *addressLabel = [UILabel new];
     [refundInfoView addSubview:addressLabel];
     addressLabel.userInteractionEnabled = YES;
     addressLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     addressLabel.font = [UIFont systemFontOfSize:12.];
-    addressLabel.text = @"收货地址: 上海杨市松江区佘山镇吉业路245号5号楼";
+    addressLabel.text = self.addressLabel;
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressInfoTap:)];
     [addressLabel addGestureRecognizer:tap];
@@ -134,12 +137,12 @@
     [afterServiceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(refundInfoView).offset(15);
         make.top.equalTo(refundInfoView).offset(15);
-        make.width.mas_equalTo(@180);
+        make.width.mas_equalTo(@(SCREENWIDTH - 120));
     }];
     [addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(refundInfoView).offset(15);
         make.top.equalTo(afterServiceLabel.mas_bottom).offset(10);
-        make.width.mas_equalTo(@180);
+        make.width.mas_equalTo(@(SCREENWIDTH - 120));
     }];
     
     NSInteger statusCount = [self.refundModelr.status integerValue];
@@ -201,7 +204,7 @@
     
     self.reasonLabel.text = self.refundModelr.reason;
     if ([self.refundModelr.pic_path isKindOfClass:[NSString class]] ) {
-        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[self.refundModelr.pic_path JMUrlEncodedString]]];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[self.refundModelr.pic_path imageOrderCompression] JMUrlEncodedString]]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     self.imageView.layer.masksToBounds = YES;
@@ -224,7 +227,31 @@
     self.statusLabel.text = self.refundModelr.status_display;
     self.createTimeLabel.text = [self stringReplaced:self.refundModelr.created];
     self.modifyTimeLabel.text = [self stringReplaced:self.refundModelr.modified];
+    
+//    NSString *douhaoStr = @"，";
+    NSString *addressStr = self.refundModelr.return_address;
+    if ([addressStr rangeOfString:@"，"].location != NSNotFound) {
+        NSArray *arr = [self.refundModelr.return_address componentsSeparatedByString:@"，"];
+        NSString *addStr = @"";
+        NSString *nameStr = @"";
+        NSString *phoneStr = @"";
+        if (arr.count > 0) {
+            addStr = arr[0];
+            nameStr = arr[2];
+            phoneStr = arr[1];
+            self.afterServiceLabel = [NSString stringWithFormat:@"%@  %@",nameStr,phoneStr];
+            self.addressLabel = addStr;
+        }else {
+//            return ;
+        }
 
+    }else {
+        self.afterServiceLabel = @"小鹿售后  021-50939326";
+        self.addressLabel = @"收货地址: 上海杨市松江区佘山镇吉业路245号5号楼";
+    }
+    
+    
+    
 }
 
 - (NSString *)stringReplaced:(NSString *)string{

@@ -148,10 +148,10 @@
     
     NSString *limtStr = self.extraModel.surplus_days;
     
-    NSInteger limtCount = [limtStr integerValue];
-    if (limtCount > 15) {
-        self.renewButton.hidden = YES;
-    }
+//    NSInteger limtCount = [limtStr integerValue];
+//    if (limtCount > 15) {
+//        self.renewButton.hidden = YES;
+//    }
     
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     NSInteger count = limtStr.length;
@@ -222,7 +222,7 @@
 //    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
     vipExaminationButton.tag = 106;
     [vipExaminationButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-//    vipExaminationButton.timeInterval = 2.0f;
+
     
     UIImageView *vipExaminationImage = [UIImageView new];
     [vipExaminationButton addSubview:vipExaminationImage];

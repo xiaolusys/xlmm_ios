@@ -55,20 +55,43 @@
     
 //    self.nameL.text = [NSString stringWithFormat:@"收件人:%@",reGoodsDic[@"buyer_nick"]];
 //    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",reGoodsDic[@"mobile"]];
-    NSArray *arr = [reGoodsDic[@"return_address"] componentsSeparatedByString:@"，"];
-    NSString *addStr = @"";
-    NSString *nameStr = @"";
-    NSString *phoneStr = @"";
-    if (arr.count > 0) {
-        addStr = arr[0];
-        nameStr = arr[1];
-        phoneStr = arr[2];
+//    NSString *douhaoStr = @"，";
+    NSString *addressStr = reGoodsDic[@"return_address"];
+    if ([addressStr rangeOfString:@"，"].location != NSNotFound) {
+        NSArray *arr = [addressStr componentsSeparatedByString:@"，"];
+        NSString *addStr = @"";
+        NSString *nameStr = @"";
+        NSString *phoneStr = @"";
+        if (arr.count > 0) {
+            addStr = arr[0];
+            nameStr = arr[2];
+            phoneStr = arr[1];
+            self.nameL.text = [NSString stringWithFormat:@"收件人:%@",nameStr];
+            self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",phoneStr];
+            self.addressL.text = [NSString stringWithFormat:@"退货地址:%@",addStr];
+        }else {
+            //            return ;
+        }
+        
     }else {
-        return ;
+        self.nameL.text = @"";
+        self.PhoneL.text = @"";
+        self.addressL.text = @"退货地址请咨询小鹿美美客服哦";
+        self.addressL.textColor = [UIColor redColor];
     }
-    self.nameL.text = [NSString stringWithFormat:@"收件人:%@",nameStr];
-    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",phoneStr];
-    self.addressL.text = [NSString stringWithFormat:@"退货地址:%@",addStr];
+    
+//    NSArray *arr = [reGoodsDic[@"return_address"] componentsSeparatedByString:@"，"];
+//    NSString *addStr = @"";
+//    NSString *nameStr = @"";
+//    NSString *phoneStr = @"";
+//    if (arr.count > 0) {
+//        addStr = arr[0];
+//        nameStr = arr[1];
+//        phoneStr = arr[2];
+//    }else {
+//        return ;
+//    }
+    
 }
 - (void)preporaUI {
     UIView *topLineView = [UIView new];
@@ -108,7 +131,6 @@
     UILabel *addressL = [UILabel new];
     [self.masBackView addSubview:addressL];
     self.addressL = addressL;
-    self.addressL.textColor = [UIColor titleDarkGrayColor];
     self.addressL.font = [UIFont systemFontOfSize:12.];
     self.addressL.numberOfLines = 0;
     

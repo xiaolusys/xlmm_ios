@@ -11,13 +11,9 @@
 @interface JMMaMaTeamModel : NSObject
 
 
-@property (nonatomic, copy) NSString *duration_total;
-
 @property (nonatomic, copy) NSString *mama;
 
 @property (nonatomic, copy) NSString *mama_nick;
-
-@property (nonatomic, copy) NSString *mobile;
 
 @property (nonatomic, copy) NSString *num;
 
@@ -34,10 +30,8 @@
 
 /**
  *  {
- "duration_total" = 81641;
  mama = 13420;
  "mama_nick" = "\U96ea\U5170";
- mobile = 13411023669;
  num = 5115;
  rank = 10;
  thumbnail = "http://wx.qlogo.cn/mmopen/K1pXhCXurQEFIjD6Y7Ml5ZiaKnf361W1iabkYAvvOPGtWskIM2DOWiaPoOD6eXU0wL3kO7vbVlVySQy74nChB62ibS0OYicTeNuan/0";

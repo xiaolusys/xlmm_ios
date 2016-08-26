@@ -64,6 +64,9 @@
         UIView *bottomView = [UIView new];
         bottomView.frame = CGRectMake(0, TableViewH - 60, SCREENWIDTH, 60);
         [self addSubview:bottomView];
+        bottomView.layer.borderWidth = 1.;
+        bottomView.layer.borderColor = [UIColor lineGrayColor].CGColor;
+        
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [bottomView addSubview:button];
         [button setTitle:@"确定" forState:UIControlStateNormal];
@@ -107,14 +110,19 @@
 - (void)topView {
     UIView *headerView = [UIView new];
     [self addSubview:headerView];
-    headerView.frame = CGRectMake(0, 0, SCREENWIDTH, 90);
-    
+    headerView.frame = CGRectMake(0, 0, SCREENWIDTH, 100);
+    headerView.layer.borderWidth = 1.;
+    headerView.layer.borderColor = [UIColor lineGrayColor].CGColor;
 //    self.tableView.tableHeaderView = headerView;
     
     UIImageView *iconImage = [UIImageView new];
     iconImage.backgroundColor = [UIColor orangeColor];
     [headerView addSubview:iconImage];
     self.iconImage = iconImage;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5.;
     
     UILabel *goodsTitle = [UILabel new];
     [headerView addSubview:goodsTitle];
@@ -142,8 +150,8 @@
     deletLine.backgroundColor = [UIColor titleDarkGrayColor];
     
     [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(headerView).offset(10);
-        make.width.height.mas_equalTo(@70);
+        make.top.left.equalTo(headerView).offset(10);
+        make.width.height.mas_equalTo(@80);
     }];
     
     [goodsTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -173,6 +181,8 @@
         make.left.right.equalTo(oldPriceLabel);
         make.height.mas_equalTo(@1);
     }];
+    
+    
     
 }
 
@@ -219,7 +229,7 @@
     
     self.nameTitle.text = titleString;
     
-    UIScrollView *headerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 90, SCREENWIDTH, TableViewH - 150)];
+    UIScrollView *headerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, SCREENWIDTH, TableViewH - 160)];
 //    self.tableView.tableHeaderView = headerView;
     [self addSubview:headerView];
     
@@ -232,7 +242,7 @@
         if (index == 100) {
             NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
             if (count > 1) {
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%ld",count - 1];
+                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count - 1];
                 _goodsNum -= 1;
             }else {
                 return ;
@@ -240,7 +250,7 @@
         }else {
             NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
             if (count < _stockValue) { //  == >>  这里是商品的数量
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%ld",count + 1];
+                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count + 1];
                 _goodsNum += 1;
             }else {
                 return ;
@@ -248,38 +258,55 @@
         }
     };
 
-    
-    self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色分类"];
-    self.colorView.delegate = self;
-    [headerView addSubview:self.colorView];
-    self.colorView.frame = CGRectMake(0, 0, SCREENWIDTH, self.colorView.height);
-    CGFloat colorViewH = self.colorView.frame.size.height;
-    
-    self.sizeView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, colorViewH, SCREENWIDTH, 50) DataArray:self.goodsSizeArray GoodsTypeName:@"尺码"];
-    self.sizeView.delegate = self;
-    [headerView addSubview:self.sizeView];
-    self.sizeView.frame = CGRectMake(0, colorViewH, SCREENWIDTH, self.sizeView.height);
-    CGFloat sizeViewH = self.sizeView.frame.size.height;
-    
-    self.buyNumView.frame = CGRectMake(0, sizeViewH + self.sizeView.frame.origin.y, SCREENWIDTH, 50);
-    CGFloat heanderViewH = headerView.frame.size.height;
-    headerView.contentSize = CGSizeMake(SCREENWIDTH, heanderViewH + headerView.frame.origin.y);
+    if (self.goodsColorArray.count == 1 && self.goodsSizeArray.count == 1) {
+        
+//        self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+        [self.buyNumView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(headerView).offset(20);
+            make.left.equalTo(headerView);
+            make.width.mas_equalTo(SCREENWIDTH);
+            make.height.mas_equalTo(@50);
+        }];
+        
+    }else {
+        self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色分类"];
+        self.colorView.delegate = self;
+        [headerView addSubview:self.colorView];
+        self.colorView.frame = CGRectMake(0, 0, SCREENWIDTH, self.colorView.height);
+        CGFloat colorViewH = self.colorView.frame.size.height;
+        
+        self.sizeView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, colorViewH, SCREENWIDTH, 50) DataArray:self.goodsSizeArray GoodsTypeName:@"尺码"];
+        self.sizeView.delegate = self;
+        [headerView addSubview:self.sizeView];
+        self.sizeView.frame = CGRectMake(0, colorViewH, SCREENWIDTH, self.sizeView.height);
+        CGFloat sizeViewH = self.sizeView.frame.size.height;
+        
+        self.buyNumView.frame = CGRectMake(0, sizeViewH + self.sizeView.frame.origin.y, SCREENWIDTH, 50);
+//        CGFloat heanderViewH = headerView.frame.size.height;
+        CGFloat H = sizeViewH + self.sizeView.frame.origin.y + 50;
+        headerView.contentSize = CGSizeMake(SCREENWIDTH, H);
+        
+        
+    }
     
     _choiseGoodsColor = self.goodsColorArray[0];
+    NSString *size = self.goodsSizeArray[0];
     NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
+    NSDictionary *sizeD = sizeDic[size];
     // --> 这里展示价格 与初始颜色与尺寸
-    self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDic[@"agent_price"] floatValue]];
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDic[@"std_sale_price"] floatValue]];
-    
+    self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"agent_price"] floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
+    _stockValue =  [sizeD[@"free_num"] integerValue];
     [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
     
     NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
     [newImageUrl appendString:@"?"];
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageMoreCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
     NSDictionary *colorD = _goodsArr[0];
-
+    
     _goodsColorID = [colorD[@"product_id"] integerValue];
-    NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+    _goodsSizeID = [sizeD[@"sku_id"] integerValue];
+
     
 }
 - (void)composeAttrubuteTypeView:(JMGoodsAttributeTypeView *)typeView Index:(NSInteger)index {
@@ -302,7 +329,7 @@
         
         NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:index - 1]];
         [newImageUrl appendString:@"?"];
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageMoreCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
         
         // -- > 在这里面给颜色 赋值
         NSDictionary *colirD = _goodsArr[index - 1];
@@ -313,7 +340,7 @@
         
         [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
         
-        NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
         
     }else if ([typeView isEqual:self.sizeView]) {
         for (int i = 1; i <= self.goodsSizeArray.count; i++) {
@@ -337,7 +364,7 @@
         self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
         _goodsSizeID = [sizeD[@"sku_id"] integerValue];
         _stockValue =  [sizeD[@"free_num"] integerValue];
-        NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
     }else {
         
     }
@@ -377,7 +404,7 @@
             NSDictionary *sizeDict = [sizeDic objectForKey:size];
             _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
             _stockValue =  [sizeDict[@"free_num"] integerValue];
-            NSLog(@" 颜色---> %ld \n  尺码 -- >%ld",_goodsColorID,_goodsSizeID);
+
             self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"agent_price"] floatValue]];
             self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
             code = 1;
@@ -390,9 +417,10 @@
 
 - (void)sureButtonClick:(UIButton *)button {
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];
-    paramer[@"item_id"] = [NSString stringWithFormat:@"%ld",_goodsColorID];
-    paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",_goodsSizeID];
-    paramer[@"num"] = [NSString stringWithFormat:@"%ld",_goodsNum];
+    paramer[@"item_id"] =
+    [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
+    paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsSizeID];
+    paramer[@"num"] = [NSString stringWithFormat:@"%ld",(long)_goodsNum];
     
     
 //    if (self.block) {

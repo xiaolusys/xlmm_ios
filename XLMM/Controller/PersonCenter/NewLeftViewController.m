@@ -64,16 +64,21 @@
             NSLog(@"%@",error.userInfo);
             NSDictionary *errorDic = error.userInfo;
             NSString *string = errorDic[@"NSLocalizedDescription"];
-            NSRange range1 = [string rangeOfString:@"("];
-            NSRange range2 = [string rangeOfString:@")"];
-            NSUInteger  location1 = range1.location + range1.length;
-            NSUInteger location2= range2.location;
-            NSString *string1 = [string substringWithRange:NSMakeRange(location1 , location2 - location1)];
-            if ([string1 integerValue] == 403) {
-                NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-                [users removeObjectForKey:kIsLogin];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+            if ([string rangeOfString:@"("].location == NSNotFound) {
+                
+            } else {
+                NSRange range1 = [string rangeOfString:@"("];
+                NSRange range2 = [string rangeOfString:@")"];
+                NSUInteger  location1 = range1.location + range1.length;
+                NSUInteger location2= range2.location;
+                NSString *string1 = [string substringWithRange:NSMakeRange(location1 , location2 - location1)];
+                if ([string1 integerValue] == 403) {
+                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                    [users removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
             }
+            
            
         } Progress:^(float progress) {
             
@@ -93,7 +98,7 @@
     
     self.jifenLabel.text = [[dic objectForKey:@"score"] stringValue];
     //判断是否为0
-    if ([[dic objectForKey:@"user_budget"] class] == [NSNull class]) {
+    if ([[dic objectForKey:@"user_budget"] isKindOfClass:[NSNull class]]) {
         self.accountLabel.text  = [NSString stringWithFormat:@"0.00"];
         self.accountMoney = [NSNumber numberWithFloat:0.00];
     }else {

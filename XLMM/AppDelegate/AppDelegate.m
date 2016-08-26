@@ -17,6 +17,7 @@
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
 #import "sys/utsname.h"
+#import "Udesk.h"
 
 #define login @"login"
 #import "JMFirstOpen.h"
@@ -48,7 +49,7 @@ static BOOL isNetPrompt;
 /**
  *  判断是否为支付页面跳转过来的
  */
-//@property (nonatomic,assign) BOOL isApinPayGo;
+@property (nonatomic,assign) BOOL isAppinPayGo;
 
 @end
 
@@ -127,27 +128,6 @@ static BOOL isNetPrompt;
     [manager startMonitoring];
 }
 
-//- (NSString *)stringFromStatus:(NetworkStatus)status{
-//    NSString *string;
-//    switch (status) {
-//        case NotReachable:
-//            string = @"无网络连接，请检查您的网络";
-//            break;
-//        case ReachableViaWiFi:
-//            string = @"wifi";
-//            break;
-//        case ReachableViaWWAN:
-//            string = @"wwan";
-//            break;
-//            
-//        default:
-//            
-//            string = @"unknown";
-//            break;
-//    }
-//    return string;
-//}
-
 - (void)ActivityTimeUpdate {
     self.timeCount++;
     if (self.timeCount > 2) {
@@ -203,6 +183,19 @@ static BOOL isNetPrompt;
         //        [alertView show];
         
     }
+    
+    NSString *urlString = @"http://192.168.1.57:8000/rest/v1/push/topic";
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        NSArray *arr = responseObject[@"topics"];
+        for (NSString *str in arr) {
+            [MiPushSDK subscribe:str];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+    }];
+    
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -212,8 +205,11 @@ static BOOL isNetPrompt;
     
     
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
-    if ([string isEqualToString:@"1"] || string == nil) {
+    
+    if ([string isEqual:@"1"] || string == nil) {
+        
         [MiPushSDK registerMiPush:self type:0 connect:YES];
+    
     }else {
         
     }
@@ -257,14 +253,14 @@ static BOOL isNetPrompt;
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
     [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
-    
+    //uDesk 客服
+    [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
     //微信分享
     [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
     
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
-    
-    
+
     
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
     
@@ -322,7 +318,7 @@ static BOOL isNetPrompt;
     }
     self.startV.imageV.alpha = 1;
     
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imagePostersCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:.3 animations:^{
             self.startV.imageV.alpha = 0;
         }];
@@ -342,7 +338,6 @@ static BOOL isNetPrompt;
         [userDefaults synchronize];
         
     }
-    
     
     
 }
@@ -423,6 +418,16 @@ static BOOL isNetPrompt;
     NSString *messageId = [userInfo objectForKey:@"_id_"];
     NSLog(@"messageID = %@", messageId);
     [MiPushSDK openAppNotify:messageId];
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        // 转换成一个本地通知，显示到通知栏，你也可以直接显示出一个alertView，只是那样稍显aggressive：）
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.userInfo = userInfo;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.alertBody = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+        localNotification.fireDate = [NSDate date];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 
@@ -494,6 +499,16 @@ static BOOL isNetPrompt;
 - ( void )miPushReceiveNotification:( NSDictionary *)data
 {
     NSLog(@"---------------data = %@", data);
+    NSDictionary *apsDic = data[@"aps"];
+    NSString *jsonString = apsDic[@"alert"];
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
+    if ([jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
+    }
+    
+    
     //
     //    // 长连接收到的消息。消息格式跟APNs格式一样
     //    // 返回数据
@@ -721,23 +736,25 @@ static BOOL isNetPrompt;
     
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    self.isAppinPayGo = NO;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    self.isAppinPayGo = NO;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    
+    self.isAppinPayGo = YES;
     /**
      *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
      */
-//    if (self.isApinPayGo) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"isApinPayGo" object:nil];
+    if (self.isAppinPayGo) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"isAppinPayGo" object:nil];
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"isShareApinPayGo" object:nil];
-//    }
+    }
     
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");

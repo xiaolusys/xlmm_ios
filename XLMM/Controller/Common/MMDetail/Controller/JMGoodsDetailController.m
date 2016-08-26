@@ -22,6 +22,7 @@
 #import "JMShareModel.h"
 #import "CartViewController.h"
 #import "JMDescLabelModel.h"
+#import "JMLogInViewController.h"
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
@@ -240,7 +241,7 @@
     }];
 }
 - (void)loadCatrsNumData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
@@ -251,11 +252,10 @@
             self.cartsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"result"]];
         }
     } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
+        
     } Progress:^(float progress) {
         
     }];
-    
 }
 - (void)lodaDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/%@",Root_URL,self.goodsID];
@@ -274,7 +274,7 @@
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
     self.topImageArray = detailContentDic[@"head_imgs"];
-    
+    [self.goodsScrollView jm_reloadData];
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
     for (NSDictionary *dic in attributes) {
@@ -302,11 +302,15 @@
             self.addCartButton.enabled = NO;
         }
     }
+    if (goodsArray.count == 0) {
+        return ;
+        
+    }else {
+        [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+    }
     
-    [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
-
-    [self.goodsScrollView jm_reloadData];
     [self.tableView reloadData];
+    
     
 }
 - (void)navigationBarButton:(UIButton *)button {
@@ -544,11 +548,23 @@
     }
 }
 - (void)cartButton:(UIButton *)button {
+    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == 100) {
-        CartViewController *cartVC = [[CartViewController alloc] init];
-        [self.navigationController pushViewController:cartVC animated:YES];
+        if (isLogin) {
+            CartViewController *cartVC = [[CartViewController alloc] init];
+            [self.navigationController pushViewController:cartVC animated:YES];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     }else if (button.tag == 101) {
-        [self showPopView];
+        if (isLogin) {
+            [self showPopView];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     }else {
     }
 }
@@ -614,12 +630,13 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
-            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
-            self.cartsLabel.hidden = NO;
-            NSLog(@"%ld",_cartsGoodsNum);
+//            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
+//            self.cartsLabel.hidden = NO;
+//            NSLog(@"%ld",_cartsGoodsNum);
             self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+            [self loadCatrsNumData];
         }else {
-            self.cartsLabel.hidden = YES;
+//            self.cartsLabel.hidden = YES;
             [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
         }
         [self hideMaskView];
@@ -742,23 +759,24 @@
     UIButton *shopCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:shopCartButton];
     shopCartButton.layer.cornerRadius = 20.;
-    shopCartButton.backgroundColor = [UIColor blackColor];
-    shopCartButton.alpha = 0.6;
+//    shopCartButton.backgroundColor = [UIColor blackColor];
+//    shopCartButton.alpha = 0.6;
     shopCartButton.tag = 100;
     [shopCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *shopCartImage = [UIImageView new];
     [shopCartButton addSubview:shopCartImage];
-    shopCartImage.image = [UIImage imageNamed:@"gouwucheicon2"];
+    shopCartImage.image = [UIImage imageNamed:@"goodsDetailCarts"];
     
     self.cartsLabel = [UILabel new];
     [shopCartImage addSubview:self.cartsLabel];
-    self.cartsLabel.font = [UIFont systemFontOfSize:12.];
+    self.cartsLabel.font = [UIFont systemFontOfSize:11.];
     self.cartsLabel.textColor = [UIColor whiteColor];
     self.cartsLabel.backgroundColor = [UIColor redColor];
     self.cartsLabel.textAlignment = NSTextAlignmentCenter;
-    self.cartsLabel.layer.cornerRadius = 10.;
+    self.cartsLabel.layer.cornerRadius = 8.;
     self.cartsLabel.layer.masksToBounds = YES;
+//    self.cartsLabel.hidden = YES;
     
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];
@@ -779,7 +797,7 @@
     [shopCartImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(shopCartButton.mas_centerX);
         make.centerY.equalTo(shopCartButton.mas_centerY);
-        make.width.height.mas_equalTo(@20);
+        make.width.height.mas_equalTo(@40);
     }];
     [addCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(shopCartButton.mas_right).offset(15);
@@ -788,9 +806,9 @@
         make.width.mas_equalTo(@(SCREENWIDTH - 85));
     }];
     [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(shopCartImage.mas_right).offset(-5);
-        make.bottom.equalTo(shopCartImage.mas_top).offset(5);
-        make.width.height.mas_equalTo(@20);
+        make.left.equalTo(shopCartImage.mas_right).offset(-15);
+        make.bottom.equalTo(shopCartImage.mas_top).offset(15);
+        make.width.height.mas_equalTo(@16);
     }];
     
 }
