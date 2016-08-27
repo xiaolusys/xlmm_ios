@@ -95,6 +95,8 @@ static NSUInteger popNum = 0;
 
 @implementation JMMaMaPersonCenterController {
     NSString *_mamaID;
+    NSInteger _indexCode;
+    NSArray *_array;
 }
 
 - (JMNewcomerTaskController *)newcomerTask {
@@ -113,7 +115,7 @@ static NSUInteger popNum = 0;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveUdeskMessage:) name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SubscribeMes:) name:@"SubscribeMessage" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SubscribeMes:) name:@"SubscribeMessage" object:nil];
 //    [self loadfoldLineData];
     [self loadDataSource];
 //    [self loadMaMaWeb];
@@ -132,6 +134,11 @@ static NSUInteger popNum = 0;
     [self loadMaMaWeb];
 //    [self loadMaMaMessage];
     [self customUserInfo];
+    
+    _array = @[@"测试数据---1",@"测试数据---2",@"测试数据---3",@"测试数据---4"];
+    _indexCode = 0;
+//    _isEarningPrompt = YES;
+    [self earningPrompt];
 }
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
@@ -557,8 +564,8 @@ static NSUInteger popNum = 0;
         self.serViceButton.hidden = NO;
     }
 }
-- (void)showNewStatusCount:(NSString *)message {
-    if (message.length == 0) {
+- (void)showNewStatusCount:(NSArray *)message Index:(NSInteger)index {
+    if (message.count == 0) {
         return ;
     }
     CGFloat h = 35.;
@@ -569,7 +576,7 @@ static NSUInteger popNum = 0;
     label6.backgroundColor = [UIColor blackColor];
     label6.alpha = 0.70f;
     label6.textColor = [UIColor whiteColor];
-    label6.text = message;
+    label6.text = message[index];
     label6.textAlignment = NSTextAlignmentCenter;
     //插入导航控制器下导航条下面
     [self.navigationController.view insertSubview:label6 belowSubview:self.navigationController.navigationBar];
@@ -580,16 +587,32 @@ static NSUInteger popNum = 0;
             label6.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             [label6 removeFromSuperview];
+            _indexCode ++;
+            int x = arc4random() % 5 + 3;
+            [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
+            
         }];
     }];
 }
-- (void)SubscribeMes:(NSNotification *)sender {
-    [self showNewStatusCount:sender.object];
+//- (void)SubscribeMes:(NSNotification *)sender {
+//    [self showNewStatusCount:sender.object];
+//}
+//- (void)dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
+/**
+ *  收益信息提示
+ */
+- (void)earningPrompt {
+    [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
 }
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)waitTimer {
+    [self showNewStatusCount:_array Index:_indexCode];
+    if (_indexCode == (_array.count - 1)) {
+        _indexCode = 0;
+    }
+    
 }
-
 
 @end
 

@@ -57,7 +57,6 @@
 @property (nonatomic, strong) JMHomeYesterdayController *yesterdayVC;
 @property (nonatomic, strong) JMHomeCollectionController *todayVC;
 @property (nonatomic, strong) JMHomeTomorrowController *tomorrowVC;
-
 /**
  *  返回顶部按钮,购物车视图,导航视图,弹出视图
  */
@@ -130,6 +129,23 @@
         [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
     }else {
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
+    NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:_timeArray[1]]]; // 结束时间
+    NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+    int timer = time;
+    NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
+    if ([timeStr isEqual:@"0"]) {
+        [self.tableView.mj_header beginRefreshing];
+    }
+}
+-(NSString*)spaceFormatTimeString:(NSString*)timeString{
+    NSMutableString *ms = [NSMutableString stringWithString:timeString];
+    NSRange range = {10,1};
+    [ms replaceCharactersInRange:range withString:@" "];
+    return ms;
 }
 - (void)viewDidAppear:(BOOL)animated {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {

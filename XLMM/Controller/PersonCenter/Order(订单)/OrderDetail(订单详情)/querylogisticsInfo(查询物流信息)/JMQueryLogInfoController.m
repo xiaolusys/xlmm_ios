@@ -182,7 +182,7 @@
     if (self.packageModel.assign_status_display.length == 0) {
         self.logNumLabel.text = @"未揽件";
     }else {
-        self.logNumLabel.text = self.packageModel.assign_status_display;
+        self.logNumLabel.text = self.packetId;//self.packageModel.assign_status_display;
     }
     
     self.logNumLabel.font = [UIFont systemFontOfSize:13.];
@@ -268,11 +268,11 @@
     [self.masBackScrollView addSubview:timeViewTwo];
     timeViewTwo.backgroundColor = [UIColor lineGrayColor];
     timeViewTwo.frame = CGRectMake(0, _count * cellHeitht + 226, SCREENWIDTH, cellHeitht);
-
+    
     UILabel *timeLabelTwo = [UILabel new];
     [timeViewTwo addSubview:timeLabelTwo];
-    NSString *timeStr2 = [self dealVisitorTime:self.packageModel.process_time];
-    timeLabelTwo.text = [NSString stringWithFormat:@"%@",timeStr2];
+//    NSString *timeStr2 = [self dealVisitorTime:self.packageModel.process_time];
+    timeLabelTwo.text = [NSString stringWithFormat:@"%@",timeStr];
     timeLabelTwo.textColor = [UIColor titleDarkGrayColor];
     [timeLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(timeViewTwo).offset(10);

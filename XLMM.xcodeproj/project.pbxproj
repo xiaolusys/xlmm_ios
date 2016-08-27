@@ -4631,9 +4631,9 @@
 		1F498BB61D2772D0007E77FC /* querylogisticsInfo(查询物流信息) */ = {
 			isa = PBXGroup;
 			children = (
-				1F498BB71D2772D0007E77FC /* Controller */,
 				1F498BBC1D2772D0007E77FC /* JMQueryLogInfoController.h */,
 				1F498BBD1D2772D0007E77FC /* JMQueryLogInfoController.m */,
+				1F498BB71D2772D0007E77FC /* Controller */,
 				1F498BBE1D2772D0007E77FC /* Model */,
 				1F498BC31D2772D0007E77FC /* View */,
 			);

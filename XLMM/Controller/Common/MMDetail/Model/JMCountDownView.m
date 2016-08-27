@@ -63,7 +63,7 @@
     dispatch_source_set_timer(self.timer, dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0);//每秒执行
     dispatch_source_set_event_handler(self.timer, ^{
         if (timeout <= 0) { //倒计时结束,关闭
-            //            dispatch_source_cancel(self.timer);
+//            dispatch_source_cancel(self.timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面显示
                 NSString *endTime = @"商品已下架";
@@ -91,6 +91,7 @@
     
 
 }
+
 -(NSString *)TimeformatFromSeconds:(NSInteger)seconds {
     
     NSString *timeString = [NSString stringWithFormat:@"%02ld天%02ld时%02ld分%02ld秒",seconds/(3600*24),(seconds/(3600))%24,(seconds%3600)/60,seconds%60];

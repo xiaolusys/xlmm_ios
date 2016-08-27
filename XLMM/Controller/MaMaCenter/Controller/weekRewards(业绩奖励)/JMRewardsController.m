@@ -219,10 +219,6 @@ static NSString *JMRewardsCellIdfier = @"JMRewardsCellIdfier";
     }
 
     
-
-    
-    
-    
 }
 
 
