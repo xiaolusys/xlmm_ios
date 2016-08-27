@@ -3901,6 +3901,7 @@
 				1F27A6341D275FB400A0F80B /* Controller */,
 				1F27A6411D275FB400A0F80B /* Model */,
 				1F27A6421D275FB400A0F80B /* View */,
+				1F7D992A1D62C79F00E18FD1 /* childItems(分类) */,
 			);
 			path = "MMRoot(首页)";
 			sourceTree = "<group>";
@@ -3920,7 +3921,6 @@
 				1F23F9D41D6C225600C78EAE /* JMHomeYesterdayController.m */,
 				1F23F9D91D6C230500C78EAE /* JMHomeTomorrowController.h */,
 				1F23F9DA1D6C230500C78EAE /* JMHomeTomorrowController.m */,
-				1F7D992A1D62C79F00E18FD1 /* childItems(分类) */,
 				1F27A63B1D275FB400A0F80B /* MMCollectionController.h */,
 				1F27A63C1D275FB400A0F80B /* MMCollectionController.m */,
 				1F27A63D1D275FB400A0F80B /* MMCollectionController.xib */,
@@ -4631,9 +4631,9 @@
 		1F498BB61D2772D0007E77FC /* querylogisticsInfo(查询物流信息) */ = {
 			isa = PBXGroup;
 			children = (
-				1F498BB71D2772D0007E77FC /* Controller */,
 				1F498BBC1D2772D0007E77FC /* JMQueryLogInfoController.h */,
 				1F498BBD1D2772D0007E77FC /* JMQueryLogInfoController.m */,
+				1F498BB71D2772D0007E77FC /* Controller */,
 				1F498BBE1D2772D0007E77FC /* Model */,
 				1F498BC31D2772D0007E77FC /* View */,
 			);
@@ -4957,7 +4957,8 @@
 				1F7D992C1D62C79F00E18FD1 /* Model */,
 				1F7D992D1D62C79F00E18FD1 /* View */,
 			);
-			path = "childItems(分类)";
+			name = "childItems(分类)";
+			path = "Controller/childItems(分类)";
 			sourceTree = "<group>";
 		};
 		1F7D992B1D62C79F00E18FD1 /* Controller */ = {
