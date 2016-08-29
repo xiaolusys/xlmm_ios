@@ -40,7 +40,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 - (void)setDetailContentDic:(NSDictionary *)detailContentDic {
     _detailContentDic = detailContentDic;
     self.nameTitle.text = detailContentDic[@"name"];
-    self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[detailContentDic[@"lowest_agent_price"] floatValue]];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[detailContentDic[@"lowest_agent_price"] floatValue]];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[detailContentDic[@"lowest_std_sale_price"] floatValue]];
 //    self.timerLabel.text = detailContentDic[@"offshelf_time"];
 

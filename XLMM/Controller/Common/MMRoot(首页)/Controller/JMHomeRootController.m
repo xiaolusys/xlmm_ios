@@ -652,8 +652,7 @@
     
     UIButton *collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [collectionView addSubview:collectionButton];
-    [collectionButton setImage:[UIImage imageNamed:@"MyCollection_Nomal"] forState:UIControlStateNormal];
-    [collectionButton setImage:[UIImage imageNamed:@"MyCollection_Selected"] forState:UIControlStateHighlighted];
+    [collectionButton setImage:[UIImage imageNamed:@"MyCollectionOrigin_Nomal"] forState:UIControlStateNormal];
     collectionButton.frame = CGRectMake(0, 0, 44, 44);
     collectionButton.layer.cornerRadius = 22;
     [collectionButton addTarget:self action:@selector(gotoCollection:) forControlEvents:UIControlEventTouchUpInside];
@@ -673,7 +672,7 @@
     self.cartView.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
     [self.cartView addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
-    iconView.image = [UIImage imageNamed:@"gouwucheicon2.png"];
+    iconView.image = [UIImage imageNamed:@"homeGoodsDetailCarts"];
     iconView.userInteractionEnabled = NO;
     [self.cartView addSubview:iconView];
     self.cartsLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, -6, 16, 16)];
