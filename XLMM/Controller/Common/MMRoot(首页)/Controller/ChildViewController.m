@@ -66,19 +66,19 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger )type{
-    if(TYPE_JUMP_CHILD == type){
-        
-        self.urlString = kCHILD_LIST_URL;
-        self.orderUrlString = kCHILD_LIST_ORDER_URL;
-        self.childClothing = YES;
-
-    }
-    else{
-        
-        self.urlString = kLADY_LIST_URL;
-        self.orderUrlString = kLADY_LIST_ORDER_URL;
-        self.childClothing = NO;
-    }
+//    if(TYPE_JUMP_CHILD == type){
+//        
+//        self.urlString = kCHILD_LIST_URL;
+//        self.orderUrlString = kCHILD_LIST_ORDER_URL;
+//        self.childClothing = YES;
+//
+//    }
+//    else{
+//        
+//        self.urlString = kLADY_LIST_URL;
+//        self.orderUrlString = kLADY_LIST_ORDER_URL;
+//        self.childClothing = NO;
+//    }
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -91,23 +91,23 @@ static NSString * ksimpleCell = @"simpleCell";
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    if(self.childClothing){
-        [MobClick beginLogPageView:@"child"];
-    }
-    else{
-        [MobClick beginLogPageView:@"women"];
-    }
+//    if(self.childClothing){
+//        [MobClick beginLogPageView:@"child"];
+//    }
+//    else{
+//        [MobClick beginLogPageView:@"women"];
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    if(self.childClothing){
-        [MobClick endLogPageView:@"child"];
-    }
-    else{
-        [MobClick endLogPageView:@"women"];
-    }
+//    if(self.childClothing){
+//        [MobClick endLogPageView:@"child"];
+//    }
+//    else{
+//        [MobClick endLogPageView:@"women"];
+//    }
 }
 
 
@@ -214,12 +214,13 @@ static NSString * ksimpleCell = @"simpleCell";
     [self setLayout];
     self.topdistant.constant = 64;
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
-    if(self.childClothing){
-        [self createNavigationBarWithTitle:@"精选童装"  selector:@selector(backClicked:)];
-    }
-    else{
-        [self createNavigationBarWithTitle:@"精选女装"  selector:@selector(backClicked:)];
-    }
+//    if(self.childClothing){
+//        [self createNavigationBarWithTitle:@"精选童装"  selector:@selector(backClicked:)];
+//    }
+//    else{
+//        [self createNavigationBarWithTitle:@"精选女装"  selector:@selector(backClicked:)];
+//    }
+    [self createNavigationBarWithTitle:self.nameTitle selector:@selector(backClicked:)];
     
   //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];

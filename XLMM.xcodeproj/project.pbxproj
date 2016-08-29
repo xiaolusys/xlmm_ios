@@ -1490,12 +1490,12 @@
 		1F27A62A1D275CD600A0F80B /* JMShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMShareView.h; sourceTree = "<group>"; };
 		1F27A62B1D275CD600A0F80B /* JMShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMShareView.m; sourceTree = "<group>"; };
 		1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMNavigationDelegate.h; sourceTree = "<group>"; };
-		1F27A6301D275FB400A0F80B /* MMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDetailsViewController.h; sourceTree = "<group>"; };
-		1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDetailsViewController.m; sourceTree = "<group>"; };
-		1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMDetailsViewController.xib; sourceTree = "<group>"; };
-		1F27A6351D275FB400A0F80B /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChildViewController.h; path = ../ChildViewController.h; sourceTree = "<group>"; };
-		1F27A6361D275FB400A0F80B /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChildViewController.m; path = ../ChildViewController.m; sourceTree = "<group>"; };
-		1F27A6371D275FB400A0F80B /* ChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChildViewController.xib; path = ../ChildViewController.xib; sourceTree = "<group>"; };
+		1F27A6301D275FB400A0F80B /* MMDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDetailsViewController.h; path = ../MMDetailsViewController.h; sourceTree = "<group>"; };
+		1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMDetailsViewController.m; path = ../MMDetailsViewController.m; sourceTree = "<group>"; };
+		1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MMDetailsViewController.xib; path = ../MMDetailsViewController.xib; sourceTree = "<group>"; };
+		1F27A6351D275FB400A0F80B /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChildViewController.h; path = ../../ChildViewController.h; sourceTree = "<group>"; };
+		1F27A6361D275FB400A0F80B /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChildViewController.m; path = ../../ChildViewController.m; sourceTree = "<group>"; };
+		1F27A6371D275FB400A0F80B /* ChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChildViewController.xib; path = ../../ChildViewController.xib; sourceTree = "<group>"; };
 		1F27A63B1D275FB400A0F80B /* MMCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCollectionController.h; sourceTree = "<group>"; };
 		1F27A63C1D275FB400A0F80B /* MMCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCollectionController.m; sourceTree = "<group>"; };
 		1F27A63D1D275FB400A0F80B /* MMCollectionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MMCollectionController.xib; sourceTree = "<group>"; };
@@ -3887,9 +3887,6 @@
 				1F2F9E2B1D5878F500E3A68B /* Model */,
 				1F2F9E2C1D5878F500E3A68B /* View */,
 				1F2F9E2A1D5878F500E3A68B /* Controller */,
-				1F27A6301D275FB400A0F80B /* MMDetailsViewController.h */,
-				1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */,
-				1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */,
 			);
 			name = "MMDetail(详情页)";
 			path = MMDetail;
@@ -4047,6 +4044,9 @@
 			children = (
 				1F2F9E2D1D58797700E3A68B /* JMGoodsDetailController.h */,
 				1F2F9E451D5978EB00E3A68B /* JMGoodsDetailController.m */,
+				1F27A6301D275FB400A0F80B /* MMDetailsViewController.h */,
+				1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */,
+				1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */,
 				1F2F9E611D59DE8900E3A68B /* Model */,
 				1F2F9E621D59DE8B00E3A68B /* View */,
 				1F2F9E601D59DE8600E3A68B /* Controller */,
@@ -4950,9 +4950,6 @@
 		1F7D992A1D62C79F00E18FD1 /* childItems(分类) */ = {
 			isa = PBXGroup;
 			children = (
-				1F27A6351D275FB400A0F80B /* ChildViewController.h */,
-				1F27A6361D275FB400A0F80B /* ChildViewController.m */,
-				1F27A6371D275FB400A0F80B /* ChildViewController.xib */,
 				1F7D992B1D62C79F00E18FD1 /* Controller */,
 				1F7D992C1D62C79F00E18FD1 /* Model */,
 				1F7D992D1D62C79F00E18FD1 /* View */,
@@ -4964,10 +4961,13 @@
 		1F7D992B1D62C79F00E18FD1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1F7D992E1D62C7FC00E18FD1 /* JMCategoryListController.h */,
-				1F7D992F1D62C7FC00E18FD1 /* JMCategoryListController.m */,
 				1F7D99341D62E3B600E18FD1 /* JMClassifyListController.h */,
 				1F7D99351D62E3B600E18FD1 /* JMClassifyListController.m */,
+				1F7D992E1D62C7FC00E18FD1 /* JMCategoryListController.h */,
+				1F7D992F1D62C7FC00E18FD1 /* JMCategoryListController.m */,
+				1F27A6351D275FB400A0F80B /* ChildViewController.h */,
+				1F27A6361D275FB400A0F80B /* ChildViewController.m */,
+				1F27A6371D275FB400A0F80B /* ChildViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

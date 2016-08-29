@@ -14,8 +14,9 @@
 //#define Root_URL @"http://192.168.1.13:8000"
 //#define Root_URL @"http://192.168.1.11:9000"
 //#define Root_URL @"http://dev.xiaolumeimei.com"
-NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
+//NSString *Root_URL =  @"http://staging.xiaolumeimei.com";
 //NSString *Root_URL =  @"http://192.168.1.31:9000";
+NSString *Root_URL = @"http://192.168.1.50:8000";
 #else
 
 NSString *Root_URL = @"http://m.xiaolumeimei.com";
