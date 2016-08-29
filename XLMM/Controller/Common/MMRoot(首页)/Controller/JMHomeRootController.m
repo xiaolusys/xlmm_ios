@@ -389,7 +389,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_categorysArray.count <= 4) {
-            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
+//            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
+            return SCREENWIDTH * 0.30 + 15;
         }else {
             return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
         }

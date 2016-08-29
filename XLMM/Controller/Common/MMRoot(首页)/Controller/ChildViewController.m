@@ -200,8 +200,8 @@ static NSString * ksimpleCell = @"simpleCell";
     
     NSLog(@"Child vc viewDidLoad");
 
-    [self itemDataSource];
-    [self craeteRight];
+//    [self itemDataSource];
+//    [self craeteRight];
     // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _isFirst = YES;
