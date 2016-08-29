@@ -777,6 +777,8 @@
 		1FE67AAB1D73FD5300761450 /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA61D73FD5300761450 /* iPhone6@2x.png */; };
 		1FE67AAC1D73FD5300761450 /* iPhone6Plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA71D73FD5300761450 /* iPhone6Plus@2x.png */; };
 		1FE67AAD1D73FD5300761450 /* iPhone6Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA81D73FD5300761450 /* iPhone6Plus@3x.png */; };
+		1FE67AAF1D742BCB00761450 /* MyCollectionOrigin_Nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AAE1D742BCB00761450 /* MyCollectionOrigin_Nomal@2x.png */; };
+		1FE67AB11D742C8D00761450 /* homeGoodsDetailCarts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AB01D742C8D00761450 /* homeGoodsDetailCarts@2x.png */; };
 		1FF3F9991D3CB31500FABBCE /* MaMaExplainFirst@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */; };
 		1FF3F99A1D3CB31500FABBCE /* MaMaExplainSecond@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */; };
 		1FF3F99B1D3CB31500FABBCE /* MaMaExplainThird@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */; };
@@ -2094,6 +2096,8 @@
 		1FE67AA61D73FD5300761450 /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
 		1FE67AA71D73FD5300761450 /* iPhone6Plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@2x.png"; sourceTree = "<group>"; };
 		1FE67AA81D73FD5300761450 /* iPhone6Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6Plus@3x.png"; sourceTree = "<group>"; };
+		1FE67AAE1D742BCB00761450 /* MyCollectionOrigin_Nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MyCollectionOrigin_Nomal@2x.png"; sourceTree = "<group>"; };
+		1FE67AB01D742C8D00761450 /* homeGoodsDetailCarts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeGoodsDetailCarts@2x.png"; sourceTree = "<group>"; };
 		1FF3F9921D3CB31500FABBCE /* MaMaExplainFirst@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainFirst@2x.png"; sourceTree = "<group>"; };
 		1FF3F9931D3CB31500FABBCE /* MaMaExplainSecond@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainSecond@2x.png"; sourceTree = "<group>"; };
 		1FF3F9941D3CB31500FABBCE /* MaMaExplainThird@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MaMaExplainThird@2x.png"; sourceTree = "<group>"; };
@@ -5673,8 +5677,10 @@
 				1FF5332B1D27762F003DEABF /* pop_bottom@2x.png */,
 				1FF5332C1D27762F003DEABF /* pop_top@2x.png */,
 				1FDF7C941D66EDA100C7456E /* goodsDetailCarts@2x.png */,
+				1FE67AB01D742C8D00761450 /* homeGoodsDetailCarts@2x.png */,
 				1FF5332D1D27762F003DEABF /* today.png */,
 				1FF5332E1D27762F003DEABF /* today1.png */,
+				1FE67AAE1D742BCB00761450 /* MyCollectionOrigin_Nomal@2x.png */,
 				1F2F9E511D597F5A00E3A68B /* goodsDetailBackImage@2x.png */,
 				1F2F9E521D597F5A00E3A68B /* goodsDetailBackColorImage@2x.png */,
 				1F2F9E591D597FF300E3A68B /* goodsDetailShareImage@2x.png */,
@@ -6479,6 +6485,7 @@
 				325B7A2F1C97E74B0022F930 /* MaMaShareSubsidiesViewCell.xib in Resources */,
 				1F498C641D2772D0007E77FC /* ShenQingTuiHuoController.xib in Resources */,
 				183075A21C97D49A00B7665E /* tag-shixiao.png in Resources */,
+				1FE67AAF1D742BCB00761450 /* MyCollectionOrigin_Nomal@2x.png in Resources */,
 				1FF3F9B61D3DC99000FABBCE /* MaMaRenewHalfyear_Nomal@2x.png in Resources */,
 				1F80FCDC1CE9D55B00E1BF86 /* back_ground@2x.png in Resources */,
 				1830757A1C97D49A00B7665E /* icon-fanhuidingbu.png in Resources */,
@@ -6528,6 +6535,7 @@
 				183075A91C97D49A00B7665E /* loading动画0011.png in Resources */,
 				1F27A6581D275FB400A0F80B /* ChildViewController.xib in Resources */,
 				3A2BC1BF1D2CFF6D00F6F54B /* UMSocialLocalizable.strings in Resources */,
+				1FE67AB11D742C8D00761450 /* homeGoodsDetailCarts@2x.png in Resources */,
 				1F56E2A51D3635080092EC91 /* MaMa_renew@2x.png in Resources */,
 				1F916A261D506A1000327408 /* 圈圈加载0007@2x.png in Resources */,
 				183076501C97D49A00B7665E /* yiguoqiyouhuiquan.png in Resources */,

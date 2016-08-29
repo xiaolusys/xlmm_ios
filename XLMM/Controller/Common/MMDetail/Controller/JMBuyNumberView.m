@@ -79,9 +79,9 @@
     addLabel.layer.cornerRadius = 10.;
     addLabel.textAlignment = NSTextAlignmentCenter;
     
-    UIView *currentView = [UIView new];
-    [self addSubview:currentView];
-    currentView.backgroundColor = [UIColor lineGrayColor];
+//    UIView *currentView = [UIView new];
+//    [self addSubview:currentView];
+//    currentView.backgroundColor = [UIColor lineGrayColor];
     
     kWeakSelf
     
@@ -118,11 +118,11 @@
         make.width.height.mas_equalTo(@20);
     }];
 
-    [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(weakSelf);
-        make.bottom.equalTo(weakSelf).offset(-1);
-        make.height.mas_equalTo(@1);
-    }];
+//    [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(weakSelf);
+//        make.bottom.equalTo(weakSelf).offset(-1);
+//        make.height.mas_equalTo(@1);
+//    }];
     
 }
 
