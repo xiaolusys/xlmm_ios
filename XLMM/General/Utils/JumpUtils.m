@@ -116,6 +116,17 @@
         [self jumpToWebview:target_url viewController:vc];
     }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
         [self jumpToCategoryProduct:target_url viewController:vc];
+    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_forum"]){
+        //  跳转到小鹿妈妈forum界面
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:@"http://forum.xiaolumeimei.com/accounts/xlmm/login/" forKey:@"web_url"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = false;
+        [vc.navigationController pushViewController:webVC animated:YES];
+
+        
     }
     
 }
