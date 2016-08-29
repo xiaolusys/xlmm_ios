@@ -139,8 +139,7 @@ static NSString * ksimpleCell = @"simpleCell";
 {
     
     NSLog(@"lodeMore url = %@", nextUrl);
-    if([nextUrl class] == [NSNull class]
-       || [nextUrl isEqualToString:@""] ) {
+    if ([nextUrl isKindOfClass:[NSNull class]] || nextUrl == nil || [nextUrl isEqual:@""]) {
         [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
         [SVProgressHUD setMinimumDismissTimeInterval:1];
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];

@@ -68,7 +68,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 }
 - (void)loadMore
 {
-    if ([_nextPageUrl class] == [NSNull class]) {
+    if ([_nextPageUrl isKindOfClass:[NSNull class]] || _nextPageUrl == nil || [_nextPageUrl isEqual:@""]) {
         [self endRefresh];
         [MBProgressHUD showMessage:@"加载完成,没有更多数据"];
         return;

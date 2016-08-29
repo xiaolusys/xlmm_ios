@@ -185,7 +185,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
          NSString * urlString = [json objectForKey:@"next"];
     NSLog(@"urlString = %@", urlString);
-    if ([urlString class] == [NSNull class]) {
+    if ([urlString isKindOfClass:[NSNull class]] || urlString == nil || [urlString isEqual:@""]) {
         NSLog(@"下一页为空");
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

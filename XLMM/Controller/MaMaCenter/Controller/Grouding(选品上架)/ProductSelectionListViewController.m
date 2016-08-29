@@ -366,7 +366,7 @@
     }];
 }
 - (void)loadMore {
-    if ([self.nextUrl class] == [NSNull class]) {
+    if ([self.nextUrl isKindOfClass:[NSNull class]] || self.nextUrl == nil || [self.nextUrl isEqual:@""]) {
         [self endRefresh];
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;

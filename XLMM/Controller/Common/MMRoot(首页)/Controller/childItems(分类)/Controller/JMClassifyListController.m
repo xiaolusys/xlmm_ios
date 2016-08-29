@@ -95,7 +95,7 @@ static NSString * cellId = @"JMClassifyListController";
     
 }
 - (void)loadMore {
-    if ([_nextPageUrlString class] == [NSNull class]) {
+    if ([_nextPageUrlString isKindOfClass:[NSNull class]] || _nextPageUrlString == nil || [_nextPageUrlString isEqual:@""]) {
         [SVProgressHUD showInfoWithStatus:@"没有更多数据....."];
         [self endRefresh];
         return;

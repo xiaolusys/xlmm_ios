@@ -50,6 +50,7 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
     }
     
+
 }
 
 - (void)setImageArray:(NSMutableArray *)imageArray {

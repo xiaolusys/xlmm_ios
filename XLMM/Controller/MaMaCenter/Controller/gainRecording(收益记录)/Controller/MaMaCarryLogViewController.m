@@ -117,7 +117,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 //加载更多
 - (void)loadMore {
-    if ([self.nextPage class] == [NSNull class]) {
+    if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;

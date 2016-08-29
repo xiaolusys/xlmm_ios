@@ -565,7 +565,7 @@
     NSCalendarUnitMinute |
     NSCalendarUnitSecond;
     NSDate *todate;
-    if ([offShelfTime class] == [NSNull class]) {
+    if ([offShelfTime isKindOfClass:[NSNull class]] || offShelfTime == nil || [offShelfTime isEqual:@""]) {
       //  NSLog(@"默认下架时间");
         NSDateComponents *endTime = [[NSDateComponents alloc] init];    //初始化目标时间...奥运时间好了
         [endTime setYear:year];
