@@ -111,7 +111,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessages:) name:@"leaveTop" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(rootViewWillEnterForeground:)
@@ -389,7 +389,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_categorysArray.count <= 4) {
-            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
+//            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
+            return SCREENWIDTH * 0.30 + 15;
         }else {
             return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
         }
@@ -486,7 +487,7 @@
     }
     return _segmentView;
 }
--(void)scrollMessages:(NSNotification *)notification{
+-(void)scrollMessage:(NSNotification *)notification{
     NSDictionary *userInfo = notification.userInfo;
     NSString *canScroll = userInfo[@"isCanScroll"];
     if ([canScroll isEqualToString:@"1"]) {

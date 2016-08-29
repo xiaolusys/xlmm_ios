@@ -43,10 +43,14 @@
 }
 
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
+    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
+        return nil;
+    }else {
+        NSMutableString *ms = [NSMutableString stringWithString:timeString];
+        NSRange range = {10,1};
+        [ms replaceCharactersInRange:range withString:@" "];
+        return ms;
+    }
 }
 - (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC {
     if (self == [super initWithFrame:frame]) {
@@ -152,7 +156,7 @@
         self.Label1.text = @"距本场结束";
     }
     NSString *todayTimeString = self.timeArray[num];
-    if ([todayTimeString isKindOfClass:[NSNull class]]) {
+    if ([todayTimeString isKindOfClass:[NSNull class]] || todayTimeString == nil || [todayTimeString isEqual:@""]) {
         //        self.timerLabel.text = @"即将上架";
         self.timeLabel.text = @"--:--:--:--";
     }else {
