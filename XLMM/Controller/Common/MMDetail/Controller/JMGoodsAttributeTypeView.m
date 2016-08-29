@@ -34,7 +34,7 @@
         
         
         BOOL isLineReturn = NO;
-        CGFloat upX = 15;
+        CGFloat upX = 10;
         CGFloat upY = 10;
         for (int i = 0; i< dataArray.count; i++) {
             NSString *str = [dataArray objectAtIndex:i];
@@ -45,7 +45,7 @@
             if (upX > (self.frame.size.width - 20 - size.width - 30 - 40)) {
                 
                 isLineReturn = YES;
-                upX = 15;
+                upX = 10;
                 upY += 40;
             }
             
