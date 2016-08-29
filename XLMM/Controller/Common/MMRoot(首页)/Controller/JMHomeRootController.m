@@ -738,7 +738,7 @@
     for (UIScrollView *scrollView in view.subviews) {
         if ([scrollView isKindOfClass:[UIScrollView class]]) {
             CGPoint offect = scrollView.contentOffset;
-            offect.y = -scrollView.contentInset.top;
+            offect.y = -scrollView.contentInset.top - 1;
             [scrollView setContentOffset:offect animated:YES];
         }
         [self searchScrollViewInWindow:scrollView];
