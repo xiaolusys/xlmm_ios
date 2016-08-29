@@ -362,11 +362,10 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
-//    NSArray *categoryArr = dic[@"categorys"];
-//    for (NSDictionary *dicts in categoryArr) {
-//        [_categorysArray addObject:dicts];
-//    }
-    _categorysArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"", nil];
+    NSArray *categoryArr = dic[@"categorys"];
+    for (NSDictionary *dicts in categoryArr) {
+        [_categorysArray addObject:dicts];
+    }
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
         [self.activeArray addObject:dict];

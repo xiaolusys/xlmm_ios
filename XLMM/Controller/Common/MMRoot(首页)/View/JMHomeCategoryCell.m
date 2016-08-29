@@ -36,7 +36,6 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
     CGFloat imageH = (SCREENWIDTH - 25) / 4 * 1.25;
     for (int i = 0; i < 8; i++) {
         UIImageView *iconImage = [UIImageView new];
-        iconImage.backgroundColor = [UIColor redColor];
         iconImage.hidden = YES;
         iconImage.userInteractionEnabled = YES;
         iconImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -51,15 +50,7 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
     }
     
-    UIView *lineView = [UIView new];
-    [self.contentView addSubview:lineView];
-    lineView.backgroundColor = [UIColor lineGrayColor];
-    
-    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.contentView);
-        make.height.mas_equalTo(@1);
-    }];
-    
+
 }
 
 - (void)setImageArray:(NSMutableArray *)imageArray {
@@ -70,7 +61,7 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
     for (int i = 0; i < imageArray.count; i++) {
         NSDictionary *dic = imageArray[i];
         UIImageView *image = (UIImageView *)[self.contentView viewWithTag:100 + i];
-//        [image sd_setImageWithURL:[NSURL URLWithString:[dic[@"cat_img"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+        [image sd_setImageWithURL:[NSURL URLWithString:[dic[@"cat_img"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
         image.hidden = NO;
     }
 }
