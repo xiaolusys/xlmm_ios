@@ -22,6 +22,7 @@
 #import "JMRefundBaseController.h"
 #import "JMLogInViewController.h"
 #import "JMGoodsDetailController.h"
+#import "JMClassifyListController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -47,20 +48,16 @@
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         //跳到潮童专区
-        ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-        childVC.urlString = kCHILD_LIST_URL;
-        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-        childVC.childClothing = YES;
-        
-        [vc.navigationController pushViewController:childVC animated:YES];
+        JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+        categoryVC.titleString = @"童装专区";
+        categoryVC.cid = @"1";
+        [vc.navigationController pushViewController:categoryVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
         //跳到时尚女装
-        ChildViewController *womanVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-        womanVC.urlString = kLADY_LIST_URL;
-        womanVC.orderUrlString = kLADY_LIST_ORDER_URL;
-        womanVC.childClothing = NO;
-        
-        [vc.navigationController pushViewController:womanVC animated:YES];
+        JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+        categoryVC.titleString = @"女装专区";
+        categoryVC.cid = @"2";
+        [vc.navigationController pushViewController:categoryVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         //跳转到用户未过期优惠券列表
         JMSegmentController *youhuiVC = [[JMSegmentController alloc] init];
@@ -117,6 +114,8 @@
     }
     else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/webview?"]){
         [self jumpToWebview:target_url viewController:vc];
+    }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
+        [self jumpToCategoryProduct:target_url viewController:vc];
     }
     
 }
@@ -286,6 +285,27 @@
         webView.isShowRightShareBtn=true;
         [vc.navigationController pushViewController:webView animated:YES];
     }
+}
+    
++(void) jumpToCategoryProduct:(NSString *)target_url viewController:(UIViewController *)vc{
+    if([target_url rangeOfString:@"?"].length > 0){
+        NSArray *components = [target_url componentsSeparatedByString:@"?"];
+        NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+        
+        NSArray *params = [parameter componentsSeparatedByString:@"&"];
+        NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+        NSString *firstparam = [firstparams firstObject];
+        NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+        NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+        if ([firstparam isEqualToString:@"cid"]) {
+            JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+            categoryVC.titleString = @"分类商品";
+            categoryVC.cid = firstvalue;
+            [vc.navigationController pushViewController:categoryVC animated:YES];
+            
+        }
+    }
+    
 }
 
 @end
