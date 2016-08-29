@@ -450,6 +450,10 @@
 - (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
     JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
     NSString *parStr = paramerString[@"cat_link"];
+    if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
+        NSLog(@"jump cat_link=%@ wrong", parStr);
+        return;
+    }
     NSArray *array = [parStr componentsSeparatedByString:@"="];
     NSString *string = array[1];
     categoryVC.titleString = paramerString[@"name"];
