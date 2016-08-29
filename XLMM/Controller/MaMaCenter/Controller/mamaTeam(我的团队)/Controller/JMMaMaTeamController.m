@@ -109,7 +109,7 @@ static const NSUInteger ITEM_COUNT = 3;
 }
 - (void)fetchSelfTeamInfoData:(NSDictionary *)teamInfoDic {
     [self.mamaIconImage sd_setImageWithURL:[NSURL URLWithString:[teamInfoDic[@"thumbnail"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
-    if ([teamInfoDic[@"total"] isKindOfClass:[NSNull class]]) {
+    if ([teamInfoDic[@"total"] isKindOfClass:[NSNull class]] || teamInfoDic[@"total"] == nil || [teamInfoDic[@"total"] isEqual:@""]) {
         return ;
     }else {
         CGFloat total = [teamInfoDic[@"total"] floatValue] / 100.00;

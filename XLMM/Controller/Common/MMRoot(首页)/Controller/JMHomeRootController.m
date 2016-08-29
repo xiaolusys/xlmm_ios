@@ -362,10 +362,11 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
-    NSArray *categoryArr = dic[@"categorys"];
-    for (NSDictionary *dicts in categoryArr) {
-        [_categorysArray addObject:dicts];
-    }
+//    NSArray *categoryArr = dic[@"categorys"];
+//    for (NSDictionary *dicts in categoryArr) {
+//        [_categorysArray addObject:dicts];
+//    }
+    _categorysArray = [NSMutableArray arrayWithObjects:@"",@"",@"",@"", nil];
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
         [self.activeArray addObject:dict];
@@ -413,7 +414,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.section == 1){
-        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
+        JMHomeActiveCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (!cell) {
             cell = [[JMHomeActiveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeActiveCellIdentifier];
         }

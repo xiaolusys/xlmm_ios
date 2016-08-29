@@ -109,7 +109,7 @@
         return YES;
     }
     
-    if ([string isKindOfClass:[NSNull class]]) {
+    if ([string isKindOfClass:[NSNull class]] || string == nil || [string isEqual:@""]) {
         return YES;
     }
     

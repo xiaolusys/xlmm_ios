@@ -61,7 +61,7 @@
     
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if([self.nextPage class] == [NSNull class]) {
+        if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
             return ;
         }

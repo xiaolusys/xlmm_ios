@@ -63,7 +63,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     // === 处理结束时间 === //
     NSString *endTime = @"";
     NSString *timeString = detailContentDic[@"offshelf_time"];
-    if ([timeString isKindOfClass:[NSNull class]]) {
+    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
         self.timerLabel.text = @"即将上架";
     }else {
         endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
@@ -82,10 +82,14 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
 }
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
+    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
+        return nil;
+    }else {
+        NSMutableString *ms = [NSMutableString stringWithString:timeString];
+        NSRange range = {10,1};
+        [ms replaceCharactersInRange:range withString:@" "];
+        return ms;
+    }
 }
 - (void)setCustomInfoDic:(NSDictionary *)customInfoDic {
     _customInfoDic = customInfoDic;

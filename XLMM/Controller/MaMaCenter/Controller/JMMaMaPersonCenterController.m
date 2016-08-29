@@ -444,7 +444,7 @@ static NSUInteger popNum = 0;
         PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [self.navigationController pushViewController:publish animated:YES];
     }else if (index == 105) {
-        if ([self.myInvitation class] == [NSNull class])return;
+        if ([self.myInvitation isKindOfClass:[NSNull class]] || self.myInvitation == nil || [self.myInvitation isEqual:@""]) return;
         WebViewController *activity = [[WebViewController alloc] init];
         NSString *active = @"myInvite";
         NSString *titleName = @"我的邀请";

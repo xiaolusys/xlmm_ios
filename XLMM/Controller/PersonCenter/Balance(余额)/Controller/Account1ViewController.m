@@ -136,7 +136,7 @@ static NSString *identifier = @"AccountCell";
     }];
 }
 - (void)loadMore {
-    if ([self.nextPage class] == [NSNull class]) {
+    if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
         [self endRefresh];
 //        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         [MBProgressHUD showMessage:@"加载完成,没有更多数据"];

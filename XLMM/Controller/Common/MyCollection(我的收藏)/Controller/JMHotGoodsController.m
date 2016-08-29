@@ -94,7 +94,7 @@
     
 }
 - (void)loadMore {
-    if ([self.nextPageUrlString class] == [NSNull class]) {
+    if ([self.nextPageUrlString isKindOfClass:[NSNull class]] || self.nextPageUrlString == nil || [self.nextPageUrlString isEqual:@""]) {
         [SVProgressHUD showInfoWithStatus:@"没有更多数据....."];
         [self endRefresh];
         return;
