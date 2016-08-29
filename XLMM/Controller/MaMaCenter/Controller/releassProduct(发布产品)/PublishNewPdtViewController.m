@@ -135,7 +135,7 @@
     self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
     
-    if (hour > 10 || hour == 10) {
+    if (hour > 6 || hour == 6) {
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
     }else {

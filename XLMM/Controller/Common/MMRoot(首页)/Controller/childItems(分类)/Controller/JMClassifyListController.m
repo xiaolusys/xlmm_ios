@@ -80,7 +80,7 @@ static NSString * cellId = @"JMClassifyListController";
     }
 }
 - (void)loadDataSource {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@",Root_URL,self.cid];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,self.cid];
     [self.dataSource removeAllObjects];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;

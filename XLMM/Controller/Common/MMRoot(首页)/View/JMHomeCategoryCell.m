@@ -32,66 +32,46 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
 
 - (void)createUI {
-    
-    self.iconImage1 = [UIImageView new];
-    self.iconImage1.userInteractionEnabled = YES;
-    self.iconImage1.contentMode = UIViewContentModeScaleAspectFit;
-    [self.contentView addSubview:self.iconImage1];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [self.iconImage1 addGestureRecognizer:tap];
-    UIView *tapView1 = [tap view];
-    tapView1.tag = 100;
-    
-    
-    self.iconImage2 = [UIImageView new];
-    self.iconImage2.userInteractionEnabled = YES;
-    self.iconImage2.contentMode = UIViewContentModeScaleAspectFit;
-    [self.contentView addSubview:self.iconImage2];
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [self.iconImage2 addGestureRecognizer:tap1];
-    UIView *tapView2 = [tap1 view];
-    tapView2.tag = 101;
-    
-    
-    kWeakSelf
-    [self.iconImage1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.contentView).offset(5);
-        make.left.equalTo(weakSelf.contentView).offset(5);
-        make.width.mas_equalTo(@((SCREENWIDTH) / 2));
-        make.height.mas_equalTo(@(SCREENWIDTH * 0.32));
-    }];
-    
-    [self.iconImage2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.contentView).offset(5);
-        make.right.equalTo(weakSelf.contentView).offset(-5);
-        make.width.mas_equalTo(@((SCREENWIDTH) / 2));
-        make.height.mas_equalTo(@(SCREENWIDTH * 0.32));
-    }];
-    
-    
+    CGFloat imageW = (SCREENWIDTH - 25) / 4;
+    CGFloat imageH = (SCREENWIDTH - 25) / 4 * 1.25;
+    for (int i = 0; i < 8; i++) {
+        UIImageView *iconImage = [UIImageView new];
+        iconImage.hidden = YES;
+        iconImage.userInteractionEnabled = YES;
+        iconImage.contentMode = UIViewContentModeScaleAspectFit;
+        [self.contentView addSubview:iconImage];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+        [iconImage addGestureRecognizer:tap];
+        UIView *tapView = [tap view];
+        tapView.tag = 100 + i;
+        iconImage.tag = 100 + i;
+        
+        iconImage.frame = CGRectMake(5 + (imageW + 5) * (i % 4), 10 + (imageH + 5) * (i / 4), imageW, imageH);
+
+    }
     
 }
 
 - (void)setImageArray:(NSMutableArray *)imageArray {
     _imageArray = imageArray;
-    
     if (imageArray.count == 0) {
-        
-    }else {
-        [self.iconImage1 sd_setImageWithURL:[NSURL URLWithString:[imageArray[0] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
-        [self.iconImage2 sd_setImageWithURL:[NSURL URLWithString:[imageArray[1] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+        return ;
     }
-    
-    
+    for (int i = 0; i < imageArray.count; i++) {
+        NSDictionary *dic = imageArray[i];
+        UIImageView *image = (UIImageView *)[self.contentView viewWithTag:100 + i];
+        [image sd_setImageWithURL:[NSURL URLWithString:[dic[@"cat_img"] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+        image.hidden = NO;
+    }
 }
 
 - (void)tapClick:(UITapGestureRecognizer *)tap {
     UIView *tapView = [tap view];
-    NSInteger index = tapView.tag;
-    if (_delegate && [_delegate respondsToSelector:@selector(composeCategoryCellTapView:TapClick:)]) {
-        [_delegate composeCategoryCellTapView:self TapClick:index];
+    NSInteger index = tapView.tag - 100;
+    NSDictionary *dic = self.imageArray[index];
+    if (_delegate && [_delegate respondsToSelector:@selector(composeCategoryCellTapView:ParamerStr:)]) {
+        [_delegate composeCategoryCellTapView:self ParamerStr:dic];
     }
-    
 }
 
 

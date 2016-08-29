@@ -13,7 +13,7 @@ extern NSString *const JMHomeCategoryCellIdentifier;
 @class JMHomeCategoryCell;
 @protocol JMHomeCategoryCellDelegate <NSObject>
 
-- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView TapClick:(NSInteger)index;
+- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString;
 
 @end
 

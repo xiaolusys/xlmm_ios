@@ -34,6 +34,7 @@
 #import "ChildViewController.h"
 #import "JMMaMaPersonCenterController.h"
 #import "MJPullGifHeader.h"
+#import "JMClassifyListController.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -363,7 +364,7 @@
     }
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
-        [_categorysArray addObject:dicts[@"cat_img"]];
+        [_categorysArray addObject:dicts];
     }
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
@@ -387,7 +388,11 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return SCREENWIDTH * 0.32 + 10;
+        if (_categorysArray.count <= 4) {
+            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
+        }else {
+            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
+        }
     }else if (indexPath.section == 1) {
         return SCREENWIDTH / 2 + 10;
     }else if (indexPath.section == 2) {
@@ -442,21 +447,14 @@
     }else {}
 }
 #pragma mark 分类点击事件
-- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView TapClick:(NSInteger)index {
-    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    if (index == 100) {
-        [MobClick event:@"child_click"];
-        childVC.urlString = kCHILD_LIST_URL;
-        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-        childVC.childClothing = YES;
-    }else if (index == 101) {
-        [MobClick event:@"women_click"];
-        childVC.urlString = kLADY_LIST_URL;
-        childVC.orderUrlString = kLADY_LIST_ORDER_URL;
-        childVC.childClothing = NO;
-    }else {
-    }
-    [self.navigationController pushViewController:childVC animated:YES];
+- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
+    JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+    NSString *parStr = paramerString[@"cat_link"];
+    NSArray *array = [parStr componentsSeparatedByString:@"="];
+    NSString *string = array[1];
+    categoryVC.titleString = paramerString[@"name"];
+    categoryVC.cid = string;
+    [self.navigationController pushViewController:categoryVC animated:YES];
 }
 #pragma mark 活动点击事件(跳转webView)
 - (void)skipWebView:(NSString *)appLink activeDic:(NSDictionary *)dic {
@@ -584,7 +582,6 @@
             make.width.mas_equalTo(@44);
         }];
     }
-    
 }
 - (void)cartViewUpData:(NSDictionary *)dic {
     kWeakSelf
@@ -627,6 +624,7 @@
     NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
     if ([d second] < 0) {
+        self.cartsCountLabel.text = @"";
         self.cartsCountLabel.hidden = YES;
         self.cartsLabel.hidden = YES;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
