@@ -35,6 +35,7 @@
 #import "JMMaMaPersonCenterController.h"
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
+#import "JMHomeActiveModel.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -185,14 +186,14 @@
     [self createTabelView];                            // 创建tableView
     [self createCartsView];                            // 创建购物车
     [self createTopButton];                            // 创建返回顶部按钮
-    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
+//    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
     [self createPullHeaderRefresh];                    // 下拉刷新,重新获取商品展示数据
     [self.tableView.mj_header beginRefreshing];        // 刚进入主页刷新数据
     [self autoUpdateVersion];                          // 版本自动升级
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开
+    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开5
     if (_isFirstOpenApp) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
@@ -281,6 +282,7 @@
 }
 - (void)refreshView {
     _isPullDown = YES;
+    [self loadActiveData];
     for (int i = 0; i < _urlArray.count; i++) {
         [self loadData:_urlArray[i]];
     }
@@ -352,6 +354,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:self WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        [_topImageArray removeAllObjects];
+        [_categorysArray removeAllObjects];
+        [self.activeArray removeAllObjects];
         [self fetchActive:responseObject];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
@@ -368,7 +373,8 @@
     }
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
-        [self.activeArray addObject:dict];
+        JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];
+        [self.activeArray addObject:model];
     }
     [self.goodsScrollView jm_reloadData];
     [self.tableView reloadData];
@@ -395,7 +401,8 @@
             return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
         }
     }else if (indexPath.section == 1) {
-        return SCREENWIDTH / 2 + 10;
+        JMHomeActiveModel *model = self.activeArray[indexPath.row];
+        return model.cellHeight;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {
@@ -413,12 +420,12 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.section == 1){
-        JMHomeActiveCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
         if (!cell) {
             cell = [[JMHomeActiveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeActiveCellIdentifier];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.activeDic = _activeArray[indexPath.row];
+        cell.model = self.activeArray[indexPath.row];
         return cell;
     }else {
         JMHomeGoodsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -449,7 +456,7 @@
 }
 #pragma mark 分类点击事件
 - (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
-    JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+    ChildViewController *categoryVC = [[ChildViewController alloc] init];
     NSString *parStr = paramerString[@"cat_link"];
     NSArray *array = [parStr componentsSeparatedByString:@"="];
     NSString *string = array[1];

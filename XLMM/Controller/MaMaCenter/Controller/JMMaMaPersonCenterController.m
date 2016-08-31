@@ -267,6 +267,8 @@ static NSUInteger popNum = 0;
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
+        [self.earningArray removeAllObjects];
+        [self.earningImageArray removeAllObjects];
         [self fetchEarning:responseObject];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
@@ -639,10 +641,13 @@ static NSUInteger popNum = 0;
     [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
 }
 - (void)waitTimer {
-    [self showNewStatusCount:self.earningArray Image:self.earningImageArray Index:_indexCode];
     if (_indexCode == (self.earningArray.count - 1)) {
         _indexCode = 0;
     }
+    [self showNewStatusCount:self.earningArray Image:self.earningImageArray Index:_indexCode];
+//    if (_indexCode == (self.earningArray.count - 1)) {
+//        _indexCode = 0;
+//    }
 }
 - (void)backClick:(UIButton *)btn {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(waitTimer) object:nil];

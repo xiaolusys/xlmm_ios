@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMHomeActiveModel.h"
 
 extern NSString *const JMHomeActiveCellIdentifier;
 
 @interface JMHomeActiveCell : UITableViewCell
 
 @property (nonatomic, strong) NSDictionary *activeDic;
+
+@property (nonatomic, strong) JMHomeActiveModel *model;
 
 @end

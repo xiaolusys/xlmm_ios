@@ -64,10 +64,10 @@ static NSString *cellIdentifier = @"shareSubsidies";
     
     //添加上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if([self.nextPage class] == [NSNull class]) {
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return ;
-        }
+//        if([self.nextPage class] == [NSNull class]) {
+//            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//            return ;
+//        }
         [self loadMore];
     }];
     
@@ -168,7 +168,7 @@ static NSString *cellIdentifier = @"shareSubsidies";
 - (void)loadMore {
     if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
         [self.tableView.mj_footer endRefreshing];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {

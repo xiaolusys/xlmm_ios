@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -84,13 +85,25 @@
                             </mask>
                         </variation>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9D2-zW-Bsb">
+                        <rect key="frame" x="412" y="13" width="40" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="FPu-V0-C03"/>
+                            <constraint firstAttribute="width" constant="40" id="aFZ-VV-opI"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="S3g-AH-H1H" secondAttribute="bottom" id="3RB-PU-LOg"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9D2-zW-Bsb" secondAttribute="trailing" id="5pO-f0-7Tb"/>
                     <constraint firstItem="S3g-AH-H1H" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9rC-jR-w6s"/>
                     <constraint firstItem="6Wx-cb-dGX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="JlH-vJ-v4J"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="top" secondItem="f0i-YC-mX6" secondAttribute="bottom" id="LEo-YT-Q29"/>
                     <constraint firstItem="Gwf-Xo-jiO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="OoD-Tp-chG"/>
+                    <constraint firstItem="9D2-zW-Bsb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="Wx3-h2-Q5B"/>
                     <constraint firstItem="Gwf-Xo-jiO" firstAttribute="leading" secondItem="f0i-YC-mX6" secondAttribute="trailing" constant="10" id="coG-dn-iAm"/>
                     <constraint firstItem="f0i-YC-mX6" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="fJv-xg-MM9"/>
                     <constraint firstItem="QIn-ek-Vvb" firstAttribute="leading" secondItem="UH8-Hz-gts" secondAttribute="trailing" constant="13" id="jXm-fu-5Rl"/>
@@ -107,6 +120,7 @@
                 <outlet property="photoImageV" destination="UH8-Hz-gts" id="w0Y-2t-DaR"/>
                 <outlet property="sourceLabel" destination="Gwf-Xo-jiO" id="t8o-C5-Sj8"/>
                 <outlet property="status" destination="f0i-YC-mX6" id="6bM-r6-CTX"/>
+                <outlet property="timeLabel" destination="9D2-zW-Bsb" id="qN9-Uo-x2h"/>
             </connections>
             <point key="canvasLocation" x="245" y="263.5"/>
         </tableViewCell>

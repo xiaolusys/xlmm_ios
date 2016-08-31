@@ -159,11 +159,12 @@
     
     [goodsTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(headerView).offset(20);
-        make.left.equalTo(iconImage.mas_right).offset(15);
+        make.left.equalTo(iconImage.mas_right).offset(10);
+        make.width.mas_equalTo(SCREENWIDTH - 110);
     }];
     
     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(iconImage.mas_right).offset(15);
+        make.left.equalTo(iconImage.mas_right).offset(10);
         make.bottom.equalTo(headerView.mas_bottom).offset(-10);
     }];
     

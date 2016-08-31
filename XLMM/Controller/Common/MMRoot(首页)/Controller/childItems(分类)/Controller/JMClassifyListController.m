@@ -33,6 +33,7 @@ static NSString * cellId = @"JMClassifyListController";
 
 @implementation JMClassifyListController {
     NSString *_nextPageUrlString;
+    NSMutableArray *_numArray;
 }
 
 
@@ -59,6 +60,7 @@ static NSString * cellId = @"JMClassifyListController";
     kWeakSelf
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
+        [self.collectionView.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];
     }];
 }
@@ -85,6 +87,7 @@ static NSString * cellId = @"JMClassifyListController";
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
         NSLog(@"%@",responseObject);
+        [self.dataSource removeAllObjects];
         [self fatchClassifyListData:responseObject];
         [self endRefresh];
     } WithFail:^(NSError *error) {
@@ -96,13 +99,13 @@ static NSString * cellId = @"JMClassifyListController";
 }
 - (void)loadMore {
     if ([_nextPageUrlString isKindOfClass:[NSNull class]] || _nextPageUrlString == nil || [_nextPageUrlString isEqual:@""]) {
-        [SVProgressHUD showInfoWithStatus:@"没有更多数据....."];
         [self endRefresh];
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPageUrlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        [self fatchClassifyListData:responseObject];
+        [self fatchClassifyListMoreData:responseObject];
         [self endRefresh];
     } WithFail:^(NSError *error) {
         [self endRefresh];
@@ -124,6 +127,37 @@ static NSString * cellId = @"JMClassifyListController";
         }
     }
     [self.collectionView reloadData];
+}
+- (void)fatchClassifyListMoreData:(NSDictionary *)itemDic {
+    _nextPageUrlString = itemDic[@"next"];
+    NSArray *resultsArr = itemDic[@"results"];
+    if (resultsArr.count == 0) {
+        //展示空视图
+        [self emptyView];
+        return ;
+    }
+    _numArray = [NSMutableArray array];
+    
+    for (NSDictionary *dic in resultsArr) {
+        NSIndexPath *index ;
+        index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
+        [self.dataSource addObject:dic];
+        [_numArray addObject:index];
+    }
+    if((_numArray != nil) && (_numArray.count > 0)){
+        @try{
+            [self.collectionView insertItemsAtIndexPaths:_numArray];
+            [_numArray removeAllObjects];
+            _numArray = nil;
+        }
+        @catch(NSException *except)
+        {
+            NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+        }
+    }
+    [self.collectionView reloadData];
+
+    
 }
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
