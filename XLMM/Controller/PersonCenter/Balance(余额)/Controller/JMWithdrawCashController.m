@@ -85,7 +85,7 @@
     UITextField *moneyTextF = [UITextField new];
     [twoView addSubview:moneyTextF];
     self.moneyTextF = moneyTextF;
-    self.moneyTextF.keyboardType = UIKeyboardTypeNumberPad;
+    self.moneyTextF.keyboardType = UIKeyboardTypeDecimalPad;
     self.moneyTextF.leftViewMode = UITextFieldViewModeAlways;
     self.moneyTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.moneyTextF.font = [UIFont systemFontOfSize:14.];
@@ -308,6 +308,11 @@
     BOOL isEnough = ((_withDrawMoney - stringF) > 0.000001);
     BOOL isSureBtn = ((textField.text != 0) && isEnough);
     [self rightDrawCashBtn:isSureBtn];
+    if ((stringF - 8.88) > 0.000001 || fabs(stringF - 8.88) <= 0.000001) {
+        [self rightDrawCashBtn:YES];
+    }else {
+        [self rightDrawCashBtn:NO];
+    }
     return YES;
 }
 - (void)rightDrawCashBtn:(BOOL)type {

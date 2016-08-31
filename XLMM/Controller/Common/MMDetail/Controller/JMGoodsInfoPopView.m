@@ -127,11 +127,13 @@
 
     UILabel *goodsTitle = [UILabel new];
     [headerView addSubview:goodsTitle];
+    goodsTitle.font = [UIFont systemFontOfSize:16.];
+    goodsTitle.textColor = [UIColor buttonTitleColor];
     self.nameTitle = goodsTitle;
     
     UILabel *PriceLabel = [UILabel new];
     [headerView addSubview:PriceLabel];
-    PriceLabel.font = [UIFont boldSystemFontOfSize:14.];
+    PriceLabel.font = [UIFont systemFontOfSize:32.];
     PriceLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     self.PriceLabel = PriceLabel;
     
@@ -156,17 +158,18 @@
     }];
     
     [goodsTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView).offset(10);
-        make.left.equalTo(iconImage.mas_right).offset(15);
+        make.top.equalTo(headerView).offset(20);
+        make.left.equalTo(iconImage.mas_right).offset(10);
+        make.width.mas_equalTo(SCREENWIDTH - 110);
     }];
     
     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(iconImage.mas_right).offset(15);
-        make.bottom.equalTo(headerView.mas_bottom).offset(-15);
+        make.left.equalTo(iconImage.mas_right).offset(10);
+        make.bottom.equalTo(headerView.mas_bottom).offset(-10);
     }];
     
     [curreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(headerView.mas_bottom).offset(-15);
+        make.bottom.equalTo(PriceLabel.mas_bottom).offset(-5);
         make.left.equalTo(PriceLabel.mas_right);
         make.height.mas_equalTo(@13);
     }];
@@ -235,7 +238,7 @@
     [self addSubview:headerView];
     
     // == 购买数量视图 == //
-    self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+    self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
     [headerView addSubview:self.buyNumView];
     
     kWeakSelf
@@ -266,11 +269,11 @@
             make.top.equalTo(headerView).offset(20);
             make.left.equalTo(headerView);
             make.width.mas_equalTo(SCREENWIDTH);
-            make.height.mas_equalTo(@50);
+            make.height.mas_equalTo(@60);
         }];
         
     }else {
-        self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色分类"];
+        self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色"];
         self.colorView.delegate = self;
         [headerView addSubview:self.colorView];
         self.colorView.frame = CGRectMake(0, 0, SCREENWIDTH, self.colorView.height);
@@ -282,9 +285,9 @@
         self.sizeView.frame = CGRectMake(0, colorViewH, SCREENWIDTH, self.sizeView.height);
         CGFloat sizeViewH = self.sizeView.frame.size.height;
         
-        self.buyNumView.frame = CGRectMake(0, sizeViewH + self.sizeView.frame.origin.y, SCREENWIDTH, 50);
+        self.buyNumView.frame = CGRectMake(0, sizeViewH + self.sizeView.frame.origin.y, SCREENWIDTH, 60);
 //        CGFloat heanderViewH = headerView.frame.size.height;
-        CGFloat H = sizeViewH + self.sizeView.frame.origin.y + 50;
+        CGFloat H = sizeViewH + self.sizeView.frame.origin.y + 60;
         headerView.contentSize = CGSizeMake(SCREENWIDTH, H);
         
         
@@ -295,7 +298,7 @@
     NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
     NSDictionary *sizeD = sizeDic[size];
     // --> 这里展示价格 与初始颜色与尺寸
-    self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"agent_price"] floatValue]];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeD[@"agent_price"] floatValue]];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
     _stockValue =  [sizeD[@"free_num"] integerValue];
     [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
@@ -363,7 +366,7 @@
 //        NSString *color = self.goodsColorArray[self.colorView.tag - 1];
         NSString *size = self.goodsSizeArray[index - 1];
         NSDictionary *sizeD = sizeDic[size];
-        self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"agent_price"] floatValue]];
+        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeD[@"agent_price"] floatValue]];
         self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
         _goodsSizeID = [sizeD[@"sku_id"] integerValue];
         _stockValue =  [sizeD[@"free_num"] integerValue];
@@ -408,10 +411,11 @@
             _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
             _stockValue =  [sizeDict[@"free_num"] integerValue];
 
-            self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"agent_price"] floatValue]];
+            self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
             self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
             code --;
         }else {
+            
         }
     }
     

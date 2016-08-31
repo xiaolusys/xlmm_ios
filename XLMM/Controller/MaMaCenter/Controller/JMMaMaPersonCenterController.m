@@ -88,15 +88,31 @@ static NSUInteger popNum = 0;
  *  MaMa客服入口
  */
 @property (nonatomic, strong) UIButton *serViceButton;
-
-
+/**
+ *  最近订单收益的20条信息
+ */
+@property (nonatomic, strong) NSMutableArray *earningArray;
+@property (nonatomic, strong) NSMutableArray *earningImageArray;
 @end
 
 
 @implementation JMMaMaPersonCenterController {
     NSString *_mamaID;
+    NSInteger _indexCode;
+    
 }
-
+- (NSMutableArray *)earningArray {
+    if (_earningArray == nil) {
+        _earningArray = [NSMutableArray array];
+    }
+    return _earningArray;
+}
+- (NSMutableArray *)earningImageArray {
+    if (_earningImageArray == nil) {
+        _earningImageArray = [NSMutableArray array];
+    }
+    return _earningImageArray;
+}
 - (JMNewcomerTaskController *)newcomerTask {
     if (_newcomerTask == nil) {
         _newcomerTask = [[JMNewcomerTaskController alloc] init];
@@ -112,25 +128,27 @@ static NSUInteger popNum = 0;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveUdeskMessage:) name:UD_RECEIVED_NEW_MESSAGES_NOTIFICATION object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SubscribeMes:) name:@"SubscribeMessage" object:nil];
-//    [self loadfoldLineData];
+    [MobClick beginLogPageView:@"JMMaMaPersonCenterController"];
     [self loadDataSource];
-//    [self loadMaMaWeb];
     [self loadMaMaMessage];
+    [self loadEarningMessage];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMMaMaPersonCenterController"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
+    _indexCode = 0;
+    
     [self createTableView];
     [self createHeaderView];
     [self createFooterView];
     [self craeteNavRightButton];
     [self loadfoldLineData];
-//    [self loadDataSource];
     [self loadMaMaWeb];
-//    [self loadMaMaMessage];
     [self customUserInfo];
 }
 - (void)loadDataSource {
@@ -213,7 +231,6 @@ static NSUInteger popNum = 0;
         NSArray *arr = responseObject[@"results"];
         if (arr.count == 0)return;
         self.mamaCenterHeaderView.mamaResults = arr;
-        //        [self endRefresh];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         
@@ -244,6 +261,28 @@ static NSUInteger popNum = 0;
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
+}
+- (void)loadEarningMessage {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/ordercarry/get_latest_order_carry",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        [self.earningArray removeAllObjects];
+        [self.earningImageArray removeAllObjects];
+        [self fetchEarning:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+- (void)fetchEarning:(NSArray *)array {
+    if (array.count == 0) {
+        return ;
+    }
+    for (NSDictionary *dic in array) {
+        [self.earningArray addObject:dic[@"content"]];
+        [self.earningImageArray addObject:dic[@"avatar"]];
+    }
+    [self earningPrompt];
 }
 // MaMaWebView跳转链接
 - (void)mamaWebViewData:(NSDictionary *)mamaDic {
@@ -304,9 +343,6 @@ static NSUInteger popNum = 0;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
-}
-- (void)backClick:(UIButton *)btn {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 /*
  100 == > 账户余额
@@ -373,15 +409,13 @@ static NSUInteger popNum = 0;
         JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
         renewVC.cashValue = self.carryValue;
         [self.navigationController pushViewController:renewVC animated:YES];
-    }else {
-    
-    }
+    }else { }
 }
 /*
  100 === > 小鹿大学(精品活动)
  101 === > 订单记录
  102 === > 收益记录
- 103 === > 我的精选
+ 103 === > 我的店铺
  104 === > 每日推送
  105 === > 邀请一元开店
  106 === > 选品上架
@@ -412,7 +446,7 @@ static NSUInteger popNum = 0;
         PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [self.navigationController pushViewController:publish animated:YES];
     }else if (index == 105) {
-        if ([self.myInvitation class] == [NSNull class])return;
+        if ([self.myInvitation isKindOfClass:[NSNull class]] || self.myInvitation == nil || [self.myInvitation isEqual:@""]) return;
         WebViewController *activity = [[WebViewController alloc] init];
         NSString *active = @"myInvite";
         NSString *titleName = @"我的邀请";
@@ -457,16 +491,11 @@ static NSUInteger popNum = 0;
     }else if (index == 112) {
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
-    }else {
-        
-    }
-    
-    
+    }else { }
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
     [JMPopView hide];
-    
 }
 #pragma mark MaMa新手任务弹出框
 - (void)composeNewcomerTask:(JMNewcomerTaskController *)taskVC Index:(NSInteger)index {
@@ -477,9 +506,7 @@ static NSUInteger popNum = 0;
         [JMPopViewAnimationSpring dismissView:self.menu overlayView:self.cover];
         [JMPopView hide];
         [self xiaoluUniversity];
-    }else {
-        
-    }
+    }else { }
 }
 #pragma mark 妈妈消息列表点击事件
 - (void)composeFooterViewScrollView:(JMMaMaCenterFooterView *)footerView Index:(NSInteger)index {
@@ -550,39 +577,85 @@ static NSUInteger popNum = 0;
                                          }
                                  };
     [UdeskManager createCustomerWithCustomerInfo:parameters];
+    if (nick_name.length == 0 || sdk_token.length == 0) {
+        self.serViceButton.hidden = YES;
+    }else {
+        self.serViceButton.hidden = NO;
+    }
 }
-- (void)showNewStatusCount:(NSString *)message {
-    if (message.length == 0) {
+- (void)showNewStatusCount:(NSArray *)message Image:(NSArray *)imageArr Index:(NSInteger)index {
+    if (message.count == 0) {
         return ;
     }
-    CGFloat h = 35.;
-    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - h;
-    CGFloat x = 0;
+    CGFloat h = 40.;
+    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) + 20;
+    CGFloat x = 10;
     CGFloat w = SCREENWIDTH;
-    UILabel *label6 = [[UILabel alloc] initWithFrame:CGRectMake(x, y, w, h)];
-    label6.backgroundColor = [UIColor blackColor];
-    label6.alpha = 0.70f;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(x, y, w - 50, h)];
+    view.layer.cornerRadius = 20;
+    view.layer.masksToBounds = YES;
+    [self.view addSubview:view];
+//    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.70f;
+    
+    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(x, 5, 30, 30)];
+    image.layer.cornerRadius = 15;
+    image.layer.masksToBounds = YES;
+    [view addSubview:image];
+    
+    UILabel *label6 = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, w - 105, h)];
+    [view addSubview:label6];
+    label6.font = [UIFont systemFontOfSize:13.];
     label6.textColor = [UIColor whiteColor];
-    label6.text = message;
-    label6.textAlignment = NSTextAlignmentCenter;
-    //插入导航控制器下导航条下面
-    [self.navigationController.view insertSubview:label6 belowSubview:self.navigationController.navigationBar];
-    [UIView animateWithDuration:0.3 animations:^{
-        label6.transform = CGAffineTransformMakeTranslation(0, h);
+    label6.text = message[index];
+
+    [image sd_setImageWithURL:[NSURL URLWithString:[[imageArr[index] JMUrlEncodedString] imageMoreCompression]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [UIView animateWithDuration:1.0 animations:^{
+//        view.transform = CGAffineTransformMakeTranslation(0, h * 2);
+        view.alpha = 1.0f;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
-            label6.transform = CGAffineTransformIdentity;
+        [UIView animateWithDuration:0.5 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
+//            view.transform = CGAffineTransformIdentity;
+            view.alpha = 0.0f;
         } completion:^(BOOL finished) {
-            [label6 removeFromSuperview];
+            [view removeFromSuperview];
+            _indexCode ++;
+            int x = arc4random() % 5 + 5;
+            [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
+            
         }];
     }];
 }
-- (void)SubscribeMes:(NSNotification *)sender {
-    [self showNewStatusCount:sender.object];
+//- (void)SubscribeMes:(NSNotification *)sender {
+//    [self showNewStatusCount:sender.object];
+//}
+//- (void)dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
+/**
+ *  收益信息提示
+ }
+ */
+- (void)earningPrompt {
+    [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
 }
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)waitTimer {
+    if (_indexCode == (self.earningArray.count - 1)) {
+        _indexCode = 0;
+    }
+    [self showNewStatusCount:self.earningArray Image:self.earningImageArray Index:_indexCode];
+//    if (_indexCode == (self.earningArray.count - 1)) {
+//        _indexCode = 0;
+//    }
 }
+- (void)backClick:(UIButton *)btn {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(waitTimer) object:nil];
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 
 
 @end

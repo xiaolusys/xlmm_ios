@@ -12,24 +12,24 @@
 
 #pragma mark 提示可自动消失
 + (void)showSuccess:(NSString *)success {
-    [self showCustomIcon:@"success.png" Title:success ToView:nil];
+    [self showCustomIcon:@"progressSuccess" Title:success ToView:nil];
 }
 + (void)showSuccess:(NSString *)success ToView:(UIView *)view {
-    [self showCustomIcon:@"success.png" Title:success ToView:view];
+    [self showCustomIcon:@"progressSuccess" Title:success ToView:view];
 }
 
 + (void)showError:(NSString *)error {
-    [self showCustomIcon:@"error" Title:error ToView:nil];
+    [self showCustomIcon:@"progressError" Title:error ToView:nil];
 }
 + (void)showError:(NSString *)error ToView:(UIView *)view {
-    [self showCustomIcon:@"error" Title:error ToView:view];
+    [self showCustomIcon:@"progressError" Title:error ToView:view];
 }
 
 + (void)showWarning:(NSString *)warn {
-    [self showCustomIcon:@"warn" Title:warn ToView:nil];
+    [self showCustomIcon:@"progressWarning" Title:warn ToView:nil];
 }
 + (void)showWarning:(NSString *)warn ToView:(UIView *)view {
-    [self showCustomIcon:@"warn" Title:warn ToView:view];
+    [self showCustomIcon:@"progressWarning" Title:warn ToView:view];
 }
 
 + (void)showCustomIcon:(NSString *)iconName Title:(NSString *)title ToView:(UIView *)view {
@@ -37,15 +37,15 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.label.text = title;
     
-    if ([iconName isEqualToString:@"error.png"] || [iconName isEqualToString:@"success.png"]) {
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", iconName]]];
-    }else{
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
-    }
-    
+//    if ([iconName isEqualToString:@"progressError"] || [iconName isEqualToString:@"progressSuccess"]) {
+//        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", iconName]]];
+//    }else{
+//        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
+//    }
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
     hud.mode = MBProgressHUDModeCustomView;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hideAnimated:YES afterDelay:2.f];
+    [hud hideAnimated:YES afterDelay:1.5f];
 }
 
 #pragma mark 文字提示,自动消失,无图

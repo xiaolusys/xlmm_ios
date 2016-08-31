@@ -36,7 +36,9 @@
 }
 
 + (void)requestWithType:(HttpRequestType)type WithURLString:(NSString *)urlString WithParaments:(id)paraments WithSuccess:(requestSuccess)success WithFail:(requestFail)fail Progress:(downloadProgress)progress {
-    
+    if ([urlString isKindOfClass:[NSNull class]] || urlString == nil || [urlString isEqual:@""]) {
+        return ;
+    }
     switch (type) {
         case RequestTypeGET: {
             [[JMHTTPManager shareManager] GET:urlString parameters:paraments progress:^(NSProgress * _Nonnull downloadProgress) {

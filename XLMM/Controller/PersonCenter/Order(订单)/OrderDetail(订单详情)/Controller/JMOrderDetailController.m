@@ -34,6 +34,7 @@
 #import "JMPayShareController.h"
 #import "WXApi.h"
 #import "PersonOrderViewController.h"
+#import "JMGoodsDetailController.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -117,7 +118,6 @@
     
     NSInteger _sectionCount;
     NSInteger _rowCount;
-    
     
 }
 - (JMRefundController *)refundVC {
@@ -412,24 +412,8 @@
         return sectionView;
     }
 }
-- (void)composeSectionView:(JMOrderDetailSectionView *)sectionView Index:(NSInteger)index {
-    NSInteger count = index - 100;
-    
-    JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
-    queryVC.index = count;
-    NSArray *arr = _dataSource[count];
-    NSArray *logisArr = _logisticsArr;
-    queryVC.orderDataSource = arr;
-    queryVC.logisDataSource = logisArr;
-    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
-    if (ligisticsDic == nil) {
-        queryVC.logName = self.orderDetailHeaderView.logisticsStr;
-    }else {
-        queryVC.logName = ligisticsDic[@"name"];
-    }
-    [self.navigationController pushViewController:queryVC animated:YES];
-}
-- (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger section = indexPath.section;
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     queryVC.index = section;
     queryVC.orderDataSource = _dataSource[section];
@@ -445,6 +429,28 @@
         queryVC.logName = ligisticsDic[@"name"];
     }
     [self.navigationController pushViewController:queryVC animated:YES];
+}
+- (void)composeSectionView:(JMOrderDetailSectionView *)sectionView Index:(NSInteger)index {
+    NSInteger count = index - 100;
+    JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
+    queryVC.index = count;
+    NSArray *arr = _dataSource[count];
+    NSArray *logisArr = _logisticsArr;
+    queryVC.orderDataSource = arr;
+    queryVC.logisDataSource = logisArr;
+    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
+    if (ligisticsDic == nil) {
+        queryVC.logName = self.orderDetailHeaderView.logisticsStr;
+    }else {
+        queryVC.logName = ligisticsDic[@"name"];
+    }
+    [self.navigationController pushViewController:queryVC animated:YES];
+}
+- (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    JMOrderGoodsModel *model = _dataSource[section][row];
+    detailVC.goodsID = model.model_id;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 #pragma mark 商品可选状态
 - (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Button:(UIButton *)button Section:(NSInteger)section Row:(NSInteger)row {

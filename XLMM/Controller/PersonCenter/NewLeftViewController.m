@@ -22,6 +22,7 @@
 #import "JMCouponController.h"
 #import "MMClass.h"
 #import "JMGoodsDetailController.h"
+#import "JMHomeRootController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -441,7 +442,6 @@
 - (IBAction)commonProblemBtnAction:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
-        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:common];
         }

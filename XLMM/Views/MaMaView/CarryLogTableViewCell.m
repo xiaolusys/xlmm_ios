@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *desLabel;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *status;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end
 
@@ -54,6 +55,7 @@
             self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
         }
         self.sourceLabel.text = [self dateDeal:carryModel.created];
+        self.timeLabel.hidden = YES;
     }else if(type == 1) {
         //佣金
         [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
@@ -62,16 +64,19 @@
         //点击
         self.photoImageV.image = [UIImage imageNamed:@"mamafan"];
         self.sourceLabel.text = [self dateDeal:carryModel.created];
-        
+        self.timeLabel.hidden = YES;
     }else if(type == 3) {
 //        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
         [self.photoImageV sd_setImageWithURL:[NSURL URLWithString:[carryModel.contributor_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
-        self.sourceLabel.text = [self dateDeal:carryModel.created];
+        self.sourceLabel.text = carryModel.contributor_nick;
     }
 
     self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.carry_value floatValue]];
     self.status.text = carryModel.status_display;
     self.desLabel.text = carryModel.carry_description;
+    self.timeLabel.text = [self dateDeal:carryModel.created];
+    
+    
 }
 
 //将日期去掉－

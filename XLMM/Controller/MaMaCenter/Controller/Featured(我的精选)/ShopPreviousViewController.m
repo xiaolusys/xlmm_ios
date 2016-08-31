@@ -13,7 +13,7 @@
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"
 
-@interface ShopPreviousViewController ()
+@interface ShopPreviousViewController ()<UIWebViewDelegate>
 @property (nonatomic, strong)UIWebView *webView;
 
 @property (nonatomic, copy) NSString *shopShareLink;
@@ -56,7 +56,7 @@
    
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.webView.backgroundColor = [UIColor whiteColor];
-   
+    self.webView.delegate = self;
     self.webView.scalesPageToFit = YES;
 
     [self.view addSubview:self.webView];
@@ -345,10 +345,18 @@
     
     [self createNavigationBarWithTitle:[NSString stringWithFormat:@"%@de精选集", self.shopShareName] selecotr:@selector(backClickAction)];
 
-    
-
-    
 }
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [MBProgressHUD showLoading:@"正在加载中....."];
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [MBProgressHUD hideHUD];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [MBProgressHUD showError:@"加载失败~!"];
+    [self backClickAction];
+}
+
 
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
