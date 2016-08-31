@@ -12,6 +12,7 @@
 #import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "JMMaMaOrderListCell.h"
+#import "JMQueryLogInfoController.h"
 
 
 @interface MaMaOrderListViewController ()
@@ -46,7 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self.tableView.mj_header beginRefreshing];
+//    [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"MaMaOrderListViewController"];
     
 }
@@ -70,6 +71,7 @@
     [self createButton];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)backClickAction {
@@ -80,6 +82,7 @@
     kWeakSelf
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
         [weakSelf loadDate];
     }];
 }
@@ -185,7 +188,7 @@
 }
 #pragma mark -- 请求数据
 - (void)loadDate {
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct", Root_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/rest/v2/mama/ordercarry?carry_type=direct",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self.dataArr removeAllObjects];
@@ -203,7 +206,7 @@
 - (void)loadMore {
     if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
         [self endRefresh];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextPage WithParaments:nil WithSuccess:^(id responseObject) {
@@ -235,9 +238,7 @@
     if (!cell) {
         cell = [[JMMaMaOrderListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    
-   
-    
+
     NSString *key = self.dataArr[indexPath.section];
     NSMutableArray *orderArr = self.dataDic[key];
     MaMaOrderModel *orderM = orderArr[indexPath.row];
@@ -274,6 +275,23 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *key = self.dataArr[indexPath.section];
+    NSMutableArray *orderArr = self.dataDic[key];
+    MaMaOrderModel *orderM = orderArr[indexPath.row];
+    BOOL isComanyCode = [orderM.company_code isKindOfClass:[NSNull class]] || orderM.company_code == nil || [orderM.company_code isEqual:@""];
+    BOOL isPacketId = [orderM.packetid isKindOfClass:[NSNull class]] || orderM.packetid == nil || [orderM.packetid isEqual:@""];
+    if (isComanyCode || isPacketId) {
+        
+    }else {
+        JMQueryLogInfoController *loginfoVC = [[JMQueryLogInfoController alloc] init];
+        loginfoVC.packetId = orderM.packetid;
+        loginfoVC.companyCode = orderM.company_code;
+        [self.navigationController pushViewController:loginfoVC animated:YES];
+    }
+
+}
+
 #pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -150,8 +150,8 @@ static NSString *cellIdentifier = @"carryLogCell";
     [self.navigationController pushViewController:earningsRankVC animated:YES];
 }
 - (void)createRequestURL {
-    NSArray *urlBefroe = @[@"/rest/v2/mama/carry", @"/rest/v2/mama/ordercarry", @"/rest/v2/mama/clickcarry",
-                           @"/rest/v2/mama/awardcarry"];
+    NSArray *urlBefroe = @[@"/rest/v2/mama/carry", @"/rest/v2/mama/awardcarry", @"/rest/v2/mama/clickcarry",
+                           @"/rest/v2/mama/ordercarry"];
     for (int i = 0; i < 4; i++) {
         NSString *url = [NSString stringWithFormat:@"%@%@", Root_URL, urlBefroe[i]];
         [self.urlArr addObject:url];
@@ -200,7 +200,7 @@ static NSString *cellIdentifier = @"carryLogCell";
     btnlineView.alpha = 0.3;
     [self.btnView addSubview:btnlineView];
     
-    NSArray *nameArr = @[@"全部", @"佣金", @"返现", @"奖金"];
+    NSArray *nameArr = @[@"全部", @"奖金", @"返现", @"佣金"];
     [self.scrollAndBtnView addSubview:self.btnView];
     for (int i = 0; i < 4; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -241,7 +241,7 @@ static NSString *cellIdentifier = @"carryLogCell";
             NSString *nextStr = [self.nextdic objectForKey:number];
             if ([nextStr isKindOfClass:[NSNull class]] || nextStr == nil || [nextStr isEqual:@""]) {
                 [table.mj_footer endRefreshingWithNoMoreData];
-                [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+//                [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
                 return;
             }
             [self loadMore];

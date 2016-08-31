@@ -17,7 +17,8 @@
 #import "WebViewController.h"
 #import "JMGoodsDetailController.h"
 #import "JMCategoryListController.h"
-#import "CollectionModel.h"
+#import "JMRootGoodsModel.h"
+#import "JMRootGoodsModel.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -45,7 +46,10 @@ static NSString * ksimpleCell = @"simpleCell";
 
 @property (nonatomic, strong) NSMutableArray *childArray;
 @property (nonatomic, strong) NSMutableArray *womenArray;
-
+//下拉的标志
+@property (nonatomic) BOOL isPullDown;
+//上拉的标志
+@property (nonatomic) BOOL isLoadMore;
 
 @end
 
@@ -66,19 +70,6 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger )type{
-//    if(TYPE_JUMP_CHILD == type){
-//        
-//        self.urlString = kCHILD_LIST_URL;
-//        self.orderUrlString = kCHILD_LIST_ORDER_URL;
-//        self.childClothing = YES;
-//
-//    }
-//    else{
-//        
-//        self.urlString = kLADY_LIST_URL;
-//        self.orderUrlString = kLADY_LIST_ORDER_URL;
-//        self.childClothing = NO;
-//    }
     
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -89,25 +80,12 @@ static NSString * ksimpleCell = @"simpleCell";
 #pragma mark  -----init----
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     self.navigationController.navigationBarHidden = NO;
-//    if(self.childClothing){
-//        [MobClick beginLogPageView:@"child"];
-//    }
-//    else{
-//        [MobClick beginLogPageView:@"women"];
-//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-//    if(self.childClothing){
-//        [MobClick endLogPageView:@"child"];
-//    }
-//    else{
-//        [MobClick endLogPageView:@"women"];
-//    }
 }
 
 
@@ -122,10 +100,39 @@ static NSString * ksimpleCell = @"simpleCell";
 
 }
 
+#pragma mrak 刷新界面
+- (void)createPullHeaderRefresh {
+    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.childCollectionView.mj_header = header;
+}
+- (void)refreshView {
+    _isPullDown = YES;
+    [self.childCollectionView.mj_footer resetNoMoreData];
+    [self downloadData];
+}
 
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.childCollectionView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.childCollectionView.mj_footer endRefreshing];
+    }
+}
 
 - (void)reloadGoods
 {
+    [self.childCollectionView.mj_footer resetNoMoreData];
     NSLog(@"CHILD vc reload");
     if(isOrder){
         [self downloadOrderData];
@@ -135,22 +142,21 @@ static NSString * ksimpleCell = @"simpleCell";
     }
 }
 
-- (void)loadMore
-{
+- (void)loadMore {
     
     NSLog(@"lodeMore url = %@", nextUrl);
     if ([nextUrl isKindOfClass:[NSNull class]] || nextUrl == nil || [nextUrl isEqual:@""]) {
+        [self endRefresh];
         [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
-        [SVProgressHUD setMinimumDismissTimeInterval:1];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:nextUrl WithParaments:nil WithSuccess:^(id responseObject) {
-        [self stopFooterRefresh];
+//        [self stopFooterRefresh];
         if (!responseObject)return ;
         [self fetchedMorePageData:responseObject];
+        [self endRefresh];
     } WithFail:^(NSError *error) {
-        
+        [self endRefresh];
     } Progress:^(float progress) {
         
     }];
@@ -172,7 +178,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSMutableArray *numArray = [[NSMutableArray alloc] init];
     
     for (NSDictionary *ladyInfo in array) {
-        CollectionModel *model = [[CollectionModel alloc] initWithDiction:ladyInfo];
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:ladyInfo];
         NSIndexPath *index ;
         if(isOrder){
              index = [NSIndexPath indexPathForRow:_orderDataArray.count inSection:0];
@@ -196,100 +202,44 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSLog(@"Child vc viewDidLoad");
-
 //    [self itemDataSource];
 //    [self craeteRight];
-    // Do any additional setup after loading the view from its nib.
     isOrder = NO;
     _isFirst = YES;
     _isupdate = YES;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
     self.orderDataArray = [[NSMutableArray alloc] init];
-
     [self.view addSubview:[[UIView alloc] init]];
     [self setLayout];
     self.topdistant.constant = 64;
     self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
-//    if(self.childClothing){
-//        [self createNavigationBarWithTitle:@"精选童装"  selector:@selector(backClicked:)];
-//    }
-//    else{
-//        [self createNavigationBarWithTitle:@"精选女装"  selector:@selector(backClicked:)];
-//    }
-    [self createNavigationBarWithTitle:self.nameTitle selector:@selector(backClicked:)];
-    
+    [self createNavigationBarWithTitle:self.titleString selector:@selector(backClicked:)];
   //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];
-    
-   
     self.childCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
     [self.view addSubview:self.containerView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     
+//    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadGoods)];
+//    header.lastUpdatedTimeLabel.hidden = YES;
+//    self.childCollectionView.mj_header = header;
+//    //添加上拉加载
+//    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
+//    }];
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
     
-    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadGoods)];
-    header.lastUpdatedTimeLabel.hidden = YES;
-    self.childCollectionView.mj_header = header;
-    
-    //添加上拉加载
-    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
-    }];
-    
-    //[self.childCollectionView.mj_header beginRefreshing];
-
-    [self reloadGoods];
+    [self.childCollectionView.mj_header beginRefreshing];
+//    [self reloadGoods];
     NSLog(@"Child vc viewDidLoad end");
     [self createButton];
     
 }
-- (void)itemDataSource {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path=[paths objectAtIndex:0];
-    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
-    //==JsonObject
-    NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    for (NSDictionary *dic in arr) {
-        if ([dic[@"cid"] integerValue] == 1) {
-            // 童装
-            self.childArray = dic[@"childs"];
-        }else if ([dic[@"cid"] integerValue] == 2) {
-            // 女装
-            self.womenArray = dic[@"childs"];
-        }else {}
-        
-    }
-    
-    
-}
-- (void)craeteRight {
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setTitle:@"分类" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16.];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
-- (void)rightClicked:(UIButton *)button {
-    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
-    if(self.childClothing) {
-        catoryVC.titleString = @"童装专区";
-        catoryVC.dataSource = self.childArray;
-    }else {
-        catoryVC.titleString = @"女装专区";
-        catoryVC.dataSource = self.womenArray;
-    }
-    [self.navigationController pushViewController:catoryVC animated:YES];
-}
+
 
 - (void)saveCurrentState{
 }
@@ -323,14 +273,18 @@ static NSString * ksimpleCell = @"simpleCell";
 //    }
     
     //[self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
-    [SVProgressHUD show];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self stopHeaderRefresh];
-        [SVProgressHUD dismiss];
+//    [SVProgressHUD show];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,self.cid];
+    
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//        [self stopHeaderRefresh];
+//        [SVProgressHUD dismiss];
         if (!responseObject)return ;
         [self fatchedSuggestListData:responseObject];
+        [self endRefresh];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+//        [SVProgressHUD dismiss];
+        [self endRefresh];
     } Progress:^(float progress) {
         
     }];
@@ -352,7 +306,7 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     [self.dataArray removeAllObjects];
     for (NSDictionary *ladyInfo in array) {
-        CollectionModel *model = [[CollectionModel alloc] initWithDiction:ladyInfo];
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:ladyInfo];
         [_dataArray addObject:model];
     }
     NSLog(@"_dataArray count %lu",(unsigned long)_dataArray.count);
@@ -360,15 +314,14 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)downloadOrderData{
-    [SVProgressHUD show];
-//    [self downLoadWithURLString:self.orderUrlString andSelector:@selector(fatchedOrderListData:)];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.orderUrlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
-        [self stopHeaderRefresh];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?order_by=price&cid=%@&page=1&page_size=10",Root_URL,self.cid];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//        [self stopHeaderRefresh];
         if (!responseObject)return ;
         [self fatchedOrderListData:responseObject];
+        [self endRefresh];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [self endRefresh];
     } Progress:^(float progress) {
         
     }];
@@ -388,14 +341,10 @@ static NSString * ksimpleCell = @"simpleCell";
     nextUrl = [json objectForKey:@"next"];
     [self.orderDataArray removeAllObjects];
     for (NSDictionary *ladyInfo in array) {
-        CollectionModel *model = [[CollectionModel alloc] initWithDiction:ladyInfo];
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:ladyInfo];
         [self.orderDataArray addObject:model];
         
     }
-    //[activityIndicator removeFromSuperview];
-    //activityIndicator = nil;
-    
-
     [self.childCollectionView reloadData];
 }
 
@@ -454,20 +403,14 @@ static NSString * ksimpleCell = @"simpleCell";
     
     if (isOrder) {
         if (_orderDataArray.count > indexPath.row) {
-            CollectionModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-            
-            [cell fillDataWithCollectionModel:model];
+            JMRootGoodsModel *model = [_orderDataArray objectAtIndex:indexPath.row];
+            [cell fillData:model];
         }
-        
-       
     }else{
-        //NSLog(@"collectionView cell _dataArray.count=%lu indexPath.row=%ld", (unsigned long)_dataArray.count, (long)indexPath.row);
         if (_dataArray.count > indexPath.row) {
-            CollectionModel *model = [_dataArray objectAtIndex:indexPath.row];
-            
-            [cell fillDataWithCollectionModel:model];
+            JMRootGoodsModel *model = [_dataArray objectAtIndex:indexPath.row];
+            [cell fillData:model];
         }
-       
     }
     return cell;
 }
@@ -476,7 +419,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
     _childDic = [NSMutableDictionary dictionary];
 
-    CollectionModel *model = nil;
+    JMRootGoodsModel *model = nil;
     if (isOrder) {
         if (_orderDataArray.count == 0) {
             return;
@@ -487,7 +430,6 @@ static NSString * ksimpleCell = @"simpleCell";
         if (_dataArray.count == 0) {
             return;
         }
-        
         model = [_dataArray objectAtIndex:indexPath.row];
     }
     
@@ -497,16 +439,10 @@ static NSString * ksimpleCell = @"simpleCell";
     
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     
-    detailVC.goodsID = model.model_id;
+    detailVC.goodsID = model.goodsID;
     
     [self.navigationController pushViewController:detailVC animated:YES];
-    
 
-//    WebViewController *webView = [[WebViewController alloc] init];
-//    webView.webDiction = _childDic;
-//    webView.isShowNavBar =false;
-//    webView.isShowRightShareBtn=false;
-//    [self.navigationController pushViewController:webView animated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -517,38 +453,10 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    if (scrollView.contentOffset.y <240 && scrollView.contentOffset.y > -400) {
-//        return;
-//    }
-//    CGPoint point = scrollView.contentOffset;
-//    CGFloat temp = oldScrollViewTop - point.y;
-//
-//    NSLog(@"contentSize.height=%f y=%fl",scrollView.contentSize.height, scrollView.contentOffset.y );
     if (scrollView.contentSize.height - scrollView.contentOffset.y < 2 * SCREENHEIGHT && _isupdate) {
             [self loadMore];
             _isupdate = NO;
     }
-//
-//    CGFloat marine = 5;
-//    if (temp > marine) {
-//        if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-//            [self.delegate showNavigation];
-//        }
-//        
-//        
-//    } else if (temp < -5){
-//        if (self.delegate && [self.delegate performSelector:@selector(hiddenNavigation)]) {
-//            [self.delegate hiddenNavigation];
-//        }
-//    }
-//    if (temp > marine ) {
-//        oldScrollViewTop = point.y;
-//        return;
-//        
-//    }
-//    if (temp < 0 - marine) {
-//        oldScrollViewTop = point.y;
-//    }
     if (scrollView.isDragging) {
         if ((scrollView.contentOffset.y - _contentY) > 5.0f) {
             //隐藏
@@ -564,19 +472,11 @@ static NSString * ksimpleCell = @"simpleCell";
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-   
         return UIEdgeInsetsMake(0, 5, 50, 5);
-  
 }
-
-
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
 }
-
-
-
-
 - (IBAction)btnClicked:(UIButton *)sender {
     NSLog(@"btnClicked %ld", (long)self.childCollectionView.visibleCells.count );
     
@@ -592,40 +492,27 @@ static NSString * ksimpleCell = @"simpleCell";
     if (sender.tag == 1) {
         isOrder = NO;
         
-        
         //[activityIndicator removeFromSuperview];
         //activityIndicator = nil;
-        [self.childCollectionView reloadData];
+//        [self.childCollectionView reloadData];
         [self.jiageButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         //[self downloadData];
-        
-        [self.childCollectionView reloadData];
+        [self.childCollectionView.mj_header beginRefreshing];
+//        [self.childCollectionView reloadData];
         
     } else if (sender.tag == 2){
         isOrder = YES;
-        
+        [self.childCollectionView.mj_header beginRefreshing];
         if(self.orderDataArray.count > 0){
            [self.childCollectionView reloadData];
         }
         else{
             [self downloadOrderData];
         }
-
         
         [self.tuijianButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.jiageButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-        
-
-//        if (activityIndicator == nil) {
-//            activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//        }
-//        
-//        activityIndicator.backgroundColor = [UIColor clearColor];
-//        [activityIndicator startAnimating];
-//        activityIndicator.center = CGPointMake(SCREENWIDTH/2, SCREENWIDTH/2 - 80);
-//        [self.childCollectionView addSubview:activityIndicator];
-        
         
     }
 
@@ -656,15 +543,7 @@ static NSString * ksimpleCell = @"simpleCell";
     self.topButton.hidden = YES;
 }
 
-//- (void)hiddenBackTopBtn {
-//    [UIView animateWithDuration:0.3 animations:^{
-//        self.topButton.hidden = YES;
-//    }];
-//}
-//
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(hiddenBackTopBtn) userInfo:nil repeats:NO];
-//}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -677,6 +556,49 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+- (void)itemDataSource {
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path=[paths objectAtIndex:0];
+    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+    //==Json数据
+    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
+    //==JsonObject
+    NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    
+    for (NSDictionary *dic in arr) {
+        if ([dic[@"cid"] integerValue] == 1) {
+            // 童装
+            self.childArray = dic[@"childs"];
+        }else if ([dic[@"cid"] integerValue] == 2) {
+            // 女装
+            self.womenArray = dic[@"childs"];
+        }else {}
+        
+    }
+    
+    
+}
+- (void)craeteRight {
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitle:@"分类" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16.];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+- (void)rightClicked:(UIButton *)button {
+    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
+    if(self.childClothing) {
+        catoryVC.titleString = @"童装专区";
+        catoryVC.dataSource = self.childArray;
+    }else {
+        catoryVC.titleString = @"女装专区";
+        catoryVC.dataSource = self.womenArray;
+    }
+    [self.navigationController pushViewController:catoryVC animated:YES];
+}
+
 
 @end
 
