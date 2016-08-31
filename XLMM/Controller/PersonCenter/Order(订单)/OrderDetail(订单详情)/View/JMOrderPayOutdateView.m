@@ -261,7 +261,7 @@
     if (timeString == nil) {
         return nil;
     }
-    if ([timeString class] == [NSNull class]) {
+    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
         return nil;
     }
     NSMutableString *newString = [NSMutableString stringWithString:timeString];

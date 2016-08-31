@@ -34,6 +34,8 @@
 #import "ChildViewController.h"
 #import "JMMaMaPersonCenterController.h"
 #import "MJPullGifHeader.h"
+#import "JMClassifyListController.h"
+#import "JMHomeActiveModel.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -57,7 +59,6 @@
 @property (nonatomic, strong) JMHomeYesterdayController *yesterdayVC;
 @property (nonatomic, strong) JMHomeCollectionController *todayVC;
 @property (nonatomic, strong) JMHomeTomorrowController *tomorrowVC;
-
 /**
  *  返回顶部按钮,购物车视图,导航视图,弹出视图
  */
@@ -120,13 +121,33 @@
     [self loadCatrsNumData];
     [MobClick beginLogPageView:@"main"];
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"main"];
+}
 - (void)rootViewWillEnterForeground:(NSNotification *)notification {
     [self autoUpdateVersion];
     if (self.isPopUpdataView == YES) {
         [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
     }else {
-        
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
+    NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:_timeArray[1]]]; // 结束时间
+    NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+    int timer = time;
+    NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
+    if ([timeStr isEqual:@"0"]) {
+        [self.tableView.mj_header beginRefreshing];
+    }
+}
+-(NSString*)spaceFormatTimeString:(NSString*)timeString{
+    NSMutableString *ms = [NSMutableString stringWithString:timeString];
+    NSRange range = {10,1};
+    [ms replaceCharactersInRange:range withString:@" "];
+    return ms;
 }
 - (void)viewDidAppear:(BOOL)animated {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -165,14 +186,14 @@
     [self createTabelView];                            // 创建tableView
     [self createCartsView];                            // 创建购物车
     [self createTopButton];                            // 创建返回顶部按钮
-    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
+//    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
     [self createPullHeaderRefresh];                    // 下拉刷新,重新获取商品展示数据
     [self.tableView.mj_header beginRefreshing];        // 刚进入主页刷新数据
     [self autoUpdateVersion];                          // 版本自动升级
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开
+    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开5
     if (_isFirstOpenApp) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
@@ -261,6 +282,7 @@
 }
 - (void)refreshView {
     _isPullDown = YES;
+    [self loadActiveData];
     for (int i = 0; i < _urlArray.count; i++) {
         [self loadData:_urlArray[i]];
     }
@@ -332,6 +354,9 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:self WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        [_topImageArray removeAllObjects];
+        [_categorysArray removeAllObjects];
+        [self.activeArray removeAllObjects];
         [self fetchActive:responseObject];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
@@ -344,11 +369,12 @@
     }
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
-        [_categorysArray addObject:dicts[@"cat_img"]];
+        [_categorysArray addObject:dicts];
     }
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
-        [self.activeArray addObject:dict];
+        JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];
+        [self.activeArray addObject:model];
     }
     [self.goodsScrollView jm_reloadData];
     [self.tableView reloadData];
@@ -368,9 +394,15 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return SCREENWIDTH * 0.32 + 10;
+        if (_categorysArray.count <= 4) {
+//            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
+            return SCREENWIDTH * 0.30 + 15;
+        }else {
+            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
+        }
     }else if (indexPath.section == 1) {
-        return SCREENWIDTH / 2 + 10;
+        JMHomeActiveModel *model = self.activeArray[indexPath.row];
+        return model.cellHeight;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {
@@ -393,7 +425,7 @@
             cell = [[JMHomeActiveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeActiveCellIdentifier];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.activeDic = _activeArray[indexPath.row];
+        cell.model = self.activeArray[indexPath.row];
         return cell;
     }else {
         JMHomeGoodsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -423,21 +455,18 @@
     }else {}
 }
 #pragma mark 分类点击事件
-- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView TapClick:(NSInteger)index {
-    ChildViewController *childVC = [[ChildViewController alloc] initWithNibName:@"ChildViewController" bundle:[NSBundle mainBundle]];
-    if (index == 100) {
-        [MobClick event:@"child_click"];
-        childVC.urlString = kCHILD_LIST_URL;
-        childVC.orderUrlString = kCHILD_LIST_ORDER_URL;
-        childVC.childClothing = YES;
-    }else if (index == 101) {
-        [MobClick event:@"women_click"];
-        childVC.urlString = kLADY_LIST_URL;
-        childVC.orderUrlString = kLADY_LIST_ORDER_URL;
-        childVC.childClothing = NO;
-    }else {
+- (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
+    ChildViewController *categoryVC = [[ChildViewController alloc] init];
+    NSString *parStr = paramerString[@"cat_link"];
+    if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
+        NSLog(@"jump cat_link=%@ wrong", parStr);
+        return;
     }
-    [self.navigationController pushViewController:childVC animated:YES];
+    NSArray *array = [parStr componentsSeparatedByString:@"="];
+    NSString *string = array[1];
+    categoryVC.titleString = paramerString[@"name"];
+    categoryVC.cid = string;
+    [self.navigationController pushViewController:categoryVC animated:YES];
 }
 #pragma mark 活动点击事件(跳转webView)
 - (void)skipWebView:(NSString *)appLink activeDic:(NSDictionary *)dic {
@@ -565,7 +594,6 @@
             make.width.mas_equalTo(@44);
         }];
     }
-    
 }
 - (void)cartViewUpData:(NSDictionary *)dic {
     kWeakSelf
@@ -608,6 +636,7 @@
     NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
     NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
     if ([d second] < 0) {
+        self.cartsCountLabel.text = @"";
         self.cartsCountLabel.hidden = YES;
         self.cartsLabel.hidden = YES;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -630,8 +659,7 @@
     
     UIButton *collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [collectionView addSubview:collectionButton];
-    [collectionButton setImage:[UIImage imageNamed:@"MyCollection_Nomal"] forState:UIControlStateNormal];
-    [collectionButton setImage:[UIImage imageNamed:@"MyCollection_Selected"] forState:UIControlStateHighlighted];
+    [collectionButton setImage:[UIImage imageNamed:@"MyCollectionOrigin_Nomal"] forState:UIControlStateNormal];
     collectionButton.frame = CGRectMake(0, 0, 44, 44);
     collectionButton.layer.cornerRadius = 22;
     [collectionButton addTarget:self action:@selector(gotoCollection:) forControlEvents:UIControlEventTouchUpInside];
@@ -651,7 +679,7 @@
     self.cartView.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
     [self.cartView addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
-    iconView.image = [UIImage imageNamed:@"gouwucheicon2.png"];
+    iconView.image = [UIImage imageNamed:@"homeGoodsDetailCarts"];
     iconView.userInteractionEnabled = NO;
     [self.cartView addSubview:iconView];
     self.cartsLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, -6, 16, 16)];
@@ -757,7 +785,7 @@
                 if (isPicked == 0) {
                     [self returnPopView];
                 }else {
-                    //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+//                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
                 [SVProgressHUD showErrorWithStatus:@"请登录"];

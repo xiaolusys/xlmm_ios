@@ -36,6 +36,7 @@
     kWeakSelf
     self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
+        [self.collection.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];
     }];
 }
@@ -73,8 +74,9 @@
     }];
 }
 - (void)loadMore {
-    if ([self.nextPageUrlString class] == [NSNull class]) {
-        [SVProgressHUD showInfoWithStatus:@"没有更多数据....."];
+    if ([self.nextPageUrlString isKindOfClass:[NSNull class]] || self.nextPageUrlString == nil || [self.nextPageUrlString isEqual:@""]) {
+        [self endRefresh];
+        [self.collection.mj_footer endRefreshingWithNoMoreData];
         [self endRefresh];
         return;
     }

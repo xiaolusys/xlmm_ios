@@ -32,9 +32,10 @@
 
 
 - (void)createUI {
-    self.onelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
+    self.onelabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 100, 60)];
     [self.contentView addSubview:self.onelabel];
-    self.onelabel.textAlignment = NSTextAlignmentCenter;
+    self.onelabel.numberOfLines = 0;
+    self.onelabel.textAlignment = NSTextAlignmentLeft;
     self.onelabel.font = [UIFont systemFontOfSize:12.];
     self.onelabel.text = @"奖励项目";
     

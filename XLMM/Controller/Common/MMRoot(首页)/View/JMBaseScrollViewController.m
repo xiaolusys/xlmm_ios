@@ -33,8 +33,8 @@
     
     
     
-
-
+    
+    
 }
 
 - (void)scrollMessage:(NSNotification *)notification {

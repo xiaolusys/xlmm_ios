@@ -66,6 +66,7 @@
     kWeakSelf
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];
     }];
 }
@@ -102,9 +103,9 @@
     }];
 }
 - (void)loadMore {
-    if ([_nextPage class] == [NSNull class]) {
+    if ([_nextPage isKindOfClass:[NSNull class]] || _nextPage == nil || [_nextPage isEqual:@""]) {
         [self endRefresh];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPage WithParaments:nil WithSuccess:^(id responseObject) {

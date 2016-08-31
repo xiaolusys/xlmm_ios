@@ -21,7 +21,6 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "iPhone4S@2x.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -33,6 +32,13 @@
       "filename" : "5C@2x.png",
       "minimum-system-version" : "7.0",
       "orientation" : "portrait",
+      "scale" : "2x"
+    },
+    {
+      "orientation" : "portrait",
+      "idiom" : "iphone",
+      "filename" : "iPhone4S@2x.png",
+      "extent" : "full-screen",
       "scale" : "2x"
     }
   ],

@@ -432,7 +432,6 @@
 }
 - (void)composeSectionView:(JMOrderDetailSectionView *)sectionView Index:(NSInteger)index {
     NSInteger count = index - 100;
-    
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     queryVC.index = count;
     NSArray *arr = _dataSource[count];

@@ -41,7 +41,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 - (void)setDetailContentDic:(NSDictionary *)detailContentDic {
     _detailContentDic = detailContentDic;
     self.nameTitle.text = detailContentDic[@"name"];
-    self.PriceLabel.text = [NSString stringWithFormat:@"%.2f",[detailContentDic[@"lowest_agent_price"] floatValue]];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[detailContentDic[@"lowest_agent_price"] floatValue]];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[detailContentDic[@"lowest_std_sale_price"] floatValue]];
 //    self.timerLabel.text = detailContentDic[@"offshelf_time"];
 
@@ -65,7 +65,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
     NSString *endTime = @"";
     NSString *timeString = detailContentDic[@"offshelf_time"];
-    if ([timeString isKindOfClass:[NSNull class]]) {
+    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
         self.timerLabel.text = @"即将上架";
     }else {
         endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
@@ -84,10 +84,14 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
 }
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
+    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
+        return nil;
+    }else {
+        NSMutableString *ms = [NSMutableString stringWithString:timeString];
+        NSRange range = {10,1};
+        [ms replaceCharactersInRange:range withString:@" "];
+        return ms;
+    }
 }
 - (void)setCustomInfoDic:(NSDictionary *)customInfoDic {
     _customInfoDic = customInfoDic;

@@ -42,18 +42,10 @@
     
     
 }
-//- (NSMutableArray *)dataSource {
-//    if (_dataSource) {
-//        _dataSource = [NSMutableArray array];
-//    }
-//    return _dataSource;
-//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick:)];
     self.view.backgroundColor = [UIColor countLabelColor];
-
-//    self.dataSource = [NSMutableArray arrayWithObjects:@"0",@"0",@"0", nil];
     
     _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"已过期",@"已使用", nil];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
@@ -66,7 +58,6 @@
     NSArray *countArr = @[@"0",@"3",@"1"];
     for (int i = 0; i < countArr.count; i++) {
         [self loadData:countArr[i]];
-        
     }
 }
 - (void)loadData:(NSString *)statusCount {
@@ -121,18 +112,6 @@
     [self.view addSubview:self.segmentedControl];
 }
 - (void)createSegement {
-    
-//    [self addObserver:self forKeyPath:@"_titleArr" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-//    NSArray *tArr = @[@"未使用",@"已过期",@"已使用"];
-//    NSMutableArray *titleArr = [NSMutableArray array];
-//    for (int i = 0; i < self.dataSource.count; i++) {
-//        NSArray *arr = self.dataSource[i];
-//        [titleArr addObject:[NSString stringWithFormat:@"%@(%ld)",tArr[i],arr.count]];
-//    }
-//    NSArray *titleArray = [NSArray arrayWithArray:titleArr];
-//    _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"已过期",@"已使用", nil];
-    
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 104, SCREENWIDTH, SCREENHEIGHT)];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -166,16 +145,6 @@
     
     [SVProgressHUD dismiss];
 }
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-//    if ([keyPath isEqualToString:@"_titleArr"]) {
-//        _titleArr = change[@"new"];
-//        NSLog(@"%@,%@",change[@"new"],change[@"old"]);
-////        self.segmentedControl.sectionTitles = change[@"new"];
-//    }
-//}
-//- (void)dealloc {
-//    [self removeObserver:self forKeyPath:@"_titleArr"];
-//}
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
 }

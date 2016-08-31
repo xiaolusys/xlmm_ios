@@ -34,6 +34,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
     [super viewDidLoad];
     [self createCollectionView];
     [self createPullFooterRefresh];
+    
 }
 #pragma mrak 刷新界面
 - (void)createPullFooterRefresh {
@@ -53,6 +54,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
     _dataDict = dataDict;
     [self.dataSource removeAllObjects];
     [self fetchData:dataDict];
+    [self.collectionView.mj_footer resetNoMoreData];
 }
 - (void)fetchData:(NSDictionary *)goodsDic {
     _nextPageUrl = goodsDic[@"next"];
@@ -65,12 +67,14 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
         [self.dataSource addObject:model];
     }
     [self.collectionView reloadData];
+    
 }
 - (void)loadMore
 {
-    if ([_nextPageUrl class] == [NSNull class]) {
+    if ([_nextPageUrl isKindOfClass:[NSNull class]] || _nextPageUrl == nil || [_nextPageUrl isEqual:@""]) {
         [self endRefresh];
-        [MBProgressHUD showMessage:@"加载完成,没有更多数据"];
+        [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+//        [MBProgressHUD showMessage:@"加载完成,没有更多数据"];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPageUrl WithParaments:nil WithSuccess:^(id responseObject) {
@@ -163,6 +167,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 
 @end
 

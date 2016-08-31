@@ -12,9 +12,11 @@
 @interface ChildViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>{
 }
 
+
 @property (nonatomic, assign) id<MMNavigationDelegate>delegate;
 @property (nonatomic, assign, getter=isChildClothing) BOOL childClothing;
 @property (assign, nonatomic) BOOL isRoot;
+@property (copy, nonatomic) NSString *nameTitle;
 @property (copy, nonatomic) NSString *urlString;
 @property (copy, nonatomic) NSString *orderUrlString;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topdistant;
@@ -23,6 +25,11 @@
 - (IBAction)btnClicked:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *jiageButton;
 @property (weak, nonatomic) IBOutlet UIButton *tuijianButton;
+
+@property (nonatomic, copy) NSString *titleString;
+
+@property (nonatomic, copy) NSString *cid;
+
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger )type;
 @end

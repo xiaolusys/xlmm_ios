@@ -12,8 +12,7 @@
 #import "JMProductSelectionListModel.h"
 #import "JMProductSelectListCell.h"
 #import "JMGoodsDetailController.h"
-
-
+#import "JMPopMenuView.h"
 
 #define HeadViewHeight 35
 
@@ -44,7 +43,7 @@
 @property (nonatomic, strong) UILabel *numberLabel;
 
 
-@property (nonatomic, copy) NSString *numbersOfSelected;
+//@property (nonatomic, copy) NSString *numbersOfSelected;
 /**
  *  下拉的标志
  */
@@ -69,19 +68,11 @@
     }
     return _dataArr;
 }
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hidePopMenuView:) name:@"hideSelectedPopView" object:nil];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
-    
-    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    
-    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-
-    self.numberLabel.text = self.numbersOfSelected;
-    
     [MobClick beginLogPageView:@"ProductSelectionListViewController"];
 
 }
@@ -97,6 +88,12 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"选品上架" selecotr:@selector(backClickAction)];
+    
+    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+//    self.numberLabel.text = self.numbersOfSelected;
+    [self numbersOfSelected];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, HeadViewHeight, SCREENWIDTH, SCREENHEIGHT - HeadViewHeight) style:UITableViewStylePlain];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -166,19 +163,31 @@
     
 }
 
-- (NSString *)numbersOfSelected{
+- (void)numbersOfSelected{
     NSString *url = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=1", Root_URL];
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-    if(data != nil){
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSString *string = [NSString stringWithFormat:@"%@", [[[dic objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
-        NSLog(@"count = %@", string);
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) {
+            return;
+        }else {
+            NSString *string = [NSString stringWithFormat:@"%@", [[[responseObject objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
+            self.numberLabel.text = string;
+        }
+    } WithFail:^(NSError *error) {
+    
+    } Progress:^(float progress) {
         
-        return string;
-    }
-    else{
-        return nil;
-    }
+    }];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//    if(data != nil){
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//        NSString *string = [NSString stringWithFormat:@"%@", [[[dic objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
+//        NSLog(@"count = %@", string);
+//        
+//        return string;
+//    }
+//    else{
+//        return nil;
+//    }
     
 }
 
@@ -193,11 +202,14 @@
     [self.allButton setTitle:@"全部" forState:UIControlStateNormal];
     self.allButton.frame = CGRectMake(0, 0, width, height);
     [self.headView addSubview:self.allButton];
+//    [self.allButton setImage:[UIImage imageNamed:@"downarrowicon"] forState:UIControlStateNormal];
+//    [self.allButton setImage:[UIImage imageNamed:@"uparrowicon"] forState:UIControlStateSelected];
+//    self.allButton.selected = NO;
     
     self.selectImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2 +15, 12, 12, 12)];
     self.selectImageView.backgroundColor = [UIColor clearColor];
     
-    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon.png"];
+    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
     
     [self.allButton addSubview:self.selectImageView];
     
@@ -223,7 +235,7 @@
     [self.orderByPriceButton addTarget:self action:@selector(yongjinorder:) forControlEvents:UIControlEventTouchUpInside];
     [self.orderBySaleButon addTarget:self action:@selector(xiangliangorder:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self createSeletedView];
+//    [self createSeletedView];
     
 }
 
@@ -238,8 +250,41 @@
 }
 
 - (void)selectedClicked:(UIButton *)button{
-    self.selectedView.hidden = NO;
-    self.selectImageView.image = [UIImage imageNamed:@"uparrowicon.png"];
+    self.selectImageView.image = [UIImage imageNamed:@"uparrowicon"];
+    CGFloat width = 100;
+    CGFloat height = 200;
+    CGFloat originX = 10;
+    CGFloat originY = 110;
+    CGPoint point = CGPointMake(0.5, 0);
+    [JMPopMenuView configCustomPopMenuWithFrame:CGRectMake(originX, originY, width, height) ImageArr:nil TitleArr:@[@"全部",@"女装",@"童装",@"食品",@"箱包"] AnchorPoint:point selectedRowIndex:^(NSInteger index) {
+        self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+        switch (index) {
+            case 0:
+                [self downloadAlllist];
+                break;
+            case 1:
+                [self downloadLadylist];
+                break;
+            case 2:
+                [self downloadChildliat];
+                break;
+            case 3:
+                
+                break;
+            case 4:
+                
+                break;
+                
+            default:
+                break;
+        }
+    } Animation:YES ShowTime:0.3 hideTime:0.3];
+    
+    
+}
+- (void)hidePopMenuView:(NSNotification *)sender {
+    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+    [JMPopMenuView hideView];
 }
 
 - (void)createSeletedView{
@@ -248,7 +293,6 @@
     CGFloat originX = SCREENWIDTH/6 - 30;
     CGFloat originY = 90;
     
-
     self.selectedView = [[UIView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
     self.backImageView = [[UIImageView alloc ] initWithFrame:self.selectedView.bounds];
     self.backImageView.image = [UIImage imageNamed:@"selectedImageView.png"];
@@ -313,6 +357,7 @@
 - (void)createPullHeaderRefresh {
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
         [self loadDataSource];
     }];
 }
@@ -366,9 +411,9 @@
     }];
 }
 - (void)loadMore {
-    if ([self.nextUrl class] == [NSNull class]) {
+    if ([self.nextUrl isKindOfClass:[NSNull class]] || self.nextUrl == nil || [self.nextUrl isEqual:@""]) {
         [self endRefresh];
-        [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextUrl WithParaments:nil WithSuccess:^(id responseObject) {
@@ -486,7 +531,8 @@
             //修改数据源中的数据
             selectList.listModel.in_customer_shop = @0;
             
-            self.numberLabel.text = self.numbersOfSelected;
+//            self.numberLabel.text = self.numbersOfSelected;
+            [self numbersOfSelected];
         } WithFail:^(NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
         } Progress:^(float progress) {
@@ -509,7 +555,8 @@
             //修改数据源中的数据
             selectList.listModel.in_customer_shop = @1;
             
-            self.numberLabel.text = self.numbersOfSelected;
+//            self.numberLabel.text = self.numbersOfSelected;
+            [self numbersOfSelected];
         } WithFail:^(NSError *error) {
             NSLog(@"上下架－－Error: %@", error);
         } Progress:^(float progress) {

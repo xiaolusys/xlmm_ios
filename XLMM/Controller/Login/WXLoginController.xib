@@ -153,6 +153,12 @@
                         <action selector="skipClicked:" destination="-1" eventType="touchUpInside" id="kBh-yX-E5i"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="为了更好的为您服务,请绑定手机号哦~!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aA0-Mb-63o">
+                    <rect key="frame" x="15" y="221" width="290" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -164,13 +170,16 @@
                 <constraint firstItem="vVg-bs-BvX" firstAttribute="top" secondItem="zyL-bJ-UCl" secondAttribute="bottom" constant="30" id="OS9-8a-i7A"/>
                 <constraint firstAttribute="trailing" secondItem="4je-uU-Abd" secondAttribute="trailing" id="Oo9-wy-zD4"/>
                 <constraint firstItem="ORN-bt-d1u" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="Qp2-LA-xlP"/>
+                <constraint firstItem="aA0-Mb-63o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="UnH-Zc-7qj"/>
                 <constraint firstItem="ORN-bt-d1u" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="XIZ-ep-QGN"/>
                 <constraint firstItem="0E5-8h-qEn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="ZjP-2F-XXf"/>
                 <constraint firstItem="zyL-bJ-UCl" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bD7-WE-zYY"/>
                 <constraint firstItem="4je-uU-Abd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cYh-jG-1dg"/>
                 <constraint firstItem="vVg-bs-BvX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="enu-IH-eX3"/>
                 <constraint firstAttribute="trailing" secondItem="0E5-8h-qEn" secondAttribute="trailing" constant="15" id="eqy-5i-iVQ"/>
+                <constraint firstAttribute="trailing" secondItem="aA0-Mb-63o" secondAttribute="trailing" constant="15" id="jI9-fM-cbG"/>
                 <constraint firstItem="0E5-8h-qEn" firstAttribute="top" secondItem="szw-FM-aET" secondAttribute="bottom" constant="30" id="kTn-vx-Q5j"/>
+                <constraint firstItem="aA0-Mb-63o" firstAttribute="top" secondItem="zyL-bJ-UCl" secondAttribute="top" constant="25" id="mHh-9H-4DF"/>
                 <constraint firstAttribute="trailing" secondItem="vVg-bs-BvX" secondAttribute="trailing" id="teS-5y-Ang"/>
             </constraints>
             <point key="canvasLocation" x="184" y="324"/>
