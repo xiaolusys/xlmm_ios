@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UIImageView *shareImage;
 @property (nonatomic, strong) UILabel *descLabel;
 
+@property (nonatomic, strong) JMSelecterButton *teamBuyOrderButton;
+
 @end
 
 @implementation JMOrderPayOutdateView {
@@ -76,7 +78,6 @@
         self.canelOrderButton.hidden = YES;
         self.bottomView.hidden = YES;
 
-        
     }
     
 
@@ -208,6 +209,18 @@
         make.height.mas_equalTo(@25);
     }];
     
+    // 如果是团购 - 订单详情的话,底部视图是一个查看拼团进展的按钮
+    self.teamBuyOrderButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.teamBuyOrderButton];
+    [self.teamBuyOrderButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"查看拼团进展" TitleFont:16. CornerRadius:20.];
+    self.teamBuyOrderButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.teamBuyOrderButton.hidden = YES;
+    [self.teamBuyOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
+        make.width.mas_equalTo(@(SCREENWIDTH - 30));
+        make.height.mas_equalTo(@40);
+    }];
     
 }
 - (void)outDateClick:(UIButton *)button {

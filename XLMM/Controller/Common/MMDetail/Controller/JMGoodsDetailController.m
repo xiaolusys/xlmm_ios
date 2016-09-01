@@ -24,6 +24,8 @@
 #import "JMDescLabelModel.h"
 #import "JMLogInViewController.h"
 #import "JMSelecterButton.h"
+#import "CartListModel.h"
+#import "JMPurchaseController.h"
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
@@ -49,7 +51,7 @@
     NSDictionary *detailContentDic;
     NSDictionary *coustomInfoDic;
     
-    NSDictionary *_paramer;
+    NSMutableDictionary *_paramer;
     
 }
 @property (nonatomic, strong) JMShareViewController *goodsShareView;
@@ -102,7 +104,7 @@
     
     NSInteger _cartsGoodsNum;
     BOOL _isAddcart;           // 判断商品是否即将开售
-    
+    BOOL _isTeamBuyGoods;      // 判断商品是否可以团购
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -188,14 +190,14 @@
 //    self.navigationController.navigationBar.alpha = 0.0;
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
-    [self lodaDataSource];
+    _paramer = [NSMutableDictionary dictionary];
     
-    [self loadShareData];
-    
-    [self createContentView];
-    [self setupHeadView];
-    [self createBottomView];
-    [self createNavigationView];
+    [self lodaDataSource];          // 商品详情数据源
+    [self loadShareData];           // 分享数据
+    [self createContentView];       // 创建内容视图
+    [self setupHeadView];           // 创建头部滚动视图
+    [self createBottomView];        // 底部购物车,购买按钮
+    [self createNavigationView];    // 自定义导航控制器视图
 
 }
 - (void)createContentView {
@@ -310,17 +312,42 @@
     }else {
         
     }
-
+    // 在这里拿到数据后先判断是否是团购商品 | 团购商品有teambuy_info字段 非团购无   --> 如果是团购商品,购买按钮为单人购买和团购
+    if ([goodsDetailDic isKindOfClass:[NSDictionary class]] && [goodsDetailDic objectForKey:@"teambuy_info"]) {
+        NSDictionary *dic = goodsDetailDic[@"teambuy_info"];
+        if ([dic[@"teambuy"] boolValue]) {
+            _isTeamBuyGoods = YES;
+            self.groupBuyPersonal.hidden = NO;
+            self.groupBuyTeam.hidden = NO;
+            self.addCartButton.hidden = YES;
+            CGFloat moneyValueTeam = [dic[@"teambuy_price"] floatValue];
+            CGFloat moneyValuePersonal = [detailContentDic[@"lowest_agent_price"] floatValue];
+            NSString *teamString = [NSString stringWithFormat:@"%@人购 ¥%.1f",dic[@"teambuy_person_num"],moneyValueTeam];
+            NSString *personalString = [NSString stringWithFormat:@"单人购 ¥%.1f",moneyValuePersonal];
+            [self.groupBuyTeam setTitle:teamString forState:UIControlStateNormal];
+            [self.groupBuyPersonal setTitle:personalString forState:UIControlStateNormal];
+        }else {
+            _isTeamBuyGoods = NO;
+            self.addCartButton.hidden = NO;
+        }
+    }else {
+        _isTeamBuyGoods = NO;
+        self.addCartButton.hidden = NO;
+    }
+    
+    
     if (goodsArray.count == 0) {
         return ;
         
     }else {
+        NSDictionary *itemDic = goodsArray[0];
+        NSDictionary *skuDic = itemDic[@"sku_items"][0];
+        _paramer[@"item_id"] = itemDic[@"product_id"];
+        _paramer[@"sku_id"] = skuDic[@"sku_id"];
+        _paramer[@"num"] = @"1";
         [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
     }
-    
     [self.tableView reloadData];
-    
-    
 }
 - (void)navigationBarButton:(UIButton *)button {
     if (button.tag == 100 || button.tag == 102) {
@@ -608,49 +635,46 @@
     return transform;
 }
 #pragma mark -- 加入购物车
-- (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSDictionary *)attrubuteDic {
-    _paramer = [NSDictionary dictionary];
-    _paramer = attrubuteDic;
-    
+- (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
-    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:attrubuteDic WithSuccess:^(id responseObject) {
+    [self addCartUrlString:urlString Paramer:attrubuteDic];
+}
+- (void)addCartUrlString:(NSString *)urlString Paramer:(NSMutableDictionary *)paramer {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:paramer WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
-            [SVProgressHUD setMinimumDismissTimeInterval:2];
-            [SVProgressHUD showSuccessWithStatus:@"加入购物车成功"];
-//            _cartsGoodsNum += [attrubuteDic[@"num"] integerValue];
+            if ([paramer isKindOfClass:[NSMutableDictionary class]] && [paramer objectForKey:@"type"]) {
+                [self getCartsFirstGoodsInfo];
+            }else {
+                [MBProgressHUD showSuccess:@"加入购物车成功"];
+            }
             self.cartsLabel.hidden = NO;
-//            NSLog(@"%ld",_cartsGoodsNum);
             self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
             [self loadCatrsNumData];
         }else {
-//            self.cartsLabel.hidden = YES;
-            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+            [MBProgressHUD showWarning:responseObject[@"info"]];
         }
-        [self hideMaskView];
+        if (!_isTeamBuyGoods) [self hideMaskView];
     } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
-//        self.cartsLabel.hidden = YES;
+        if (!_isTeamBuyGoods) {
+            [self hideMaskView];
+            [MBProgressHUD showError:@"加入购物车失败"];
+        }else {
+            [MBProgressHUD showError:@"拼团失败"];
+        }
     } Progress:^(float progress) {
-        
     }];
 }
-
-
-#pragma mark - LPAutoScrollViewDatasource
+#pragma mark - LPAutoScrollViewDatasource,LPAutoScrollViewDelegate
 - (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
     return self.topImageArray.count;
 }
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMGoodsLoopRollView *)rollView {
     rollView.imageString = self.topImageArray[index];
 }
-#pragma mark LPAutoScrollViewDelegate
 - (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
-    NSLog(@"%@", self.topImageArray[index]);
-    
-    
 }
 #pragma mark 自定义导航视图
 - (void)createNavigationView {
@@ -772,6 +796,7 @@
     addCartButton.titleLabel.font = [UIFont systemFontOfSize:16.];
     [addCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     self.addCartButton = addCartButton;
+    self.addCartButton.hidden = YES;
     kWeakSelf
     [shopCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.bottomView).offset(15);
@@ -811,16 +836,16 @@
     [self.groupBuyTeam addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.groupBuyPersonal mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.bottomView).offset(15);
+        make.left.equalTo(weakSelf.bottomView).offset(70);
         make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
+        make.width.mas_equalTo(@((SCREENWIDTH - 70) / 2 - 15));
         make.height.mas_equalTo(@40);
     }];
     
     [self.groupBuyTeam mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.bottomView).offset(-15);
         make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
+        make.width.mas_equalTo(@((SCREENWIDTH - 70) / 2 - 15));
         make.height.mas_equalTo(@40);
     }];
     
@@ -829,7 +854,6 @@
     
     
 }
-
 - (void)cartButton:(UIButton *)button {
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
     BOOL isLogin = [defalts boolForKey:kIsLogin];
@@ -849,22 +873,51 @@
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     }else if (button.tag == kBottomViewTag + 2) {
-        NSLog(@"button.tag == kBottomViewTag + 2");
+        if (isLogin) {
+            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
+            [self addCartUrlString:urlString Paramer:_paramer];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     }else if (button.tag == kBottomViewTag + 3) {
-        NSLog(@"button.tag == kBottomViewTag + 3");
+        if (isLogin) {
+            _paramer[@"type"] = @"3";
+            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
+            [self addCartUrlString:urlString Paramer:_paramer];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
     }else {
     
     }
     
 }
+- (void)getCartsFirstGoodsInfo {
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"tyoe"] = @"3";
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts.json",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        [self fetchedCartData:responseObject];
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"拼团失败,请稍后重试"];
+    } Progress:^(float progress) {
+    }];
+}
+- (void)fetchedCartData:(NSArray *)careArr {
+    if (careArr.count == 0) return ;
+    JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
+    NSMutableArray *cartArray = [NSMutableArray array];
+    NSDictionary *dic = careArr[0];
+    CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
+    [cartArray addObject:model];
+    purchaseVC.purchaseGoodsArr = cartArray;
+    [self.navigationController pushViewController:purchaseVC animated:YES];
+}
 
 @end
-
-
-
-
-
-
 
 
 

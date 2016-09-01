@@ -212,7 +212,6 @@ static NSUInteger popNum = 0;
     NSDictionary *configDic = newcomerDic[@"config"];
     BOOL isPOP = [configDic[@"page_pop"] boolValue];
     if (isPOP) {
-        // 测试弹出框
         JMShareView *cover = [JMShareView show];
         self.cover = cover;
         cover.delegate = self;
@@ -567,6 +566,9 @@ static NSUInteger popNum = 0;
     button.enabled = YES;
 }
 - (void)customUserInfo {
+    if (self.userInfoDic.count == 0) {
+        return ;
+    }
     NSString *nick_name = self.userInfoDic[@"nick"];
     NSString *sdk_token = self.userInfoDic[@"user_id"];
 //    NSString *cellphone = self.userInfoDic[@"mobile"];
@@ -594,8 +596,8 @@ static NSUInteger popNum = 0;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(x, y, w - 50, h)];
     view.layer.cornerRadius = 20;
     view.layer.masksToBounds = YES;
-    [self.view addSubview:view];
-//    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
+//    [self.view addSubview:view];
+    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.70f;
     

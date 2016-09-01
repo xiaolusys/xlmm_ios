@@ -285,7 +285,7 @@
     }else {
         _isPopChoiseRefundWay = YES;
     }
-    
+    // 这里对数据进行赋值,当订单详情为团购的时候,底部不显示继续支付或者分享红包,只显示查看进度
     self.orderDetailHeaderView.orderDetailModel = self.orderDetailModel;
     self.orderDetailFooterView.orderDetailModel = self.orderDetailModel;
     NSInteger statusCount = [dicJson[@"status"] integerValue];

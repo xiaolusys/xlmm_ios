@@ -185,7 +185,6 @@
         if (self.dataArray.count == 0) {
             
         } else{
-            
             CartListModel *model = [self.dataArray objectAtIndex:indexPath.row];
             cell.cartModel= model;
             cell.myImageView.layer.borderWidth = 0.5;

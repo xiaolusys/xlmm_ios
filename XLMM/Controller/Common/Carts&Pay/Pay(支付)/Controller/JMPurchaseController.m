@@ -90,7 +90,6 @@
 static BOOL isAgreeTerms = YES;
 
 @implementation JMPurchaseController {
-    
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
     NSDictionary *_rightReduce;       // app立减
@@ -116,14 +115,20 @@ static BOOL isAgreeTerms = YES;
     
     NSString *_limitStr;              //分享红包数量
     NSString *_orderTidNum;           //订单编号
-    
     NSInteger _flagCount;             //标志是否弹出延迟框
+    BOOL _isTeamBuyGoods;             //是否为团购
 }
 - (NSMutableArray *)logisticsArr {
     if (!_logisticsArr) {
         _logisticsArr = [NSMutableArray array];
     }
     return _logisticsArr;
+}
+- (NSMutableArray *)purchaseGoodsArr {
+    if (!_purchaseGoodsArr) {
+        _purchaseGoodsArr = [NSMutableArray array];
+    }
+    return _purchaseGoodsArr;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -187,7 +192,7 @@ static BOOL isAgreeTerms = YES;
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     self.paramstring = paramstring;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,paramstring,@"app"];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,self.paramstring,@"app"];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
@@ -196,7 +201,6 @@ static BOOL isAgreeTerms = YES;
     } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     } Progress:^(float progress) {
-        
     }];
 }
 #pragma mark 地址信息网络请求
@@ -222,6 +226,18 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
+    [self.purchaseGoodsArr removeAllObjects];
+    NSArray *goodsArr = purchaseDic[@"cart_list"];
+    NSDictionary *teamGoodsDic = goodsArr[0];
+    for (NSDictionary *dic in goodsArr) {
+        CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
+        [self.purchaseGoodsArr addObject:model];
+    }
+    if ([teamGoodsDic isKindOfClass:[NSMutableDictionary class]] && [teamGoodsDic objectForKey:@"type"]) {
+        _isTeamBuyGoods = YES;
+    }else {
+        _isTeamBuyGoods = NO;
+    }
     NSArray *logArr = purchaseDic[@"logistics_companys"];
     NSDictionary *logisticsDic = logArr[0];
     _logisticsID = logisticsDic[@"id"];

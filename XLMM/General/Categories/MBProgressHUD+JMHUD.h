@@ -91,7 +91,7 @@
  *  @return
  */
 + (MBProgressHUD *)showTitle:(NSString *)title ToView:(UIView *)view;
-
++ (MBProgressHUD *)hideHUDView:(UIView *)view;
 
 
 

@@ -109,7 +109,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)refreshView {
     _isPullDown = YES;
     [self.childCollectionView.mj_footer resetNoMoreData];
-    [self downloadData];
+    [self reloadGoods];
 }
 
 - (void)createPullFooterRefresh {
@@ -491,26 +491,26 @@ static NSString * ksimpleCell = @"simpleCell";
     
     if (sender.tag == 1) {
         isOrder = NO;
-        
+        [self reloadGoods];
         //[activityIndicator removeFromSuperview];
         //activityIndicator = nil;
 //        [self.childCollectionView reloadData];
         [self.jiageButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.tuijianButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
-        //[self downloadData];
-        [self.childCollectionView.mj_header beginRefreshing];
+        
+//        [self.childCollectionView.mj_header beginRefreshing];
 //        [self.childCollectionView reloadData];
         
     } else if (sender.tag == 2){
         isOrder = YES;
-        [self.childCollectionView.mj_header beginRefreshing];
-        if(self.orderDataArray.count > 0){
-           [self.childCollectionView reloadData];
-        }
-        else{
-            [self downloadOrderData];
-        }
-        
+        [self reloadGoods];
+//        [self.childCollectionView.mj_header beginRefreshing];
+//        if(self.orderDataArray.count > 0){
+//           [self.childCollectionView reloadData];
+//        }
+//        else{
+//            [self downloadOrderData];
+//        }
         [self.tuijianButton setTitleColor:[UIColor cartViewBackGround] forState:UIControlStateNormal];
         [self.jiageButton setTitleColor:[UIColor rootViewButtonColor] forState:UIControlStateNormal];
         
