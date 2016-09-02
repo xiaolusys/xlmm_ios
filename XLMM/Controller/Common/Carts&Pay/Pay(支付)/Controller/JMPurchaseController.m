@@ -793,7 +793,6 @@ static BOOL isAgreeTerms = YES;
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isAppinPayGo) name:@"isAppinPayGo" object:nil];
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self

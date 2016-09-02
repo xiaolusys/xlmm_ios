@@ -297,7 +297,7 @@
     
     NSString *saleStatus = detailContentDic[@"sale_state"];
     if ([saleStatus isEqual:@"on"]) {
-        if ([detailContentDic[@"is_saleout"] boolValue]) {
+        if ([detailContentDic[@"is_sale_out"] boolValue]) {
             [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
             self.addCartButton.enabled = NO;
         }else {
