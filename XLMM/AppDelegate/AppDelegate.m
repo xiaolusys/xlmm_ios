@@ -142,7 +142,20 @@ static BOOL isNetPrompt;
         
     }
 }
+
+- (void)umengTrack {
+    //[MobClick setLogEnabled:YES];
+    //version标识
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
+    [MobClick startWithConfigure:UMConfigInstance];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self umengTrack];
+    
     isNetPrompt = YES;
     [self AFNetworkStatus];
 
@@ -214,14 +227,7 @@ static BOOL isNetPrompt;
     
     NSLog(@"%d", self.isLaunchedByNotification);
     
-    //[MobClick setLogEnabled:YES];
-    //version标识
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-    
-    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
-    UMConfigInstance.channelId = @"App Store";
-    [MobClick startWithConfigure:UMConfigInstance];
+
     
     //    Class cls = NSClassFromString(@"UMANUtil");
     //    SEL deviceIDSelector = @selector(openUDIDString);

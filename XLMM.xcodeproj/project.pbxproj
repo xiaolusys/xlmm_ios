@@ -961,10 +961,9 @@
 		3A2BC1DC1D2CFF6E00F6F54B /* ios-social-sdk-share-quick.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BC1BC1D2CFF6D00F6F54B /* ios-social-sdk-share-quick.html */; };
 		3A2BC1DD1D2CFF6E00F6F54B /* ios-social-sdk-socialbar.html in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BC1BD1D2CFF6D00F6F54B /* ios-social-sdk-socialbar.html */; };
 		3A2BC1DE1D2CFF6E00F6F54B /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BC1BE1D2CFF6D00F6F54B /* markdown.css */; };
-		3A2BC1E21D2D146600F6F54B /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2BC1E11D2D146600F6F54B /* UMMobClick.framework */; };
-		3A2BC1E41D2D147400F6F54B /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A2BC1E31D2D147400F6F54B /* UMMobClick.framework */; };
 		3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */; };
 		3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3CF7191CE224D000F0463D /* MMClass.m */; };
+		3A4F80321D7A5D9C003D3495 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A4F80311D7A5D9C003D3495 /* UMMobClick.framework */; };
 		3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5214E81CC764AA00F4E699 /* Images.xcassets */; };
 		3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */; };
 		3A69686A1CEDC0A500358EEC /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6968691CEDC0A500358EEC /* LogisticsModel.m */; };
@@ -2384,11 +2383,10 @@
 		3A2BC1BC1D2CFF6D00F6F54B /* ios-social-sdk-share-quick.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ios-social-sdk-share-quick.html"; sourceTree = "<group>"; };
 		3A2BC1BD1D2CFF6D00F6F54B /* ios-social-sdk-socialbar.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ios-social-sdk-socialbar.html"; sourceTree = "<group>"; };
 		3A2BC1BE1D2CFF6D00F6F54B /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
-		3A2BC1E11D2D146600F6F54B /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = XLMM/Venders/UMMobClick.framework; sourceTree = "<group>"; };
-		3A2BC1E31D2D147400F6F54B /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		3A2E26691D12F53E005C1CDA /* IosJsBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IosJsBridge.h; sourceTree = "<group>"; };
 		3A2E266A1D12F53E005C1CDA /* IosJsBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IosJsBridge.m; sourceTree = "<group>"; };
 		3A3CF7191CE224D000F0463D /* MMClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMClass.m; sourceTree = "<group>"; };
+		3A4F80311D7A5D9C003D3495 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1/UMMobClick.framework"; sourceTree = "<group>"; };
 		3A5214E81CC764AA00F4E699 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A5DF7B61CCE135D00FFE818 /* JumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpUtils.h; sourceTree = "<group>"; };
 		3A5DF7B71CCE135D00FFE818 /* JumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpUtils.m; sourceTree = "<group>"; };
@@ -2412,6 +2410,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A4F80321D7A5D9C003D3495 /* UMMobClick.framework in Frameworks */,
 				1F99F87B1D65678800C6B79C /* libxml2.tbd in Frameworks */,
 				1F99F7B91D65661300C6B79C /* libsqlite3.tbd in Frameworks */,
 				1F99F7B81D6565E700C6B79C /* libresolv.tbd in Frameworks */,
@@ -2429,14 +2428,12 @@
 				1F9169DE1D5055BF00327408 /* libQiniu.a in Frameworks */,
 				1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */,
 				32F3D9701B6CCBCE008530BA /* Security.framework in Frameworks */,
-				3A2BC1E21D2D146600F6F54B /* UMMobClick.framework in Frameworks */,
 				3A2BC1CE1D2CFF6E00F6F54B /* TencentOpenAPI.framework in Frameworks */,
 				3A2BC1D01D2CFF6E00F6F54B /* libSocialWechat.a in Frameworks */,
 				1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */,
 				321857C31CA109990085FF21 /* WebKit.framework in Frameworks */,
 				3A2BC1CD1D2CFF6E00F6F54B /* libSocialQQ.a in Frameworks */,
 				3A2BC1CB1D2CFF6E00F6F54B /* libWeiboSDK.a in Frameworks */,
-				3A2BC1E41D2D147400F6F54B /* UMMobClick.framework in Frameworks */,
 				1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */,
 				183073E31C97D17800B7665E /* AlipaySDK.framework in Frameworks */,
 				183074171C97D17800B7665E /* libMiPushSDK.a in Frameworks */,
@@ -2480,6 +2477,7 @@
 		1463567F77B797326B629CFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A4F80311D7A5D9C003D3495 /* UMMobClick.framework */,
 				1F8AD67C1D65599B00482D52 /* libUdeskSDK.a */,
 				1F8AD67A1D654F3800482D52 /* libUdeskSDK.a */,
 				1F7D993A1D632E4A00E18FD1 /* libMBProgressHUD.a */,
@@ -2917,7 +2915,6 @@
 			isa = PBXGroup;
 			children = (
 				1F99F7BA1D6566E900C6B79C /* UdeskSDK */,
-				3A2BC1E31D2D147400F6F54B /* UMMobClick.framework */,
 				3A2BC1781D2CFF6D00F6F54B /* umeng_ios_social_sdk_5.2.1_arm64_custom */,
 				3A1E057A1CE1C3FB001018AC /* LGViews */,
 				184FCFBA1CA6699C00F8FC94 /* Source */,
@@ -5799,7 +5796,6 @@
 		325BA0E51B68B18A006D64BD = {
 			isa = PBXGroup;
 			children = (
-				3A2BC1E11D2D146600F6F54B /* UMMobClick.framework */,
 				325BA0F01B68B18A006D64BD /* XLMM */,
 				325BA10A1B68B18A006D64BD /* XLMMTests */,
 				325BA0EF1B68B18A006D64BD /* Products */,
@@ -7243,8 +7239,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -7269,7 +7265,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -7291,8 +7287,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -7309,7 +7305,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -7322,8 +7318,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -7334,6 +7330,7 @@
 					"$(PROJECT_DIR)/XLMM/Venders/UmengStatistics",
 					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/XLMM/Venders",
+					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7401,7 +7398,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -7414,8 +7411,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
@@ -7426,6 +7423,7 @@
 					"$(PROJECT_DIR)/XLMM/Venders/UmengStatistics",
 					"$(PROJECT_DIR)/XLMM/Venders/umeng_ios_social_sdk_5.2.1_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/XLMM/Venders",
+					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7493,7 +7491,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e008fb6e-2c99-4ca5-a6e7-2125c96160bd";
+				PROVISIONING_PROFILE = "55f411f4-cad9-4a12-b8b6-27c30853b40f";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
