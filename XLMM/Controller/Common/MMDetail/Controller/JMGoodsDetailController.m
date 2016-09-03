@@ -92,19 +92,15 @@
 @property (nonatomic, strong) JMShareModel *shareModel;
 @property (nonatomic, strong) UIButton *shopCartButton;
 @property (nonatomic, strong) UIButton *addCartButton;
-
 @property (nonatomic, strong) JMSelecterButton *groupBuyPersonal;
 @property (nonatomic, strong) JMSelecterButton *groupBuyTeam;
-
-
 @end
 
 @implementation JMGoodsDetailController {
-    NSMutableArray *goodsArray;
-    
-    NSInteger _cartsGoodsNum;
-    BOOL _isAddcart;           // 判断商品是否即将开售
-    BOOL _isTeamBuyGoods;      // 判断商品是否可以团购
+    NSMutableArray *goodsArray; // 商品属性数据
+    NSInteger _cartsGoodsNum;   // 购物车数量
+    BOOL _isAddcart;            // 判断商品是否即将开售
+    BOOL _isTeamBuyGoods;       // 判断商品是否可以团购
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -130,7 +126,6 @@
     }
     return _attributeArray;
 }
-
 - (UIView *)maskView {
     if (!_maskView) {
         _maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -148,7 +143,6 @@
         _popView = [[JMGoodsInfoPopView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, POPHeight)];
         _popView.delegate = self;
         _popView.backgroundColor = [UIColor whiteColor];
-        
     }
     return _popView;
 }
@@ -158,11 +152,9 @@
     }
     return _topImageArray;
 }
-
 - (UILabel *)upViewLabel {
     if (_upViewLabel == nil) {
         _upViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
-        //继续拖动,查看图文详情
         _upViewLabel.font = [UIFont systemFontOfSize:14.0f];
         _upViewLabel.textAlignment = NSTextAlignmentCenter;
         _upViewLabel.backgroundColor = [UIColor countLabelColor];
@@ -183,7 +175,6 @@
     }
     return _downViewLabel;
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor countLabelColor];
@@ -204,7 +195,6 @@
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
     self.allContentView.backgroundColor = [UIColor countLabelColor];
-    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, SCREENWIDTH, SCREENHEIGHT - 40) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor countLabelColor];
     self.tableView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT * 2);
@@ -213,7 +203,6 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.upViewLabel;
-    
     self.detailWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64 - BottomHeitht)];
     self.detailWebView.backgroundColor = [UIColor countLabelColor];
     //self.detailWebView.delegate = self;
@@ -225,26 +214,32 @@
         [self.detailWebView loadRequest:request];
     });
     self.detailWebView.scrollView.delegate = self;
-    
     [self.view addSubview:self.allContentView];
     [self.allContentView addSubview:self.tableView];
     [self.allContentView addSubview:self.detailWebView];
-    
     [self.tableView registerClass:[JMGoodsAttributeCell class] forCellReuseIdentifier:JMGoodsAttributeCellIdentifier];
     [self.tableView registerClass:[JMGoodsExplainCell class] forCellReuseIdentifier:JMGoodsExplainCellIdentifier];
     [self.tableView registerClass:[JMGoodsSafeGuardCell class] forCellReuseIdentifier:JMGoodsSafeGuardCellIdentifier];
+}
+- (void)setupHeadView {
+    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
+    self.goodsScrollView = scrollView;
+    scrollView.jm_scrollDataSource = self;
+    scrollView.jm_scrollDelegate = self;
+    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight);
+    scrollView.jm_isStopScrollForSingleCount = NO;
+    scrollView.jm_autoScrollInterval = 3.;
+    [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
+    self.tableView.tableHeaderView = scrollView;
 }
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        NSLog(@"%@",responseObject);
         self.shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
         self.shareModel.share_type = @"link";
     } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
     } Progress:^(float progress) {
-        
     }];
 }
 - (void)loadCatrsNumData {
@@ -260,23 +255,17 @@
             self.cartsLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"result"]];
         }
     } WithFail:^(NSError *error) {
-        
     } Progress:^(float progress) {
-        
     }];
 }
 - (void)lodaDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/%@",Root_URL,self.goodsID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        NSLog(@"%@",responseObject);
         [self fetchData:responseObject];
     } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
     } Progress:^(float progress) {
-        
     }];
-    
 }
 - (void)fetchData:(NSDictionary *)goodsDetailDic {
     detailContentDic = [NSDictionary dictionary];
@@ -290,7 +279,6 @@
         JMDescLabelModel *model = [JMDescLabelModel mj_objectWithKeyValues:dic];
         [self.attributeArray addObject:model];
     }
-    
     coustomInfoDic = [NSDictionary dictionary];
     coustomInfoDic = goodsDetailDic[@"custom_info"];
     goodsArray = goodsDetailDic[@"sku_info"];
@@ -310,7 +298,6 @@
         [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
         self.addCartButton.enabled = NO;
     }else {
-        
     }
     // 在这里拿到数据后先判断是否是团购商品 | 团购商品有teambuy_info字段 非团购无   --> 如果是团购商品,购买按钮为单人购买和团购
     if ([goodsDetailDic isKindOfClass:[NSDictionary class]] && [goodsDetailDic objectForKey:@"teambuy_info"]) {
@@ -334,11 +321,8 @@
         _isTeamBuyGoods = NO;
         self.addCartButton.hidden = NO;
     }
-    
-    
     if (goodsArray.count == 0) {
         return ;
-        
     }else {
         NSDictionary *itemDic = goodsArray[0];
         NSDictionary *skuDic = itemDic[@"sku_items"][0];
@@ -353,44 +337,22 @@
     if (button.tag == 100 || button.tag == 102) {
         [self.navigationController popViewControllerAnimated:YES];
     }else {
-        NSLog(@"navigationBarButton层  分享按钮 --------");
-        
         JMShareViewController *shareView = [[JMShareViewController alloc] init];
         self.goodsShareView = shareView;
         self.goodsShareView.model = self.shareModel;
-        
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
-        //弹出视图
         JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
         menu.contentView = self.goodsShareView.view;
-        
     }
 }
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
-    //隐藏pop菜单
     [JMPopView hide];
-}
-- (void)setupHeadView {
-    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
-    self.goodsScrollView = scrollView;
-    scrollView.jm_scrollDataSource = self;
-    scrollView.jm_scrollDelegate = self;
-    
-    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight);
-    
-    scrollView.jm_isStopScrollForSingleCount = YES;
-    scrollView.jm_autoScrollInterval = 3.;
-    [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
-    
-    self.tableView.tableHeaderView = scrollView;
-    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
@@ -411,7 +373,6 @@
     }else {
         return 0;
     }
-
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -485,7 +446,6 @@
     }else {
         return nil;
     }
-    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 2) {
@@ -523,30 +483,17 @@
             self.navigationView.alpha = (offset / scrolHeight) * 1.25;
             self.backToRootView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
             self.shareView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
-            
-            NSLog(@"offset == %f",offset);
-            NSLog(@"HeaderScrolHeight == %f",scrolHeight);
-            NSLog(@"%.2f",offset / scrolHeight);
-            
-        }else {
-//            self.navigationView.alpha = 1.0;
-        }
-
+        }else { }
         if (offset <= self.tableView.contentSize.height - SCREENHEIGHT + RollHeight + BottomHeitht) {
             self.upViewLabel.text = @"继续拖动,查看图文详情";
-        }else {
-            //            self.middleLab.text = @"上拉显示底部View";
-        }
+        }else { }
     }else {
-        // WebView中的ScrollView
         if (offset <= -60) {
             self.downViewLabel.text = @"释放返回商品详情";
         }else {
             self.downViewLabel.text = @"下拉返回商品详情";
         }
     }
-    
-    
 }
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (decelerate) {
@@ -841,18 +788,14 @@
         make.width.mas_equalTo(@((SCREENWIDTH - 70) / 2 - 15));
         make.height.mas_equalTo(@40);
     }];
-    
     [self.groupBuyTeam mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.bottomView).offset(-15);
         make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
         make.width.mas_equalTo(@((SCREENWIDTH - 70) / 2 - 15));
         make.height.mas_equalTo(@40);
     }];
-    
     self.groupBuyPersonal.hidden = YES;
     self.groupBuyTeam.hidden = YES;
-    
-    
 }
 - (void)cartButton:(UIButton *)button {
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
@@ -889,10 +832,7 @@
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-    }else {
-    
-    }
-    
+    }else { }
 }
 - (void)getCartsFirstGoodsInfo {
     NSMutableDictionary *parame = [NSMutableDictionary dictionary];

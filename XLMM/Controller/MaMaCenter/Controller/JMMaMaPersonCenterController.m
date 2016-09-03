@@ -596,8 +596,8 @@ static NSUInteger popNum = 0;
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(x, y, w - 50, h)];
     view.layer.cornerRadius = 20;
     view.layer.masksToBounds = YES;
-//    [self.view addSubview:view];
-    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
+    [self.view addSubview:view];
+//    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.70f;
     
