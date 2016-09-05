@@ -30,6 +30,7 @@
 #import "JMDelayPopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "MBProgressHUD.h"
+#import "WebViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -284,7 +285,6 @@ static BOOL isAgreeTerms = YES;
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 3) {
             _xlWallet = dicExtras;
             _availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
-
 //            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
 //                //足够支付
 //                self.isEnoughBudget = YES;
@@ -394,7 +394,6 @@ static BOOL isAgreeTerms = YES;
     }else if (index == 101) {
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
-        
         if (self.showViewVC.view == nil) {
             self.showViewVC = [[JMChoiseLogisController alloc] init];
         }
@@ -402,12 +401,9 @@ static BOOL isAgreeTerms = YES;
         NSInteger count = self.logisticsArr.count;
         self.showViewVC.count = count;
         JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
-        
         self.showViewVC.delegate = self;
         menu.contentView = self.showViewVC.view;
-    }else {
-    
-    }
+    }else { }
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopView hide];
@@ -421,7 +417,6 @@ static BOOL isAgreeTerms = YES;
     [MobClick event:@"logistics_choose"];
     self.purchaseHeaderView.logisticsLabel.text = model.name;
     _logisticsID = model.logistcsID;
-    
 }
 #pragma mark 底部视图按钮选择_处理事件
 - (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
@@ -634,7 +629,11 @@ static BOOL isAgreeTerms = YES;
                 [_timer invalidate];
                 [MobClick event:@"buy_succ"];
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [self pushShareVC];
+                if (_isTeamBuyGoods) {
+                    [self getTeam:_orderTidNum]; // == > 团购信息
+                }else {
+                    [self pushShareVC];
+                }
             });
             return;
         }
@@ -651,7 +650,11 @@ static BOOL isAgreeTerms = YES;
                         [_timer invalidate];
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                         [MobClick event:@"buy_succ"];
-                        [self pushShareVC];
+                        if (_isTeamBuyGoods) {
+                            [self getTeam:_orderTidNum]; // == > 团购信息
+                        }else {
+                            [self pushShareVC];
+                        }
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [self.hud hideAnimated:YES];
@@ -720,6 +723,29 @@ static BOOL isAgreeTerms = YES;
         }];
     }
 }
+#pragma mark 团购支付
+- (void)getTeamID:(NSString *)teamID {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/teambuy/%@/team_info",Root_URL,teamID];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        [self getTeam:responseObject[@"id"]];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+- (void)getTeam:(NSString *)teamID {
+    NSString *string = [NSString stringWithFormat:@"http://192.168.1.64:7070/mall/order/spell/group/%@?from_page=order_commit",teamID];
+    NSDictionary *diction = [NSMutableDictionary dictionary];
+    [diction setValue:string forKey:@"web_url"];
+    [diction setValue:@"teamBuySuccess" forKey:@"type_title"];
+    WebViewController *webView = [[WebViewController alloc] init];
+    [SVProgressHUD showWithStatus:@"正在加载中....."];
+    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:diction];
+    webView.isShowNavBar = true;
+    webView.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:webView animated:YES];
+}
 #pragma mark alterView 弹出与协议方法
 - (void)payBackAlter {
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"限时好货不等人,机不可失哦" delegate:self cancelButtonTitle:@"放弃订单" otherButtonTitles:@"继续支付", nil];
@@ -760,7 +786,11 @@ static BOOL isAgreeTerms = YES;
     [self.hud hideAnimated:YES];
     [_timer invalidate];
     [MobClick event:@"buy_succ"];
-    [self pushShareVC];
+    if (_isTeamBuyGoods) {
+        [self getTeam:_orderTidNum]; // == > 团购信息
+    }else {
+        [self pushShareVC];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作

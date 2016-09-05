@@ -62,6 +62,8 @@
 @property (nonatomic,copy) NSString *trade_type;
 
 //@property (nonatomic,copy) NSString *url;
+
+@property (nonatomic,copy) NSString *order_type;
 /**
  *  商品信息
  */

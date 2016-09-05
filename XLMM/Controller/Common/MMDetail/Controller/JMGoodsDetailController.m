@@ -596,10 +596,10 @@
                 [self getCartsFirstGoodsInfo];
             }else {
                 [MBProgressHUD showSuccess:@"加入购物车成功"];
+                self.cartsLabel.hidden = NO;
+                self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+                [self loadCatrsNumData];
             }
-            self.cartsLabel.hidden = NO;
-            self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
-            [self loadCatrsNumData];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }
@@ -835,9 +835,6 @@
     }else { }
 }
 - (void)getCartsFirstGoodsInfo {
-    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
-    parame[@"tyoe"] = @"3";
-//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts.json",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchedCartData:responseObject];

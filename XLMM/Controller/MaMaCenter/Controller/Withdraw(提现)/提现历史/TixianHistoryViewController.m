@@ -19,16 +19,21 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSString *nextString;
-//是否刷新
-@property (nonatomic,assign) BOOL isRefreshing;
-@property (nonatomic,assign) BOOL isLoadMore;
+//下拉的标志
+@property (nonatomic) BOOL isPullDown;
+//上拉的标志
+@property (nonatomic) BOOL isLoadMore;
 //记录当前页
 @property (nonatomic,assign) NSInteger currentPage;
 @property (nonatomic,strong) UIButton *topButton;
 
 @end
 
-@implementation TixianHistoryViewController
+@implementation TixianHistoryViewController {
+    NSString *_urlStr;
+    
+}
+
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,16 +50,10 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     
     [self createTableView];
     
-    [self downloadData];
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
     
-    [self createRefreshView];
-    
-    /**
-     *  刷新用到的参数 (判断状态)
-     */
-    self.currentPage = 1;
-    self.isRefreshing = NO;
-    self.isLoadMore = NO;
+
     
     /**
      *  进入页面就刷新一次
@@ -64,32 +63,47 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 
 #pragma mark --- 创建一个数据请求
-- (void)downloadData{
-    
-    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=%ld", Root_URL,_currentPage];
-    NSLog(@"string = %@", self.nextString);
+- (void)loadDataSource{
+    self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=1", Root_URL];
+//    NSLog(@"string = %@", self.nextString);
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextString WithParaments:nil WithSuccess:^(id responseObject) {
         [SVProgressHUD dismiss];
         if (!responseObject) return;
-        
         [self fetchedHistoryData:responseObject];
         [self.tableView reloadData];
-        [self endRefreshing];
+        [self endRefresh];
     } WithFail:^(NSError *error) {
         [SVProgressHUD dismiss];
     } Progress:^(float progress) {
         
     }];
 }
+- (void)loadMore
+{
+    if ([_urlStr isKindOfClass:[NSNull class]] || _urlStr == nil || [_urlStr isEqual:@""]) {
+        [self endRefresh];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        return;
+    }
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchedHistoryData:responseObject];
+        [self endRefresh];
+        [self.tableView reloadData];
+    } WithFail:^(NSError *error) {
+        [self endRefresh];
+    } Progress:^(float progress) {
+        
+    }];
+}
+
 #pragma mark ---- 字典转模型
 - (void)fetchedHistoryData:(NSDictionary *)data{
     if (data== nil) {
         return;
     }
-    
-    if (_isRefreshing) {
-        [self.dataArray removeAllObjects];
-    }
+    _urlStr = data[@"next"];
+    [self.dataArray removeAllObjects];
     NSDictionary *dicJson = data;
     NSArray *results = [dicJson objectForKey:@"results"];
     for (NSDictionary *dic in results) {
@@ -98,44 +112,29 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     }
 }
 
-#pragma mark --- 上拉加载，下拉刷新
-- (void)createRefreshView {
+#pragma mrak 刷新界面
+- (void)createPullHeaderRefresh {
     kWeakSelf
-    /**
-     *  下拉刷新
-     */
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        if (weakSelf.isRefreshing) {
-            return ;
-        }
-        weakSelf.isRefreshing = YES;
-        weakSelf.currentPage = 1;
-        [weakSelf downloadData];
-
+        _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
+        [weakSelf loadDataSource];
     }];
-    
-    /**
-     *  上拉加载
-     */
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        if (weakSelf.isLoadMore) {
-            return ;
-        }
-        weakSelf.isLoadMore = YES;
-        weakSelf.currentPage += 1;
-        [weakSelf downloadData];
-    }];
-
 }
-#pragma mark ---- 结束刷新
-- (void)endRefreshing {
-    if (self.isRefreshing) {
-        self.isRefreshing = NO;//标记刷新结束
-        //正在刷新 就结束刷新
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
         [self.tableView.mj_header endRefreshing];
     }
-    if (self.isLoadMore) {
-        self.isLoadMore = NO;
+    if (_isLoadMore) {
+        _isLoadMore = NO;
         [self.tableView.mj_footer endRefreshing];
     }
 }

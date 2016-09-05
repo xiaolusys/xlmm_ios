@@ -35,6 +35,7 @@
 #import "WXApi.h"
 #import "PersonOrderViewController.h"
 #import "JMGoodsDetailController.h"
+#import "WebViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -96,29 +97,31 @@
 @end
 
 @implementation JMOrderDetailController {
-    NSMutableArray *_refundStatusArray;//退款状态
-    NSMutableArray *_refundStatusDisplayArray;// 退款状态描述
+    NSMutableArray *_refundStatusArray;        //退款状态
+    NSMutableArray *_refundStatusDisplayArray; // 退款状态描述
     NSMutableArray *_orderStatusDisplay;
     NSMutableArray *_orderStatus;
     NSDictionary *_orderDic;
     
-    NSMutableArray *_logisticsArr; //包裹分组信息
-    NSMutableArray *_dataSource; //商品分组信息
+    NSMutableArray *_logisticsArr;             //包裹分组信息
+    NSMutableArray *_dataSource;               //商品分组信息
     
-    NSString *_packageStr; // 判断是否分包
+    NSString *_packageStr;                     // 判断是否分包
     NSDictionary *_refundDic;
     NSString *tid;
     NSString *_orderTid;
     NSString *_addressGoodsID;
     
     BOOL _isTimeLineView;
-    BOOL _isPopChoiseRefundWay; // 是否弹出选择退款方式
-    NSArray *_choiseRefundArr; // 退款方式数组
-    NSDictionary *_choiseRefundDict; // 退款方式
+    BOOL _isPopChoiseRefundWay;                // 是否弹出选择退款方式
+    BOOL _isTeamBuy;                           // 是否为团购订单
+    NSArray *_choiseRefundArr;                 // 退款方式数组
+    NSDictionary *_choiseRefundDict;           // 退款方式
     
     NSInteger _sectionCount;
     NSInteger _rowCount;
-    
+    NSString *_checkTeamBuy;                   // 查看开团进展
+    bool _isCanRefund;                         // 开团后是否可以退款
 }
 - (JMRefundController *)refundVC {
     if (_refundVC == nil) {
@@ -136,6 +139,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(backClick:)];
+    
+    _isTeamBuy = NO;
     
     [self createTableView];
     [self createBottomView];
@@ -249,6 +254,12 @@
     _orderStatusDisplay = [NSMutableArray array];
     _refundStatusArray = [NSMutableArray array];
     _refundStatusDisplayArray = [NSMutableArray array];
+    if ([dicJson objectForKey:@"order_type"]) {  
+        if ([dicJson[@"order_type"] integerValue] == 3) {  // 这里是判断是否为开团订单,默认NO.开团为YES
+            _isTeamBuy = YES;
+        }
+        _isCanRefund = [dicJson[@"can_refund"] boolValue];
+    }
     
     _refundDic = dicJson[@"extras"];
     tid = [dicJson objectForKey:@"id"];
@@ -289,6 +300,7 @@
     self.orderDetailHeaderView.orderDetailModel = self.orderDetailModel;
     self.orderDetailFooterView.orderDetailModel = self.orderDetailModel;
     NSInteger statusCount = [dicJson[@"status"] integerValue];
+    self.outDateView.isTeamBuy = _isTeamBuy;
     self.outDateView.statusCount = statusCount;
     self.outDateView.createTimeStr = dicJson[@"created"];
 //    if (statusCount == ORDER_STATUS_WAITPAY) {
@@ -326,6 +338,7 @@
             }
         }
     }
+    _checkTeamBuy = [NSString stringWithFormat:@"http://192.168.1.64:7070/mall/order/spell/group/%@?from_page=order_detail",_orderTid];
 }
 #pragma mark tableHeaderView点击事件 ->修改地址/物流
 - (void)composeHeaderTapView:(JMOrderDetailHeaderView *)headerView TapClick:(NSInteger)index {
@@ -382,6 +395,8 @@
     }else {
         self.packageModel = _logisticsArr[indexPath.section];
     }
+    cell.isTeamBuy = _isTeamBuy;
+    cell.isCanRefund = _isCanRefund;
     [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
     cell.delegate = self;
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];//刷新行
@@ -573,8 +588,16 @@
         //弹出视图
         JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
         shareMenu.contentView = self.shareView.view;
+    }else {  // 查看拼团进展
+        NSDictionary *diction = [NSMutableDictionary dictionary];
+        [diction setValue:_checkTeamBuy forKey:@"web_url"];
+        [diction setValue:@"ProductDetail" forKey:@"type_title"];
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:diction];
+        webView.isShowNavBar = true;
+        webView.isShowRightShareBtn = false;
+        [self.navigationController pushViewController:webView animated:YES];
         
-    }else {
         
     }
 }

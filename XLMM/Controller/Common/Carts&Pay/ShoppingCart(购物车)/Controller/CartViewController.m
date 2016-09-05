@@ -562,7 +562,7 @@
 //        WebViewController *webVC = [[WebViewController alloc] init];
 //        webVC.webDiction = dic;
 //        [self.navigationController pushViewController:webVC animated:YES];
-//    }
+//    }2
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

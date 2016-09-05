@@ -213,19 +213,16 @@
     } else{
         [newImageUrl appendString:@"?"];
     }
-    
-    
+
 //    NSLog(@"name = %@ %@ %@ %@", model.name, model.isSaleopen, model.isSaleout , model.productModel);
-    
-    
+
     self.iconImage.alpha = 0.3;
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
         }];
     }];
-    
-    
+
     self.titleLabel.text = model.name;
     
     if ([model.lowest_agent_price integerValue]!=[model.lowest_agent_price floatValue]) {
@@ -236,8 +233,7 @@
 
     self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.lowest_std_sale_price floatValue]];
 //    self.backView.layer.cornerRadius = 30;
-    
-    
+
     if ([model.sale_state isEqual:@"on"]) {
         if ([model.is_saleout boolValue]) {
             self.backView.hidden = NO;
@@ -252,10 +248,8 @@
         self.backView.hidden = NO;
         self.backLabel.text = @"即将开售";
     }else {
-        
     }
 
-    
 //    if ([model.sale_state boolValue]) {
 //        if ([model.is_saleout boolValue]) {
 //            self.backView.hidden = NO;
