@@ -20,6 +20,8 @@
 @property (nonatomic, copy) NSString *createTimeStr;
 
 @property (nonatomic, assign) NSInteger statusCount;
+@property (nonatomic, assign) BOOL isTeamBuy;
+
 
 @property (nonatomic, weak) id<JMOrderPayOutdateViewDelegate> delegate;
 

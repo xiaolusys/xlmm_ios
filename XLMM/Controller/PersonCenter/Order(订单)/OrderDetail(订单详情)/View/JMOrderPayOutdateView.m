@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UIImageView *shareImage;
 @property (nonatomic, strong) UILabel *descLabel;
 
+@property (nonatomic, strong) JMSelecterButton *teamBuyOrderButton;
+
 @end
 
 @implementation JMOrderPayOutdateView {
@@ -37,6 +39,9 @@
         [self setUpTopUI];
     }
     return self;
+}
+- (void)setIsTeamBuy:(BOOL)isTeamBuy {
+    _isTeamBuy = isTeamBuy;
 }
 - (void)setStatusCount:(NSInteger)statusCount {
     _statusCount = statusCount;
@@ -55,32 +60,37 @@
     
 }
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
-    if (_isShow) {
-        _dateStr = @"";
-//        self.sureOrderButton.hidden = NO;
-//        self.canelOrderButton.hidden = NO;
+    if (_isTeamBuy) {     // 如果是团购的话,就吧下面的继续支付和分享红包的视图给隐藏掉,只显示开团进展
+        self.teamBuyOrderButton.hidden = NO;
         self.bottomView.hidden = NO;
-        _createTimeStr = createTimeStr;
-        _dateStr = [self formatterTimeString:createTimeStr];
-        _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     }else {
-        if (_isShowShare == YES) {
-            self.shareImage.hidden = NO;
-            self.descLabel.hidden = NO;
-            self.shareButton.hidden = NO;
-            self.sharBottom.hidden = NO;
+        if (_isShow) {
+            _dateStr = @"";
+            //        self.sureOrderButton.hidden = NO;
+            //        self.canelOrderButton.hidden = NO;
+            self.bottomView.hidden = NO;
+            _createTimeStr = createTimeStr;
+            _dateStr = [self formatterTimeString:createTimeStr];
+            _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
         }else {
-        
+            if (_isShowShare == YES) {
+                self.shareImage.hidden = NO;
+                self.descLabel.hidden = NO;
+                self.shareButton.hidden = NO;
+                self.sharBottom.hidden = NO;
+            }else {
+                
+            }
+            self.sureOrderButton.hidden = YES;
+            self.canelOrderButton.hidden = YES;
+            self.bottomView.hidden = YES;
+            
         }
-        self.sureOrderButton.hidden = YES;
-        self.canelOrderButton.hidden = YES;
-        self.bottomView.hidden = YES;
-
-        
     }
     
 
 }
+
 
 - (void)setUpTopUI {
     
@@ -208,6 +218,20 @@
         make.height.mas_equalTo(@25);
     }];
     
+    // 如果是团购 - 订单详情的话,底部视图是一个查看拼团进展的按钮
+    self.teamBuyOrderButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.teamBuyOrderButton];
+    [self.teamBuyOrderButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"查看拼团进展" TitleFont:16. CornerRadius:20.];
+    self.teamBuyOrderButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.teamBuyOrderButton.tag = 103;
+    [self.teamBuyOrderButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.teamBuyOrderButton.hidden = YES;
+    [self.teamBuyOrderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
+        make.width.mas_equalTo(@(SCREENWIDTH - 30));
+        make.height.mas_equalTo(@40);
+    }];
     
 }
 - (void)outDateClick:(UIButton *)button {

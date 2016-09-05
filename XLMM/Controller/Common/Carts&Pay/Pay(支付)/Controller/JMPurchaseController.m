@@ -30,6 +30,7 @@
 #import "JMDelayPopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "MBProgressHUD.h"
+#import "WebViewController.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -90,7 +91,6 @@
 static BOOL isAgreeTerms = YES;
 
 @implementation JMPurchaseController {
-    
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
     NSDictionary *_rightReduce;       // app立减
@@ -116,14 +116,20 @@ static BOOL isAgreeTerms = YES;
     
     NSString *_limitStr;              //分享红包数量
     NSString *_orderTidNum;           //订单编号
-    
     NSInteger _flagCount;             //标志是否弹出延迟框
+    BOOL _isTeamBuyGoods;             //是否为团购
 }
 - (NSMutableArray *)logisticsArr {
     if (!_logisticsArr) {
         _logisticsArr = [NSMutableArray array];
     }
     return _logisticsArr;
+}
+- (NSMutableArray *)purchaseGoodsArr {
+    if (!_purchaseGoodsArr) {
+        _purchaseGoodsArr = [NSMutableArray array];
+    }
+    return _purchaseGoodsArr;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -187,7 +193,7 @@ static BOOL isAgreeTerms = YES;
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     self.paramstring = paramstring;
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,paramstring,@"app"];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,self.paramstring,@"app"];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
@@ -196,7 +202,6 @@ static BOOL isAgreeTerms = YES;
     } WithFail:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
     } Progress:^(float progress) {
-        
     }];
 }
 #pragma mark 地址信息网络请求
@@ -222,6 +227,18 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
+    [self.purchaseGoodsArr removeAllObjects];
+    NSArray *goodsArr = purchaseDic[@"cart_list"];
+    NSDictionary *teamGoodsDic = goodsArr[0];
+    for (NSDictionary *dic in goodsArr) {
+        CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
+        [self.purchaseGoodsArr addObject:model];
+    }
+    if ([teamGoodsDic isKindOfClass:[NSMutableDictionary class]] && [teamGoodsDic objectForKey:@"type"]) {
+        _isTeamBuyGoods = YES;
+    }else {
+        _isTeamBuyGoods = NO;
+    }
     NSArray *logArr = purchaseDic[@"logistics_companys"];
     NSDictionary *logisticsDic = logArr[0];
     _logisticsID = logisticsDic[@"id"];
@@ -268,7 +285,6 @@ static BOOL isAgreeTerms = YES;
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 3) {
             _xlWallet = dicExtras;
             _availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
-
 //            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
 //                //足够支付
 //                self.isEnoughBudget = YES;
@@ -378,7 +394,6 @@ static BOOL isAgreeTerms = YES;
     }else if (index == 101) {
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
-        
         if (self.showViewVC.view == nil) {
             self.showViewVC = [[JMChoiseLogisController alloc] init];
         }
@@ -386,12 +401,9 @@ static BOOL isAgreeTerms = YES;
         NSInteger count = self.logisticsArr.count;
         self.showViewVC.count = count;
         JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
-        
         self.showViewVC.delegate = self;
         menu.contentView = self.showViewVC.view;
-    }else {
-    
-    }
+    }else { }
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopView hide];
@@ -405,7 +417,6 @@ static BOOL isAgreeTerms = YES;
     [MobClick event:@"logistics_choose"];
     self.purchaseHeaderView.logisticsLabel.text = model.name;
     _logisticsID = model.logistcsID;
-    
 }
 #pragma mark 底部视图按钮选择_处理事件
 - (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
@@ -618,7 +629,11 @@ static BOOL isAgreeTerms = YES;
                 [_timer invalidate];
                 [MobClick event:@"buy_succ"];
                 [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [self pushShareVC];
+                if (_isTeamBuyGoods) {
+                    [self getTeam:_orderTidNum]; // == > 团购信息
+                }else {
+                    [self pushShareVC];
+                }
             });
             return;
         }
@@ -635,7 +650,11 @@ static BOOL isAgreeTerms = YES;
                         [_timer invalidate];
                         [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                         [MobClick event:@"buy_succ"];
-                        [self pushShareVC];
+                        if (_isTeamBuyGoods) {
+                            [self getTeam:_orderTidNum]; // == > 团购信息
+                        }else {
+                            [self pushShareVC];
+                        }
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
                             [self.hud hideAnimated:YES];
@@ -704,6 +723,29 @@ static BOOL isAgreeTerms = YES;
         }];
     }
 }
+#pragma mark 团购支付
+- (void)getTeamID:(NSString *)teamID {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/teambuy/%@/team_info",Root_URL,teamID];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        [self getTeam:responseObject[@"id"]];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+- (void)getTeam:(NSString *)teamID {
+    NSString *string = [NSString stringWithFormat:@"http://192.168.1.64:7070/mall/order/spell/group/%@?from_page=order_commit",teamID];
+    NSDictionary *diction = [NSMutableDictionary dictionary];
+    [diction setValue:string forKey:@"web_url"];
+    [diction setValue:@"teamBuySuccess" forKey:@"type_title"];
+    WebViewController *webView = [[WebViewController alloc] init];
+    [SVProgressHUD showWithStatus:@"正在加载中....."];
+    webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:diction];
+    webView.isShowNavBar = true;
+    webView.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:webView animated:YES];
+}
 #pragma mark alterView 弹出与协议方法
 - (void)payBackAlter {
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"限时好货不等人,机不可失哦" delegate:self cancelButtonTitle:@"放弃订单" otherButtonTitles:@"继续支付", nil];
@@ -744,7 +786,11 @@ static BOOL isAgreeTerms = YES;
     [self.hud hideAnimated:YES];
     [_timer invalidate];
     [MobClick event:@"buy_succ"];
-    [self pushShareVC];
+    if (_isTeamBuyGoods) {
+        [self getTeam:_orderTidNum]; // == > 团购信息
+    }else {
+        [self pushShareVC];
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作
@@ -777,7 +823,6 @@ static BOOL isAgreeTerms = YES;
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isAppinPayGo) name:@"isAppinPayGo" object:nil];
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self

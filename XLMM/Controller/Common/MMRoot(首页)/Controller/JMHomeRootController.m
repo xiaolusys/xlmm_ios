@@ -440,12 +440,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         [MobClick event:@"ROOT_activitys"];
-        NSDictionary *dic = self.activeArray[indexPath.row];
-        NSString *appLink = dic[@"act_applink"];
+        JMHomeActiveModel *model = self.activeArray[indexPath.row];
+        NSDictionary *dic = model.mj_keyValues;
+        NSString *appLink = model.act_applink;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             [self skipWebView:appLink activeDic:dic];
         }else {
-            if ([dic[@"login_required"] boolValue]) {
+            if ([model.login_required boolValue]) {
                 JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
                 [self.navigationController pushViewController:loginVC animated:YES];
             }else {
@@ -589,6 +590,8 @@
         } Progress:^(float progress) {
         }];
     }else {
+        self.cartsLabel.hidden = YES;
+        self.cartsCountLabel.hidden = YES;
         self.navigationItem.rightBarButtonItem = nil;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(@44);
@@ -696,6 +699,7 @@
     [self.cartView addSubview:self.cartsCountLabel];
     self.cartsCountLabel.font = [UIFont systemFontOfSize:18.];
     self.cartsCountLabel.textColor = [UIColor whiteColor];
+    self.cartsCountLabel.hidden = YES;
     
 }
 #pragma mark 点击按钮进入购物车界面

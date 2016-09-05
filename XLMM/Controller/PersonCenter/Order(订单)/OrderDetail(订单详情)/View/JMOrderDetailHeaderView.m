@@ -77,7 +77,7 @@
 }
 - (void)setOrderDetailModel:(JMOrderDetailModel *)orderDetailModel {
     _orderDetailModel = orderDetailModel;
-    self.orderStatusLabel.text = orderDetailModel.status_display;
+    self.orderStatusLabel.text = self.orderDetailModel.status_display;
     self.orderNumLabel.text = orderDetailModel.tid;
     self.orderCreateTime.text = [self formatterTimeString:orderDetailModel.created];
     NSDictionary *addressDict = orderDetailModel.user_adress;
@@ -121,9 +121,7 @@
         self.timeLineView.showsHorizontalScrollIndicator = NO;
     }
     
-    
 }
-
 - (void)setUpTopUI {
     // == 时间轴视图 == //
     UIScrollView *timeLineView = [[UIScrollView alloc] init];

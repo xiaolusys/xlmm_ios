@@ -305,7 +305,7 @@
         [vc.navigationController pushViewController:webView animated:YES];
     }
 }
-    
+
 +(void) jumpToCategoryProduct:(NSString *)target_url viewController:(UIViewController *)vc{
     if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
@@ -328,4 +328,45 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

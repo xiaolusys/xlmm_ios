@@ -30,6 +30,7 @@
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
+#import "PersonOrderViewController.h"
 
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
@@ -106,6 +107,7 @@
     UIImage *newshareImage;
     NSString *shareType;
     NSString *shareUrllink;
+    BOOL isTeamBuy;
 }
 - (YoumengShare *)youmengShare {
     if (!_youmengShare) {
@@ -140,7 +142,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     NSString *active = _webDiction[@"type_title"];
-
+    if ([active isEqualToString:@"teamBuySuccess"]) {
+        isTeamBuy = YES;
+    }else {
+        isTeamBuy = NO;
+    }
     if ([active isEqualToString:@"myInvite"] || [active isEqualToString:@"active"] || _isShowNavBar) {
         self.navigationController.navigationBarHidden = NO;
     }else {
@@ -660,7 +666,13 @@
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 - (void)backClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+    if (isTeamBuy) {
+        PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+        orderVC.index = 100;
+        [self.navigationController pushViewController:orderVC animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
