@@ -13,6 +13,7 @@
 #import "JMSelecterButton.h"
 #import "JMEmptyView.h"
 #import "JMEmptyGoodsView.h"
+#import "JMRootGoodsModel.h"
 
 @interface JMClassifyListController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -123,7 +124,8 @@ static NSString * cellId = @"JMClassifyListController";
         return ;
     }else {
         for (NSDictionary *dic in resultsArr) {
-            [self.dataSource addObject:dic];
+            JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
+            [self.dataSource addObject:model];
         }
     }
     [self.collectionView reloadData];
@@ -182,10 +184,9 @@ static NSString * cellId = @"JMClassifyListController";
     return self.dataSource.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     JMRootgoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
-    NSDictionary *dic = self.dataSource[indexPath.row];
-    cell.itemDict = dic;
+    JMRootGoodsModel *model = self.dataSource[indexPath.row];
+    [cell fillData:model];
     return cell;
 }
 

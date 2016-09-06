@@ -39,6 +39,8 @@
  */
 @property (nonatomic,strong) NSDictionary *logistics_company;
 
+@property (nonatomic, copy) NSString *order_type;
+
 @property (nonatomic,copy) NSString *out_sid;
 
 @property (nonatomic,copy) NSString *pay_time;
@@ -71,7 +73,7 @@
 
 
 @end
-
+ // order_type --> 判断是否为团购
 /**
  *  "buyer_id" = 1;
  "buyer_message" = "";

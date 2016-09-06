@@ -47,6 +47,8 @@
     BOOL _isWeixinFriends;
     BOOL _isCopy;
     
+    NSString *_titleUrlString;
+    
 }
 
 - (void)viewDidLoad {
@@ -146,6 +148,8 @@
     _imageData = [UIImage imagewithURLString:_imageUrlString];
     _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
+    _titleUrlString = [NSString stringWithFormat:@"%@ %@",_content,_url];
+    
     NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
 }
 
@@ -166,7 +170,7 @@
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
 //            UMSocialUrlResource * urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:(UMSocialUrlResourceTypeImage) url:_url];
             
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_titleUrlString image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //                [self hiddenNavigationView];
                 if (response.responseCode == UMSResponseCodeSuccess) {
                     NSLog(@"分享成功");
@@ -189,7 +193,7 @@
             [self cancelBtnClick];
         }else {
             [UMSocialData defaultData].extConfig.wechatTimelineData.url = _url;
-            [UMSocialData defaultData].extConfig.wechatTimelineData.title = _titleStr;
+            [UMSocialData defaultData].extConfig.wechatTimelineData.title = _titleUrlString;
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
@@ -204,7 +208,7 @@
         [UMSocialData defaultData].extConfig.qqData.url = _url;
         [UMSocialData defaultData].extConfig.qqData.title = _titleStr;
         
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_titleUrlString image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         }];
         
         [self cancelBtnClick];
@@ -216,7 +220,7 @@
         [UMSocialData defaultData].extConfig.qzoneData.url = _url;
         [UMSocialData defaultData].extConfig.qzoneData.title = _titleStr;
         
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_titleUrlString image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //            [self hiddenNavigationView];
         }];
         [self cancelBtnClick];
@@ -226,7 +230,7 @@
             [self createPrompt];
             return;
         }
-        NSString *sina_content = [NSString stringWithFormat:@"%@%@",_titleStr, _url];
+        NSString *sina_content = [NSString stringWithFormat:@"%@%@",_content, _url];
         [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_imageData)];
         [self cancelBtnClick];
 

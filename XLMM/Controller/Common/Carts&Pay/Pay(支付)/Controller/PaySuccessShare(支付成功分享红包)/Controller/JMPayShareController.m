@@ -15,6 +15,7 @@
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
 #import "JMPopView.h"
+#import "PersonOrderViewController.h"
 
 @interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMShareViewDelegate,JMSharePackViewDelegate>
 
@@ -149,13 +150,19 @@
     [SVProgressHUD dismiss];
 }
 - (void)backClick:(UIButton *)sender {
-    NSInteger count = 0;
-    count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (count >= 2) {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-    }else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    // 支付成功后,跳转到待收货页面
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 102;
+    [self.navigationController pushViewController:orderVC animated:YES];
+    
+//    NSInteger count = 0;
+//    count = [[self.navigationController viewControllers] indexOfObject:self];
+//    if (count >= 2) {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+//    }else {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    
 }
 //- (void)isShareApinPayGo {
 //    NSInteger count = 0;

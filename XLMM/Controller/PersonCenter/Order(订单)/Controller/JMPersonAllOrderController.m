@@ -230,8 +230,11 @@
     self.orderStatusLabel = orderStatusLabel;
     self.orderStatusLabel.font = [UIFont systemFontOfSize:13.];
     self.orderStatusLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    self.orderStatusLabel.text = self.orderDetailModel.status_display;
-    
+//    if ([self.orderDetailModel.order_type isEqual:@"3"]) {
+//        [self getTeamID:self.orderDetailModel.tid];
+//    }else {
+        self.orderStatusLabel.text = self.orderDetailModel.status_display;
+//    }
     CGFloat payment = [self.orderDetailModel.payment floatValue];
     UILabel *orderPament = [UILabel new];
     [sectionShowView addSubview:orderPament];
@@ -259,12 +262,12 @@
     }];
     
     [self.orderStatusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(sectionShowView).offset(10);
+        make.right.equalTo(sectionShowView).offset(-10);
         make.centerY.equalTo(sectionShowView.mas_centerY);
     }];
     
     [self.orderPament mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.orderStatusLabel.mas_right).offset(10);
+        make.left.equalTo(sectionShowView).offset(10);
         make.centerY.equalTo(sectionShowView.mas_centerY);
     }];
     
@@ -276,6 +279,25 @@
     
     return sectionView;
 }
+- (void)getTeamID:(NSString *)teamID {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/teambuy/%@/team_info",Root_URL,teamID];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSLog(@"%@",responseObject);
+        NSInteger status = [responseObject[@"status"] integerValue];
+        if (status == 0) {
+            self.orderStatusLabel.text = @"开团中";
+        }else if (status == 1) {
+            self.orderStatusLabel.text = @"开团成功";
+        }else {
+            self.orderStatusLabel.text = @"开团失败";
+        }
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+    
+}
+
 #pragma mark 没有订单显示空视图
 -(void)displayDefaultView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];

@@ -116,6 +116,7 @@
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.titleLabel.mas_bottom).offset(10);
         make.left.equalTo(weakSelf.titleLabel);
+        make.width.mas_equalTo(@(SCREENWIDTH - 180));
     }];
     
     [self.PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -147,7 +148,13 @@
 //    }];
     
 }
-
+- (void)setIsTeamBuy:(BOOL)isTeamBuy {
+    _isTeamBuy = isTeamBuy;
+}
+- (void)setIsCanRefund:(bool)isCanRefund {
+    _isCanRefund = isCanRefund;
+    
+}
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
     NSString *string = goodsModel.pic_path;
 
@@ -162,7 +169,6 @@
 //    }else {
 //        self.iconImage.userInteractionEnabled = NO;
 //    }
-    
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.total_fee floatValue];
@@ -173,13 +179,18 @@
     NSInteger refundStatus = [goodsModel.refund_status integerValue];
     NSString *refundDisplay = goodsModel.refund_status_display;
 //    NSString *orderDisplay = goodsModel.status_display;
-    
     BOOL isOrderStatus = (orderStatus == ORDER_STATUS_CONFIRM_RECEIVE);
-    
     if (orderStatus == ORDER_STATUS_PAYED) {
         if (refundStatus == 0) {
-            [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
-            self.optionButton.tag = 100;
+            if (_isTeamBuy) {
+                if (_isCanRefund) {
+                    [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
+                    self.optionButton.tag = 100;
+                }else { }
+            }else {
+                [self.optionButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"申请退款" TitleFont:12. CornerRadius:10];
+                self.optionButton.tag = 100;
+            }
         }else {
             self.optionButton.hidden = YES;
             self.refundLabel.text = refundDisplay;
@@ -230,6 +241,7 @@
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
     
 }
+
 /**
  *  支付订单数据源赋值
  */

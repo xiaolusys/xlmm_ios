@@ -50,7 +50,6 @@ static BOOL isNetPrompt;
 /**
  *  判断是否为支付页面跳转过来的
  */
-@property (nonatomic,assign) BOOL isAppinPayGo;
 
 @end
 
@@ -142,7 +141,20 @@ static BOOL isNetPrompt;
         
     }
 }
+
+- (void)umengTrack {
+    //[MobClick setLogEnabled:YES];
+    //version标识
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
+    [MobClick startWithConfigure:UMConfigInstance];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self umengTrack];
+    
     isNetPrompt = YES;
     [self AFNetworkStatus];
 
@@ -214,15 +226,6 @@ static BOOL isNetPrompt;
     
     NSLog(@"%d", self.isLaunchedByNotification);
     
-    //[MobClick setLogEnabled:YES];
-    //version标识
-
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-    
-    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
-    UMConfigInstance.channelId = @"App Store";
-    [MobClick startWithConfigure:UMConfigInstance];
     
     //    Class cls = NSClassFromString(@"UMANUtil");
     //    SEL deviceIDSelector = @selector(openUDIDString);
@@ -654,7 +657,7 @@ static BOOL isNetPrompt;
     //    {
     ////        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
     ////        NSString *strMsg;
-    ////        if (resp.errCode == 0) {
+//            if (resp.errCode == 0) {
     ////            strMsg = @"分享成功";
     ////        } else {
     ////            strMsg = @"分享失败";
@@ -812,40 +815,13 @@ static BOOL isNetPrompt;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    self.isAppinPayGo = NO;
 }
-
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    self.isAppinPayGo = NO;
-    
-    
-    
 }
-
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    self.isAppinPayGo = YES;
-    /**
-     *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
-     */
-    if (self.isAppinPayGo) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"isAppinPayGo" object:nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"isShareApinPayGo" object:nil];
-    }
-    
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");
-    
 }
-
-
-
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
 
@@ -856,7 +832,6 @@ static BOOL isNetPrompt;
         _isFirst = NO;
         
         if ((self.pushInfo == nil) || [self.pushInfo objectForKey:@"target_url"] == nil) {
-            
             
         } else {
             dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2
@@ -893,7 +868,11 @@ static BOOL isNetPrompt;
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    
+//    if ([sourceApplication isEqualToString:@"com.jimei.xlmm"]) {
+        NSLog(@"调用的应用程序的Bundle ID是: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+//    }
     
     NSString *urlString = [url absoluteString];
     

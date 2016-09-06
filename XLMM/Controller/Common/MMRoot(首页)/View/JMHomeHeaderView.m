@@ -47,7 +47,7 @@
     NSString *imageString = topDic[@"pic_link"];
 //    NSMutableString *newImageUrl = [NSMutableString stringWithString:imageString];
 //    [newImageUrl appendString:@"?"];
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[imageString JMUrlEncodedString] imageNormalCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[imageString JMUrlEncodedString] imageNormalCompression]] placeholderImage:nil];
     
     
     

@@ -42,6 +42,9 @@
     NSInteger _stockValue;
     NSString *_choiseGoodsColor;
     NSString *_choiseGoodsSize;
+    NSString *_goodsTitleString;     // 商品名称
+    NSString *_skuColorString;       // 颜色
+    NSString *_skuSizeString;        // 尺码
     
     NSInteger _goodsNum;
     NSInteger _goodsColorID;
@@ -127,8 +130,9 @@
 
     UILabel *goodsTitle = [UILabel new];
     [headerView addSubview:goodsTitle];
-    goodsTitle.font = [UIFont systemFontOfSize:16.];
+    goodsTitle.font = [UIFont systemFontOfSize:15.];
     goodsTitle.textColor = [UIColor buttonTitleColor];
+    goodsTitle.numberOfLines = 2;
     self.nameTitle = goodsTitle;
     
     UILabel *PriceLabel = [UILabel new];
@@ -158,9 +162,9 @@
     }];
     
     [goodsTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(headerView).offset(20);
+        make.top.equalTo(headerView).offset(15);
         make.left.equalTo(iconImage.mas_right).offset(10);
-        make.width.mas_equalTo(SCREENWIDTH - 110);
+        make.width.mas_equalTo(SCREENWIDTH - 100);
     }];
     
     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -193,6 +197,7 @@
 - (void)initTypeSizeView:(NSArray *)goodsArray TitleString:(NSString *)titleString {
     _goodsArr = [NSArray array];
     _goodsArr = goodsArray;
+    _goodsTitleString = titleString;
     NSMutableDictionary *sizeDict = [NSMutableDictionary dictionary];
     for (NSDictionary *goodsDic in goodsArray) {
         NSArray *sizeArr = goodsDic[@"sku_items"];
@@ -227,11 +232,8 @@
         }
         
     }
-    
-    
-    
-    
-    self.nameTitle.text = titleString;
+
+    self.nameTitle.text = _goodsTitleString;
     
     UIScrollView *headerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, SCREENWIDTH, TableViewH - 160)];
 //    self.tableView.tableHeaderView = headerView;
@@ -310,7 +312,9 @@
     
     _goodsColorID = [colorD[@"product_id"] integerValue];
     _goodsSizeID = [sizeD[@"sku_id"] integerValue];
-
+    _skuColorString = colorD[@"name"];
+    _skuSizeString = sizeD[@"name"];
+    self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
     
 }
 - (void)composeAttrubuteTypeView:(JMGoodsAttributeTypeView *)typeView Index:(NSInteger)index {
@@ -339,8 +343,10 @@
         NSDictionary *colirD = _goodsArr[index - 1];
         _goodsColorID = [colirD[@"product_id"] integerValue];
         _choiseGoodsColor = self.goodsColorArray[index - 1];
+        _skuColorString = _choiseGoodsColor;
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
+        self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
     }else if ([typeView isEqual:self.sizeView]) {
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         for (int i = 1; i <= self.goodsSizeArray.count; i++) {
@@ -370,7 +376,8 @@
         self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
         _goodsSizeID = [sizeD[@"sku_id"] integerValue];
         _stockValue =  [sizeD[@"free_num"] integerValue];
-
+        _skuSizeString = sizeD[@"name"];
+        self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
     }else {
         
     }
@@ -410,7 +417,7 @@
             NSDictionary *sizeDict = [sizeDic objectForKey:size];
             _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
             _stockValue =  [sizeDict[@"free_num"] integerValue];
-
+            _skuSizeString = sizeDict[@"name"];
             self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
             self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
             code --;
@@ -421,6 +428,11 @@
     
     
 }
+
+
+
+
+
 
 - (void)sureButtonClick:(UIButton *)button {
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];

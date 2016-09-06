@@ -53,7 +53,7 @@
     [self showMessage:message ToView:nil];
 }
 + (void)showMessage:(NSString *)message ToView:(UIView *)view {
-    [self showMessage:message ToView:view RemainTime:1.f Model:MBProgressHUDModeText];
+    [self showMessage:message ToView:view RemainTime:1.0f Model:MBProgressHUDModeText];
 }
 
 
@@ -85,6 +85,14 @@
     hud.dimBackground = YES;
     return hud;
 }
++ (MBProgressHUD *)hideHUDView:(UIView *)view {
+    if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    [hud hideAnimated:YES];
+    return hud;
+}
+
+
 + (void)showLoading:(NSString *)title {
     [self showTitle:title ToView:nil];
 }
