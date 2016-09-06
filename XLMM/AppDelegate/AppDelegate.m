@@ -159,7 +159,7 @@ static BOOL isNetPrompt;
     [self AFNetworkStatus];
 
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    [NSThread sleepForTimeInterval:2.0];
+//    [NSThread sleepForTimeInterval:2.0];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     
