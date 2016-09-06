@@ -106,12 +106,12 @@
     UILabel *descTitleLabel = [UILabel new];
     [self.view addSubview:descTitleLabel];
     self.descTitleLabel = descTitleLabel;
-    self.descTitleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.descTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.descTitleLabel.textColor = [UIColor timeLabelColor];
-    self.descTitleLabel.font = [UIFont systemFontOfSize:11.];
+    self.descTitleLabel.font = [UIFont systemFontOfSize:12.];
     self.descTitleLabel.numberOfLines = 0;
     if ([_userBudget[@"is_cash_out"] integerValue] == 1) {
-        self.descTitleLabel.text = @"提现金额将以微信红包形式，24小时内发至你绑定的微信账户";
+        self.descTitleLabel.text = [NSString stringWithFormat:@"提现金额将以微信红包形式，24小时内发至你绑定的微信账户  \n\n提现说明:默认最低提现金额为8.88元，根据推广活动会调整此最低提现金额，目前最低提现金额为%.2f元。不提现时零钱可以购物消费。",_minWithDrawMoney];
     }else {
         self.descTitleLabel.text = @"暂时不可提现,如有疑问,请询问小鹿客服哦~!";
     }
@@ -153,7 +153,7 @@
     
     UILabel *blanceL = [UILabel new];
     [firstView addSubview:blanceL];
-    blanceL.text = @"我的余额:";
+    blanceL.text = @"我的零钱:";
     blanceL.textColor = [UIColor buttonTitleColor];
     blanceL.font = [UIFont systemFontOfSize:13.];
     [blanceL mas_makeConstraints:^(MASConstraintMaker *make) {
