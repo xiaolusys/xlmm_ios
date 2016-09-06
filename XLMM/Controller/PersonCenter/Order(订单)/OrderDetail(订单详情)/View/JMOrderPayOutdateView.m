@@ -51,7 +51,11 @@
         _isShow = NO;
     }
     if ((statusCount >= ORDER_STATUS_PAYED) && (statusCount <= ORDER_STATUS_TRADE_SUCCESS)) {
-        _isShowShare = YES;
+        if (_isTeamBuy) {
+            _isShowShare = NO;
+        }else {
+            _isShowShare = YES;
+        }
     }else {
         _isShowShare = NO;
     }
@@ -60,33 +64,40 @@
     
 }
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
-    if (_isTeamBuy) {     // 如果是团购的话,就吧下面的继续支付和分享红包的视图给隐藏掉,只显示开团进展
-        self.teamBuyOrderButton.hidden = NO;
+    if (_isShow) {
+        _dateStr = @"";
+        //        self.sureOrderButton.hidden = NO;
+        //        self.canelOrderButton.hidden = NO;
         self.bottomView.hidden = NO;
+        _createTimeStr = createTimeStr;
+        _dateStr = [self formatterTimeString:createTimeStr];
+        _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     }else {
-        if (_isShow) {
-            _dateStr = @"";
-            //        self.sureOrderButton.hidden = NO;
-            //        self.canelOrderButton.hidden = NO;
+        self.sureOrderButton.hidden = YES;
+        self.canelOrderButton.hidden = YES;
+        self.bottomView.hidden = YES;
+        
+        if (_isTeamBuy) {     // 如果是团购的话,就吧下面的继续支付和分享红包的视图给隐藏掉,只显示开团进展
+            self.teamBuyOrderButton.hidden = NO;
             self.bottomView.hidden = NO;
-            _createTimeStr = createTimeStr;
-            _dateStr = [self formatterTimeString:createTimeStr];
-            _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
         }else {
-            if (_isShowShare == YES) {
-                self.shareImage.hidden = NO;
-                self.descLabel.hidden = NO;
-                self.shareButton.hidden = NO;
-                self.sharBottom.hidden = NO;
-            }else {
-                
-            }
-            self.sureOrderButton.hidden = YES;
-            self.canelOrderButton.hidden = YES;
-            self.bottomView.hidden = YES;
             
         }
+        
+        if (_isShowShare == YES) {
+            self.shareImage.hidden = NO;
+            self.descLabel.hidden = NO;
+            self.shareButton.hidden = NO;
+            self.sharBottom.hidden = NO;
+        }else {
+            
+        }
+        
+        
     }
+    
+    
+    
     
 
 }

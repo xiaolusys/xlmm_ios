@@ -338,7 +338,7 @@
             }
         }
     }
-    _checkTeamBuy = [NSString stringWithFormat:@"http://192.168.1.64:7070/mall/order/spell/group/%@?from_page=order_detail",_orderTid];
+    _checkTeamBuy = [NSString stringWithFormat:@"%@/mall/order/spell/group/%@?from_page=order_detail",Root_URL,_orderTid];
 }
 #pragma mark tableHeaderView点击事件 ->修改地址/物流
 - (void)composeHeaderTapView:(JMOrderDetailHeaderView *)headerView TapClick:(NSInteger)index {
@@ -591,7 +591,7 @@
     }else {  // 查看拼团进展
         NSDictionary *diction = [NSMutableDictionary dictionary];
         [diction setValue:_checkTeamBuy forKey:@"web_url"];
-        [diction setValue:@"ProductDetail" forKey:@"type_title"];
+        [diction setValue:@"teamBuySuccessNo" forKey:@"type_title"];
         WebViewController *webView = [[WebViewController alloc] init];
         webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:diction];
         webView.isShowNavBar = true;

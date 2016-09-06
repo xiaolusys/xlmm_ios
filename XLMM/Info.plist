@@ -31,7 +31,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>XLMMskip</string>
+				<string>com.jimei.xlmm</string>
 			</array>
 			<key>CFBundleURLName</key>
 			<string>so.xiaolu.m.xiaolumeimei</string>

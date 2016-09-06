@@ -202,7 +202,7 @@ static NSString *identifier = @"AccountCell";
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 75, 100, 20)];
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"我的余额(元)";
+    titleLabel.text = @"零钱(元)";
     
     [headerV addSubview:titleLabel];
     [headerV addSubview:self.moneyLabel];

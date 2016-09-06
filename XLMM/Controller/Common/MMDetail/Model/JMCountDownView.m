@@ -35,6 +35,7 @@
     }
     return self;
 }
+
 + (instancetype)countDownWithCurrentTime:(NSString *)endTime {
     return [[self shareCountDown] initWithCountDownTime:endTime];
 }
@@ -54,8 +55,6 @@
     
     NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
     NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
-    
-    
     
     __block int timeout  = time;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);

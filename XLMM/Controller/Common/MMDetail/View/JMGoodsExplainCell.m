@@ -12,7 +12,7 @@
 
 NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
-@interface JMGoodsExplainCell ()
+@interface JMGoodsExplainCell ()//<JMCountDownViewDelegate>
 
 @property (nonatomic, strong) UILabel *nameTitle;
 
@@ -25,6 +25,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 @property (nonatomic, strong) UIButton *storeUpButton;
 
 @property (nonatomic, strong) JMCountDownView *countDownView;
+
 
 @end
 
@@ -61,6 +62,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 //    self.itemMask.textAlignment = NSTextAlignmentCenter;
     
     // === 处理结束时间 === //
+
     NSString *endTime = @"";
     NSString *timeString = detailContentDic[@"offshelf_time"];
     if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
@@ -243,7 +245,6 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         make.centerY.equalTo(timerView.mas_centerY);
     }];
 
-    
 }
 
 - (void)storeUpClick:(UIButton *)button {
@@ -253,8 +254,14 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }
     
 }
-
-
+//-(void)countDownStart:(NSString *)countDownTimeArr {
+//    self.timerLabel.text = countDownTimeArr;
+//}
+//
+//-(void)countDownEnd:(NSString *)countDownTimeArr {
+//    self.timerLabel.text = @"商品已下架";
+//}
+//
 
 
 

@@ -306,6 +306,11 @@ static BOOL isAgreeTerms = YES;
     _discount = _couponValue + _rightAmount;
     if (_discount - _amontPayment > 0.000001 || fabs(_discount - _amontPayment) <= 0.000001) {
         self.isCouponEnoughPay = YES;
+        if (self.isUseXLW) {
+            self.isEnoughBudget = YES;
+        }else {
+            self.isEnoughBudget = NO;
+        }
         _discount = _amontPayment;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
         NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
@@ -735,7 +740,7 @@ static BOOL isAgreeTerms = YES;
     }];
 }
 - (void)getTeam:(NSString *)teamID {
-    NSString *string = [NSString stringWithFormat:@"http://192.168.1.64:7070/mall/order/spell/group/%@?from_page=order_commit",teamID];
+    NSString *string = [NSString stringWithFormat:@"%@/mall/order/spell/group/%@?from_page=order_commit",Root_URL,teamID];
     NSDictionary *diction = [NSMutableDictionary dictionary];
     [diction setValue:string forKey:@"web_url"];
     [diction setValue:@"teamBuySuccess" forKey:@"type_title"];

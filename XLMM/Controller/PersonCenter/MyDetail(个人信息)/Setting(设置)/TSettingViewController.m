@@ -11,7 +11,6 @@
 #import "MMClass.h"
 #import "MiPushSDK.h"
 
-
 @interface TSettingViewController ()<MiPushSDKDelegate>
 
 @end
@@ -79,8 +78,9 @@
         make.width.mas_equalTo(@50);
         make.height.mas_equalTo(@30);
     }];
-    
+
 }
+
 - (void)pushMessageOn:(id)sender {
     UISwitch *switchButton = (UISwitch*)sender;
     BOOL isButtonOn = [switchButton isOn];

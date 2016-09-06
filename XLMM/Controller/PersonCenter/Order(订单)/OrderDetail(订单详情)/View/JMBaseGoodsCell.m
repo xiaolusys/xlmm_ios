@@ -116,6 +116,7 @@
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.titleLabel.mas_bottom).offset(10);
         make.left.equalTo(weakSelf.titleLabel);
+        make.width.mas_equalTo(@(SCREENWIDTH - 180));
     }];
     
     [self.PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,7 +169,6 @@
 //    }else {
 //        self.iconImage.userInteractionEnabled = NO;
 //    }
-    
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.total_fee floatValue];
@@ -179,9 +179,7 @@
     NSInteger refundStatus = [goodsModel.refund_status integerValue];
     NSString *refundDisplay = goodsModel.refund_status_display;
 //    NSString *orderDisplay = goodsModel.status_display;
-    
     BOOL isOrderStatus = (orderStatus == ORDER_STATUS_CONFIRM_RECEIVE);
-    
     if (orderStatus == ORDER_STATUS_PAYED) {
         if (refundStatus == 0) {
             if (_isTeamBuy) {

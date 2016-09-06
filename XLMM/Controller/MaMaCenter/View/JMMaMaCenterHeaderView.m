@@ -222,7 +222,7 @@
 //    [vipExaminationButton setImage:[UIImage imageNamed:@"vipGrade_Examination"] forState:UIControlStateNormal];
     vipExaminationButton.tag = 106;
     [vipExaminationButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     
     UIImageView *vipExaminationImage = [UIImageView new];
     [vipExaminationButton addSubview:vipExaminationImage];

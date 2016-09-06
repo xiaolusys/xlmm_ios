@@ -254,8 +254,7 @@
             
             urlString =  secondvalue;
 
-        }
-        else{
+        }else {
             params = [parameter componentsSeparatedByString:@"&is_native="];
             firstvalue = [[params firstObject] substringFromIndex:([@"url=" length])];
             secondvalue = [params lastObject];
