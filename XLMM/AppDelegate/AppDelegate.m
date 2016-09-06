@@ -142,7 +142,12 @@ static BOOL isNetPrompt;
     }
 }
 
-- (void)umengTrack {
+- (void)udeskInit{
+    //uDesk 客服
+    [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
+}
+
+- (void)umengTrackInit {
     //[MobClick setLogEnabled:YES];
     //version标识
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -152,8 +157,26 @@ static BOOL isNetPrompt;
     [MobClick startWithConfigure:UMConfigInstance];
 }
 
+- (void)umengShareInit{
+    [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
+    //qq分享
+    [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
+    
+    //微信分享
+    [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
+    
+    //微博分享
+    [WeiboSDK registerApp:@"2475629754"];
+    
+    
+    [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self umengTrack];
+    //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
+    [self udeskInit];
+    [self umengTrackInit];
     
     isNetPrompt = YES;
     [self AFNetworkStatus];
@@ -239,20 +262,7 @@ static BOOL isNetPrompt;
     //
     //    NSLog(@"－－－－－－－－－－－－%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
-    
-    [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
-    //qq分享
-    [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
-    //uDesk 客服
-    [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
-    //微信分享
-    [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
-    
-    //微博分享
-    [WeiboSDK registerApp:@"2475629754"];
-
-    
-    [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+    [self umengShareInit];
     
     //创建导航控制器，添加根视图控制器
 //    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
