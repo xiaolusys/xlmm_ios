@@ -786,7 +786,7 @@
             NSInteger code = [responseObject[@"code"] integerValue];
             NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
             if (code == 0) {
-                if (isPicked == 0) {
+                if (isPicked == 0) {  // 服务端返回是否弹出首次使用APP字段
                     [self returnPopView];
                 }else {
 //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];

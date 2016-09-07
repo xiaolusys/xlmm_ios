@@ -11,6 +11,7 @@
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "RefundDetailsViewController.h"
+#import "JMEmptyView.h"
 
 @interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -123,7 +124,7 @@
     _nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
-        [self displayDefaultView];
+        [self emptyView];
         return;
     }
     for (NSDictionary *refund in results) {
@@ -159,23 +160,16 @@
     [self.navigationController pushViewController:refundDetailVC animated:YES];
     
 }
--(void)displayDefaultView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
-    UIView *defaultView = views[0];
-    UIButton *button = [defaultView viewWithTag:100];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 1;
-    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-    UILabel *label = (UILabel *)[defaultView viewWithTag:300];
-    label.text = @"亲,您暂时还没有退货(款)订单哦～快去看看吧!";
-    
-    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
-    
-    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
-    [self.view addSubview:defaultView];
-    
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 120) Title:@"亲,您暂时还没有退货(款)订单哦～快去看看吧!" DescTitle:@"再不抢购,就卖光啦~!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
 }
-
 -(void)gotoLandingPage{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
