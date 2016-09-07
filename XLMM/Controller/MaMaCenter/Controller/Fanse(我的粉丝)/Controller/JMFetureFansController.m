@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "JMFetureFansModel.h"
 #import "JMFetureFansCell.h"
+#import "JMEmptyView.h"
 
 
 
@@ -26,7 +27,6 @@
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
 
-@property (nonatomic, strong) UIView *emptyView;
 
 @end
 
@@ -51,7 +51,6 @@
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     [self createButton];
-    [self displayDefaultView];
 }
 
 #pragma mrak 刷新界面
@@ -128,9 +127,8 @@
     _urlStr = data[@"next"];
     NSArray *arr = data[@"results"];
     if (arr.count == 0) {
-        self.emptyView.hidden = NO;
+        [self emptyView];
     }else {
-        self.emptyView.hidden = YES;
         for (NSDictionary *dic in arr) {
             JMFetureFansModel *fetureModel = [JMFetureFansModel mj_objectWithKeyValues:dic];
             [self.dataArray addObject:fetureModel];
@@ -157,21 +155,19 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
--(void)displayDefaultView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"FansEmpty" owner:nil options:nil];
-    UIView *defaultView = views[0];
-    UIButton *button = [defaultView viewWithTag:100];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 1;
-    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-    defaultView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, SCREENWIDTH, SCREENHEIGHT);
-    self.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    self.emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
-    self.emptyView.hidden = YES;
-    [self.view addSubview:self.emptyView];
-    [self.emptyView addSubview:defaultView];
-    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
+
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"您还没有粉丝哦..." DescTitle:@"分享您的精选给好友就会获得粉丝哦~" BackImage:@"heart" InfoStr:@"我的精选"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    };
 }
+
+
 
 -(void)gotoLandingPage{
     [self.navigationController popViewControllerAnimated:YES];

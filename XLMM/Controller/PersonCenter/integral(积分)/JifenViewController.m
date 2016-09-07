@@ -11,6 +11,7 @@
 #import "JiFenCollectionCell.h"
 #import "JifenReusableView.h"
 #import "JiFenModel.h"
+#import "JMEmptyView.h"
 
 
 @interface JifenViewController ()
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) NSNumber *integralValue;
 
+@property (nonatomic, strong) JMEmptyView *empty;
 
 @end
 
@@ -57,9 +59,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     self.collectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
-    
-    [self createEmptyView];
-    
+    [self emptyView];
     [self downlaodData];
    // [self.view addSubview:[[UIView alloc] init]];
    self.integralValue =  [self numberOfJifen];
@@ -68,21 +68,18 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     
     // Do any additional setup after loading the view.
 }
-
-- (void)createEmptyView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"emptyJifenView" owner:nil options:nil];
-    emptyView = views[0];
-    emptyView.frame = CGRectMake(0, SCREENHEIGHT/2 - 60, SCREENWIDTH, 200);
-    UIButton *button = (UIButton *)[emptyView viewWithTag:1234];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 0.5;
-    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    [self.view addSubview:emptyView];
-    emptyView.hidden = YES;
+- (void)emptyView {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"您暂时没有积分记录哦~" DescTitle:@"快去下单赚取积分吧～" BackImage:@"emptyJifenIcon" InfoStr:@"快去抢购"];
+    [self.view addSubview:self.empty];
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
+    self.empty.hidden = YES;
 }
+
 - (void)gotoLeadingView{
     [self.navigationController popToRootViewControllerAnimated:YES];
     
@@ -101,7 +98,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     NSLog(@"dic = %@", dic);
     if ([[dic objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"无积分");
-        emptyView.hidden = NO;
+        self.empty.hidden = NO;
         return [NSNumber numberWithInt:0];
     }
     
@@ -159,7 +156,7 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     NSLog(@"json = %@", json);
     if ([[json objectForKey:@"count"] integerValue] == 0) {
         NSLog(@"您的积分列表为空");
-        emptyView.hidden = NO;
+        self.empty.hidden = NO;
         return;
     }
     NSArray *array = [json objectForKey:@"results"];
@@ -224,10 +221,10 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
 
 //    return 0;
     if (self.dataArray.count == 0) {
-        emptyView.hidden = NO;
+        self.empty.hidden = NO;
     }
     else{
-        emptyView.hidden = YES;
+        self.empty.hidden = YES;
     }
     return self.dataArray.count;
 }

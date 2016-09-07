@@ -11,6 +11,7 @@
 #import "JMCouponRootCell.h"
 #import "JMCouponModel.h"
 #import "JMSelecterButton.h"
+#import "JMEmptyView.h"
 
 @interface JMUsableCouponController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -18,7 +19,6 @@
 
 @property (nonatomic, strong) JMSelecterButton *disableButton;
 
-@property (nonatomic, strong) UIView *emptyView;
 
 @end
 
@@ -28,15 +28,13 @@
     [super viewDidLoad];
     
     [self createTableView];
-    [self displayEmptyView];
 }
 
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
     if (dataSource.count == 0) {
-        self.emptyView.hidden = NO;
+        [self emptyView];
     }else {
-        self.emptyView.hidden = YES;
     }
 }
 
@@ -103,21 +101,17 @@
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;
 }
-- (void)displayEmptyView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];
-    UIView *empty = views[0];
-    UIButton *button = (UIButton *)[empty viewWithTag:100];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 0.5;
-    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
-    self.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    self.emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
-    self.emptyView.hidden = YES;
-    [self.view addSubview:self.emptyView];
-    empty.frame = CGRectMake(0, SCREENHEIGHT/2 - 100, SCREENWIDTH, 220);
-    [self.emptyView addSubview:empty];
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
 }
+
 - (void)gotoLeadingView{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
