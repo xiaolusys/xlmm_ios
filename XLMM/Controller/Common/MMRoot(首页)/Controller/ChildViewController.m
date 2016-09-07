@@ -37,7 +37,7 @@ static NSString * ksimpleCell = @"simpleCell";
     CGFloat _contentY;
     
     NSMutableDictionary *_childDic;
-    
+    BOOL isLoading; //网络请求时置为true，用于网络还未应答时不能切换推荐和价格查询条件控制
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -150,13 +150,17 @@ static NSString * ksimpleCell = @"simpleCell";
         [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
         return;
     }
+    
+    isLoading = true;
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:nextUrl WithParaments:nil WithSuccess:^(id responseObject) {
 //        [self stopFooterRefresh];
         if (!responseObject)return ;
         [self fetchedMorePageData:responseObject];
         [self endRefresh];
+        isLoading = false;
     } WithFail:^(NSError *error) {
         [self endRefresh];
+        isLoading = false;
     } Progress:^(float progress) {
         
     }];
@@ -217,6 +221,7 @@ static NSString * ksimpleCell = @"simpleCell";
     isOrder = NO;
     _isFirst = YES;
     _isupdate = YES;
+    isLoading = NO;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
     self.orderDataArray = [[NSMutableArray alloc] init];
@@ -284,6 +289,7 @@ static NSString * ksimpleCell = @"simpleCell";
     
     //[self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
 //    [SVProgressHUD show];
+    isLoading = true;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,self.cid];
     
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -292,9 +298,11 @@ static NSString * ksimpleCell = @"simpleCell";
         if (!responseObject)return ;
         [self fatchedSuggestListData:responseObject];
         [self endRefresh];
+        isLoading = false;
     } WithFail:^(NSError *error) {
 //        [SVProgressHUD dismiss];
         [self endRefresh];
+        isLoading = false;
     } Progress:^(float progress) {
         
     }];
@@ -324,14 +332,17 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)downloadOrderData{
+    isLoading = true;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?order_by=price&cid=%@&page=1&page_size=10",Root_URL,self.cid];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
 //        [self stopHeaderRefresh];
         if (!responseObject)return ;
         [self fatchedOrderListData:responseObject];
         [self endRefresh];
+        isLoading = false;
     } WithFail:^(NSError *error) {
         [self endRefresh];
+        isLoading = false;
     } Progress:^(float progress) {
         
     }];
@@ -489,6 +500,10 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 - (IBAction)btnClicked:(UIButton *)sender {
     NSLog(@"btnClicked %ld", (long)self.childCollectionView.visibleCells.count );
+    if(isLoading){
+        NSLog(@"isloading data,not change button.");
+        return;
+    }
     
     if(self.childCollectionView.visibleCells.count > 0){
         NSIndexPath *bottomIndexPath=[NSIndexPath indexPathForItem:0 inSection:0];
