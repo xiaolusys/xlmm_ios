@@ -190,9 +190,19 @@ static NSString * ksimpleCell = @"simpleCell";
         }
         [numArray addObject:index];
     }
-    [self.childCollectionView insertItemsAtIndexPaths:numArray];
-    [numArray removeAllObjects];
-    numArray = nil;
+
+    
+    if((numArray != nil) && (numArray.count > 0)){
+        @try{
+            [self.childCollectionView insertItemsAtIndexPaths:numArray];
+            [numArray removeAllObjects];
+            numArray = nil;
+        }
+        @catch(NSException *except)
+        {
+            NSLog(@"DEBUG: childvc failure to batch update.  %@", except.description);
+        }
+    }
     
     _isupdate = YES;
 }
