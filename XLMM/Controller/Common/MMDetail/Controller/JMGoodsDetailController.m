@@ -301,7 +301,7 @@
     }
     // 在这里拿到数据后先判断是否是团购商品 | 团购商品有teambuy_info字段 非团购无   --> 如果是团购商品,购买按钮为单人购买和团购
     if ([goodsDetailDic isKindOfClass:[NSDictionary class]] && [goodsDetailDic objectForKey:@"teambuy_info"]) {
-        NSArray *teamNumBuy = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
+//        NSArray *teamNumBuy = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
         NSDictionary *dic = goodsDetailDic[@"teambuy_info"];
         NSInteger code1 = [dic[@"teambuy_person_num"] integerValue];
         if ([dic[@"teambuy"] boolValue]) {
@@ -311,7 +311,7 @@
             self.addCartButton.hidden = YES;
             CGFloat moneyValueTeam = [dic[@"teambuy_price"] floatValue];
             CGFloat moneyValuePersonal = [detailContentDic[@"lowest_agent_price"] floatValue];
-            NSString *teamString = [NSString stringWithFormat:@"%@人购 ¥%.1f",teamNumBuy[code1],moneyValueTeam];
+            NSString *teamString = [NSString stringWithFormat:@"%ld人购 ¥%.1f", (long)code1, moneyValueTeam];
             NSString *personalString = [NSString stringWithFormat:@"单人购 ¥%.1f",moneyValuePersonal];
             [self.groupBuyTeam setTitle:teamString forState:UIControlStateNormal];
             [self.groupBuyPersonal setTitle:personalString forState:UIControlStateNormal];
