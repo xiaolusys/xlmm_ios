@@ -80,10 +80,6 @@ static NSString * const headViewIdentifier = @"headViewIdentifier";
     self.empty.hidden = YES;
 }
 
-- (void)gotoLeadingView{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-}
 
 - (NSNumber *)numberOfJifen{
     

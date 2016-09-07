@@ -447,14 +447,23 @@
 }
 - (void)backApointInterface {
     NSInteger count = 0;
-    count = [[self.navigationController viewControllers] indexOfObject:self];
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[JMLogInViewController class]]) {
+            count = [[self.navigationController viewControllers] indexOfObject:self];
+        }
+    }
     if (count > 2) {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-//        [self.navigationController popViewControllerAnimated:YES];
+        //        [self.navigationController popViewControllerAnimated:YES];
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+
+    
 }
+
+
+
 
 
 @end

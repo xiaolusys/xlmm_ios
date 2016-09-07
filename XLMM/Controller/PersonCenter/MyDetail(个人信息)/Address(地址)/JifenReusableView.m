@@ -1,23 +1,22 @@
 //
-//  PosterCollectionCell2.m
+//  JifenReusableView.m
 //  XLMM
 //
-//  Created by younishijie on 15/10/30.
+//  Created by younishijie on 15/11/21.
 //  Copyright © 2015年 上海己美. All rights reserved.
 //
 
-#import "PosterCollectionCell2.h"
+#import "JifenReusableView.h"
 
-@implementation PosterCollectionCell2
+@implementation JifenReusableView
 
 - (void)awakeFromNib {
     // Initialization code
 }
-
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"PosterCollectionCell2" owner:self options:nil];
+        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"JifenReusableView" owner:self options:nil];
         if (arrayOfViews.count < 1) {
             return nil;
         }
@@ -29,5 +28,4 @@
     
     return self;
 }
-
 @end

@@ -167,11 +167,6 @@
     };
 }
 
-
-
--(void)gotoLandingPage{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 #pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
