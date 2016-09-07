@@ -30,6 +30,7 @@
     NSDictionary *_userBudget;
     CGFloat _withDrawMoney;
     CGFloat _textFieldMoney;
+    CGFloat _minWithDrawMoney;      // 最小提现金额
 }
 
 - (void)viewDidLoad {
@@ -37,13 +38,15 @@
     self.view.backgroundColor = [UIColor lineGrayColor];
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClick:)];
     
+    
     [self createWtihdrawView];
 }
 - (void)setPersonCenterDict:(NSDictionary *)personCenterDict {
     _personCenterDict = personCenterDict;
     _userBudget = personCenterDict[@"user_budget"];
-    
+    _minWithDrawMoney = [_userBudget[@"cash_out_limit"] floatValue];
 }
+
 - (void)createWtihdrawView {
     
     UIView *firstView = [UIView new];
@@ -103,11 +106,16 @@
     UILabel *descTitleLabel = [UILabel new];
     [self.view addSubview:descTitleLabel];
     self.descTitleLabel = descTitleLabel;
-    self.descTitleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.descTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.descTitleLabel.textColor = [UIColor timeLabelColor];
-    self.descTitleLabel.text = @"提现金额将以微信红包形式，24小时内发至你绑定的微信账户";
-    self.descTitleLabel.font = [UIFont systemFontOfSize:11.];
+    self.descTitleLabel.font = [UIFont systemFontOfSize:12.];
     self.descTitleLabel.numberOfLines = 0;
+    if ([_userBudget[@"is_cash_out"] integerValue] == 1) {
+        self.descTitleLabel.text = [NSString stringWithFormat:@"提现金额将以微信红包形式，24小时内发至你绑定的微信账户  \n\n提现说明:默认最低提现金额为8.88元，根据推广活动会调整此最低提现金额，目前最低提现金额为%.2f元。不提现时零钱可以购物消费。",_minWithDrawMoney];
+    }else {
+        self.descTitleLabel.text = @"暂时不可提现,如有疑问,请询问小鹿客服哦~!";
+    }
+    
     
     UIButton *sureWithdrawButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:sureWithdrawButton];
@@ -145,7 +153,7 @@
     
     UILabel *blanceL = [UILabel new];
     [firstView addSubview:blanceL];
-    blanceL.text = @"我的余额:";
+    blanceL.text = @"我的零钱:";
     blanceL.textColor = [UIColor buttonTitleColor];
     blanceL.font = [UIFont systemFontOfSize:13.];
     [blanceL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -241,6 +249,9 @@
     
 }
 - (void)withdrawSureButton:(UIButton *)button {
+    if ([_userBudget[@"is_cash_out"] integerValue] != 1) {
+        return ;
+    }
     _textFieldMoney = [self.moneyTextF.text floatValue];
     NSNumber *withdrawNum = [NSNumber numberWithFloat:_textFieldMoney];
     NSDictionary *param = @{@"cashout_amount":withdrawNum};
@@ -308,7 +319,7 @@
     BOOL isEnough = ((_withDrawMoney - stringF) > 0.000001);
     BOOL isSureBtn = ((textField.text != 0) && isEnough);
     [self rightDrawCashBtn:isSureBtn];
-    if ((stringF - 8.88) > 0.000001 || fabs(stringF - 8.88) <= 0.000001) {
+    if ((stringF - _minWithDrawMoney) > 0.000001 || fabs(stringF - _minWithDrawMoney) <= 0.000001) {
         [self rightDrawCashBtn:YES];
     }else {
         [self rightDrawCashBtn:NO];

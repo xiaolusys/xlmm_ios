@@ -49,6 +49,7 @@
  */
 @property (nonatomic,strong) UIView *bottomView;
 @property (nonatomic,strong) UILabel *activeLabel;
+@property (nonatomic,strong) UILabel *descLabel;
 @property (nonatomic,strong) UIButton *sureButton;
 
 
@@ -236,6 +237,14 @@
     _active = 10;
     self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_active,(long)_activeValue];
     self.activeLabel.textAlignment = NSTextAlignmentCenter;
+    
+    UILabel *descLabel = [UILabel new];
+    [self.bottomView addSubview:descLabel];
+    descLabel.font = [UIFont systemFontOfSize:12.];
+    descLabel.textColor = [UIColor dingfanxiangqingColor];
+    descLabel.numberOfLines = 0;
+    descLabel.text = @"提现说明：由于微信存在提现次数限制，为了在方便妈妈提现和多次小额提现等待审核时间长之间做一个平衡，我们设定提现金额为100元和200元。金额不足100元情况下，妈妈可以兑换现金券进行消费。";
+    self.descLabel = descLabel;
     
     UIButton *sureButton = [[UIButton alloc] init];
     [self.bottomView addSubview:sureButton];
@@ -480,7 +489,7 @@
     [self.blanceBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.myBlanceView.mas_bottom).offset(0);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@30);
+        make.height.mas_equalTo(@20);
     }];
     
     [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -602,14 +611,20 @@
     }];
     
     [self.activeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_top).offset(10);
+        make.top.equalTo(self.bottomView.mas_top).offset(5);
         make.centerX.equalTo(self.bottomView.mas_centerX);
 //        make.width.mas_equalTo(SCREENWIDTH);
 //        make.height.mas_equalTo(@19);
     }];
     
+    [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.activeLabel.mas_bottom).offset(5);
+        make.left.equalTo(self.bottomView).offset(20);
+        make.width.mas_equalTo(@(SCREENWIDTH - 40));
+    }];
+    
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.activeLabel.mas_bottom).offset(30);
+        make.top.equalTo(self.descLabel.mas_bottom).offset(10);
         make.left.equalTo(self.bottomView.mas_left).offset(15);
         make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(@(79/2));

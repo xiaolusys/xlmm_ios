@@ -159,7 +159,7 @@ static BOOL isNetPrompt;
     [self AFNetworkStatus];
 
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    [NSThread sleepForTimeInterval:2.0];
+//    [NSThread sleepForTimeInterval:2.0];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     
@@ -226,7 +226,6 @@ static BOOL isNetPrompt;
     
     NSLog(@"%d", self.isLaunchedByNotification);
     
-
     
     //    Class cls = NSClassFromString(@"UMANUtil");
     //    SEL deviceIDSelector = @selector(openUDIDString);
@@ -869,7 +868,11 @@ static BOOL isNetPrompt;
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    
+//    if ([sourceApplication isEqualToString:@"com.jimei.xlmm"]) {
+        NSLog(@"调用的应用程序的Bundle ID是: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+//    }
     
     NSString *urlString = [url absoluteString];
     

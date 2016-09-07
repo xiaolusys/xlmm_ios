@@ -35,6 +35,7 @@
     couponeButton.tag = 100;
     couponeButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     couponeButton.layer.borderWidth = 1.;
+
     [couponeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *couponL = [UILabel new];
@@ -58,13 +59,13 @@
     [self addSubview:walletButton];
     walletButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     walletButton.layer.borderWidth = 1.;
-    [walletButton setTitle:@"小鹿钱包" forState:UIControlStateNormal];
+    [walletButton setTitle:@"零钱" forState:UIControlStateNormal];
     walletButton.titleLabel.font = [UIFont systemFontOfSize:14.];
     [walletButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [walletButton setImage:[UIImage imageNamed:@"circle_wallet_Normal"] forState:UIControlStateNormal];
     [walletButton setImage:[UIImage imageNamed:@"circle_wallet_Selected"] forState:UIControlStateSelected];
-    walletButton.titleEdgeInsets = UIEdgeInsetsMake(0, -SCREENWIDTH + 70, 0, 0);
-    walletButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH - 15);
+    walletButton.titleEdgeInsets = UIEdgeInsetsMake(0, -SCREENWIDTH + 40, 0, 0);
+    walletButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH + 10);
     walletButton.tag = 101;
     [walletButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -162,6 +163,7 @@
     [goPayButton setTitle:@"去结算" forState:UIControlStateNormal];
     goPayButton.layer.cornerRadius = 20;
     goPayButton.tag = 103;
+
     [goPayButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.goPayButton = goPayButton;
     
@@ -279,10 +281,16 @@
     }];
 
 }
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button ======= 222222222222");
+    button.userInteractionEnabled = YES;
+}
 - (void)buttonClick:(UIButton *)button {
+    button.userInteractionEnabled = NO;
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterButtonView:UIButton:)]) {
         [_delegate composeFooterButtonView:self UIButton:button];
     }
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.3f];//防止重复点击
 }
 - (void)termsTapClick:(UITapGestureRecognizer *)tap {
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterTapView:)]) {

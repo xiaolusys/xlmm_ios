@@ -39,7 +39,6 @@ NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
         make.bottom.equalTo(weakSelf.contentView).offset(-5);
         make.left.equalTo(weakSelf.contentView);
         make.width.mas_equalTo(@(SCREENWIDTH));
-//        make.height.mas_equalTo(@(SCREENWIDTH * 0.72));
     }];
     
 }
