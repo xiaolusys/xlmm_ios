@@ -15,7 +15,6 @@
 #import "CartViewController.h"
 #import "MMDetailsViewController.h"
 #import "MMCollectionController.h"
-#import "MMCartsView.h"
 #import "MMNavigationDelegate.h"
 #import "JMLogInViewController.h"
 #import "WXApi.h"

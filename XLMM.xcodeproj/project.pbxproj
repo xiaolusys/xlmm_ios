@@ -422,7 +422,7 @@
 		1F3EE5BD1D7FE04A006033FC /* JifenReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3EE5BB1D7FE04A006033FC /* JifenReusableView.xib */; };
 		1F3EE5C31D7FE1A8006033FC /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EE5C01D7FE1A8006033FC /* HMSegmentedControl.m */; };
 		1F3EE5C41D7FE1A8006033FC /* JMPageViewBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EE5C21D7FE1A8006033FC /* JMPageViewBaseController.m */; };
-		1F3EE5C81D7FE1FA006033FC /* MJPullGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EE5C71D7FE1FA006033FC /* MJPullGifHeader.m */; };
+		1F3EE5CE1D7FE86B006033FC /* MJPullGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EE5CD1D7FE86B006033FC /* MJPullGifHeader.m */; };
 		1F3F75551D76BD3D0079D19B /* JMHomeActiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F75541D76BD3D0079D19B /* JMHomeActiveModel.m */; };
 		1F41B2B61CEAE0BA00E63E6F /* JMLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F41B2B51CEAE0BA00E63E6F /* JMLineView.m */; };
 		1F41B2B81CEAECB700E63E6F /* empty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F41B2B71CEAECB700E63E6F /* empty@2x.png */; };
@@ -1535,8 +1535,8 @@
 		1F3EE5C01D7FE1A8006033FC /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		1F3EE5C11D7FE1A8006033FC /* JMPageViewBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPageViewBaseController.h; sourceTree = "<group>"; };
 		1F3EE5C21D7FE1A8006033FC /* JMPageViewBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPageViewBaseController.m; sourceTree = "<group>"; };
-		1F3EE5C61D7FE1FA006033FC /* MJPullGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPullGifHeader.h; sourceTree = "<group>"; };
-		1F3EE5C71D7FE1FA006033FC /* MJPullGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPullGifHeader.m; sourceTree = "<group>"; };
+		1F3EE5CC1D7FE86B006033FC /* MJPullGifHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPullGifHeader.h; sourceTree = "<group>"; };
+		1F3EE5CD1D7FE86B006033FC /* MJPullGifHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPullGifHeader.m; sourceTree = "<group>"; };
 		1F3F75531D76BD3D0079D19B /* JMHomeActiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeActiveModel.h; sourceTree = "<group>"; };
 		1F3F75541D76BD3D0079D19B /* JMHomeActiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeActiveModel.m; sourceTree = "<group>"; };
 		1F41B2B41CEAE0BA00E63E6F /* JMLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLineView.h; sourceTree = "<group>"; };
@@ -4022,8 +4022,8 @@
 		1F3EE5C51D7FE1FA006033FC /* customRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				1F3EE5C61D7FE1FA006033FC /* MJPullGifHeader.h */,
-				1F3EE5C71D7FE1FA006033FC /* MJPullGifHeader.m */,
+				1F3EE5CC1D7FE86B006033FC /* MJPullGifHeader.h */,
+				1F3EE5CD1D7FE86B006033FC /* MJPullGifHeader.m */,
 			);
 			path = customRefresh;
 			sourceTree = "<group>";
@@ -6084,7 +6084,6 @@
 				TargetAttributes = {
 					325BA0ED1B68B18A006D64BD = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = QM2A85BC28;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -6711,6 +6710,7 @@
 				1FF533721D2CA39C003DEABF /* JMWithdrawCashController.m in Sources */,
 				1F27A61C1D27597100A0F80B /* JMFirstOpen.m in Sources */,
 				1F99F85C1D6566E900C6B79C /* UdeskProductView.m in Sources */,
+				1F3EE5CE1D7FE86B006033FC /* MJPullGifHeader.m in Sources */,
 				1F99F8721D6566E900C6B79C /* UdeskMessageBubbleFactory.m in Sources */,
 				183071F81C97BE3700B7665E /* WXLoginController.m in Sources */,
 				183070E61C97B83900B7665E /* JiFenModel.m in Sources */,
@@ -6842,7 +6842,6 @@
 				1F916A5E1D51831200327408 /* JMHTTPManager.m in Sources */,
 				1FF533EB1D2DFACB003DEABF /* JMOrderDetailFooterView.m in Sources */,
 				321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */,
-				1F3EE5C81D7FE1FA006033FC /* MJPullGifHeader.m in Sources */,
 				183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */,
 				1F27A5E71D2520E200A0F80B /* MyInvitationViewController.m in Sources */,
 				325B79D81C97E7160022F930 /* MMAdvertiseView.m in Sources */,
@@ -7393,7 +7392,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4944ae3f-a20d-4682-9bd5-c5a12892d5f0";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XLMM.app/XLMM";
 			};
 			name = Debug;
@@ -7409,7 +7407,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4944ae3f-a20d-4682-9bd5-c5a12892d5f0";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XLMM.app/XLMM";
 			};
 			name = Release;
