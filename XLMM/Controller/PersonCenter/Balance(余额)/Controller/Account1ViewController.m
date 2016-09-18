@@ -11,6 +11,7 @@
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"
+#import "JMEmptyView.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -158,7 +159,7 @@ static NSString *identifier = @"AccountCell";
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
-        [self createEmptyView];
+        [self emptyView];
         return;
     }
     for (NSDictionary *account in results) {
@@ -202,7 +203,7 @@ static NSString *identifier = @"AccountCell";
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 75, 100, 20)];
     titleLabel.font = [UIFont systemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.text = @"我的余额(元)";
+    titleLabel.text = @"零钱(元)";
     
     [headerV addSubview:titleLabel];
     [headerV addSubview:self.moneyLabel];
@@ -220,21 +221,15 @@ static NSString *identifier = @"AccountCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
 }
-
-- (void)createEmptyView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"AccountEmpty" owner:nil options:nil];
-    emptyView = views[0];
-    
-    emptyView.frame = CGRectMake(0, 186, SCREENWIDTH, SCREENHEIGHT - 186);
-    
-    UIButton *button = (UIButton *)[emptyView viewWithTag:101];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 0.5;
-    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    
-    
-    [self.view addSubview:emptyView];
-    //    emptyView.hidden = YES;
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"你的钱包空空如也" DescTitle:@"" BackImage:@"wallet" InfoStr:@"快去逛逛"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
 }
 
 #pragma mark --邀请好友

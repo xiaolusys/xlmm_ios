@@ -13,6 +13,7 @@
 #import "JMOrderGoodsModel.h"
 #import "JMAllOrderModel.h"
 #import "JMOrderDetailController.h"
+#import "JMEmptyView.h"
 
 @interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -137,7 +138,7 @@
     NSArray *allArr = data[@"results"];
     if (allArr.count == 0) {
         //没有订单
-        [self displayDefaultView];
+        [self emptyView];
         return ;
     }
     
@@ -259,12 +260,12 @@
     }];
     
     [self.orderStatusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(sectionShowView).offset(10);
+        make.right.equalTo(sectionShowView).offset(-10);
         make.centerY.equalTo(sectionShowView.mas_centerY);
     }];
     
     [self.orderPament mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.orderStatusLabel.mas_right).offset(10);
+        make.left.equalTo(sectionShowView).offset(10);
         make.centerY.equalTo(sectionShowView.mas_centerY);
     }];
     
@@ -276,19 +277,17 @@
     
     return sectionView;
 }
+
 #pragma mark 没有订单显示空视图
--(void)displayDefaultView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyDefault" owner:nil options:nil];
-    UIView *defaultView = views[0];
-    UIButton *button = [defaultView viewWithTag:100];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 1;
-    button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-    UILabel *label = (UILabel *)[defaultView viewWithTag:300];
-    label.text = @"亲,您暂时还没有订单哦～快去看看吧!";
-    [button addTarget:self action:@selector(gotoLandingPage) forControlEvents:UIControlEventTouchUpInside];
-    defaultView.frame = CGRectMake(0,0,SCREENWIDTH,SCREENHEIGHT);
-    [self.view addSubview:defaultView];
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
 }
 -(void)gotoLandingPage{
     [self.navigationController popToRootViewControllerAnimated:YES];

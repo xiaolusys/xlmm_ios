@@ -11,6 +11,7 @@
 #import "AddressModel.h"
 #import "MMClass.h"
 #import "AddressTableCell.h"
+#import "JMEmptyView.h"
 
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
@@ -128,7 +129,7 @@
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
-        [self displayEmptyAddressView];
+        [self emptyView];
         [self.addressTableView reloadData];
         return;
     }
@@ -181,7 +182,13 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
     AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    cell.addressModel = [dataArray objectAtIndex:indexPath.row];
+    if(dataArray.count > indexPath.row){
+        cell.addressModel = [dataArray objectAtIndex:indexPath.row];
+    }
+    else{
+        return cell;
+    }
+    
     cell.delegate = self;
     
     if (self.isSelected == YES) {
@@ -308,19 +315,18 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-- (void)displayEmptyAddressView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyAddressView" owner:nil options:nil];
-    UIView *view = views[0];
-    view.tag = 888;
-    view.frame = CGRectMake(0, SCREENHEIGHT/2-100, SCREENWIDTH, 140);
-    [self.view addSubview:view];
-}
 
-
+- (void)emptyView {
+//    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您还没有添加收货地址哦～" DescTitle:@"" BackImage:@"empty_address_icon" InfoStr:@""];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            UIButton *button = (UIButton *)[self.view viewWithTag:100];
+            button.hidden = YES;
+        }
+    };
+}
 
 #pragma mark --AddressDelegate--
 

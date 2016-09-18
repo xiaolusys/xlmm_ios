@@ -12,6 +12,8 @@
 
 - (NSString *)JMUrlEncodedString;
 
+- (NSString *)JMURLDecodedString;
+
 - (NSString *)imageCompression;
 
 - (NSString *)imageMoreCompression;

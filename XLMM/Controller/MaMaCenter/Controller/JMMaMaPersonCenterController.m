@@ -37,7 +37,10 @@
 
 static NSUInteger popNum = 0;
 
-@interface JMMaMaPersonCenterController ()<JMNewcomerTaskControllerDelegate,JMShareViewDelegate,UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate>
+
+@interface JMMaMaPersonCenterController ()<JMNewcomerTaskControllerDelegate,JMShareViewDelegate,UITableViewDelegate,UITableViewDataSource,JMMaMaCenterFooterViewDelegate,JMMaMaCenterHeaderViewDelegate> {
+    NSInteger _indexCode;
+}
 
 
 
@@ -98,7 +101,7 @@ static NSUInteger popNum = 0;
 
 @implementation JMMaMaPersonCenterController {
     NSString *_mamaID;
-    NSInteger _indexCode;
+    
     
 }
 - (NSMutableArray *)earningArray {
@@ -128,6 +131,7 @@ static NSUInteger popNum = 0;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _indexCode = 0;
     [MobClick beginLogPageView:@"JMMaMaPersonCenterController"];
     [self loadDataSource];
     [self loadMaMaMessage];
@@ -142,7 +146,6 @@ static NSUInteger popNum = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _indexCode = 0;
-    
     [self createTableView];
     [self createHeaderView];
     [self createFooterView];
@@ -212,7 +215,6 @@ static NSUInteger popNum = 0;
     NSDictionary *configDic = newcomerDic[@"config"];
     BOOL isPOP = [configDic[@"page_pop"] boolValue];
     if (isPOP) {
-        // 测试弹出框
         JMShareView *cover = [JMShareView show];
         self.cover = cover;
         cover.delegate = self;
@@ -345,7 +347,7 @@ static NSUInteger popNum = 0;
     return cell;
 }
 /*
- 100 == > 账户余额
+ 100 == > 账户余额(点击后进入提现界面)
  101 == > 累计收益
  102 == > 活跃度
  103 == > 访客
@@ -480,7 +482,7 @@ static NSUInteger popNum = 0;
         [self.navigationController pushViewController:earningsRankVC animated:YES];
     }else if (index == 111) {
         [MobClick event:@"BBS"];
-//        NSString *urlString = @"http://forum-stg.xiaolumm.com/accounts/xlmm/login/";
+//        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:self.bbsUrl forKey:@"web_url"];
@@ -567,6 +569,9 @@ static NSUInteger popNum = 0;
     button.enabled = YES;
 }
 - (void)customUserInfo {
+    if (self.userInfoDic.count == 0) {
+        return ;
+    }
     NSString *nick_name = self.userInfoDic[@"nick"];
     NSString *sdk_token = self.userInfoDic[@"user_id"];
 //    NSString *cellphone = self.userInfoDic[@"mobile"];
@@ -641,20 +646,24 @@ static NSUInteger popNum = 0;
     [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
 }
 - (void)waitTimer {
-    if (_indexCode == (self.earningArray.count - 1)) {
-        _indexCode = 0;
+    UIViewController *controller = [self.navigationController.viewControllers lastObject];
+    NSLog(@"controller ==== %@",self.navigationController.viewControllers);
+    if ([controller isKindOfClass:[JMMaMaPersonCenterController class]]) {
+        NSLog(@"controller ==== %@",controller);
+        NSLog(@"_indexCode ==== %ld",_indexCode);
+        if (_indexCode >= (self.earningArray.count - 1)) {
+            _indexCode = 0;
+        }
+        [self showNewStatusCount:self.earningArray Image:self.earningImageArray Index:_indexCode];
+        
     }
-    [self showNewStatusCount:self.earningArray Image:self.earningImageArray Index:_indexCode];
-//    if (_indexCode == (self.earningArray.count - 1)) {
-//        _indexCode = 0;
-//    }
+    
 }
 - (void)backClick:(UIButton *)btn {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(waitTimer) object:nil];
 //    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 

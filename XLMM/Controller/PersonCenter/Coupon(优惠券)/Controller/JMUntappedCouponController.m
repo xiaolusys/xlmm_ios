@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "JMCouponModel.h"
 #import "JMCouponRootCell.h"
+#import "JMEmptyView.h"
 //#import "JMSelecterButton.h"
 
 @interface JMUntappedCouponController ()<UITableViewDataSource,UITableViewDelegate>
@@ -36,7 +37,7 @@
     [super viewDidLoad];
     
     [self createTabelView];
-    [self displayEmptyView];
+//    [self displayEmptyView];
     
 }
 - (NSInteger)couponCount {
@@ -62,7 +63,7 @@
 - (void)setCouponArray:(NSArray *)couponArray {
     _couponArray = couponArray;
     if (couponArray.count == 0) {
-        emptyView.hidden = NO;
+        [self emptyView];
     }else {
         for (NSDictionary *dic in couponArray) {
             self.couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
@@ -85,6 +86,18 @@
     [cell configData:self.couponModel Index:[self couponCount]];
     return cell;
 }
+
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+        }
+    };
+}
+
 - (void)displayEmptyView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];
     UIView *empty = views[0];

@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) NSMutableArray *purchaseGoodsArr;
 
+
+
 @end

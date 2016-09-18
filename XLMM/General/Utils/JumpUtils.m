@@ -8,6 +8,7 @@
 
 #import "JumpUtils.h"
 #import "MMClass.h"
+#import "NSString+URL.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "MMDetailsViewController.h"
@@ -34,7 +35,7 @@
         NSLog(@"target_url null");
         return;
     }
-    target_url =  [target_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    target_url =  [target_url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
         //跳到今日上新
@@ -242,6 +243,7 @@
     NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
     NSString *firstparam = [firstparams firstObject];
     NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    NSString *urlString = nil;
     NSLog(@"firstparams %@  %@", firstparam, firstvalue);
     if ([firstparam isEqualToString:@"is_native"] || [firstparam isEqualToString:@"url"]){
         NSString *secondvalue = nil;
@@ -250,15 +252,18 @@
             params = [parameter componentsSeparatedByString:@"url="];
             secondvalue = params[1];
             
-            [web_dic setValue:secondvalue forKey:@"web_url"];
-        }
-        else{
+            urlString =  secondvalue;
+
+        }else {
             params = [parameter componentsSeparatedByString:@"&is_native="];
             firstvalue = [[params firstObject] substringFromIndex:([@"url=" length])];
             secondvalue = [params lastObject];
             
-            [web_dic setValue:firstvalue forKey:@"web_url"];
+            urlString =  firstvalue;
         }
+        
+        NSString *urlStringDecode = [urlString JMURLDecodedString];
+        [web_dic setValue:urlStringDecode forKey:@"web_url"];
 
         NSLog(@"跳到H5首页 firstvalue= %@ secondvalue=%@", firstvalue, secondvalue);
         
@@ -276,19 +281,21 @@
         if ([firstparam isEqualToString:@"activity_id"]){
             params = [parameter componentsSeparatedByString:@"url="];
             secondvalue = params[1];
+            urlString =  secondvalue;
             
             [web_dic setValue:firstvalue forKey:@"activity_id"];
-            [web_dic setValue:secondvalue forKey:@"web_url"];
         }
         else{
             params = [parameter componentsSeparatedByString:@"&activity_id="];
             firstvalue = [[params firstObject] substringFromIndex:([@"url=" length])];
             secondvalue = [params lastObject];
+            urlString =  firstvalue;
             
             [web_dic setValue:secondvalue forKey:@"activity_id"];
-            [web_dic setValue:firstvalue forKey:@"web_url"];
         }
         NSLog(@"跳到activity_id firstvalue=%@ secondvalue= %@", firstvalue, secondvalue);
+        NSString *urlStringDecode = [urlString JMURLDecodedString];
+        [web_dic setValue:urlStringDecode forKey:@"web_url"];
         
         WebViewController *webView = [[WebViewController alloc] init];
         webView.webDiction = web_dic;
@@ -297,7 +304,7 @@
         [vc.navigationController pushViewController:webView animated:YES];
     }
 }
-    
+
 +(void) jumpToCategoryProduct:(NSString *)target_url viewController:(UIViewController *)vc{
     if([target_url rangeOfString:@"?"].length > 0){
         NSArray *components = [target_url componentsSeparatedByString:@"?"];
@@ -320,4 +327,45 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

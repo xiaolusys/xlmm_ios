@@ -82,6 +82,7 @@
 }
 
 -(void)touchbtn:(UIButton *)button {
+//    NSInteger index = button.tag - 100;
     if (_delegate && [_delegate respondsToSelector:@selector(composeAttrubuteTypeView:Index:)]) {
         [_delegate composeAttrubuteTypeView:self Index:button.tag];
     }

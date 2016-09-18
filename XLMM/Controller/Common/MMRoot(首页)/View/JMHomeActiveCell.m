@@ -37,10 +37,8 @@ NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.contentView).offset(5);
         make.bottom.equalTo(weakSelf.contentView).offset(-5);
-//        make.right.equalTo(weakSelf.contentView).offset(-5);
-//        make.left.equalTo(weakSelf.contentView).offset(5);
+        make.left.equalTo(weakSelf.contentView);
         make.width.mas_equalTo(@(SCREENWIDTH));
-//        make.height.mas_equalTo(@(SCREENWIDTH * 0.72));
     }];
     
 }
@@ -53,7 +51,7 @@ NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
 - (void)setModel:(JMHomeActiveModel *)model {
     _model = model;
     
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.act_img JMUrlEncodedString] imageNormalCompression]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.act_img JMUrlEncodedString] imageNormalCompression]] placeholderImage:nil];
     
 }
 

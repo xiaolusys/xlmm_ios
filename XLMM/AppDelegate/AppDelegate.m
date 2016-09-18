@@ -50,7 +50,6 @@ static BOOL isNetPrompt;
 /**
  *  判断是否为支付页面跳转过来的
  */
-@property (nonatomic,assign) BOOL isAppinPayGo;
 
 @end
 
@@ -142,12 +141,48 @@ static BOOL isNetPrompt;
         
     }
 }
+
+- (void)udeskInit{
+    //uDesk 客服
+    [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
+}
+
+- (void)umengTrackInit {
+    //[MobClick setLogEnabled:YES];
+    //version标识
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
+    [MobClick startWithConfigure:UMConfigInstance];
+}
+
+- (void)umengShareInit{
+    [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
+    //qq分享
+    [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
+    
+    //微信分享
+    [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
+    
+    //微博分享
+    [WeiboSDK registerApp:@"2475629754"];
+    
+    
+    [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
+    [self udeskInit];
+    [self umengTrackInit];
+    
     isNetPrompt = YES;
     [self AFNetworkStatus];
 
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    [NSThread sleepForTimeInterval:2.0];
+//    [NSThread sleepForTimeInterval:2.0];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     
@@ -214,14 +249,6 @@ static BOOL isNetPrompt;
     
     NSLog(@"%d", self.isLaunchedByNotification);
     
-    //[MobClick setLogEnabled:YES];
-    //version标识
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    [MobClick setAppVersion:version];
-    
-    UMConfigInstance.appKey = @"5665541ee0f55aedfc0034f4";
-    UMConfigInstance.channelId = @"App Store";
-    [MobClick startWithConfigure:UMConfigInstance];
     
     //    Class cls = NSClassFromString(@"UMANUtil");
     //    SEL deviceIDSelector = @selector(openUDIDString);
@@ -235,20 +262,7 @@ static BOOL isNetPrompt;
     //
     //    NSLog(@"－－－－－－－－－－－－%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     
-    
-    [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
-    //qq分享
-    [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
-    //uDesk 客服
-    [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
-    //微信分享
-    [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
-    
-    //微博分享
-    [WeiboSDK registerApp:@"2475629754"];
-
-    
-    [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+    [self umengShareInit];
     
     //创建导航控制器，添加根视图控制器
 //    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
@@ -653,7 +667,7 @@ static BOOL isNetPrompt;
     //    {
     ////        NSString *strTitle = [NSString stringWithFormat:@"分享结果"];
     ////        NSString *strMsg;
-    ////        if (resp.errCode == 0) {
+//            if (resp.errCode == 0) {
     ////            strMsg = @"分享成功";
     ////        } else {
     ////            strMsg = @"分享失败";
@@ -811,40 +825,13 @@ static BOOL isNetPrompt;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    self.isAppinPayGo = NO;
 }
-
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    self.isAppinPayGo = NO;
-    
-    
-    
 }
-
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-    self.isAppinPayGo = YES;
-    /**
-     *  这里 -- > 如果在进入另一个App后不操作任何事情,点击状态栏中的返回按钮.会调用这个方法,这里使用isApinPayGo判断
-     */
-    if (self.isAppinPayGo) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"isAppinPayGo" object:nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"isShareApinPayGo" object:nil];
-    }
-    
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     NSLog(@"applicationWillEnterForeground");
-    
 }
-
-
-
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
 
@@ -855,7 +842,6 @@ static BOOL isNetPrompt;
         _isFirst = NO;
         
         if ((self.pushInfo == nil) || [self.pushInfo objectForKey:@"target_url"] == nil) {
-            
             
         } else {
             dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2
@@ -892,7 +878,11 @@ static BOOL isNetPrompt;
 
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    
+//    if ([sourceApplication isEqualToString:@"com.jimei.xlmm"]) {
+        NSLog(@"调用的应用程序的Bundle ID是: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+//    }
     
     NSString *urlString = [url absoluteString];
     

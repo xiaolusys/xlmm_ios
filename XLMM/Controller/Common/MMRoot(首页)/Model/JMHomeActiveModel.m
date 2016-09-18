@@ -19,7 +19,7 @@
         
         float h;
         if((imgView == nil) || (imgView.size.width == 0)){
-            h = SCREENWIDTH * 0.6;
+            h = SCREENWIDTH * 0.5;
         }
         else{
             h = SCREENWIDTH * (imgView.size.height / imgView.size.width);
