@@ -68,6 +68,7 @@
     [self createTabelView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    [self.tableView.mj_header beginRefreshing];
 }
 - (NSString *)urlStr {
     return kQuanbuDingdan_URL;
@@ -295,14 +296,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self.tableView.mj_header beginRefreshing];
+//    [self.tableView.mj_header beginRefreshing];
+    [self loadDataSource];
     [MobClick beginLogPageView:@"PersonOrder"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //    self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PersonOrder"];
 }
 - (void)backBtnClicked:(UIButton *)button{

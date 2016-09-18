@@ -185,7 +185,7 @@
 #pragma mark --- 监听微信登录的通知
 - (void)update:(NSNotificationCenter *)notification {
     
-    [SVProgressHUD showWithStatus:@"正在登录......"];
+    [MBProgressHUD showLoading:@"正在登录......"];
     
     dic = [[NSUserDefaults standardUserDefaults] objectForKey:@"userInfo"];
     
@@ -304,7 +304,7 @@
 
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
 //    [MobClick profileSignInWithPUID:@"playerID"];
     
     
@@ -450,11 +450,23 @@
     count = [[self.navigationController viewControllers] indexOfObject:self];
     if ((count > 2) && (count < [self.navigationController viewControllers].count)) {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-//        [self.navigationController popViewControllerAnimated:YES];
+        //        [self.navigationController popViewControllerAnimated:YES];
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+
+    
 }
+
+/**
+ *      for (UIViewController *controller in self.navigationController.viewControllers) {
+ if ([controller isKindOfClass:[JMLogInViewController class]]) {
+ count = [[self.navigationController viewControllers] indexOfObject:self];
+ }
+ }
+ if (count > 2) {
+ */
+
 
 
 @end

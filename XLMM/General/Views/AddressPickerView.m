@@ -9,7 +9,6 @@
 #import "AddressPickerView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JMHelper.h"
-#import "JMDBManager.h"
 
 #define kDuration 0.3
 

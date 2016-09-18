@@ -8,7 +8,6 @@
 
 #import "NewLeftViewController.h"
 #import <RESideMenu.h>
-#import "JifenViewController.h"
 #import "MMUserCoupons.h"
 #import "AddressViewController.h"
 #import "SettingViewController.h"
@@ -23,6 +22,8 @@
 #import "MMClass.h"
 #import "JMGoodsDetailController.h"
 #import "JMHomeRootController.h"
+#import "JMMineIntegralController.h"
+#import "WebViewController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -242,7 +243,8 @@
 - (IBAction)jifenClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        JifenViewController *jifenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
+//        JifenViewController *jifenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
+        JMMineIntegralController *jifenVC = [[JMMineIntegralController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:jifenVC];
         }
@@ -441,9 +443,18 @@
 
 - (IBAction)commonProblemBtnAction:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
+//        CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:COMMONPROBLEM_URL title:@"常见问题"];
+        NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
+        dictionDic[@"titleName"] = @"常见问题";
+        dictionDic[@"web_url"] = COMMONPROBLEM_URL;
+        WebViewController *webView = [[WebViewController alloc] init];
+        webView.webDiction = dictionDic;
+        webView.isShowNavBar = true;
+        webView.isShowRightShareBtn = false;
+
+        
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-            [self.pushVCDelegate rootVCPushOtherVC:common];
+            [self.pushVCDelegate rootVCPushOtherVC:webView];
         }
         [self.sideMenuViewController hideMenuViewController];
     }else{

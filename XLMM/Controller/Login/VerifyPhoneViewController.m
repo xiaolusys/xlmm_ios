@@ -32,7 +32,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -219,15 +219,15 @@
             if (nums == 0) {
                 [self startCountingDown];
             }else {
-                [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
+                [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
             }
         } WithFail:^(NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"登录失败"];
+            [MBProgressHUD showError:@"登录失败"];
         } Progress:^(float progress) {
             
         }];
     }else {
-        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
+        [MBProgressHUD showError:@"手机号错误！"];
     }
     
 }
@@ -394,12 +394,12 @@
     
     if ([[dic objectForKey:@"rcode"] integerValue] != 0){
 //        [self alertMessage:[dic objectForKey:@"msg"]];
-        [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"msg"]];
+        [MBProgressHUD showWarning:[dic objectForKey:@"msg"]];
         return;
     }
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
 //        [self alertMessage:[dic objectForKey:@"msg"]];
-        [SVProgressHUD showInfoWithStatus:[dic objectForKey:@"msg"]];
+        [MBProgressHUD showWarning:[dic objectForKey:@"msg"]];
         
         NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];

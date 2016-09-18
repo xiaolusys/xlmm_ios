@@ -64,7 +64,7 @@
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PublishNewPdtViewController"];
 
 }
@@ -156,16 +156,15 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
     
-    [SVProgressHUD showWithStatus:@"正在加载..."];
+    [MBProgressHUD showLoading:@"正在加载..."];
     //网络请求
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:requestURL WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"获取信息失败"];
+        [MBProgressHUD showError:@"获取信息失败"];
     } Progress:^(float progress) {
         
     }];
@@ -363,7 +362,7 @@
 //        NSLog(@"---------%@", picModel.title);
         [pab setString:picModel.title];
         if (pab == nil) {
-            [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
+            [MBProgressHUD showError:@"请重新复制文案"];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             alert.tag = 102;

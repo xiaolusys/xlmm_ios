@@ -167,11 +167,6 @@
     };
 }
 
-
-
--(void)gotoLandingPage{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 #pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -220,7 +215,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMFetureFansController"];
 }
 - (void)backBtnClicked:(UIButton *)button{

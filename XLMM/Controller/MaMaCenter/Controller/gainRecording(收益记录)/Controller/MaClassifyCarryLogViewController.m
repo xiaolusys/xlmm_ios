@@ -99,7 +99,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"MaClassifyCarryLogViewController"];
 }
 
@@ -281,10 +281,10 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 #pragma mark --网络请求
 - (void)requestAction {
-    [SVProgressHUD showWithStatus:@"正在加载..."];
+    [MBProgressHUD showLoading:@"正在加载..."];
     NSString *url = self.urlArr[self.currentIndex];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject)return ;
         [self dataAnalysis:responseObject];
     } WithFail:^(NSError *error) {

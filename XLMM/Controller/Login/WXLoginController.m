@@ -83,7 +83,7 @@
 
     
 
-    [self createNavigationBarWithTitle:@"手机绑定" selecotr:@selector(backClicked:)];
+    [self createNavigationBarWithTitle:@"手机绑定" selecotr:@selector(backClick:)];
     NSLog(@"用户信息 = %@", self.userInfo);
     self.myImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[self.userInfo objectForKey:@"headimgurl"]]]];
     
@@ -258,7 +258,7 @@
 }
 
 
-- (void)backClicked:(UIButton *)sender {
+- (void)backClick:(UIButton *)sender {
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

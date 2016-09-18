@@ -18,4 +18,6 @@
 
 @property (nonatomic, strong) NSMutableArray *urlArray;
 
+@property (nonatomic, assign) NSInteger selectIndex;
+
 @end

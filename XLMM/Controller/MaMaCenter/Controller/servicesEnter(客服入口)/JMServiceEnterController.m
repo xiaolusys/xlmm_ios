@@ -84,7 +84,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMServiceEnterController"];
 }
 - (void)backClick:(UIButton *)button{

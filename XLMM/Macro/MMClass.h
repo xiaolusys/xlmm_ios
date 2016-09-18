@@ -17,7 +17,6 @@
 #import "UIViewController+NavigationBar.h"
 #import "NSString+URL.h"
 #import <MJRefresh.h>
-#import <FMDB.h>
 #import "JMHTTPManager.h"
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"

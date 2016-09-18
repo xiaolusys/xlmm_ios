@@ -274,7 +274,7 @@
     
     pwd = self.tvpwd.text;
     if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""]){
-        [SVProgressHUD showErrorWithStatus:@"ip or password is empty"];
+        [MBProgressHUD showError:@"ip or password is empty"];
         return;
     }
     
@@ -294,17 +294,17 @@
             
             Root_URL = serverip;
             
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"switch to server %@", serverip]];
+            [MBProgressHUD showSuccess:[NSString stringWithFormat:@"switch to server %@", serverip]];
             
             [self.navigationController popToRootViewControllerAnimated:YES];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         }
         else{
             NSLog(@"debug check failed");
-            [SVProgressHUD showErrorWithStatus:@"debug check failed"];
+            [MBProgressHUD showError:@"debug check failed"];
         }
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"debug check failed"];
+        [MBProgressHUD showError:@"debug check failed"];
     } Progress:^(float progress) {
         
     }];

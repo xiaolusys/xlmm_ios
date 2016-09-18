@@ -11,8 +11,8 @@
 #import "JMStoreUpModel.h"
 #import "WebViewController.h"
 #import "JMEmptyView.h"
-#import "SVProgressHUD.h"
 #import "JMGoodsDetailController.h"
+#import "MBProgressHUD+JMHUD.h"
 
 
 //static NSString *storeUpCell = @"JMHotGoodsController";
@@ -164,7 +164,7 @@
             if (code == 0) {
                 [self.collection.mj_header beginRefreshing];
             }else {
-                [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                [MBProgressHUD showWarning:responseObject[@"info"]];
             }
         } WithFail:^(NSError *error) {
             

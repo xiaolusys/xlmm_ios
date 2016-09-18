@@ -237,16 +237,18 @@
     }else if (index == 105) {
         _isCopy = YES;
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
-        NSString *str = _url;
-        [pab setString:str];
-        if (pab == nil) {
-            [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-        }else
-        {
-            [SVProgressHUD showSuccessWithStatus:@"已复制"];
+        if ([_url isKindOfClass:[NSNull class]] || _url == nil || [_url isEqual:@""]) {
+            [MBProgressHUD showMessage:@"复制失败"];
+        }else {
+            [pab setString:_url];
+            if (pab == nil) {
+                [MBProgressHUD showMessage:@"请重新复制"];
+            }else
+            {
+                [MBProgressHUD showMessage:@"已复制"];
+            }
         }
         //    [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
-        
         [self cancelBtnClick];
 
     }else { // 6
@@ -261,8 +263,7 @@
     [JMShareView hide];
     
     [JMPopView hide];
-    
-    [SVProgressHUD dismiss];
+
 }
 
 //提示分享失败

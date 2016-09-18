@@ -75,10 +75,10 @@
     }];
     
     //网络请求
-    [SVProgressHUD showWithStatus:@"正在加载..."];
+    [MBProgressHUD showLoading:@"正在加载..."];
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/mama/activevalue", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject)return;
         [self fetchListDic:responseObject];
     } WithFail:^(NSError *error) {

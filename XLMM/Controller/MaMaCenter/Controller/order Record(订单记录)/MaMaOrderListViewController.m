@@ -54,7 +54,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"MaMaOrderListViewController"];
 }
 
@@ -140,22 +140,27 @@
 - (void)dataAnalysis:(NSDictionary *)data {
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
-    for (NSDictionary *order in results) {
-        MaMaOrderModel *orderM = [MaMaOrderModel mj_objectWithKeyValues:order];
-        NSString *date = [self dateDeal:orderM.date_field];
-        self.dataArr = [[self.dataDic allKeys] mutableCopy];
-        //判断对应键值的数组是否存在
-        if ([self.dataArr containsObject:date]) {
-            NSMutableArray *orderArr = self.dataDic[date];
-            [orderArr addObject:orderM];
-        }else {
-            NSMutableArray *orderArr = [NSMutableArray arrayWithCapacity:0];
-            [orderArr addObject:orderM];
-            [self.dataDic setObject:orderArr forKey:date];
+    if (results.count == 0) { // 空视图
+        
+    }else {
+        for (NSDictionary *order in results) {
+            MaMaOrderModel *orderM = [MaMaOrderModel mj_objectWithKeyValues:order];
+            NSString *date = [self dateDeal:orderM.date_field];
+            self.dataArr = [[self.dataDic allKeys] mutableCopy];
+            //判断对应键值的数组是否存在
+            if ([self.dataArr containsObject:date]) {
+                NSMutableArray *orderArr = self.dataDic[date];
+                [orderArr addObject:orderM];
+            }else {
+                NSMutableArray *orderArr = [NSMutableArray arrayWithCapacity:0];
+                [orderArr addObject:orderM];
+                [self.dataDic setObject:orderArr forKey:date];
+            }
         }
+        self.dataArr = [[self.dataDic allKeys] mutableCopy];
+        self.dataArr = [self sortAllKeyArray:self.dataArr];
     }
-    self.dataArr = [[self.dataDic allKeys] mutableCopy];
-    self.dataArr = [self sortAllKeyArray:self.dataArr];
+    
 }
 
 //将日期去掉－

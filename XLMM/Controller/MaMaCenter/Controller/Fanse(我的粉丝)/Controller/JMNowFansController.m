@@ -9,7 +9,6 @@
 #import "JMNowFansController.h"
 #import "MMClass.h"
 #import "FanceModel.h"
-#import "FensiTableViewCell.h"
 #import "JMFetureFansCell.h"
 #import "JMEmptyView.h"
 
@@ -184,7 +183,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMNowFansController"];
 }
 - (void)backBtnClicked:(UIButton *)button{

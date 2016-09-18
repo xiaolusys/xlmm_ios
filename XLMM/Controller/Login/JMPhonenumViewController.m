@@ -195,7 +195,7 @@
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;
     if (userName.length == 0 || password.length == 0) {
-        [SVProgressHUD showInfoWithStatus:@"请输入正确的信息！"];
+        [MBProgressHUD showWarning:@"请输入正确的信息！"];
         return;
     }
     NSDictionary *parameters = @{@"username":userName,
@@ -205,7 +205,7 @@
         if ([[responseObject objectForKey:@"rcode"] integerValue] != 0) {
             //            [self alertMessage:[responseObject objectForKey:@"msg"]];
             //            [SVProgressHUD dismiss];
-            [SVProgressHUD showErrorWithStatus:[responseObject objectForKey:@"msg"]];
+            [MBProgressHUD showError:[responseObject objectForKey:@"msg"]];
             return ;
         }
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -218,13 +218,13 @@
         [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
-        [SVProgressHUD showInfoWithStatus:@"登录中....."];
+        [MBProgressHUD showMessage:@"登录中....."];
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         [self setDevice];
         [self backApointInterface];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"登录失败，请重试"];
+        [MBProgressHUD showError:@"登录失败，请重试"];
     } Progress:^(float progress) {
         
     }];
@@ -400,7 +400,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"JMPhonenumViewController"];
 }

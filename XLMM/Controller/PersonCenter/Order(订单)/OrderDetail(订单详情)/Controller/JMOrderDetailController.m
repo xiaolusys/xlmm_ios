@@ -39,7 +39,29 @@
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMShareViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate>
+@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMShareViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
+    NSMutableArray *_refundStatusArray;        //退款状态
+    NSMutableArray *_refundStatusDisplayArray; // 退款状态描述
+    NSMutableArray *_orderStatusDisplay;
+    NSMutableArray *_orderStatus;
+    NSDictionary *_orderDic;
+    NSString *_packageStr;                     // 判断是否分包
+    NSDictionary *_refundDic;
+    NSString *tid;
+    NSString *_orderTid;
+    NSString *_addressGoodsID;
+    
+    BOOL _isTimeLineView;
+    BOOL _isPopChoiseRefundWay;                // 是否弹出选择退款方式
+    BOOL _isTeamBuy;                           // 是否为团购订单
+    NSArray *_choiseRefundArr;                 // 退款方式数组
+    NSDictionary *_choiseRefundDict;           // 退款方式
+    
+    NSInteger _sectionCount;
+    NSInteger _rowCount;
+    NSString *_checkTeamBuy;                   // 查看开团进展
+    bool _isCanRefund;                         // 开团后是否可以退款
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *orderGoodsDataSource;
@@ -93,36 +115,32 @@
 @property (nonatomic,strong) JMShareModel *shareModel;
 
 @property (nonatomic, assign)BOOL isInstallWX;
+@property (nonatomic, strong) NSMutableArray *logisticsArr;  //包裹分组信息
+@property (nonatomic, strong) NSMutableArray *dataSource;    //商品分组信息
 
 @end
 
-@implementation JMOrderDetailController {
-    NSMutableArray *_refundStatusArray;        //退款状态
-    NSMutableArray *_refundStatusDisplayArray; // 退款状态描述
-    NSMutableArray *_orderStatusDisplay;
-    NSMutableArray *_orderStatus;
-    NSDictionary *_orderDic;
-    
-    NSMutableArray *_logisticsArr;             //包裹分组信息
-    NSMutableArray *_dataSource;               //商品分组信息
-    
-    NSString *_packageStr;                     // 判断是否分包
-    NSDictionary *_refundDic;
-    NSString *tid;
-    NSString *_orderTid;
-    NSString *_addressGoodsID;
-    
-    BOOL _isTimeLineView;
-    BOOL _isPopChoiseRefundWay;                // 是否弹出选择退款方式
-    BOOL _isTeamBuy;                           // 是否为团购订单
-    NSArray *_choiseRefundArr;                 // 退款方式数组
-    NSDictionary *_choiseRefundDict;           // 退款方式
-    
-    NSInteger _sectionCount;
-    NSInteger _rowCount;
-    NSString *_checkTeamBuy;                   // 查看开团进展
-    bool _isCanRefund;                         // 开团后是否可以退款
+@implementation JMOrderDetailController
+
+- (JMPackAgeModel *)packageModel {
+    if (_packageModel == nil) {
+        _packageModel = [[JMPackAgeModel alloc] init];
+    }
+    return _packageModel;
 }
+- (NSMutableArray *)logisticsArr {
+    if (_logisticsArr == nil) {
+        _logisticsArr = [NSMutableArray array];
+    }
+    return _logisticsArr;
+}
+- (NSMutableArray *)dataSource {
+    if (_dataSource == nil) {
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
+}
+
 - (JMRefundController *)refundVC {
     if (_refundVC == nil) {
         _refundVC = [[JMRefundController alloc] init];
@@ -213,11 +231,11 @@
 - (void)loadShareRedpage:(NSString *)orderTid {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,orderTid];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject) return;
         [self shareRedpageData:responseObject];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];
@@ -238,12 +256,14 @@
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.orderGoodsDataSource removeAllObjects];
+        [self.dataSource removeAllObjects];
+        [self.logisticsArr removeAllObjects];
         [self refetchData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
-        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+        [MBProgressHUD showError:@"获取数据失败"];
     } Progress:^(float progress) {
         
     }];
@@ -282,11 +302,10 @@
         [_refundStatusDisplayArray addObject:goodsDic[@"refund_status_display"]];
     }
     // ===== 订单详情包裹分包数据源模型 =======
-    _logisticsArr = [NSMutableArray array];
     NSArray *packArr = dicJson[@"package_orders"];
     for (NSDictionary *packDic in packArr) {
         self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:packDic];
-        [_logisticsArr addObject:self.packageModel];
+        [self.logisticsArr addObject:self.packageModel];
     }
     // ===== 订单退款选择是否弹出选择退款方式 ===== //
     _choiseRefundArr = [NSArray array];
@@ -309,7 +328,6 @@
 //        self.outDateView.hidden = YES;
 //    }
     // == 包裹信息的分包判断 == //
-    _dataSource = [NSMutableArray array];
 //    NSInteger count = [self.orderDetailModel.status integerValue];
     NSString *statusDes = self.orderDetailModel.status_display;
     if ([statusDes isEqualToString:@"已付款"]) {
@@ -325,7 +343,7 @@
         [dataArr addObject:self.orderGoodsDataSource[number]];
         number ++;
         if (number == goodsArr.count) {
-            [_dataSource addObject:dataArr];
+            [self.dataSource addObject:dataArr];
         }else {
             NSDictionary *dict2 = goodsArr[number];
             NSString *package2 = dict2[@"package_order_id"];
@@ -333,7 +351,7 @@
                 
             }else {
                 package = package2;
-                [_dataSource addObject:dataArr];
+                [self.dataSource addObject:dataArr];
                 dataArr = [NSMutableArray array];
             }
         }
@@ -368,15 +386,14 @@
 }
 - (void)coverDidClickCover:(JMShareView *)cover {
     [JMPopView hide];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
 }
 #pragma mark UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _dataSource.count;
+    return self.dataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *arr = _dataSource[section];
-    return arr.count;
+    return [self.dataSource[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 90;
@@ -388,12 +405,11 @@
         cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     self.orderGoodsModel = [[JMOrderGoodsModel alloc] init];
-    self.packageModel = [[JMPackAgeModel alloc] init];
-    self.orderGoodsModel = _dataSource[indexPath.section][indexPath.row];
-    if (_logisticsArr.count == 0) {
+    self.orderGoodsModel = self.dataSource[indexPath.section][indexPath.row];
+    if (self.logisticsArr.count == 0) {
         self.packageModel = nil;
     }else {
-        self.packageModel = _logisticsArr[indexPath.section];
+        self.packageModel = self.logisticsArr[indexPath.section];
     }
     cell.isTeamBuy = _isTeamBuy;
     cell.isCanRefund = _isCanRefund;
@@ -404,25 +420,24 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (_logisticsArr.count == 0) {
+    if (self.logisticsArr.count == 0) {
         return 0;
     }else {
         return 35;
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (_logisticsArr.count == 0) {
+    if (self.logisticsArr.count == 0) {
+        self.packageModel = nil;
         return nil;
     }else {
         JMOrderDetailSectionView *sectionView = [[JMOrderDetailSectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
         sectionView.indexSection = section;
-        self.packageModel = [[JMPackAgeModel alloc] init];
-        if (_logisticsArr.count == 0) {
-            self.packageModel = nil;
+        if (section >= self.logisticsArr.count) {
         }else {
-            self.packageModel = _logisticsArr[section];
-            sectionView.packAgeStr = self.packageModel.assign_status_display;
+            self.packageModel = self.logisticsArr[section];
         }
+        sectionView.packAgeStr = self.packageModel.assign_status_display;
         sectionView.delegate = self;
         return sectionView;
     }
@@ -431,11 +446,11 @@
     NSInteger section = indexPath.section;
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     queryVC.index = section;
-    queryVC.orderDataSource = _dataSource[section];
-    if (_logisticsArr.count == 0) {
+    queryVC.orderDataSource = self.dataSource[section];
+    if (self.logisticsArr.count == 0) {
         return ;
     }else {
-        queryVC.logisDataSource = _logisticsArr;
+        queryVC.logisDataSource = self.logisticsArr;
     }
     NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
     if (ligisticsDic == nil) {
@@ -449,8 +464,8 @@
     NSInteger count = index - 100;
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     queryVC.index = count;
-    NSArray *arr = _dataSource[count];
-    NSArray *logisArr = _logisticsArr;
+    NSArray *arr = self.dataSource[count];
+    NSArray *logisArr = self.logisticsArr;
     queryVC.orderDataSource = arr;
     queryVC.logisDataSource = logisArr;
     NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
@@ -463,7 +478,7 @@
 }
 - (void)composeOptionClick:(JMBaseGoodsCell *)baseGoods Tap:(UITapGestureRecognizer *)tap Section:(NSInteger)section Row:(NSInteger)row {
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
-    JMOrderGoodsModel *model = _dataSource[section][row];
+    JMOrderGoodsModel *model = self.dataSource[section][row];
     detailVC.goodsID = model.model_id;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
@@ -472,12 +487,11 @@
     _sectionCount = section;
     _rowCount = row;
     // 100 申请退款 101 确认收货 102 退货退款 103 秒杀不退不换
-    NSArray *arr = _dataSource[section];
+    NSArray *arr = self.dataSource[section];
     JMOrderGoodsModel *model = arr[row];
     if (button.tag == 100) {
-        self.packageModel = [[JMPackAgeModel alloc] init];
-        if (_logisticsArr.count > 0) {
-            self.packageModel = _logisticsArr[section];
+        if (self.logisticsArr.count > 0) {
+            self.packageModel = self.logisticsArr[section];
         }else {
             self.packageModel = nil;
         }
@@ -602,7 +616,7 @@
     }
 }
 - (void)Clickrefund:(JMRefundController *)click ContinuePay:(NSDictionary *)continueDic {
-    [SVProgressHUD showWithStatus:@"支付处理中....."];
+    [MBProgressHUD showLoading:@"支付处理中....."];
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/%@",Root_URL,tid];
     NSMutableString *string = [[NSMutableString alloc] initWithString:urlStr];
     [string appendString:@"/charge"];
@@ -610,7 +624,7 @@
     params[@"channel"] = continueDic[@"id"];
     if ([continueDic[@"id"] isEqualToString:@"wx"]) {
         if (!self.isInstallWX) {
-            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
+            [MBProgressHUD showError:@"亲，没有安装微信哦"];
             return;
         }
     }
@@ -621,9 +635,9 @@
         
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code != 0) {
-            [SVProgressHUD showErrorWithStatus:responseObject[@"info"]];
+            [MBProgressHUD showError:responseObject[@"info"]];
         }else {
-            [SVProgressHUD dismiss];
+            [MBProgressHUD hideHUD];
             NSDictionary *dic = responseObject[@"charge"];
             
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
@@ -638,16 +652,16 @@
                     NSLog(@"completion block: %@", result);
                     
                     if (error == nil) {
-                        [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [MBProgressHUD showSuccess:@"支付成功"];
                         [MobClick event:@"buy_succ"];
                         [self pushShareVC];
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                            [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                            [MBProgressHUD showError:@"用户取消支付"];
                             [MobClick event:@"buy_cancel"];
                             [self popview];
                         } else {
-                            [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            [MBProgressHUD showError:@"支付失败"];
                             NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
                             [MobClick event:@"buy_fail" attributes:temp_dict];
                             NSLog(@"%@",error);
@@ -659,7 +673,7 @@
             
         }
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];
@@ -702,7 +716,7 @@
         }else{}
     }else if (alertView.tag == 101){
         if (buttonIndex == 1) {
-            NSArray *arr = _dataSource[_sectionCount];
+            NSArray *arr = self.dataSource[_sectionCount];
             JMOrderGoodsModel *model = arr[_rowCount];
             if (_isPopChoiseRefundWay == YES) {
                 ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
@@ -777,7 +791,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationWillEnterForegroundNotification

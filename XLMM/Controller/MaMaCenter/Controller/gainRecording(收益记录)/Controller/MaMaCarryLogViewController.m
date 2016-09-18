@@ -57,9 +57,9 @@ static NSString *cellIdentifier = @"carryLogCell";
     [self createNavigationBarWithTitle:@"收益记录" selecotr:@selector(backClickAction)];
     [self createTableView];
     NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/carrylog", Root_URL];
-    [SVProgressHUD showWithStatus:@"正在加载..."];
+    [MBProgressHUD showLoading:@"正在加载..."];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
     } WithFail:^(NSError *error) {
