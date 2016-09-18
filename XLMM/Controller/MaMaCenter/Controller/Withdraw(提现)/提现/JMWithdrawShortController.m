@@ -237,7 +237,7 @@
                         vc.withDrawMoney = _mywithBlance;
                         [self.navigationController pushViewController:vc animated:YES];
                     }else {
-                        [SVProgressHUD showErrorWithStatus:responseObject[@"info"]];
+                        [MBProgressHUD showError:responseObject[@"info"]];
                     }
                     
                 }

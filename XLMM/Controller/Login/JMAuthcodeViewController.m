@@ -249,16 +249,16 @@
                 [self startTime];
                 
             }else {
-                [SVProgressHUD showInfoWithStatus:[responseObject objectForKey:@"msg"]];
+                [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
             }
         } WithFail:^(NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"获取失败！"];
+            [MBProgressHUD showError:@"获取失败！"];
         } Progress:^(float progress) {
             
         }];
     
     }else {
-        [SVProgressHUD showErrorWithStatus:@"手机号错误！"];
+        [MBProgressHUD showError:@"手机号错误！"];
     }
     
     
@@ -307,7 +307,7 @@
     
     NSDictionary *parameters = nil;
     
-    [SVProgressHUD showWithStatus:@"登录中....."];
+    [MBProgressHUD showLoading:@"登录中....."];
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
     }
@@ -323,7 +323,7 @@
         if (!responseObject)return;
         [self verifyAfter:responseObject];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"登录失败！"];
+        [MBProgressHUD showError:@"登录失败！"];
     } Progress:^(float progress) {
         
     }];
@@ -433,7 +433,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"JMAuthcodeViewController"];
 }

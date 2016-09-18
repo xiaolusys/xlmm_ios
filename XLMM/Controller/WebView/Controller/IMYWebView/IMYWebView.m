@@ -7,14 +7,15 @@
 //
 
 #import "IMYWebView.h"
-
 #import "IMY_NJKWebViewProgress.h"
 #import <TargetConditionals.h>
 #import <dlfcn.h>
 #import <WebKit/WebKit.h>
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
-#import "SVProgressHUD.h"
+#import "MBProgressHUD+JMHUD.h"
+
+
 
 @interface IMYWebView()<UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
 
@@ -79,8 +80,7 @@
     [self.realWebView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self addSubview:self.realWebView];
 }
--(void)initWKWebView
-{
+-(void)initWKWebView {
     WKWebViewConfiguration* configuration = [[NSClassFromString(@"WKWebViewConfiguration") alloc] init];
     configuration.preferences = [NSClassFromString(@"WKPreferences") new];
     configuration.userContentController = [NSClassFromString(@"WKUserContentController") new];
@@ -91,50 +91,44 @@
     WKWebView* webView = [[NSClassFromString(@"WKWebView") alloc] initWithFrame:self.bounds configuration:configuration];
     webView.UIDelegate = self;
     webView.navigationDelegate = self;
-    
     webView.backgroundColor = [UIColor clearColor];
     webView.opaque = NO;
-    
     [webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     [webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
-    
     _realWebView = webView;
 }
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSLog(@"new == %@",change[@"new"]);
     NSLog(@"old == %@",change[@"old"]);
-    if([keyPath isEqualToString:@"estimatedProgress"])
-    {
+    if([keyPath isEqualToString:@"estimatedProgress"]) {
         self.estimatedProgress = [change[NSKeyValueChangeNewKey] doubleValue];
-        
-    }
-    else if([keyPath isEqualToString:@"title"])
-    {
+        if (_progressBlock) {
+            _progressBlock(self.estimatedProgress);
+        }
+    }else if ([keyPath isEqualToString:@"title"]) {
         self.title = change[NSKeyValueChangeNewKey];
     }
 }
--(void)initUIWebView
-{
+-(void)initUIWebView {
     UIWebView* webView = [[UIWebView alloc] initWithFrame:self.bounds];
     webView.backgroundColor = [UIColor clearColor];
     webView.opaque = NO;
-//    for (UIView *subview in [webView.scrollView subviews])
-//    {
-//        if ([subview isKindOfClass:[UIImageView class]])
-//        {
-//            ((UIImageView *) subview).image = nil;
-//            subview.backgroundColor = [UIColor clearColor];
-//        }
-//    }
+    for (UIView *subview in [webView.scrollView subviews])
+    {
+        if ([subview isKindOfClass:[UIImageView class]])
+        {
+            ((UIImageView *) subview).image = nil;
+            subview.backgroundColor = [UIColor clearColor];
+        }
+    }
     
-//    self.njkWebViewProgress = [[IMY_NJKWebViewProgress alloc] init];
-//    webView.delegate = _njkWebViewProgress;
-//    _njkWebViewProgress.webViewProxyDelegate = self;
-//    _njkWebViewProgress.progressDelegate = self;
+    self.njkWebViewProgress = [[IMY_NJKWebViewProgress alloc] init];
+    webView.delegate = _njkWebViewProgress;
+    _njkWebViewProgress.webViewProxyDelegate = self;
+    _njkWebViewProgress.progressDelegate = self;
     
-    webView.delegate = self;
-    webView.userInteractionEnabled = YES;
+//    webView.delegate = self;
+//    webView.userInteractionEnabled = YES;
     
     _realWebView = webView;
 }
@@ -152,12 +146,15 @@
     {
         self.originRequest = webView.request;
     }
-    
+    [MBProgressHUD hideHUD];
     [self callback_webViewDidFinishLoad];
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [self callback_webViewDidStartLoad];
+    
+    
+    
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
@@ -168,9 +165,16 @@
     BOOL resultBOOL = [self callback_webViewShouldStartLoadWithRequest:request navigationType:navigationType];
     return resultBOOL;
 }
-- (void)webViewProgress:(IMY_NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-{
+- (void)webViewProgress:(IMY_NJKWebViewProgress *)webViewProgress updateProgress:(float)progress {
+    
     self.estimatedProgress = progress;
+    if (progress >= 1.0) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerJsBridge" object:nil];
+    }
+    if (_progressBlock) {
+        _progressBlock(progress);
+    }
+    
 }
 
 #pragma mark- WKNavigationDelegate
@@ -201,7 +205,7 @@
 //        
 //    }];
     [self callback_webViewDidFinishLoad];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
 {

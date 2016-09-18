@@ -28,12 +28,12 @@
 
 - (void)setUpInit {
     
-    UIView *baseView = [UIView new];
-    [self addSubview:baseView];
-    baseView.backgroundColor = [UIColor whiteColor];
+//    UIView *baseView = [UIView new];
+//    [self addSubview:baseView];
+//    baseView.backgroundColor = [UIColor whiteColor];
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    [baseView addSubview:titleLabel];
+    [self addSubview:titleLabel];
     titleLabel.font = [UIFont systemFontOfSize:13.];
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = [UIColor buttonTitleColor];
@@ -44,29 +44,31 @@
     seeLabel.font = [UIFont systemFontOfSize:13];
     seeLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     seeLabel.text = @"马上查看";
-    [baseView addSubview:seeLabel];
+    [self addSubview:seeLabel];
     self.seeLabel = seeLabel;
     
     kWeakSelf
-    
-    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(weakSelf);
-        make.width.mas_equalTo(SCREENWIDTH - 60);
-        make.height.mas_equalTo(@40);
-    }];
-    
-    [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(baseView);
-        make.centerY.equalTo(baseView.mas_centerY);
-    }];
+//    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.left.equalTo(weakSelf);
+//        make.width.mas_equalTo(SCREENWIDTH - 60);
+//        make.height.mas_equalTo(@40);
+//    }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(baseView.mas_centerY);
-        make.left.equalTo(baseView);
-//        make.right.equalTo(baseView).offset(-60);
-        make.width.mas_equalTo(SCREENWIDTH - 110);
-        make.height.mas_equalTo(@40);
+        make.centerY.equalTo(weakSelf.mas_centerY);
+        make.left.equalTo(weakSelf);
+        //        make.right.equalTo(baseView).offset(-60);
+        make.width.mas_equalTo(@(SCREENWIDTH - 135));
+//        make.height.mas_equalTo(@40);
     }];
+    
+    
+    [seeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf).offset(-5);
+        make.centerY.equalTo(weakSelf.mas_centerY);
+    }];
+    
+    
     
     
 }
@@ -78,3 +80,24 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -43,8 +43,16 @@
 }
 - (void)setPersonCenterDict:(NSDictionary *)personCenterDict {
     _personCenterDict = personCenterDict;
-    _userBudget = personCenterDict[@"user_budget"];
-    _minWithDrawMoney = [_userBudget[@"cash_out_limit"] floatValue];
+    if ([personCenterDict isKindOfClass:[NSDictionary class]] && [personCenterDict objectForKey:@"user_budget"]) {
+        _userBudget = personCenterDict[@"user_budget"];
+        if ([_userBudget isKindOfClass:[NSDictionary class]] && [_userBudget objectForKey:@"cash_out_limit"]) {
+            _minWithDrawMoney = [_userBudget[@"cash_out_limit"] floatValue];
+        }else {
+            _minWithDrawMoney = 8.88;
+        }
+    }else {
+        _minWithDrawMoney = 8.88;
+    }
 }
 
 - (void)createWtihdrawView {

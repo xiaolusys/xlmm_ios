@@ -13,6 +13,7 @@
 
 - (void)createNavigationBarWithTitle:(NSString *)title selecotr:(SEL)aSelector{
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = title;
     label.textColor = [UIColor blackColor];
@@ -46,3 +47,13 @@
 }
 
 @end
+
+
+
+/**  在自己定义的导航栏中或者设计稿中需要去除导航栏的1px横线，主要是颜色太不协调了
+ *   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+     同样,设置tabBar
+     [self.tabBarController.tabBar setBackgroundImage:[UIImage new]];
+     [self.tabBarController.tabBar setShadowImage:[UIImage new]];
+ */

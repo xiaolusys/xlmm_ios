@@ -219,19 +219,19 @@
             [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(shareImage)];
         } else if ([platform isEqualToString:@"web"]){
             UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            NSString *str = sharelink;
-            if (str == nil) {
-                [SVProgressHUD showSuccessWithStatus:@"复制失败"];
+            if ([sharelink isKindOfClass:[NSNull class]] || sharelink == nil || [sharelink isEqual:@""]) {
+                [MBProgressHUD showMessage:@"复制失败"];
                 return ;
+            }else {
+                [pab setString:sharelink];
+                if (pab == nil) {
+                    [MBProgressHUD showMessage:@"请重新复制"];
+                }else
+                {
+                    [MBProgressHUD showMessage:@"已复制"];
+                }
             }
-            [pab setString:str];
-            if (pab == nil) {
-                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-            }else
-            {
-                [SVProgressHUD showSuccessWithStatus:@"已复制"];
-            }
-            [SVProgressHUD showWithStatus:@"正在下载二维码..."];
+            [MBProgressHUD showLoading:@"正在下载二维码..."];
             //            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
             //            [self createKuaiZhaoImage];
         } else if ([platform isEqualToString:@"qqspa"]){
@@ -247,7 +247,7 @@
                 [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:content image:shareImage location:nil urlResource:nil presentedController:vc completion:^(UMSocialResponseEntity *response){
                 }];
             } else {
-                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                [MBProgressHUD showLoading:@"正在生成快照..."];
                 //                [self createKuaiZhaoImage];
             }
         }  else if ([platform isEqualToString:@"pyq"]){
@@ -261,7 +261,7 @@
                 }];
             } else{
                 
-                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                [MBProgressHUD showLoading:@"正在生成快照..."];
                 //                  isWXFriends = NO;
                 //                [self createKuaiZhaoImage];
             }
@@ -280,7 +280,7 @@
 + (void)showLoading:(NSDictionary *)data{
     BOOL isLoading = [data[@"isLoading"] boolValue];
     if (!isLoading) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     }
 }
 

@@ -447,7 +447,7 @@
 }
 
 - (IBAction)commitClicked:(id)sender {
-    [SVProgressHUD showWithStatus:@"退款处理中....."];
+    [MBProgressHUD showLoading:@"退款处理中....."];
     //budget
     NSString *refundChannel = self.refundDic[@"refund_channel"];
     if ([refundChannel isEqualToString:@"budget"]) {
@@ -473,14 +473,14 @@
         if (dic.count == 0) return;
         NSInteger code = [dic[@"code"] integerValue];
         if (code == 0) {
-            [SVProgressHUD dismiss];
+            [MBProgressHUD hideHUD];
             [self returnPopView];
             
         }else {
-            [SVProgressHUD showErrorWithStatus:dic[@"info"]];
+            [MBProgressHUD showError:dic[@"info"]];
         }
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"退款失败,请稍后重试."];
+        [MBProgressHUD showError:@"退款失败,请稍后重试."];
     } Progress:^(float progress) {
         
     }];

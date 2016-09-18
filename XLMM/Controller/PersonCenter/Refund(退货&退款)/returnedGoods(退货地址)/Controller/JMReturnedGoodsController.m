@@ -12,6 +12,8 @@
 #import "JMSelecterButton.h"
 #import "JMChooseLogisticsController.h"
 #import "JMRefundModel.h"
+#import "HCScanQRViewController.h"
+#import "SystemFunctions.h"
 
 @interface JMReturnedGoodsController ()<JMChooseLogisticsControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate> {
     BOOL _isPopup;
@@ -151,8 +153,33 @@
     [self.expressListTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(textTFV);
         make.left.equalTo(textTFV).offset(15);
-        make.width.mas_equalTo(SCREENWIDTH - 30);
+        make.width.mas_equalTo(SCREENWIDTH - 80);
         make.height.mas_equalTo(@60);
+    }];
+    
+    UIButton *erweimaButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [textTFV addSubview:erweimaButton];
+    [erweimaButton addTarget:self action:@selector(erweimaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [erweimaButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.equalTo(textTFV);
+        make.width.height.mas_equalTo(@60);
+    }];
+    UIImageView *buttonImage = [UIImageView new];
+    [erweimaButton addSubview:buttonImage];
+    buttonImage.image = [UIImage imageNamed:@"mamaeryaoqing"];
+    [buttonImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(erweimaButton.mas_centerX);
+        make.centerY.equalTo(erweimaButton.mas_centerY).offset(-5);
+        make.width.height.mas_equalTo(@31);
+    }];
+    UILabel *buttonLabel = [UILabel new];
+    [erweimaButton addSubview:buttonLabel];
+    buttonLabel.text = @"扫一扫";
+    buttonLabel.textColor = [UIColor buttonTitleColor];
+    buttonLabel.font = [UIFont systemFontOfSize:10.];
+    [buttonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(erweimaButton.mas_centerX);
+        make.top.equalTo(buttonImage.mas_bottom);
     }];
     
     UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -174,6 +201,29 @@
 //    self.baseScrollV.contentOffset = CGPointMake(0, 118);
 
     
+}
+#pragma mark --- 扫描二维码
+- (void)erweimaButtonClick:(UIButton *)button {
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied) {
+        //无权限
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"未获得授权使用摄像头哦~\n去\"设置-隐私-相机\"开启一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alert show];
+    }else {
+        HCScanQRViewController *scan = [[HCScanQRViewController alloc]init];
+        scan.showQRCodeInfo = YES;
+        //调用此方法来获取二维码信息
+        [scan successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
+            NSLog(@"%@",QRCodeInfo);
+            if ([QRCodeInfo isKindOfClass:[NSNull class]] || QRCodeInfo == nil || [QRCodeInfo isEqual:@""]) {
+                [MBProgressHUD showError:@"扫描有误,请重试"];
+            }else {
+                self.expressListTF.text = QRCodeInfo;
+            }
+            
+        }];
+        [self.navigationController pushViewController:scan animated:YES];
+    }
 }
 #pragma mark --- 联系客服
 - (void)rightClicked:(UIButton *)button {
@@ -200,12 +250,12 @@
     [self.expressListTF resignFirstResponder];
     NSLog(@"提交。。。。");
     if([_expressName isEqualToString:@"请选择快递公司"]){
-        [SVProgressHUD showErrorWithStatus:@"请填写快递公司信息"];
+        [MBProgressHUD showError:@"请填写快递公司信息"];
         return;
     }
     
     if([[_expressNum stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
-        [SVProgressHUD showErrorWithStatus:@"请填写快递单号信息"];
+        [MBProgressHUD showError:@"请填写快递单号信息"];
         return;
     }
     
@@ -242,7 +292,7 @@
             } WithFail:^(NSError *error) {
                 NSLog(@"Error: %@", error);
                 NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-                [SVProgressHUD showErrorWithStatus:@"提交退货快递信息失败，请检查网络后重试！"];
+                [MBProgressHUD showError:@"提交退货快递信息失败，请检查网络后重试！"];
             } Progress:^(float progress) {
                 
             }];
@@ -327,12 +377,6 @@
 }
 
 @end
-
-
-
-
-
-
 
 
 

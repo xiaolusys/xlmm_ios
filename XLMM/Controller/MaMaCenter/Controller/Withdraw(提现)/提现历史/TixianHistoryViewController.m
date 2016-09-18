@@ -67,13 +67,13 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=1", Root_URL];
 //    NSLog(@"string = %@", self.nextString);
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextString WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject) return;
         [self fetchedHistoryData:responseObject];
         [self.tableView reloadData];
         [self endRefresh];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];

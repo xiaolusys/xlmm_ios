@@ -242,6 +242,7 @@ static NSString *identifier = @"AccountCell";
 //提现
 - (void)rightBarButtonAction {
     JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
+    
     drawCash.personCenterDict = self.personCenterDict;
     
     drawCash.block=^(CGFloat money){

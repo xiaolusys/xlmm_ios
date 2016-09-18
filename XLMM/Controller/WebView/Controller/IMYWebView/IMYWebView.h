@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WKScriptMessageHandler.h>
 
+typedef void (^IMYWebViewProgressBlock)(double estimatedProgress);
 @class IMYWebView;
 @protocol IMYWebViewDelegate <NSObject>
 @optional
@@ -17,6 +18,7 @@
 - (void)webViewDidFinishLoad:(IMYWebView *)webView;
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error;
 - (BOOL)webView:(IMYWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
+
 
 @end
 
@@ -34,6 +36,7 @@
 @property (nonatomic, readonly) BOOL usingUIWebView;
 ///预估网页加载进度
 @property (nonatomic, readonly) double estimatedProgress;
+@property (nonatomic, copy) IMYWebViewProgressBlock progressBlock;
 
 @property (nonatomic, readonly) NSURLRequest *originRequest;
 
@@ -79,4 +82,41 @@
 ///是否根据视图大小来缩放页面  默认为YES
 @property (nonatomic) BOOL scalesPageToFit;
 
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

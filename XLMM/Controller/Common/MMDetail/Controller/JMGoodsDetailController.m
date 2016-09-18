@@ -14,7 +14,6 @@
 #import "JMGoodsLoopRollView.h"
 #import "JMGoodsInfoPopView.h"
 #import "JMGoodsSafeGuardCell.h"
-#import "SVProgressHUD.h"
 #import "IMYWebView.h"
 #import "JMShareViewController.h"
 #import "JMPopView.h"
@@ -283,25 +282,9 @@
     coustomInfoDic = goodsDetailDic[@"custom_info"];
     goodsArray = goodsDetailDic[@"sku_info"];
     
-    NSString *saleStatus = detailContentDic[@"sale_state"];
-    if ([saleStatus isEqual:@"on"]) {
-        if ([detailContentDic[@"is_sale_out"] boolValue]) {
-            [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
-            self.addCartButton.enabled = NO;
-        }else {
-            self.addCartButton.enabled = YES;
-        }
-    }else if ([saleStatus isEqual:@"off"]) {
-        [self.addCartButton setTitle:@"已下架" forState:UIControlStateNormal];
-        self.addCartButton.enabled = NO;
-    }else if ([saleStatus isEqual:@"will"]) {
-        [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
-        self.addCartButton.enabled = NO;
-    }else {
-    }
     // 在这里拿到数据后先判断是否是团购商品 | 团购商品有teambuy_info字段 非团购无   --> 如果是团购商品,购买按钮为单人购买和团购
     if ([goodsDetailDic isKindOfClass:[NSDictionary class]] && [goodsDetailDic objectForKey:@"teambuy_info"]) {
-        NSArray *teamNumBuy = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
+//        NSArray *teamNumBuy = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
         NSDictionary *dic = goodsDetailDic[@"teambuy_info"];
         NSInteger code1 = [dic[@"teambuy_person_num"] integerValue];
         if ([dic[@"teambuy"] boolValue]) {
@@ -311,7 +294,7 @@
             self.addCartButton.hidden = YES;
             CGFloat moneyValueTeam = [dic[@"teambuy_price"] floatValue];
             CGFloat moneyValuePersonal = [detailContentDic[@"lowest_agent_price"] floatValue];
-            NSString *teamString = [NSString stringWithFormat:@"%@人购 ¥%.1f",teamNumBuy[code1],moneyValueTeam];
+            NSString *teamString = [NSString stringWithFormat:@"%ld人购 ¥%.1f", (long)code1, moneyValueTeam];
             NSString *personalString = [NSString stringWithFormat:@"单人购 ¥%.1f",moneyValuePersonal];
             [self.groupBuyTeam setTitle:teamString forState:UIControlStateNormal];
             [self.groupBuyPersonal setTitle:personalString forState:UIControlStateNormal];
@@ -323,6 +306,47 @@
         _isTeamBuyGoods = NO;
         self.addCartButton.hidden = NO;
     }
+    // === 显示商品出售状态 === //
+    NSString *saleStatus = detailContentDic[@"sale_state"];
+    
+    if (_isTeamBuyGoods) { // 团购
+        if ([saleStatus isEqual:@"on"]) {
+            if ([detailContentDic[@"is_sale_out"] boolValue]) {
+                [self getStatusButton:YES];
+                [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
+                self.addCartButton.enabled = NO;
+            }else {
+                [self getStatusButton:NO];
+            }
+        }else if ([saleStatus isEqual:@"off"]) {
+            [self getStatusButton:YES];
+            [self.addCartButton setTitle:@"已下架" forState:UIControlStateNormal];
+            self.addCartButton.enabled = NO;
+        }else if ([saleStatus isEqual:@"will"]) {
+            [self getStatusButton:YES];
+            [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
+            self.addCartButton.enabled = NO;
+        }else {
+        }
+    }else {
+        if ([saleStatus isEqual:@"on"]) {
+            if ([detailContentDic[@"is_sale_out"] boolValue]) {
+                [self.addCartButton setTitle:@"已抢光" forState:UIControlStateNormal];
+                self.addCartButton.enabled = NO;
+            }else {
+                self.addCartButton.enabled = YES;
+            }
+        }else if ([saleStatus isEqual:@"off"]) {
+            [self.addCartButton setTitle:@"已下架" forState:UIControlStateNormal];
+            self.addCartButton.enabled = NO;
+        }else if ([saleStatus isEqual:@"will"]) {
+            [self.addCartButton setTitle:@"即将开售" forState:UIControlStateNormal];
+            self.addCartButton.enabled = NO;
+        }else {
+        }
+    }
+    
+    
     if (goodsArray.count == 0) {
         return ;
     }else {
@@ -334,6 +358,17 @@
         [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
     }
     [self.tableView reloadData];
+}
+- (void)getStatusButton:(BOOL)isShow {
+    if (isShow) {
+        self.groupBuyPersonal.hidden = YES;
+        self.groupBuyTeam.hidden = YES;
+        self.addCartButton.hidden = NO;
+    }else {
+        self.groupBuyPersonal.hidden = NO;
+        self.groupBuyTeam.hidden = NO;
+        self.addCartButton.hidden = YES;
+    }
 }
 - (void)navigationBarButton:(UIButton *)button {
     if (button.tag == 100 || button.tag == 102) {
@@ -400,10 +435,10 @@
                         NSInteger code = [responseObject[@"code"] integerValue];
                         if (code == 0) {
                             button.selected = YES;
-                            [SVProgressHUD showSuccessWithStatus:@"收藏成功"];
+                            [MBProgressHUD showSuccess:@"收藏成功"];
                         }else {
                             button.selected = NO;
-                            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                            [MBProgressHUD showWarning:responseObject[@"info"]];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = NO;
@@ -421,10 +456,10 @@
                         NSInteger code = [responseObject[@"code"] integerValue];
                         if (code == 0) {
                             button.selected = NO;
-                            [SVProgressHUD showSuccessWithStatus:@"取消成功"];
+                            [MBProgressHUD showSuccess:@"取消成功"];
                         }else {
                             button.selected = YES;
-                            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+                            [MBProgressHUD showWarning:responseObject[@"info"]];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = YES;

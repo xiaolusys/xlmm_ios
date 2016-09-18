@@ -182,7 +182,13 @@
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"AddressTableCell" owner:nil options:nil];
     AddressTableCell *cell = [array objectAtIndex:0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    cell.addressModel = [dataArray objectAtIndex:indexPath.row];
+    if(dataArray.count > indexPath.row){
+        cell.addressModel = [dataArray objectAtIndex:indexPath.row];
+    }
+    else{
+        return cell;
+    }
+    
     cell.delegate = self;
     
     if (self.isSelected == YES) {

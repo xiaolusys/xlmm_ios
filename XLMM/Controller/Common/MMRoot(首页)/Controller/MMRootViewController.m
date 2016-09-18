@@ -42,7 +42,6 @@
 #import "JMPopViewAnimationDrop.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMHelper.h"
-#import "JMDBManager.h"
 #import "JMUpdataAppPopView.h"
 #import "JMMaMaPersonCenterController.h"
 #import "JMStoreupController.h"
@@ -552,12 +551,12 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                     NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
                     if (code == 0) {
                         if (isPicked == 1) {
-                            [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                            [MBProgressHUD showSuccess:responseObject[@"info"]];
                         }else {
                             [self pickCoupon];
                         }
                     }else {
-                        [SVProgressHUD showErrorWithStatus:@"请登录"];
+                        [MBProgressHUD showError:@"请登录"];
                     }
                 }
             } WithFail:^(NSError *error) {
@@ -591,7 +590,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
                     //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
-                [SVProgressHUD showErrorWithStatus:@"请登录"];
+                [MBProgressHUD showError:@"请登录"];
             }
             
         }
@@ -609,9 +608,9 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         }else {
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
-                [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                [MBProgressHUD showSuccess:responseObject[@"info"]];
             }else {
-                [SVProgressHUD showErrorWithStatus:@"领取失败"];
+                [MBProgressHUD showError:@"领取失败"];
             }
         }
     } WithFail:^(NSError *error) {

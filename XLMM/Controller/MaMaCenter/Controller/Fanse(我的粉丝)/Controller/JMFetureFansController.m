@@ -215,7 +215,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMFetureFansController"];
 }
 - (void)backBtnClicked:(UIButton *)button{

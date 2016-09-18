@@ -87,6 +87,10 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
     }
     return _dataSource;
 }
+- (void)setSelectIndex:(NSInteger)selectIndex {
+    _selectIndex = selectIndex;
+    _currentIndex = _selectIndex;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -100,7 +104,7 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
 //        self.urlArray = @[@"s18.xiaolumm.com/rest/v2/mama/rank/carry_total_rank ",@"s18.xiaolumm.com/rest/v2/mama/rank/carry_duration_rank"];
         [self loadNoTeamData];
     }
-    _currentIndex = 0;
+    _currentIndex = _selectIndex;
 
     _allDataArray = [NSMutableArray array];
     _weekDataArray = [NSMutableArray array];
@@ -111,9 +115,9 @@ static NSString *JMMaMaEarningsRankIdfier = @"JMMaMaEarningsRankController";
     [self createSegmentView];
     [self loadSelfInfoDataSource];
     
-    _currentIndex = 0;
+    _currentIndex = _selectIndex;
     for (UIButton *btn in self.btnView.subviews) {
-        if (btn.tag == 100) {
+        if (btn.tag == 100 + _currentIndex) {
             [self titleBtnClickAction:btn];
         }
     }

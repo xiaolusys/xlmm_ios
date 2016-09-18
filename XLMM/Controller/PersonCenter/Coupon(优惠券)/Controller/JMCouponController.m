@@ -54,7 +54,7 @@
 }
 
 - (void)loadCouponData {
-    [SVProgressHUD showWithStatus:@"小鹿正在加载优惠券,稍等片刻哦~!"];
+    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
     NSArray *countArr = @[@"0",@"3",@"1"];
     for (int i = 0; i < countArr.count; i++) {
         [self loadData:countArr[i]];
@@ -89,7 +89,7 @@
             
         }
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"优惠券加载失败,请稍后重试~!"];
+        [MBProgressHUD showError:@"优惠券加载失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -143,7 +143,7 @@
     self.usedCouponVC.couponArray = usedArr;
     
     
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);

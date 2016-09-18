@@ -7,7 +7,6 @@
 //
 
 #import "WebViewJavascriptBridge.h"
-#import "SVProgressHUD.h"
 
 #if __has_feature(objc_arc_weak)
     #define WVJB_WEAK __weak
@@ -137,7 +136,7 @@
     /**
      *  在webView加载完成后 执行取消提示框操作
      */
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
 
     if (webView != _webView) { return; }
     
