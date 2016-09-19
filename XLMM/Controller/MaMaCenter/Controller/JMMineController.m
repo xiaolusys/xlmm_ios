@@ -62,7 +62,7 @@
 @property (nonatomic, strong) UILabel *label6;                 // 我的粉丝
 @property (nonatomic, strong) UILabel *label7;                 // 个人排名
 @property (nonatomic, strong) UILabel *label8;                 // 我的团队
-
+@property (nonatomic, strong) UIButton *renewButton;           // 续费按钮
 
 
 /**
@@ -242,8 +242,8 @@
     UIView *memberView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 45)];
     [headerView addSubview:memberView];
     memberView.backgroundColor = [UIColor whiteColor];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    [memberView addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+//    [memberView addGestureRecognizer:tap];
     
     UILabel *memberL = [UILabel new];
     [memberView addSubview:memberL];
@@ -255,14 +255,28 @@
     [memberView addSubview:memberLabel];
     self.memberLabel = memberLabel;
     
+    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [memberView addSubview:self.renewButton];
+    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
+    self.renewButton.tag = 108;
+    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(memberView).offset(10);
         make.centerY.equalTo(memberView.mas_centerY);
     }];
     [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(memberView).offset(-10);
+        make.right.equalTo(memberView).offset(-60);
         make.centerY.equalTo(memberView.mas_centerY);
     }];
+    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(memberView);
+        make.centerY.equalTo(memberView.mas_centerY);
+        make.width.mas_equalTo(@(60));
+        make.height.mas_equalTo(@(45));
+    }];
+    
     
     
     UILabel *memberLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 149, SCREENWIDTH, 1)];
@@ -376,11 +390,11 @@
 
     
 }
-- (void)tapClick:(UITapGestureRecognizer *)tap {
-    JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
-    renewVC.cashValue = _carryValue;
-    [self.navigationController pushViewController:renewVC animated:YES];
-}
+//- (void)tapClick:(UITapGestureRecognizer *)tap {
+//    JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+//    renewVC.cashValue = _carryValue;
+//    [self.navigationController pushViewController:renewVC animated:YES];
+//}
 /**
  *  100 --> 我的提现
  *  101 --> 累计收益
@@ -442,6 +456,10 @@
         teamVC.mamaID = _mamaID;
         teamVC.explainUrl = _teamExplainUrl;
         [self.navigationController pushViewController:teamVC animated:YES];
+    }else if (index == 108) {
+        JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+        renewVC.cashValue = _carryValue;
+        [self.navigationController pushViewController:renewVC animated:YES];
     }else { }
   
 }
