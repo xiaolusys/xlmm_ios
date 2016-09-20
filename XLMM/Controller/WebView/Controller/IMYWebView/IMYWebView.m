@@ -146,7 +146,6 @@
     {
         self.originRequest = webView.request;
     }
-    [MBProgressHUD hideHUD];
     [self callback_webViewDidFinishLoad];
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -205,7 +204,7 @@
 //        
 //    }];
     [self callback_webViewDidFinishLoad];
-    [MBProgressHUD hideHUD];
+    
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error
 {

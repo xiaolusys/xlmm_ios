@@ -406,6 +406,8 @@
 }
 #pragma mark --- 确认提现按钮点击
 - (void)sureBtnClick:(UIButton *)btn {
+    btn.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:btn afterDelay:0.5f];
     
     NSString *stringurl;
     
@@ -462,7 +464,10 @@
     }];
 
 }
-
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
+}
 
 - (void)alterMessage:(NSString *)message{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

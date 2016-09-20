@@ -15,6 +15,7 @@
 #import "JMPopMenuView.h"
 #import "JMEmptyView.h"
 
+
 #define HeadViewHeight 35
 
 @interface ProductSelectionListViewController ()<UIAlertViewDelegate,JMProductSelectListCellDelegate>
@@ -92,7 +93,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-//    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUDForView:self.view];
     [MobClick endLogPageView:@"ProductSelectionListViewController"];
 
 }
@@ -103,7 +104,7 @@
     reverseCode = 0;
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+//    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
 //    self.numberLabel.text = self.numbersOfSelected;
     [self numbersOfSelected];
     
@@ -291,12 +292,13 @@
 - (void)selectedClicked:(UIButton *)button{
     self.selectImageView.image = [UIImage imageNamed:@"uparrowicon"];
     CGFloat width = 100;
-    CGFloat height = 200;
+    CGFloat height = 300;
     CGFloat originX = 10;
     CGFloat originY = 110;
     CGPoint point = CGPointMake(0.5, 0);
     [JMPopMenuView configCustomPopMenuWithFrame:CGRectMake(originX, originY, width, height) ImageArr:nil TitleArr:itemNameArray AnchorPoint:point selectedRowIndex:^(NSInteger index) {
         self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+        [self.allButton setTitle:itemNameArray[index] forState:UIControlStateNormal];
         if (index == 0) {
             [self downloadAlllist:nil];
         }else {
@@ -311,71 +313,71 @@
     [JMPopMenuView hideView];
 }
 
-- (void)createSeletedView{
-    CGFloat width = 75;
-    CGFloat height = 100;
-    CGFloat originX = SCREENWIDTH/6 - 30;
-    CGFloat originY = 90;
-    
-    self.selectedView = [[UIView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
-    self.backImageView = [[UIImageView alloc ] initWithFrame:self.selectedView.bounds];
-    self.backImageView.image = [UIImage imageNamed:@"selectedImageView.png"];
-    [self.selectedView addSubview:self.backImageView];
-    [self.view addSubview:self.selectedView];
-    self.selectedView.hidden = YES;
-    
-    self.secondButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 60, width, 44)];
-    [self.secondButton setTitle:@"童装" forState:UIControlStateNormal];
-    [self.secondButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.selectedView addSubview:self.secondButton];
-   
-    self.firstButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, width, 44)];
-    [self.firstButton setTitle:@"女装" forState:UIControlStateNormal];
-    [self.firstButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.selectedView addSubview:self.firstButton];
-    
-    [self.firstButton addTarget:self action:@selector(firstbuttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.secondButton addTarget:self action:@selector(secondButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-}
+//- (void)createSeletedView{
+//    CGFloat width = 75;
+//    CGFloat height = 100;
+//    CGFloat originX = SCREENWIDTH/6 - 30;
+//    CGFloat originY = 90;
+//    
+//    self.selectedView = [[UIView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
+//    self.backImageView = [[UIImageView alloc ] initWithFrame:self.selectedView.bounds];
+//    self.backImageView.image = [UIImage imageNamed:@"selectedImageView.png"];
+//    [self.selectedView addSubview:self.backImageView];
+//    [self.view addSubview:self.selectedView];
+//    self.selectedView.hidden = YES;
+//    
+//    self.secondButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 60, width, 44)];
+//    [self.secondButton setTitle:@"童装" forState:UIControlStateNormal];
+//    [self.secondButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    [self.selectedView addSubview:self.secondButton];
+//   
+//    self.firstButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, width, 44)];
+//    [self.firstButton setTitle:@"女装" forState:UIControlStateNormal];
+//    [self.firstButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    [self.selectedView addSubview:self.firstButton];
+//    
+//    [self.firstButton addTarget:self action:@selector(firstbuttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.secondButton addTarget:self action:@selector(secondButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//}
 
-- (void)hiddeSeletedView{
-    self.selectedView.hidden = YES;
-    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
-    
-    
-}
-- (void)performSelector:(SEL)aSelector title1:(NSString *)title1 title2:(NSString *)title2 title3:(NSString*)title3{
-    if ([self respondsToSelector:aSelector]) {
-        [self performSelector:aSelector withObject:nil];
-    }
-    [self hiddeSeletedView];
-    [self.allButton setTitle:title1 forState:UIControlStateNormal];
-    [self.firstButton setTitle:title2 forState:UIControlStateNormal];
-    [self.secondButton setTitle:title3 forState:UIControlStateNormal];
-    
-    
-}
-- (void)firstbuttonClicked:(UIButton *)button{
-   
-    if ([self.firstButton.currentTitle isEqualToString:@"女装"]) {
-        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
-      
-    } else if ([self.firstButton.currentTitle isEqualToString:@"全部"]){
-        [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-    }
-   
-}
-- (void)secondButtonClicked:(UIButton *)button{
-    if ([self.secondButton.currentTitle isEqualToString:@"女装"]) {
-        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
-      
-        
-    } else if ([self.secondButton.currentTitle isEqualToString:@"童装"]){
-        [self performSelector:@selector(downloadChildliat) title1:@"童装" title2:@"全部" title3:@"女装"];
-    
-    }
-}
+//- (void)hiddeSeletedView{
+//    self.selectedView.hidden = YES;
+//    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+//    
+//    
+//}
+//- (void)performSelector:(SEL)aSelector title1:(NSString *)title1 title2:(NSString *)title2 title3:(NSString*)title3{
+//    if ([self respondsToSelector:aSelector]) {
+//        [self performSelector:aSelector withObject:nil];
+//    }
+//    [self hiddeSeletedView];
+//    [self.allButton setTitle:title1 forState:UIControlStateNormal];
+//    [self.firstButton setTitle:title2 forState:UIControlStateNormal];
+//    [self.secondButton setTitle:title3 forState:UIControlStateNormal];
+//    
+//    
+//}
+//- (void)firstbuttonClicked:(UIButton *)button{
+//   
+//    if ([self.firstButton.currentTitle isEqualToString:@"女装"]) {
+//        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
+//      
+//    } else if ([self.firstButton.currentTitle isEqualToString:@"全部"]){
+//        [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+//    }
+//   
+//}
+//- (void)secondButtonClicked:(UIButton *)button{
+//    if ([self.secondButton.currentTitle isEqualToString:@"女装"]) {
+//        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
+//      
+//        
+//    } else if ([self.secondButton.currentTitle isEqualToString:@"童装"]){
+//        [self performSelector:@selector(downloadChildliat) title1:@"童装" title2:@"全部" title3:@"女装"];
+//    
+//    }
+//}
 
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
@@ -442,16 +444,19 @@
         
     }];
 }
+#pragma mark 数据请求 (主要)
 - (void)loadDataSource:(NSMutableDictionary *)param {
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:param WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
-//        [MBProgressHUD hideHUD];
         [self.tableView reloadData];
+        [MBProgressHUD hideHUDForView:self.view];
     } WithFail:^(NSError *error) {
         [self endRefresh];
+        [MBProgressHUD hideHUDForView:self.view];
     } Progress:^(float progress) {
         
     }];
@@ -495,29 +500,29 @@
     
     
 }
-/**
- *  童装
- */
-- (void)downloadChildliat{
-//    [MBProgressHUD showLoading:@"加载中..."];
-    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    category = 1;
-    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    [self loadDataSource];
-}
-/**
- *  女装
- */
-- (void)downloadLadylist{
-//    [MBProgressHUD showLoading:@"加载中..."];
-    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    category = 2;
-    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
-    [self loadDataSource];
-    
-}
+///**
+// *  童装
+// */
+//- (void)downloadChildliat{
+////    [MBProgressHUD showLoading:@"加载中..."];
+//    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    category = 1;
+//    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
+//    [self loadDataSource];
+//}
+///**
+// *  女装
+// */
+//- (void)downloadLadylist{
+////    [MBProgressHUD showLoading:@"加载中..."];
+//    [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    category = 2;
+//    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
+//    [self loadDataSource];
+//    
+//}
 /**
  *  佣金排序
  */

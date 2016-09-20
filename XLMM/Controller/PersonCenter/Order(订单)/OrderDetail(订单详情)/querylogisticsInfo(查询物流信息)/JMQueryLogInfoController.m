@@ -89,7 +89,7 @@
     packageModel = logisDataSource[self.index];
     self.packetId = packageModel.out_sid;
     NSDictionary *logisticsDic = packageModel.logistics_company;
-    self.companyCode = logisticsDic[@"id"];
+    self.companyCode = logisticsDic[@"code"];
     self.packageModel = packageModel;
 }
 
@@ -113,10 +113,10 @@
 }
 /**
  *  数据请求  http://m.xiaolumeimei.com/rest/v1/wuliu/get_wuliu_by_packetid?packetid=3101040539131&company_code=YUNDA_QR
+            http://192.168.1.8:8005/rest/v1/wuliu/get_wuliu_by_packetid?packetid=227838694987&company_code=STO
  */
 - (void)loadData {
     
-//    _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", _urlStr);
     

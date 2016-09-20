@@ -558,9 +558,12 @@ static NSUInteger popNum = 0;
 //    [self.navigationController pushViewController:enterVC animated:YES];
     button.enabled = NO;
     [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-
-    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
-    [self.navigationController pushViewController:robot animated:YES];
+    
+    UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
+    [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
+    
+//    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
+//    [self.navigationController pushViewController:robot animated:YES];
     
 //    UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
 //    [self.navigationController pushViewController:chat animated:YES];

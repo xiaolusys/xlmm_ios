@@ -38,6 +38,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MBProgressHUD hideHUDForView:self.view];
     [MobClick endLogPageView:@"ShopPreviousViewController"];
 }
 
@@ -343,13 +344,13 @@
 
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    [MBProgressHUD showLoading:@"正在加载中....."];
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUDForView:self.view];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [MBProgressHUD showError:@"加载失败~!"];
+    [MBProgressHUD hideHUDForView:self.view];
     [self backClickAction];
 }
 

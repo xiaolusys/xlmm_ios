@@ -1,4 +1,4 @@
-//
+    //
 //  JMBillDetailController.m
 //  XLMM
 //
@@ -12,8 +12,11 @@
 #import "NSString+DeleteT.h"
 #import "TixianViewController.h"
 #import "JMWithdrawCashController.h"
+#import "Account1ViewController.h"
 
-@interface JMBillDetailController ()<UIAlertViewDelegate>
+@interface JMBillDetailController ()<UIAlertViewDelegate> {
+    NSInteger flag;
+}
 
 //头View
 @property (nonatomic,strong) UIView *headView;
@@ -111,10 +114,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-
+    
     [self createNavigationBarWithTitle:@"账单明细" selecotr:@selector(backClickedesllect:)];
-    [self loadDataSource];
-
+    if (flag == 10) {
+        
+    }else {
+        [self loadDataSource];
+    }
+    
+    
     [self createUI];
     [self createLayout];
     
@@ -156,11 +164,19 @@
         
     }];
 }
+- (void)setAccountDic:(NSDictionary *)accountDic {
+    _accountDic = accountDic;
+    
+    flag = 10;
+    
+}
+
+
 - (void)createNoActive:(NSDictionary *)dict {
     _iceTimeLabel.text = dict[@"budget_date"];
     _disTimeLabel.text = dict[@"budget_date"];
     _sucTimeLabel.text = dict[@"budget_date"];
-    _withdrawToAccountValueLabel.text = @"微信红包";
+    _withdrawToAccountValueLabel.text = dict[@"budget_log_type"];//@"微信红包";
     _moneyImageView.text = [NSString stringWithFormat:@"%.2f",self.withDrawF];
     _balanceValueLabel.text = [NSString stringWithFormat:@"%.2f",self.withdrawMoney];
     _setUpTimeValueLabel.text = dict[@"budget_date"];
@@ -431,7 +447,21 @@
         surplusActiveValueLabel.font = [UIFont systemFontOfSize:12.];
     }
     
-
+    if (flag == 10) {
+        if ([self.accountDic[@"budget_type"] boolValue]) {
+            self.takeoutMoney.text = @"出账金额(元)";
+        }else {
+            self.takeoutMoney.text = @"入账金额(元)";
+            self.withdrawToAccountLabel.text = @"收入至账户:";
+            self.sucLabel.text = @"收入成功";
+        }
+        
+        [self createNoActive:self.accountDic];
+        self.balanceLabel.hidden = YES;
+        self.moneyImageView.text = CS_FLOAT([self.accountDic[@"budeget_detail_cash"] floatValue]);
+        self.balanceValueLabel.text = @"";
+    }
+    
     
 
 }
@@ -754,7 +784,7 @@
     
     
     for (UIViewController *temp in self.navigationController.viewControllers) {
-        if ([temp isKindOfClass:[TixianViewController class]] || [temp isKindOfClass:[JMWithdrawCashController class]]) {
+        if ([temp isKindOfClass:[TixianViewController class]] || [temp isKindOfClass:[JMWithdrawCashController class]] || [temp isKindOfClass:[Account1ViewController class]]) {
             [self.navigationController popToViewController:temp animated:YES];
         }
     }

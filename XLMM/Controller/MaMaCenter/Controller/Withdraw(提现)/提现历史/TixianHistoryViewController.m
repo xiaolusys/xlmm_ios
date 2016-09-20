@@ -69,6 +69,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return;
+        [self.dataArray removeAllObjects];
         [self fetchedHistoryData:responseObject];
         [self.tableView reloadData];
         [self endRefresh];
@@ -103,7 +104,6 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         return;
     }
     _urlStr = data[@"next"];
-    [self.dataArray removeAllObjects];
     NSDictionary *dicJson = data;
     NSArray *results = [dicJson objectForKey:@"results"];
     for (NSDictionary *dic in results) {

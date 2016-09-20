@@ -10,6 +10,7 @@
 #import "PublishNewPdtViewController.h"
 #import "MMClass.h"
 #import "JMBillDetailController.h"
+#import "JMWithDrawDetailController.h"
 
 @interface TixianSucceedViewController ()
 
@@ -217,18 +218,17 @@
 
 - (void)rightClicked:(UIButton *)button{
 
-    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+//    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+//    billDetail.withdrawMoney = _surplusMoney; // 剩余金额
+//    billDetail.activeValue = _activeValueNum; // 剩余活跃值
+//    billDetail.withDrawF = self.tixianjine;
+//    billDetail.isActiveValue = self.isActiveValue;
     
-    billDetail.withdrawMoney = _surplusMoney; // 剩余金额
-    
-    billDetail.activeValue = _activeValueNum; // 剩余活跃值
-    
-    billDetail.withDrawF = self.tixianjine;
-    
+    JMWithDrawDetailController *billDetail = [[JMWithDrawDetailController alloc] init];
     billDetail.isActiveValue = self.isActiveValue;
-    
-    
     [self.navigationController pushViewController:billDetail animated:YES];
+    
+    
     
     
 }

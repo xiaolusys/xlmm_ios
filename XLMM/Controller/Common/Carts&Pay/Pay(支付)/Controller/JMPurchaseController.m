@@ -30,6 +30,7 @@
 #import "JMDelayPopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "WebViewController.h"
+#import "JMRichTextTool.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -314,7 +315,8 @@ static BOOL isAgreeTerms = YES;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
         NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
         NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_amontPayment];
-        self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+        NSString *amontPatStr = [NSString stringWithFormat:@"%.2f",_amontPayment];
+        self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,amontPatStr]];//[self stringText:mutableStr WithStr:paymentStr];
         self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
     }else {
         self.isCouponEnoughPay = NO;
@@ -326,14 +328,16 @@ static BOOL isAgreeTerms = YES;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
-                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+                NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
+                self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
                 self.isEnoughBudget = NO;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
-                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+                NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
+                self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
             }
         }else {
@@ -346,7 +350,8 @@ static BOOL isAgreeTerms = YES;
             self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _discount];
             NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _discount];
             NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
-            self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+            NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
+            self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
         }
     }
 }
@@ -807,18 +812,7 @@ static BOOL isAgreeTerms = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作
-- (NSMutableAttributedString *)stringText:(NSString *)string WithStr:(NSString *)payString {
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
-    NSInteger payLength = payString.length;
-    NSInteger strLength = string.length;
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,4)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(4, payLength)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(0,4)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.] range:NSMakeRange(4,payLength)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
-    return str;
-}
+
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
     NSArray *firstArr = [str componentsSeparatedByString:@"&"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -913,7 +907,21 @@ static BOOL isAgreeTerms = YES;
 
 
 
+/**
 
+- (NSMutableAttributedString *)stringText:(NSString *)string WithStr:(NSString *)payString {
+ NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+ NSInteger payLength = payString.length;
+ NSInteger strLength = string.length;
+ [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,4)];
+ [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(4, payLength)];
+ [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
+ [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(0,4)];
+ [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.] range:NSMakeRange(4,payLength)];
+ [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
+ return str;
+ }
+ */
 
 
 

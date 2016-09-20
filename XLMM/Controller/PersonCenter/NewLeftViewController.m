@@ -24,6 +24,7 @@
 #import "JMHomeRootController.h"
 #import "JMMineIntegralController.h"
 #import "WebViewController.h"
+#import "JMWithDrawDetailController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -282,8 +283,8 @@
 - (IBAction)suggestionClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
-//        JMGoodsDetailController *yijianVC = [[JMGoodsDetailController alloc] init];
+        JMWithDrawDetailController *yijianVC = [[JMWithDrawDetailController alloc] init];
+//        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
         }

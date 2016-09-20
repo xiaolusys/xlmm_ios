@@ -11,7 +11,9 @@
 #import "JMFetureFansCell.h"
 #import "VisitorModel.h"
 
-@interface TodayVisitorViewController ()
+@interface TodayVisitorViewController () {
+    NSInteger VisitorNum;
+}
 @property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)NSMutableDictionary *dataDic;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -21,7 +23,7 @@
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
-
+@property (nonatomic, strong) UILabel *titleLabel;
 @end
 
 @implementation TodayVisitorViewController
@@ -96,10 +98,35 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
+    self.tableView.backgroundColor = [UIColor countLabelColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableHeaderView = headerView;
+    UILabel *descLabel = [UILabel new];
+    descLabel.textColor = [UIColor buttonTitleColor];
+    descLabel.text = @"最近14天访客记录";
+    descLabel.font = [UIFont systemFontOfSize:14.];
+    [headerView addSubview:descLabel];
+    
+    self.titleLabel = [UILabel new];
+    self.titleLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:36.];
+    [headerView addSubview:self.titleLabel];
+    
+    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(headerView).offset(20);
+        make.centerX.equalTo(headerView.mas_centerX);
+    }];
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(descLabel.mas_bottom).offset(10);
+        make.centerX.equalTo(descLabel.mas_centerX);
+    }];
+    
+    
+    
     
 }
 #pragma mark -- 请求数据
@@ -157,6 +184,8 @@
 
 
 - (void)fetchedData:(NSDictionary *)dic{
+    VisitorNum = [dic[@"count"] integerValue];
+    self.titleLabel.text = [NSString stringWithFormat:@"%ld",VisitorNum];
     self.nextPage = dic[@"next"];
     NSArray *array = dic[@"results"];
     if (array.count == 0) { // 空视图

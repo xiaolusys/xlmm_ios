@@ -37,7 +37,8 @@ static NSString * ksimpleCell = @"simpleCell";
     CGFloat _contentY;
     
     NSMutableDictionary *_childDic;
-    BOOL isLoading; //网络请求时置为true，用于网络还未应答时不能切换推荐和价格查询条件控制
+//    BOOL isLoading; //网络请求时置为true，用于网络还未应答时不能切换推荐和价格查询条件控制
+    NSString *nextNavTitle;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -85,6 +86,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [MBProgressHUD hideHUDForView:self.view];
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -151,16 +153,16 @@ static NSString * ksimpleCell = @"simpleCell";
         return;
     }
     
-    isLoading = true;
+//    isLoading = true;
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:nextUrl WithParaments:nil WithSuccess:^(id responseObject) {
 //        [self stopFooterRefresh];
         if (!responseObject)return ;
         [self fetchedMorePageData:responseObject];
         [self endRefresh];
-        isLoading = false;
+//        isLoading = false;
     } WithFail:^(NSError *error) {
         [self endRefresh];
-        isLoading = false;
+//        isLoading = false;
     } Progress:^(float progress) {
         
     }];
@@ -216,12 +218,12 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self itemDataSource];
-//    [self craeteRight];
+    [self itemDataSource];
+    [self craeteRight];
     isOrder = NO;
     _isFirst = YES;
     _isupdate = YES;
-    isLoading = NO;
+//    isLoading = NO;
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
     self.orderDataArray = [[NSMutableArray alloc] init];
@@ -238,20 +240,12 @@ static NSString * ksimpleCell = @"simpleCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     
-//    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadGoods)];
-//    header.lastUpdatedTimeLabel.hidden = YES;
-//    self.childCollectionView.mj_header = header;
-//    //添加上拉加载
-//    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
-//    }];
+    [self createTopButton];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     
     [self.childCollectionView.mj_header beginRefreshing];
-//    [self reloadGoods];
-    NSLog(@"Child vc viewDidLoad end");
-    [self createButton];
+    
     
 }
 
@@ -283,26 +277,20 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)downloadData{
-//    if (self.delegate && [self.delegate performSelector:@selector(showNavigation)]) {
-//        [self.delegate showNavigation];
-//    }
-    
-    //[self downLoadWithURLString:self.urlString andSelector:@selector(fatchedChildListData:)];
-//    [SVProgressHUD show];
-    isLoading = true;
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
+//    isLoading = true;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,self.cid];
-    
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-//        [self stopHeaderRefresh];
-//        [SVProgressHUD dismiss];
         if (!responseObject)return ;
+        [self.dataArray removeAllObjects];
         [self fatchedSuggestListData:responseObject];
         [self endRefresh];
-        isLoading = false;
+        [MBProgressHUD hideHUDForView:self.view];
+//        isLoading = false;
     } WithFail:^(NSError *error) {
-//        [SVProgressHUD dismiss];
         [self endRefresh];
-        isLoading = false;
+        [MBProgressHUD hideHUDForView:self.view];
+//        isLoading = false;
     } Progress:^(float progress) {
         
     }];
@@ -322,7 +310,6 @@ static NSString * ksimpleCell = @"simpleCell";
     if (array.count == 0) {
         return;
     }
-    [self.dataArray removeAllObjects];
     for (NSDictionary *ladyInfo in array) {
         JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:ladyInfo];
         [_dataArray addObject:model];
@@ -332,17 +319,21 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 - (void)downloadOrderData{
-    isLoading = true;
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
+//    isLoading = true;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?order_by=price&cid=%@&page=1&page_size=10",Root_URL,self.cid];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
 //        [self stopHeaderRefresh];
         if (!responseObject)return ;
+        [self.orderDataArray removeAllObjects];
         [self fatchedOrderListData:responseObject];
         [self endRefresh];
-        isLoading = false;
+        [MBProgressHUD hideHUDForView:self.view];
+//        isLoading = false;
     } WithFail:^(NSError *error) {
         [self endRefresh];
-        isLoading = false;
+        [MBProgressHUD hideHUDForView:self.view];
+//        isLoading = false;
     } Progress:^(float progress) {
         
     }];
@@ -357,10 +348,9 @@ static NSString * ksimpleCell = @"simpleCell";
     }
     
     _isupdate = YES;
-    
     NSArray *array = [json objectForKey:@"results"];
     nextUrl = [json objectForKey:@"next"];
-    [self.orderDataArray removeAllObjects];
+    
     for (NSDictionary *ladyInfo in array) {
         JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:ladyInfo];
         [self.orderDataArray addObject:model];
@@ -397,7 +387,6 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (isOrder) {
-       
         return self.orderDataArray.count;
         
     }else{
@@ -500,19 +489,17 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 - (IBAction)btnClicked:(UIButton *)sender {
     NSLog(@"btnClicked %ld", (long)self.childCollectionView.visibleCells.count );
-    if(isLoading){
-        NSLog(@"isloading data,not change button.");
-        return;
-    }
-    
+//    if(isLoading){
+//        NSLog(@"isloading data,not change button.");
+//        return;
+//    }
     if(self.childCollectionView.visibleCells.count > 0){
         NSIndexPath *bottomIndexPath=[NSIndexPath indexPathForItem:0 inSection:0];
         [self.childCollectionView scrollToItemAtIndexPath:bottomIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     }
-    
-    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
-    }];
+//    self.childCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        //此处用的是在scrollview里面画到底部前自动刷新了，此处不做处理，只是显示一个提示而已
+//    }];
     
     if (sender.tag == 1) {
         isOrder = NO;
@@ -542,12 +529,8 @@ static NSString * ksimpleCell = @"simpleCell";
     }
 
 }
-
-
-
 #pragma mark -- 添加返回顶部按钮
-
-- (void)createButton {
+- (void)createTopButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:topButton];
     self.topButton = topButton;
@@ -567,19 +550,12 @@ static NSString * ksimpleCell = @"simpleCell";
     [self.childCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
     self.topButton.hidden = YES;
 }
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     [[SDImageCache sharedImageCache] setValue:nil forKey:@"memCache"];
-    // Dispose of any resources that can be recreated.
 }
-
-
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 - (void)itemDataSource {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -591,17 +567,15 @@ static NSString * ksimpleCell = @"simpleCell";
     NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     
     for (NSDictionary *dic in arr) {
-        if ([dic[@"cid"] integerValue] == 1) {
-            // 童装
-            self.childArray = dic[@"childs"];
-        }else if ([dic[@"cid"] integerValue] == 2) {
-            // 女装
-            self.womenArray = dic[@"childs"];
+        if ([dic[@"cid"] isEqual:self.cid]) {
+            nextNavTitle = dic[@"name"];
+            if ([dic isKindOfClass:[NSDictionary class]] && [dic objectForKey:@"childs"]) {
+                self.childArray = dic[@"childs"];
+            }else {
+                self.childArray = nil;
+            }
         }else {}
-        
     }
-    
-    
 }
 - (void)craeteRight {
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
@@ -614,13 +588,9 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 - (void)rightClicked:(UIButton *)button {
     JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
-    if(self.childClothing) {
-        catoryVC.titleString = @"童装专区";
-        catoryVC.dataSource = self.childArray;
-    }else {
-        catoryVC.titleString = @"女装专区";
-        catoryVC.dataSource = self.womenArray;
-    }
+    catoryVC.titleString = nextNavTitle;
+    catoryVC.dataSource = self.childArray;
+
     [self.navigationController pushViewController:catoryVC animated:YES];
 }
 
