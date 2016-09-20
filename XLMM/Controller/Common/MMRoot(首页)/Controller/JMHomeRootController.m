@@ -140,7 +140,7 @@
     if ([timeString isEqualToString:@"00:00:00"] || timeString == nil) {
         [self.tableView.mj_header beginRefreshing];
     }else {
-        NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:_timeArray[1]]]; // 结束时间
+        NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:timeString]]; // 结束时间
         NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
         int timer = time;
         NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];

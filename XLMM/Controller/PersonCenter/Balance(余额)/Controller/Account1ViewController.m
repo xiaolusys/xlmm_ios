@@ -12,6 +12,8 @@
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"
 #import "JMEmptyView.h"
+#import "JMBillDetailController.h"
+#import "JMWithDrawDetailController.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -242,8 +244,17 @@ static NSString *identifier = @"AccountCell";
 //提现
 - (void)rightBarButtonAction {
     JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
-    
-    drawCash.personCenterDict = self.personCenterDict;
+    if ([self.personCenterDict isKindOfClass:[NSDictionary class]] && [self.personCenterDict objectForKey:@"user_budget"]) {
+        NSDictionary *userBudget = self.personCenterDict[@"user_budget"];
+        if ([userBudget isKindOfClass:[NSDictionary class]] && [userBudget objectForKey:@"cash_out_limit"]) {
+            drawCash.personCenterDict = self.personCenterDict;
+        }else {
+            [MBProgressHUD showError:@"不可提现"];
+            return ;
+        }
+    }else {
+        
+    }
     
     drawCash.block=^(CGFloat money){
         self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
@@ -309,7 +320,16 @@ static NSString *identifier = @"AccountCell";
     [cell fillDataOfCell:accountM];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    AccountModel *accountM = self.dataArr[indexPath.row];
+//    JMBillDetailController *detailVC = [[JMBillDetailController alloc] init];
+//    detailVC.accountDic = [accountM mj_keyValues];
+    
+    JMWithDrawDetailController *detailVC = [[JMWithDrawDetailController alloc] init];
+    detailVC.drawDict = [accountM mj_keyValues];
 
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -317,6 +337,86 @@ static NSString *identifier = @"AccountCell";
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

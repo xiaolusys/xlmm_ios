@@ -11,11 +11,13 @@
 #import "WebViewController.h"
 #import "NJKWebViewProgressView.h"
 
-@interface JMSocialActivityController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JMSocialActivityController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
+
+@property (nonatomic, strong)UIWebView *webView;
 
 @property (nonatomic, strong)UITableView *tableView;
 
-@property (nonatomic ,strong) IMYWebView *baseWebView;
+//@property (nonatomic ,strong) IMYWebView *baseWebView;
 
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
 
@@ -31,29 +33,38 @@
 }
 - (void)setUrlString:(NSString *)urlString {
     _urlString = urlString;
+    if ([urlString isKindOfClass:[NSNull class]] || urlString == nil || [urlString isEqual:@""]) {
+        [MBProgressHUD showError:@"加载失败~"];
+    }else {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
+    }
     
-    [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
+    
 
 }
 - (void)createWebView {
-    kWeakSelf
-    CGFloat progressBarHeight = 2.f;
-    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
-    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
-    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-    self.progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [self.navigationController.navigationBar addSubview:self.progressView];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108)];
+    self.webView.backgroundColor = [UIColor whiteColor];
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit = YES;
     
-    
-    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) usingUIWebView:NO];
-    self.baseWebView.scalesPageToFit = YES;
-    self.baseWebView.progressBlock = ^(double estimatedProgress) {
-        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
-    };
-    [self.view addSubview:self.baseWebView];
+    [self.view addSubview:self.webView];
 
 }
-
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [MBProgressHUD hideHUDForView:self.view];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD showError:@"加载失败~"];
+//    [self backClickAction];
+}
+- (void)backClickAction {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) style:UITableViewStylePlain];

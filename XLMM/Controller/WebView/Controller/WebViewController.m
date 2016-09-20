@@ -162,7 +162,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [MBProgressHUD showLoading:@"小鹿努力加载中....."];
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
     [MobClick event:@"activity"];
     [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
     
@@ -372,14 +372,14 @@
 - (void)coverDidClickCover:(JMShareView *)cover {
     //隐藏pop菜单
     [JMPopView hide];
-    [MBProgressHUD hideHUD];
+    
 }
 
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"完成加载 %ld",(long)webView.tag);
-    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUDForView:self.view];
 
     if (webView.tag != 102) {
         [self updateUserAgent];
@@ -412,7 +412,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSLog(@"webview didFailLoadWithError error=%@", error);
     self.navigationController.navigationBarHidden = YES;
-    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUDForView:self.view];
 }
 
 - (void)updateUserAgent{
@@ -518,7 +518,7 @@
 
         BOOL isLoading = [data[@"isLoading"] boolValue];
         if (!isLoading) {
-            [MBProgressHUD hideHUD];
+            [MBProgressHUD hideHUDForView:self.view];
         }
     }];
     /**
@@ -689,7 +689,7 @@
     self.baseWebView = nil;
     [self.progressView removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUDForView:self.view];
 }
 
 - (void)hiddenNavigationView{

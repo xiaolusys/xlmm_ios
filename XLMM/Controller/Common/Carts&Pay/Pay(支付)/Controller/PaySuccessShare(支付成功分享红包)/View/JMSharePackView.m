@@ -9,6 +9,7 @@
 #import "JMSharePackView.h"
 #import "MMClass.h"
 #import "JMSelecterButton.h"
+#import "JMRichTextTool.h"
 
 #define JMSHAREPROPORTION 0.62
 
@@ -49,8 +50,9 @@
     
     UILabel *getRedpake = [UILabel new];
     [self.payShareImage addSubview:getRedpake];
+    getRedpake.textColor = [UIColor whiteColor];
+    getRedpake.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0];
     self.getRedpake = getRedpake;
-    
     
     
     UILabel *deductionPayMoneyL = [UILabel new];
@@ -95,14 +97,15 @@
 - (void)setLimitStr:(NSString *)limitStr {
     _limitStr = limitStr;
     NSString *numStr = [NSString stringWithFormat:@"恭喜您获得%@个红包",limitStr];
-    NSInteger numStrLength = numStr.length;
-    NSInteger limtStrLength = limitStr.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,numStrLength)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(0, 5)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0] range:NSMakeRange(5, limtStrLength)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(5 + limtStrLength, 3)];
-    self.getRedpake.attributedText = str;
+    self.getRedpake.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0] SubColor:[UIColor whiteColor] AllString:numStr SubStringArray:@[limitStr]];
+//    NSInteger numStrLength = numStr.length;
+//    NSInteger limtStrLength = limitStr.length;
+//    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
+//    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,numStrLength)];
+//    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(0, 5)];
+//    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:28.0] range:NSMakeRange(5, limtStrLength)];
+//    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(5 + limtStrLength, 3)];
+//    self.getRedpake.attributedText = str;
     
 }
 - (void)shareRedPackClick:(UIButton *)sender {

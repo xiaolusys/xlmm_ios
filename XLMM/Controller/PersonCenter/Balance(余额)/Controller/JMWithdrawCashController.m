@@ -9,8 +9,23 @@
 #import "JMWithdrawCashController.h"
 #import "MMClass.h"
 #import "TixianSucceedViewController.h"
+#import "JMSelecterButton.h"
+#import "WXLoginController.h"
 
-@interface JMWithdrawCashController ()<UITextFieldDelegate>
+#define COUNTING_LIMIT 60
+
+
+@interface JMWithdrawCashController ()<UITextFieldDelegate> {
+    NSDictionary *_userBudget;
+    CGFloat _withDrawMoney;
+    CGFloat _textFieldMoney;
+    CGFloat _minWithDrawMoney;      // 最小提现金额
+    CGFloat _maxWithDrawMoney;      // 最大提现金额
+    NSString *phoneNumber;
+    BOOL isUserEnable;
+    BOOL isUserEnableAuth;
+}
+
 
 @property (nonatomic, strong) UILabel *myBlanceLabel;
 
@@ -24,25 +39,27 @@
 
 @property (nonatomic, strong) UILabel *descTitleLabel;
 
+@property (nonatomic,strong) UITextField *authcodeTextF;
+
+@property (nonatomic,strong) JMSelecterButton *selButton;
+
 @end
 
-@implementation JMWithdrawCashController {
-    NSDictionary *_userBudget;
-    CGFloat _withDrawMoney;
-    CGFloat _textFieldMoney;
-    CGFloat _minWithDrawMoney;      // 最小提现金额
-}
+@implementation JMWithdrawCashController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lineGrayColor];
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClick:)];
-    
-    
+    isUserEnable = NO;
+    _maxWithDrawMoney = 200.00;
     [self createWtihdrawView];
+    [self loadCashoutPolicyData];
 }
 - (void)setPersonCenterDict:(NSDictionary *)personCenterDict {
     _personCenterDict = personCenterDict;
+    phoneNumber = personCenterDict[@"mobile"];
     if ([personCenterDict isKindOfClass:[NSDictionary class]] && [personCenterDict objectForKey:@"user_budget"]) {
         _userBudget = personCenterDict[@"user_budget"];
         if ([_userBudget isKindOfClass:[NSDictionary class]] && [_userBudget objectForKey:@"cash_out_limit"]) {
@@ -53,6 +70,21 @@
     }else {
         _minWithDrawMoney = 8.88;
     }
+}
+- (void)loadCashoutPolicyData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/cashout_policy",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        
+        _minWithDrawMoney = [responseObject[@"min_cashout_amount"] floatValue];
+        _maxWithDrawMoney = [responseObject[@"max_cashout_amount"] floatValue];
+        self.descTitleLabel.text = responseObject[@"message"];
+        
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 - (void)createWtihdrawView {
@@ -72,6 +104,10 @@
     [self.view addSubview:threeView];
     threeView.backgroundColor = [UIColor whiteColor];
     
+    UIView *authCodeView = [UIView new];
+    [self.view addSubview:authCodeView];
+    authCodeView.backgroundColor = [UIColor whiteColor];
+    
     UILabel *myBlanceLabel = [UILabel new];
     [firstView addSubview:myBlanceLabel];
     self.myBlanceLabel = myBlanceLabel;
@@ -80,6 +116,7 @@
     CGFloat budgerCash = [_userBudget[@"budget_cash"] floatValue];
     self.myBlanceLabel.text = [NSString stringWithFormat:@"%.2f",budgerCash];
     _withDrawMoney = budgerCash;
+
     
     UIButton *withdrawButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [firstView addSubview:withdrawButton];
@@ -159,6 +196,13 @@
         make.height.mas_equalTo(@60);
     }];
     
+    [authCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(threeView.mas_bottom);
+        make.left.right.equalTo(weakSelf.view);
+        make.height.mas_equalTo(@60);
+    }];
+    
+    
     UILabel *blanceL = [UILabel new];
     [firstView addSubview:blanceL];
     blanceL.text = @"我的零钱:";
@@ -196,6 +240,37 @@
         make.width.mas_equalTo(SCREENWIDTH - 80);
     }];
     
+    UITextField *authcodeTextF = [UITextField new];
+    [authCodeView addSubview:authcodeTextF];
+    self.authcodeTextF = authcodeTextF;
+    self.authcodeTextF.keyboardType = UIKeyboardTypeNumberPad;
+    self.authcodeTextF.leftViewMode = UITextFieldViewModeAlways;
+    self.authcodeTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.authcodeTextF.font = [UIFont systemFontOfSize:14.];
+    self.authcodeTextF.placeholder = @"请输入短信验证码";
+    self.authcodeTextF.delegate = self;
+    
+    self.selButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [authCodeView addSubview:self.selButton];
+    [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
+    self.selButton.selected = NO;
+    self.selButton.enabled = NO;
+    [_selButton addTarget:self action:@selector(getAuthcodeClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.authcodeTextF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(authCodeView).offset(15);
+        make.right.equalTo(weakSelf.selButton.mas_left).offset(-15);
+        make.centerY.equalTo(authCodeView.mas_centerY);
+    }];
+    
+    [self.selButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(authCodeView.mas_centerY);
+        make.right.equalTo(authCodeView).offset(-10);
+        make.width.mas_equalTo(@87);
+        make.height.mas_equalTo(@32);
+    }];
+    
+    
     UIImageView *weXinImage = [UIImageView new];
     [threeView addSubview:weXinImage];
     weXinImage.image = [UIImage imageNamed:@"wallet_weixin"];
@@ -222,7 +297,7 @@
     }];
     
     [self.descTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(threeView.mas_bottom).offset(10);
+        make.top.equalTo(authCodeView.mas_bottom).offset(10);
         make.left.equalTo(weakSelf.view).offset(30);
         make.width.mas_equalTo(SCREENWIDTH - 60);
     }];
@@ -237,26 +312,44 @@
 }
 
 - (void)withDrawClick:(UIButton *)button {
-    
     button.selected = !button.selected;
     if (button.selected) {
-        if (200.00 - _withDrawMoney > 0.000001) {
+        if (_maxWithDrawMoney - _withDrawMoney > 0.000001) {
             self.moneyTextF.text = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
         }else {
-            self.moneyTextF.text = @"200.00";
+            self.moneyTextF.text = [NSString stringWithFormat:@"%.2f",_maxWithDrawMoney];
         }
+        self.selButton.enabled = YES;
+        self.selButton.selected = YES;
+        isUserEnable = YES;
     }else {
         self.moneyTextF.text = @"";
+        self.selButton.enabled = NO;
+        self.selButton.selected = NO;
+        isUserEnable = NO;
     }
-    CGFloat moneyTextF = [self.moneyTextF.text floatValue];
-    if (moneyTextF - _withDrawMoney > 0.000001) {
-        [self rightDrawCashBtn:NO];
+    if (self.authcodeTextF.text.length == 0) {
+        isUserEnableAuth = NO;
     }else {
-        [self rightDrawCashBtn:YES];
+        isUserEnableAuth = YES;
     }
+    if (isUserEnable && isUserEnableAuth) {
+        [self rightDrawCashBtn:YES];
+    }else {
+        [self rightDrawCashBtn:NO];
+    }
+//    CGFloat moneyTextF = [self.moneyTextF.text floatValue];
+//    if (moneyTextF - _withDrawMoney > 0.000001) {
+//        [self rightDrawCashBtn:NO];
+//    }else {
+//        [self rightDrawCashBtn:YES];
+//    }
     
 }
 - (void)withdrawSureButton:(UIButton *)button {
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
+    
     if ([_userBudget[@"is_cash_out"] integerValue] != 1) {
         return ;
     }
@@ -283,7 +376,7 @@
             }else {
                 [self showDrawResults:responseObject];
             }
-            self.moneyTextF.text = @"";
+//            self.moneyTextF.text = @"";
         }
     } WithFail:^(NSError *error) {
         
@@ -291,12 +384,82 @@
         
     }];
 }
-
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
+}
 - (void)showDrawResults:(NSDictionary *)results {
     NSString *desc = results[@"message"];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:desc delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
+
+- (void)getAuthcodeClick:(UIButton *)sender {
+    
+    // 需要手机号
+    if ([phoneNumber isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+        NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+        
+        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+        wxloginVC.userInfo = dic;
+        [self.navigationController pushViewController:wxloginVC animated:YES];
+    }else {
+        NSDictionary *parameters = nil;
+        NSString *stringurl = TSendCode_URL;;
+        parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
+        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringurl WithParaments:parameters WithSuccess:^(id responseObject) {
+            NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
+            if (rcodeStr == 0) {
+                [self startTime];
+            }else {
+                [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
+            }
+        } WithFail:^(NSError *error) {
+            [MBProgressHUD showError:@"获取失败！"];
+        } Progress:^(float progress) {
+            
+        }];
+        
+    }
+    
+    
+}
+- (void)startTime {
+    __block int secondsCountDown = COUNTING_LIMIT;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
+    
+    
+    dispatch_source_set_event_handler(_timer, ^{
+        if(secondsCountDown<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
+                _selButton.enabled = YES;
+                _selButton.selected = YES;
+            });
+        }else{
+            int seconds = secondsCountDown % 60;
+            //            NSString *strTime = [NSString stringWithFormat:@"%02d", seconds];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                //NSLog(@"____%@",strTime);
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:1];
+                self.selButton.titleLabel.text = [NSString stringWithFormat:@" 剩余%02d秒",seconds];
+                [UIView commitAnimations];
+                _selButton.enabled = NO;
+                _selButton.selected = NO;
+            });
+            secondsCountDown--;
+        }
+    });
+    dispatch_resume(_timer);
+    
+}
+
 
 #pragma mark -----UITextFieldDelegate
 //是否允许本字段结束编辑，允许-->文本字段会失去firse responder
@@ -314,24 +477,57 @@
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.moneyTextF resignFirstResponder];
+    [self.authcodeTextF resignFirstResponder];
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    [self rightDrawCashBtn:NO];
+    if (textField == self.authcodeTextF) {
+        [self rightDrawCashBtn:NO];
+    }else {
+        [self rightDrawCashBtn:NO];
+        isUserEnable = NO;
+        self.withdrawButton.selected = NO;
+        self.selButton.enabled = NO;
+        self.selButton.selected = NO;
+    }
+    
     return YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
-    [muString appendString:string];
-    [muString deleteCharactersInRange:range];
-    CGFloat stringF = [muString floatValue];
-    BOOL isEnough = ((_withDrawMoney - stringF) > 0.000001);
-    BOOL isSureBtn = ((textField.text != 0) && isEnough);
-    [self rightDrawCashBtn:isSureBtn];
-    if ((stringF - _minWithDrawMoney) > 0.000001 || fabs(stringF - _minWithDrawMoney) <= 0.000001) {
+    if (textField == self.moneyTextF) {
+        NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
+        [muString appendString:string];
+        [muString deleteCharactersInRange:range];
+        CGFloat stringF = [muString floatValue];
+        BOOL isEnough = ((_withDrawMoney - stringF) > 0.000001);
+        BOOL isSureBtn = ((textField.text != 0) && isEnough);
+        [self rightDrawCashBtn:isSureBtn];
+        if ((stringF - _minWithDrawMoney) > 0.000001 || fabs(stringF - _minWithDrawMoney) <= 0.000001) {
+            isUserEnable = YES;
+            self.selButton.enabled = YES;
+            self.selButton.selected = YES;
+//            [self rightDrawCashBtn:YES];
+        }else {
+            isUserEnable = NO;
+            self.selButton.enabled = NO;
+            self.selButton.selected = NO;
+//            [self rightDrawCashBtn:NO];
+        }
+    }else {
+        if (self.authcodeTextF.text.length == 0) {
+            isUserEnableAuth = NO;
+        }else {
+            isUserEnableAuth = YES;
+        }
+        
+    }
+    if (isUserEnable && isUserEnableAuth) {
         [self rightDrawCashBtn:YES];
     }else {
         [self rightDrawCashBtn:NO];
     }
+    
+    
+    
     return YES;
 }
 - (void)rightDrawCashBtn:(BOOL)type {

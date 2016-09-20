@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "JMNewcomerTaskModel.h"
 #import "JMNewcomerTaskCell.h"
+#import "JMRichTextTool.h"
 
 @interface JMNewcomerTaskController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -114,8 +115,12 @@
     UILabel *descLabel = [UILabel new];
     descLabel.numberOfLines = 0;
     [headerView addSubview:descLabel];
+    descLabel.textColor = [UIColor dingfanxiangqingColor];
+    descLabel.font = [UIFont systemFontOfSize:12.];
     NSString *descString = @"根据以下步骤开启你的生意事业88%的小鹿妈妈15天后能够每天赚100元月入3000元";
-    descLabel.attributedText = [self attributedString:descString];
+    NSArray *subStrArr = @[@"88%",@"15",@"100",@"3000"];
+    descLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:15.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:descString SubStringArray:subStrArr];
+//    descLabel.attributedText = [self attributedString:descString];
     
     UILabel *descDownLabel = [UILabel new];
     descDownLabel.textColor = [UIColor dingfanxiangqingColor];

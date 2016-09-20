@@ -25,6 +25,8 @@
 #import "JMVipRenewController.h"
 #import "HCScanQRViewController.h"
 #import "SystemFunctions.h"
+#import "JMRichTextTool.h"
+#import "JMChoiseWithDrawController.h"
 
 
 @interface JMMineController ()<UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
@@ -97,6 +99,12 @@
     
     
 }
+- (void)setExtraModel:(JMMaMaExtraModel *)extraModel {
+    _extraModel = extraModel;
+    
+    
+}
+
 - (void)setMamaCenterModel:(JMMaMaCenterModel *)mamaCenterModel {
     _mamaCenterModel = mamaCenterModel;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:mamaCenterModel.extra_info];
@@ -108,18 +116,8 @@
     self.mamaLeveLabel.text = self.extraModel.agencylevel_display;                                            // 妈妈的VIP等级
     NSString *limtStr = self.extraModel.surplus_days;                                                         // 会员剩余期限
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
-    NSInteger count = limtStr.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:numStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,6)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(6,count)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(count + 6,1)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0] range:NSMakeRange(0, 6)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0] range:NSMakeRange(6, count)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:12.0] range:NSMakeRange(6+count, 1)];
-    self.memberLabel.attributedText = str;
-    
-    
-    
+    self.memberLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:numStr SubStringArray:@[limtStr]];
+
     NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[self.mamaCenterModel.cash_value floatValue]];
     _carryValue = [carryValueStr floatValue];                                                                           // 账户金额
     _historyEarningsRecord = [NSString stringWithFormat:@"%.2f", [self.extraModel.his_confirmed_cash_out floatValue]];  // 累计收益金额
@@ -138,11 +136,7 @@
     self.label8.text = @"我的团队排名";                                                                                   // 团队收益排名
     
 }
-- (void)setExtraModel:(JMMaMaExtraModel *)extraModel {
-    _extraModel = extraModel;
 
-    
-}
 
 - (void)setMessageDic:(NSDictionary *)messageDic {
     NSArray *resultsArr = messageDic[@"results"];
@@ -160,10 +154,17 @@
     _fansWebUrl = webDict[@"fans_explain"];         // --> 粉丝二维码
     _teamExplainUrl = webDict[@"team_explain"];     // --> 团队说明
 }
+- (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
+    _extraFiguresDic = extraFiguresDic;
+    
+    self.label7.text = CS_DSTRING(@"我的排名:",extraFiguresDic[@"personal_total_rank"]);
+    self.label8.text = CS_DSTRING(@"团队排名:",extraFiguresDic[@"team_total_rank"]);
+    
+}
 
 
 - (void)createHeaderView {
-    NSArray *imageArr = @[@"mamaeryaoqing",@"EverydayPushNormal",@"selectionShopNormal",@"inviteShopNormal",@"mamaeryaoqing",@"EverydayPushNormal",@"selectionShopNormal",@"inviteShopNormal"];
+    NSArray *imageArr = @[@"wodetixian",@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"huoyuedu",@"wodefensi",@"gerenpaiming",@"tuanduipaiming"];
     NSArray *titleArr = @[@"我的提现",@"累计收益",@"访客记录",@"订单记录",@"活跃度",@"我的粉丝",@"个人排名",@"团队排名"];
 //    NSArray *descTitleArr = @[@"888.88元",@"888.88元",@"88人访问",@"88个",@"888点",@"888人",@"第1名",@"第1名"];
     
@@ -253,6 +254,8 @@
     
     UILabel *memberLabel = [UILabel new];
     [memberView addSubview:memberLabel];
+    memberLabel.font = [UIFont systemFontOfSize:12.];
+    memberLabel.textColor = [UIColor buttonTitleColor];
     self.memberLabel = memberLabel;
     
     self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -352,7 +355,7 @@
         
         [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(button).offset(15);
-            make.width.height.mas_equalTo(@25);
+//            make.width.height.mas_equalTo(@25);
             make.centerY.equalTo(button.mas_centerY);
         }];
         
@@ -409,18 +412,21 @@
     NSLog(@"%ld",(long)button.tag);
     NSInteger index = button.tag;
     if (index == 100) {
-        NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
-        if (code == 1) {
-            TixianViewController *vc = [[TixianViewController alloc] init];
-            vc.cantixianjine = _carryValue;
-            vc.activeValue = [_activeValueNum integerValue];
-            [self.navigationController pushViewController:vc animated:YES];
-        }else {
-            JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-            shortVC.myBalance = _carryValue;
-            shortVC.descStr = self.extraModel.cashout_reason;
-            [self.navigationController pushViewController:shortVC animated:YES];
-        }
+        JMChoiseWithDrawController *choiseVC = [[JMChoiseWithDrawController alloc] init];
+        choiseVC.myBlance = _carryValue;
+        [self.navigationController pushViewController:choiseVC animated:YES];
+//        NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
+//        if (code == 1) {
+//            TixianViewController *vc = [[TixianViewController alloc] init];
+//            vc.cantixianjine = _carryValue;
+//            vc.activeValue = [_activeValueNum integerValue];
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }else {
+//            JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
+//            shortVC.myBalance = _carryValue;
+//            shortVC.descStr = self.extraModel.cashout_reason;
+//            [self.navigationController pushViewController:shortVC animated:YES];
+//        }
     }else if (index == 101) {
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
         carry.earningsRecord = _earningsRecord;

@@ -14,6 +14,7 @@
 #import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "WebViewController.h"
+#import "JMRichTextTool.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -224,11 +225,7 @@
     [footView addSubview:termsLabel];
     termsLabel.font = [UIFont systemFontOfSize:13.];
     NSString *termStr = @"我已阅读并同意小鹿美美购买条款";
-    NSInteger termStrLength = termStr.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:termStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,7)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(7, termStrLength - 7)];
-    termsLabel.attributedText = str;
+    termsLabel.attributedText = [JMRichTextTool cs_changeColorWithColor:[UIColor buttonEnabledBackgroundColor] AllString:termStr SubStringArray:@[@"小鹿美美购买条款"]];
     termsLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *termsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(termsTapClick:)];
     [termsLabel addGestureRecognizer:termsTap];

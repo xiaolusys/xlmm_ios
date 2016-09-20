@@ -49,6 +49,8 @@
  */
 @property (nonatomic, copy) NSString *his_confirmed_cash_out;
 
+@property (nonatomic, copy) NSString *total_rank;
+
 @end
 
 /**

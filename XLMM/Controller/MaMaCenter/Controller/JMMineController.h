@@ -24,5 +24,7 @@
 
 @property (nonatomic, strong) NSDictionary *webDict;
 
+@property (nonatomic, strong) NSDictionary *extraFiguresDic;
+
 
 @end

@@ -23,6 +23,9 @@
     CGFloat rightWidth;
     CGFloat viewWidther;
     
+    CGFloat _betweenLabelOffset;
+    CGFloat _spaceLabelOffset;
+    
 }
 
 @property (nonatomic, strong) UIView *progressView;
@@ -63,7 +66,16 @@
 - (id)initWithTimeArray:(NSArray *)time andTimeDesArray:(NSArray *)timeDes andCurrentStatus:(NSInteger)status andFrame:(CGRect)frame {
     
     if (self == [super initWithFrame:frame]) {
-        viewWidth = 75.0;
+        
+        viewWidth = 75.;
+        
+        if (timeDes.count == 3) {
+            _betweenLabelOffset = (SCREENWIDTH - 60) / 3;
+            _spaceLabelOffset = 30;
+        }else {
+            _betweenLabelOffset = 20;
+            _spaceLabelOffset = 20;
+        }
         
         self.progressView = [UIView new];
         self.timeView = [UIView new];
@@ -98,11 +110,11 @@
         
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.timeView);
-            make.width.mas_equalTo(@0);
+            make.width.mas_equalTo(self.timeView);
             make.left.equalTo(desLabel.mas_left);
         }];
         CGSize fittingSize = [label systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-        betweenLabelOffset = 20;
+        betweenLabelOffset = _betweenLabelOffset;
         totlaWidther += (fittingSize.width + betweenLabelOffset);
         
         [self.labelDesArr addObject:label];
@@ -114,6 +126,7 @@
     [self updateConstraintsIfNeeded];
     
 }
+
 - (void)addTimeDesLabel:(NSArray *)timeDes addTime:(NSArray *)time currentStatus:(NSInteger)currentStatus {
     CGFloat betweenLabelOffset = 0;
     CGFloat totlaWidth = 6;
@@ -136,7 +149,7 @@
         //        [label setPreferredMaxLayoutWidth:leftWidth];
         [label sizeToFit];
         fittingSizeLabel = [label systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-        betweenLabelOffset = 20;
+        betweenLabelOffset = _betweenLabelOffset;
         totlaWidth += (fittingSizeLabel.width + betweenLabelOffset);
         lastLabel = label;
         [self.labelDesArr addObject:label];
@@ -169,6 +182,7 @@
         [circleLayers addObject:circlelabyer];
         CAShapeLayer *grayStaticCircleLayer = [self getLayerWithCircle:circle andStrokeColor:[UIColor lightGrayColor]];
         [self.progressView.layer addSublayer:grayStaticCircleLayer];
+
         if (i > 0) {
             fromPoint = lastpoint;
             toPoint = CGPointMake(yCenter - 3,lastpoint.y);
@@ -179,13 +193,14 @@
             [layers addObject:lineLayer];
             CAShapeLayer *grayStaticLineLayer = [self getLayerWithLine:line andStrokeColor:[UIColor lightGrayColor]];
             [self.progressView.layer addSublayer:grayStaticCircleLayer];
+//            [self.progressView addSubview:contentImage];
             
             
         }else {
             lastpoint = CGPointMake(self.progressView.center.x + 1 + 10 , yCenter + 5.);
         }
         
-        betweenLineOffset = 20;
+        betweenLineOffset = _betweenLabelOffset;
         totlaWidth += (fittingSize.width + betweenLineOffset);
         i++;
     }
@@ -304,16 +319,16 @@
 - (void)updateConstraints {
     [self.progressView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(viewWidth);
-        make.top.equalTo(self.timeView.mas_bottom);
-        make.left.equalTo(self).offset(20);
+        make.top.equalTo(self);
+        make.left.equalTo(self).offset(_spaceLabelOffset);
         make.height.mas_equalTo(@30);
     }];
     
     [self.timeView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self);
-        make.top.equalTo(self);
-        make.width.mas_equalTo(@0);
-        make.height.mas_equalTo(@0);
+        make.top.equalTo(self.progressDesView.mas_bottom);
+        make.width.mas_equalTo(viewWidth);
+        make.height.mas_equalTo(@30);
     }];
     
     [self.progressDesView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -327,3 +342,30 @@
     [super updateConstraints];
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

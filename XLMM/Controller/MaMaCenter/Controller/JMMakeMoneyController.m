@@ -14,6 +14,8 @@
 #import "ProductSelectionListViewController.h"
 #import "JMMaMaEarningsRankController.h"
 #import "JMRewardsController.h"
+#import "JMRichTextTool.h"
+#import "JMHomeActiveCell.h"
 
 @interface JMMakeMoneyController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -24,6 +26,12 @@
 @property (nonatomic,strong) NSMutableDictionary *diction;
 
 @property (nonatomic, copy) NSString *myInvitation;
+
+@property (nonatomic, strong) UILabel *addEarningLabel;
+
+@property (nonatomic, strong) UILabel *weekRankLabel;
+
+@property (nonatomic, strong) UILabel *finishProgressLabel;
 
 @end
 
@@ -44,10 +52,32 @@
 - (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
     _makeMoneyDic = makeMoneyDic;
     self.myInvitation = makeMoneyDic[@"invite"];
+    
+    
+    
+}
+- (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
+    _extraFiguresDic = extraFiguresDic;
+    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
+    NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
+    NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
+    self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
+    CGFloat finisF = [extraFiguresDic[@"task_percentage"] floatValue];
+    NSString *finishProStr = [NSString stringWithFormat:@"%.f%%",finisF * 100];
+    self.finishProgressLabel.text = CS_DSTRING(@"本周任务已完成 ",finishProStr);
+
+    
+}
+- (void)setActiveArray:(NSMutableArray *)activeArray {
+    _activeArray = activeArray;
+    
+    
+    
 }
 
+
 - (void)createHeaderView {
-    NSArray *imageArr = @[@"mamaeryaoqing",@"EverydayPushNormal",@"selectionShopNormal",@"inviteShopNormal"];
+    NSArray *imageArr = @[@"mamaeryaoqingColor",@"EverydayPushNormalColor",@"selectionShopNormalColor",@"inviteShopNormalColor"];
     NSArray *titleArr = @[@"分享店铺",@"每日推送",@"选品佣金",@"邀请开店"];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 290)];
@@ -70,6 +100,7 @@
     addEarningLabel.textColor = [UIColor whiteColor];
     addEarningLabel.font = [UIFont systemFontOfSize:36.];
     addEarningLabel.text = @"666.66";
+    self.addEarningLabel = addEarningLabel;
     
     UILabel *lineView = [UILabel new];
     [topImageView addSubview:lineView];
@@ -89,6 +120,7 @@
     weekRankLabel.font = [UIFont systemFontOfSize:12.];
     weekRankLabel.textColor = [UIColor buttonTitleColor];
     weekRankLabel.text = @"本周我的排名";
+    self.weekRankLabel = weekRankLabel;
     
     UILabel *worldRankLabel = [UILabel new];
     [worldRankButton addSubview:worldRankLabel];
@@ -148,7 +180,7 @@
         
         [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(button).offset(25);
-            make.width.height.mas_equalTo(@25);
+//            make.width.height.mas_equalTo(@25);
             make.centerX.equalTo(button.mas_centerX);
         }];
         
@@ -180,7 +212,8 @@
     [weekTaskView addSubview:finishProgressLabel];
     finishProgressLabel.textColor = [UIColor buttonTitleColor];
     finishProgressLabel.font = [UIFont systemFontOfSize:14.];
-    finishProgressLabel.text = @"本周任务已完成10%";
+    finishProgressLabel.text = @"本周任务已完成 --%";
+    self.finishProgressLabel = finishProgressLabel;
     
     UIButton *gotoExecutionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [weekTaskView addSubview:gotoExecutionButton];
@@ -273,19 +306,19 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 0;
+    return self.activeArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 0;
+    return SCREENWIDTH * 0.5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellID = @"tableViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
+    if (!cell) {
+        cell = [[JMHomeActiveCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeActiveCellIdentifier];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.model = self.activeArray[indexPath.row];
     return cell;
 }
 
