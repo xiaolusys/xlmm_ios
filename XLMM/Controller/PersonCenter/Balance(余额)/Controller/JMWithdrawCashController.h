@@ -14,6 +14,11 @@ typedef void(^MoneyBlock)(CGFloat money);
 
 @property (nonatomic, strong) NSDictionary *personCenterDict;
 
+@property (nonatomic, assign) CGFloat myBlabce;
+
 @property (nonatomic,copy) MoneyBlock block;
+
+@property (nonatomic, assign) BOOL isMaMaWithDraw;
+
 
 @end

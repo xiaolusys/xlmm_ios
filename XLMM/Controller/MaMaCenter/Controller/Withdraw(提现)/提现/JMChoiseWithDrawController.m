@@ -21,6 +21,7 @@
 
 @property (nonatomic,strong) UILabel *moneyLabel;
 
+@property (nonatomic, strong) UILabel *withDrawDescLabel;
 
 @end
 
@@ -31,26 +32,51 @@
     
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClick:)];
     
-    cellDataArr = @[@{
-                        @"title":@"小额提现",
-                        @"descTitle":@"提现金额小于等于6元"
-                        },
-                    @{
-                        @"title":@"整额提现",
-                        @"descTitle":@"提现金额为100元200元整"
-                        },
-                    @{
-                        @"title":@"兑换现金券",
-                        @"descTitle":@"提现现金券为20元50元整"
-                        }
-                    ];
+//    cellDataArr = @[@{
+//                        @"title":@"小额提现",
+//                        @"descTitle":@"提现金额小于等于6元"
+//                        },
+//                    @{
+//                        @"title":@"整额提现",
+//                        @"descTitle":@"提现金额为100元200元整"
+//                        },
+//                    @{
+//                        @"title":@"兑换现金券",
+//                        @"descTitle":@"提现现金券为20元50元整"
+//                        }
+//                    ];
     
     [self createTableView];
-    
+    [self loadCashoutPolicyData];
     
 }
 
-
+- (void)loadCashoutPolicyData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/cashout_policy",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        self.withDrawDescLabel.text = responseObject[@"message"];
+        NSString *string = [NSString stringWithFormat:@"提现金额%@元至%@元",responseObject[@"min_cashout_amount"],responseObject[@"audit_cashout_amount"]];
+        cellDataArr = @[@{
+                            @"title":@"小额提现",
+                            @"descTitle":string
+                            },
+                        @{
+                            @"title":@"整额提现",
+                            @"descTitle":@"提现金额为100元200元整"
+                            },
+                        @{
+                            @"title":@"兑换现金券",
+                            @"descTitle":@"提现现金券为20元50元整"
+                            }
+                        ];
+        [self.tableView reloadData];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+}
 
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
@@ -66,7 +92,7 @@
     UILabel *takeoutMoney = [[UILabel alloc] init];
     [headerView addSubview:takeoutMoney];
     takeoutMoney = takeoutMoney;
-    takeoutMoney.text = @"出账余额(元)";
+    takeoutMoney.text = @"我的余额(元)";
     takeoutMoney.font = CS_SYSTEMFONT(13.);
     takeoutMoney.textAlignment = NSTextAlignmentCenter;
     
@@ -85,6 +111,26 @@
         make.centerX.equalTo(takeoutMoney.mas_centerX);
         make.top.equalTo(takeoutMoney.mas_bottom).offset(10);
     }];
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 160)];
+    self.tableView.tableFooterView = footerView;
+    UILabel *withDrawDescLabel = [UILabel new];
+    [footerView addSubview:withDrawDescLabel];
+    withDrawDescLabel.font = CS_SYSTEMFONT(13.);
+    withDrawDescLabel.textColor = [UIColor dingfanxiangqingColor];
+    withDrawDescLabel.numberOfLines = 0;
+    self.withDrawDescLabel = withDrawDescLabel;
+    [withDrawDescLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(footerView).offset(15);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
+    }];
+    
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -109,7 +155,8 @@
     NSInteger index = indexPath.row;
     if (index == 0) { // 小额提现
         JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
-        
+        drawCash.myBlabce = self.myBlance;
+        drawCash.isMaMaWithDraw = YES;
         [self.navigationController pushViewController:drawCash animated:YES];
     }else if (index == 1) { // 整额提现
         TixianViewController *vc = [[TixianViewController alloc] init];

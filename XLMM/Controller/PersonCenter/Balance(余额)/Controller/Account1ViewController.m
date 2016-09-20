@@ -248,6 +248,7 @@ static NSString *identifier = @"AccountCell";
         NSDictionary *userBudget = self.personCenterDict[@"user_budget"];
         if ([userBudget isKindOfClass:[NSDictionary class]] && [userBudget objectForKey:@"cash_out_limit"]) {
             drawCash.personCenterDict = self.personCenterDict;
+            drawCash.isMaMaWithDraw = NO;
         }else {
             [MBProgressHUD showError:@"不可提现"];
             return ;

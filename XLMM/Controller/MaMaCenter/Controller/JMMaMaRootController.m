@@ -12,12 +12,12 @@
 #import "JMMakeMoneyController.h"
 #import "JMSocialActivityController.h"
 #import "JMMineController.h"
-#import "UdeskRobotIMViewController.h"
+//#import "UdeskRobotIMViewController.h"
 #import "UdeskManager.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
 #import "JMHomeActiveModel.h"
-
+#import "Udesk.h"
 
 
 @interface JMMaMaRootController () {
@@ -170,9 +170,10 @@
 - (void)mamaWebViewData:(NSDictionary *)mamaDic {
     NSArray *resultsArr = mamaDic[@"results"];
     NSDictionary *resultsDict = [NSDictionary dictionary];
-    for (NSDictionary *dic in resultsArr) {
-        resultsDict = dic;
-    }
+//    for (NSDictionary *dic in resultsArr) {
+//        resultsDict = dic;
+//    }
+    resultsDict = resultsArr[0];
     NSDictionary *extraDict = resultsDict[@"extra"];
     self.mamaWebDict[@"invite"] = extraDict[@"invite"];                 // --> 我的邀请
     self.mamaWebDict[@"exam"] = extraDict[@"exam"];                     // --> 等级考试
@@ -187,7 +188,7 @@
     self.mineVC.webDict = self.mamaWebDict;
     self.activityVC.urlString = extraDict[@"forum"];
     
-    NSArray *activeArr = mamaDic[@"mama_activities"];
+    NSArray *activeArr = resultsDict[@"mama_activities"];
     if (activeArr.count == 0) {
         return ;
     }
@@ -241,8 +242,11 @@
     [MobClick event:@"MaMa_service"];
     button.enabled = NO;
     [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
-    [self.navigationController pushViewController:robot animated:YES];
+//    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
+//    [self.navigationController pushViewController:robot animated:YES];
+    UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
+    [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
+    
 }
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;

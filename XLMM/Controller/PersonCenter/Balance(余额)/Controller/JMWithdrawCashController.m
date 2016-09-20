@@ -55,7 +55,11 @@
     isUserEnable = NO;
     _maxWithDrawMoney = 200.00;
     [self createWtihdrawView];
-    [self loadCashoutPolicyData];
+    
+    if (self.isMaMaWithDraw) {
+        [self loadCashoutPolicyData];
+    }
+    
 }
 - (void)setPersonCenterDict:(NSDictionary *)personCenterDict {
     _personCenterDict = personCenterDict;
@@ -71,6 +75,7 @@
         _minWithDrawMoney = 8.88;
     }
 }
+
 - (void)loadCashoutPolicyData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/cashout_policy",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -79,7 +84,8 @@
         _minWithDrawMoney = [responseObject[@"min_cashout_amount"] floatValue];
         _maxWithDrawMoney = [responseObject[@"max_cashout_amount"] floatValue];
         self.descTitleLabel.text = responseObject[@"message"];
-        
+        self.myBlanceLabel.text = CS_FLOAT(self.myBlabce);
+        _withDrawMoney = self.myBlabce;
     } WithFail:^(NSError *error) {
         
     } Progress:^(float progress) {
@@ -543,7 +549,7 @@
 }
 
 - (void)backClick:(UIButton *)btn {
-    self.block(_withDrawMoney);
+//    self.block(_withDrawMoney);
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated{

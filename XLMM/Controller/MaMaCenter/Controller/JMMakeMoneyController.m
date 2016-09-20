@@ -72,7 +72,7 @@
     _activeArray = activeArray;
     
     
-    
+    [self.tableView reloadData];
 }
 
 
@@ -240,11 +240,11 @@
 /**
  *  100 --> 本周我的排名
  *  101 --> 世界排名TOP10
- *  102 --> 分享店铺
- *  103 --> 每日推送
- *  104 --> 选品佣金
- *  105 --> 邀请开店
- *  106 --> 马上执行
+ *  102 --> 马上执行
+ *  103 --> 分享店铺
+ *  104 --> 每日推送
+ *  105 --> 选品佣金
+ *  106 --> 邀请开店
  */
 - (void)mamaButtonClick:(UIButton *)button {
     NSLog(@"button.tag --> %ld",button.tag);
