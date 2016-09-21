@@ -39,6 +39,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSMutableDictionary *_childDic;
 //    BOOL isLoading; //网络请求时置为true，用于网络还未应答时不能切换推荐和价格查询条件控制
     NSString *nextNavTitle;
+    NSString *cidString;
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -90,7 +91,15 @@ static NSString * ksimpleCell = @"simpleCell";
     self.navigationController.navigationBarHidden = YES;
 }
 
-
+- (void)setCid:(NSString *)cid {
+    _cid = cid;
+    if([cid rangeOfString:@","].location != NSNotFound) {
+        NSArray *arr = [cid componentsSeparatedByString:@","];
+        cidString = arr[1];
+    }else {
+        cidString = cid;
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -567,7 +576,7 @@ static NSString * ksimpleCell = @"simpleCell";
     NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     
     for (NSDictionary *dic in arr) {
-        if ([dic[@"cid"] isEqual:self.cid]) {
+        if ([dic[@"cid"] isEqual:cidString]) {
             nextNavTitle = dic[@"name"];
             if ([dic isKindOfClass:[NSDictionary class]] && [dic objectForKey:@"childs"]) {
                 self.childArray = dic[@"childs"];
@@ -609,7 +618,10 @@ static NSString * ksimpleCell = @"simpleCell";
 
 
 
+/**
+ *
 
+ */
 
 
 

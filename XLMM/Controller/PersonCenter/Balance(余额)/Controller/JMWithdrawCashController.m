@@ -413,11 +413,11 @@
 - (void)getAuthcodeClick:(UIButton *)sender {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/request_cashout_verify_code");
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
+        NSInteger rcodeStr = [[responseObject objectForKey:@"code"] integerValue];
         if (rcodeStr == 0) {
             [self startTime];
         }else {
-            [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
+            [MBProgressHUD showWarning:[responseObject objectForKey:@"info"]];
         }
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"获取失败！"];

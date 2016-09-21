@@ -229,6 +229,7 @@
         NSDictionary *result = responseObject;
         if (result.count == 0) return;
         if ([[result objectForKey:@"rcode"]integerValue] != 0) {
+            [MBProgressHUD hideHUD];
             [self alertMessage:[result objectForKey:@"msg"]];
             return;
         }
@@ -240,7 +241,7 @@
         
         
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];
@@ -306,7 +307,6 @@
 - (void) loginSuccessful {
     [MBProgressHUD hideHUD];
 //    [MobClick profileSignInWithPUID:@"playerID"];
-    
     
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];

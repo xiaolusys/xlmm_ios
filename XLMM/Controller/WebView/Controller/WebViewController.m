@@ -332,6 +332,13 @@
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
+    if ([_webDiction[@"type_title"] isEqual:@"active"]) {
+        [MobClick event:@"Active_share"];
+    }else if ([_webDiction[@"type_title"] isEqual:@"myInvite"]) {
+        if ([self.activityId isEqual:@38]) {
+            [MobClick event:@"MyInvite_share"];
+        }
+    }
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
     _shareDic = nil;

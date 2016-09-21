@@ -114,7 +114,7 @@
 
 - (void)sharedMethod{
     NSLog(@"分享");
-    
+    [MobClick event:@"MaMaShop_share"];
     shareView = [MamaShareView new];
     
     

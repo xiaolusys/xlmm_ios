@@ -411,8 +411,9 @@
             return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
         }
     }else if (indexPath.section == 1) {
-        JMHomeActiveModel *model = self.activeArray[indexPath.row];
-        return model.cellHeight;
+        return SCREENWIDTH * 0.5 + 10;
+//        JMHomeActiveModel *model = self.activeArray[indexPath.row];
+//        return model.cellHeight;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {

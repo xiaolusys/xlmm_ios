@@ -374,6 +374,7 @@
     if (button.tag == 100 || button.tag == 102) {
         [self.navigationController popViewControllerAnimated:YES];
     }else {
+        [MobClick event:@"GoodsDetail_share"];
         JMShareViewController *shareView = [[JMShareViewController alloc] init];
         self.goodsShareView = shareView;
         self.goodsShareView.model = self.shareModel;
