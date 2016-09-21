@@ -155,7 +155,7 @@
 }
 - (void)emptyView {
     kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 260, SCREENWIDTH, SCREENHEIGHT - 260) Title:@"您暂时没有积分记录哦~" DescTitle:@"快去下单赚取积分吧～" BackImage:@"emptyJifenIcon" InfoStr:@"快去抢购"];
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 240, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时没有积分记录哦~" DescTitle:@"快去下单赚取积分吧～" BackImage:@"emptyJifenIcon" InfoStr:@"快去抢购"];
     [self.view addSubview:self.empty];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
