@@ -10,9 +10,27 @@
 
 @interface AccountModel : NSObject
 @property (nonatomic, strong)NSNumber *budget_type;
-@property (nonatomic, strong)NSString *budget_log_type;
-@property (nonatomic, strong)NSString *budget_date;
-@property (nonatomic, strong)NSString *get_status_display;
+@property (nonatomic, copy)NSString *budget_log_type;
+@property (nonatomic, copy)NSString *budget_date;
+@property (nonatomic, copy)NSString *get_status_display;
 @property (nonatomic, strong)NSNumber *budeget_detail_cash;
-@property (nonatomic, strong)NSString *desc;
+@property (nonatomic, copy)NSString *desc;
+@property (nonatomic, copy)NSString *status;
+
+
 @end
+
+
+
+/**
+ *  {
+ "desc":"您通过代理提现至余额收入100.0元.",
+ "budget_type":0,
+ "budget_log_type":"mmcash",
+ "budget_date":"2016-09-20",
+ "get_status_display":"已确定",
+ "status":0,
+ "budeget_detail_cash":100.0
+ }
+ */
+

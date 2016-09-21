@@ -125,7 +125,7 @@
     
     
     
-    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_numValue,(long)_activeValueNum];
+//    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_numValue,(long)_activeValueNum];
     self.promptLabel.font = [UIFont systemFontOfSize:12.];
 
     

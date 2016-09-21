@@ -49,7 +49,7 @@
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
     hud.mode = MBProgressHUDModeCustomView;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hideAnimated:YES afterDelay:1.5f];
+    [hud hideAnimated:YES afterDelay:2.0f];
 }
 
 #pragma mark 文字提示,自动消失,无图
@@ -57,7 +57,7 @@
     [self showMessage:message ToView:nil];
 }
 + (void)showMessage:(NSString *)message ToView:(UIView *)view {
-    [self showMessage:message ToView:view RemainTime:1.0f Model:MBProgressHUDModeText];
+    [self showMessage:message ToView:view RemainTime:1.5f Model:MBProgressHUDModeText];
 }
 
 

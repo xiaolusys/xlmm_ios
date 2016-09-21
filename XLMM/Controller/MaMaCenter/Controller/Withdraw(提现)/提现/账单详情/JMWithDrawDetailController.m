@@ -30,6 +30,8 @@
 
 @property (nonatomic, strong) UIView *timeLineBaseView;
 
+@property (nonatomic, strong) UILabel *takeoutMoney;
+
 @end
 
 @implementation JMWithDrawDetailController
@@ -51,7 +53,13 @@
 }
 - (void)setDrawDict:(NSDictionary *)drawDict {
     _drawDict = drawDict;
+    flag = 1;
     
+    
+    
+}
+- (void)setMamaWithDrawHistoryDict:(NSDictionary *)mamaWithDrawHistoryDict {
+    _mamaWithDrawHistoryDict = mamaWithDrawHistoryDict;
     flag = 1;
     
 }
@@ -59,7 +67,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"账单明细" selecotr:@selector(backClickedesllect:)];
-    
     timeLineTitleArr = [NSArray array];
     timeLineTimeArray = [NSArray array];
     cellDataArr = [NSArray array];
@@ -75,16 +82,6 @@
         }
     }
     
-    cellDataArr = @[@{
-                      @"title":@"提现至账户",
-                      @"descTitle":@"测试数据测试数据测试数据"
-                      },
-                    @{
-                      @"title":@"创 建 时 间",
-                      @"descTitle":@"测试数据测试数据"
-                      }
-                    ];
-    timeLineTitleArr = @[@"金额冻结",@"审核中",@"提现成功"];
     imageArray = @[@[@"ice_Image",@"dispose_Image",@"success_Image_nomal"],
                    @[@"ice_Image",@"dispose_Image",@"success_Image"]];
     
@@ -96,21 +93,68 @@
         if (responseObject == nil) return ;
         NSArray *results = responseObject[@"results"];
         NSDictionary *dict = results[0];
-        [self fetchData:dict];
+        [self fetchData:dict ActiveValye:self.isActiveValue];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showMessage:@"查询有误"];
     } Progress:^(float progress) {
     }];
     
-    
 }
-- (void)fetchData:(NSDictionary *)dict {
-    NSString *timeString = dict[@"budget_date"];
-    timeLineTimeArray = @[timeString,timeString,timeString];
+- (void)fetchData:(NSDictionary *)dict ActiveValye:(BOOL)isMaMaWithDraw {
+    NSString *budgetType = @"提现至账户:";
+    NSInteger statusCode = 2;
+    if (isMaMaWithDraw) {
+        NSString *timeString = dict[@"created"];
+        NSString *timeStr = [timeString stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+        NSString *timeS = [timeStr substringWithRange:NSMakeRange(5,11)];
+        timeLineTimeArray = @[timeS,timeS,timeS];
+        self.moneyLabel.text = CS_FLOAT([dict[@"value_money"] floatValue]);
+        cellDataArr = @[@{
+                            @"title":budgetType,
+                            @"descTitle":dict[@"get_cash_out_type_display"]
+                            },
+                        @{
+                            @"title":@"创 建 时 间:",
+                            @"descTitle":timeStr
+                            }
+                        ];
+        timeLineTitleArr = @[@"金额冻结",dict[@"get_status_display"],@"提现成功"];
+        if ([dict[@"status"] isEqual:@"approved"]) {  // 审核状态在下方 注释块中
+            statusCode = 3;
+        }
+    }else {
+        NSString *budgetType = @"提现至账户:";
+        if ([self.drawDict[@"status"] integerValue] == 0) {
+            statusCode = 3;
+        }
+        NSString *statusDescStr = self.drawDict[@"get_status_display"];
+        if ([self.drawDict[@"budget_type"] boolValue]) {
+            self.takeoutMoney.text = @"出账金额(元)";
+            timeLineTitleArr = @[@"金额冻结",statusDescStr,@"提现成功"];
+        }else {
+            self.takeoutMoney.text = @"入账金额(元)";
+            budgetType = @"收入至账户:";
+            timeLineTitleArr = @[@"金额冻结",statusDescStr,@"入账成功"];
+        }
+        self.moneyLabel.text = CS_FLOAT([self.drawDict[@"budeget_detail_cash"] floatValue]);
+        NSString *timeStr = self.drawDict[@"budget_date"];
+        NSString *typeStr = self.drawDict[@"desc"];
+        cellDataArr = @[@{
+                            @"title":budgetType,
+                            @"descTitle":typeStr
+                            },
+                        @{
+                            @"title":@"创 建 时 间:",
+                            @"descTitle":timeStr
+                            }
+                        ];
+        timeLineTimeArray = @[timeStr,timeStr,timeStr];
+    }
 
-    JMToolTimeLineView *timeLineView = [[JMToolTimeLineView alloc] initWithTimeArray:timeLineTimeArray andTimeDesArray:timeLineTitleArr ImageArray:imageArray andCurrentStatus:2 andFrame:self.timeLineBaseView.bounds];
+    [self.tableView reloadData];
+    JMToolTimeLineView *timeLineView = [[JMToolTimeLineView alloc] initWithTimeArray:timeLineTimeArray andTimeDesArray:timeLineTitleArr ImageArray:imageArray andCurrentStatus:statusCode andFrame:self.timeLineBaseView.bounds];
     [self.timeLineBaseView addSubview:timeLineView];
-
+    
 }
 
 - (void)createTableView {
@@ -130,6 +174,7 @@
     takeoutMoney.text = @"出账余额(元)";
     takeoutMoney.font = CS_SYSTEMFONT(13.);
     takeoutMoney.textAlignment = NSTextAlignmentCenter;
+    self.takeoutMoney = takeoutMoney;
     
     [takeoutMoney mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headerView.mas_centerX);
@@ -151,31 +196,10 @@
     [headerView addSubview:timeLineBaseView];
     self.timeLineBaseView = timeLineBaseView;
     
-    NSString *budgetType = @"提现至账户:";
-    if (flag == 1) {
-        if ([self.drawDict[@"budget_type"] boolValue]) {
-            takeoutMoney.text = @"出账金额(元)";
-        }else {
-            takeoutMoney.text = @"入账金额(元)";
-            budgetType = @"收入至账户:";
-            timeLineTitleArr = @[@"金额冻结",@"审核中",@"入账成功"];
-        }
-        self.moneyLabel.text = CS_FLOAT([self.drawDict[@"budeget_detail_cash"] floatValue]);
-        NSString *timeStr = self.drawDict[@"budget_date"];
-        NSString *typeStr = self.drawDict[@"budget_log_type"];
-        cellDataArr = @[@{
-                            @"title":budgetType,
-                            @"descTitle":typeStr
-                            },
-                        @{
-                            @"title":@"创 建 时 间:",
-                            @"descTitle":timeStr
-                            }
-                        ];
-        timeLineTimeArray = @[timeStr,timeStr,timeStr];
-        JMToolTimeLineView *timeLineView = [[JMToolTimeLineView alloc] initWithTimeArray:timeLineTimeArray andTimeDesArray:timeLineTitleArr ImageArray:imageArray andCurrentStatus:2 andFrame:self.timeLineBaseView.bounds];
-        [self.timeLineBaseView addSubview:timeLineView];
-        
+    if (self.isActiveValue) {
+        [self fetchData:self.mamaWithDrawHistoryDict ActiveValye:YES];
+    }else {
+        [self fetchData:self.drawDict ActiveValye:NO];
     }
     
     
@@ -200,12 +224,12 @@
 
 
 - (void)backClickedesllect:(id)sender {
-    for (UIViewController *temp in self.navigationController.viewControllers) {
-        if ([temp isKindOfClass:[TixianViewController class]] || [temp isKindOfClass:[JMWithdrawCashController class]] || [temp isKindOfClass:[Account1ViewController class]]) {
-            [self.navigationController popToViewController:temp animated:YES];
-        }
-    }
-    
+//    for (UIViewController *temp in self.navigationController.viewControllers) {
+//        if ([temp isKindOfClass:[TixianViewController class]] || [temp isKindOfClass:[JMWithdrawCashController class]] || [temp isKindOfClass:[Account1ViewController class]]) {
+//            [self.navigationController popToViewController:temp animated:YES];
+//        }
+//    }
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
@@ -217,7 +241,42 @@
 
 
 
-
+/**
+ *  
+ 
+ 小鹿妈妈
+ PENDING = 'pending'
+ APPROVED = 'approved'
+ REJECTED = 'rejected'
+ COMPLETED = 'completed'
+ CANCEL = 'cancel'
+ SENDFAIL = 'fail'
+ 
+ STATUS_CHOICES = (
+ (PENDING, u'待审核'),
+ (APPROVED, u'审核通过'),
+ (REJECTED, u'已拒绝'),
+ (CANCEL, u'取消'),
+ (COMPLETED, u'完成'),
+ (SENDFAIL, u'发送失败')
+ )
+ 
+ 个人
+ CONFIRMED = 0
+ CANCELED = 1
+ PENDING = 2
+ 
+ STATUS_CHOICES = (
+ (PENDING, u'待确定'),
+ (CONFIRMED, u'已确定'),
+ (CANCELED, u'已取消'),
+ )
+ 
+ 
+ 
+ 
+ 
+ */
 
 
 

@@ -327,8 +327,8 @@ static NSString *identifier = @"AccountCell";
 //    detailVC.accountDic = [accountM mj_keyValues];
     
     JMWithDrawDetailController *detailVC = [[JMWithDrawDetailController alloc] init];
+    detailVC.isActiveValue = NO;
     detailVC.drawDict = [accountM mj_keyValues];
-
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
