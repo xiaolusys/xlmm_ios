@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface JMWithDrawDetailController : UIViewController
 
 /**
@@ -17,5 +18,10 @@
 
 
 @property (nonatomic, strong) NSDictionary *drawDict;
+
+@property (nonatomic, strong) NSDictionary *mamaWithDrawHistoryDict;
+
+
+
 
 @end

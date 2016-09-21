@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSString *end_time;
 @property (nonatomic, strong) NSDictionary *extras;
 @property (nonatomic, copy) NSString *friend_member_num;
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *activeID;
 @property (nonatomic, copy) NSString *is_active;
 @property (nonatomic, copy) NSString *login_required;
 @property (nonatomic, copy) NSString *mask_link;

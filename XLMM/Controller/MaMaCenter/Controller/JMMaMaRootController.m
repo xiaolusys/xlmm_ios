@@ -186,7 +186,7 @@
     _isActiveClick = YES;                                               // --> 如果想要点击论坛才开始加载需要设置这个属性,否则就不用设置
     self.makeMoneyVC.makeMoneyDic = self.mamaWebDict;
     self.mineVC.webDict = self.mamaWebDict;
-    self.activityVC.urlString = extraDict[@"forum"];
+//    self.activityVC.urlString = extraDict[@"forum"];
     
     NSArray *activeArr = resultsDict[@"mama_activities"];
     if (activeArr.count == 0) {
@@ -291,11 +291,12 @@
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
-//    if (page == 1 && _isActiveClick) {
-//        self.activityVC.urlString = self.mamaWebDict[@"forum"];
-//    }else {
-//        
-//    }
+    if (page == 1 && _isActiveClick) {
+        self.activityVC.urlString = self.mamaWebDict[@"forum"];
+        _isActiveClick = NO;
+    }else {
+        
+    }
     self.scrollView.contentOffset = CGPointMake(page * SCREENWIDTH, 0);
     [MobClick event:_titleArr[page]];
 }

@@ -16,8 +16,11 @@
 #import "JMRewardsController.h"
 #import "JMRichTextTool.h"
 #import "JMHomeActiveCell.h"
+#import "JumpUtils.h"
 
-@interface JMMakeMoneyController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JMMakeMoneyController ()<UITableViewDataSource,UITableViewDelegate> {
+    NSMutableDictionary *_webDict;
+}
 
 @property (nonatomic, strong)UITableView *tableView;
 /**
@@ -45,6 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    _webDict = [NSMutableDictionary dictionary];
     [self createTableView];
     [self createHeaderView];
     
@@ -321,7 +325,29 @@
     cell.model = self.activeArray[indexPath.row];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    JMHomeActiveModel *model = self.activeArray[indexPath.row];
+    [self skipWebView:model.act_applink activeDic:model];
+    
+}
 
+#pragma mark 活动点击事件(跳转webView)
+- (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
+    if(appLink.length == 0){
+        WebViewController *huodongVC = [[WebViewController alloc] init];
+        NSString *active = @"active";
+        [_webDict setValue:active forKey:@"type_title"];
+        [_webDict setValue:model.activeID forKey:@"activity_id"];
+        [_webDict setValue:model.act_link forKey:@"web_url"];
+        huodongVC.webDiction = _webDict;
+        huodongVC.isShowNavBar = true;
+        huodongVC.isShowRightShareBtn = true;
+        huodongVC.titleName = model.title;
+        [self.navigationController pushViewController:huodongVC animated:YES];
+    }else{
+        [JumpUtils jumpToLocation:appLink viewController:self];
+    }
+}
 
 
 

@@ -344,30 +344,37 @@
     }else {
         [self rightDrawCashBtn:NO];
     }
-//    CGFloat moneyTextF = [self.moneyTextF.text floatValue];
-//    if (moneyTextF - _withDrawMoney > 0.000001) {
-//        [self rightDrawCashBtn:NO];
-//    }else {
-//        [self rightDrawCashBtn:YES];
-//    }
     
 }
 - (void)withdrawSureButton:(UIButton *)button {
     button.enabled = NO;
-    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-    
-    if ([_userBudget[@"is_cash_out"] integerValue] != 1) {
-        return ;
-    }
     _textFieldMoney = [self.moneyTextF.text floatValue];
     NSNumber *withdrawNum = [NSNumber numberWithFloat:_textFieldMoney];
-    NSDictionary *param = @{@"cashout_amount":withdrawNum};
-    NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users/budget_cash_out", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:param WithSuccess:^(id responseObject) {
+    NSString *verfiyStr = self.authcodeTextF.text;
+    if (self.isMaMaWithDraw) {
+        NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/noaudit_cashout",Root_URL];
+        NSDictionary *param = @{@"amount":withdrawNum,
+                                @"verify_code":verfiyStr};
+        [self withDrawRequestURL:urlStr Param:param ActiveBOOL:YES];
+    }else {
+        if ([_userBudget[@"is_cash_out"] integerValue] != 1) {
+            return ;
+        }else {
+            NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/users/budget_cash_out",Root_URL];
+            NSDictionary *param = @{@"cashout_amount":withdrawNum,
+                                    @"verify_code":verfiyStr};
+            [self withDrawRequestURL:urlStr Param:param ActiveBOOL:NO];
+        }
+    }    
+}
+- (void)withDrawRequestURL:(NSString *)urlString Param:(NSDictionary *)param ActiveBOOL:(BOOL)activeType {
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
         if (!responseObject) {
+            self.sureWithdrawButton.enabled = YES;
             return ;
             
         }else {
+            self.sureWithdrawButton.enabled = YES;
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
                 _withDrawMoney -= _textFieldMoney;
@@ -377,59 +384,49 @@
                 TixianSucceedViewController *successVC = [[TixianSucceedViewController alloc] init];
                 successVC.tixianjine = _textFieldMoney;
                 successVC.surplusMoney = _withDrawMoney;
-                successVC.isActiveValue = NO;
+                successVC.isActiveValue = activeType;
                 [self.navigationController pushViewController:successVC animated:YES];
             }else {
-                [self showDrawResults:responseObject];
+                [self showDrawResults:responseObject[@"info"]];
             }
-//            self.moneyTextF.text = @"";
+            //            self.moneyTextF.text = @"";
         }
     } WithFail:^(NSError *error) {
-        
+        self.sureWithdrawButton.enabled = YES;
+        [self showDrawResults:@"提现失败,请稍后重试"];
     } Progress:^(float progress) {
         
     }];
+    
+    
 }
-- (void)changeButtonStatus:(UIButton *)button {
-    NSLog(@"button.enabled = YES; ========== ");
-    button.enabled = YES;
-}
-- (void)showDrawResults:(NSDictionary *)results {
-    NSString *desc = results[@"message"];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:desc delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+
+//- (void)changeButtonStatus:(UIButton *)button {
+//    NSLog(@"button.enabled = YES; ========== ");
+//    button.enabled = YES;
+//}
+- (void)showDrawResults:(NSString *)messageStr {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:messageStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
 
 - (void)getAuthcodeClick:(UIButton *)sender {
-    
-    // 需要手机号
-    if ([phoneNumber isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
-        NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+    NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/request_cashout_verify_code");
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
+        if (rcodeStr == 0) {
+            [self startTime];
+        }else {
+            [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
+        }
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"获取失败！"];
+    } Progress:^(float progress) {
         
-        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-        wxloginVC.userInfo = dic;
-        [self.navigationController pushViewController:wxloginVC animated:YES];
-    }else {
-        NSDictionary *parameters = nil;
-        NSString *stringurl = TSendCode_URL;;
-        parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
-        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringurl WithParaments:parameters WithSuccess:^(id responseObject) {
-            NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
-            if (rcodeStr == 0) {
-                [self startTime];
-            }else {
-                [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
-            }
-        } WithFail:^(NSError *error) {
-            [MBProgressHUD showError:@"获取失败！"];
-        } Progress:^(float progress) {
-            
-        }];
-        
-    }
-    
+    }];
     
 }
+
 - (void)startTime {
     __block int secondsCountDown = COUNTING_LIMIT;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -499,32 +496,30 @@
     return YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
+    [muString appendString:string];
+    [muString deleteCharactersInRange:range];
+    CGFloat stringF = [muString floatValue];
+    
     if (textField == self.moneyTextF) {
-        NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
-        [muString appendString:string];
-        [muString deleteCharactersInRange:range];
-        CGFloat stringF = [muString floatValue];
-        BOOL isEnough = ((_withDrawMoney - stringF) > 0.000001);
-        BOOL isSureBtn = ((textField.text != 0) && isEnough);
-        [self rightDrawCashBtn:isSureBtn];
-        if ((stringF - _minWithDrawMoney) > 0.000001 || fabs(stringF - _minWithDrawMoney) <= 0.000001) {
+        BOOL isTFtoMineWithDrawMoeny = (stringF - _minWithDrawMoney) > 0.000001 || fabs(stringF - _minWithDrawMoney) <= 0.000001;    // 判断输入金额与最小提现金额比较
+        BOOL isTFtoWitrDrawmoney = (_withDrawMoney - stringF) >0.000001 || fabs(_withDrawMoney - stringF) <= 0.000001;               // 判断输入金额与我的余额比较
+        
+        if (isTFtoMineWithDrawMoeny && isTFtoWitrDrawmoney) {
             isUserEnable = YES;
             self.selButton.enabled = YES;
             self.selButton.selected = YES;
-//            [self rightDrawCashBtn:YES];
         }else {
             isUserEnable = NO;
             self.selButton.enabled = NO;
             self.selButton.selected = NO;
-//            [self rightDrawCashBtn:NO];
         }
     }else {
-        if (self.authcodeTextF.text.length == 0) {
+        if (muString.length == 0) {
             isUserEnableAuth = NO;
         }else {
             isUserEnableAuth = YES;
         }
-        
     }
     if (isUserEnable && isUserEnableAuth) {
         [self rightDrawCashBtn:YES];
