@@ -137,7 +137,7 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
     NSString *timeString = _timeArray[1];
-    if ([timeString isEqualToString:@"00:00:00"] || timeString == nil) {
+    if ([timeString isEqualToString:@"00:00:00"] || timeString == nil || [timeString isKindOfClass:[NSNull class]]) {
         [self.tableView.mj_header beginRefreshing];
     }else {
         NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:timeString]]; // 结束时间

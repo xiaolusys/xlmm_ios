@@ -103,7 +103,7 @@
     [topImageView addSubview:addEarningLabel];
     addEarningLabel.textColor = [UIColor whiteColor];
     addEarningLabel.font = [UIFont systemFontOfSize:36.];
-    addEarningLabel.text = @"666.66";
+//    addEarningLabel.text = @"666.66";
     self.addEarningLabel = addEarningLabel;
     
     UILabel *lineView = [UILabel new];

@@ -82,7 +82,7 @@
         if (!responseObject) return ;
         
         _minWithDrawMoney = [responseObject[@"min_cashout_amount"] floatValue];
-        _maxWithDrawMoney = [responseObject[@"max_cashout_amount"] floatValue];
+        _maxWithDrawMoney = [responseObject[@"audit_cashout_amount"] floatValue];
         self.descTitleLabel.text = responseObject[@"message"];
         self.myBlanceLabel.text = CS_FLOAT(self.myBlabce);
         _withDrawMoney = self.myBlabce;
@@ -372,7 +372,6 @@
         if (!responseObject) {
             self.sureWithdrawButton.enabled = YES;
             return ;
-            
         }else {
             self.sureWithdrawButton.enabled = YES;
             NSInteger code = [responseObject[@"code"] integerValue];

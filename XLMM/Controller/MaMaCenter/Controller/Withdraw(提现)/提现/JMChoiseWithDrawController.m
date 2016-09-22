@@ -12,6 +12,7 @@
 #import "TixianViewController.h"
 #import "JMWithdrawShortController.h"
 #import "JMWithdrawCashController.h"
+#import "TixianHistoryViewController.h"
 
 @interface JMChoiseWithDrawController () <UITableViewDataSource,UITableViewDelegate> {
     NSArray *cellDataArr;              // 自定义在cell上展示的类型
@@ -45,7 +46,7 @@
 //                        @"descTitle":@"提现现金券为20元50元整"
 //                        }
 //                    ];
-    
+    [self createRightButonItem];
     [self createTableView];
     [self loadCashoutPolicyData];
     
@@ -174,7 +175,21 @@
     
 }
 
+#pragma mark ---- 导航栏右侧体现历史
+- (void) createRightButonItem{
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn setTitle:@"提现历史" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
 
+- (void)rightClicked:(UIButton *)button{
+    TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
+    [self.navigationController pushViewController:historyVC animated:YES];
+}
 
 
 

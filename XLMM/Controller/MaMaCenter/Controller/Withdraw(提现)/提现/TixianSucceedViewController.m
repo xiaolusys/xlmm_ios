@@ -63,7 +63,14 @@
 }
 
 - (void)backClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)setActiveNum:(float)activeNum {
@@ -248,8 +255,13 @@
 */
 
 - (void)finishButton:(UIButton *)btn {
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 
@@ -261,3 +273,24 @@
     [self.navigationController pushViewController:publish animated:YES];
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
