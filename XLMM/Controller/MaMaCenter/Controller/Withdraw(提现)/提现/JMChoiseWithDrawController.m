@@ -59,7 +59,7 @@
         self.withDrawDescLabel.text = responseObject[@"message"];
         NSString *string = [NSString stringWithFormat:@"提现金额%@元至%@元",responseObject[@"min_cashout_amount"],responseObject[@"audit_cashout_amount"]];
         cellDataArr = @[@{
-                            @"title":@"小额提现",
+                            @"title":@"快速提现",
                             @"descTitle":string
                             },
                         @{
@@ -158,6 +158,9 @@
         JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
         drawCash.myBlabce = self.myBlance;
         drawCash.isMaMaWithDraw = YES;
+        drawCash.block=^(CGFloat money){
+            self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
+        };
         [self.navigationController pushViewController:drawCash animated:YES];
     }else if (index == 1) { // 整额提现
         TixianViewController *vc = [[TixianViewController alloc] init];
