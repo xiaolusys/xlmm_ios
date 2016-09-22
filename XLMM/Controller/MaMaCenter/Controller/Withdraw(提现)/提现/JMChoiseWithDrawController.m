@@ -32,20 +32,19 @@
     [super viewDidLoad];
     
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClick:)];
-    
-//    cellDataArr = @[@{
-//                        @"title":@"小额提现",
-//                        @"descTitle":@"提现金额小于等于6元"
-//                        },
-//                    @{
-//                        @"title":@"整额提现",
-//                        @"descTitle":@"提现金额为100元200元整"
-//                        },
-//                    @{
-//                        @"title":@"兑换现金券",
-//                        @"descTitle":@"提现现金券为20元50元整"
-//                        }
-//                    ];
+    cellDataArr = @[@{
+                        @"title":@"小额提现",
+                        @"descTitle":@"提现金额小于等于6元"
+                        },
+                    @{
+                        @"title":@"整额提现",
+                        @"descTitle":@"提现金额为100元200元整"
+                        },
+                    @{
+                        @"title":@"兑换现金券",
+                        @"descTitle":@"提现现金券为20元50元整"
+                        }
+                    ];
     [self createRightButonItem];
     [self createTableView];
     [self loadCashoutPolicyData];

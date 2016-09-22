@@ -120,7 +120,9 @@
     }];
 }
 - (void)mamaMesageData:(NSDictionary *)messageDic {
-    self.mineVC.messageDic = messageDic;
+//    self.mineVC.messageDic = messageDic;
+    self.makeMoneyVC.messageDic = messageDic;
+    
 }
 
 - (void)loadDataSource {

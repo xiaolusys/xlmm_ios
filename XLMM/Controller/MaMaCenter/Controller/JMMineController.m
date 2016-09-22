@@ -8,8 +8,6 @@
 
 #import "JMMineController.h"
 #import "MMClass.h"
-#import "JMAutoLoopScrollView.h"
-#import "JMContentRollView.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
 #import "TixianViewController.h"
@@ -28,8 +26,7 @@
 #import "JMRichTextTool.h"
 #import "JMChoiseWithDrawController.h"
 
-
-@interface JMMineController ()<UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
+@interface JMMineController ()<UITableViewDataSource,UITableViewDelegate> {
     CGFloat _carryValue;              // 账户金额
     NSNumber *_activeValueNum;        // 活跃值
     NSNumber *_fansNum;               // 我的粉丝
@@ -49,7 +46,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) JMAutoLoopScrollView *scrollView;
+//@property (nonatomic, strong) JMAutoLoopScrollView *scrollView;
 
 @property (nonatomic, strong) UILabel *idLabel;                // 妈妈ID
 @property (nonatomic, strong) UILabel *memberLabel;            // 会员剩余期限
@@ -71,18 +68,11 @@
  *  字典中存储在webView中使用的值
  */
 @property (nonatomic,strong) NSMutableDictionary *diction;
-@property (nonatomic, strong) NSMutableArray *titlesArray;
 
 @end
 
 @implementation JMMineController {
     NSString *_mamaID;
-}
-- (NSMutableArray *)titlesArray {
-    if (_titlesArray == nil) {
-        _titlesArray = [NSMutableArray array];
-    }
-    return _titlesArray;
 }
 - (NSMutableDictionary *)diction {
     if (!_diction) {
@@ -137,18 +127,6 @@
     
 }
 
-
-- (void)setMessageDic:(NSDictionary *)messageDic {
-    NSArray *resultsArr = messageDic[@"results"];
-    if (resultsArr.count == 0) {
-        self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
-    }else {
-        for (NSDictionary *dic in resultsArr) {
-            [self.titlesArray addObject:dic[@"title"]];
-        }
-    }
-    [self.scrollView jm_reloadData];
-}
 - (void)setWebDict:(NSDictionary *)webDict {
     _webDict = webDict;
     _fansWebUrl = webDict[@"fans_explain"];         // --> 粉丝二维码
@@ -280,54 +258,7 @@
         make.height.mas_equalTo(@(45));
     }];
     
-    
-    
-    UILabel *memberLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 149, SCREENWIDTH, 1)];
-    memberLine.backgroundColor = [UIColor countLabelColor];
-    [memberView addSubview:memberLine];
-    
-    UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, 150, SCREENWIDTH, 45)];
-    [headerView addSubview:messageView];
-    messageView.backgroundColor = [UIColor whiteColor];
-    
-    UILabel *messageLabel = [UILabel new];
-    [messageView addSubview:messageLabel];
-    messageLabel.font = [UIFont systemFontOfSize:14.];
-    messageLabel.textColor = [UIColor buttonTitleColor];
-    messageLabel.text = @"我的消息";
-    
-    UIView *messageScrollView = [UIView new];
-    [messageView addSubview:messageScrollView];
-    
-    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleVertical];
-    self.scrollView = scrollView;
-    //代理和数据源
-    scrollView.jm_scrollDataSource = self;
-    scrollView.jm_scrollDelegate = self;
-    //数据数组为1时是否关闭滚动
-    scrollView.jm_isStopScrollForSingleCount = YES;
-    scrollView.jm_autoScrollInterval = 2.;
-    [scrollView jm_registerClass:[JMContentRollView class]];
-    [messageScrollView addSubview:self.scrollView];
-    
-    [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(messageView).offset(10);
-        make.centerY.equalTo(messageView.mas_centerY);
-    }];
-    [messageScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(messageLabel.mas_right).offset(10);
-        make.top.bottom.right.equalTo(messageView);
-    }];
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(messageScrollView);
-        make.centerY.equalTo(messageScrollView.mas_centerY);
-        make.height.mas_equalTo(@40);
-    }];
-    
-    
-
-    
-    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 210, SCREENWIDTH, 275)];
+    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 165, SCREENWIDTH, 275)];
 //    selectBoxView.backgroundColor = [UIColor countLabelColor];
     [headerView addSubview:selectBoxView];
     
@@ -469,24 +400,18 @@
     }else { }
   
 }
-#pragma mark - LPAutoScrollViewDatasource
-- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
-    return self.titlesArray.count;
-}
-- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMContentRollView *)rollView {
-    rollView.title = self.titlesArray[index];
-}
-#pragma mark LPAutoScrollViewDelegate
-- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
-    WebViewController *message = [[WebViewController alloc] init];
-    [self.diction setValue:self.webDict[@"notice"] forKey:@"web_url"];
-    [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
-    message.webDiction = self.diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
-    message.isShowNavBar = true;
-    message.isShowRightShareBtn = false;
-    [self.navigationController pushViewController:message animated:YES];
+//#pragma mark - LPAutoScrollViewDatasource
+//- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
+//    return self.titlesArray.count;
+//}
+//- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMContentRollView *)rollView {
+//    rollView.title = self.titlesArray[index];
+//}
+//#pragma mark LPAutoScrollViewDelegate
+//- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
 
-}
+//
+//}
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) style:UITableViewStylePlain];
     self.tableView.delegate = self;

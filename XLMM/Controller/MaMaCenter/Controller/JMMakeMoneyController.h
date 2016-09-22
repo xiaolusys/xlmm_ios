@@ -16,5 +16,7 @@
 
 @property (nonatomic, strong) NSMutableArray *activeArray;
 
+@property (nonatomic, strong) NSDictionary *messageDic;
+
 
 @end

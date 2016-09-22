@@ -816,6 +816,11 @@
 		1FE52DDE1D9159A20051D5A0 /* UdeskPhotoManeger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52D971D9159A20051D5A0 /* UdeskPhotoManeger.m */; };
 		1FE52DDF1D9159A20051D5A0 /* UdeskPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52D991D9159A20051D5A0 /* UdeskPhotoView.m */; };
 		1FE52DE01D9159A20051D5A0 /* UdeskReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52D9C1D9159A20051D5A0 /* UdeskReachability.m */; };
+		1FE52DE61D93C5C70051D5A0 /* JJCyclePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52DE51D93C5C70051D5A0 /* JJCyclePageView.m */; };
+		1FE52DE91D93C64D0051D5A0 /* JMMaMaMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52DE81D93C64D0051D5A0 /* JMMaMaMessageCell.m */; };
+		1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52DEB1D93CEA30051D5A0 /* JMHomeHeaderCell.m */; };
+		1FE52DEF1D93D89F0051D5A0 /* JMAutoLoopPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52DEE1D93D89F0051D5A0 /* JMAutoLoopPageView.m */; };
+		1FE52DF21D93FFF30051D5A0 /* JMGoodsLoopRollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52DF11D93FFF30051D5A0 /* JMGoodsLoopRollCell.m */; };
 		1FE67AA91D73FD5300761450 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA41D73FD5300761450 /* 5C@2x.png */; };
 		1FE67AAA1D73FD5300761450 /* iPhone4S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA51D73FD5300761450 /* iPhone4S@2x.png */; };
 		1FE67AAB1D73FD5300761450 /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA61D73FD5300761450 /* iPhone6@2x.png */; };
@@ -2185,6 +2190,16 @@
 		1FE52D991D9159A20051D5A0 /* UdeskPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdeskPhotoView.m; sourceTree = "<group>"; };
 		1FE52D9B1D9159A20051D5A0 /* UdeskReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdeskReachability.h; sourceTree = "<group>"; };
 		1FE52D9C1D9159A20051D5A0 /* UdeskReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdeskReachability.m; sourceTree = "<group>"; };
+		1FE52DE41D93C5C70051D5A0 /* JJCyclePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJCyclePageView.h; sourceTree = "<group>"; };
+		1FE52DE51D93C5C70051D5A0 /* JJCyclePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJCyclePageView.m; sourceTree = "<group>"; };
+		1FE52DE71D93C64D0051D5A0 /* JMMaMaMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaMessageCell.h; sourceTree = "<group>"; };
+		1FE52DE81D93C64D0051D5A0 /* JMMaMaMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaMessageCell.m; sourceTree = "<group>"; };
+		1FE52DEA1D93CEA30051D5A0 /* JMHomeHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeHeaderCell.h; sourceTree = "<group>"; };
+		1FE52DEB1D93CEA30051D5A0 /* JMHomeHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeHeaderCell.m; sourceTree = "<group>"; };
+		1FE52DED1D93D89F0051D5A0 /* JMAutoLoopPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAutoLoopPageView.h; sourceTree = "<group>"; };
+		1FE52DEE1D93D89F0051D5A0 /* JMAutoLoopPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAutoLoopPageView.m; sourceTree = "<group>"; };
+		1FE52DF01D93FFF30051D5A0 /* JMGoodsLoopRollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsLoopRollCell.h; sourceTree = "<group>"; };
+		1FE52DF11D93FFF30051D5A0 /* JMGoodsLoopRollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsLoopRollCell.m; sourceTree = "<group>"; };
 		1FE67AA41D73FD5300761450 /* 5C@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5C@2x.png"; sourceTree = "<group>"; };
 		1FE67AA51D73FD5300761450 /* iPhone4S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone4S@2x.png"; sourceTree = "<group>"; };
 		1FE67AA61D73FD5300761450 /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
@@ -2825,6 +2840,8 @@
 		183071301C97BE3700B7665E /* MaMaCenter */ = {
 			isa = PBXGroup;
 			children = (
+				1FE52DE41D93C5C70051D5A0 /* JJCyclePageView.h */,
+				1FE52DE51D93C5C70051D5A0 /* JJCyclePageView.m */,
 				1F27A5C91D2520E200A0F80B /* Model */,
 				1F27A5CA1D2520E200A0F80B /* View */,
 				1F27A5691D2520E200A0F80B /* Controller */,
@@ -3813,6 +3830,8 @@
 				1FDD07441D463A6F0010231F /* JMMaMaCenterFooterView.m */,
 				1F916A751D51B95300327408 /* JMContentRollView.h */,
 				1F916A761D51B95300327408 /* JMContentRollView.m */,
+				1FE52DE71D93C64D0051D5A0 /* JMMaMaMessageCell.h */,
+				1FE52DE81D93C64D0051D5A0 /* JMMaMaMessageCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4036,6 +4055,8 @@
 				1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */,
 				1F23F9A81D6712C700C78EAE /* JMHomeGoodsCell.h */,
 				1F23F9A91D6712C700C78EAE /* JMHomeGoodsCell.m */,
+				1FE52DEA1D93CEA30051D5A0 /* JMHomeHeaderCell.h */,
+				1FE52DEB1D93CEA30051D5A0 /* JMHomeHeaderCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4152,6 +4173,8 @@
 				1F2F9E7C1D5C1C3D00E3A68B /* JMGoodsSafeGuardCell.m */,
 				1F2F9E3A1D58A54300E3A68B /* JMGoodsLoopRollView.h */,
 				1F2F9E3B1D58A54300E3A68B /* JMGoodsLoopRollView.m */,
+				1FE52DF01D93FFF30051D5A0 /* JMGoodsLoopRollCell.h */,
+				1FE52DF11D93FFF30051D5A0 /* JMGoodsLoopRollCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5026,6 +5049,8 @@
 				1F5AE2C01D535CB50022E6E4 /* JMRollView.m */,
 				1F5AE2C11D535CB50022E6E4 /* JMAutoLoopScrollView.h */,
 				1F5AE2C21D535CB50022E6E4 /* JMAutoLoopScrollView.m */,
+				1FE52DED1D93D89F0051D5A0 /* JMAutoLoopPageView.h */,
+				1FE52DEE1D93D89F0051D5A0 /* JMAutoLoopPageView.m */,
 			);
 			path = "autoLoopscrollView(滚动视图)";
 			sourceTree = "<group>";
@@ -7153,6 +7178,7 @@
 				1F23F9CF1D6C1C4800C78EAE /* JMBaseScrollViewController.m in Sources */,
 				1F2F9E5F1D59A73900E3A68B /* JMGoodsInfoPopView.m in Sources */,
 				325B79931C97E6F10022F930 /* AddressTableCell.m in Sources */,
+				1FE52DE91D93C64D0051D5A0 /* JMMaMaMessageCell.m in Sources */,
 				1FE52DC51D9159A20051D5A0 /* UITextView+UDTextView.m in Sources */,
 				1F498B351D276450007E77FC /* CartViewController.m in Sources */,
 				1830728E1C97C00900B7665E /* AddressPickerView.m in Sources */,
@@ -7261,6 +7287,7 @@
 				1FDD07A41D49B6250010231F /* JMMaMaSelfTeamModel.m in Sources */,
 				1FE52DA81D9159A20051D5A0 /* UdeskProductMessage.m in Sources */,
 				1830744E1C97D17900B7665E /* SendMessageToWeibo.m in Sources */,
+				1FE52DF21D93FFF30051D5A0 /* JMGoodsLoopRollCell.m in Sources */,
 				1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */,
 				1FF5335C1D27789D003DEABF /* PersonOrderViewController.m in Sources */,
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
@@ -7317,6 +7344,7 @@
 				325B79A01C97E6F10022F930 /* ReBuyTableViewCell.m in Sources */,
 				1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */,
 				1F27A5D91D2520E200A0F80B /* JMFetureFansModel.m in Sources */,
+				1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */,
 				1F498C281D2772D0007E77FC /* AddAdressViewController.m in Sources */,
 				181ABB141CA136C3001307C0 /* VisitorModel.m in Sources */,
 				1F27A60A1D26078B00A0F80B /* JMCouponView.m in Sources */,
@@ -7378,6 +7406,7 @@
 				1F498C491D2772D0007E77FC /* JMGoodsListController.m in Sources */,
 				1F1D79541CE7310F0042701C /* JMPhonenumViewController.m in Sources */,
 				1F27A6131D26291000A0F80B /* JMMaMaExtraModel.m in Sources */,
+				1FE52DE61D93C5C70051D5A0 /* JJCyclePageView.m in Sources */,
 				1F3621D21CF92433004359B0 /* UIView+RGSize.m in Sources */,
 				1F56E2701D33CDE00092EC91 /* JMCouponController.m in Sources */,
 				1F27A62D1D275CD600A0F80B /* JMShareView.m in Sources */,
@@ -7449,6 +7478,7 @@
 				1F27A5ED1D2520E200A0F80B /* ActivityErweimaViewController.m in Sources */,
 				1FE52DD61D9159A20051D5A0 /* UdeskUtils.m in Sources */,
 				1F498C501D2772D0007E77FC /* JMTimeListCell.m in Sources */,
+				1FE52DEF1D93D89F0051D5A0 /* JMAutoLoopPageView.m in Sources */,
 				1F56E2A31D3617210092EC91 /* JMPersonAllOrderController.m in Sources */,
 				1FEDCB0F1D90D40300CB7D97 /* JMWithDrawDetailController.m in Sources */,
 				1F1FB8C81D8E24D2004C60CE /* NJKWebViewProgressView.m in Sources */,
