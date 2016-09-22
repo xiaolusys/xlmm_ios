@@ -12,6 +12,7 @@
 #import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"
 
+
 @interface TixianViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 
@@ -420,27 +421,14 @@
         }
         NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
         TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
-        
-        switch (code) {
-            case 0:
-                vc.tixianjine = tixianjine;
-                vc.activeValueNum = _activeValue;
-                vc.surplusMoney = self.cantixianjine;
-                vc.isActiveValue = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-                break;
-            case 1:
-                [self alterMessage:@"参数错误"];
-                break;
-            case 2:
-                [self alterMessage:@"不足提现金额"];
-                break;
-            case 3:
-                [self alterMessage:@"有待审核记录不予再次提现"];
-                break;
-                
-            default:
-                break;
+        if (code == 0) {
+            vc.tixianjine = tixianjine;
+            vc.activeValueNum = _activeValue;
+            vc.surplusMoney = self.cantixianjine;
+            vc.isActiveValue = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            [MBProgressHUD showError:responseObject[@"msg"]];
         }
     } WithFail:^(NSError *error) {
         
@@ -449,6 +437,7 @@
     }];
 
 }
+
 - (void)changeButtonStatus:(UIButton *)button {
     NSLog(@"button.enabled = YES; ========== ");
     button.enabled = YES;

@@ -124,11 +124,11 @@
         }
     }else {
         NSString *budgetType = @"提现至账户:";
-        if ([self.drawDict[@"status"] integerValue] == 0) {
+        if ([dict[@"status"] integerValue] == 0) {
             statusCode = 3;
         }
-        NSString *statusDescStr = self.drawDict[@"get_status_display"];
-        if ([self.drawDict[@"budget_type"] boolValue]) {
+        NSString *statusDescStr = dict[@"get_status_display"];
+        if ([dict[@"budget_type"] boolValue]) {
             self.takeoutMoney.text = @"出账金额(元)";
             timeLineTitleArr = @[@"金额冻结",statusDescStr,@"提现成功"];
         }else {
@@ -136,9 +136,9 @@
             budgetType = @"收入至账户:";
             timeLineTitleArr = @[@"金额冻结",statusDescStr,@"入账成功"];
         }
-        self.moneyLabel.text = CS_FLOAT([self.drawDict[@"budeget_detail_cash"] floatValue]);
-        NSString *timeStr = self.drawDict[@"budget_date"];
-        NSString *typeStr = self.drawDict[@"desc"];
+        self.moneyLabel.text = CS_FLOAT([dict[@"budeget_detail_cash"] floatValue]);
+        NSString *timeStr = dict[@"budget_date"];
+        NSString *typeStr = dict[@"desc"];
         cellDataArr = @[@{
                             @"title":budgetType,
                             @"descTitle":typeStr
@@ -196,11 +196,14 @@
     [headerView addSubview:timeLineBaseView];
     self.timeLineBaseView = timeLineBaseView;
     
-    if (self.isActiveValue) {
-        [self fetchData:self.mamaWithDrawHistoryDict ActiveValye:YES];
-    }else {
-        [self fetchData:self.drawDict ActiveValye:NO];
+    if (flag == 1) {
+        if (self.isActiveValue) {
+            [self fetchData:self.mamaWithDrawHistoryDict ActiveValye:YES];
+        }else {
+            [self fetchData:self.drawDict ActiveValye:NO];
+        }
     }
+    
     
     
 }
