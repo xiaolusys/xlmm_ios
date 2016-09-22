@@ -365,27 +365,12 @@
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
     [self createWithdraw];
     [self createAutolayouts];
-    [self createRightButonItem];
         
     type = @"";
 
     
 }
-#pragma mark ---- 导航栏右侧体现历史
-- (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setTitle:@"提现历史" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
 
-- (void)rightClicked:(UIButton *)button{
-    TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
-    [self.navigationController pushViewController:historyVC animated:YES];
-}
 #pragma mark ----- 体现按钮是否可由点击
 - (void)enableSureButton{
     self.sureButton.enabled = YES;
