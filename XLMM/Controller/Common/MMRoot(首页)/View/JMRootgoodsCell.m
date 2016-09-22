@@ -209,11 +209,14 @@
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
     if (![model.watermark_op isEqualToString:@""]) {
         [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
-        
     } else{
         [newImageUrl appendString:@"?"];
     }
-
+    
+    if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
+    }else {
+        [newImageUrl insertString:@"http:" atIndex:0];
+    }
 //    NSLog(@"name = %@ %@ %@ %@", model.name, model.isSaleopen, model.isSaleout , model.productModel);
 
     self.iconImage.alpha = 0.3;

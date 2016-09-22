@@ -64,7 +64,7 @@
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PublishNewPdtViewController"];
 
 }
@@ -156,16 +156,15 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
     
-    [SVProgressHUD showWithStatus:@"正在加载..."];
+    [MBProgressHUD showLoading:@"正在加载..."];
     //网络请求
     NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:requestURL WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"获取信息失败"];
+        [MBProgressHUD showError:@"获取信息失败"];
     } Progress:^(float progress) {
         
     }];
@@ -346,7 +345,7 @@
 #pragma mark --保存事件
 - (void)tapSaveImageToIphone:(UIButton *)sender
                currentPicArr:(NSMutableArray *)currentPicArr {
-
+    
     NSInteger saveIndex = sender.tag - 100;
     self.saveIndex = saveIndex;
     SharePicModel *picModel = self.dataArr[saveIndex];
@@ -354,6 +353,7 @@
     //判断是否有用户权限
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
     if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+        [MobClick event:@"DaysPush_success"];
         //无权限
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         alert.tag = 101;
@@ -363,8 +363,10 @@
 //        NSLog(@"---------%@", picModel.title);
         [pab setString:picModel.title];
         if (pab == nil) {
-            [SVProgressHUD showErrorWithStatus:@"请重新复制文案"];
+            [MobClick event:@"DaysPush_fail"];
+            [MBProgressHUD showError:@"请重新复制文案"];
         }else{
+            [MobClick event:@"DaysPush_success"];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             alert.tag = 102;
             [alert show];

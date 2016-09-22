@@ -206,15 +206,26 @@ static NSString * cellId = @"JMClassifyListController";
     
 }
 - (void)emptyView {
-    JMEmptyGoodsView *empty = [[JMEmptyGoodsView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99)];
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
         }
     };
-    
 }
+
+//- (void)emptyView {
+//    JMEmptyGoodsView *empty = [[JMEmptyGoodsView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99)];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//        }
+//    };
+//    
+//}
 
 - (void)backClick:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];

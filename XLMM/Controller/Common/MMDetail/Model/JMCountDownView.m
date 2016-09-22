@@ -35,7 +35,6 @@
     }
     return self;
 }
-
 + (instancetype)countDownWithCurrentTime:(NSString *)endTime {
     return [[self shareCountDown] initWithCountDownTime:endTime];
 }

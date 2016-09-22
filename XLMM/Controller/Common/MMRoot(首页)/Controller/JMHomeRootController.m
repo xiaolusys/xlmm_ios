@@ -36,6 +36,7 @@
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"
+#import "JMMaMaRootController.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -135,19 +136,28 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
-    NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:_timeArray[1]]]; // 结束时间
-    NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
-    int timer = time;
-    NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
-    if ([timeStr isEqual:@"0"]) {
+    NSString *timeString = _timeArray[1];
+    if ([timeString isEqualToString:@"00:00:00"] || timeString == nil || [timeString isKindOfClass:[NSNull class]]) {
         [self.tableView.mj_header beginRefreshing];
+    }else {
+        NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:timeString]]; // 结束时间
+        NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+        int timer = time;
+        NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
+        if ([timeStr isEqual:@"0"]) {
+            [self.tableView.mj_header beginRefreshing];
+        }
     }
 }
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
+    if ([timeString isEqualToString:@"00:00:00"]) {
+        return 0;
+    }else {
+        NSMutableString *ms = [NSMutableString stringWithString:timeString];
+        NSRange range = {10,1};
+        [ms replaceCharactersInRange:range withString:@" "];
+        return ms;
+    }
 }
 - (void)viewDidAppear:(BOOL)animated {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -401,8 +411,9 @@
             return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
         }
     }else if (indexPath.section == 1) {
-        JMHomeActiveModel *model = self.activeArray[indexPath.row];
-        return model.cellHeight;
+        return SCREENWIDTH * 0.5 + 10;
+//        JMHomeActiveModel *model = self.activeArray[indexPath.row];
+//        return model.cellHeight;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {
@@ -552,7 +563,8 @@
         }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
-            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+//            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
             mamaCenterVC.userInfoDic = json;
             [self.navigationController pushViewController:mamaCenterVC animated:YES];
         } else {
@@ -792,7 +804,7 @@
 //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
-                [SVProgressHUD showErrorWithStatus:@"请登录"];
+                [MBProgressHUD showError:@"请登录"];
             }
             
         }
@@ -810,9 +822,9 @@
         }else {
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
-                [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                [MBProgressHUD showSuccess:responseObject[@"info"]];
             }else {
-                [SVProgressHUD showErrorWithStatus:@"领取失败"];
+                [MBProgressHUD showError:@"领取失败"];
             }
         }
     } WithFail:^(NSError *error) {
@@ -848,12 +860,12 @@
                     NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
                     if (code == 0) {
                         if (isPicked == 1) {
-                            [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                            [MBProgressHUD showSuccess:responseObject[@"info"]];
                         }else {
                             [self pickCoupon];
                         }
                     }else {
-                        [SVProgressHUD showErrorWithStatus:@"请登录"];
+                        [MBProgressHUD showError:@"请登录"];
                     }
                 }
             } WithFail:^(NSError *error) {

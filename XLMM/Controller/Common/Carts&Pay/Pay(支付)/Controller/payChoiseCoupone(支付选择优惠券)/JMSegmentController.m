@@ -51,15 +51,15 @@
     return _disableCouponArr;
 }
 - (void)loadCouponData {
-    [SVProgressHUD showWithStatus:@"小鹿正在加载优惠券,稍等片刻哦~!"];
+    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/coupon_able?cart_ids=%@",Root_URL,self.cartID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchData:responseObject];
         [self createSegement];
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"优惠券加载失败,请稍后重试~!"];
+        [MBProgressHUD showError:@"优惠券加载失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -131,7 +131,7 @@
         }else {
         }
     }else {
-        [SVProgressHUD showInfoWithStatus:couponData[@"info"]];
+        [MBProgressHUD showWarning:couponData[@"info"]];
     }
 }
 - (void)updateYouhuiquanmodel:(JMCouponModel *)model {

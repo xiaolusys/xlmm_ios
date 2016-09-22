@@ -14,6 +14,7 @@
 #import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "WebViewController.h"
+#import "JMRichTextTool.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -224,11 +225,7 @@
     [footView addSubview:termsLabel];
     termsLabel.font = [UIFont systemFontOfSize:13.];
     NSString *termStr = @"我已阅读并同意小鹿美美购买条款";
-    NSInteger termStrLength = termStr.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:termStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,7)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(7, termStrLength - 7)];
-    termsLabel.attributedText = str;
+    termsLabel.attributedText = [JMRichTextTool cs_changeColorWithColor:[UIColor buttonEnabledBackgroundColor] AllString:termStr SubStringArray:@[@"小鹿美美购买条款"]];
     termsLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *termsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(termsTapClick:)];
     [termsLabel addGestureRecognizer:termsTap];
@@ -446,7 +443,7 @@
     JMVipRenewController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         
         NSError *parseError = nil;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
@@ -454,14 +451,14 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                 if (error == nil) {
-                    [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                    [MBProgressHUD showSuccess:@"支付成功"];
                     [MobClick event:@"renewBuy_succ"];
                 } else {
                     if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                        [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                        [MBProgressHUD showError:@"用户取消支付"];
                         [MobClick event:@"renewBuy_cancel"];
                     } else {
-                        [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                        [MBProgressHUD showError:@"支付失败"];
                         NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
                         [MobClick event:@"renewBuy_fail" attributes:temp_dict];
                     }
@@ -470,9 +467,9 @@
                 
             }];
         });
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"续费失败,请稍后尝试 ~~(>_<)~~ !"];
+        [MBProgressHUD showError:@"续费失败,请稍后尝试 ~~(>_<)~~ !"];
     } Progress:^(float progress) {
         
     }];
@@ -486,10 +483,9 @@
         if (!responseObject) return ;
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
-            [SVProgressHUD setMinimumDismissTimeInterval:1];
-            [SVProgressHUD showSuccessWithStatus:@"续费成功......"];
+            [MBProgressHUD showSuccess:@"续费成功......"];
         }else {
-            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+            [MBProgressHUD showWarning:responseObject[@"info"]];
         }
     } WithFail:^(NSError *error) {
         
@@ -581,7 +577,7 @@
                 [self createPayPopView];
             }
         }else {
-            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
+            [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
         }
     }else {
         button.selected = !button.selected;
@@ -602,9 +598,9 @@
         [self payBackAlter];
         
     }else if (index == 101) { //点击了微信支付
-        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        [MBProgressHUD showLoading:@"正在支付中....."];
         if (!self.isInstallWX) {
-            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦"];
+            [MBProgressHUD showError:@"亲，没有安装微信哦"];
             return;
         }
         _channel = @"wx";
@@ -612,7 +608,7 @@
         [self payMoney];
         
     }else if (index == 102) { //点击了支付宝支付
-        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        [MBProgressHUD showLoading:@"正在支付中....."];
         _channel = @"alipay";
         [self hidePickerView];
         [self payMoney];

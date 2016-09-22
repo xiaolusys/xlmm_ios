@@ -33,19 +33,23 @@
 }
 
 + (void)showCustomIcon:(NSString *)iconName Title:(NSString *)title ToView:(UIView *)view {
+    [self hideHUDForView:nil];
     if (view == nil) view = (UIView *)[UIApplication sharedApplication].delegate.window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.label.text = title;
-    
-//    if ([iconName isEqualToString:@"progressError"] || [iconName isEqualToString:@"progressSuccess"]) {
-//        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", iconName]]];
-//    }else{
-//        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
-//    }
+//    hud.dimBackground = NO;
+//    hud.offset = CGPointMake(0.f, MBProgressMaxOffset);     // 指示框位置
+//    hud.detailsLabel.text = @"我是文本详情";                  // 可以设置文本详情
+//    hud.minSize = CGSizeMake(150.f, 100.f);                 // 指示框最小范围
+//    hud.margin = 20.;                                       // 指示框内容距离边框间距
+    hud.contentColor = [UIColor whiteColor];               // 文字内容颜色
+    hud.bezelView.backgroundColor = [UIColor blackColor];
+    hud.bezelView.alpha = 0.7;
+    hud.animationType = MBProgressHUDAnimationZoom;
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconName]];
     hud.mode = MBProgressHUDModeCustomView;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hideAnimated:YES afterDelay:1.5f];
+    [hud hideAnimated:YES afterDelay:2.0f];
 }
 
 #pragma mark 文字提示,自动消失,无图
@@ -53,7 +57,7 @@
     [self showMessage:message ToView:nil];
 }
 + (void)showMessage:(NSString *)message ToView:(UIView *)view {
-    [self showMessage:message ToView:view RemainTime:1.0f Model:MBProgressHUDModeText];
+    [self showMessage:message ToView:view RemainTime:1.5f Model:MBProgressHUDModeText];
 }
 
 
@@ -66,12 +70,16 @@
     [self showMessage:message ToView:view RemainTime:time Model:MBProgressHUDModeText];
 }
 +(void)showMessage:(NSString *)message ToView:(UIView *)view RemainTime:(CGFloat)time Model:(MBProgressHUDMode)model {
+    [self hideHUDForView:nil];
     if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.contentColor = [UIColor whiteColor];               // 文字内容颜色
+    hud.bezelView.backgroundColor = [UIColor blackColor];
+    hud.bezelView.alpha = 0.7;
+    hud.animationType = MBProgressHUDAnimationZoom;
     hud.label.text = message;
     hud.mode = model;
     hud.removeFromSuperViewOnHide = YES;
-    hud.dimBackground = YES;        // 蒙版效果
     [hud hideAnimated:YES afterDelay:time];
     
 }
@@ -80,9 +88,14 @@
 + (MBProgressHUD *)showTitle:(NSString *)title ToView:(UIView *)view {
     if (view == nil) view = (UIView*)[UIApplication sharedApplication].delegate.window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.contentColor = [UIColor whiteColor];               // 文字内容颜色
+    hud.bezelView.backgroundColor = [UIColor blackColor];
+    hud.bezelView.alpha = 0.7;
+    hud.animationType = MBProgressHUDAnimationZoom;
     hud.label.text = title;
     hud.removeFromSuperViewOnHide = YES;
-    hud.dimBackground = YES;
+//    hud.dimBackground = NO;        // 蒙版效果
     return hud;
 }
 + (MBProgressHUD *)hideHUDView:(UIView *)view {

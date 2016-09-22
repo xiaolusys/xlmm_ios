@@ -258,15 +258,17 @@
 
 - (void)linkCopyBtnClick:(UIButton *)btn {
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    NSString *str = self.mamalink;
-    [pab setString:str];
-    if (pab == nil) {
-        [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-    }else
-    {
-        [SVProgressHUD showSuccessWithStatus:@"已复制"];
+    if ([self.mamalink isKindOfClass:[NSNull class]] || self.mamalink == nil || [self.mamalink isEqual:@""]) {
+        [MBProgressHUD showMessage:@"复制失败"];
+    }else {
+        [pab setString:self.mamalink];
+        if (pab == nil) {
+            [MBProgressHUD showMessage:@"请重新复制"];
+        }else
+        {
+            [MBProgressHUD showMessage:@"已复制"];
+        }
     }
-    
     [self cancleShareBtnClick:nil];
 }
 

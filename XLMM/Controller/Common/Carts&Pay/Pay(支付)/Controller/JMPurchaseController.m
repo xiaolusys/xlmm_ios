@@ -29,8 +29,8 @@
 #import "JMCouponModel.h"
 #import "JMDelayPopView.h"
 #import "JMPopViewAnimationSpring.h"
-#import "MBProgressHUD.h"
 #import "WebViewController.h"
+#import "JMRichTextTool.h"
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
@@ -85,7 +85,6 @@
  */
 @property (nonatomic,assign) BOOL isXLWforAlipay;
 
-@property (nonatomic, strong) MBProgressHUD *hud;
 @end
 
 static BOOL isAgreeTerms = YES;
@@ -200,7 +199,7 @@ static BOOL isAgreeTerms = YES;
         [self fetchedCartsData:responseObject];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+        [MBProgressHUD showError:@"获取数据失败"];
     } Progress:^(float progress) {
     }];
 }
@@ -211,7 +210,7 @@ static BOOL isAgreeTerms = YES;
         [self fetchedAddressData:responseObject];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"获取数据失败"];
+        [MBProgressHUD showError:@"获取数据失败"];
     } Progress:^(float progress) {
         
     }];
@@ -234,7 +233,8 @@ static BOOL isAgreeTerms = YES;
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.purchaseGoodsArr addObject:model];
     }
-    if ([teamGoodsDic isKindOfClass:[NSMutableDictionary class]] && [teamGoodsDic objectForKey:@"type"]) {
+    NSInteger isTeamCode = [[teamGoodsDic objectForKey:@"type"] integerValue];
+    if ([teamGoodsDic isKindOfClass:[NSMutableDictionary class]] && isTeamCode == 3) {
         _isTeamBuyGoods = YES;
     }else {
         _isTeamBuyGoods = NO;
@@ -315,7 +315,8 @@ static BOOL isAgreeTerms = YES;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
         NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
         NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_amontPayment];
-        self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+        NSString *amontPatStr = [NSString stringWithFormat:@"%.2f",_amontPayment];
+        self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,amontPatStr]];//[self stringText:mutableStr WithStr:paymentStr];
         self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
     }else {
         self.isCouponEnoughPay = NO;
@@ -327,14 +328,16 @@ static BOOL isAgreeTerms = YES;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
-                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+                NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
+                self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
                 self.isEnoughBudget = NO;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _couponValue - _rightAmount - _availableFloat];
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
-                self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+                NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
+                self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
             }
         }else {
@@ -347,7 +350,8 @@ static BOOL isAgreeTerms = YES;
             self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _discount];
             NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _discount];
             NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
-            self.purchaseFooterView.paymenLabel.attributedText = [self stringText:mutableStr WithStr:paymentStr];
+            NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
+            self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
         }
     }
 }
@@ -457,7 +461,7 @@ static BOOL isAgreeTerms = YES;
                 [self calculationLabelValue];
             }
         }else {
-            [SVProgressHUD showInfoWithStatus:@"钱包不可用"];
+            [MBProgressHUD showWarning:@"钱包不可用"];
         }
     }else if (button.tag == 102) {
         button.selected = !button.selected;
@@ -470,7 +474,8 @@ static BOOL isAgreeTerms = YES;
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (!isAgreeTerms) {
-            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
+//            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
+            [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
             return ;
         }else {
             if (self.isUseXLW) {
@@ -479,12 +484,13 @@ static BOOL isAgreeTerms = YES;
                     [self createPayPopView];
                 }else {
                     self.isXLWforAlipay = NO;
-                    [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+//                    [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+                    [MBProgressHUD showLoading:@"小鹿正在为您支付....."];
                     [self payMoney];
                 }
             }else {
                 if (self.isCouponEnoughPay) {
-                    [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
+                    [MBProgressHUD showLoading:@"小鹿正在为您支付....."];
                     [self payMoney];
                 }else {
                     [self createPayPopView];
@@ -528,10 +534,12 @@ static BOOL isAgreeTerms = YES;
         [self payBackAlter];
     }else if (index == 101) { // 选择了微信支付
         _flagCount ++;
-        [SVProgressHUD showWithStatus:@"正在支付中....."];
+//        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        [MBProgressHUD showLoading:@"正在支付中....."];
         if (!self.isInstallWX) {
             _flagCount --;
-            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
+//            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
+            [MBProgressHUD showError:@"亲，没有安装微信哦!"];
             return ;
         }
         _payMethod = @"wx";
@@ -539,7 +547,7 @@ static BOOL isAgreeTerms = YES;
         [self payMoney];
     }else if (index == 102) { // 选择了支付宝支付
         _flagCount ++;
-        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        [MBProgressHUD showLoading:@"正在支付中....."];
         _payMethod = @"alipay";
         [self hidePickerView];
         [self payMoney];
@@ -549,7 +557,8 @@ static BOOL isAgreeTerms = YES;
 - (void)payMoney {
     self.purchaseFooterView.goPayButton.userInteractionEnabled = NO;
     if (_addressID == nil) {
-        [SVProgressHUD showErrorWithStatus:@"收货地址不能为空,请填写收货地址"];
+//        [SVProgressHUD showErrorWithStatus:@"收货地址不能为空,请填写收货地址"];
+        [MBProgressHUD showError:@"收货地址不能为空,请填写收货地址"];
         return ;
     }
     NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",_rightReduce[@"pid"],_rightReduce[@"value"]];
@@ -567,7 +576,7 @@ static BOOL isAgreeTerms = YES;
             _discountfee = _discountfee + _couponValue;
         }else {//未使用
             if (!self.isUseXLW && _payMethod.length == 0) {
-                [SVProgressHUD showErrorWithStatus:@"请至少选择一种支付方式"];
+                [MBProgressHUD showError:@"请至少选择一种支付方式"];
                 return;
             }
         }
@@ -612,14 +621,14 @@ static BOOL isAgreeTerms = YES;
     JMPurchaseController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         NSDictionary *dict = responseObject[@"trade"];
         _orderTidNum = dict[@"tid"];
         if ([responseObject[@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)[responseObject[@"code"] integerValue]]};
                 [MobClick event:@"buy_fail" attributes:temp_dict];
-                [SVProgressHUD dismiss];
+                [MBProgressHUD hideHUD];
                 NSString *errorStr = responseObject[@"info"];
                 NSString *messageStr = [NSString stringWithFormat:@"%@,请在购物车重新选择提交.",errorStr];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"支付异常" message:messageStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -630,10 +639,11 @@ static BOOL isAgreeTerms = YES;
         }
         if ([responseObject[@"channel"] isEqualToString:@"budget"] && [responseObject[@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.hud hideAnimated:YES];
+                [MBProgressHUD hideHUD];
                 [_timer invalidate];
                 [MobClick event:@"buy_succ"];
-                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+//                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                [MBProgressHUD showSuccess:@"支付成功"];
                 if (_isTeamBuyGoods) {
                     [self getTeam:_orderTidNum]; // == > 团购信息
                 }else {
@@ -651,9 +661,9 @@ static BOOL isAgreeTerms = YES;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
                     if (error == nil) {
-                        [self.hud hideAnimated:YES];
+                        [MBProgressHUD hideHUD];
                         [_timer invalidate];
-                        [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [MBProgressHUD showSuccess:@"支付成功"];
                         [MobClick event:@"buy_succ"];
                         if (_isTeamBuyGoods) {
                             [self getTeam:_orderTidNum]; // == > 团购信息
@@ -662,15 +672,15 @@ static BOOL isAgreeTerms = YES;
                         }
                     } else {
                         if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                            [self.hud hideAnimated:YES];
+                            [MBProgressHUD hideHUD];
                             [_timer invalidate];
-                            [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+                            [MBProgressHUD showError:@"用户取消支付"];
                             [MobClick event:@"buy_cancel"];
                             [self popview];
                         } else {
-                            [self.hud hideAnimated:YES];
+                            [MBProgressHUD hideHUD];
                             [_timer invalidate];
-                            [SVProgressHUD showErrorWithStatus:@"支付失败"];
+                            [MBProgressHUD showError:@"支付失败"];
                             NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
                             [MobClick event:@"buy_fail" attributes:temp_dict];
                             NSLog(@"%@",error);
@@ -680,11 +690,12 @@ static BOOL isAgreeTerms = YES;
                 }];
             });
         }
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
-        [self.hud hideAnimated:YES];
+        [MBProgressHUD hideHUD];
         [_timer invalidate];
-        [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
+//        [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
+        [MBProgressHUD showError:@"支付请求失败,请稍后重试!"];
     } Progress:^(float progress) {
         
     }];
@@ -713,7 +724,8 @@ static BOOL isAgreeTerms = YES;
                 _yhqModelID = [NSString stringWithFormat:@"%@", model.couponID];
                 [self calculationLabelValue];
             }else {
-                [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
+//                [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
+                [MBProgressHUD showWarning:goodsModel.coupon_message];
                 self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
                 self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
                 self.isEnoughCoupon = NO;
@@ -722,7 +734,8 @@ static BOOL isAgreeTerms = YES;
             }
         } WithFail:^(NSError *error) {
             self.isEnoughCoupon = NO;
-            [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
+//            [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
+            [MBProgressHUD showWarning:@"网络出错，优惠券暂不可选"];
         } Progress:^(float progress) {
             
         }];
@@ -740,12 +753,12 @@ static BOOL isAgreeTerms = YES;
     }];
 }
 - (void)getTeam:(NSString *)teamID {
+    [MBProgressHUD hideHUD];
     NSString *string = [NSString stringWithFormat:@"%@/mall/order/spell/group/%@?from_page=order_commit",Root_URL,teamID];
     NSDictionary *diction = [NSMutableDictionary dictionary];
     [diction setValue:string forKey:@"web_url"];
     [diction setValue:@"teamBuySuccess" forKey:@"type_title"];
     WebViewController *webView = [[WebViewController alloc] init];
-    [SVProgressHUD showWithStatus:@"正在加载中....."];
     webView.webDiction = [NSMutableDictionary dictionaryWithDictionary:diction];
     webView.isShowNavBar = true;
     webView.isShowRightShareBtn = false;
@@ -779,7 +792,7 @@ static BOOL isAgreeTerms = YES;
     [self.navigationController pushViewController:payShareVC animated:YES];
 }
 - (void)popview{
-    [self.hud hideAnimated:YES];
+    [MBProgressHUD hideHUD];
     [_timer invalidate];
     [MobClick event:@"buy_cancel"];
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
@@ -788,7 +801,7 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark 支付成功的弹出框
 - (void)paySuccessful{
-    [self.hud hideAnimated:YES];
+    [MBProgressHUD hideHUD];
     [_timer invalidate];
     [MobClick event:@"buy_succ"];
     if (_isTeamBuyGoods) {
@@ -799,18 +812,7 @@ static BOOL isAgreeTerms = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作
-- (NSMutableAttributedString *)stringText:(NSString *)string WithStr:(NSString *)payString {
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
-    NSInteger payLength = payString.length;
-    NSInteger strLength = string.length;
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,4)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(4, payLength)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(0,4)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.] range:NSMakeRange(4,payLength)];
-    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
-    return str;
-}
+
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
     NSArray *firstArr = [str componentsSeparatedByString:@"&"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -855,14 +857,14 @@ static BOOL isAgreeTerms = YES;
     NSLog(@"purchaseViewWillEnterForeground ");
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
     if (_flagCount > 0) {
-        self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        [MBProgressHUD showLoading:@""];
         _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(doSomeWork) userInfo:nil repeats:NO];
     }
     _flagCount --;
 }
 
 - (void)doSomeWork {
-    [self.hud hideAnimated:YES];
+    [MBProgressHUD hideHUD];
     // Simulate by just waiting.
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付被您取消或支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     alterView.tag = 102;
@@ -905,7 +907,21 @@ static BOOL isAgreeTerms = YES;
 
 
 
+/**
 
+- (NSMutableAttributedString *)stringText:(NSString *)string WithStr:(NSString *)payString {
+ NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
+ NSInteger payLength = payString.length;
+ NSInteger strLength = string.length;
+ [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,4)];
+ [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(4, payLength)];
+ [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
+ [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(0,4)];
+ [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16.] range:NSMakeRange(4,payLength)];
+ [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13.] range:NSMakeRange(4 + payLength, strLength - 4 - payLength)];
+ return str;
+ }
+ */
 
 
 

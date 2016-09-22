@@ -29,4 +29,8 @@
 - (NSString *)imageShareNinePicture;
 
 - (NSString *)imageNormalCompression;
+
+
+
+
 @end

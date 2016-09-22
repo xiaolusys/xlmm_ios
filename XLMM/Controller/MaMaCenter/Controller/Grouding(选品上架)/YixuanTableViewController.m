@@ -47,8 +47,6 @@ static NSString *const cellIdentifier = @"YixuanCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArr = [[NSMutableArray alloc] init];
-    [SVProgressHUD show];
-    
     
     [self createNavigationBarWithTitle:@"已选" selecotr:@selector(backClicked:)];
     
@@ -120,10 +118,10 @@ static NSString *const cellIdentifier = @"YixuanCell";
     }
     
     if (self.dataArr.count == 0) {
-        [SVProgressHUD dismiss];
+        
         [self createDefaultView];
     } else {
-        [SVProgressHUD dismiss];
+        
         [self.tableView reloadData];
     }
 }

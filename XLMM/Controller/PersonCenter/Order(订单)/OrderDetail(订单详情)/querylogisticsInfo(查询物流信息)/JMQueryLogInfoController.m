@@ -89,7 +89,7 @@
     packageModel = logisDataSource[self.index];
     self.packetId = packageModel.out_sid;
     NSDictionary *logisticsDic = packageModel.logistics_company;
-    self.companyCode = logisticsDic[@"id"];
+    self.companyCode = logisticsDic[@"code"];
     self.packageModel = packageModel;
 }
 
@@ -113,15 +113,16 @@
 }
 /**
  *  数据请求  http://m.xiaolumeimei.com/rest/v1/wuliu/get_wuliu_by_packetid?packetid=3101040539131&company_code=YUNDA_QR
+            http://192.168.1.8:8005/rest/v1/wuliu/get_wuliu_by_packetid?packetid=227838694987&company_code=STO
  */
 - (void)loadData {
     
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", _urlStr);
     
-    [SVProgressHUD showWithStatus:@"获取物流信息"];
+    [MBProgressHUD showLoading:@"获取物流信息"];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if(responseObject == nil) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alertView show];
@@ -130,7 +131,7 @@
         NSDictionary *info = responseObject;
         [self fetchedWuliuData:info];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         NSLog(@"wuliu info get failed.");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"查询失败,您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];

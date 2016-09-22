@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface VisitorModel : NSObject
+
 @property (nonatomic, copy) NSString *visitor_nick;
 @property (nonatomic, copy) NSString *visitor_img;
 @property (nonatomic, copy) NSString *created;
 @property (nonatomic, copy) NSString *visitor_description;
+
 @end

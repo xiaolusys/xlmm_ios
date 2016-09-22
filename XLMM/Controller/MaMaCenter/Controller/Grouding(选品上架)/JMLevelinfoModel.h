@@ -20,21 +20,8 @@
  */
 @property (nonatomic, copy) NSString *next_agencylevel;
 @property (nonatomic, copy) NSString *next_agencylevel_desc;
-/**
- *  下一等级返利佣金
- */
-@property (nonatomic, copy) NSString *next_rebet_amount;
-@property (nonatomic, copy) NSString *next_rebet_amount_des;
-/**
- *  本次返利佣金
- */
-@property (nonatomic, copy) NSString *rebet_amount;
-@property (nonatomic, copy) NSString *rebet_amount_des;
-/**
- *  在卖人数
- */
-@property (nonatomic, copy) NSString *sale_num;
-@property (nonatomic, copy) NSString *sale_num_des;
+
+
 
 
 @end

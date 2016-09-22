@@ -77,9 +77,9 @@
     _personDic = personDic;
     NSDictionary *missionDic = personDic[@"mission"];
     self.onelabel.text = [NSString stringWithFormat:@"%@",missionDic[@"name"]];
-    self.label1.text = [NSString stringWithFormat:@"%@",missionDic[@"target_value"]];
+    self.label1.text = [NSString stringWithFormat:@"%@",personDic[@"target_value"]];
     self.label2.text = [NSString stringWithFormat:@"%@",personDic[@"finish_value"]];
-    CGFloat awardAmount = [missionDic[@"award_amount"] floatValue] / 100.00;
+    CGFloat awardAmount = [personDic[@"award_amount"] floatValue];
     self.label3.text = [NSString stringWithFormat:@"%.2f",awardAmount];
     self.label4.text = [NSString stringWithFormat:@"%@",personDic[@"status_name"]];
     
@@ -90,9 +90,9 @@
     _teamDic = teamDic;
     NSDictionary *missionDic = teamDic[@"mission"];
     self.onelabel.text = [NSString stringWithFormat:@"%@",missionDic[@"name"]];
-    self.label1.text = [NSString stringWithFormat:@"%@",missionDic[@"target_value"]];
+    self.label1.text = [NSString stringWithFormat:@"%@",teamDic[@"target_value"]];
     self.label2.text = [NSString stringWithFormat:@"%@",teamDic[@"finish_value"]];
-    CGFloat awardAmount = [missionDic[@"award_amount"] floatValue] / 100.00;
+    CGFloat awardAmount = [teamDic[@"award_amount"] floatValue];
     self.label3.text = [NSString stringWithFormat:@"%.2f",awardAmount];
     self.label4.text = [NSString stringWithFormat:@"%@",teamDic[@"status_name"]];
     
@@ -105,7 +105,27 @@
 @end
 
 
+/**
+ *  {
+ "award_amount" = 30;
+ "finish_time" = "<null>";
+ "finish_value" = 0;
+ id = 173013;
+ "mama_id" = 44;
+ mission =             {
+ "award_amount" = 3000;
+ id = 1;
+ "kpi_type" = count;
+ name = "\U65b0\U589e\U4e0b\U5c5e\U5988\U5988\U4efb\U52a1A";
+ "target_value" = 1;
+ };
+ status = staging;
+ "status_name" = "\U8fdb\U884c\U4e2d";
+ "target_value" = 1;
+ "year_week" = "2016-38";
+ },
 
+ */
 
 
 

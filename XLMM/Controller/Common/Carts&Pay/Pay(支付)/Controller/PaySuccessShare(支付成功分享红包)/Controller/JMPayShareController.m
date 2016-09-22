@@ -89,7 +89,7 @@
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/sharecoupon/create_order_share?uniq_id=%@", Root_URL,_ordNum];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject) return;
         [self resolveActivityShareParam:responseObject];
     } WithFail:^(NSError *error) {
@@ -147,7 +147,7 @@
 - (void)coverDidClickCover:(JMShareView *)cover {
     //隐藏pop菜单
     [JMPopView hide];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
 }
 - (void)backClick:(UIButton *)sender {
     // 支付成功后,跳转到待收货页面

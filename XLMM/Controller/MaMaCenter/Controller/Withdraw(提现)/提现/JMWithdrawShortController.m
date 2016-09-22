@@ -53,7 +53,7 @@
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
 
     [self createCoupon];
-    [self createRightButonItem];
+    
     
 }
 - (void)setMyBalance:(CGFloat)myBalance {
@@ -194,21 +194,7 @@
     
     
 }
-#pragma mark ---- 导航栏右侧体现历史
-- (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setTitle:@"提现历史" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
 
-- (void)rightClicked:(UIButton *)button{
-    TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
-    [self.navigationController pushViewController:historyVC animated:YES];
-}
 - (void)sureButtonClick:(UIButton *)button {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"兑换提示" message:@"兑换此现金券后，小鹿妈妈账户余额会相应扣减金额，此现金券能够用于商城购买商品，无法取消" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alertView.tag = 100;
@@ -237,7 +223,7 @@
                         vc.withDrawMoney = _mywithBlance;
                         [self.navigationController pushViewController:vc animated:YES];
                     }else {
-                        [SVProgressHUD showErrorWithStatus:responseObject[@"info"]];
+                        [MBProgressHUD showError:responseObject[@"info"]];
                     }
                     
                 }

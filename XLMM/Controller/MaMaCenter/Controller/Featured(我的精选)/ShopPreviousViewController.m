@@ -38,6 +38,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [MBProgressHUD hideHUDForView:self.view];
     [MobClick endLogPageView:@"ShopPreviousViewController"];
 }
 
@@ -113,7 +114,7 @@
 
 - (void)sharedMethod{
     NSLog(@"分享");
-    
+    [MobClick event:@"MaMaShop_share"];
     shareView = [MamaShareView new];
     
     
@@ -250,24 +251,20 @@
             break;
         }
         case 105:{
-            
             UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            NSString *str = self.shopShareLink;
-            [pab setString:str];
-            if (pab == nil) {
-                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-            }else
-            {
-                [SVProgressHUD showSuccessWithStatus:@"已复制"];
+            if ([self.shopShareLink isKindOfClass:[NSNull class]] || self.shopShareLink == nil || [self.shopShareLink isEqual:@""]) {
+                [MBProgressHUD showMessage:@"复制失败"];
+            }else {
+                [pab setString:self.shopShareLink];
+                if (pab == nil) {
+                    [MBProgressHUD showMessage:@"请重新复制"];
+                }else
+                {
+                    [MBProgressHUD showMessage:@"已复制"];
+                }
             }
             [self cancleBtnClicked:nil];
             
-            //            NSLog(@"复制");
-            
-            
-            [self cancleBtnClicked:nil];
-            
-            //            NSLog(@"复制");
             break;
         }
         case 106:{
@@ -347,13 +344,13 @@
 
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    [MBProgressHUD showLoading:@"正在加载中....."];
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUDForView:self.view];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [MBProgressHUD showError:@"加载失败~!"];
+    [MBProgressHUD hideHUDForView:self.view];
     [self backClickAction];
 }
 

@@ -72,6 +72,7 @@
 
 @property (nonatomic, strong) NSDictionary *extra_info;
 
+@property (nonatomic, strong) NSDictionary *extra_figures;
 
 @end
 

@@ -1351,7 +1351,7 @@
     self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
     self.kuaiZhaoImage = [UIImage imagewithWebView:self.webView];
     
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     if (isWXFriends) {
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:self.kuaiZhaoImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){

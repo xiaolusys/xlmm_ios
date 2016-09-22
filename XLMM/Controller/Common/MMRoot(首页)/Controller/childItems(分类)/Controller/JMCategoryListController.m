@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "JMCategoryListCell.h"
 #import "JMClassifyListController.h"
+#import "JMEmptyView.h"
 
 @interface JMCategoryListController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -26,9 +27,24 @@ static NSString * cellId = @"JMCategoryListController";
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
     
+    if (self.dataSource.count == 0) {
+        [self emptyView];
+    }else {
+        [self createCollectionView];
+    }
     
-    [self createCollectionView];
+    
 
+}
+- (void)emptyView {
+    kWeakSelf
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT / 3, SCREENWIDTH, SCREENHEIGHT - (SCREENHEIGHT / 3)) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
+    [self.view addSubview:empty];
+    empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    };
 }
 
 - (void)createCollectionView {

@@ -102,7 +102,7 @@
                                   serverip = @"http://staging.xiaolumeimei.com";
                                   break;
                               case 2:
-                                  serverip = @"http://192.168.1.8:8888";
+                                  serverip = @"http://192.168.1.8:8005";
                                   break;
                               case 3:
                                   serverip = @"http://192.168.1.56:8000";
@@ -123,7 +123,7 @@
                       }];
     _radioButtons1.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.f];
     _radioButtons1.contentEdgeInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumeimei.com", @"192.168.1.8:8888",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.50:8000", @"192.168.1.57:8000"] forState:UIControlStateNormal];
+    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumeimei.com", @"192.168.1.8:8005",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.50:8000", @"192.168.1.57:8000"] forState:UIControlStateNormal];
     [_radioButtons1 setButtonsTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageNormal forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageHighlighted forState:UIControlStateHighlighted];
@@ -274,7 +274,7 @@
     
     pwd = self.tvpwd.text;
     if([serverip isEqualToString:@""]  || [pwd isEqualToString:@""]){
-        [SVProgressHUD showErrorWithStatus:@"ip or password is empty"];
+        [MBProgressHUD showError:@"ip or password is empty"];
         return;
     }
     
@@ -294,17 +294,17 @@
             
             Root_URL = serverip;
             
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"switch to server %@", serverip]];
+            [MBProgressHUD showSuccess:[NSString stringWithFormat:@"switch to server %@", serverip]];
             
             [self.navigationController popToRootViewControllerAnimated:YES];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         }
         else{
             NSLog(@"debug check failed");
-            [SVProgressHUD showErrorWithStatus:@"debug check failed"];
+            [MBProgressHUD showError:@"debug check failed"];
         }
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"debug check failed"];
+        [MBProgressHUD showError:@"debug check failed"];
     } Progress:^(float progress) {
         
     }];

@@ -11,6 +11,10 @@
 
 @implementation JMHomeActiveModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"activeID":@"id"};
+}
+
 - (CGFloat)cellHeight {
     if (!_cellHeight) {
 //        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , SCREENWIDTH, SCREENWIDTH * 0.6)];

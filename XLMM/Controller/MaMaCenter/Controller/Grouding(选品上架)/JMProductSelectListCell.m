@@ -198,26 +198,26 @@
     self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
     self.nameLabtl.text = model.name;
-    self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.agent_price floatValue]];
-    self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.std_sale_price floatValue]];
-    self.saleNumLabel.text = self.leveModel.sale_num_des;
+    self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.lowest_agent_price floatValue]];
+    self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.lowest_std_sale_price floatValue]];
+    self.saleNumLabel.text = [NSString stringWithFormat:@"%@人在卖",model.sale_num];
     
-    CGFloat rebetAmount = [self.leveModel.rebet_amount floatValue];
-    CGFloat nextRebetAmount = [self.leveModel.next_rebet_amount floatValue];
+    CGFloat rebetAmount = [model.rebet_amount floatValue];
+    CGFloat nextRebetAmount = [model.next_rebet_amount floatValue];
     self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
     self.nextRebetLabtl.text = [NSString stringWithFormat:@"  ¥%.2f",nextRebetAmount];
     self.vipLabel.text = self.leveModel.next_agencylevel_desc;
     
     self.pdtID = [NSString stringWithFormat:@"%@", model.goodsID];
-    if ([model.in_customer_shop intValue]) {
-        self.addOrCancelButton.selected = YES;
-        [self.addOrCancelButton setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright"] forState:UIControlStateNormal];;
-        self.statusLabel.text = @"已加入";
-    }else {
-        self.addOrCancelButton.selected = NO;
-        [self.addOrCancelButton setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia"] forState:UIControlStateNormal];
-        self.statusLabel.text = @"加入精选";
-    }
+//    if ([model.in_customer_shop intValue]) {
+//        self.addOrCancelButton.selected = YES;
+//        [self.addOrCancelButton setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright"] forState:UIControlStateNormal];;
+//        self.statusLabel.text = @"已加入";
+//    }else {
+//        self.addOrCancelButton.selected = NO;
+//        [self.addOrCancelButton setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia"] forState:UIControlStateNormal];
+//        self.statusLabel.text = @"加入精选";
+//    }
 
 }
 //- (void)addButtonClick:(UIButton *)button {
@@ -248,10 +248,10 @@
     self.iconImage.layer.borderWidth = 0.5;
     self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
-    self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.agent_price floatValue]];
-    self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.std_sale_price floatValue]];
-    self.rebetLabel.text = [NSString stringWithFormat:@"¥%.2f", [self.leveModel.rebet_amount floatValue]];
-    self.saleNumLabel.text = [NSString stringWithFormat:@"%ld件", (long)[self.leveModel.sale_num integerValue]];
+    self.agentPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.lowest_agent_price floatValue]];
+    self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.0f", [product.lowest_std_sale_price floatValue]];
+    self.rebetLabel.text = [NSString stringWithFormat:@"¥%.2f", [product.rebet_amount floatValue]];
+    self.saleNumLabel.text = [NSString stringWithFormat:@"%ld件", (long)[product.sale_num integerValue]];
     
     //[self.addBtnClick setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 }

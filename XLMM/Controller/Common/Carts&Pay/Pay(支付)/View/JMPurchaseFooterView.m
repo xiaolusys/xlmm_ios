@@ -8,6 +8,7 @@
 
 #import "JMPurchaseFooterView.h"
 #import "MMClass.h"
+#import "JMRichTextTool.h"
 
 @interface JMPurchaseFooterView ()
 
@@ -112,11 +113,7 @@
     [termsView addSubview:termsLabel];
     termsLabel.font = [UIFont systemFontOfSize:13.];
     NSString *termStr = @"我已阅读并同意小鹿美美购买条款";
-    NSInteger termStrLength = termStr.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:termStr];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,7)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(7, termStrLength - 7)];
-    termsLabel.attributedText = str;
+    termsLabel.attributedText = [JMRichTextTool cs_changeColorWithColor:[UIColor buttonEnabledBackgroundColor] AllString:termStr SubStringArray:@[@"小鹿美美购买条款"]];
     termsLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *termsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(termsTapClick:)];
     [termsLabel addGestureRecognizer:termsTap];
@@ -153,8 +150,8 @@
 
     UILabel *paymenLabel = [UILabel new];
     [bottomView addSubview:paymenLabel];
-    paymenLabel.font = [UIFont systemFontOfSize:18.];
-    paymenLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    paymenLabel.font = [UIFont systemFontOfSize:13.];
+    paymenLabel.textColor = [UIColor buttonTitleColor];
     self.paymenLabel = paymenLabel;
     
     UIButton *goPayButton = [UIButton buttonWithType:UIButtonTypeCustom];

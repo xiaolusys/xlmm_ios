@@ -17,6 +17,7 @@
 #import "JMPurchaseController.h"
 #import "JMGoodsDetailController.h"
 
+
 @interface CartViewController ()<CartViewDelegate, ReBuyCartViewDelegate, UIAlertViewDelegate>{
     float allPrice;
     CartListModel *deleteModel;
@@ -44,7 +45,7 @@
     isEmpty = YES;
     download1 = NO;
     download2 = NO;
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    [MBProgressHUD showLoading:@"加载中..."];
     [self downloadData];
     [self downloadHistoryData];
     
@@ -79,7 +80,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"ShoppingCart"];
 }
 - (void)viewDidLoad {
@@ -106,13 +107,12 @@
     youhuiquanValud = 0;
 }
 - (void)downloadData {
-
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         [self fetchedCartData:responseObject];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
 
     }];
@@ -139,11 +139,11 @@
 }
 - (void)downloadHistoryData{
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         [self fetchedHistoryCartData:responseObject];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
 
     }];
@@ -415,14 +415,13 @@
  *  减少一件商品
  */
 - (void)reduceNumber:(CartListModel *)cartModel{
-    
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    [MBProgressHUD showLoading:@"加载中..."];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [self downloadData];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
 
     }];
@@ -431,13 +430,13 @@
  *  添加一件商品
  */
 - (void)addNumber:(CartListModel *)cartModel{
-   [SVProgressHUD showWithStatus:@"加载中..."];
+   [MBProgressHUD showLoading:@"加载中"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [self downloadData];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"商品库存不足"];
+        [MBProgressHUD showError:@"商品库存不足"];
         [self downloadData];
     } Progress:^(float progress) {
 
@@ -519,10 +518,10 @@
                 [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
             }
         }else {
-            [SVProgressHUD showInfoWithStatus:responseObject[@"info"]];
+            [MBProgressHUD showWarning:responseObject[@"info"]];
         }
     } WithFail:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"加入购物车失败，请检查网络或者注销后重新登录。"];
+        [MBProgressHUD showError:@"加入购物车失败，请检查网络或者注销后重新登录。"];
     } Progress:^(float progress) {
         
     }];

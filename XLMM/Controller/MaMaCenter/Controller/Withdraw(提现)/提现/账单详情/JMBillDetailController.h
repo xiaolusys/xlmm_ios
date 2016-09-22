@@ -20,4 +20,6 @@
 
 @property (nonatomic, assign) CGFloat withDrawF;
 
+@property (nonatomic, strong) NSDictionary *accountDic;
+
 @end

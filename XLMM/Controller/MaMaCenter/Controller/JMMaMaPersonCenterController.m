@@ -522,7 +522,7 @@ static NSUInteger popNum = 0;
 }
 - (void)xiaoluUniversity {
     if (self.boutiqueActiveWebUrl == nil || self.boutiqueActiveWebUrl.length == 0) {
-        [SVProgressHUD showInfoWithStatus:@"活动还未开始"];
+        [MBProgressHUD showMessage:@"活动还未开始"];
         return;
     }
     WebViewController *activity = [[WebViewController alloc] init];
@@ -553,14 +553,17 @@ static NSUInteger popNum = 0;
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)serViceButtonClick:(UIButton *)button {
-    [MobClick event:@"buy_cancel"];
+    [MobClick event:@"MaMa_service"];
 //    JMServiceEnterController *enterVC = [[JMServiceEnterController alloc] init];
 //    [self.navigationController pushViewController:enterVC animated:YES];
     button.enabled = NO;
     [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-
-    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
-    [self.navigationController pushViewController:robot animated:YES];
+    
+    UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
+    [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
+    
+//    UdeskRobotIMViewController *robot = [[UdeskRobotIMViewController alloc] init];
+//    [self.navigationController pushViewController:robot animated:YES];
     
 //    UdeskChatViewController *chat = [[UdeskChatViewController alloc] init];
 //    [self.navigationController pushViewController:chat animated:YES];

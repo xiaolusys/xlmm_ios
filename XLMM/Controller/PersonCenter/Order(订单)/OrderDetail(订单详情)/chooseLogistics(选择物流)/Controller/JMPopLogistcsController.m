@@ -144,7 +144,7 @@
     [JMPopView hide];
     
     
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUD];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

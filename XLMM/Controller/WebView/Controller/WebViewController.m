@@ -31,6 +31,7 @@
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
 #import "PersonOrderViewController.h"
+#import "NJKWebViewProgressView.h"
 
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
@@ -40,7 +41,7 @@
 @interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
-
+@property (nonatomic, strong) NJKWebViewProgressView *progressView;
 //分享参数
 @property (nonatomic, copy)NSString *titleStr;
 @property (nonatomic, copy)NSString *des;
@@ -122,6 +123,11 @@
 //}
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
+    if ([webDiction isKindOfClass:[NSMutableDictionary class]] && [webDiction objectForKey:@"titleName"]) {
+        self.titleName = webDiction[@"titleName"];
+    }else {
+    }
+
 }
 - (JMShareModel*)share_model {
     if (!_share_model) {
@@ -154,22 +160,27 @@
     }
     
 }
-- (void)viewDidAppear:(BOOL)animated {
-//    [SVProgressHUD dismiss];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SVProgressHUD showWithStatus:@"小鹿努力加载中....."];
+    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
     [MobClick event:@"activity"];
+    [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
     
-    NSString *titleName = self.titleName;
+    CGFloat progressBarHeight = 2.f;
+    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
+    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
+    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    self.progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [self.navigationController.navigationBar addSubview:self.progressView];
     
-    [self createNavigationBarWithTitle:titleName selecotr:@selector(backClicked:)];
-    
+    kWeakSelf
     IMYWebView *baseWebView1 = [[IMYWebView alloc] initWithFrame:self.view.bounds usingUIWebView:NO];
     super.baseWebView = baseWebView1;
-    
+    self.baseWebView.progressBlock = ^(double estimatedProgress) {
+        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
+    };
     [self.view addSubview:super.baseWebView];
+
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
 //    self.baseWebView.delegate = self;
@@ -177,14 +188,13 @@
 //    super.baseWebView.userInteractionEnabled = YES;
     super.baseWebView.viewController = self;
     
-    if(super.baseWebView.usingUIWebView)
-    {
+    if(super.baseWebView.usingUIWebView) {
         NSLog(@"7.0 UIWebView");
-        [self registerJsBridge];
-        self.baseWebView.delegate = self;
-    }
-    else
-    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
+//        [self registerJsBridge];
+        
+//        self.baseWebView.delegate = self;
+    }else {
         NSLog(@"bigger than8.0 WKWebView");
 //        self.baseWebView.delegate = self;
     }
@@ -322,6 +332,13 @@
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
+    if ([_webDiction[@"type_title"] isEqual:@"active"]) {
+        [MobClick event:@"Active_share"];
+    }else if ([_webDiction[@"type_title"] isEqual:@"myInvite"]) {
+        if ([self.activityId isEqual:@38]) {
+            [MobClick event:@"MyInvite_share"];
+        }
+    }
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
     _shareDic = nil;
@@ -362,14 +379,14 @@
 - (void)coverDidClickCover:(JMShareView *)cover {
     //隐藏pop菜单
     [JMPopView hide];
-    [SVProgressHUD dismiss];
+    
 }
 
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"完成加载 %ld",(long)webView.tag);
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUDForView:self.view];
 
     if (webView.tag != 102) {
         [self updateUserAgent];
@@ -381,8 +398,6 @@
     }
     
     _webViewImage = [UIImage imagewithWebView:self.shareWebView];
-
-    [SVProgressHUD dismiss];
     
     if (!self.isWXFriends) {
         [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
@@ -404,7 +419,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     NSLog(@"webview didFailLoadWithError error=%@", error);
     self.navigationController.navigationBarHidden = YES;
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUDForView:self.view];
 }
 
 - (void)updateUserAgent{
@@ -510,7 +525,7 @@
 
         BOOL isLoading = [data[@"isLoading"] boolValue];
         if (!isLoading) {
-            [SVProgressHUD dismiss];
+            [MBProgressHUD hideHUDForView:self.view];
         }
     }];
     /**
@@ -601,19 +616,18 @@
             [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_shareImage)];
         } else if ([platform isEqualToString:@"web"]){
             UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            NSString *str = sharelink;
-            if (str == nil) {
-                [SVProgressHUD showSuccessWithStatus:@"复制失败"];
-                return ;
+            if ([sharelink isKindOfClass:[NSNull class]] || sharelink == nil || [sharelink isEqual:@""]) {
+                [MBProgressHUD showMessage:@"复制失败"];
+            }else {
+                [pab setString:sharelink];
+                if (pab == nil) {
+                    [MBProgressHUD showMessage:@"请重新复制"];
+                }else
+                {
+                    [MBProgressHUD showMessage:@"已复制"];
+                }
             }
-            [pab setString:str];
-            if (pab == nil) {
-                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-            }else
-            {
-                [SVProgressHUD showSuccessWithStatus:@"已复制"];
-            }
-            [SVProgressHUD showWithStatus:@"正在下载二维码..."];
+            [MBProgressHUD showLoading:@"正在下载二维码..."];
             //            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
             //            [self createKuaiZhaoImage];
         } else if ([platform isEqualToString:@"qqspa"]){
@@ -629,7 +643,7 @@
                 [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
                 }];
             } else {
-                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                [MBProgressHUD showLoading:@"正在生成快照..."];
                 //                [self createKuaiZhaoImage];
             }
         }  else if ([platform isEqualToString:@"pyq"]){
@@ -643,7 +657,7 @@
                 }];
             } else{
                 
-                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+                [MBProgressHUD showLoading:@"正在生成快照..."];
                 //                  isWXFriends = NO;
                 //                [self createKuaiZhaoImage];
             }
@@ -680,8 +694,9 @@
     self.shareWebView = nil;
     self.webViewImage = nil;
     self.baseWebView = nil;
+    [self.progressView removeFromSuperview];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [SVProgressHUD dismiss];
+    [MBProgressHUD hideHUDForView:self.view];
 }
 
 - (void)hiddenNavigationView{

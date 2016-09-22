@@ -17,10 +17,10 @@
 #import "UIViewController+NavigationBar.h"
 #import "NSString+URL.h"
 #import <MJRefresh.h>
-#import <FMDB.h>
 #import "JMHTTPManager.h"
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
+#import "JMToolMacro.h"
 
 
 
@@ -42,10 +42,20 @@
  *  循环引用
  */
 #define kWeakSelf __weak typeof (self) weakSelf = self;
-
-
+// 当前版本
+#define FSystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
+#define SSystemVersion ([[UIDevice currentDevice] systemVersion])
+// 当前语言
+#define CURRENTLANGUAGE ([[NSLocale preferredLanguages] objectAtIndex:0])
+// 获得屏幕宽高
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
+// ios7之上的系统
+#define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? YES : NO)
+// ios8之上的系统
+#define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)
+
+
 #define KTITLENAME @"小鹿美美"
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
 #define LOADIMAGE(a) [UIImage imageNamed:a]

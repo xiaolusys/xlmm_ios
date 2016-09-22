@@ -148,6 +148,9 @@
     self.descLabel.text = model.visitor_description;
     
     self.timeLabel.text = [self composeString:model.created];
+    
+    
+    
 }
 - (void)configNowFnas:(FanceModel *)model {
     kWeakSelf

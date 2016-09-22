@@ -683,7 +683,7 @@
 - (IBAction)commitClicked:(id)sender {
     
     NSLog(@"提交");
-    [SVProgressHUD showWithStatus:@"退货处理中....."];
+    [MBProgressHUD showLoading:@"退货处理中....."];
     //申请退货 上传图片bug修复
     
     for (int i = 0; i< self.imagesArray.count && i < self.keysArray.count; i++) {
@@ -702,7 +702,7 @@
     
     NSMutableString *linkstr = [[NSMutableString alloc] init];
     if(self.imagesArray.count > 3){
-        [SVProgressHUD showErrorWithStatus:@"上传3张图片即可，请选择后重新提交"];
+        [MBProgressHUD showError:@"上传3张图片即可，请选择后重新提交"];
         return;
     }
     for (int i = 0; i < self.imagesArray.count; i++) {
@@ -733,17 +733,17 @@
         NSInteger code = [dic[@"code"] integerValue];
         if (code == 0) {
             NSLog(@"refund return ok");
-            [SVProgressHUD dismiss];
+            [MBProgressHUD hideHUD];
             self.button.hidden = YES;
             [self returnPopView];
         }else {
-            [SVProgressHUD showErrorWithStatus:dic[@"info"]];
+            [MBProgressHUD showError:dic[@"info"]];
         }
         NSLog(@"refund return ok end");
     } WithFail:^(NSError *error) {
         isChangeBtn = NO;
         NSLog(@"refund return failed %@", error);
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];

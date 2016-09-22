@@ -11,6 +11,7 @@
 #import "JMRefundModel.h"
 #import "MMClass.h"
 #import "JMTimeInfoModel.h"
+#import "JMRichTextTool.h"
 
 @interface JMReturnProgressController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -19,6 +20,8 @@
 @property (nonatomic,strong) JMReGoodsAddView *reGoodsV;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
+
+
 
 @end
 
@@ -44,6 +47,7 @@
 }
 - (void)loadDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/rtnwuliu/get_wuliu_by_packetid?rid=%@&packetid=%@&company_name=%@",Root_URL,self.refundModelr.refund_no,self.refundModelr.sid,self.refundModelr.company_name];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/kdn?rid=%@&out_sid=%@&logistics_company=%@",Root_URL,self.refundModelr.refund_no,self.refundModelr.sid,self.refundModelr.company_name];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
@@ -51,7 +55,7 @@
     } WithFail:^(NSError *error) {
         NSLog(@"Error: %@", error);
         NSLog(@"erro = %@\n%@", error.userInfo, error.description);
-        [SVProgressHUD showErrorWithStatus:@"提交退货快递信息失败，请检查网络后重试！"];
+        [MBProgressHUD showError:@"提交退货快递信息失败，请检查网络后重试！"];
     } Progress:^(float progress) {
         
     }];
@@ -71,8 +75,6 @@
             [self.dataSource addObject:timeModel];
         }
     }
-    
-    
     [self.tableView reloadData];
 }
 
@@ -132,23 +134,30 @@
     [baseView addSubview:nameLabel];
     nameLabel.font = [UIFont systemFontOfSize:14.];
     nameLabel.textColor = [UIColor dingfanxiangqingColor];
-    nameLabel.text = [NSString stringWithFormat:@"承运来源: %@",_logisticsDic[@"name"]];
     
     UILabel *statusLabel = [UILabel new];
     [baseView addSubview:statusLabel];
     statusLabel.font = [UIFont systemFontOfSize:14.];
-    NSString *string = [NSString stringWithFormat:@"物流状态: %@",_logisticsDic[@"status"]];
-    NSInteger strLength = string.length;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonTitleColor] range:NSMakeRange(0,5)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor buttonEnabledBackgroundColor] range:NSMakeRange(5,strLength - 5)];
-    statusLabel.attributedText = str;
+    statusLabel.textColor = [UIColor buttonTitleColor];
     
     UILabel *numLabe = [UILabel new];
     [baseView addSubview:numLabe];
     numLabe.font = [UIFont systemFontOfSize:14.];
     numLabe.textColor = [UIColor dingfanxiangqingColor];
-    numLabe.text = [NSString stringWithFormat:@"运单编号: %@",_logisticsDic[@"order"]];
+    
+    NSString *nameStr = _logisticsDic[@"name"];
+    nameStr = IF_NULL_TO_STRING(nameStr);
+    nameLabel.text = [NSString stringWithFormat:@"承运来源: %@",nameStr];
+    
+    NSString *logStr = _logisticsDic[@"status"];
+    logStr = IF_NULL_TO_STRING(logStr);
+    NSString *string = [NSString stringWithFormat:@"物流状态: %@",logStr];
+    statusLabel.attributedText = [JMRichTextTool cs_changeColorWithColor:[UIColor buttonEnabledBackgroundColor] AllString:string SubStringArray:@[logStr]];
+    
+    NSString *numStr = _logisticsDic[@"order"];
+    numStr = IF_NULL_TO_STRING(numStr);
+    numLabe.text = [NSString stringWithFormat:@"运单编号: %@",numStr];
+    
     
     [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(baseView).offset(10);
@@ -177,7 +186,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *refundProgressIndefire = @"refundProgressIndefire";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:refundProgressIndefire];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];//[tableView dequeueReusableCellWithIdentifier:refundProgressIndefire];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:refundProgressIndefire];
     }

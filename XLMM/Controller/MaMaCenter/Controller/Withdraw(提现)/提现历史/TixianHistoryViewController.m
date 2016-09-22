@@ -10,6 +10,7 @@
 #import "MMClass.h"
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
+#import "JMWithDrawDetailController.h"
 
 
 static NSString *CellIdentify = @"TixianCellIdentify";
@@ -67,13 +68,14 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     self.nextString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout?page=1", Root_URL];
 //    NSLog(@"string = %@", self.nextString);
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.nextString WithParaments:nil WithSuccess:^(id responseObject) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
         if (!responseObject) return;
+        [self.dataArray removeAllObjects];
         [self fetchedHistoryData:responseObject];
         [self.tableView reloadData];
         [self endRefresh];
     } WithFail:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];
@@ -103,7 +105,6 @@ static NSString *CellIdentify = @"TixianCellIdentify";
         return;
     }
     _urlStr = data[@"next"];
-    [self.dataArray removeAllObjects];
     NSDictionary *dicJson = data;
     NSArray *results = [dicJson objectForKey:@"results"];
     for (NSDictionary *dic in results) {
@@ -141,10 +142,10 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 #pragma mark ---- 创建tableView
 - (void)createTableView{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
-    [self.tableView registerClass:[UITableViewCell class]
-             forCellReuseIdentifier:CellIdentify];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentify];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.rowHeight = 80.;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
      [self.tableView registerNib:[UINib nibWithNibName:@"TixianTableViewCell" bundle:nil] forCellReuseIdentifier:CellIdentify];
     [self.view addSubview:self.tableView];
@@ -176,9 +177,15 @@ static NSString *CellIdentify = @"TixianCellIdentify";
     
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    TixianModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    JMWithDrawDetailController *detailVC = [[JMWithDrawDetailController alloc] init];
+    detailVC.isActiveValue = YES;
+    detailVC.mamaWithDrawHistoryDict = [model mj_keyValues];
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
+    
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 80;
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

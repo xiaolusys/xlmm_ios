@@ -63,6 +63,7 @@ static CGPoint jm_anchorPoint;
     jm_tableView.dataSource = backgroundView;
     //    jm_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     jm_tableView.layer.anchorPoint = anchorPoint;
+    jm_tableView.rowHeight = frame.size.height / titleArr.count;
     //根据锚点位置来确定position
     if (anchorPoint.x == 0 && anchorPoint.y == 0) jm_tableView.layer.position = CGPointMake(jm_frame.origin.x, jm_frame.origin.y);
     if (anchorPoint.x == 0 && anchorPoint.y == 0.5) jm_tableView.layer.position = CGPointMake(jm_frame.origin.x, jm_frame.origin.y + jm_frame.size.height / 2.0);
@@ -116,9 +117,9 @@ static CGPoint jm_anchorPoint;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.titleArr.count;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return jm_tableView.frame.size.height / self.titleArr.count;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return jm_tableView.frame.size.height / self.titleArr.count;
+//}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (backgroundView.indexBlock) {
         //利用block回调 确定选中的row

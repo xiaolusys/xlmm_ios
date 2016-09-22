@@ -10,6 +10,7 @@
 #import "PublishNewPdtViewController.h"
 #import "MMClass.h"
 #import "JMBillDetailController.h"
+#import "JMWithDrawDetailController.h"
 
 @interface TixianSucceedViewController ()
 
@@ -62,7 +63,14 @@
 }
 
 - (void)backClicked:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)setActiveNum:(float)activeNum {
@@ -124,7 +132,7 @@
     
     
     
-    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_numValue,(long)_activeValueNum];
+//    self.activeLabel.text = [NSString stringWithFormat:@"消耗%ld点活跃值，剩余%ld点活跃值",(long)_numValue,(long)_activeValueNum];
     self.promptLabel.font = [UIFont systemFontOfSize:12.];
 
     
@@ -217,18 +225,17 @@
 
 - (void)rightClicked:(UIButton *)button{
 
-    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+//    JMBillDetailController *billDetail = [[JMBillDetailController alloc] init];
+//    billDetail.withdrawMoney = _surplusMoney; // 剩余金额
+//    billDetail.activeValue = _activeValueNum; // 剩余活跃值
+//    billDetail.withDrawF = self.tixianjine;
+//    billDetail.isActiveValue = self.isActiveValue;
     
-    billDetail.withdrawMoney = _surplusMoney; // 剩余金额
-    
-    billDetail.activeValue = _activeValueNum; // 剩余活跃值
-    
-    billDetail.withDrawF = self.tixianjine;
-    
+    JMWithDrawDetailController *billDetail = [[JMWithDrawDetailController alloc] init];
     billDetail.isActiveValue = self.isActiveValue;
-    
-    
     [self.navigationController pushViewController:billDetail animated:YES];
+    
+    
     
     
 }
@@ -248,8 +255,13 @@
 */
 
 - (void)finishButton:(UIButton *)btn {
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    NSInteger count = 0;
+    count = [[self.navigationController viewControllers] indexOfObject:self];
+    if (count >= 2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 
@@ -261,3 +273,24 @@
     [self.navigationController pushViewController:publish animated:YES];
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

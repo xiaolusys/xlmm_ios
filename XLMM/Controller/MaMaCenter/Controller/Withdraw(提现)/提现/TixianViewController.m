@@ -12,6 +12,7 @@
 #import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"
 
+
 @interface TixianViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 
@@ -365,27 +366,12 @@
     [self createNavigationBarWithTitle:@"提现" selecotr:@selector(backClicked:)];
     [self createWithdraw];
     [self createAutolayouts];
-    [self createRightButonItem];
         
     type = @"";
 
     
 }
-#pragma mark ---- 导航栏右侧体现历史
-- (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightBtn setTitle:@"提现历史" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
 
-- (void)rightClicked:(UIButton *)button{
-    TixianHistoryViewController *historyVC = [[TixianHistoryViewController alloc] init];
-    [self.navigationController pushViewController:historyVC animated:YES];
-}
 #pragma mark ----- 体现按钮是否可由点击
 - (void)enableSureButton{
     self.sureButton.enabled = YES;
@@ -406,6 +392,8 @@
 }
 #pragma mark --- 确认提现按钮点击
 - (void)sureBtnClick:(UIButton *)btn {
+    btn.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:btn afterDelay:0.5f];
     
     NSString *stringurl;
     
@@ -433,27 +421,14 @@
         }
         NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
         TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
-        
-        switch (code) {
-            case 0:
-                vc.tixianjine = tixianjine;
-                vc.activeValueNum = _activeValue;
-                vc.surplusMoney = self.cantixianjine;
-                vc.isActiveValue = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-                break;
-            case 1:
-                [self alterMessage:@"参数错误"];
-                break;
-            case 2:
-                [self alterMessage:@"不足提现金额"];
-                break;
-            case 3:
-                [self alterMessage:@"有待审核记录不予再次提现"];
-                break;
-                
-            default:
-                break;
+        if (code == 0) {
+            vc.tixianjine = tixianjine;
+            vc.activeValueNum = _activeValue;
+            vc.surplusMoney = self.cantixianjine;
+            vc.isActiveValue = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            [MBProgressHUD showError:responseObject[@"msg"]];
         }
     } WithFail:^(NSError *error) {
         
@@ -463,6 +438,10 @@
 
 }
 
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
+}
 
 - (void)alterMessage:(NSString *)message{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
