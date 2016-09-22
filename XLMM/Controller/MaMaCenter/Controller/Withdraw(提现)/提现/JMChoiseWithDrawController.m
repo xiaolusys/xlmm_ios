@@ -71,6 +71,8 @@
                             @"descTitle":@"提现现金券为20元50元整"
                             }
                         ];
+        
+        self.moneyLabel.text = CS_FLOAT(self.myBlance);
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         
