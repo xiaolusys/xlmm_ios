@@ -169,6 +169,8 @@ static NSString *identifier = @"AccountCell";
         [accountM setValuesForKeysWithDictionary:account];
         [self.dataArr addObject:accountM];
     }
+    self.moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
+    
 }
 
 
