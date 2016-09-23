@@ -258,7 +258,7 @@
     self.pageView.scrollForSingleCount = YES;
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
-    self.pageView.autoScrollInterVal = 2.0f;
+    self.pageView.autoScrollInterVal = 3.0f;
     
     [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(messageView).offset(10);

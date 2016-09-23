@@ -37,6 +37,7 @@
 #import "JMMaMaRootController.h"
 #import "JMAutoLoopPageView.h"
 #import "JMHomeHeaderCell.h"
+#import "JMHomeRootCategoryController.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -326,7 +327,7 @@
     self.pageView.scrollForSingleCount = YES;
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
-    self.pageView.autoScrollInterVal = 2.0f;
+    self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
 }
 #pragma mark 创建自定义 navigationView
@@ -468,7 +469,7 @@
 }
 #pragma mark 分类点击事件
 - (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
-    ChildViewController *categoryVC = [[ChildViewController alloc] init];
+    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
     NSString *parStr = paramerString[@"cat_link"];
     if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
         NSLog(@"jump cat_link=%@ wrong", parStr);
@@ -476,9 +477,21 @@
     }
     NSArray *array = [parStr componentsSeparatedByString:@"="];
     NSString *string = array[1];
-    categoryVC.titleString = paramerString[@"name"];
-    categoryVC.cid = string;
-    [self.navigationController pushViewController:categoryVC animated:YES];
+    rootCategoryVC.cidString = string;
+    rootCategoryVC.titleString = paramerString[@"name"];
+    
+    [self.navigationController pushViewController:rootCategoryVC animated:YES];
+//    ChildViewController *categoryVC = [[ChildViewController alloc] init];
+//    NSString *parStr = paramerString[@"cat_link"];
+//    if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
+//        NSLog(@"jump cat_link=%@ wrong", parStr);
+//        return;
+//    }
+//    NSArray *array = [parStr componentsSeparatedByString:@"="];
+//    NSString *string = array[1];
+//    categoryVC.titleString = paramerString[@"name"];
+//    categoryVC.cid = string;
+//    [self.navigationController pushViewController:categoryVC animated:YES];
 }
 #pragma mark 活动点击事件(跳转webView)
 - (void)skipWebView:(NSString *)appLink activeDic:(NSDictionary *)dic {

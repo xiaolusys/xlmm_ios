@@ -231,7 +231,7 @@
     [self.pageView registerCellWithClass:[JMGoodsLoopRollCell class] identifier:@"JMGoodsLoopRollCell"];
     self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
     self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-    self.pageView.scrollForSingleCount = YES;
+    self.pageView.scrollForSingleCount = NO;
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 3.0f;
