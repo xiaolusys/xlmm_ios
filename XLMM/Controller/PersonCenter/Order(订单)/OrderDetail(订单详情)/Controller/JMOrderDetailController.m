@@ -329,8 +329,10 @@
 //    }
     // == 包裹信息的分包判断 == //
 //    NSInteger count = [self.orderDetailModel.status integerValue];
-    NSString *statusDes = self.orderDetailModel.status_display;
-    if ([statusDes isEqualToString:@"已付款"]) {
+//    NSString *statusDes = self.orderDetailModel.status_display;
+    NSInteger statusCode = [self.orderDetailModel.status integerValue];
+    bool isCanChangeAddress = [self.orderDetailModel.can_change_address boolValue];
+    if (statusCode == 2 && isCanChangeAddress) {
         self.orderDetailHeaderView.addressView.userInteractionEnabled = YES;
         self.orderDetailHeaderView.logisticsView.userInteractionEnabled = YES;
     }
