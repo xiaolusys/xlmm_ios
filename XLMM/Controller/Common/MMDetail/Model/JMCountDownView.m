@@ -52,7 +52,7 @@
     
     NSDate *date = [dateFormatter dateFromString:self.ennTime]; // 结束时间
     
-    NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+    NSTimeInterval time = [date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
     NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
     
     __block int timeout  = time;

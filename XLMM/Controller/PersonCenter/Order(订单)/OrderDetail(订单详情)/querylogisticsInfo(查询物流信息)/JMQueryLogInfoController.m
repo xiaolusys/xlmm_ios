@@ -19,6 +19,7 @@
 
 @interface JMQueryLogInfoController ()<UIScrollViewDelegate>
 
+
 @property (nonatomic,strong) UIScrollView *masBackScrollView;
 
 @property (nonatomic,strong) UILabel *logNameLabel;

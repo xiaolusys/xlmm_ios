@@ -19,6 +19,7 @@
 #import "JMCategoryListController.h"
 #import "JMRootGoodsModel.h"
 #import "JMRootGoodsModel.h"
+#import "JMHomeRootCategoryController.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -250,6 +251,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [self createTopButton];
+    [self craeteRight];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     
@@ -596,11 +598,16 @@ static NSString * ksimpleCell = @"simpleCell";
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)rightClicked:(UIButton *)button {
-    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
-    catoryVC.titleString = nextNavTitle;
-    catoryVC.dataSource = self.childArray;
-
-    [self.navigationController pushViewController:catoryVC animated:YES];
+    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+    rootCategoryVC.cidString = self.cid;
+    rootCategoryVC.titleString = self.titleString;
+    [self.navigationController pushViewController:rootCategoryVC animated:YES];
+//    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
+//    catoryVC.titleString = nextNavTitle;
+//    catoryVC.dataSource = self.childArray;
+//
+//    [self.navigationController pushViewController:catoryVC animated:YES];
+    
 }
 
 
@@ -620,7 +627,18 @@ static NSString * ksimpleCell = @"simpleCell";
 
 /**
  *
-
+ //    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+ //    NSString *parStr = paramerString[@"cat_link"];
+ //    if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
+ //        NSLog(@"jump cat_link=%@ wrong", parStr);
+ //        return;
+ //    }
+ //    NSArray *array = [parStr componentsSeparatedByString:@"="];
+ //    NSString *string = array[1];
+ //    rootCategoryVC.cidString = string;
+ //    rootCategoryVC.titleString = paramerString[@"name"];
+ //
+ //    [self.navigationController pushViewController:rootCategoryVC animated:YES];
  */
 
 

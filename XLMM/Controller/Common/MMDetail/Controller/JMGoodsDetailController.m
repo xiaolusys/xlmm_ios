@@ -234,7 +234,7 @@
     self.pageView.scrollForSingleCount = NO;
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
-    self.pageView.autoScrollInterVal = 3.0f;
+    self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
 //    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
 //    self.goodsScrollView = scrollView;

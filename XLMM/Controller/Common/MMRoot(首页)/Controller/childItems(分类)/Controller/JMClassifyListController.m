@@ -143,7 +143,8 @@ static NSString * cellId = @"JMClassifyListController";
     for (NSDictionary *dic in resultsArr) {
         NSIndexPath *index ;
         index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
-        [self.dataSource addObject:dic];
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
+        [self.dataSource addObject:model];
         [_numArray addObject:index];
     }
     if((_numArray != nil) && (_numArray.count > 0)){

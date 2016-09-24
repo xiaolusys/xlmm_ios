@@ -508,7 +508,6 @@
 		1F498C501D2772D0007E77FC /* JMTimeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BC91D2772D0007E77FC /* JMTimeListCell.m */; };
 		1F498C511D2772D0007E77FC /* JMBaseGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BCC1D2772D0007E77FC /* JMBaseGoodsCell.m */; };
 		1F498C521D2772D0007E77FC /* JMGoodsShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BCE1D2772D0007E77FC /* JMGoodsShowView.m */; };
-		1F498C531D2772D0007E77FC /* JMNORefundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BD01D2772D0007E77FC /* JMNORefundView.m */; };
 		1F498C5B1D2772D0007E77FC /* JMRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BE01D2772D0007E77FC /* JMRefundController.m */; };
 		1F498C5C1D2772D0007E77FC /* RefundAddressInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498BE11D2772D0007E77FC /* RefundAddressInfoView.xib */; };
 		1F498C5D1D2772D0007E77FC /* SelectedReasonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498BE21D2772D0007E77FC /* SelectedReasonsView.xib */; };
@@ -832,6 +831,8 @@
 		1FE52E3C1D94D5FC0051D5A0 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1FE52E2E1D94D5FC0051D5A0 /* Pingpp.bundle */; };
 		1FE52E431D94E2330051D5A0 /* JMHomeRootCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */; };
 		1FE52E461D950BBE0051D5A0 /* JMHomeRootCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */; };
+		1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */; };
+		1FE52E4C1D9653600051D5A0 /* JMClassPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E4B1D9653600051D5A0 /* JMClassPopView.m */; };
 		1FE67AA91D73FD5300761450 /* 5C@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA41D73FD5300761450 /* 5C@2x.png */; };
 		1FE67AAA1D73FD5300761450 /* iPhone4S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA51D73FD5300761450 /* iPhone4S@2x.png */; };
 		1FE67AAB1D73FD5300761450 /* iPhone6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67AA61D73FD5300761450 /* iPhone6@2x.png */; };
@@ -1749,8 +1750,6 @@
 		1F498BCC1D2772D0007E77FC /* JMBaseGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBaseGoodsCell.m; sourceTree = "<group>"; };
 		1F498BCD1D2772D0007E77FC /* JMGoodsShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsShowView.h; sourceTree = "<group>"; };
 		1F498BCE1D2772D0007E77FC /* JMGoodsShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsShowView.m; sourceTree = "<group>"; };
-		1F498BCF1D2772D0007E77FC /* JMNORefundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMNORefundView.h; sourceTree = "<group>"; };
-		1F498BD01D2772D0007E77FC /* JMNORefundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMNORefundView.m; sourceTree = "<group>"; };
 		1F498BDF1D2772D0007E77FC /* JMRefundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundController.h; sourceTree = "<group>"; };
 		1F498BE01D2772D0007E77FC /* JMRefundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundController.m; sourceTree = "<group>"; };
 		1F498BE11D2772D0007E77FC /* RefundAddressInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefundAddressInfoView.xib; sourceTree = "<group>"; };
@@ -2227,6 +2226,10 @@
 		1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootCategoryController.m; sourceTree = "<group>"; };
 		1FE52E441D950BBE0051D5A0 /* JMHomeRootCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootCategoryCell.h; sourceTree = "<group>"; };
 		1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootCategoryCell.m; sourceTree = "<group>"; };
+		1FE52E471D96124F0051D5A0 /* JMCategoryContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryContentCell.h; sourceTree = "<group>"; };
+		1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryContentCell.m; sourceTree = "<group>"; };
+		1FE52E4A1D9653600051D5A0 /* JMClassPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMClassPopView.h; sourceTree = "<group>"; };
+		1FE52E4B1D9653600051D5A0 /* JMClassPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMClassPopView.m; sourceTree = "<group>"; };
 		1FE67AA41D73FD5300761450 /* 5C@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5C@2x.png"; sourceTree = "<group>"; };
 		1FE67AA51D73FD5300761450 /* iPhone4S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone4S@2x.png"; sourceTree = "<group>"; };
 		1FE67AA61D73FD5300761450 /* iPhone6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone6@2x.png"; sourceTree = "<group>"; };
@@ -3948,6 +3951,8 @@
 				1F27A6221D275A6300A0F80B /* JMPopViewAnimationDrop.m */,
 				1F27A6231D275A6300A0F80B /* JMPopViewAnimationSpring.h */,
 				1F27A6241D275A6300A0F80B /* JMPopViewAnimationSpring.m */,
+				1FE52E4A1D9653600051D5A0 /* JMClassPopView.h */,
+				1FE52E4B1D9653600051D5A0 /* JMClassPopView.m */,
 			);
 			path = "popView(弹出视图)";
 			sourceTree = "<group>";
@@ -4794,8 +4799,6 @@
 				1F498BCC1D2772D0007E77FC /* JMBaseGoodsCell.m */,
 				1F498BCD1D2772D0007E77FC /* JMGoodsShowView.h */,
 				1F498BCE1D2772D0007E77FC /* JMGoodsShowView.m */,
-				1F498BCF1D2772D0007E77FC /* JMNORefundView.h */,
-				1F498BD01D2772D0007E77FC /* JMNORefundView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5989,6 +5992,8 @@
 			children = (
 				1FE52E441D950BBE0051D5A0 /* JMHomeRootCategoryCell.h */,
 				1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */,
+				1FE52E471D96124F0051D5A0 /* JMCategoryContentCell.h */,
+				1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7361,6 +7366,7 @@
 				183072881C97C00900B7665E /* UIImage+ColorImage.m in Sources */,
 				183070D91C97B83900B7665E /* MMDetailsModel.m in Sources */,
 				1F27A6101D2627EB00A0F80B /* JMMaMaCenterModel.m in Sources */,
+				1FE52E4C1D9653600051D5A0 /* JMClassPopView.m in Sources */,
 				1F2F9E231D58534A00E3A68B /* JMStoreupController.m in Sources */,
 				3A7BCCF91CDA1FD1000212B0 /* BrandModel.m in Sources */,
 				1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */,
@@ -7435,6 +7441,7 @@
 				1F1FB8AD1D88EA50004C60CE /* JMMineIntegralCell.m in Sources */,
 				1F23F9DB1D6C230500C78EAE /* JMHomeTomorrowController.m in Sources */,
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
+				1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */,
 				1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */,
 				1FE52DC11D9159A20051D5A0 /* NSTimer+UdeskSDK.m in Sources */,
 				1F498C2A1D2772D0007E77FC /* AddressViewController.m in Sources */,
@@ -7599,7 +7606,6 @@
 				1FE52DC91D9159A20051D5A0 /* UdeskSDKManager.m in Sources */,
 				1F27A6601D275FB400A0F80B /* JMRootgoodsCell.m in Sources */,
 				1F5AE2C51D535CB50022E6E4 /* JMAutoLoopScrollView.m in Sources */,
-				1F498C531D2772D0007E77FC /* JMNORefundView.m in Sources */,
 				1F498AEC1D276197007E77FC /* JMShareButtonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
