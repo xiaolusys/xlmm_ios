@@ -469,7 +469,7 @@
 }
 #pragma mark 分类点击事件
 - (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
-    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+    ChildViewController *categoryVC = [[ChildViewController alloc] init];
     NSString *parStr = paramerString[@"cat_link"];
     if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
         NSLog(@"jump cat_link=%@ wrong", parStr);
@@ -477,21 +477,9 @@
     }
     NSArray *array = [parStr componentsSeparatedByString:@"="];
     NSString *string = array[1];
-    rootCategoryVC.cidString = string;
-    rootCategoryVC.titleString = paramerString[@"name"];
-    
-    [self.navigationController pushViewController:rootCategoryVC animated:YES];
-//    ChildViewController *categoryVC = [[ChildViewController alloc] init];
-//    NSString *parStr = paramerString[@"cat_link"];
-//    if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
-//        NSLog(@"jump cat_link=%@ wrong", parStr);
-//        return;
-//    }
-//    NSArray *array = [parStr componentsSeparatedByString:@"="];
-//    NSString *string = array[1];
-//    categoryVC.titleString = paramerString[@"name"];
-//    categoryVC.cid = string;
-//    [self.navigationController pushViewController:categoryVC animated:YES];
+    categoryVC.titleString = paramerString[@"name"];
+    categoryVC.cid = string;
+    [self.navigationController pushViewController:categoryVC animated:YES];
 }
 #pragma mark 活动点击事件(跳转webView)
 - (void)skipWebView:(NSString *)appLink activeDic:(NSDictionary *)dic {

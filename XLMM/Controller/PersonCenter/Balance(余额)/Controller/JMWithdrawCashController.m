@@ -320,7 +320,7 @@
 - (void)withDrawClick:(UIButton *)button {
     button.selected = !button.selected;
     if (button.selected) {
-        if (_maxWithDrawMoney - _withDrawMoney > 0.000001) {
+        if (_maxWithDrawMoney - _withDrawMoney > 0.00001) {
             self.moneyTextF.text = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
         }else {
             self.moneyTextF.text = [NSString stringWithFormat:@"%.2f",_maxWithDrawMoney];
@@ -501,8 +501,8 @@
     CGFloat stringF = [muString floatValue];
     
     if (textField == self.moneyTextF) {
-        BOOL isTFtoMineWithDrawMoeny = (stringF - _minWithDrawMoney) > 0.000001 || fabs(stringF - _minWithDrawMoney) <= 0.000001;    // 判断输入金额与最小提现金额比较
-        BOOL isTFtoWitrDrawmoney = (_withDrawMoney - stringF) >0.000001 || fabs(_withDrawMoney - stringF) <= 0.000001;               // 判断输入金额与我的余额比较
+        BOOL isTFtoMineWithDrawMoeny = (stringF - _minWithDrawMoney) > 0.00001 || fabs(stringF - _minWithDrawMoney) <= 0.00001;    // 判断输入金额与最小提现金额比较
+        BOOL isTFtoWitrDrawmoney = (_withDrawMoney - stringF) >0.00001 || fabs(_withDrawMoney - stringF) <= 0.00001;               // 判断输入金额与我的余额比较
         
         if (isTFtoMineWithDrawMoeny && isTFtoWitrDrawmoney) {
             isUserEnable = YES;
