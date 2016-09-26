@@ -281,7 +281,7 @@
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
     [newImageUrl appendString:@"?"];
     
-    if ([string hasPrefix:@"http:"]) {
+    if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
         
     }else {
         [newImageUrl insertString:@"http:" atIndex:0];
@@ -309,7 +309,7 @@
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
     [newImageUrl appendString:@"?"];
     
-    if ([string hasPrefix:@"http:"]) {
+    if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
         
     }else {
         [newImageUrl insertString:@"http:" atIndex:0];

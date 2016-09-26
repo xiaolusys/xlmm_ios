@@ -21,7 +21,7 @@
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
 #import "JMToolMacro.h"
-
+#import "NSString+DeleteT.h"
 
 
 
@@ -31,10 +31,18 @@
 #ifndef XLMM_MMClass_h
 #define XLMM_MMClass_h
 
-#ifndef __OPTIMIZE__
-#define NSLog(...) NSLog(__VA_ARGS__)
+//#ifndef __OPTIMIZE__
+//#define NSLog(...) NSLog(__VA_ARGS__)
+//#else
+//#define NSLog(...) {}
+//#endif
+
+#ifdef DEBUG
+#define JMString [NSString stringWithFormat:@"%s", __FILE__].lastPathComponent
+#define NSLog(...) printf("%s -> [ %s ] 第%d行: %s\n\n",[[NSString jm_stringDate] UTF8String],[JMString UTF8String],__LINE__, [[NSString stringWithFormat:__VA_ARGS__] UTF8String]);
+
 #else
-#define NSLog(...) {}
+#define NSLog(...)
 #endif
 
 

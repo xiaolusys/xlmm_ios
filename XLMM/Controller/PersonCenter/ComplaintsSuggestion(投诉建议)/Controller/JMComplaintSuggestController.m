@@ -47,8 +47,8 @@
     [self createComSug];
     [self setUpTextView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonShow:) name:UIKeyboardDidShowNotification object:nil]
-    ;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonShow:) name:UIKeyboardDidShowNotification object:nil];
+    
 }
 
 - (void)setUpTextView {
@@ -61,7 +61,7 @@
 
 #pragma mark ---- 导航栏右侧体现历史
 - (void) createRightButonItem{
-    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 40)];
     [rightBtn addTarget:self action:@selector(rightClicked:) forControlEvents:UIControlEventTouchUpInside];
     [rightBtn setTitle:@"投诉历史" forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];

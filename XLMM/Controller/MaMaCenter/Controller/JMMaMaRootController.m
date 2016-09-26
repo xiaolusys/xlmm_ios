@@ -225,7 +225,7 @@
     [self earningPrompt];
 }
 
-
+#pragma mark 创建小鹿客服入口
 - (void)craeteNavRightButton {
     UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 80)];
     [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];

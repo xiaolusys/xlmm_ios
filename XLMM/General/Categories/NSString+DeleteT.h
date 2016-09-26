@@ -12,5 +12,7 @@
 
 + (NSString *)dateDeleteT:(NSString *)time;
 
++ (NSString *)jm_stringDate;
+
 
 @end
