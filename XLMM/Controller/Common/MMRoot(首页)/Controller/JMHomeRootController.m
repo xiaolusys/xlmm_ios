@@ -269,7 +269,7 @@
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
-                _timeArray[2] = responseObject[@"onshelf_starttime"];
+                _timeArray[2] = responseObject[@"offshelf_deadline"];
             }
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {

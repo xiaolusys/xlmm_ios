@@ -282,7 +282,7 @@
             CGFloat stringWidth = 0;
             CGFloat stringHeight = 0;
             CGSize size = [self measureTitleAtIndex:idx];
-            stringWidth = size.width;
+            stringWidth = size.width + 5;   // iOS 10.0 字体宽度改变.
             stringHeight = size.height;
             CGRect rectDiv, fullRect;
             
@@ -885,3 +885,40 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

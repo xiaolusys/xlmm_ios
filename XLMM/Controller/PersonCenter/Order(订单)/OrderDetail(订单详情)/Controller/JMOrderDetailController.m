@@ -498,7 +498,9 @@
         }else {
             self.packageModel = nil;
         }
-        BOOL isWarehouseOrder = (self.packageModel.assign_time != nil || self.packageModel.book_time != nil || self.packageModel.finish_time != nil);
+//        NSDictionary *dcit = [self.packageModel mj_keyValues];
+        NSInteger statusCode = [self.orderDetailModel.status integerValue];
+        BOOL isWarehouseOrder = (self.packageModel.assign_time == nil && self.packageModel.book_time != nil && self.packageModel.finish_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
             [self createClassPopView:@"提示" Message:@"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。" Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
@@ -735,7 +737,6 @@
     self.maskView.alpha = 0.3;
 //    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideClassPopView)]];
     self.classPopView = [JMClassPopView shareManager];
-//    [self.classPopView initWithFrame:self.view.bounds Title:title DescTitle:message Cancel:@"取消" Sure:@"确定"];
     self.classPopView = [[JMClassPopView alloc] initWithFrame:self.view.bounds Title:title DescTitle:message Cancel:@"取消" Sure:@"确定"];
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.classPopView];

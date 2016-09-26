@@ -43,7 +43,7 @@
 
 }
 - (void)createWebView {
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108)];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114)];
     self.webView.backgroundColor = [UIColor whiteColor];
     self.webView.delegate = self;
     self.webView.scalesPageToFit = YES;
@@ -67,7 +67,7 @@
 }
 
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor orangeColor];
     self.tableView.dataSource = self;

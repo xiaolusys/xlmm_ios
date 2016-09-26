@@ -44,6 +44,9 @@
     self.descTitleLabel.text = messageTitle;
     
 }
+
+
+
 - (instancetype)initWithFrame:(CGRect)frame Title:(NSString *)title DescTitle:(NSString *)descTitle Cancel:(NSString *)cancel Sure:(NSString *)sure {
     if (self == [super initWithFrame:frame]) {
         if (cancel == nil || [cancel isEqual:@""] || [cancel isKindOfClass:[NSNull class]]) {

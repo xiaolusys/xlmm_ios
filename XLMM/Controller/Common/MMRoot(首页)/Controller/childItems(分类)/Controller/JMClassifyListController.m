@@ -198,8 +198,8 @@ static NSString * cellId = @"JMClassifyListController";
 
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *dic = self.dataSource[indexPath.row];
-    NSString *goodsID = dic[@"id"];
+    JMRootGoodsModel *model = self.dataSource[indexPath.row];
+    NSString *goodsID = model.goodsID;
     
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     detailVC.goodsID = goodsID;

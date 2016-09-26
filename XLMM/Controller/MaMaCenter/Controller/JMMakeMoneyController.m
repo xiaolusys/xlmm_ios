@@ -209,9 +209,10 @@
         iconImage.image = [UIImage imageNamed:imageArr[i]];
         
         [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(button).offset(25);
+//            make.top.equalTo(button).offset(25);
 //            make.width.height.mas_equalTo(@25);
             make.centerX.equalTo(button.mas_centerX);
+            make.centerY.equalTo(button.mas_centerY).offset(-10);
         }];
         
         UILabel *titleLabel = [UILabel new];
@@ -220,7 +221,7 @@
         titleLabel.font = [UIFont systemFontOfSize:12.];
         titleLabel.textColor = [UIColor buttonTitleColor];
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(iconImage.mas_bottom).offset(10);
+            make.bottom.equalTo(button).offset(-15);
             make.centerX.equalTo(iconImage.mas_centerX);
         }];
         
@@ -397,7 +398,7 @@
 
 
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];

@@ -335,12 +335,13 @@
     if ([[dic objectForKey:@"rcode"] integerValue] != 0){
         
 //        [SVProgressHUD dismiss];
-//        [self alertMessage:[dic objectForKey:@"msg"]];
+        [MBProgressHUD hideHUD];
+        [self alertMessage:[dic objectForKey:@"msg"]];
         
         return;
     }
     if ([self.config[@"isRegister"] boolValue] || [self.config[@"isMessageLogin"] boolValue]) {
-//        [self alertMessage:[dic objectForKey:@"msg"]];
+        [self alertMessage:[dic objectForKey:@"msg"]];
         NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {

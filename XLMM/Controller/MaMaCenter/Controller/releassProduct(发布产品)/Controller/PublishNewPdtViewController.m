@@ -21,7 +21,9 @@
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
 
-@interface PublishNewPdtViewController ()
+@interface PublishNewPdtViewController () {
+    NSString *qrCodeUrlString;
+}
 
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 @property (nonatomic, strong)PhotoView *photoView;
@@ -85,7 +87,9 @@
     
     [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
     [self createCollectionView];
+    [self loaderweimaData];
     [self dingshishuaxin];
+    
 }
 
 - (void)dingshishuaxin{
@@ -156,11 +160,13 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
     
-    [MBProgressHUD showLoading:@"正在加载..."];
-    //网络请求
-    NSString *requestURL = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:requestURL WithParaments:nil WithSuccess:^(id responseObject) {
-        [MBProgressHUD hideHUD];
+    [MBProgressHUD showLoading:@"正在加载..." ToView:self.view];
+    
+}
+- (void)loadPicData {
+    NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        [MBProgressHUD hideHUDForView:self.view];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
@@ -168,6 +174,28 @@
     } Progress:^(float progress) {
         
     }];
+}
+- (void)loaderweimaData {
+    NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/qrcode/get_wxpub_qrcode");
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//        [MBProgressHUD hideHUD];
+        [self fetchErweimaData:responseObject];
+        [self loadPicData];
+    } WithFail:^(NSError *error) {
+//        [MBProgressHUD showError:@"获取信息失败"];
+    } Progress:^(float progress) {
+        
+    }];
+    
+}
+- (void)fetchErweimaData:(NSDictionary *)dict {
+    NSInteger code = [dict[@"code"] integerValue];
+    if (code == 0) {
+        qrCodeUrlString = dict[@"qrcode_link"];
+    }else {
+        [MBProgressHUD showWarning:dict[@"info"]];
+    }
+    
 }
 
 - (NSInteger)getCurrentTime{
@@ -213,6 +241,12 @@
         [sharePic setValuesForKeysWithDictionary:oneTurns];
         
         [self.dataArr addObject:sharePic];
+    }
+    NSInteger countNum = self.dataArr.count;
+    if (countNum < 9) {
+        [self.dataArr addObject:qrCodeUrlString];
+    }else {
+        [self.dataArr replaceObjectAtIndex:5 withObject:qrCodeUrlString];
     }
     
     self.isLoad = YES;
@@ -424,19 +458,51 @@
 //    }
 //}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
