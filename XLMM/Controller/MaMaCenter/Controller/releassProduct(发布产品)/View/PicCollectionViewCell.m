@@ -25,7 +25,6 @@
 - (void)createImageForCellImageView:(NSString *)imageUrl {
     //图片处理小图
     NSString *url = [imageUrl imageShareCompression];
-    
 //    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
     [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.cellImageView.contentMode = UIViewContentModeScaleAspectFill;

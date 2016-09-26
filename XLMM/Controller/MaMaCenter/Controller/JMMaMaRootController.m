@@ -23,6 +23,7 @@
 @interface JMMaMaRootController () {
     NSInteger _indexCode;
     BOOL _isActiveClick;
+    NSArray *_titleArr;
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -56,9 +57,8 @@
 
 @end
 
-@implementation JMMaMaRootController {
-    NSMutableArray *_titleArr;
-}
+@implementation JMMaMaRootController
+
 - (NSMutableArray *)activeArray {
     if (_activeArray == nil) {
         _activeArray = [NSMutableArray array];
@@ -99,7 +99,7 @@
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _indexCode = 0;
     _isActiveClick = NO;
-    _titleArr = [NSMutableArray arrayWithObjects:@"我要赚钱",@"社交活动",@"我的", nil];
+    
     [self createSegmentView];
     [self craeteNavRightButton];
     [self customUserInfo];
@@ -255,18 +255,19 @@
 }
 #pragma mark 创建segment(tabBar)
 - (void)createSegmentView {
-    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 44, SCREENWIDTH, 44)];
+    _titleArr = @[@"我要赚钱",@"社交活动",@"我的"];
+    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 50, SCREENWIDTH, 50)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
     self.segmentedControl.sectionTitles = _titleArr;
     self.segmentedControl.selectedSegmentIndex = 0;
-    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
+    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
+    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:18.]};
     self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
     self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
     [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.segmentedControl];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 108)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 114)];
     self.scrollView.backgroundColor = [UIColor lineGrayColor];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;

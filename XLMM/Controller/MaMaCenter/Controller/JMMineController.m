@@ -413,7 +413,7 @@
 //
 //}
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
     self.tableView.dataSource = self;
