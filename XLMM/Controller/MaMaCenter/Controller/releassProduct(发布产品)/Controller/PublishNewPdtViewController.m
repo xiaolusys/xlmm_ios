@@ -235,19 +235,24 @@
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         return;
     }
-    
+    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
     for (NSMutableDictionary *oneTurns in data) {
-        SharePicModel *sharePic = [[SharePicModel alloc] init];
-        [sharePic setValuesForKeysWithDictionary:oneTurns];
-        
+        NSMutableArray *muArray = [NSMutableArray arrayWithArray:oneTurns[@"pic_arry"]];
+        NSInteger countNum = muArray.count;
+        if (countNum < 9) {
+            [muArray addObject:qrCodeUrlString];
+        }else {
+            [muArray replaceObjectAtIndex:4 withObject:qrCodeUrlString];
+        }
+//        NSArray *arr = [NSArray arrayWithArray:muArray];
+//        [oneTurns setObject:muArray forKey:@"pic_arry"];
+//        oneTurns[@"pic_arry"] = arr;
+//        [sharePic setValuesForKeysWithDictionary:oneTurns];
+        SharePicModel *sharePic = [SharePicModel mj_objectWithKeyValues:oneTurns];
+        sharePic.pic_arry = muArray;
         [self.dataArr addObject:sharePic];
     }
-    NSInteger countNum = self.dataArr.count;
-    if (countNum < 9) {
-        [self.dataArr addObject:qrCodeUrlString];
-    }else {
-        [self.dataArr replaceObjectAtIndex:5 withObject:qrCodeUrlString];
-    }
+    
     
     self.isLoad = YES;
     
@@ -269,7 +274,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
     SharePicModel *picModel = self.dataArr[indexPath.section];
-    [cell createImageForCellImageView:picModel.pic_arry[indexPath.row]];
+    NSInteger countNum = picModel.pic_arry.count;
+    if (countNum < 9) {
+        [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:4];
+    }else {
+        [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:(countNum - 1)];
+    }
     return cell;
 }
 

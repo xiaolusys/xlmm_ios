@@ -192,7 +192,6 @@
         else {
             viewController.navigationItem.title = getUDLocalizedString(@"udesk_robot_title");
         }
-        
     }
     else if ([viewController isKindOfClass:[UdeskFAQViewController class]]) {
         
