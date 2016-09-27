@@ -77,7 +77,7 @@
     CGFloat H = (SCREENWIDTH * 0.7) * 1.3 + 60;
     [rootView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(SCREENWIDTH *0.7);
-        make.height.mas_equalTo(H);
+        make.height.mas_equalTo(@(H));
         make.centerX.equalTo(weakSelf.mas_centerX);
         make.centerY.equalTo(weakSelf.mas_centerY);
     }];

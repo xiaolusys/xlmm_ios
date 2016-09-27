@@ -9,6 +9,13 @@
 #import "JMHomeCategoryCell.h"
 #import "MMClass.h"
 
+
+// 主页分类 比例布局
+#define HomeCategoryRatio               SCREENWIDTH / 320.0
+#define HomeCategorySpaceW              25 * HomeCategoryRatio
+#define HomeCategorySpaceH              20 * HomeCategoryRatio
+
+
 NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
 @interface JMHomeCategoryCell ()
@@ -32,21 +39,31 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
 
 - (void)createUI {
-    CGFloat imageW = (SCREENWIDTH - 25) / 4;
-    CGFloat imageH = (SCREENWIDTH - 25) / 4 * 1.25;
+    kWeakSelf
+    UIView *baseView = [UIView new];
+    [self.contentView addSubview:baseView];
+    
+    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(weakSelf.contentView);
+        make.top.equalTo(weakSelf.contentView).offset(15);
+        make.bottom.equalTo(weakSelf.contentView).offset(-15);
+    }];
+    
+    CGFloat imageW = (SCREENWIDTH - 25 * HomeCategorySpaceW) / 4;
+    CGFloat imageH = imageW * 1.25;
     for (int i = 0; i < 8; i++) {
         UIImageView *iconImage = [UIImageView new];
         iconImage.hidden = YES;
         iconImage.userInteractionEnabled = YES;
         iconImage.contentMode = UIViewContentModeScaleAspectFit;
-        [self.contentView addSubview:iconImage];
+        [baseView addSubview:iconImage];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
         [iconImage addGestureRecognizer:tap];
         UIView *tapView = [tap view];
         tapView.tag = 100 + i;
         iconImage.tag = 100 + i;
         
-        iconImage.frame = CGRectMake(5 + (imageW + 5) * (i % 4), 10 + (imageH + 5) * (i / 4), imageW, imageH);
+        iconImage.frame = CGRectMake(HomeCategorySpaceW + (imageW + HomeCategorySpaceW) * (i % 4), (imageH + HomeCategorySpaceH) * (i / 4), imageW, imageH);
 
     }
     

@@ -294,7 +294,7 @@
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
     //    NSDictionary *dic = _model.mj_keyValues;
-    NSLog(@"Share para=%@",dic);
+//    NSLog(@"Share para=%@",dic);
     
     self.share_model.share_type = [dic objectForKey:@"share_type"];
 
