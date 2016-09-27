@@ -414,14 +414,15 @@
     }
     self.orderGoodsModel = [[JMOrderGoodsModel alloc] init];
     self.orderGoodsModel = self.dataSource[indexPath.section][indexPath.row];
-    if (self.logisticsArr.count == 0) {
-        self.packageModel = nil;
-    }else {
-        self.packageModel = self.logisticsArr[indexPath.section];
-    }
+//    if (self.logisticsArr.count == 0) {
+//        self.packageModel = nil;
+//    }else {
+//        self.packageModel = self.logisticsArr[indexPath.section];
+//    }
     cell.isTeamBuy = _isTeamBuy;
     cell.isCanRefund = _isCanRefund;
-    [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
+//    [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
+    [cell configWithModel:self.orderGoodsModel SectionCount:indexPath.section RowCount:indexPath.row];
     cell.delegate = self;
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];//刷新行
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

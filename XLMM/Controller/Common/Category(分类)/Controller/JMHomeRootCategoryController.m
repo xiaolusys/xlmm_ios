@@ -62,21 +62,34 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
 
-    [self createTableView];
+    [self itemDataSource];
+    
 //    [self createCollectionView];
     
-    [self itemDataSource];
+    
 }
 
 - (void)itemDataSource {
+    kWeakSelf
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path=[paths objectAtIndex:0];
     NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
     //==Json数据
     NSData *data=[NSData dataWithContentsOfFile:jsonPath];
+    if (data == nil) {
+        self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
+        [self.view addSubview:self.empty];
+        self.empty.block = ^(NSInteger index) {
+            if (index == 100) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }
+        };
+        return ;
+    }
+    [self createTableView];
     //==JsonObject
     self.tabDataArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
 

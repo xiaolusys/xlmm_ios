@@ -64,6 +64,7 @@
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)
 
 
+
 #define KTITLENAME @"小鹿美美"
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
 #define LOADIMAGE(a) [UIImage imageNamed:a]

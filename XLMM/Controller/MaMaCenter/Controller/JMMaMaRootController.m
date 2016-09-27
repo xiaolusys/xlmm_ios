@@ -113,7 +113,6 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/message/self_list",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        NSLog(@"%@",responseObject);
         [self mamaMesageData:responseObject];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
@@ -206,7 +205,6 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/ordercarry/get_latest_order_carry",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        NSLog(@"%@",responseObject);
         [self.earningArray removeAllObjects];
         [self.earningImageArray removeAllObjects];
         [self fetchEarning:responseObject];
@@ -295,7 +293,8 @@
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
     if (page == 1 && _isActiveClick) {
-        self.activityVC.urlString = self.mamaWebDict[@"forum"];
+        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
+        self.activityVC.urlString = urlString;//self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
     }else {
         

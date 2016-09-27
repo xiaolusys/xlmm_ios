@@ -39,9 +39,16 @@
 #import "JMHomeHeaderCell.h"
 #import "JMHomeRootCategoryController.h"
 
+// 主页分类 比例布局
+#define HomeCategoryRatio               SCREENWIDTH / 320.0
+#define HomeCategorySpaceW              25 * HomeCategoryRatio
+#define HomeCategorySpaceH              20 * HomeCategoryRatio
+
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
     NSString *_cartTimeString;      // 购物车时间
+    CGFloat oneRowCellH;
+    CGFloat twoRowCellH;
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
@@ -115,6 +122,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.cartsCountLabel.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -307,6 +315,10 @@
 }
 #pragma mark 创建tableView
 - (void)createTabelView {
+    
+    oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
+    twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
+    
     self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -407,9 +419,10 @@
     if (indexPath.section == 0) {
         if (_categorysArray.count <= 4) {
 //            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
-            return SCREENWIDTH * 0.30 + 15;
+            return oneRowCellH;
         }else {
-            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
+//            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 20;
+            return twoRowCellH;
         }
     }else if (indexPath.section == 1) {
         return SCREENWIDTH * 0.5 + 10;
