@@ -155,7 +155,7 @@
     _isCanRefund = isCanRefund;
     
 }
-- (void)configWithModel:(JMOrderGoodsModel *)goodsModel PackageModel:(JMPackAgeModel *)packageModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount {
+- (void)configWithModel:(JMOrderGoodsModel *)goodsModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount     {
     NSString *string = goodsModel.pic_path;
 
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];

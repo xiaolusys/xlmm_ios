@@ -39,31 +39,33 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
 
 - (void)createUI {
-    kWeakSelf
-    UIView *baseView = [UIView new];
-    [self.contentView addSubview:baseView];
+    NSLog(@"%f",SCREENWIDTH / 320.0);
+    NSLog(@"%f",HomeCategorySpaceW);
+    NSLog(@"%f",HomeCategorySpaceH);
+//    UIView *baseView = [UIView new];
+//    [self.contentView addSubview:baseView];
+//    
+//    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(weakSelf.contentView);
+//        make.top.equalTo(weakSelf.contentView).offset(15);
+//        make.bottom.equalTo(weakSelf.contentView).offset(-15);
+//    }];
     
-    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(weakSelf.contentView);
-        make.top.equalTo(weakSelf.contentView).offset(15);
-        make.bottom.equalTo(weakSelf.contentView).offset(-15);
-    }];
-    
-    CGFloat imageW = (SCREENWIDTH - 25 * HomeCategorySpaceW) / 4;
+    CGFloat imageW = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4;
     CGFloat imageH = imageW * 1.25;
     for (int i = 0; i < 8; i++) {
         UIImageView *iconImage = [UIImageView new];
         iconImage.hidden = YES;
         iconImage.userInteractionEnabled = YES;
         iconImage.contentMode = UIViewContentModeScaleAspectFit;
-        [baseView addSubview:iconImage];
+        [self.contentView addSubview:iconImage];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
         [iconImage addGestureRecognizer:tap];
         UIView *tapView = [tap view];
         tapView.tag = 100 + i;
         iconImage.tag = 100 + i;
         
-        iconImage.frame = CGRectMake(HomeCategorySpaceW + (imageW + HomeCategorySpaceW) * (i % 4), (imageH + HomeCategorySpaceH) * (i / 4), imageW, imageH);
+        iconImage.frame = CGRectMake(HomeCategorySpaceW + (imageW + HomeCategorySpaceW) * (i % 4), 15 + (imageH + HomeCategorySpaceH) * (i / 4), imageW, imageH);
 
     }
     

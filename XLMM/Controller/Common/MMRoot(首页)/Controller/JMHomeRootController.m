@@ -122,6 +122,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.cartsCountLabel.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -315,8 +316,8 @@
 #pragma mark 创建tableView
 - (void)createTabelView {
     
-    oneRowCellH = (SCREENWIDTH - 25 * HomeCategorySpaceW) / 4 * 1.25 + 30;
-    twoRowCellH = (SCREENWIDTH - 25 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30;
+    oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
+    twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
     
     self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
@@ -420,6 +421,7 @@
 //            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
             return oneRowCellH;
         }else {
+//            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 20;
             return twoRowCellH;
         }
     }else if (indexPath.section == 1) {

@@ -18,12 +18,13 @@
 #import "CartViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
-#import "JMMaMaPersonCenterController.h"
+//#import "JMMaMaPersonCenterController.h"
 #import "JMSegmentController.h"
 #import "JMRefundBaseController.h"
 #import "JMLogInViewController.h"
 #import "JMGoodsDetailController.h"
 #import "JMClassifyListController.h"
+#import "JMMaMaRootController.h"
 
 @implementation JumpUtils
 #pragma mark 解析targeturl 跳转到不同的界面
@@ -67,8 +68,9 @@
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-        JMMaMaPersonCenterController *ma = [[JMMaMaPersonCenterController alloc] init];
-        [vc.navigationController pushViewController:ma animated:YES];
+        JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
+//        JMMaMaPersonCenterController *ma = [[JMMaMaPersonCenterController alloc] init];
+        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新

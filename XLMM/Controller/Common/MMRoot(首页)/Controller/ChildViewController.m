@@ -41,6 +41,7 @@ static NSString * ksimpleCell = @"simpleCell";
 //    BOOL isLoading; //网络请求时置为true，用于网络还未应答时不能切换推荐和价格查询条件控制
     NSString *nextNavTitle;
     NSString *cidString;
+    
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -228,7 +229,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self itemDataSource];
+//    [self itemDataSource];
     [self craeteRight];
     isOrder = NO;
     _isFirst = YES;
@@ -571,10 +572,8 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)itemDataSource {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path=[paths objectAtIndex:0];
-    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
-    //==JsonObject
+    NSString *jsonPath = [path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+    NSData *data = [NSData dataWithContentsOfFile:jsonPath];
     NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     
     for (NSDictionary *dic in arr) {
@@ -602,6 +601,7 @@ static NSString * ksimpleCell = @"simpleCell";
     rootCategoryVC.cidString = self.cid;
     rootCategoryVC.titleString = self.titleString;
     [self.navigationController pushViewController:rootCategoryVC animated:YES];
+    
 //    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
 //    catoryVC.titleString = nextNavTitle;
 //    catoryVC.dataSource = self.childArray;
