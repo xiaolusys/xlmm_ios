@@ -80,21 +80,38 @@ static NSUInteger selectedIndex = 0;
     //==Json数据
     NSData *data=[NSData dataWithContentsOfFile:jsonPath];
     if (data == nil) {
-        self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
-        [self.view addSubview:self.empty];
-        self.empty.block = ^(NSInteger index) {
-            if (index == 100) {
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-            }
-        };
-        return ;
+//        if ([self.categoryUrl isKindOfClass:[NSNull class]] || self.categoryUrl == nil || [self.categoryUrl isEqual:@""]) {
+            self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
+            [self.view addSubview:self.empty];
+            self.empty.block = ^(NSInteger index) {
+                if (index == 100) {
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                }
+            };
+//        }else {
+//            [self loadCategoryData];
+//        }
+    }else {
+        self.tabDataArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        [self fetchCategoryData:self.tabDataArray];
     }
-    [self createTableView];
+    
     //==JsonObject
-    self.tabDataArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    
 
+}
+- (void)loadCategoryData {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.categoryUrl WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        [self fetchCategoryData:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+
+}
+- (void)fetchCategoryData:(NSArray *)tabDataArray {
     int i = 0;
-    for (NSDictionary *dict in self.tabDataArray) {
+    for (NSDictionary *dict in tabDataArray) {
         [self.tabDataSource addObject:dict[@"name"]];
         if ([dict[@"cid"] isEqual:self.cidString]) {
             selectedIndex = i;
@@ -107,11 +124,9 @@ static NSUInteger selectedIndex = 0;
         }
         [self.colDataSource addObject:dictArr];
     }
-
-    [self.mainTableView reloadData];
-    [self.mainCollectionView reloadData];
-    
-
+    [self createTableView];
+//    [self.mainTableView reloadData];
+//    [self.mainCollectionView reloadData];
 }
 - (void)createTableView {
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT) style:UITableViewStylePlain];

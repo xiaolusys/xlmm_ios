@@ -293,8 +293,8 @@
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
     if (page == 1 && _isActiveClick) {
-        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
-        self.activityVC.urlString = urlString;//self.mamaWebDict[@"forum"];
+//        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
+        self.activityVC.urlString = self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
     }else {
         

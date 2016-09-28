@@ -47,8 +47,8 @@
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
     NSString *_cartTimeString;      // 购物车时间
-    CGFloat oneRowCellH;
-    CGFloat twoRowCellH;
+    NSInteger oneRowCellH;
+    NSInteger twoRowCellH;
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
@@ -105,6 +105,7 @@
     NSString *_releaseNotes;            // 版本升级信息
     NSString *_hash;                    // 判断是否需要重新下载的哈希值
     NSString *_downloadURLString;       // 地址下载链接
+    NSString *urlCategory;              // 下载分类json文件
 }
 - (UIView *)maskView {
     if (!_maskView) {
@@ -492,6 +493,7 @@
     NSString *string = array[1];
     categoryVC.titleString = paramerString[@"name"];
     categoryVC.cid = string;
+    categoryVC.categoryUrlString = urlCategory;
     [self.navigationController pushViewController:categoryVC animated:YES];
 }
 #pragma mark 活动点击事件(跳转webView)
@@ -681,8 +683,8 @@
         if ([_cartTimer isValid]) {
             [_cartTimer invalidate];
         }
-    }
-    self.cartsCountLabel.text = string;
+    }else { self.cartsCountLabel.text = string; }
+    
 }
 #pragma mark 创建购物车,收藏按钮
 - (void)createCartsView {
@@ -966,15 +968,15 @@
 }
 - (void)fetchItemize:(NSDictionary *)dic {
     NSString *isUpData = dic[@"sha1"];
-    NSString *urlString = dic[@"download_url"];
+    urlCategory = dic[@"download_url"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *oldVersion = [defaults stringForKey:@"itemHash"];
     if (oldVersion == nil) {
-        [self downLoadUrl:urlString];
+        [self downLoadUrl:urlCategory];
     }else {
         if ([oldVersion isEqualToString:isUpData]) {
         }else {
-            [self downLoadUrl:urlString];
+            [self downLoadUrl:urlCategory];
         }
     }
     [defaults setObject:isUpData forKey:@"itemHash"];
@@ -1099,50 +1101,31 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+ *
+ *          ┌─┐       ┌─┐
+ *       ┌──┘ ┴───────┘ ┴──┐
+ *       │                 │
+ *       │       ───       │
+ *       │  ─┬┘       └┬─  │
+ *       │                 │
+ *       │       ─┴─       │
+ *       │                 │
+ *       └───┐         ┌───┘
+ *           │         │
+ *           │         │
+ *           │         │
+ *           │         └──────────────┐
+ *           │                        │
+ *           │                        ├─┐
+ *           │                        ┌─┘
+ *           │                        │
+ *           └─┐  ┐  ┌───────┬──┐  ┌──┘
+ *             │ ─┤ ─┤       │ ─┤ ─┤
+ *             └──┴──┘       └──┴──┘
+ *                 神兽保佑
+ *                 代码无BUG!
+ */
 
 
 

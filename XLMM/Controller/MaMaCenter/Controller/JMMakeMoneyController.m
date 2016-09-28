@@ -42,6 +42,10 @@
 
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
 @property (nonatomic, strong) NSMutableArray *titlesArray;
+/**
+ *  是否显示消息未读提示
+ */
+@property (nonatomic, strong) UILabel *messagePromptLabel;
 
 @end
 
@@ -77,7 +81,7 @@
 }
 - (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
     _extraFiguresDic = extraFiguresDic;
-    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
+    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
     NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
     NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
     self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
@@ -98,6 +102,12 @@
     if (resultsArr.count == 0) {
         self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
     }else {
+        if ([messageDic[@"unread_cnt"] integerValue] == 0) {
+            self.messagePromptLabel.hidden = YES;
+        }else {
+            self.messagePromptLabel.hidden = NO;
+//            self.messagePromptLabel.text = CS_STRING(messageDic[@"unread_cnt"]);
+        }
         for (NSDictionary *dic in resultsArr) {
             [self.titlesArray addObject:dic[@"title"]];
         }
@@ -122,8 +132,8 @@
     UILabel *addEarningL = [UILabel new];
     [topImageView addSubview:addEarningL];
     addEarningL.textColor = [UIColor buttonTitleColor];
-    addEarningL.font = [UIFont systemFontOfSize:12.];
-    addEarningL.text = @"本周累计收益";
+    addEarningL.font = [UIFont systemFontOfSize:14.];
+    addEarningL.text = @"今日累计收益";
     
     UILabel *addEarningLabel = [UILabel new];
     [topImageView addSubview:addEarningLabel];
@@ -227,10 +237,7 @@
         
     
     }
-    
-    
-    
-    
+
     UIView *currentView = [[UIView alloc] initWithFrame:CGRectMake(0, 230, SCREENWIDTH, 15)];
     [headerView addSubview:currentView];
     headerView.backgroundColor = [UIColor countLabelColor];
@@ -240,11 +247,26 @@
     [headerView addSubview:messageView];
     messageView.backgroundColor = [UIColor whiteColor];
     
-    UILabel *messageLabel = [UILabel new];
-    [messageView addSubview:messageLabel];
-    messageLabel.font = [UIFont systemFontOfSize:14.];
-    messageLabel.textColor = [UIColor buttonTitleColor];
-    messageLabel.text = @"我的消息";
+//    UILabel *messageLabel = [UILabel new];
+//    [messageView addSubview:messageLabel];
+//    messageLabel.font = [UIFont systemFontOfSize:14.];
+//    messageLabel.textColor = [UIColor buttonTitleColor];
+//    messageLabel.text = @"我的消息";
+    
+    UIImageView *promptImage = [UIImageView new];
+    [messageView addSubview:promptImage];
+    promptImage.image = [UIImage imageNamed:@"messageImage"];
+    
+    UILabel *unReadMessageLabel = [UILabel new];
+    [promptImage addSubview:unReadMessageLabel];
+    unReadMessageLabel.textColor = [UIColor whiteColor];
+    unReadMessageLabel.font = CS_SYSTEMFONT(10.);
+    unReadMessageLabel.backgroundColor = [UIColor redColor];
+    unReadMessageLabel.layer.cornerRadius = 5.;
+    unReadMessageLabel.layer.masksToBounds = YES;
+    self.messagePromptLabel = unReadMessageLabel;
+    self.messagePromptLabel.hidden = YES;
+    
     
     UIView *messageScrollView = [UIView new];
     [messageView addSubview:messageScrollView];
@@ -261,12 +283,23 @@
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 3.0f;
     
-    [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(messageView).offset(10);
+    
+//    [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(messageView).offset(10);
+//        make.centerY.equalTo(messageView.mas_centerY);
+//    }];
+    [promptImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(messageView).offset(15);
+        make.width.height.mas_equalTo(@18);
         make.centerY.equalTo(messageView.mas_centerY);
     }];
+    [unReadMessageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(promptImage).offset(-5);
+        make.right.equalTo(promptImage).offset(5);
+        make.width.height.mas_equalTo(10);
+    }];
     [messageScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(messageLabel.mas_right).offset(10);
+        make.left.equalTo(promptImage.mas_right).offset(15);
         make.top.bottom.right.equalTo(messageView);
     }];
     [self.pageView mas_makeConstraints:^(MASConstraintMaker *make) {
