@@ -11,7 +11,7 @@
 @interface JMHomeRootCategoryController : UIViewController
 
 @property (nonatomic, copy) NSString *titleString;
-
 @property (nonatomic, copy) NSString *cidString;
+@property (nonatomic, copy) NSString *categoryUrl;
 
 @end

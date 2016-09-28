@@ -600,6 +600,7 @@ static NSString * ksimpleCell = @"simpleCell";
     JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
     rootCategoryVC.cidString = self.cid;
     rootCategoryVC.titleString = self.titleString;
+    rootCategoryVC.categoryUrl = self.categoryUrlString;
     [self.navigationController pushViewController:rootCategoryVC animated:YES];
     
 //    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];

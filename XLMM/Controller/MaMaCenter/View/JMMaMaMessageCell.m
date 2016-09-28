@@ -48,7 +48,7 @@
         make.centerY.equalTo(weakSelf.mas_centerY);
         make.left.equalTo(weakSelf);
         //        make.right.equalTo(baseView).offset(-60);
-        make.width.mas_equalTo(@(SCREENWIDTH - 135));
+        make.width.mas_equalTo(@(SCREENWIDTH - 110));
         //        make.height.mas_equalTo(@40);
     }];
     

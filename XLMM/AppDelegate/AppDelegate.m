@@ -586,7 +586,7 @@ static BOOL isNetPrompt;
             return;
         }
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
             return;
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];

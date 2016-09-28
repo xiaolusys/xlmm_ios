@@ -51,8 +51,8 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 //        make.bottom.equalTo(weakSelf.contentView).offset(-15);
 //    }];
     
-    CGFloat imageW = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4;
-    CGFloat imageH = imageW * 1.25;
+    NSInteger imageW = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4;
+    NSInteger imageH = imageW * 1.25;
     for (int i = 0; i < 8; i++) {
         UIImageView *iconImage = [UIImageView new];
         iconImage.hidden = YES;
