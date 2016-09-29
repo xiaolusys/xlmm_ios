@@ -64,50 +64,58 @@ static NSUInteger selectedIndex = 0;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
-
+    
     [self itemDataSource];
     
-//    [self createCollectionView];
+    //    [self createCollectionView];
     
     
 }
-
-- (void)itemDataSource {
+- (void)emptyCategory {
     kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
+    [self.view addSubview:self.empty];
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    };
+}
+- (void)itemDataSource {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path=[paths objectAtIndex:0];
     NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
     //==Json数据
     NSData *data=[NSData dataWithContentsOfFile:jsonPath];
     if (data == nil) {
-//        if ([self.categoryUrl isKindOfClass:[NSNull class]] || self.categoryUrl == nil || [self.categoryUrl isEqual:@""]) {
-            self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
-            [self.view addSubview:self.empty];
-            self.empty.block = ^(NSInteger index) {
-                if (index == 100) {
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
-                }
-            };
-//        }else {
-//            [self loadCategoryData];
-//        }
+        if ([self.categoryUrl isKindOfClass:[NSNull class]] || self.categoryUrl == nil || [self.categoryUrl isEqual:@""]) {
+            [self emptyCategory];
+        }else {
+            [self createTableView];
+            [self loadCategoryData];
+        }
     }else {
         self.tabDataArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         [self fetchCategoryData:self.tabDataArray];
+        [self createTableView];
+        [self crateContentTableView];
     }
     
     //==JsonObject
     
-
+    
 }
 - (void)loadCategoryData {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.categoryUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchCategoryData:responseObject];
+        [self.mainTableView reloadData];
+        [self crateContentTableView];
     } WithFail:^(NSError *error) {
+        [self emptyCategory];
     } Progress:^(float progress) {
     }];
-
+    
 }
 - (void)fetchCategoryData:(NSArray *)tabDataArray {
     int i = 0;
@@ -124,9 +132,9 @@ static NSUInteger selectedIndex = 0;
         }
         [self.colDataSource addObject:dictArr];
     }
-    [self createTableView];
-//    [self.mainTableView reloadData];
-//    [self.mainCollectionView reloadData];
+    //    [self createTableView];
+    //    [self.mainTableView reloadData];
+    //    [self.mainCollectionView reloadData];
 }
 - (void)createTableView {
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT) style:UITableViewStylePlain];
@@ -140,11 +148,15 @@ static NSUInteger selectedIndex = 0;
     
     [self.view addSubview:self.mainTableView];
     
+    [self emptyView];
+    self.empty.hidden = YES;
+}
+- (void)crateContentTableView {
     // 添加测试数据
     self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.contentTableView.dataSource = self;
     self.contentTableView.delegate = self;
-//    self.contentTableView.backgroundColor = [UIColor countLabelColor];
+    //    self.contentTableView.backgroundColor = [UIColor countLabelColor];
     self.contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.contentTableView.showsVerticalScrollIndicator = NO;
     self.contentTableView.showsHorizontalScrollIndicator = NO;
@@ -154,6 +166,7 @@ static NSUInteger selectedIndex = 0;
     
     [self emptyView];
     self.empty.hidden = YES;
+    
 }
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -168,18 +181,17 @@ static NSUInteger selectedIndex = 0;
     [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
     [self.view addSubview:self.mainCollectionView];
     
-    [self emptyView];
-    self.empty.hidden = YES;
+    
     
 }
 
 - (void)emptyView {
-//    kWeakSelf
+    //    kWeakSelf
     self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth / 2, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
     [self.view addSubview:self.empty];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
-//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            //            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
         }
     };
 }
@@ -195,7 +207,7 @@ static NSUInteger selectedIndex = 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.mainTableView) {
-//        static NSString *cellID = @"JMHomeRootCategoryCell";
+        //        static NSString *cellID = @"JMHomeRootCategoryCell";
         JMHomeRootCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:homeCategoryCellId];
         if (!cell) {
             cell = [[JMHomeRootCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homeCategoryCellId];
@@ -204,15 +216,15 @@ static NSUInteger selectedIndex = 0;
         [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
         return cell;
     }else {
-//        JMCategoryContentCell 
-//        static NSString *cellID = @"JMCategoryContentCell";
+        //        JMCategoryContentCell
+        //        static NSString *cellID = @"JMCategoryContentCell";
         JMCategoryContentCell *cell = [tableView dequeueReusableCellWithIdentifier:CategoryCellId];
         if (!cell) {
             cell = [[JMCategoryContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CategoryCellId];
         }
-//        cell.backgroundColor = [UIColor orangeColor];
-//        NSString *nameString = self.tabDataSource[indexPath.row];
-//        [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
+        //        cell.backgroundColor = [UIColor orangeColor];
+        //        NSString *nameString = self.tabDataSource[indexPath.row];
+        //        [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
         return cell;
     }
     
@@ -222,7 +234,7 @@ static NSUInteger selectedIndex = 0;
         [self.mainTableView reloadData];
         [self.mainTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         [self.contentTableView scrollRectToVisible:CGRectMake(0, 0, self.contentTableView.frame.size.width, self.contentTableView.frame.size.height) animated:YES];
-//        [self.mainCollectionView scrollRectToVisible:CGRectMake(0, 0, self.mainCollectionView.frame.size.width, self.mainCollectionView.frame.size.height) animated:YES];
+        //        [self.mainCollectionView scrollRectToVisible:CGRectMake(0, 0, self.mainCollectionView.frame.size.width, self.mainCollectionView.frame.size.height) animated:YES];
         selectedIndex = indexPath.row;
         NSString *titleStr = self.tabDataSource[selectedIndex];
         [self createNavigationBarWithTitle:titleStr selecotr:@selector(backClick:)];
@@ -235,7 +247,7 @@ static NSUInteger selectedIndex = 0;
 - (void)tableView:(UITableView *)tableView willDisplayCell:(JMCategoryContentCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contentTableView) {
         [cell setCollectionViewDataSourceDelegate:self IndexPath:indexPath];
-//        selectedIndex = cell.contentCollecionView.ContentCollectionIndexPath.row;
+        //        selectedIndex = cell.contentCollecionView.ContentCollectionIndexPath.row;
     }
     
 }
@@ -275,7 +287,7 @@ static NSUInteger selectedIndex = 0;
     itemVC.titleString = dic[@"name"];
     itemVC.cid = cid;
     [self.navigationController pushViewController:itemVC animated:YES];
-
+    
 }
 
 

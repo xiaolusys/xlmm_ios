@@ -10,6 +10,7 @@
 
 @interface JMHelper : NSObject
 
++ (BOOL)isFileExist:(NSString *)fileName;
 //获取 一个文件 在沙盒沙盒Library/Caches/ 目录下的路径
 + (NSString *)getFullPathWithFile;
 //检测 缓存文件 是否超时

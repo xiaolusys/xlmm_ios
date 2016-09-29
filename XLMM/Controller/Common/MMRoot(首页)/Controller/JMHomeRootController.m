@@ -974,7 +974,7 @@
     if (oldVersion == nil) {
         [self downLoadUrl:urlCategory];
     }else {
-        if ([oldVersion isEqualToString:isUpData]) {
+        if ([oldVersion isEqualToString:isUpData] && [JMHelper isFileExist:@"GoodsItemFile.json"]) {
         }else {
             [self downLoadUrl:urlCategory];
         }
@@ -1023,11 +1023,14 @@
     if (oldVersion == nil) {
         [self startDownload:_downloadURLString];
     }else {
-        if ([oldVersion isEqualToString:_hash]) {
+        if ([oldVersion isEqualToString:_hash] && [JMHelper isFileExist:@"addressInfo.json"]) {
         }else {
             [self startDownload:_downloadURLString];
         }
     }
+//    if ([JMHelper isFileExist:@"addressInfo.json"]) {
+//        
+//    }
     [defaults setObject:_hash forKey:@"hash"];
     [defaults synchronize];
 }

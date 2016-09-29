@@ -4099,7 +4099,7 @@
 				1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */,
 				1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */,
 				1F2F9E611D59DE8900E3A68B /* Model */,
-				1F2F9E621D59DE8B00E3A68B /* View */,
+				1F2F9E621D59DE8B00E3A68B /* View(加入购物车商品属性) */,
 				1F2F9E601D59DE8600E3A68B /* Controller */,
 			);
 			path = Controller;
@@ -4147,7 +4147,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		1F2F9E621D59DE8B00E3A68B /* View */ = {
+		1F2F9E621D59DE8B00E3A68B /* View(加入购物车商品属性) */ = {
 			isa = PBXGroup;
 			children = (
 				1F2F9E6F1D5AB17400E3A68B /* JMBuyNumberView.h */,
@@ -4157,7 +4157,7 @@
 				1F2F9E5D1D59A73900E3A68B /* JMGoodsInfoPopView.h */,
 				1F2F9E5E1D59A73900E3A68B /* JMGoodsInfoPopView.m */,
 			);
-			name = View;
+			name = "View(加入购物车商品属性)";
 			sourceTree = "<group>";
 		};
 		1F3EE5BE1D7FE190006033FC /* SegmentPage */ = {
