@@ -88,7 +88,7 @@ static NSUInteger selectedIndex = 0;
     //==Json数据
     NSData *data=[NSData dataWithContentsOfFile:jsonPath];
     if (data == nil) {
-        if ([self.categoryUrl isKindOfClass:[NSNull class]] || self.categoryUrl == nil || [self.categoryUrl isEqual:@""]) {
+        if ([NSString isStringEmpty:self.categoryUrl]) {
             [self emptyCategory];
         }else {
             [self createTableView];

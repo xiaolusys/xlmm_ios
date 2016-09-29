@@ -21,8 +21,7 @@
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
 #import "JMToolMacro.h"
-#import "NSString+DeleteT.h"
-
+#import "NSString+CSCommon.h"
 
 
 //#import "NSDictionary+Log.h"

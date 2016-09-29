@@ -10,7 +10,6 @@
 #import "UIColor+RGBColor.h"
 #import "AFNetworking.h"
 #import "MMClass.h"
-#import "NSString+DeleteT.h"
 
 
 
@@ -24,7 +23,7 @@
 
 - (void)fillModel:(TixianModel *)model{
     
-    NSString *string = [NSString dateDeleteT:model.created];
+    NSString *string = [NSString jm_deleteTimeWithT:model.created];
     
     
     self.timeLabel.text = string;

@@ -524,10 +524,7 @@
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat offset = scrollView.contentOffset.y ;
-    if (offset < 0) {
-        offset = 0;
-    }
+    CGFloat offset = scrollView.contentOffset.y;
     if (scrollView == self.tableView) {
         self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, 0); // self.pageView.mj_origin.x --> self.goodsScrollView.contentSize
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
@@ -541,11 +538,7 @@
             self.upViewLabel.text = @"继续拖动,查看图文详情";
         }else { }
     }else {
-        if (offset <= -60) {
-            self.downViewLabel.text = @"释放返回商品详情";
-        }else {
-            self.downViewLabel.text = @"下拉返回商品详情";
-        }
+        self.downViewLabel.text = (offset<= - 60) ? @"释放返回商品详情" : @"下拉返回商品详情";
     }
 }
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

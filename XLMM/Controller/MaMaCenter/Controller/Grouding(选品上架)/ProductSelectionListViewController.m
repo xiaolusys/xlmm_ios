@@ -462,7 +462,7 @@
     }];
 }
 - (void)loadMore {
-    if ([self.nextUrl isKindOfClass:[NSNull class]] || self.nextUrl == nil || [self.nextUrl isEqual:@""]) {
+    if ([NSString isStringEmpty:self.nextUrl]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;

@@ -71,7 +71,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 }
 - (void)loadMore
 {
-    if ([_nextPageUrl isKindOfClass:[NSNull class]] || _nextPageUrl == nil || [_nextPageUrl isEqual:@""]) {
+    if ([NSString isStringEmpty:_nextPageUrl]) {
         [self endRefresh];
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
 //        [MBProgressHUD showMessage:@"加载完成,没有更多数据"];

@@ -65,7 +65,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
     NSString *endTime = @"";
     NSString *timeString = detailContentDic[@"offshelf_time"];
-    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
+    if ([NSString isStringEmpty:timeString]) {
         self.timerLabel.text = @"即将上架";
     }else {
         endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
@@ -84,7 +84,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
 }
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
+    if ([NSString isStringEmpty:timeString]) {
         return nil;
     }else {
         NSMutableString *ms = [NSMutableString stringWithString:timeString];

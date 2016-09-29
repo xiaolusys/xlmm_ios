@@ -305,7 +305,7 @@ static BOOL isNetPrompt;
 - (void)startDeal:(NSDictionary *)dic {
     self.imageUrl = [dic objectForKey:@"picture"];
     NSLog(@"startDeal imageUrl %@", self.imageUrl);
-    if ([self.imageUrl isKindOfClass:[NSNull class]] || self.imageUrl == nil || [self.imageUrl isEqual:@""]) {
+    if ([NSString isStringEmpty:self.imageUrl]) {
         [self.sttime invalidate];
         self.sttime = nil;
         

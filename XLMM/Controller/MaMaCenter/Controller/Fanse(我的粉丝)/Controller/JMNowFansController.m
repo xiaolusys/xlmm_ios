@@ -108,7 +108,7 @@
     }];
 }
 - (void)loadMore {
-    if ([_urlStr isKindOfClass:[NSNull class]] || _urlStr == nil || [_urlStr isEqual:@""]) {
+    if ([NSString isStringEmpty:_urlStr]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;

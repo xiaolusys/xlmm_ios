@@ -54,7 +54,7 @@
             //奖金
             self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
         }
-        self.sourceLabel.text = [self dateDeal:carryModel.created];
+        self.sourceLabel.text = [NSString jm_subWithHourAndMinute:carryModel.created];
         self.timeLabel.hidden = YES;
     }else if(type == 1) {
         //佣金
@@ -63,7 +63,7 @@
     }else if(type == 2) {
         //点击
         self.photoImageV.image = [UIImage imageNamed:@"mamafan"];
-        self.sourceLabel.text = [self dateDeal:carryModel.created];
+        self.sourceLabel.text = [NSString jm_subWithHourAndMinute:carryModel.created];
         self.timeLabel.hidden = YES;
     }else if(type == 3) {
 //        self.photoImageV.image = [UIImage imageNamed:@"mamajiang"];
@@ -74,15 +74,12 @@
     self.moneyLabel.text = [NSString stringWithFormat:@"+%.2f", [carryModel.carry_value floatValue]];
     self.status.text = carryModel.status_display;
     self.desLabel.text = carryModel.carry_description;
-    self.timeLabel.text = [self dateDeal:carryModel.created];
+    self.timeLabel.text = [NSString jm_subWithHourAndMinute:carryModel.created];
     
     
 }
 
-//将日期去掉－
-- (NSString *)dateDeal:(NSString *)str {
-    NSString *string = [str substringWithRange:NSMakeRange(11, 5)];
-    return string;
-}
+
+
 
 @end

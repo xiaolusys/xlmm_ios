@@ -147,7 +147,7 @@
 }
 //加载更多
 - (void)loadMore {
-    if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
+    if ([NSString isStringEmpty:self.nextPage]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;

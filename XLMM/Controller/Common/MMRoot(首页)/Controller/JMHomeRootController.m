@@ -330,7 +330,8 @@
     [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
     [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
     [self.tableView registerClass:[JMHomeGoodsCell class] forCellReuseIdentifier:JMHomeGoodsCellIdentifier];
-
+    [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    
     self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
     self.pageView.dataSource = self;
     self.pageView.delegate = self;
@@ -794,21 +795,20 @@
         [self searchScrollViewInWindow:scrollView];
     }
 }
-- (void)comeToTop{
+- (void)comeToTop {
     self.topButton.hidden = YES;
     [self searchScrollViewInWindow:self.view];
 }
-#pragma mark UIscrollViewDelegate  滚动视图代理方法
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat currentOffset = offset.y;
-    if (currentOffset > SCREENHEIGHT) {
-        self.topButton.hidden = NO;
-    }else {
-        self.topButton.hidden = YES;
+#pragma mark 返回顶部按钮显示/隐藏  KVO监听
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"contentOffset"]) {
+        CGFloat offsetY = self.tableView.contentOffset.y;
+        self.topButton.hidden = offsetY > SCREENWIDTH * 3 ? NO : YES;
     }
 }
-- (void)dealloc{
+- (void)dealloc {
+    NSLog(@"dealloc 被调用");
+    [self.tableView removeObserver:self forKeyPath:@"contentOffset" context:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 #pragma mark -- 判断用户是否领取优惠券
@@ -829,12 +829,9 @@
             }else {
                 [MBProgressHUD showError:@"请登录"];
             }
-            
         }
     } WithFail:^(NSError *error) {
-        
     } Progress:^(float progress) {
-        
     }];
 }
 - (void)pickCoupon {
@@ -1023,14 +1020,8 @@
     if (oldVersion == nil) {
         [self startDownload:_downloadURLString];
     }else {
-        if ([oldVersion isEqualToString:_hash] && [JMHelper isFileExist:@"addressInfo.json"]) {
-        }else {
-            [self startDownload:_downloadURLString];
-        }
+        [oldVersion isEqualToString:_hash] && [JMHelper isFileExist:@"addressInfo.json"] ? : [self startDownload:_downloadURLString];
     }
-//    if ([JMHelper isFileExist:@"addressInfo.json"]) {
-//        
-//    }
     [defaults setObject:_hash forKey:@"hash"];
     [defaults synchronize];
 }

@@ -239,7 +239,7 @@ static NSString *cellIdentifier = @"carryLogCell";
         table.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
             NSString *nextStr = [self.nextdic objectForKey:number];
-            if ([nextStr isKindOfClass:[NSNull class]] || nextStr == nil || [nextStr isEqual:@""]) {
+            if ([NSString isStringEmpty:nextStr]) {
                 [table.mj_footer endRefreshingWithNoMoreData];
 //                [SVProgressHUD showInfoWithStatus:@"加载完成,没有更多数据"];
                 return;

@@ -12,7 +12,6 @@
 #import "JMPhonenumViewController.h"
 #import "JMAuthcodeViewController.h"
 #import "RegisterViewController.h"
-#import "NSString+Encrypto.h"
 #import "MiPushSDK.h"
 //#import "MobClick.h"
 #import "JMSelecterButton.h"

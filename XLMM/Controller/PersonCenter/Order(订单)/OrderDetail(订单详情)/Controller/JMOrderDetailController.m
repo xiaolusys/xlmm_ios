@@ -63,6 +63,7 @@
     NSInteger _rowCount;
     NSString *_checkTeamBuy;                   // 查看开团进展
     bool _isCanRefund;                         // 开团后是否可以退款
+    NSInteger redPageNumber;                   // 红包数量
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -251,6 +252,7 @@
     self.shareModel.desc = [shareDict objectForKey:@"description"]; // 文字详情
     self.shareModel.title = [shareDict objectForKey:@"title"]; //标题
     self.shareModel.share_link = [shareDict objectForKey:@"share_link"];
+    redPageNumber = [shareDict[@"share_times_limit"] integerValue];
 }
 #pragma mark 请求数据
 - (void)loadDataSource {
@@ -569,14 +571,18 @@
         menu.contentView = self.refundVC.view;
     }else if (index == 102) {
         //分享红包
-        JMShareViewController *shareView = [[JMShareViewController alloc] init];
-        self.shareView = shareView;
-        self.shareView.model = self.shareModel;
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        //弹出视图
-        JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
-        shareMenu.contentView = self.shareView.view;
+        if (redPageNumber > 0) {
+            JMShareViewController *shareView = [[JMShareViewController alloc] init];
+            self.shareView = shareView;
+            self.shareView.model = self.shareModel;
+            JMShareView *cover = [JMShareView show];
+            cover.delegate = self;
+            //弹出视图
+            JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+            shareMenu.contentView = self.shareView.view;
+        }else {
+           [self createClassPopView:@"分享提示" Message:@"红包数量不足,分享失败。如有疑问,请咨询小鹿客服哦~!" Index:4];
+        }
     }else {  // 查看拼团进展
         NSDictionary *diction = [NSMutableDictionary dictionary];
         [diction setValue:_checkTeamBuy forKey:@"web_url"];
@@ -764,6 +770,12 @@
             }
         };
     }else if (index == 3) {
+        self.classPopView.block = ^(NSInteger index) {
+            [weakSelf hideClassPopView];
+            if (index == 101) {
+            }
+        };
+    }else if (index == 4) {
         self.classPopView.block = ^(NSInteger index) {
             [weakSelf hideClassPopView];
             if (index == 101) {

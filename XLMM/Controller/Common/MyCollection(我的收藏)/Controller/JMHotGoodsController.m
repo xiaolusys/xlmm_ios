@@ -95,7 +95,7 @@
     
 }
 - (void)loadMore {
-    if ([self.nextPageUrlString isKindOfClass:[NSNull class]] || self.nextPageUrlString == nil || [self.nextPageUrlString isEqual:@""]) {
+    if ([NSString isStringEmpty:self.nextPageUrlString]) {
         [self endRefresh];
         [self.collection.mj_footer endRefreshingWithNoMoreData];
         [self endRefresh];

@@ -99,7 +99,7 @@ static NSString * cellId = @"JMClassifyListController";
     
 }
 - (void)loadMore {
-    if ([_nextPageUrlString isKindOfClass:[NSNull class]] || _nextPageUrlString == nil || [_nextPageUrlString isEqual:@""]) {
+    if ([NSString isStringEmpty:_nextPageUrlString]) {
         [self endRefresh];
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
         return;
