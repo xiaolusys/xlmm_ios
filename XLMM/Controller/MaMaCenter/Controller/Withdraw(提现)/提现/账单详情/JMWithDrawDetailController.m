@@ -70,6 +70,15 @@
     timeLineTitleArr = [NSArray array];
     timeLineTimeArray = [NSArray array];
     cellDataArr = [NSArray array];
+    cellDataArr = @[@{
+                        @"title":@"收 支 类 型",
+                        @"descTitle":@"暂无数据,请稍后查询"
+                        },
+                    @{
+                        @"title":@"创 建 时 间:",
+                        @"descTitle":@"暂无数据,请稍后查询"
+                        }
+                    ];
     if (flag == 1) {
         
     }else {
@@ -92,8 +101,13 @@
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (responseObject == nil) return ;
         NSArray *results = responseObject[@"results"];
-        NSDictionary *dict = results[0];
-        [self fetchData:dict ActiveValye:self.isActiveValue];
+        if (results.count == 0) {
+            self.moneyLabel.text = @"暂无数据,请稍后查询。 如有疑问请询问小鹿美美客服哦~!";
+        }else {
+            NSDictionary *dict = results[0];
+            [self fetchData:dict ActiveValye:self.isActiveValue];
+        }
+        
     } WithFail:^(NSError *error) {
         [MBProgressHUD showMessage:@"查询有误"];
     } Progress:^(float progress) {
@@ -185,7 +199,6 @@
     [headerView addSubview:moneyLabel];
     self.moneyLabel = moneyLabel;
     self.moneyLabel.font = CS_SYSTEMFONT(40.);
-    self.moneyLabel.text = @"888.88";
     self.moneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(takeoutMoney.mas_centerX);

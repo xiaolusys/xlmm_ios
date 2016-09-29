@@ -143,7 +143,7 @@
 - (void)finishButton:(UIButton *)btn {
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];
-    if (_withDrawMoney - 20 < 0.000001) {
+    if (_withDrawMoney - 20 < 0.00001) {
         if (count >= 2) {
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
         }else {

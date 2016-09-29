@@ -47,7 +47,8 @@
     self.baseView.backgroundColor = [UIColor lineGrayColor];
     self.baseView.layer.cornerRadius = 10.0;
     self.baseView.layer.masksToBounds = YES;
-
+    
+    
     
     UILabel *titleLabel = [UILabel new];
     [self.baseView addSubview:titleLabel];

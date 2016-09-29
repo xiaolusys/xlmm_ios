@@ -33,7 +33,7 @@
 }
 
 + (void)showCustomIcon:(NSString *)iconName Title:(NSString *)title ToView:(UIView *)view {
-    [self hideHUDForView:nil];
+    [self hideHUDForView:view];
     if (view == nil) view = (UIView *)[UIApplication sharedApplication].delegate.window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.label.text = title;

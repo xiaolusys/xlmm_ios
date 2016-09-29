@@ -27,9 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *tuijianButton;
 
 @property (nonatomic, copy) NSString *titleString;
-
 @property (nonatomic, copy) NSString *cid;
-
+@property (nonatomic, copy) NSString *categoryUrlString;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil type:(NSInteger )type;
 @end

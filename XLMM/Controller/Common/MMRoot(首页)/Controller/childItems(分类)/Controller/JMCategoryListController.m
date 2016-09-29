@@ -18,7 +18,7 @@
 
 @end
 
-static NSString * cellId = @"JMCategoryListController";
+static NSString * categoryCellId = @"JMCategoryListController";
 
 @implementation JMCategoryListController
 
@@ -58,7 +58,7 @@ static NSString * cellId = @"JMCategoryListController";
     self.collectionView.delegate = self;
     [self.view addSubview:self.collectionView];
 
-    [self.collectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:cellId];
+    [self.collectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:categoryCellId];
 
 }
 
@@ -71,7 +71,7 @@ static NSString * cellId = @"JMCategoryListController";
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    JMCategoryListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    JMCategoryListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:categoryCellId forIndexPath:indexPath];
     NSDictionary *dic = self.dataSource[indexPath.row];
     cell.itemsDic = dic;
     return cell;

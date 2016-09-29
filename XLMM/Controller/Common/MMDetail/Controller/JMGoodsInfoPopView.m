@@ -436,8 +436,7 @@
 
 - (void)sureButtonClick:(UIButton *)button {
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];
-    paramer[@"item_id"] =
-    [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
+    paramer[@"item_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
     paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsSizeID];
     paramer[@"num"] = [NSString stringWithFormat:@"%ld",(long)_goodsNum];
     

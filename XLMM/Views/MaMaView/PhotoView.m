@@ -86,7 +86,18 @@
     
     UIImageView *imageIndex = [[UIImageView alloc] initWithFrame:CGRectMake(smallX, smallY, 80, 80)];
     NSString *url = self.picArr[self.index];
+    NSInteger countNum = self.picArr.count;
     NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", url];
+    if (countNum < 9) {
+        if (self.index == (countNum - 1)) {
+            joinUrl = self.picArr[self.index];
+        }
+    }else {
+        if (self.index == 4) {
+            joinUrl = self.picArr[4];
+        }
+    }
+    
 
 //    [imageIndex sd_setImageWithURL:[NSURL URLWithString:joinUrl]];
     __block float imageWidth = 0.0;
@@ -106,7 +117,7 @@
     [self.scrollView addSubview:imageIndex];
     
     //添加图片
-    for (int i = 0; i < self.picArr.count; i++) {
+    for (int i = 0; i < countNum; i++) {
         if (self.index == i)continue;
     
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, 80, 80)];
@@ -114,8 +125,17 @@
 //        __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 //        activityIndicator.center = imageV.center;
 //        [activityIndicator startAnimating];
-
+        
         NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.picArr[i]];
+        if (countNum < 9) {
+            if (i == countNum - 1) {
+                joinUrl = self.picArr[i];
+            }
+        }else {
+            if (i == 4) {
+                joinUrl = self.picArr[4];
+            }
+        }
         __block float imagew = 0.0;
         __block float imageh = 0.0;
         [imageV sd_setImageWithURL:[NSURL URLWithString:joinUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {

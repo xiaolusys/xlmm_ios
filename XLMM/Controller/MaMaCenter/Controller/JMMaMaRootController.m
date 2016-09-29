@@ -23,6 +23,7 @@
 @interface JMMaMaRootController () {
     NSInteger _indexCode;
     BOOL _isActiveClick;
+    NSArray *_titleArr;
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -56,9 +57,8 @@
 
 @end
 
-@implementation JMMaMaRootController {
-    NSMutableArray *_titleArr;
-}
+@implementation JMMaMaRootController
+
 - (NSMutableArray *)activeArray {
     if (_activeArray == nil) {
         _activeArray = [NSMutableArray array];
@@ -99,7 +99,7 @@
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _indexCode = 0;
     _isActiveClick = NO;
-    _titleArr = [NSMutableArray arrayWithObjects:@"我要赚钱",@"社交活动",@"我的", nil];
+    
     [self createSegmentView];
     [self craeteNavRightButton];
     [self customUserInfo];
@@ -113,14 +113,15 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/message/self_list",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        NSLog(@"%@",responseObject);
         [self mamaMesageData:responseObject];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
 }
 - (void)mamaMesageData:(NSDictionary *)messageDic {
-    self.mineVC.messageDic = messageDic;
+//    self.mineVC.messageDic = messageDic;
+    self.makeMoneyVC.messageDic = messageDic;
+    
 }
 
 - (void)loadDataSource {
@@ -204,7 +205,6 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/ordercarry/get_latest_order_carry",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        NSLog(@"%@",responseObject);
         [self.earningArray removeAllObjects];
         [self.earningImageArray removeAllObjects];
         [self fetchEarning:responseObject];
@@ -223,7 +223,7 @@
     [self earningPrompt];
 }
 
-
+#pragma mark 创建小鹿客服入口
 - (void)craeteNavRightButton {
     UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 80)];
     [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -253,18 +253,19 @@
 }
 #pragma mark 创建segment(tabBar)
 - (void)createSegmentView {
-    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 44, SCREENWIDTH, 44)];
+    _titleArr = @[@"我要赚钱",@"社交活动",@"我的"];
+    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 50, SCREENWIDTH, 50)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
     self.segmentedControl.sectionTitles = _titleArr;
     self.segmentedControl.selectedSegmentIndex = 0;
-    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
+    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
+    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:18.]};
     self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
     self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
     [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.segmentedControl];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 108)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 114)];
     self.scrollView.backgroundColor = [UIColor lineGrayColor];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -292,6 +293,7 @@
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
     if (page == 1 && _isActiveClick) {
+//        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
     }else {

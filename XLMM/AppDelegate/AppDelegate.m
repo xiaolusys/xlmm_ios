@@ -586,7 +586,7 @@ static BOOL isNetPrompt;
             return;
         }
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
             return;
         } else {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
@@ -874,9 +874,6 @@ static BOOL isNetPrompt;
 
 
 //   [PayResp code]....
-
-
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
 //    if ([sourceApplication isEqualToString:@"com.jimei.xlmm"]) {
         NSLog(@"调用的应用程序的Bundle ID是: %@", sourceApplication);
@@ -887,7 +884,20 @@ static BOOL isNetPrompt;
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
+    [self pingppPay:url];
+    
+    //    return [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
 
+    
+}
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
+    [self pingppPay:url];
+    //    return [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+}
+
+- (void)pingppPay:(NSURL *)url {
     [Pingpp handleOpenURL:url
            withCompletion:^(NSString *result, PingppError *error) {
                
@@ -901,19 +911,11 @@ static BOOL isNetPrompt;
                } else {
                    // 支付失败或取消
                    // 发送支付不成功的 通知
-                   
                    [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
-                   
-                                      
                }
            }];
-    //    return [UMSocialSnsService handleOpenURL:url];
-    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
-    
-    
-    
-    
 }
+
 
 #pragma mark ---- User_Agent
 //从webview获得浏览器中的useragent，并进行更新

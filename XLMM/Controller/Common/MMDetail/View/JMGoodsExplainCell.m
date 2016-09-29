@@ -70,7 +70,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }else {
         endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
         self.countDownView = [JMCountDownView shareCountDown];
-        //    [JMCountDownView countDownWithCurrentTime:endTime];
+//            [JMCountDownView countDownWithCurrentTime:endTime];
         [self.countDownView initWithCountDownTime:endTime];
         //    self.countDownView.delegate = self;
         kWeakSelf

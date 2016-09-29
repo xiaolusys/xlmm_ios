@@ -304,7 +304,7 @@ static BOOL isAgreeTerms = YES;
 - (void)calculationLabelValue {
     self.purchaseFooterView.postLabel.text = [NSString stringWithFormat:@"¥%.2f",_postfee];
     _discount = _couponValue + _rightAmount;
-    if (_discount - _amontPayment > 0.000001 || fabs(_discount - _amontPayment) <= 0.000001) {
+    if (_discount - _amontPayment > 0.00001 || fabsf(_discount - _amontPayment) <= 0.00001) {
         self.isCouponEnoughPay = YES;
         if (self.isUseXLW) {
             self.isEnoughBudget = YES;
@@ -321,8 +321,8 @@ static BOOL isAgreeTerms = YES;
     }else {
         self.isCouponEnoughPay = NO;
         if (self.isUseXLW) {
-            CGFloat surplus = _amontPayment - _couponValue - _rightAmount;
-            if (_availableFloat - surplus > 0.000001 || fabs(_availableFloat - surplus) <= 0.000001) {
+            float surplus = _amontPayment - _couponValue - _rightAmount;
+            if (_availableFloat - surplus > 0.00001 || fabsf(_availableFloat - surplus) <= 0.00001) {
                 //钱包金额够使用
                 self.isEnoughBudget = YES;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
@@ -341,8 +341,8 @@ static BOOL isAgreeTerms = YES;
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
             }
         }else {
-            CGFloat surplus = _amontPayment - _couponValue - _rightAmount;
-            if (_availableFloat - surplus > 0.000001 || fabs(_availableFloat - surplus) <= 0.000001) {
+            float surplus = _amontPayment - _couponValue - _rightAmount;
+            if (_availableFloat - surplus > 0.00001 || fabsf(_availableFloat - surplus) <= 0.00001) {
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
             }else {
                 self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
@@ -582,8 +582,8 @@ static BOOL isAgreeTerms = YES;
         }
         //不足需要使用小鹿钱包或者其它支付方式
         _totalPayment = _totalPayment - _couponValue;
-        if (self.isUseXLW && (self.isEnoughBudget || _totalPayment < (_availableFloat + _couponValue) || fabs(_totalPayment - (_availableFloat + _couponValue)) < 0.000001 )) {//使用了小鹿钱包 足够提交信息
-            CGFloat value = [[_xlWallet objectForKey:@"value"] floatValue];
+        if (self.isUseXLW && (self.isEnoughBudget || _totalPayment < (_availableFloat + _couponValue) || fabsf(_totalPayment - (_availableFloat + _couponValue)) < 0.00001 )) {//使用了小鹿钱包 足够提交信息
+            float value = [[_xlWallet objectForKey:@"value"] floatValue];
             if (_totalPayment > value) {
                 parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [_xlWallet objectForKey:@"pid"], value];
             }else {
@@ -597,7 +597,7 @@ static BOOL isAgreeTerms = YES;
             [self submitBuyGoods];
         }else {
             if (self.isUseXLW) {
-                CGFloat value = [[_xlWallet objectForKey:@"value"] floatValue];
+                float value = [[_xlWallet objectForKey:@"value"] floatValue];
                 if (_totalPayment > value) {
                     parms = [NSString stringWithFormat:@"%@,pid:%@:budget:%.2f", parms, [_xlWallet objectForKey:@"pid"], value];
                 }else {

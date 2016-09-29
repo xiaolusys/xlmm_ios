@@ -20,8 +20,6 @@
  */
 @property (nonatomic, strong) JMMaMaExtraModel *extraModel;
 
-@property (nonatomic, strong) NSDictionary *messageDic;
-
 @property (nonatomic, strong) NSDictionary *webDict;
 
 @property (nonatomic, strong) NSDictionary *extraFiguresDic;

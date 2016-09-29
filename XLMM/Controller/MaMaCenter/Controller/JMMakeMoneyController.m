@@ -17,8 +17,12 @@
 #import "JMRichTextTool.h"
 #import "JMHomeActiveCell.h"
 #import "JumpUtils.h"
+#import "JMMaMaMessageCell.h"
+#import "JMAutoLoopPageView.h"
 
-@interface JMMakeMoneyController ()<UITableViewDataSource,UITableViewDelegate> {
+
+
+@interface JMMakeMoneyController ()<UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSMutableDictionary *_webDict;
 }
 
@@ -36,9 +40,23 @@
 
 @property (nonatomic, strong) UILabel *finishProgressLabel;
 
+@property (nonatomic, strong) JMAutoLoopPageView *pageView;
+@property (nonatomic, strong) NSMutableArray *titlesArray;
+/**
+ *  是否显示消息未读提示
+ */
+@property (nonatomic, strong) UILabel *messagePromptLabel;
+
 @end
 
 @implementation JMMakeMoneyController
+
+- (NSMutableArray *)titlesArray {
+    if (_titlesArray == nil) {
+        _titlesArray = [NSMutableArray array];
+    }
+    return _titlesArray;
+}
 - (NSMutableDictionary *)diction {
     if (!_diction) {
         _diction = [NSMutableDictionary dictionary];
@@ -52,6 +70,7 @@
     [self createTableView];
     [self createHeaderView];
     
+    
 }
 - (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
     _makeMoneyDic = makeMoneyDic;
@@ -62,7 +81,7 @@
 }
 - (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
     _extraFiguresDic = extraFiguresDic;
-    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
+    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
     NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
     NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
     self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
@@ -78,13 +97,30 @@
     
     [self.tableView reloadData];
 }
+- (void)setMessageDic:(NSDictionary *)messageDic {
+    NSArray *resultsArr = messageDic[@"results"];
+    if (resultsArr.count == 0) {
+        self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
+    }else {
+        if ([messageDic[@"unread_cnt"] integerValue] == 0) {
+            self.messagePromptLabel.hidden = YES;
+        }else {
+            self.messagePromptLabel.hidden = NO;
+//            self.messagePromptLabel.text = CS_STRING(messageDic[@"unread_cnt"]);
+        }
+        for (NSDictionary *dic in resultsArr) {
+            [self.titlesArray addObject:dic[@"title"]];
+        }
+    }
+    [self.pageView reloadData];
+}
 
 
 - (void)createHeaderView {
     NSArray *imageArr = @[@"mamaeryaoqingColor",@"EverydayPushNormalColor",@"selectionShopNormalColor",@"inviteShopNormalColor"];
     NSArray *titleArr = @[@"分享店铺",@"每日推送",@"选品佣金",@"邀请开店"];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 290)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 335)];
     self.tableView.tableHeaderView = headerView;
     
     // === 顶部图片 === //
@@ -96,8 +132,8 @@
     UILabel *addEarningL = [UILabel new];
     [topImageView addSubview:addEarningL];
     addEarningL.textColor = [UIColor buttonTitleColor];
-    addEarningL.font = [UIFont systemFontOfSize:12.];
-    addEarningL.text = @"本周累计收益";
+    addEarningL.font = [UIFont systemFontOfSize:14.];
+    addEarningL.text = @"今日累计收益";
     
     UILabel *addEarningLabel = [UILabel new];
     [topImageView addSubview:addEarningLabel];
@@ -183,9 +219,10 @@
         iconImage.image = [UIImage imageNamed:imageArr[i]];
         
         [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(button).offset(25);
+//            make.top.equalTo(button).offset(25);
 //            make.width.height.mas_equalTo(@25);
             make.centerX.equalTo(button.mas_centerX);
+            make.centerY.equalTo(button.mas_centerY).offset(-10);
         }];
         
         UILabel *titleLabel = [UILabel new];
@@ -194,22 +231,91 @@
         titleLabel.font = [UIFont systemFontOfSize:12.];
         titleLabel.textColor = [UIColor buttonTitleColor];
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(iconImage.mas_bottom).offset(10);
+            make.bottom.equalTo(button).offset(-15);
             make.centerX.equalTo(iconImage.mas_centerX);
         }];
         
     
     }
-    
-    
-    
-    
+
     UIView *currentView = [[UIView alloc] initWithFrame:CGRectMake(0, 230, SCREENWIDTH, 15)];
     [headerView addSubview:currentView];
     headerView.backgroundColor = [UIColor countLabelColor];
     
     
-    UIView *weekTaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 245, SCREENWIDTH, 45)];
+    UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, 245, SCREENWIDTH, 45)];
+    [headerView addSubview:messageView];
+    messageView.backgroundColor = [UIColor whiteColor];
+    
+//    UILabel *messageLabel = [UILabel new];
+//    [messageView addSubview:messageLabel];
+//    messageLabel.font = [UIFont systemFontOfSize:14.];
+//    messageLabel.textColor = [UIColor buttonTitleColor];
+//    messageLabel.text = @"我的消息";
+    
+    UIImageView *promptImage = [UIImageView new];
+    [messageView addSubview:promptImage];
+    promptImage.image = [UIImage imageNamed:@"messageImage"];
+    
+    UILabel *unReadMessageLabel = [UILabel new];
+    [promptImage addSubview:unReadMessageLabel];
+    unReadMessageLabel.textColor = [UIColor whiteColor];
+    unReadMessageLabel.font = CS_SYSTEMFONT(10.);
+    unReadMessageLabel.backgroundColor = [UIColor redColor];
+    unReadMessageLabel.layer.cornerRadius = 5.;
+    unReadMessageLabel.layer.masksToBounds = YES;
+    self.messagePromptLabel = unReadMessageLabel;
+    self.messagePromptLabel.hidden = YES;
+    
+    
+    UIView *messageScrollView = [UIView new];
+    [messageView addSubview:messageScrollView];
+    
+    self.pageView = [[JMAutoLoopPageView alloc] init];
+    [messageView addSubview:self.pageView];
+    self.pageView.dataSource = self;
+    self.pageView.delegate = self;
+    [self.pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
+    self.pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
+    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+    self.pageView.scrollForSingleCount = YES;
+    self.pageView.atuoLoopScroll = YES;
+    self.pageView.scrollFuture = YES;
+    self.pageView.autoScrollInterVal = 3.0f;
+    
+    
+//    [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(messageView).offset(10);
+//        make.centerY.equalTo(messageView.mas_centerY);
+//    }];
+    [promptImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(messageView).offset(15);
+        make.width.height.mas_equalTo(@18);
+        make.centerY.equalTo(messageView.mas_centerY);
+    }];
+    [unReadMessageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(promptImage).offset(-5);
+        make.right.equalTo(promptImage).offset(5);
+        make.width.height.mas_equalTo(10);
+    }];
+    [messageScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(promptImage.mas_right).offset(15);
+        make.top.bottom.right.equalTo(messageView);
+    }];
+    [self.pageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(messageScrollView);
+        make.centerY.equalTo(messageScrollView.mas_centerY);
+        make.height.mas_equalTo(@40);
+    }];
+    
+    
+    UILabel *memberLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 289, SCREENWIDTH, 1)];
+    memberLine.backgroundColor = [UIColor countLabelColor];
+    [messageView addSubview:memberLine];
+    
+    
+    
+    UIView *weekTaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 290, SCREENWIDTH, 45)];
     [headerView addSubview:weekTaskView];
     weekTaskView.backgroundColor = [UIColor whiteColor];
     UILabel *finishProgressLabel = [UILabel new];
@@ -241,6 +347,30 @@
     }];
 
 }
+#pragma mark 顶部视图滚动协议方法
+- (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
+    return self.titlesArray.count;
+}
+- (void)configCell:(__kindof UICollectionViewCell *)cell Index:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    JMMaMaMessageCell *testCell = cell;
+    NSString *string = self.titlesArray[index];
+    testCell.messageString = string;
+}
+- (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    return @"JMMaMaMessageCell";
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
+    WebViewController *message = [[WebViewController alloc] init];
+    [self.diction setValue:self.makeMoneyDic[@"notice"] forKey:@"web_url"];
+    [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
+    message.webDiction = self.diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
+    message.isShowNavBar = true;
+    message.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:message animated:YES];
+}
+
 /**
  *  100 --> 本周我的排名
  *  101 --> 世界排名TOP10
@@ -301,7 +431,7 @@
 
 
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 108) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];

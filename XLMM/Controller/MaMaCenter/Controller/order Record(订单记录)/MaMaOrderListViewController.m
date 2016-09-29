@@ -284,6 +284,7 @@
     NSString *key = self.dataArr[indexPath.section];
     NSMutableArray *orderArr = self.dataDic[key];
     MaMaOrderModel *orderM = orderArr[indexPath.row];
+    NSLog(@"%@",[orderM mj_keyValues]);
     BOOL isComanyCode = [orderM.company_code isKindOfClass:[NSNull class]] || orderM.company_code == nil || [orderM.company_code isEqual:@""];
     BOOL isPacketId = [orderM.packetid isKindOfClass:[NSNull class]] || orderM.packetid == nil || [orderM.packetid isEqual:@""];
     if (isComanyCode || isPacketId) {

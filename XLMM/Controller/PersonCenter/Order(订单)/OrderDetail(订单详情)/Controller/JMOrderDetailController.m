@@ -36,6 +36,8 @@
 #import "PersonOrderViewController.h"
 #import "JMGoodsDetailController.h"
 #import "WebViewController.h"
+#import "JMClassPopView.h"
+#import "JMPopViewAnimationDrop.h"
 
 #define kUrlScheme @"wx25fcb32689872499"
 
@@ -97,6 +99,7 @@
 @property (nonatomic,strong) UIView *maskView;
 @property (nonatomic, strong) JMRefundView *popView;
 @property (nonatomic, strong) JMOrderPayOutdateView *outDateView;
+@property (nonatomic, strong) JMClassPopView *classPopView;
 /**
  *  修改物流视图
  */
@@ -156,7 +159,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(backClick:)];
+    [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(popToview)];
     
     _isTeamBuy = NO;
     
@@ -329,8 +332,10 @@
 //    }
     // == 包裹信息的分包判断 == //
 //    NSInteger count = [self.orderDetailModel.status integerValue];
-    NSString *statusDes = self.orderDetailModel.status_display;
-    if ([statusDes isEqualToString:@"已付款"]) {
+//    NSString *statusDes = self.orderDetailModel.status_display;
+    NSInteger statusCode = [self.orderDetailModel.status integerValue];
+    bool isCanChangeAddress = [self.orderDetailModel.can_change_address boolValue];
+    if (statusCode == 2 && isCanChangeAddress) {
         self.orderDetailHeaderView.addressView.userInteractionEnabled = YES;
         self.orderDetailHeaderView.logisticsView.userInteractionEnabled = YES;
     }
@@ -366,19 +371,22 @@
         editVC.editDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
-        // 修改物流
-        self.showViewVC = [[JMPopLogistcsController alloc] init];
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
-        if (self.showViewVC.view == nil) {
-            self.showViewVC = [[JMPopLogistcsController alloc] init];
-        }
-        self.showViewVC.goodsID = _addressGoodsID;
-        self.showViewVC.logisticsStr = tid;
-        self.showViewVC.delegate = self;
-        menu.contentView = self.showViewVC.view;
+        // 修改物流  (如果需要判断是否可以更改物流在这里弹出一个提示)
+        [self createClassPopView:@"提示" Message:@"非服装类商品是由供应商直接发货，只能尽量满足您选择的快递公司，如需确认能否满足您的快递需求，请联系客服。" Index:0];
     }
+}
+- (void)createChangeLogisticsView {
+    self.showViewVC = [[JMPopLogistcsController alloc] init];
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    if (self.showViewVC.view == nil) {
+        self.showViewVC = [[JMPopLogistcsController alloc] init];
+    }
+    self.showViewVC.goodsID = _addressGoodsID;
+    self.showViewVC.logisticsStr = tid;
+    self.showViewVC.delegate = self;
+    menu.contentView = self.showViewVC.view;
 }
 - (void)ClickLogistics:(JMPopLogistcsController *)click Title:(NSString *)title {
     [self.tableView.mj_header beginRefreshing];
@@ -406,14 +414,15 @@
     }
     self.orderGoodsModel = [[JMOrderGoodsModel alloc] init];
     self.orderGoodsModel = self.dataSource[indexPath.section][indexPath.row];
-    if (self.logisticsArr.count == 0) {
-        self.packageModel = nil;
-    }else {
-        self.packageModel = self.logisticsArr[indexPath.section];
-    }
+//    if (self.logisticsArr.count == 0) {
+//        self.packageModel = nil;
+//    }else {
+//        self.packageModel = self.logisticsArr[indexPath.section];
+//    }
     cell.isTeamBuy = _isTeamBuy;
     cell.isCanRefund = _isCanRefund;
-    [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
+//    [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
+    [cell configWithModel:self.orderGoodsModel SectionCount:indexPath.section RowCount:indexPath.row];
     cell.delegate = self;
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];//刷新行
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -444,6 +453,13 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
+    [self queryLogInfo:section];
+}
+- (void)composeSectionView:(JMOrderDetailSectionView *)sectionView Index:(NSInteger)index {
+    NSInteger section = index - 100;
+    [self queryLogInfo:section];
+}
+- (void)queryLogInfo:(NSInteger)section {
     JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
     queryVC.index = section;
     queryVC.orderDataSource = self.dataSource[section];
@@ -452,23 +468,11 @@
     }else {
         queryVC.logisDataSource = self.logisticsArr;
     }
-    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
-    if (ligisticsDic == nil) {
-        queryVC.logName = self.orderDetailHeaderView.logisticsStr;
-    }else {
-        queryVC.logName = ligisticsDic[@"name"];
-    }
-    [self.navigationController pushViewController:queryVC animated:YES];
-}
-- (void)composeSectionView:(JMOrderDetailSectionView *)sectionView Index:(NSInteger)index {
-    NSInteger count = index - 100;
-    JMQueryLogInfoController *queryVC = [[JMQueryLogInfoController alloc] init];
-    queryVC.index = count;
-    NSArray *arr = self.dataSource[count];
-    NSArray *logisArr = self.logisticsArr;
-    queryVC.orderDataSource = arr;
-    queryVC.logisDataSource = logisArr;
-    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
+    JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
+    packageModel = self.logisticsArr[section];
+    NSDictionary *ligisticsDic = packageModel.logistics_company;
+    queryVC.logName = ligisticsDic[@"name"];
+    //    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
     if (ligisticsDic == nil) {
         queryVC.logName = self.orderDetailHeaderView.logisticsStr;
     }else {
@@ -495,9 +499,11 @@
         }else {
             self.packageModel = nil;
         }
-        BOOL isWarehouseOrder = (self.packageModel.assign_time != nil || self.packageModel.book_time != nil || self.packageModel.finish_time != nil);
+//        NSDictionary *dcit = [self.packageModel mj_keyValues];
+        NSInteger statusCode = [self.orderDetailModel.status integerValue];
+        BOOL isWarehouseOrder = (self.packageModel.assign_time == nil && self.packageModel.book_time != nil && self.packageModel.finish_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
-            [self returnPopView];
+            [self createClassPopView:@"提示" Message:@"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。" Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
             if (_isPopChoiseRefundWay == YES) {
                 JMShareView *cover = [JMShareView show];
@@ -508,9 +514,7 @@
                 self.refundVC.delegate = self;
                 menu.contentView = self.refundVC.view;
             }else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"小鹿退款说明" message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同意", nil];
-                alertView.tag = 101;
-                [alertView show];
+                [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
             }
         }
     }else if (button.tag == 101) {
@@ -550,41 +554,12 @@
  */
 - (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic {
     _choiseRefundDict = refundDic;
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"小鹿退款说明" message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同意", nil];
-    alertView.tag = 101;
-    [alertView show];
-}
-#pragma mark -- 弹出视图
-- (void)returnPopView {
-    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0.3;
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideRefundpopView)]];
-    JMRefundView *popView = [JMRefundView defaultPopView];
-    self.popView = popView;
-    self.popView.titleStr = @"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。";
-    self.popView.delegate = self;
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.popView];
-    [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
-    
-}
-- (void)composeRefundButton:(JMRefundView *)refundButton didClick:(NSInteger)index {
-    if (index == 100) {
-        [self hideRefundpopView];
-    }else {
-        [self hideRefundpopView];
-    }
-}
-- (void)hideRefundpopView {
-    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
+    [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
 }
 #pragma mark 订单倒计时点击时间
 - (void)composeOutDateView:(JMOrderPayOutdateView *)outDateView Index:(NSInteger)index {
     if (index == 100) { // 取消支付
-        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"小鹿美美" message:@"取消的产品可能会被人抢走哦~\n要取消吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alterView show];
-        alterView.tag = 100;
+        [self createClassPopView:@"小鹿美美" Message:@"取消的产品可能会被人抢走哦~\n要取消吗？" Index:2];
     }else if (index == 101) { // 继续支付
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
@@ -689,7 +664,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
     JMOrderDetailController * __weak weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
@@ -699,52 +673,7 @@
         }];
     });
 }
-#pragma mark --AlertViewDelegate--
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 100) {
-        if (buttonIndex == 1) {
-            NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
-            
-            NSURL *url = [NSURL URLWithString:string];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            [request setHTTPMethod:@"DELETE"];
-            
-            NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-            [connection start];
-            
-            [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
-        }else{}
-    }else if (alertView.tag == 101){
-        if (buttonIndex == 1) {
-            NSArray *arr = self.dataSource[_sectionCount];
-            JMOrderGoodsModel *model = arr[_rowCount];
-            if (_isPopChoiseRefundWay == YES) {
-                ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
-                tuikuanVC.dingdanModel = model;
-                tuikuanVC.refundDic = _choiseRefundDict;
-                tuikuanVC.tid = tid;
-                tuikuanVC.oid = model.orderGoodsID;
-                tuikuanVC.status = model.status_display;
-                [self.navigationController pushViewController:tuikuanVC animated:YES];
-            }else {
-                ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
-                tuikuanVC.dingdanModel = model;
-                if (_choiseRefundArr.count > 0) {
-                    tuikuanVC.refundDic = _choiseRefundArr[0];
-                }
-                tuikuanVC.tid = tid;
-                tuikuanVC.oid = model.orderGoodsID;
-                tuikuanVC.status = model.status_display;
-                [self.navigationController pushViewController:tuikuanVC animated:YES];
-            }
-
-        }else{}
-    }
-}
 - (void)popToview {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (void)backClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark --- 支付成功的弹出框
@@ -801,6 +730,89 @@
 - (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
 
 }
+#pragma mark 弹出视图公共用法
+- (void)createClassPopView:(NSString *)title Message:(NSString *)message Index:(NSInteger)index {
+    kWeakSelf
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0.3;
+//    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideClassPopView)]];
+    self.classPopView = [JMClassPopView shareManager];
+    self.classPopView = [[JMClassPopView alloc] initWithFrame:self.view.bounds Title:title DescTitle:message Cancel:@"取消" Sure:@"确定"];
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.classPopView];
+    [self showClassPopVoew];
+    if (index == 0) {
+        self.classPopView.block = ^(NSInteger index) {
+            [weakSelf hideClassPopView];
+            if (index == 101) {
+                [weakSelf createChangeLogisticsView];
+            }else { }
+        };
+    }else if (index == 1) {
+        self.classPopView.block = ^(NSInteger index) {
+            [weakSelf hideClassPopView];
+            if (index == 101) {
+                [weakSelf refundEntry];
+            }
+        };
+    }else if (index == 2) {
+        self.classPopView.block = ^(NSInteger index) {
+            [weakSelf hideClassPopView];
+            if (index == 101) {
+                [weakSelf deletePayOrder];
+            }
+        };
+    }else if (index == 3) {
+        self.classPopView.block = ^(NSInteger index) {
+            [weakSelf hideClassPopView];
+            if (index == 101) {
+            }
+        };
+    }else { }
+}
+- (void)showClassPopVoew {
+    [JMPopViewAnimationDrop showView:self.classPopView overlayView:self.maskView];
+}
+- (void)hideClassPopView {
+    [JMPopViewAnimationDrop dismissView:self.classPopView overlayView:self.maskView];
+}
+#pragma mark 选择进入退款界面
+- (void)refundEntry {
+    NSArray *arr = self.dataSource[_sectionCount];
+    JMOrderGoodsModel *model = arr[_rowCount];
+    if (_isPopChoiseRefundWay == YES) {
+        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+        tuikuanVC.dingdanModel = model;
+        tuikuanVC.refundDic = _choiseRefundDict;
+        tuikuanVC.tid = tid;
+        tuikuanVC.oid = model.orderGoodsID;
+        tuikuanVC.status = model.status_display;
+        [self.navigationController pushViewController:tuikuanVC animated:YES];
+    }else {
+        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+        tuikuanVC.dingdanModel = model;
+        if (_choiseRefundArr.count > 0) {
+            tuikuanVC.refundDic = _choiseRefundArr[0];
+        }
+        tuikuanVC.tid = tid;
+        tuikuanVC.oid = model.orderGoodsID;
+        tuikuanVC.status = model.status_display;
+        [self.navigationController pushViewController:tuikuanVC animated:YES];
+    }
+}
+#pragma mark 取消待支付订单
+- (void)deletePayOrder {
+    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
+    NSURL *url = [NSURL URLWithString:string];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"DELETE"];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+}
+
+
 @end
 
 

@@ -19,6 +19,7 @@
 #import "JMCategoryListController.h"
 #import "JMRootGoodsModel.h"
 #import "JMRootGoodsModel.h"
+#import "JMHomeRootCategoryController.h"
 
 static NSString * ksimpleCell = @"simpleCell";
 
@@ -40,6 +41,7 @@ static NSString * ksimpleCell = @"simpleCell";
 //    BOOL isLoading; //网络请求时置为true，用于网络还未应答时不能切换推荐和价格查询条件控制
     NSString *nextNavTitle;
     NSString *cidString;
+    
 }
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -227,7 +229,7 @@ static NSString * ksimpleCell = @"simpleCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self itemDataSource];
+//    [self itemDataSource];
     [self craeteRight];
     isOrder = NO;
     _isFirst = YES;
@@ -250,6 +252,7 @@ static NSString * ksimpleCell = @"simpleCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [self createTopButton];
+    [self craeteRight];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     
@@ -569,10 +572,8 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)itemDataSource {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path=[paths objectAtIndex:0];
-    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
-    //==JsonObject
+    NSString *jsonPath = [path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+    NSData *data = [NSData dataWithContentsOfFile:jsonPath];
     NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     
     for (NSDictionary *dic in arr) {
@@ -596,11 +597,18 @@ static NSString * ksimpleCell = @"simpleCell";
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 - (void)rightClicked:(UIButton *)button {
-    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
-    catoryVC.titleString = nextNavTitle;
-    catoryVC.dataSource = self.childArray;
-
-    [self.navigationController pushViewController:catoryVC animated:YES];
+    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+    rootCategoryVC.cidString = self.cid;
+    rootCategoryVC.titleString = self.titleString;
+    rootCategoryVC.categoryUrl = self.categoryUrlString;
+    [self.navigationController pushViewController:rootCategoryVC animated:YES];
+    
+//    JMCategoryListController *catoryVC = [[JMCategoryListController alloc] init];
+//    catoryVC.titleString = nextNavTitle;
+//    catoryVC.dataSource = self.childArray;
+//
+//    [self.navigationController pushViewController:catoryVC animated:YES];
+    
 }
 
 
@@ -620,7 +628,18 @@ static NSString * ksimpleCell = @"simpleCell";
 
 /**
  *
-
+ //    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+ //    NSString *parStr = paramerString[@"cat_link"];
+ //    if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
+ //        NSLog(@"jump cat_link=%@ wrong", parStr);
+ //        return;
+ //    }
+ //    NSArray *array = [parStr componentsSeparatedByString:@"="];
+ //    NSString *string = array[1];
+ //    rootCategoryVC.cidString = string;
+ //    rootCategoryVC.titleString = paramerString[@"name"];
+ //
+ //    [self.navigationController pushViewController:rootCategoryVC animated:YES];
  */
 
 

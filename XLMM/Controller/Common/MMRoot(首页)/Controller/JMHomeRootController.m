@@ -9,8 +9,6 @@
 #import "JMHomeRootController.h"
 #import "MMClass.h"
 #import <RESideMenu.h>
-#import "JMAutoLoopScrollView.h"
-#import "JMHomeHeaderView.h"
 #import "JMHomeActiveCell.h"
 #import "JMHomeCategoryCell.h"
 #import "JMHomeGoodsCell.h"
@@ -37,17 +35,26 @@
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"
 #import "JMMaMaRootController.h"
+#import "JMAutoLoopPageView.h"
+#import "JMHomeHeaderCell.h"
+#import "JMHomeRootCategoryController.h"
 
-@interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate> {
+// 主页分类 比例布局
+#define HomeCategoryRatio               SCREENWIDTH / 320.0
+#define HomeCategorySpaceW              25 * HomeCategoryRatio
+#define HomeCategorySpaceH              20 * HomeCategoryRatio
+
+@interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
     NSString *_cartTimeString;      // 购物车时间
+    NSInteger oneRowCellH;
+    NSInteger twoRowCellH;
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
  */
 @property (nonatomic, strong) JMMainTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *activeArray;
-@property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
 @property (nonatomic, strong) JMSegmentView *segmentView;
 /**
  *  主页视图滚动位置判断
@@ -82,6 +89,8 @@
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
 
+@property (nonatomic, strong) JMAutoLoopPageView *pageView;
+
 @end
 
 @implementation JMHomeRootController {
@@ -96,6 +105,7 @@
     NSString *_releaseNotes;            // 版本升级信息
     NSString *_hash;                    // 判断是否需要重新下载的哈希值
     NSString *_downloadURLString;       // 地址下载链接
+    NSString *urlCategory;              // 下载分类json文件
 }
 - (UIView *)maskView {
     if (!_maskView) {
@@ -113,6 +123,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.cartsCountLabel.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -267,7 +278,7 @@
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
-                _timeArray[2] = responseObject[@"onshelf_starttime"];
+                _timeArray[2] = responseObject[@"offshelf_deadline"];
             }
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {
@@ -305,6 +316,10 @@
 }
 #pragma mark 创建tableView
 - (void)createTabelView {
+    
+    oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
+    twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
+    
     self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -315,19 +330,18 @@
     [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
     [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
     [self.tableView registerClass:[JMHomeGoodsCell class] forCellReuseIdentifier:JMHomeGoodsCellIdentifier];
-    
-    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
-    self.goodsScrollView = scrollView;
-    scrollView.jm_scrollDataSource = self;
-    scrollView.jm_scrollDelegate = self;
-    
-    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4);
-    
-    scrollView.jm_isStopScrollForSingleCount = YES;
-    scrollView.jm_autoScrollInterval = 3.;
-    [scrollView jm_registerClass:[JMHomeHeaderView class]];
-    self.tableView.tableHeaderView = scrollView;
 
+    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
+    self.pageView.dataSource = self;
+    self.pageView.delegate = self;
+    [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
+    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+    self.pageView.scrollForSingleCount = YES;
+    self.pageView.atuoLoopScroll = YES;
+    self.pageView.scrollFuture = YES;
+    self.pageView.autoScrollInterVal = 4.0f;
+    self.tableView.tableHeaderView = self.pageView;
 }
 #pragma mark 创建自定义 navigationView
 - (void)createNavigaView {
@@ -377,6 +391,7 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
+    [self.pageView reloadData];
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
         [_categorysArray addObject:dicts];
@@ -386,7 +401,6 @@
         JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];
         [self.activeArray addObject:model];
     }
-    [self.goodsScrollView jm_reloadData];
     [self.tableView reloadData];
 }
 #pragma mark UITableViewDataSource,UITableViewDelegate
@@ -406,9 +420,10 @@
     if (indexPath.section == 0) {
         if (_categorysArray.count <= 4) {
 //            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
-            return SCREENWIDTH * 0.30 + 15;
+            return oneRowCellH;
         }else {
-            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 25;
+//            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 20;
+            return twoRowCellH;
         }
     }else if (indexPath.section == 1) {
         return SCREENWIDTH * 0.5 + 10;
@@ -478,6 +493,7 @@
     NSString *string = array[1];
     categoryVC.titleString = paramerString[@"name"];
     categoryVC.cid = string;
+    categoryVC.categoryUrlString = urlCategory;
     [self.navigationController pushViewController:categoryVC animated:YES];
 }
 #pragma mark 活动点击事件(跳转webView)
@@ -577,18 +593,25 @@
     }
 }
 #pragma mark 顶部视图滚动协议方法
-- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
+- (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
     return _topImageArray.count;
 }
-- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMHomeHeaderView *)rollView {
-    rollView.topDic = _topImageArray[index];
+- (void)configCell:(__kindof UICollectionViewCell *)cell Index:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    JMHomeHeaderCell *testCell = cell;
+    NSDictionary *dict = _topImageArray[index];
+    testCell.topDic = dict;
 }
-- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
-    NSLog(@"%@", _topImageArray[index]);
+- (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    return @"JMHomeHeaderCell"; // 返回自定义cell的identifier
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     [MobClick event:@"banner_click"];
     NSDictionary *topDic = _topImageArray[index];
     [JumpUtils jumpToLocation:topDic[@"app_link"] viewController:self];
 }
+
 - (void)backClick:(UIButton *)button {
 }
 #pragma mark 购物车数量请求
@@ -660,8 +683,8 @@
         if ([_cartTimer isValid]) {
             [_cartTimer invalidate];
         }
-    }
-    self.cartsCountLabel.text = string;
+    }else { self.cartsCountLabel.text = string; }
+    
 }
 #pragma mark 创建购物车,收藏按钮
 - (void)createCartsView {
@@ -945,15 +968,15 @@
 }
 - (void)fetchItemize:(NSDictionary *)dic {
     NSString *isUpData = dic[@"sha1"];
-    NSString *urlString = dic[@"download_url"];
+    urlCategory = dic[@"download_url"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *oldVersion = [defaults stringForKey:@"itemHash"];
     if (oldVersion == nil) {
-        [self downLoadUrl:urlString];
+        [self downLoadUrl:urlCategory];
     }else {
         if ([oldVersion isEqualToString:isUpData]) {
         }else {
-            [self downLoadUrl:urlString];
+            [self downLoadUrl:urlCategory];
         }
     }
     [defaults setObject:isUpData forKey:@"itemHash"];
@@ -1078,50 +1101,31 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+ *
+ *          ┌─┐       ┌─┐
+ *       ┌──┘ ┴───────┘ ┴──┐
+ *       │                 │
+ *       │       ───       │
+ *       │  ─┬┘       └┬─  │
+ *       │                 │
+ *       │       ─┴─       │
+ *       │                 │
+ *       └───┐         ┌───┘
+ *           │         │
+ *           │         │
+ *           │         │
+ *           │         └──────────────┐
+ *           │                        │
+ *           │                        ├─┐
+ *           │                        ┌─┘
+ *           │                        │
+ *           └─┐  ┐  ┌───────┬──┐  ┌──┘
+ *             │ ─┤ ─┤       │ ─┤ ─┤
+ *             └──┴──┘       └──┴──┘
+ *                 神兽保佑
+ *                 代码无BUG!
+ */
 
 
 

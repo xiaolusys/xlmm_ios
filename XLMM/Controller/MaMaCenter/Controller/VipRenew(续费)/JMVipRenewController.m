@@ -116,7 +116,7 @@
     NSDictionary *renewDict = skusArr[_numCount];
     CGFloat paument = [renewDict[@"agent_price"] floatValue];
     _skuID = renewDict[@"id"];
-    if (_walletCash - paument > 0.000001) {
+    if (_walletCash - paument > 0.00001) {
         self.isEnoughBudgetPay = YES;
         _descLabelValue = paument;
         _exchangeType = @"half";
@@ -533,7 +533,7 @@
         NSDictionary *renewDic = skusArr[_numCount];
         CGFloat paument = [renewDic[@"agent_price"] floatValue];
         _skuID = renewDic[@"id"];
-        if (_walletCash - paument > 0.000001) {
+        if (_walletCash - paument > 0.00001) {
             self.isEnoughBudgetPay = YES;
             _exchangeType = @"half";
             _descLabelValue = paument;
@@ -555,7 +555,7 @@
         NSDictionary *renewDic = skusArr[_numCount];
         CGFloat paument = [renewDic[@"agent_price"] floatValue];
         _skuID = renewDic[@"id"];
-        if (_walletCash - paument > 0.000001) {
+        if (_walletCash - paument > 0.00001) {
             self.isEnoughBudgetPay = YES;
             _exchangeType = @"full";
             _descLabelValue = paument;

@@ -202,10 +202,10 @@
     self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.lowest_std_sale_price floatValue]];
     self.saleNumLabel.text = [NSString stringWithFormat:@"%@人在卖",model.sale_num];
     
-    CGFloat rebetAmount = [model.rebet_amount floatValue];
-    CGFloat nextRebetAmount = [model.next_rebet_amount floatValue];
-    self.rebetLabel.text = [NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
-    self.nextRebetLabtl.text = [NSString stringWithFormat:@"  ¥%.2f",nextRebetAmount];
+//    CGFloat rebetAmount = [model.rebet_amount floatValue];
+//    CGFloat nextRebetAmount = [model.next_rebet_amount floatValue];
+    self.rebetLabel.text = CS_STRING(model.rebet_amount_desc);//[NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
+    self.nextRebetLabtl.text = [NSString stringWithFormat:@"  %@",model.next_rebet_amount_desc];
     self.vipLabel.text = self.leveModel.next_agencylevel_desc;
     
     self.pdtID = [NSString stringWithFormat:@"%@", model.goodsID];

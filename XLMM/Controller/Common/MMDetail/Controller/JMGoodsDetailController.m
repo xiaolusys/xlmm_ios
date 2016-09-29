@@ -10,8 +10,6 @@
 #import "MMClass.h"
 #import "JMGoodsAttributeCell.h"
 #import "JMGoodsExplainCell.h"
-#import "JMAutoLoopScrollView.h"
-#import "JMGoodsLoopRollView.h"
 #import "JMGoodsInfoPopView.h"
 #import "JMGoodsSafeGuardCell.h"
 #import "IMYWebView.h"
@@ -25,6 +23,9 @@
 #import "JMSelecterButton.h"
 #import "CartListModel.h"
 #import "JMPurchaseController.h"
+#import "JMAutoLoopPageView.h"
+#import "JMGoodsLoopRollCell.h"
+
 
 #define BottomHeitht 60.0
 #define RollHeight 20.0
@@ -33,7 +34,7 @@
 #define NavigationMaskWH 36
 #define kBottomViewTag 100
 
-@interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,JMAutoLoopScrollViewDatasource,JMAutoLoopScrollViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate> {
+@interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     CGFloat maxY;
     CGFloat minY;
     
@@ -63,7 +64,8 @@
 @property (nonatomic, strong) UILabel *upViewLabel;
 @property (nonatomic, strong) UILabel *downViewLabel;
 
-@property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
+@property (nonatomic, strong) JMAutoLoopPageView *pageView;
+//@property (nonatomic, strong) JMAutoLoopScrollView *goodsScrollView;
 /**
  *  自定义导航栏视图
  */
@@ -93,6 +95,8 @@
 @property (nonatomic, strong) UIButton *addCartButton;
 @property (nonatomic, strong) JMSelecterButton *groupBuyPersonal;
 @property (nonatomic, strong) JMSelecterButton *groupBuyTeam;
+
+
 @end
 
 @implementation JMGoodsDetailController {
@@ -221,15 +225,26 @@
     [self.tableView registerClass:[JMGoodsSafeGuardCell class] forCellReuseIdentifier:JMGoodsSafeGuardCellIdentifier];
 }
 - (void)setupHeadView {
-    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
-    self.goodsScrollView = scrollView;
-    scrollView.jm_scrollDataSource = self;
-    scrollView.jm_scrollDelegate = self;
-    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight);
-    scrollView.jm_isStopScrollForSingleCount = NO;
-    scrollView.jm_autoScrollInterval = 3.;
-    [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
-    self.tableView.tableHeaderView = scrollView;
+    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight)];
+    self.pageView.dataSource = self;
+    self.pageView.delegate = self;
+    [self.pageView registerCellWithClass:[JMGoodsLoopRollCell class] identifier:@"JMGoodsLoopRollCell"];
+    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+    self.pageView.scrollForSingleCount = NO;
+    self.pageView.atuoLoopScroll = YES;
+    self.pageView.scrollFuture = YES;
+    self.pageView.autoScrollInterVal = 4.0f;
+    self.tableView.tableHeaderView = self.pageView;
+//    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
+//    self.goodsScrollView = scrollView;
+//    scrollView.jm_scrollDataSource = self;
+//    scrollView.jm_scrollDelegate = self;
+//    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight);
+//    scrollView.jm_isStopScrollForSingleCount = NO;
+//    scrollView.jm_autoScrollInterval = 3.;
+//    [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
+//    self.tableView.tableHeaderView = scrollView;
 }
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
@@ -270,8 +285,8 @@
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
     self.topImageArray = detailContentDic[@"head_imgs"];
-    [self.goodsScrollView jm_reloadData];
-
+//    [self.goodsScrollView jm_reloadData];
+    [self.pageView reloadData];
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
     for (NSDictionary *dic in attributes) {
@@ -514,9 +529,9 @@
         offset = 0;
     }
     if (scrollView == self.tableView) {
-        self.goodsScrollView.contentOffset = CGPointMake(self.goodsScrollView.contentOffset.x, 0);
+        self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, 0); // self.pageView.mj_origin.x --> self.goodsScrollView.contentSize
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
-            self.goodsScrollView.contentOffset = CGPointMake(self.goodsScrollView.contentOffset.x, -offset / 2.0f);
+            self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, -offset / 2.0f);
             CGFloat scrolHeight = HeaderScrolHeight;
             self.navigationView.alpha = (offset / scrolHeight) * 1.25;
             self.backToRootView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
@@ -653,14 +668,30 @@
     }];
 }
 #pragma mark - LPAutoScrollViewDatasource,LPAutoScrollViewDelegate
-- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
+#pragma mark 顶部视图滚动协议方法
+- (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
     return self.topImageArray.count;
 }
-- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMGoodsLoopRollView *)rollView {
-    rollView.imageString = self.topImageArray[index];
+- (void)configCell:(__kindof UICollectionViewCell *)cell Index:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    JMGoodsLoopRollCell *testCell = cell;
+    NSString *string = self.topImageArray[index];
+    testCell.imageString = string;
 }
-- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
+- (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    return @"JMGoodsLoopRollCell";
 }
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
+}
+//- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
+//    
+//}
+//- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMGoodsLoopRollView *)rollView {
+//    rollView.imageString = self.topImageArray[index];
+//}
+//- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
+//}
 #pragma mark 自定义导航视图
 - (void)createNavigationView {
     kWeakSelf

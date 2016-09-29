@@ -143,7 +143,8 @@ static NSString * cellId = @"JMClassifyListController";
     for (NSDictionary *dic in resultsArr) {
         NSIndexPath *index ;
         index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
-        [self.dataSource addObject:dic];
+        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
+        [self.dataSource addObject:model];
         [_numArray addObject:index];
     }
     if((_numArray != nil) && (_numArray.count > 0)){
@@ -197,8 +198,8 @@ static NSString * cellId = @"JMClassifyListController";
 
 // 选中某item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *dic = self.dataSource[indexPath.row];
-    NSString *goodsID = dic[@"id"];
+    JMRootGoodsModel *model = self.dataSource[indexPath.row];
+    NSString *goodsID = model.goodsID;
     
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     detailVC.goodsID = goodsID;
