@@ -107,7 +107,6 @@
             NSDictionary *dict = results[0];
             [self fetchData:dict ActiveValye:self.isActiveValue];
         }
-        
     } WithFail:^(NSError *error) {
         [MBProgressHUD showMessage:@"查询有误"];
     } Progress:^(float progress) {

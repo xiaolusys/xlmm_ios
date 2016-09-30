@@ -529,10 +529,11 @@
         self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, 0); // self.pageView.mj_origin.x --> self.goodsScrollView.contentSize
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
             self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, -offset / 2.0f);
-            CGFloat scrolHeight = HeaderScrolHeight;
-            self.navigationView.alpha = (offset / scrolHeight) * 1.25;
-            self.backToRootView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
-            self.shareView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
+            CGFloat scrolHeight = HeaderScrolHeight - 80;
+            NSLog(@"%.f ------ %.f ",offset,scrolHeight);
+            self.navigationView.alpha = (offset / scrolHeight);
+            self.backToRootView.alpha = 0.7 - (offset / scrolHeight);
+            self.shareView.alpha = 0.7 - (offset / scrolHeight);
         }else { }
         if (offset <= self.tableView.contentSize.height - SCREENHEIGHT + RollHeight + BottomHeitht) {
             self.upViewLabel.text = @"继续拖动,查看图文详情";

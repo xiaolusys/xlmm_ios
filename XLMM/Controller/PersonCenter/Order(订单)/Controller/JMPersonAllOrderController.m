@@ -165,6 +165,7 @@
     self.tableView.delegate = self;
     self.tableView.tableFooterView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = 90.;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataSource.count;
@@ -173,11 +174,8 @@
     NSArray *sectionArr = self.dataSource[section];
     return sectionArr.count;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"JMBaseGoodsCell";
+    static NSString *cellID = @"JMPersonAllOrderController";
     JMBaseGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];

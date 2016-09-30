@@ -105,6 +105,9 @@
     self.isMaMaVipLabel.text = self.mamaCenterModel.mama_level_display;                                       // 妈妈的VIP状态
     self.mamaLeveLabel.text = self.extraModel.agencylevel_display;                                            // 妈妈的VIP等级
     NSString *limtStr = self.extraModel.surplus_days;                                                         // 会员剩余期限
+    if ([NSString isStringEmpty:limtStr]) {
+        limtStr = @"0";
+    }
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     self.memberLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:numStr SubStringArray:@[limtStr]];
 
