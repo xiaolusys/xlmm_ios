@@ -169,6 +169,11 @@
                 [alterView show];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
+            else {
+                UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alterView show];
+                
+            }
         }else {
             NSString *result = [responseObject objectForKey:@"rcode"];
             if ([result intValue] == 0) {
@@ -176,10 +181,17 @@
                 [alterView show];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
+            else {
+                UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alterView show];
+
+            }
         }
         //修改密码成功，要怎么做。。。。
     } WithFail:^(NSError *error) {
-        
+        UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"密码修改失败!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alterView show];
+
     } Progress:^(float progress) {
         
     }];
