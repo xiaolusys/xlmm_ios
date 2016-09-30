@@ -352,7 +352,7 @@
         }else {
             NSDictionary *dict2 = goodsArr[number];
             NSString *package2 = dict2[@"package_order_id"];
-            if (package == package2) {
+            if ([package isEqualToString: package2]) {
                 
             }else {
                 package = package2;
