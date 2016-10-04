@@ -605,6 +605,9 @@
 		1F4DE5A91CE4712E00114BDA /* ice_Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A21CE4712E00114BDA /* ice_Image@2x.png */; };
 		1F4DE5AA1CE4712E00114BDA /* left_line_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A31CE4712E00114BDA /* left_line_selected@2x.png */; };
 		1F4DE5AB1CE4712E00114BDA /* oneHunder_Withdraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */; };
+		1F5418FE1DA3557300804547 /* JMDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5418FD1DA3557300804547 /* JMDevice.m */; };
+		1F5419011DA3930800804547 /* JMSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419001DA3930800804547 /* JMSettingController.m */; };
+		1F5419041DA397E200804547 /* JMSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419031DA397E200804547 /* JMSettingCell.m */; };
 		1F56E2701D33CDE00092EC91 /* JMCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E26F1D33CDE00092EC91 /* JMCouponController.m */; };
 		1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2791D347EF70092EC91 /* JMExpiredCouponController.m */; };
 		1F56E27D1D347F0B0092EC91 /* JMUntappedCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E27C1D347F0B0092EC91 /* JMUntappedCouponController.m */; };
@@ -1920,6 +1923,12 @@
 		1F4DE5A21CE4712E00114BDA /* ice_Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ice_Image@2x.png"; sourceTree = "<group>"; };
 		1F4DE5A31CE4712E00114BDA /* left_line_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_line_selected@2x.png"; sourceTree = "<group>"; };
 		1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneHunder_Withdraw@2x.png"; sourceTree = "<group>"; };
+		1F5418FC1DA3557300804547 /* JMDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDevice.h; sourceTree = "<group>"; };
+		1F5418FD1DA3557300804547 /* JMDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDevice.m; sourceTree = "<group>"; };
+		1F5418FF1DA3930800804547 /* JMSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMSettingController.h; path = "Setting(设置)/JMSettingController.h"; sourceTree = "<group>"; };
+		1F5419001DA3930800804547 /* JMSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMSettingController.m; path = "Setting(设置)/JMSettingController.m"; sourceTree = "<group>"; };
+		1F5419021DA397E200804547 /* JMSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSettingCell.h; sourceTree = "<group>"; };
+		1F5419031DA397E200804547 /* JMSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSettingCell.m; sourceTree = "<group>"; };
 		1F56E26E1D33CDE00092EC91 /* JMCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponController.h; sourceTree = "<group>"; };
 		1F56E26F1D33CDE00092EC91 /* JMCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponController.m; sourceTree = "<group>"; };
 		1F56E2781D347EF70092EC91 /* JMExpiredCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMExpiredCouponController.h; sourceTree = "<group>"; };
@@ -3866,6 +3875,7 @@
 		1F27A6141D27597100A0F80B /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				1F5418FB1DA3554700804547 /* Device */,
 				1F56E2AC1D373ADC0092EC91 /* store(存储) */,
 				1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */,
 				1F27A6171D27597100A0F80B /* JMFirstOpen.h */,
@@ -4534,6 +4544,10 @@
 				1F498B8E1D2772D0007E77FC /* SettingViewController.h */,
 				1F498B8F1D2772D0007E77FC /* SettingViewController.m */,
 				1F498B901D2772D0007E77FC /* SettingViewController.xib */,
+				1F5418FF1DA3930800804547 /* JMSettingController.h */,
+				1F5419001DA3930800804547 /* JMSettingController.m */,
+				1F5419021DA397E200804547 /* JMSettingCell.h */,
+				1F5419031DA397E200804547 /* JMSettingCell.m */,
 				1F498B911D2772D0007E77FC /* ThirdAccoutn(第三方账户绑定) */,
 			);
 			path = "MyDetail(个人信息)";
@@ -5406,6 +5420,16 @@
 				1F4C9E781D9912600089CE74 /* UdeskReachability.m */,
 			);
 			path = UDReachability;
+			sourceTree = "<group>";
+		};
+		1F5418FB1DA3554700804547 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				1F5418FC1DA3557300804547 /* JMDevice.h */,
+				1F5418FD1DA3557300804547 /* JMDevice.m */,
+			);
+			name = Device;
+			path = "未命名文件夹";
 			sourceTree = "<group>";
 		};
 		1F56E2741D347E620092EC91 /* youhuiquan  */ = {
@@ -7251,6 +7275,7 @@
 				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */,
+				1F5418FE1DA3557300804547 /* JMDevice.m in Sources */,
 				1FDD07291D45BA910010231F /* JMDisableCouponController.m in Sources */,
 				1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */,
 				1F498C4D1D2772D0007E77FC /* JMTimeInfoModel.m in Sources */,
@@ -7395,6 +7420,7 @@
 				1FDD07A41D49B6250010231F /* JMMaMaSelfTeamModel.m in Sources */,
 				1F4C9E9A1D9912600089CE74 /* UdeskShareTransitioningDelegateImpl.m in Sources */,
 				1F24A2741D9CC88500403213 /* NSString+CSCommon.m in Sources */,
+				1F5419041DA397E200804547 /* JMSettingCell.m in Sources */,
 				1830744E1C97D17900B7665E /* SendMessageToWeibo.m in Sources */,
 				1FE52DF21D93FFF30051D5A0 /* JMGoodsLoopRollCell.m in Sources */,
 				1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */,
@@ -7550,6 +7576,7 @@
 				1F498C3A1D2772D0007E77FC /* ThirdAccountViewController.m in Sources */,
 				1FE52E761D98B5470051D5A0 /* HuoyuezhiModel.m in Sources */,
 				1FEDCB121D91017800CB7D97 /* JMWithDrawDetailCell.m in Sources */,
+				1F5419011DA3930800804547 /* JMSettingController.m in Sources */,
 				1F916A851D51DC5700327408 /* JMNewcomerTaskController.m in Sources */,
 				1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */,
 				1F498C341D2772D0007E77FC /* TSettingViewController.m in Sources */,

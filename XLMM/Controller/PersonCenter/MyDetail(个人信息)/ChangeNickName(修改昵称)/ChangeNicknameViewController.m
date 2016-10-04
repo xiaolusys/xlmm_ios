@@ -8,6 +8,7 @@
 
 #import "ChangeNicknameViewController.h"
 #import "SettingViewController.h"
+#import "JMSettingController.h"
 #import "MMClass.h"
 #define NICK_LOWER_LIMIT 4
 #define NICK_UPPER_LIMIT 20
@@ -182,11 +183,68 @@
 }
 
 -(void) updateNameLabelAndGoBack{
-    SettingViewController *svc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-    svc.nameLabel.text = self.nicknameField.text;
-    svc.nameLabel.textColor = [UIColor orangeThemeColor];
+//    JMSettingController *svc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+//    svc.nameLabel.text = self.nicknameField.text;
+//    svc.nameLabel.textColor = [UIColor orangeThemeColor];
+    if (self.blcok) {
+        self.blcok(self.nicknameField.text);
+    }
     
     //[self performSelector:@selector(goback) withObject:nil afterDelay:2];
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

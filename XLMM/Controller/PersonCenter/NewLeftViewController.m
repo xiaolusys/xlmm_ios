@@ -25,6 +25,7 @@
 #import "JMMineIntegralController.h"
 #import "WebViewController.h"
 #import "JMWithDrawDetailController.h"
+#import "JMSettingController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -406,7 +407,8 @@
 - (IBAction)loginButtonClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+//        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+        JMSettingController *addressVC = [[JMSettingController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:addressVC];
         }
