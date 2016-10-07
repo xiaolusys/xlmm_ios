@@ -39,6 +39,7 @@
     [self createTableView];
     [self ishavemobel];
     [self loadUserData];
+    
 
 }
 - (void)loadUserData {
@@ -47,8 +48,9 @@
         if (!responseObject) return ;
         [self getData:responseObject];
         [self.tableView reloadData];
+        self.tableView.scrollEnabled = self.tableView.contentSize.height > SCREENHEIGHT ? YES : NO;
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD showError:@"个人数据获取失败,请检查网络哦~"];
     } Progress:^(float progress) {
         
     }];
@@ -95,6 +97,7 @@
     NSDictionary *dict = cellDataArr[indexPath.row];
     [cell configSettingData:dict Index:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -189,10 +192,11 @@
 }
 
 - (void)getData:(NSDictionary *)dic {
-    if (dic == nil) {
+    NSArray *resultArr = [dic objectForKey:@"results"];
+    if (resultArr.count == 0) {
         return ;
     }
-    NSDictionary *result = [[dic objectForKey:@"results"] firstObject];
+    NSDictionary *result = resultArr[0];
     nameString = result[@"nick"];
     phoneString = result[@"mobile"];
     NSMutableString * mutablePhoneNumber = [phoneString mutableCopy];

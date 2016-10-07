@@ -107,6 +107,12 @@
     NSString *_downloadURLString;       // 地址下载链接
     NSString *urlCategory;              // 下载分类json文件
 }
+- (JMUpdataAppPopView *)updataPopView {
+    if (_updataPopView == nil) {
+        _updataPopView = [JMUpdataAppPopView defaultUpdataPopView];
+    }
+    return _updataPopView;
+}
 - (UIView *)maskView {
     if (!_maskView) {
         _maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -130,12 +136,20 @@
                                              selector:@selector(rootViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(rootViewDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:app];
+    
     [self loadCatrsNumData];
     [MobClick beginLogPageView:@"main"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"main"];
+}
+- (void)rootViewDidEnterBackground:(NSNotification *)notification {
+    [self hideUpdataView];
 }
 - (void)rootViewWillEnterForeground:(NSNotification *)notification {
     [self autoUpdateVersion];
@@ -930,8 +944,6 @@
 }
 - (void)updataAppPopView {
     [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideUpdataView)]];
-    JMUpdataAppPopView *updataPopView = [JMUpdataAppPopView defaultUpdataPopView];
-    self.updataPopView = updataPopView;
     self.updataPopView.releaseNotes = _releaseNotes;
     self.updataPopView.delegate = self;
     [self.view addSubview:self.maskView];
