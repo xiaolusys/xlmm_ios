@@ -107,7 +107,7 @@
     self.tableView.tableHeaderView = headerView;
     UILabel *descLabel = [UILabel new];
     descLabel.textColor = [UIColor buttonTitleColor];
-    descLabel.text = @"最近14天访客记录";
+    descLabel.text = @"最近访客记录";
     descLabel.font = [UIFont systemFontOfSize:14.];
     [headerView addSubview:descLabel];
     

@@ -171,13 +171,6 @@
     return date;
 }
 
-//只含有年月日
-- (NSString *)yearDeal:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *year = strarray[0];
-    return year;
-}
-
 //将所有的key排序
 - (NSMutableArray *)sortAllKeyArray:(NSMutableArray *)keyArr {
     for (int i = 0; i < keyArr.count; i++) {
@@ -255,9 +248,6 @@
 //    [self.tableView reloadData];
     
     return cell;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 

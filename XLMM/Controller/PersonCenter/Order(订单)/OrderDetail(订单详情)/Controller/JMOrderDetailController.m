@@ -356,12 +356,7 @@
         }else {
             NSDictionary *dict2 = goodsArr[number];
             NSString *package2 = dict2[@"package_order_id"];
-<<<<<<< HEAD
             if ([package isEqual:package2]) {
-=======
-            if ([package isEqualToString: package2]) {
-                
->>>>>>> 80e06c60ebdc64720f93f239a496dfcf9e26c275
             }else {
                 package = package2;
                 [self.dataSource addObject:dataArr];

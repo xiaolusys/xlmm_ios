@@ -281,13 +281,41 @@
     //==Json数据
     NSData *data=[NSData dataWithContentsOfFile:jsonPath];
     //==JsonObject
-    NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    if (data == nil) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
+        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+            if (!responseObject) {
+                return ;
+            }else {
+                [self fetchItemize:responseObject];
+            }
+        } WithFail:^(NSError *error) {
+        } Progress:^(float progress) {
+        }];
+    }else {
+        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        [self fetchItemData:arr];
+    }
+
+}
+- (void)fetchItemize:(NSDictionary *)dic {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:dic[@"download_url"] WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) {
+            return ;
+        }else {
+            [self fetchItemData:responseObject];
+        }
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+    
+}
+- (void)fetchItemData:(NSArray *)arr {
     [itemNameArray addObject:@"全部"];
     for (NSDictionary *dic in arr) {
         [itemNameArray addObject:dic[@"name"]];
         [itemCidArray addObject:dic[@"cid"]];
     }
-    
 }
 - (void)selectedClicked:(UIButton *)button{
     self.selectImageView.image = [UIImage imageNamed:@"uparrowicon"];

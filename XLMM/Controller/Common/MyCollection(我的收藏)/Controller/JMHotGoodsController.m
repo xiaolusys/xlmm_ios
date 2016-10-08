@@ -162,12 +162,14 @@
             NSLog(@"%@",responseObject);
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
+                [MobClick event:@"cancleStoreUpSuccess"];
                 [self.collection.mj_header beginRefreshing];
             }else {
+                [MobClick event:@"cancleStoreUpFail"];
                 [MBProgressHUD showWarning:responseObject[@"info"]];
             }
         } WithFail:^(NSError *error) {
-            
+            [MobClick event:@"cancleStoreUpFail"];
         } Progress:^(float progress) {
             
         }];

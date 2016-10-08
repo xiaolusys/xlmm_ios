@@ -15,24 +15,7 @@
 #define TableViewH SCREENHEIGHT * 0.6
 
 
-@interface JMGoodsInfoPopView ()<JMGoodsAttributeTypeViewDelegate>
-
-
-@property (nonatomic, strong) NSMutableArray *goodsColorArray;
-
-@property (nonatomic, strong) NSMutableArray *goodsSizeArray;
-
-@property (nonatomic, strong) UIButton *sureButton;
-
-@property (nonatomic, strong) UIImageView *iconImage;
-
-@property (nonatomic, strong) UILabel *nameTitle;
-@property (nonatomic, strong) UILabel *PriceLabel;
-@property (nonatomic, strong) UILabel *oldPriceLabel;
-
-@end
-
-@implementation JMGoodsInfoPopView {
+@interface JMGoodsInfoPopView ()<JMGoodsAttributeTypeViewDelegate> {
     
     NSMutableDictionary *_stockDict;
     NSMutableArray *_imageArray;
@@ -51,15 +34,34 @@
     NSInteger _goodsNum;
     NSInteger _goodsColorID;
     NSInteger _goodsSizeID;
-    
+    BOOL _isGoodsEnough;             // 判断商品是否有库存
     NSInteger _defaultChoiseSize;
 }
+
+
+
+@property (nonatomic, strong) NSMutableArray *goodsColorArray;
+
+@property (nonatomic, strong) NSMutableArray *goodsSizeArray;
+
+@property (nonatomic, strong) UIButton *sureButton;
+
+@property (nonatomic, strong) UIImageView *iconImage;
+
+@property (nonatomic, strong) UILabel *nameTitle;
+@property (nonatomic, strong) UILabel *PriceLabel;
+@property (nonatomic, strong) UILabel *oldPriceLabel;
+
+@end
+
+@implementation JMGoodsInfoPopView
+
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
         
         _goodsNum = 1;
-        
+        _isGoodsEnough = NO;
         
         [self topView];
         _stockDict = [NSMutableDictionary dictionary];
@@ -349,7 +351,11 @@
         _skuColorString = _choiseGoodsColor;
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
+        _skuSizeString = _isGoodsEnough ? @"库存不足" : _skuSizeString;
         self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
+        
+        NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
+        
     }else if ([typeView isEqual:self.sizeView]) {
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         for (int i = 1; i <= self.goodsSizeArray.count; i++) {
@@ -382,6 +388,9 @@
         _stockValue =  [sizeD[@"free_num"] integerValue];
         _skuSizeString = sizeD[@"name"];
         self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
+        
+        NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
+        
     }else {
         
     }
@@ -401,6 +410,9 @@
             NSString *size = sizeArr[i - 1];
             NSDictionary *sizeDict = [sizeDic objectForKey:size];
             NSInteger count = [sizeDict[@"free_num"] integerValue];
+//            _goodsSizeID = (sizeDict != nil && count == 0) ? -1 : _goodsSizeID;
+            _isGoodsEnough = (sizeDict != nil && count == 0);
+            _goodsSizeID = _isGoodsEnough ? [sizeDict[@"sku_id"] integerValue] : _goodsSizeID;
             UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
             // -- > 在这里面给尺码 赋值
             
@@ -441,14 +453,14 @@
         }
     } while (flag == 0 && code == 1);
     
+    NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
 }
 
-
-
-
-
-
 - (void)sureButtonClick:(UIButton *)button {
+    if (_isGoodsEnough) {
+        [MBProgressHUD showWarning:@"商品库存不足~"];
+        return ;
+    }
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];
     paramer[@"item_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
     paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsSizeID];
