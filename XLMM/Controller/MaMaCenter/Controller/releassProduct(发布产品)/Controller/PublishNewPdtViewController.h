@@ -11,6 +11,6 @@
 
 @interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
-
+@property (nonatomic, copy) NSString *qrCodeUrlString;
 
 @end

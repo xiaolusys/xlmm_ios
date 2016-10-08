@@ -46,8 +46,6 @@
 		183071F81C97BE3700B7665E /* WXLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830712E1C97BE3700B7665E /* WXLoginController.m */; };
 		183071F91C97BE3700B7665E /* WXLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1830712F1C97BE3700B7665E /* WXLoginController.xib */; };
 		183072821C97C00900B7665E /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072611C97C00900B7665E /* NSArray+Log.m */; };
-		183072831C97C00900B7665E /* NSString+DeleteT.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072631C97C00900B7665E /* NSString+DeleteT.m */; };
-		183072841C97C00900B7665E /* NSString+Encrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072651C97C00900B7665E /* NSString+Encrypto.m */; };
 		183072851C97C00900B7665E /* NSString+URL.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072671C97C00900B7665E /* NSString+URL.m */; };
 		183072861C97C00900B7665E /* UIColor+RGBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072691C97C00900B7665E /* UIColor+RGBColor.m */; };
 		183072871C97C00900B7665E /* UIImage+ChangeGray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830726B1C97C00900B7665E /* UIImage+ChangeGray.m */; };
@@ -345,6 +343,7 @@
 		1F23F9D51D6C225600C78EAE /* JMHomeYesterdayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9D41D6C225600C78EAE /* JMHomeYesterdayController.m */; };
 		1F23F9DB1D6C230500C78EAE /* JMHomeTomorrowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9DA1D6C230500C78EAE /* JMHomeTomorrowController.m */; };
 		1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F23F9DD1D6C331100C78EAE /* JMMainTableView.m */; };
+		1F24A2741D9CC88500403213 /* NSString+CSCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F24A2731D9CC88500403213 /* NSString+CSCommon.m */; };
 		1F27A5641D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */; };
 		1F27A5651D2516A000A0F80B /* vipGrade_Examination@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */; };
 		1F27A5CF1D2520E200A0F80B /* ActivityViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A5701D2520E200A0F80B /* ActivityViewController2.m */; };
@@ -606,6 +605,9 @@
 		1F4DE5A91CE4712E00114BDA /* ice_Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A21CE4712E00114BDA /* ice_Image@2x.png */; };
 		1F4DE5AA1CE4712E00114BDA /* left_line_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A31CE4712E00114BDA /* left_line_selected@2x.png */; };
 		1F4DE5AB1CE4712E00114BDA /* oneHunder_Withdraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */; };
+		1F5418FE1DA3557300804547 /* JMDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5418FD1DA3557300804547 /* JMDevice.m */; };
+		1F5419011DA3930800804547 /* JMSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419001DA3930800804547 /* JMSettingController.m */; };
+		1F5419041DA397E200804547 /* JMSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419031DA397E200804547 /* JMSettingCell.m */; };
 		1F56E2701D33CDE00092EC91 /* JMCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E26F1D33CDE00092EC91 /* JMCouponController.m */; };
 		1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2791D347EF70092EC91 /* JMExpiredCouponController.m */; };
 		1F56E27D1D347F0B0092EC91 /* JMUntappedCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E27C1D347F0B0092EC91 /* JMUntappedCouponController.m */; };
@@ -1089,10 +1091,6 @@
 		1830712F1C97BE3700B7665E /* WXLoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WXLoginController.xib; sourceTree = "<group>"; };
 		183072601C97C00900B7665E /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
 		183072611C97C00900B7665E /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
-		183072621C97C00900B7665E /* NSString+DeleteT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DeleteT.h"; sourceTree = "<group>"; };
-		183072631C97C00900B7665E /* NSString+DeleteT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DeleteT.m"; sourceTree = "<group>"; };
-		183072641C97C00900B7665E /* NSString+Encrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Encrypto.h"; sourceTree = "<group>"; };
-		183072651C97C00900B7665E /* NSString+Encrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Encrypto.m"; sourceTree = "<group>"; };
 		183072661C97C00900B7665E /* NSString+URL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URL.h"; sourceTree = "<group>"; };
 		183072671C97C00900B7665E /* NSString+URL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URL.m"; sourceTree = "<group>"; };
 		183072681C97C00900B7665E /* UIColor+RGBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RGBColor.h"; sourceTree = "<group>"; };
@@ -1453,6 +1451,8 @@
 		1F23F9DA1D6C230500C78EAE /* JMHomeTomorrowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeTomorrowController.m; sourceTree = "<group>"; };
 		1F23F9DC1D6C331100C78EAE /* JMMainTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMainTableView.h; sourceTree = "<group>"; };
 		1F23F9DD1D6C331100C78EAE /* JMMainTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMainTableView.m; sourceTree = "<group>"; };
+		1F24A2721D9CC88500403213 /* NSString+CSCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CSCommon.h"; sourceTree = "<group>"; };
+		1F24A2731D9CC88500403213 /* NSString+CSCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CSCommon.m"; sourceTree = "<group>"; };
 		1F27A5621D2516A000A0F80B /* mamaUser_DiamondsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mamaUser_DiamondsIcon@2x.png"; sourceTree = "<group>"; };
 		1F27A5631D2516A000A0F80B /* vipGrade_Examination@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vipGrade_Examination@2x.png"; sourceTree = "<group>"; };
 		1F27A56F1D2520E200A0F80B /* ActivityViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController2.h; sourceTree = "<group>"; };
@@ -1923,6 +1923,12 @@
 		1F4DE5A21CE4712E00114BDA /* ice_Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ice_Image@2x.png"; sourceTree = "<group>"; };
 		1F4DE5A31CE4712E00114BDA /* left_line_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_line_selected@2x.png"; sourceTree = "<group>"; };
 		1F4DE5A41CE4712E00114BDA /* oneHunder_Withdraw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneHunder_Withdraw@2x.png"; sourceTree = "<group>"; };
+		1F5418FC1DA3557300804547 /* JMDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDevice.h; sourceTree = "<group>"; };
+		1F5418FD1DA3557300804547 /* JMDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDevice.m; sourceTree = "<group>"; };
+		1F5418FF1DA3930800804547 /* JMSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JMSettingController.h; path = "Setting(设置)/JMSettingController.h"; sourceTree = "<group>"; };
+		1F5419001DA3930800804547 /* JMSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMSettingController.m; path = "Setting(设置)/JMSettingController.m"; sourceTree = "<group>"; };
+		1F5419021DA397E200804547 /* JMSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSettingCell.h; sourceTree = "<group>"; };
+		1F5419031DA397E200804547 /* JMSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSettingCell.m; sourceTree = "<group>"; };
 		1F56E26E1D33CDE00092EC91 /* JMCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponController.h; sourceTree = "<group>"; };
 		1F56E26F1D33CDE00092EC91 /* JMCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponController.m; sourceTree = "<group>"; };
 		1F56E2781D347EF70092EC91 /* JMExpiredCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMExpiredCouponController.h; sourceTree = "<group>"; };
@@ -2893,12 +2899,10 @@
 				183076AD1C97E31A00B7665E /* NSArray+Reverse.m */,
 				183072601C97C00900B7665E /* NSArray+Log.h */,
 				183072611C97C00900B7665E /* NSArray+Log.m */,
-				183072621C97C00900B7665E /* NSString+DeleteT.h */,
-				183072631C97C00900B7665E /* NSString+DeleteT.m */,
-				183072641C97C00900B7665E /* NSString+Encrypto.h */,
-				183072651C97C00900B7665E /* NSString+Encrypto.m */,
 				183072661C97C00900B7665E /* NSString+URL.h */,
 				183072671C97C00900B7665E /* NSString+URL.m */,
+				1F24A2721D9CC88500403213 /* NSString+CSCommon.h */,
+				1F24A2731D9CC88500403213 /* NSString+CSCommon.m */,
 				183072681C97C00900B7665E /* UIColor+RGBColor.h */,
 				183072691C97C00900B7665E /* UIColor+RGBColor.m */,
 				1830726A1C97C00900B7665E /* UIImage+ChangeGray.h */,
@@ -3871,6 +3875,7 @@
 		1F27A6141D27597100A0F80B /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				1F5418FB1DA3554700804547 /* Device */,
 				1F56E2AC1D373ADC0092EC91 /* store(存储) */,
 				1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */,
 				1F27A6171D27597100A0F80B /* JMFirstOpen.h */,
@@ -4099,7 +4104,7 @@
 				1F27A6311D275FB400A0F80B /* MMDetailsViewController.m */,
 				1F27A6321D275FB400A0F80B /* MMDetailsViewController.xib */,
 				1F2F9E611D59DE8900E3A68B /* Model */,
-				1F2F9E621D59DE8B00E3A68B /* View */,
+				1F2F9E621D59DE8B00E3A68B /* View(加入购物车商品属性) */,
 				1F2F9E601D59DE8600E3A68B /* Controller */,
 			);
 			path = Controller;
@@ -4147,7 +4152,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		1F2F9E621D59DE8B00E3A68B /* View */ = {
+		1F2F9E621D59DE8B00E3A68B /* View(加入购物车商品属性) */ = {
 			isa = PBXGroup;
 			children = (
 				1F2F9E6F1D5AB17400E3A68B /* JMBuyNumberView.h */,
@@ -4157,7 +4162,7 @@
 				1F2F9E5D1D59A73900E3A68B /* JMGoodsInfoPopView.h */,
 				1F2F9E5E1D59A73900E3A68B /* JMGoodsInfoPopView.m */,
 			);
-			name = View;
+			name = "View(加入购物车商品属性)";
 			sourceTree = "<group>";
 		};
 		1F3EE5BE1D7FE190006033FC /* SegmentPage */ = {
@@ -4539,6 +4544,10 @@
 				1F498B8E1D2772D0007E77FC /* SettingViewController.h */,
 				1F498B8F1D2772D0007E77FC /* SettingViewController.m */,
 				1F498B901D2772D0007E77FC /* SettingViewController.xib */,
+				1F5418FF1DA3930800804547 /* JMSettingController.h */,
+				1F5419001DA3930800804547 /* JMSettingController.m */,
+				1F5419021DA397E200804547 /* JMSettingCell.h */,
+				1F5419031DA397E200804547 /* JMSettingCell.m */,
 				1F498B911D2772D0007E77FC /* ThirdAccoutn(第三方账户绑定) */,
 			);
 			path = "MyDetail(个人信息)";
@@ -5411,6 +5420,16 @@
 				1F4C9E781D9912600089CE74 /* UdeskReachability.m */,
 			);
 			path = UDReachability;
+			sourceTree = "<group>";
+		};
+		1F5418FB1DA3554700804547 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				1F5418FC1DA3557300804547 /* JMDevice.h */,
+				1F5418FD1DA3557300804547 /* JMDevice.m */,
+			);
+			name = Device;
+			path = "未命名文件夹";
 			sourceTree = "<group>";
 		};
 		1F56E2741D347E620092EC91 /* youhuiquan  */ = {
@@ -6574,6 +6593,7 @@
 				TargetAttributes = {
 					325BA0ED1B68B18A006D64BD = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = QM2A85BC28;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -7242,7 +7262,6 @@
 				1F4C9EAD1D9912600089CE74 /* UdeskBaseModel.m in Sources */,
 				183073D51C97D17800B7665E /* FSLineChart.m in Sources */,
 				1F4C9E941D9912600089CE74 /* UdeskAgentMenuViewController.m in Sources */,
-				183072831C97C00900B7665E /* NSString+DeleteT.m in Sources */,
 				1F498C6E1D2772D0007E77FC /* JMUserAddressModel.m in Sources */,
 				1FE52E661D98B4640051D5A0 /* SharePicModel.m in Sources */,
 				1F4C9EB61D9912600089CE74 /* UdeskHpple.m in Sources */,
@@ -7257,6 +7276,7 @@
 				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				183071F41C97BE3700B7665E /* TiaoKuanViewController.m in Sources */,
 				1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */,
+				1F5418FE1DA3557300804547 /* JMDevice.m in Sources */,
 				1FDD07291D45BA910010231F /* JMDisableCouponController.m in Sources */,
 				1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */,
 				1F498C4D1D2772D0007E77FC /* JMTimeInfoModel.m in Sources */,
@@ -7378,7 +7398,6 @@
 				183071F01C97BE3700B7665E /* SetPasswordController.m in Sources */,
 				1F498C6B1D2772D0007E77FC /* JMReturnedGoodsController.m in Sources */,
 				1F1FB89B1D87E79D004C60CE /* SystemFunctions.m in Sources */,
-				183072841C97C00900B7665E /* NSString+Encrypto.m in Sources */,
 				1F27A5EC1D2520E200A0F80B /* TodayVisitorViewController.m in Sources */,
 				1FDD07551D4878EF0010231F /* JMMaMaTeamController.m in Sources */,
 				1F498C701D2772D0007E77FC /* JMTimeLineView.m in Sources */,
@@ -7401,6 +7420,8 @@
 				1F7D99391D63186400E18FD1 /* JMDelayPopView.m in Sources */,
 				1FDD07A41D49B6250010231F /* JMMaMaSelfTeamModel.m in Sources */,
 				1F4C9E9A1D9912600089CE74 /* UdeskShareTransitioningDelegateImpl.m in Sources */,
+				1F24A2741D9CC88500403213 /* NSString+CSCommon.m in Sources */,
+				1F5419041DA397E200804547 /* JMSettingCell.m in Sources */,
 				1830744E1C97D17900B7665E /* SendMessageToWeibo.m in Sources */,
 				1FE52DF21D93FFF30051D5A0 /* JMGoodsLoopRollCell.m in Sources */,
 				1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */,
@@ -7556,6 +7577,7 @@
 				1F498C3A1D2772D0007E77FC /* ThirdAccountViewController.m in Sources */,
 				1FE52E761D98B5470051D5A0 /* HuoyuezhiModel.m in Sources */,
 				1FEDCB121D91017800CB7D97 /* JMWithDrawDetailCell.m in Sources */,
+				1F5419011DA3930800804547 /* JMSettingController.m in Sources */,
 				1F916A851D51DC5700327408 /* JMNewcomerTaskController.m in Sources */,
 				1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */,
 				1F498C341D2772D0007E77FC /* TSettingViewController.m in Sources */,
@@ -7671,8 +7693,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -7697,7 +7719,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "7aa521ee-4ece-4919-83ee-badd5f8237cf";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -7719,8 +7741,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -7737,7 +7759,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "7aa521ee-4ece-4919-83ee-badd5f8237cf";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -7750,9 +7772,10 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QM2A85BC28;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/umeng_ios_social_sdk_4-2.4_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -7823,6 +7846,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7aa521ee-4ece-4919-83ee-badd5f8237cf";
+				PROVISIONING_PROFILE_SPECIFIER = iOS_dev0412;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -7835,8 +7859,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jimei Internet Technology Co., Ltd (QM2A85BC28)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zifei Zhong (J68GCJCVQW)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/lib/Channels/Alipay",

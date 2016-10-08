@@ -252,7 +252,7 @@
         }
         case 105:{
             UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            if ([self.shopShareLink isKindOfClass:[NSNull class]] || self.shopShareLink == nil || [self.shopShareLink isEqual:@""]) {
+            if ([NSString isStringEmpty:self.shopShareLink]) {
                 [MBProgressHUD showMessage:@"复制失败"];
             }else {
                 [pab setString:self.shopShareLink];

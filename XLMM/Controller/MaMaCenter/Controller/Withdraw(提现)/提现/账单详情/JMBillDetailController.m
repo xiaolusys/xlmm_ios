@@ -9,7 +9,6 @@
 #import "JMBillDetailController.h"
 #import "MMClass.h"
 #import "TixianModel.h"
-#import "NSString+DeleteT.h"
 #import "TixianViewController.h"
 #import "JMWithdrawCashController.h"
 #import "Account1ViewController.h"
@@ -203,9 +202,8 @@
     
     
     //时间 -- 判断系统的处理时间的格式
-    NSString *created = dict[@"created"];
-    NSString *string = [NSString dateDeleteT:created];
-    NSString *timeStr = [string substringWithRange:NSMakeRange(5, 11)];
+    NSString *string = [NSString jm_deleteTimeWithT:dict[@"created"]];
+    NSString *timeStr = [NSString jm_cutOutYearWihtSec:dict[@"created"]];
 //    self.timeStr = timeStr;
     
     //时间 -- 判断创建时间

@@ -89,11 +89,11 @@
     
     
 }
-- (void)setExtraModel:(JMMaMaExtraModel *)extraModel {
-    _extraModel = extraModel;
-    
-    
-}
+//- (void)setExtraModel:(JMMaMaExtraModel *)extraModel {
+//    _extraModel = extraModel;
+//    
+//    
+//}
 
 - (void)setMamaCenterModel:(JMMaMaCenterModel *)mamaCenterModel {
     _mamaCenterModel = mamaCenterModel;
@@ -104,9 +104,12 @@
     self.idLabel.text = [NSString stringWithFormat:@"ID: %@",mamaCenterModel.mama_id];                        // 妈妈ID
     self.isMaMaVipLabel.text = self.mamaCenterModel.mama_level_display;                                       // 妈妈的VIP状态
     self.mamaLeveLabel.text = self.extraModel.agencylevel_display;                                            // 妈妈的VIP等级
-    NSString *limtStr = self.extraModel.surplus_days;                                                         // 会员剩余期限
-    NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
-    self.memberLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:numStr SubStringArray:@[limtStr]];
+//    NSString *limtStr = CS_STRING(self.extraModel.surplus_days);                                              // 会员剩余期限
+//    if ([NSString isStringEmpty:limtStr]) {
+//        limtStr = @"0";
+//    }
+//    NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
+//    self.memberLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:numStr SubStringArray:@[limtStr]];
 
     NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[self.mamaCenterModel.cash_value floatValue]];
     _carryValue = [carryValueStr floatValue];                                                                           // 账户金额
@@ -218,47 +221,47 @@
         make.centerY.equalTo(isMaMaVipImage.mas_centerY);
     }];
     
-    UIView *memberView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 45)];
-    [headerView addSubview:memberView];
-    memberView.backgroundColor = [UIColor whiteColor];
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-//    [memberView addGestureRecognizer:tap];
+//    UIView *memberView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 45)];
+//    [headerView addSubview:memberView];
+//    memberView.backgroundColor = [UIColor whiteColor];
+////    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+////    [memberView addGestureRecognizer:tap];
+//    
+//    UILabel *memberL = [UILabel new];
+//    [memberView addSubview:memberL];
+//    memberL.font = [UIFont systemFontOfSize:14.];
+//    memberL.textColor = [UIColor buttonTitleColor];
+//    memberL.text = @"我的会员";
+//    
+//    UILabel *memberLabel = [UILabel new];
+//    [memberView addSubview:memberLabel];
+//    memberLabel.font = [UIFont systemFontOfSize:12.];
+//    memberLabel.textColor = [UIColor buttonTitleColor];
+//    self.memberLabel = memberLabel;
+//    
+//    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [memberView addSubview:self.renewButton];
+//    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
+//    self.renewButton.tag = 108;
+//    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    
+//    [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(memberView).offset(10);
+//        make.centerY.equalTo(memberView.mas_centerY);
+//    }];
+//    [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(memberView).offset(-60);
+//        make.centerY.equalTo(memberView.mas_centerY);
+//    }];
+//    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(memberView);
+//        make.centerY.equalTo(memberView.mas_centerY);
+//        make.width.mas_equalTo(@(60));
+//        make.height.mas_equalTo(@(45));
+//    }];
     
-    UILabel *memberL = [UILabel new];
-    [memberView addSubview:memberL];
-    memberL.font = [UIFont systemFontOfSize:14.];
-    memberL.textColor = [UIColor buttonTitleColor];
-    memberL.text = @"我的会员";
-    
-    UILabel *memberLabel = [UILabel new];
-    [memberView addSubview:memberLabel];
-    memberLabel.font = [UIFont systemFontOfSize:12.];
-    memberLabel.textColor = [UIColor buttonTitleColor];
-    self.memberLabel = memberLabel;
-    
-    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [memberView addSubview:self.renewButton];
-    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
-    self.renewButton.tag = 108;
-    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(memberView).offset(10);
-        make.centerY.equalTo(memberView.mas_centerY);
-    }];
-    [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(memberView).offset(-60);
-        make.centerY.equalTo(memberView.mas_centerY);
-    }];
-    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(memberView);
-        make.centerY.equalTo(memberView.mas_centerY);
-        make.width.mas_equalTo(@(60));
-        make.height.mas_equalTo(@(45));
-    }];
-    
-    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 165, SCREENWIDTH, 275)];
+    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 275)];
 //    selectBoxView.backgroundColor = [UIColor countLabelColor];
     [headerView addSubview:selectBoxView];
     
@@ -365,7 +368,7 @@
         [self.navigationController pushViewController:carry animated:YES];
     }else if (index == 102) {
         TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-        today.visitorDate = @14;
+        today.visitorDate = kVisitorDay;
         [self.navigationController pushViewController:today animated:YES];
     }else if (index == 103) {
         MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];

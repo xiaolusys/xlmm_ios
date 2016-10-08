@@ -109,6 +109,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    [MobClick event:@"checkGoodsDetail"];
     [MobClick beginLogPageView:@"JMGoodsDetailController"];
     [self loadCatrsNumData];
 }
@@ -452,12 +453,15 @@
                         if (code == 0) {
                             button.selected = YES;
                             [MBProgressHUD showSuccess:@"收藏成功"];
+                            [MobClick event:@"addStoreUpSuccess"];
                         }else {
                             button.selected = NO;
                             [MBProgressHUD showWarning:responseObject[@"info"]];
+                            [MobClick event:@"addStoreUpFail"];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = NO;
+                        [MobClick event:@"addStoreUpFail"];
                     } Progress:^(float progress) {
                         
                     }];
@@ -473,12 +477,15 @@
                         if (code == 0) {
                             button.selected = NO;
                             [MBProgressHUD showSuccess:@"取消成功"];
+                            [MobClick event:@"cancleStoreUpSuccess"];
                         }else {
                             button.selected = YES;
                             [MBProgressHUD showWarning:responseObject[@"info"]];
+                            [MobClick event:@"cancleStoreUpFail"];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = YES;
+                        [MobClick event:@"cancleStoreUpFail"];
                     } Progress:^(float progress) {
                     }];
                 }
@@ -524,28 +531,24 @@
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat offset = scrollView.contentOffset.y ;
-    if (offset < 0) {
-        offset = 0;
-    }
+    CGFloat offset = scrollView.contentOffset.y;
     if (scrollView == self.tableView) {
         self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, 0); // self.pageView.mj_origin.x --> self.goodsScrollView.contentSize
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
             self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, -offset / 2.0f);
-            CGFloat scrolHeight = HeaderScrolHeight;
-            self.navigationView.alpha = (offset / scrolHeight) * 1.25;
-            self.backToRootView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
-            self.shareView.alpha = 0.7 - (offset / scrolHeight) * 1.25;
-        }else { }
+            CGFloat scrolHeight = HeaderScrolHeight - 80;
+            NSLog(@"%.f ------ %.f ",offset,scrolHeight);
+            self.navigationView.alpha = (offset / scrolHeight);
+            self.backToRootView.alpha = 0.7 - (offset / scrolHeight);
+            self.shareView.alpha = 0.7 - (offset / scrolHeight);
+        }else {
+            self.navigationView.alpha = 0.;
+        }
         if (offset <= self.tableView.contentSize.height - SCREENHEIGHT + RollHeight + BottomHeitht) {
             self.upViewLabel.text = @"继续拖动,查看图文详情";
         }else { }
     }else {
-        if (offset <= -60) {
-            self.downViewLabel.text = @"释放返回商品详情";
-        }else {
-            self.downViewLabel.text = @"下拉返回商品详情";
-        }
+        self.downViewLabel.text = (offset<= - 60) ? @"释放返回商品详情" : @"下拉返回商品详情";
     }
 }
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -646,8 +649,10 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             if ([paramer isKindOfClass:[NSMutableDictionary class]] && [paramer objectForKey:@"type"]) {
+                [MobClick event:@"TeamAddShoppingCartSuccess"];
                 [self getCartsFirstGoodsInfo];
             }else {
+                [MobClick event:@"addShoppingCartSuccess"];
                 [MBProgressHUD showSuccess:@"加入购物车成功"];
                 self.cartsLabel.hidden = NO;
                 self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
@@ -660,8 +665,10 @@
     } WithFail:^(NSError *error) {
         if (!_isTeamBuyGoods) {
             [self hideMaskView];
+            [MobClick event:@"addShoppingCartFail"];
             [MBProgressHUD showError:@"加入购物车失败"];
         }else {
+            [MobClick event:@"TeamAddShoppingCartFail"];
             [MBProgressHUD showError:@"拼团失败"];
         }
     } Progress:^(float progress) {

@@ -17,7 +17,7 @@
 
 @end
 
-static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
+static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier";
 
 @implementation JMHomeCollectionController {
     NSString *_nextPageUrl;
@@ -34,6 +34,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
     [super viewDidLoad];
     [self createCollectionView];
     [self createPullFooterRefresh];
+    
     
 }
 #pragma mrak 刷新界面
@@ -71,7 +72,7 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 }
 - (void)loadMore
 {
-    if ([_nextPageUrl isKindOfClass:[NSNull class]] || _nextPageUrl == nil || [_nextPageUrl isEqual:@""]) {
+    if ([NSString isStringEmpty:_nextPageUrl]) {
         [self endRefresh];
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
 //        [MBProgressHUD showMessage:@"加载完成,没有更多数据"];
@@ -102,14 +103,13 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
         [_numArray addObject:index];
         
     }
-    if((_numArray != nil) && (_numArray.count > 0)){
+    if((_numArray != nil) && (_numArray.count > 0)) {
         @try{
             [self.collectionView insertItemsAtIndexPaths:_numArray];
             [_numArray removeAllObjects];
             _numArray = nil;
         }
-        @catch(NSException *except)
-        {
+        @catch(NSException *except) {
             NSLog(@"DEBUG: failure to batch update.  %@", except.description);
         }
     }
@@ -130,24 +130,25 @@ static NSString * homeCollectionIndefir = @"homeCollectionIndefir";
 //    [self.collectionView.collectionViewLayout invalidateLayout];
     [self.view addSubview:self.collectionView];
     
-    [self.collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:homeCollectionIndefir];
-    
+    [self.collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:CS_STRING([self class])];
+    NSLog(@"%@",CS_STRING([self class]));
 }
 
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//    return 1;
-//}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:homeCollectionIndefir forIndexPath:indexPath];
+    JMRootgoodsCell *cell = (JMRootgoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CS_STRING([self class]) forIndexPath:indexPath];
+    if (self.dataSource.count == 0) {
+        return cell;
+    }
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
     [cell fillData:model];
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [MobClick event:@"checkGoodsDetailClick"];
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     detailVC.readImageUrl = model.head_img;

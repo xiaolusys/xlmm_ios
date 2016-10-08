@@ -65,5 +65,6 @@
 - (IBAction)accountBtnAction:(id)sender;
 
 - (IBAction)commonProblemBtnAction:(id)sender;
+- (IBAction)mamaShopClick:(id)sender;
 
 @end

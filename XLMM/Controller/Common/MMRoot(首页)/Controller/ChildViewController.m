@@ -158,7 +158,7 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)loadMore {
     
     NSLog(@"lodeMore url = %@", nextUrl);
-    if ([nextUrl isKindOfClass:[NSNull class]] || nextUrl == nil || [nextUrl isEqual:@""]) {
+    if ([NSString isStringEmpty:nextUrl]) {
         [self endRefresh];
         [self.childCollectionView.mj_footer endRefreshingWithNoMoreData];
         return;

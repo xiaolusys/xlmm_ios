@@ -311,6 +311,7 @@ static BOOL isAgreeTerms = YES;
         }else {
             self.isEnoughBudget = NO;
         }
+//        self.isEnoughBudget = self.isUseXLW ? YES : NO;
         _discount = _amontPayment;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
         NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];

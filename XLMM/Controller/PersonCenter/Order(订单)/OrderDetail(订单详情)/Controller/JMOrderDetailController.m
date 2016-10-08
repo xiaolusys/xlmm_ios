@@ -63,6 +63,7 @@
     NSInteger _rowCount;
     NSString *_checkTeamBuy;                   // 查看开团进展
     bool _isCanRefund;                         // 开团后是否可以退款
+    NSInteger redPageNumber;                   // 红包数量
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -251,6 +252,7 @@
     self.shareModel.desc = [shareDict objectForKey:@"description"]; // 文字详情
     self.shareModel.title = [shareDict objectForKey:@"title"]; //标题
     self.shareModel.share_link = [shareDict objectForKey:@"share_link"];
+    redPageNumber = [shareDict[@"share_times_limit"] integerValue];
 }
 #pragma mark 请求数据
 - (void)loadDataSource {
@@ -262,8 +264,8 @@
         [self.dataSource removeAllObjects];
         [self.logisticsArr removeAllObjects];
         [self refetchData:responseObject];
-        [self endRefresh];
         [self.tableView reloadData];
+        [self endRefresh];
     } WithFail:^(NSError *error) {
         [self endRefresh];
         [MBProgressHUD showError:@"获取数据失败"];
@@ -306,10 +308,12 @@
     }
     // ===== 订单详情包裹分包数据源模型 =======
     NSArray *packArr = dicJson[@"package_orders"];
+    NSLog(@"%@",packArr);
     for (NSDictionary *packDic in packArr) {
         self.packageModel = [JMPackAgeModel mj_objectWithKeyValues:packDic];
         [self.logisticsArr addObject:self.packageModel];
     }
+    NSLog(@"%@",self.logisticsArr);
     // ===== 订单退款选择是否弹出选择退款方式 ===== //
     _choiseRefundArr = [NSArray array];
     _choiseRefundArr = _refundDic[@"refund_choices"];
@@ -352,8 +356,7 @@
         }else {
             NSDictionary *dict2 = goodsArr[number];
             NSString *package2 = dict2[@"package_order_id"];
-            if ([package isEqualToString: package2]) {
-                
+            if ([package isEqual:package2]) {
             }else {
                 package = package2;
                 [self.dataSource addObject:dataArr];
@@ -407,18 +410,18 @@
     return 90;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
+    static NSString *cellID = @"JMOrderDetailController";
     JMBaseGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     self.orderGoodsModel = [[JMOrderGoodsModel alloc] init];
     self.orderGoodsModel = self.dataSource[indexPath.section][indexPath.row];
-//    if (self.logisticsArr.count == 0) {
-//        self.packageModel = nil;
-//    }else {
-//        self.packageModel = self.logisticsArr[indexPath.section];
-//    }
+    if (self.logisticsArr.count == 0) {
+        self.packageModel = nil;
+    }else {
+        self.packageModel = self.logisticsArr[indexPath.section];
+    }
     cell.isTeamBuy = _isTeamBuy;
     cell.isCanRefund = _isCanRefund;
 //    [cell configWithModel:self.orderGoodsModel PackageModel:self.packageModel SectionCount:indexPath.section RowCount:indexPath.row];
@@ -432,7 +435,11 @@
     if (self.logisticsArr.count == 0) {
         return 0;
     }else {
-        return 35;
+        if (self.logisticsArr.count > section) {
+            return 35;
+        }else {
+            return 0;
+        }
     }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -442,10 +449,7 @@
     }else {
         JMOrderDetailSectionView *sectionView = [[JMOrderDetailSectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
         sectionView.indexSection = section;
-        if (section >= self.logisticsArr.count) {
-        }else {
-            self.packageModel = self.logisticsArr[section];
-        }
+        self.packageModel = self.logisticsArr[section];
         sectionView.packAgeStr = self.packageModel.assign_status_display;
         sectionView.delegate = self;
         return sectionView;
@@ -494,14 +498,10 @@
     NSArray *arr = self.dataSource[section];
     JMOrderGoodsModel *model = arr[row];
     if (button.tag == 100) {
-        if (self.logisticsArr.count > 0) {
-            self.packageModel = self.logisticsArr[section];
-        }else {
-            self.packageModel = nil;
-        }
+        self.packageModel = self.logisticsArr[section];
 //        NSDictionary *dcit = [self.packageModel mj_keyValues];
         NSInteger statusCode = [self.orderDetailModel.status integerValue];
-        BOOL isWarehouseOrder = (self.packageModel.assign_time == nil && self.packageModel.book_time != nil && self.packageModel.finish_time == nil && statusCode == 2);
+        BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.finish_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
             [self createClassPopView:@"提示" Message:@"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。" Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
@@ -569,14 +569,18 @@
         menu.contentView = self.refundVC.view;
     }else if (index == 102) {
         //分享红包
-        JMShareViewController *shareView = [[JMShareViewController alloc] init];
-        self.shareView = shareView;
-        self.shareView.model = self.shareModel;
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        //弹出视图
-        JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
-        shareMenu.contentView = self.shareView.view;
+        if (redPageNumber > 0) {
+            JMShareViewController *shareView = [[JMShareViewController alloc] init];
+            self.shareView = shareView;
+            self.shareView.model = self.shareModel;
+            JMShareView *cover = [JMShareView show];
+            cover.delegate = self;
+            //弹出视图
+            JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+            shareMenu.contentView = self.shareView.view;
+        }else {
+           [self createClassPopView:@"分享提示" Message:@"红包数量不足,分享失败。如有疑问,请咨询小鹿客服哦~!" Index:4];
+        }
     }else {  // 查看拼团进展
         NSDictionary *diction = [NSMutableDictionary dictionary];
         [diction setValue:_checkTeamBuy forKey:@"web_url"];
@@ -764,6 +768,12 @@
             }
         };
     }else if (index == 3) {
+        self.classPopView.block = ^(NSInteger index) {
+            [weakSelf hideClassPopView];
+            if (index == 101) {
+            }
+        };
+    }else if (index == 4) {
         self.classPopView.block = ^(NSInteger index) {
             [weakSelf hideClassPopView];
             if (index == 101) {

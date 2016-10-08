@@ -24,8 +24,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
-//记录当前页
-@property (nonatomic,assign) NSInteger currentPage;
+
 @property (nonatomic,strong) UIButton *topButton;
 
 @end
@@ -82,7 +81,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 - (void)loadMore
 {
-    if ([_urlStr isKindOfClass:[NSNull class]] || _urlStr == nil || [_urlStr isEqual:@""]) {
+    if ([NSString isStringEmpty:_urlStr]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
@@ -153,16 +152,11 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 
 
 #pragma makr --UITableViewDelegate
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TixianTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentify];
-    
     if (!cell) {
         cell = [[TixianTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentify];
     }

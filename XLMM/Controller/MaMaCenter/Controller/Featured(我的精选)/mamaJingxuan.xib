@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,27 +12,23 @@
             <rect key="frame" x="0.0" y="0.0" width="418" height="180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小鹿妈妈de精选集" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60S-BL-i6W">
-                    <rect key="frame" x="140" y="144" width="139" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="小鹿妈妈de精选集" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60S-BL-i6W">
+                    <frame key="frameInset" minX="140" minY="144" width="139" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wodejingxuantouxiangicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="wck-aM-1MF">
-                    <rect key="frame" x="172" y="65" width="74" height="74"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="74" id="4YN-j9-TBD"/>
                         <constraint firstAttribute="height" constant="74" id="hoa-4h-Blx"/>
                     </constraints>
                 </imageView>
                 <view tag="200" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKZ-IS-eUi">
-                    <rect key="frame" x="179" y="72" width="60" height="60"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" tag="888" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-76.png" translatesAutoresizingMaskIntoConstraints="NO" id="rHi-ss-e7f">
-                            <rect key="frame" x="3" y="3" width="54" height="54"/>
-                        </imageView>
+                        <imageView userInteractionEnabled="NO" tag="888" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-76.png" translatesAutoresizingMaskIntoConstraints="NO" id="rHi-ss-e7f"/>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="rHi-ss-e7f" secondAttribute="trailing" constant="3" id="0I3-va-7cV"/>
                         <constraint firstAttribute="bottom" secondItem="rHi-ss-e7f" secondAttribute="bottom" constant="3" id="4cC-7v-Hft"/>
@@ -42,7 +39,6 @@
                     </constraints>
                 </view>
                 <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkX-iE-agD">
-                    <rect key="frame" x="8" y="24" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="O5f-nb-YKh"/>
                         <constraint firstAttribute="width" constant="40" id="h45-Fw-be7"/>
@@ -50,7 +46,6 @@
                     <state key="normal" backgroundImage="wodejingxuanfanhui.png"/>
                 </button>
                 <button opaque="NO" tag="2000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isj-YZ-Ngt">
-                    <rect key="frame" x="318" y="24" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="MLA-B4-lP1"/>
                         <constraint firstAttribute="width" constant="40" id="gzg-vI-u3B"/>
@@ -58,18 +53,15 @@
                     <state key="normal" backgroundImage="wodejingxuanyulan.png"/>
                 </button>
                 <button opaque="NO" tag="3000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E2t-lt-iT7">
-                    <rect key="frame" x="370" y="24" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="HaT-Rk-ZMR"/>
                         <constraint firstAttribute="width" constant="40" id="lI4-rw-2jh"/>
                     </constraints>
                     <state key="normal" backgroundImage="wodejingxuanfenxiang.png"/>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wodejingxuanback.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xm0-h7-8p3">
-                    <rect key="frame" x="0.0" y="0.0" width="418" height="180"/>
-                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wodejingxuanback.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xm0-h7-8p3"/>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="wck-aM-1MF" firstAttribute="centerX" secondItem="Xm0-h7-8p3" secondAttribute="centerX" id="31f-zp-MQJ"/>
                 <constraint firstItem="nKZ-IS-eUi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="72" id="9Kj-RM-NXC"/>

@@ -8,6 +8,7 @@
 
 #import "HuoyuezhiTableViewCell.h"
 #import "HuoyuezhiModel.h"
+#import "MMClass.h"
 
 @implementation HuoyuezhiTableViewCell
 
@@ -32,16 +33,13 @@
 }
 
 - (void)fillDataOfCell:(HuoyuezhiModel *)activeM {
-    self.timeLabel.text = [self dealDate:activeM.created];
+    self.timeLabel.text = [NSString jm_subWithHourAndMinute:activeM.created];
     self.statusLabel.text = activeM.status_display;
     self.desLabel.text = activeM.value_description;
     self.carryLabel.text = [NSString stringWithFormat:@"＋%@", activeM.value_num];
 }
-- (NSString *)dealDate:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *hour = strarray[1];
-    NSString *time = [hour substringToIndex:5];
-    return time;
-}
+
+
+
 
 @end

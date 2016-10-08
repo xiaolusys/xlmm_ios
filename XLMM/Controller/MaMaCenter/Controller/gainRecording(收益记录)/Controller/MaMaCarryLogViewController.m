@@ -117,7 +117,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 //加载更多
 - (void)loadMore {
-    if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
+    if ([NSString isStringEmpty:self.nextPage]) {
         [self.tableView.mj_footer endRefreshing];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;

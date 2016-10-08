@@ -21,8 +21,7 @@
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
 #import "JMToolMacro.h"
-#import "NSString+DeleteT.h"
-
+#import "NSString+CSCommon.h"
 
 
 //#import "NSDictionary+Log.h"
@@ -64,7 +63,7 @@
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)
 
 
-
+#define kVisitorDay @14      // 加载访客记录(天数)
 #define KTITLENAME @"小鹿美美"
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
 #define LOADIMAGE(a) [UIImage imageNamed:a]

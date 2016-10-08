@@ -104,7 +104,7 @@
     }];
 }
 - (void)loadMore {
-    if ([_nextPage isKindOfClass:[NSNull class]] || _nextPage == nil || [_nextPage isEqual:@""]) {
+    if ([NSString isStringEmpty:_nextPage]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;

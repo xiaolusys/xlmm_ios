@@ -237,7 +237,7 @@
     }else if (index == 105) {
         _isCopy = YES;
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
-        if ([_url isKindOfClass:[NSNull class]] || _url == nil || [_url isEqual:@""]) {
+        if ([NSString isStringEmpty:_url]) {
             [MBProgressHUD showMessage:@"复制失败"];
         }else {
             [pab setString:_url];
