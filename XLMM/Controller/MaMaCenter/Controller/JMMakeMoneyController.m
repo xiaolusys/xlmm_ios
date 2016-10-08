@@ -669,7 +669,7 @@
         [self.navigationController pushViewController:renewVC animated:YES];
     }else if (index == 108) {
         TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-        today.visitorDate = @7;
+        today.visitorDate = kVisitorDay;
         [self.navigationController pushViewController:today animated:YES];
     }else if (index == 109) {
         MaMaOrderListViewController *order = [[MaMaOrderListViewController alloc] init];

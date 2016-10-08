@@ -368,7 +368,7 @@
         [self.navigationController pushViewController:carry animated:YES];
     }else if (index == 102) {
         TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-        today.visitorDate = @7;
+        today.visitorDate = kVisitorDay;
         [self.navigationController pushViewController:today animated:YES];
     }else if (index == 103) {
         MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
