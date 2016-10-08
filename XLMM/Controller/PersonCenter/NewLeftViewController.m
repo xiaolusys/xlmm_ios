@@ -481,12 +481,12 @@
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
                 [self.pushVCDelegate rootVCPushOtherVC:mamaCenterVC];
             }
+            [self.sideMenuViewController hideMenuViewController];
         }else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"暂时不是小鹿妈妈,请`````````" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"您还不是小鹿妈妈,请关注小鹿美美公众号,获取更多信息哦~" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];
         }
-        
-        [self.sideMenuViewController hideMenuViewController];
+
     }else{
         
         [self.sideMenuViewController hideMenuViewController];
