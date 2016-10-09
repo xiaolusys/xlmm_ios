@@ -245,7 +245,6 @@
     }];
 }
 - (void)loaderweimaData {
-    _qrCodeRequestDataIndex ++;
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/qrcode/get_wxpub_qrcode");
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
@@ -258,7 +257,8 @@
         }
 
     } WithFail:^(NSError *error) {
-        if (_qrCodeRequestDataIndex <= 2) {
+        _qrCodeRequestDataIndex ++;
+        if (_qrCodeRequestDataIndex <= 3) {
             [self performSelector:@selector(loaderweimaData) withObject:nil afterDelay:1.0];
         }
     } Progress:^(float progress) {
