@@ -382,6 +382,7 @@
         JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
         mamaCenterFansVC.fansNum = _fansNum;
         mamaCenterFansVC.fansUrlStr = _fansWebUrl;
+        mamaCenterFansVC.index = 100;
         [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
     }else if (index == 106) {
         JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];

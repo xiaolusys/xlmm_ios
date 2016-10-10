@@ -76,7 +76,7 @@
 
 - (void)createPageView {
     self.pageControll = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    self.pageControll.view.frame = CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99);
+    self.pageControll.view.frame = CGRectMake(0, 104, SCREENWIDTH, SCREENHEIGHT - 104);
     self.pageControll.view.userInteractionEnabled = YES;
     self.pageControll.dataSource = self;
     self.pageControll.delegate = self;
@@ -113,11 +113,11 @@
     return @[@"粉丝列表", @"未来粉丝", @"关于粉丝"];
 }
 - (void)createFansBtn {
-    self.headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 35)];
+    self.headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
     
     //创建button
-    self.btnView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 35)];
-    UIView *btnlineView = [[UIView alloc] initWithFrame:CGRectMake(0, 34, SCREENWIDTH, 1)];
+    self.btnView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
+    UIView *btnlineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39, SCREENWIDTH, 1)];
     btnlineView.backgroundColor = [UIColor lightGrayColor];
     btnlineView.alpha = 0.3;
     [self.btnView addSubview:btnlineView];
@@ -128,7 +128,7 @@
     CGFloat buttonW = SCREENWIDTH / nameArr.count;
     for (int i = 0; i < nameArr.count; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(i * buttonW, 0, buttonW, 34);
+        btn.frame = CGRectMake(i * buttonW, 0, buttonW, 39);
         btn.titleLabel.font =  [UIFont systemFontOfSize: 14];
         [btn setTitle:nameArr[i] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor textDarkGrayColor] forState:UIControlStateNormal];

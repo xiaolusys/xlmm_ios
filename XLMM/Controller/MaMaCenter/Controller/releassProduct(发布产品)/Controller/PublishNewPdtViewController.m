@@ -88,7 +88,7 @@
     indexCode = 0;
     _qrCodeRequestDataIndex = 0;
 //    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
-    [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
+    [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
 //    [self loaderweimaData];
     
@@ -334,11 +334,11 @@
         
         //改变label的高
         if (self.isLoad) {
-            CGSize titleSize = [picModel.title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+            CGSize titleSize = [picModel.descriptionTitle boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
             headerV.desheight.constant = titleSize.height + 10;
         }
         
-        headerV.propagandaLabel.text = picModel.title;
+        headerV.propagandaLabel.text = picModel.descriptionTitle;
         NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
         return headerV;
@@ -379,7 +379,7 @@
         return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
     }else {
         SharePicModel *picModel = self.dataArr[section];
-        NSString *title = picModel.title;
+        NSString *title = picModel.descriptionTitle;
         CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
         if (titleSize.width < 30) {
             return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
@@ -419,8 +419,8 @@
         [alert show];
     }else {
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
-//        NSLog(@"---------%@", picModel.title);
-        [pab setString:picModel.title];
+//        NSLog(@"---------%@", picModel.descriptionTitle);
+        [pab setString:picModel.descriptionTitle];
         if (pab == nil) {
             [MobClick event:@"DaysPush_fail"];
             [MBProgressHUD showError:@"请重新复制文案"];

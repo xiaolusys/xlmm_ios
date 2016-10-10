@@ -29,6 +29,8 @@
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
 
+
+
 @interface JMMakeMoneyController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSMutableDictionary *_webDict;
     CGFloat _carryValue;

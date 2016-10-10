@@ -121,7 +121,6 @@
         if (self.index == i)continue;
     
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(i * SWIDTH , 0, 80, 80)];
-
 //        __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 //        activityIndicator.center = imageV.center;
 //        [activityIndicator startAnimating];

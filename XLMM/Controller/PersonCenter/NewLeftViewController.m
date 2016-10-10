@@ -285,7 +285,6 @@
 - (IBAction)suggestionClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        JMWithDrawDetailController *yijianVC = [[JMWithDrawDetailController alloc] init];
         JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
