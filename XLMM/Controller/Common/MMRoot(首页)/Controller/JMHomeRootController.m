@@ -38,6 +38,7 @@
 #import "JMAutoLoopPageView.h"
 #import "JMHomeHeaderCell.h"
 #import "JMHomeRootCategoryController.h"
+#import "JMStoreManager.h"
 
 // 主页分类 比例布局
 #define HomeCategoryRatio               SCREENWIDTH / 320.0
@@ -411,6 +412,8 @@
     for (NSDictionary *dicts in categoryArr) {
         [_categorysArray addObject:dicts];
     }
+    [JMStoreManager storeobject:_categorysArray FileName:@"categorysArray"];
+    
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
         JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];

@@ -15,7 +15,6 @@
 #import "YoumengShare.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
-#import "MMDetailsViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "UUID.h"

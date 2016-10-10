@@ -28,6 +28,7 @@
 #import "JMSettingController.h"
 #import "JMMaMaRootController.h"
 
+
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
 @end
@@ -283,7 +284,6 @@
 }
 #pragma mark -- 投诉建议
 - (IBAction)suggestionClicked:(id)sender {
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {

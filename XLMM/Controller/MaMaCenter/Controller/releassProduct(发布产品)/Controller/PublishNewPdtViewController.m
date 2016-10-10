@@ -15,14 +15,14 @@
 #import "SharePicModel.h"
 #import "CountdownView.h"
 #import "UILabel+CustomLabel.h"
-
+#import "JMStoreManager.h"
 
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
 
 @interface PublishNewPdtViewController () {
-//    NSString *qrCodeUrlString;
+    NSString *_qrCodeUrlString;
     NSInteger indexCode;
     NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
 }
@@ -91,9 +91,9 @@
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
 //    [self loaderweimaData];
-    
+    _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
     [self dingshishuaxin];
-    if ([NSString isStringEmpty:self.qrCodeUrlString]) {
+    if ([NSString isStringEmpty:_qrCodeUrlString]) {
         [self loaderweimaData];
     }else {
         [self loadPicData];
@@ -146,7 +146,7 @@
     flowLayout.minimumLineSpacing = 1.5;
     
     
-    self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
+    self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104) collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
     
     if (hour > 6 || hour == 6) {
@@ -175,6 +175,10 @@
 }
 - (void)loadPicData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
+    if (self.categoryCidString) {
+        urlString = [NSString stringWithFormat:@"%@?%@",urlString,self.categoryCidString];
+    }
+    
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
@@ -204,7 +208,7 @@
 - (void)fetchErweimaData:(NSDictionary *)dict {
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 0) {
-        self.qrCodeUrlString = dict[@"qrcode_link"];
+        _qrCodeUrlString = dict[@"qrcode_link"];
     }else {
         [MBProgressHUD showWarning:dict[@"info"]];
     }
@@ -228,9 +232,9 @@
 }
 
 - (void)requestData:(NSArray *)data {
-    
-    
+
     if (data.count == 0) {
+        [MBProgressHUD hideHUDForView:self.view];
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
         [self.view addSubview:timeView];
         
@@ -252,11 +256,11 @@
     for (NSMutableDictionary *oneTurns in data) {
         NSMutableArray *muArray = [NSMutableArray arrayWithArray:oneTurns[@"pic_arry"]];
         NSInteger countNum = muArray.count;
-        if (![NSString isStringEmpty:self.qrCodeUrlString]) {
+        if (![NSString isStringEmpty:_qrCodeUrlString]) {
             if (countNum < 9) {
-                [muArray addObject:self.qrCodeUrlString];
+                [muArray addObject:_qrCodeUrlString];
             }else {
-                [muArray replaceObjectAtIndex:4 withObject:self.qrCodeUrlString];
+                [muArray replaceObjectAtIndex:4 withObject:_qrCodeUrlString];
             }
         }
         SharePicModel *sharePic = [SharePicModel mj_objectWithKeyValues:oneTurns];

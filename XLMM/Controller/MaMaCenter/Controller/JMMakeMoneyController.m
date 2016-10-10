@@ -28,6 +28,7 @@
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
+#import "JMPushingDaysController.h"
 
 
 
@@ -646,9 +647,11 @@
         ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
         [self.navigationController pushViewController:previous animated:YES];
     }else if (index == 104) {
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-        publish.qrCodeUrlString = self.qrCodeUrlString;
-        [self.navigationController pushViewController:publish animated:YES];
+        JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
+        [self.navigationController pushViewController:pushingVC animated:YES];
+//        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+//        publish.qrCodeUrlString = self.qrCodeUrlString;
+//        [self.navigationController pushViewController:publish animated:YES];
     }else if (index == 105) {
         ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
         [self.navigationController pushViewController:product animated:YES];

@@ -16,4 +16,13 @@
 //检测 缓存文件 是否超时
 + (BOOL)isTimeOutWithFile:(NSString *)filePath timeOut:(double)timeOut;
 
+
+
+
+
+
+
+
+
+
 @end

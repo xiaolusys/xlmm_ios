@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DingdanModel.h"
 #import "JMAllOrderModel.h"
 
 @interface JMOrderDetailController : UIViewController

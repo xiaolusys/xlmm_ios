@@ -11,7 +11,7 @@
 #import "NSString+URL.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
-#import "MMDetailsViewController.h"
+#import "JMHomeRootController.h"
 #import "XlmmMall.h"
 #import "ChildViewController.h"
 #import "ProductSelectionListViewController.h"

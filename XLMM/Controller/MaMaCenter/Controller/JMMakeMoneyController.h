@@ -23,6 +23,5 @@
 
 @property (nonatomic, strong) NSArray *mamaResults;
 
-@property (nonatomic, copy) NSString *qrCodeUrlString;
 
 @end

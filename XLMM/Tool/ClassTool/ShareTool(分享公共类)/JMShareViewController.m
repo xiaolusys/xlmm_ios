@@ -148,7 +148,7 @@
     _imageData = [UIImage imagewithURLString:_imageUrlString];
     _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
-    _titleUrlString = [NSString stringWithFormat:@"%@ %@",_content,_url];
+    _titleUrlString = [NSString stringWithFormat:@"%@",_content];
     
     NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
 }

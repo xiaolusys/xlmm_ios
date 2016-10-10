@@ -18,7 +18,7 @@
 #import "JMMaMaExtraModel.h"
 #import "JMHomeActiveModel.h"
 #import "Udesk.h"
-
+#import "JMStoreManager.h"
 
 @interface JMMaMaRootController () {
     NSInteger _indexCode;
@@ -251,11 +251,9 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             qrCodeUrlString = responseObject[@"qrcode_link"];
-            self.makeMoneyVC.qrCodeUrlString = qrCodeUrlString;
+            [JMStoreManager storeUserDefults:qrCodeUrlString forKey:@"qrCodeUrlString"];
         }else {
-            
         }
-
     } WithFail:^(NSError *error) {
         _qrCodeRequestDataIndex ++;
         if (_qrCodeRequestDataIndex <= 3) {

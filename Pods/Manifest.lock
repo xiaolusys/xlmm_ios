@@ -26,7 +26,6 @@ PODS:
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
-  - SVProgressHUD (2.0.3)
   - UMengAnalytics-NO-IDFA (4.0.5)
 
 DEPENDENCIES:
@@ -38,7 +37,6 @@ DEPENDENCIES:
   - Qiniu (~> 7.1)
   - RESideMenu (~> 4.0.7)
   - SDWebImage (~> 3.8.1)
-  - SVProgressHUD (~> 2.0.3)
   - UMengAnalytics-NO-IDFA
 
 SPEC CHECKSUMS:
@@ -51,9 +49,8 @@ SPEC CHECKSUMS:
   Qiniu: 0e92ff0d1b9afbc55275306671284e4ebeb08d03
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   UMengAnalytics-NO-IDFA: 965a219b05475ff2a4c09a164139a27bbaa0e25b
 
-PODFILE CHECKSUM: c1209d8e7ff4014d98facf0c84b5c1d8f9b24bab
+PODFILE CHECKSUM: fd1d25e52e783e48f3ac763db482cbf85b759c09
 
 COCOAPODS: 1.0.1

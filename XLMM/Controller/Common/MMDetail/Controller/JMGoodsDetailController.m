@@ -237,15 +237,6 @@
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
-//    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
-//    self.goodsScrollView = scrollView;
-//    scrollView.jm_scrollDataSource = self;
-//    scrollView.jm_scrollDelegate = self;
-//    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight);
-//    scrollView.jm_isStopScrollForSingleCount = NO;
-//    scrollView.jm_autoScrollInterval = 3.;
-//    [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
-//    self.tableView.tableHeaderView = scrollView;
 }
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
@@ -537,10 +528,11 @@
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
             self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, -offset / 2.0f);
             CGFloat scrolHeight = HeaderScrolHeight - 80;
-            NSLog(@"%.f ------ %.f ",offset,scrolHeight);
-            self.navigationView.alpha = (offset / scrolHeight);
-            self.backToRootView.alpha = 0.7 - (offset / scrolHeight);
-            self.shareView.alpha = 0.7 - (offset / scrolHeight);
+            CGFloat yOffset = offset / scrolHeight;
+            yOffset = MAX(0, MIN(1, yOffset));
+            self.navigationView.alpha = yOffset;
+            self.backToRootView.alpha = 0.7 - yOffset;
+            self.shareView.alpha = 0.7 - yOffset;
         }else {
             self.navigationView.alpha = 0.;
         }
