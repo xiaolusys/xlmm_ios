@@ -10,10 +10,20 @@
 
 @implementation SharePicModel
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    if ([key isEqualToString:@"id"]) {
-        _piID = value;
-    }
+//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+//    if ([key isEqualToString:@"id"]) {
+//        _piID = value;
+//    }
+//    if ([key isEqualToString:@"description"]) {
+//        _descriptionTitle = value;
+//    }
+//}
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"piID":@"id",
+             @"descriptionTitle":@"description"};
 }
+
+
 
 @end

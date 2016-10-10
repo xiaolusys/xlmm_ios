@@ -11,8 +11,9 @@
 @interface SharePicModel : NSObject
 
 @property (nonatomic, strong)NSNumber* piID;
-@property (nonatomic, strong)NSString* title;
-@property (nonatomic, strong)NSString* start_time;
+@property (nonatomic, copy)NSString* title;
+@property (nonatomic, copy)NSString* descriptionTitle;
+@property (nonatomic, copy)NSString* start_time;
 @property (nonatomic, strong)NSNumber* turns_num;
 @property (nonatomic, strong)NSArray* pic_arry;
 @property (nonatomic, strong)NSNumber* could_share;

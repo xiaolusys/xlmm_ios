@@ -27,7 +27,6 @@
 #import "JMWithDrawDetailController.h"
 #import "JMSettingController.h"
 #import "JMMaMaRootController.h"
-#import "JMPushingDaysController.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -286,8 +285,7 @@
 - (IBAction)suggestionClicked:(id)sender {
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        JMPushingDaysController *yijianVC = [[JMPushingDaysController alloc] init];
-//        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
+        JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:yijianVC];
         }
