@@ -291,7 +291,6 @@
 		1F27A60D1D261F5100A0F80B /* JMCouponSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A60C1D261F5100A0F80B /* JMCouponSuccessController.m */; };
 		1F27A6101D2627EB00A0F80B /* JMMaMaCenterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A60F1D2627EB00A0F80B /* JMMaMaCenterModel.m */; };
 		1F27A6131D26291000A0F80B /* JMMaMaExtraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6121D26291000A0F80B /* JMMaMaExtraModel.m */; };
-		1F27A61C1D27597100A0F80B /* JMFirstOpen.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6181D27597100A0F80B /* JMFirstOpen.m */; };
 		1F27A61D1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A61A1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m */; };
 		1F27A6251D275A6300A0F80B /* JMPopViewAnimationDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6221D275A6300A0F80B /* JMPopViewAnimationDrop.m */; };
 		1F27A6261D275A6300A0F80B /* JMPopViewAnimationSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A6241D275A6300A0F80B /* JMPopViewAnimationSpring.m */; };
@@ -523,7 +522,6 @@
 		1F56E2A51D3635080092EC91 /* MaMa_renew@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F56E2A41D3635080092EC91 /* MaMa_renew@2x.png */; };
 		1F56E2A81D36439E0092EC91 /* JMPersonWaitPayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2A71D36439E0092EC91 /* JMPersonWaitPayController.m */; };
 		1F56E2AB1D3643F80092EC91 /* JMPersonWaitGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2AA1D3643F80092EC91 /* JMPersonWaitGoodsController.m */; };
-		1F56E2B01D38D2CC0092EC91 /* JMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2AF1D38D2CC0092EC91 /* JMHelper.m */; };
 		1F56E3181D3C79960092EC91 /* areasAddress.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F56E3171D3C79960092EC91 /* areasAddress.json */; };
 		1F5917DB1D5DCD7A003BB786 /* JMDescLabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */; };
 		1F5AE2C31D535CB50022E6E4 /* JMTimerWeakTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5AE2BE1D535CB50022E6E4 /* JMTimerWeakTarget.m */; };
@@ -1302,8 +1300,6 @@
 		1F27A60F1D2627EB00A0F80B /* JMMaMaCenterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaCenterModel.m; sourceTree = "<group>"; };
 		1F27A6111D26291000A0F80B /* JMMaMaExtraModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaExtraModel.h; sourceTree = "<group>"; };
 		1F27A6121D26291000A0F80B /* JMMaMaExtraModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaExtraModel.m; sourceTree = "<group>"; };
-		1F27A6171D27597100A0F80B /* JMFirstOpen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFirstOpen.h; sourceTree = "<group>"; };
-		1F27A6181D27597100A0F80B /* JMFirstOpen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFirstOpen.m; sourceTree = "<group>"; };
 		1F27A6191D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		1F27A61A1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		1F27A6211D275A6300A0F80B /* JMPopViewAnimationDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPopViewAnimationDrop.h; sourceTree = "<group>"; };
@@ -1716,8 +1712,6 @@
 		1F56E2A71D36439E0092EC91 /* JMPersonWaitPayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPersonWaitPayController.m; sourceTree = "<group>"; };
 		1F56E2A91D3643F80092EC91 /* JMPersonWaitGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPersonWaitGoodsController.h; sourceTree = "<group>"; };
 		1F56E2AA1D3643F80092EC91 /* JMPersonWaitGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPersonWaitGoodsController.m; sourceTree = "<group>"; };
-		1F56E2AE1D38D2CC0092EC91 /* JMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHelper.h; sourceTree = "<group>"; };
-		1F56E2AF1D38D2CC0092EC91 /* JMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHelper.m; sourceTree = "<group>"; };
 		1F56E3171D3C79960092EC91 /* areasAddress.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = areasAddress.json; sourceTree = "<group>"; };
 		1F5917D91D5DCD7A003BB786 /* JMDescLabelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDescLabelModel.h; sourceTree = "<group>"; };
 		1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDescLabelModel.m; sourceTree = "<group>"; };
@@ -3496,8 +3490,6 @@
 				1F5418FB1DA3554700804547 /* Device */,
 				1F56E2AC1D373ADC0092EC91 /* store(存储) */,
 				1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */,
-				1F27A6171D27597100A0F80B /* JMFirstOpen.h */,
-				1F27A6181D27597100A0F80B /* JMFirstOpen.m */,
 				1F27A6191D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.h */,
 				1F27A61A1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m */,
 			);
@@ -5050,8 +5042,6 @@
 		1F56E2AD1D38D2B00092EC91 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				1F56E2AE1D38D2CC0092EC91 /* JMHelper.h */,
-				1F56E2AF1D38D2CC0092EC91 /* JMHelper.m */,
 				1FD540C51DAB7FD500E159DB /* JMStoreManager.h */,
 				1FD540C61DAB7FD500E159DB /* JMStoreManager.m */,
 			);
@@ -6725,7 +6715,6 @@
 				1F4C9EAE1D9912600089CE74 /* UdeskDateFormatter.m in Sources */,
 				1FDD07A11D49A2C00010231F /* JMEmptyView.m in Sources */,
 				1FF533721D2CA39C003DEABF /* JMWithdrawCashController.m in Sources */,
-				1F27A61C1D27597100A0F80B /* JMFirstOpen.m in Sources */,
 				1F4C9E801D9912600089CE74 /* UdeskAgentSurvey.m in Sources */,
 				1F3EE5CE1D7FE86B006033FC /* MJPullGifHeader.m in Sources */,
 				183071F81C97BE3700B7665E /* WXLoginController.m in Sources */,
@@ -6824,7 +6813,6 @@
 				1F4C9EB11D9912600089CE74 /* UdeskTools.m in Sources */,
 				184FCFBD1CA6699C00F8FC94 /* SSKeychain.m in Sources */,
 				1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */,
-				1F56E2B01D38D2CC0092EC91 /* JMHelper.m in Sources */,
 				183073D61C97D17800B7665E /* UIColor+FSPalette.m in Sources */,
 				183070EC1C97B83900B7665E /* AccountModel.m in Sources */,
 				1F27A5D21D2520E200A0F80B /* JMAboutFansController.m in Sources */,

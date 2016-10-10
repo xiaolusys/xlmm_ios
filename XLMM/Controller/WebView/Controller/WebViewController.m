@@ -347,7 +347,7 @@
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     menu.contentView = self.shareView.view;
 }
 
@@ -371,7 +371,7 @@
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     menu.contentView = self.shareView.view;
 }
 #pragma mark --- 点击隐藏弹出视图

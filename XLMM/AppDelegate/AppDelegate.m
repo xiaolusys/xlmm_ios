@@ -7,7 +7,7 @@
 //
 #import "MiPushSDK.h"
 #import "AppDelegate.h"
-//#import "Reachability.h"
+#import "JMStoreManager.h"
 #import "Pingpp.h"
 #import "MMClass.h"
 #import "NewLeftViewController.h"
@@ -19,7 +19,7 @@
 #import "JMDevice.h"
 
 #define login @"login"
-#import "JMFirstOpen.h"
+
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
 static BOOL isNetPrompt;
@@ -216,7 +216,7 @@ static BOOL isNetPrompt;
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
-    [JMFirstOpen recoderAppLoadNum];
+    [JMStoreManager recoderAppLoadNum];
     
     self.isFirst = YES;
     

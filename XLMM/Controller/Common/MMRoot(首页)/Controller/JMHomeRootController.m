@@ -25,9 +25,7 @@
 #import "CartViewController.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMRepopView.h"
-#import "JMFirstOpen.h"
 #import "JMUpdataAppPopView.h"
-#import "JMHelper.h"
 #import "AppDelegate.h"
 #import "ChildViewController.h"
 #import "JMMaMaPersonCenterController.h"
@@ -229,7 +227,7 @@
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开5
+    _isFirstOpenApp = [JMStoreManager isFirstLoadApp]; // 判断程序是否第一次打开5
     if (_isFirstOpenApp) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
@@ -986,7 +984,7 @@
     if (oldVersion == nil) {
         [self downLoadUrl:urlCategory];
     }else {
-        if ([oldVersion isEqualToString:isUpData] && [JMHelper isFileExist:@"GoodsItemFile.json"]) {
+        if ([oldVersion isEqualToString:isUpData] && [JMStoreManager isFileExist:@"GoodsItemFile.json"]) {
         }else {
             [self downLoadUrl:urlCategory];
         }
@@ -1035,7 +1033,7 @@
     if (oldVersion == nil) {
         [self startDownload:_downloadURLString];
     }else {
-        [oldVersion isEqualToString:_hash] && [JMHelper isFileExist:@"addressInfo.json"] ? : [self startDownload:_downloadURLString];
+        [oldVersion isEqualToString:_hash] && [JMStoreManager isFileExist:@"addressInfo.json"] ? : [self startDownload:_downloadURLString];
     }
     [defaults setObject:_hash forKey:@"hash"];
     [defaults synchronize];
@@ -1062,7 +1060,7 @@
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
 }
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
-    NSString *addressPath = [JMHelper getFullPathWithFile];
+    NSString *addressPath = [JMStoreManager getFullPathWithFile:@"addressInfo.json"];
     NSURL *pathUrl = [NSURL fileURLWithPath:addressPath];
     NSError *errorCopy;
     

@@ -7,9 +7,45 @@
 //
 
 #import "JMStoreManager.h"
+#define kAppLoadNum @"kAppLoadNum"
+
+
 
 @implementation JMStoreManager
+/**
+ *  记录打开的次数
+ */
++ (void)recoderAppLoadNum {
+    //取出沙盒的key的值
+    NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:kAppLoadNum];
+    
+    if (num == 0) {
+        //第一次打开
+    }else {
+        
+    }
+    NSLog(@"%ld",(long)num);
+    //num++ 记录打开次数加一
+    num ++;
+    NSLog(@"%ld",(long)num);
+    //保存
+    [[NSUserDefaults standardUserDefaults] setInteger:num forKey:kAppLoadNum];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
+/**
+ *  是否是第一次打开
+ */
++ (BOOL)isFirstLoadApp {
+    NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:kAppLoadNum];
+    
+    if (num == 1) {
+        //第一次打开
+        return YES;
+    }else {
+        return NO;
+    }
+}
 /*
     把对象归档存到沙盒里
  */
@@ -84,7 +120,38 @@
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];
 }
 
-
+//获取 一个文件 在沙盒Library/Caches/ 目录下的路径
++ (NSString *)getFullPathWithFile:(NSString *)fileName {
+    //先获取 沙盒中的Library/Caches/路径
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *myCacheDirectory = [docPath stringByAppendingPathComponent:fileName];
+    //检测MyCaches 文件夹是否存在
+    if (![[NSFileManager defaultManager] fileExistsAtPath:myCacheDirectory]) {
+        //不存在 那么创建
+        [[NSFileManager defaultManager] createDirectoryAtPath:myCacheDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    //    NSString * newName = urlName;
+    
+    return myCacheDirectory;
+}
+//检测 缓存文件 是否超时
++ (BOOL)isTimeOutWithFile:(NSString *)filePath timeOut:(double)timeOut {
+    //获取文件的属性
+    NSDictionary *fileDict = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+    //获取文件的上次的修改时间
+    NSDate *lastModfyDate = fileDict.fileModificationDate;
+    //算出时间差 获取当前系统时间 和 lastModfyDate时间差
+    NSTimeInterval sub = [[NSDate date] timeIntervalSinceDate:lastModfyDate];
+    if (sub < 0) {
+        sub = -sub;
+    }
+    //比较是否超时
+    if (sub > timeOut) {
+        //如果时间差 大于 设置的超时时间 那么就表示超时
+        return YES;
+    }
+    return NO;
+}
 
 
 @end

@@ -9,6 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface JMStoreManager : NSObject
+/**
+ *  记录程序打开的次数
+ */
++ (void)recoderAppLoadNum;
+
+/**
+ *  是否是第一次打开程序
+ */
++ (BOOL)isFirstLoadApp;
 
 /*
     把对象归档存储到沙盒中
@@ -40,7 +49,10 @@
  */
 + (void)removeUserDataForkey:(NSString*)key;
 
-
+//获取 一个文件 在沙盒沙盒Library/Caches/ 目录下的路径
++ (NSString *)getFullPathWithFile:(NSString *)fileName;
+//检测 缓存文件 是否超时
++ (BOOL)isTimeOutWithFile:(NSString *)filePath timeOut:(double)timeOut;
 
 
 
