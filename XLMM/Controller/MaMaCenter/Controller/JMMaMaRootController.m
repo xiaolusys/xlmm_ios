@@ -24,6 +24,8 @@
     NSInteger _indexCode;
     BOOL _isActiveClick;
     NSArray *_titleArr;
+    NSString *qrCodeUrlString;          // 二维码图片
+    NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -96,8 +98,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _indexCode = 0;
+    _qrCodeRequestDataIndex = 0;
+    qrCodeUrlString = @"";
     _isActiveClick = NO;
     
     [self createSegmentView];
@@ -106,6 +111,8 @@
     
     [self loadMaMaWeb];
     [self loadDataSource];
+    [self loadfoldLineData];
+    [self loaderweimaData];
     
 }
 
@@ -145,10 +152,11 @@
     NSDictionary *extraDic = self.mamaCenterModel.extra_info;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
 //    _mamaID = self.mamaCenterModel.mama_id;
-    self.mineVC.extraModel = self.extraModel;
+//    self.mineVC.extraModel = self.extraModel;
     self.mineVC.mamaCenterModel = self.mamaCenterModel;
     
-    self.makeMoneyVC.extraFiguresDic = fortuneDic[@"extra_figures"];
+    self.makeMoneyVC.centerModel = self.mamaCenterModel;
+//    self.makeMoneyVC.extraFiguresDic = fortuneDic[@"extra_figures"];
     self.mineVC.extraFiguresDic = fortuneDic[@"extra_figures"];
     
 }
@@ -222,6 +230,43 @@
     }
     [self earningPrompt];
 }
+// 折线图数据请求
+- (void)loadfoldLineData {
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/dailystats?from=0&days=14", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:chartUrl WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject)return ;
+        NSArray *arr = responseObject[@"results"];
+        if (arr.count == 0)return;
+        self.makeMoneyVC.mamaResults = arr;
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+}
+- (void)loaderweimaData {
+    NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/qrcode/get_wxpub_qrcode");
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            qrCodeUrlString = responseObject[@"qrcode_link"];
+            self.makeMoneyVC.qrCodeUrlString = qrCodeUrlString;
+        }else {
+            
+        }
+
+    } WithFail:^(NSError *error) {
+        _qrCodeRequestDataIndex ++;
+        if (_qrCodeRequestDataIndex <= 3) {
+            [self performSelector:@selector(loaderweimaData) withObject:nil afterDelay:1.0];
+        }
+    } Progress:^(float progress) {
+        
+    }];
+    
+}
+
 
 #pragma mark 创建小鹿客服入口
 - (void)craeteNavRightButton {

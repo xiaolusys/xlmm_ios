@@ -10,6 +10,13 @@
 
 @interface JMChoiseWithDrawCell : UITableViewCell
 
+
+
 @property (nonatomic, strong) NSDictionary *withDrawDic;
+
+
+
+- (void)configSettingData:(NSDictionary *)dict Index:(NSInteger)index;
+
 
 @end

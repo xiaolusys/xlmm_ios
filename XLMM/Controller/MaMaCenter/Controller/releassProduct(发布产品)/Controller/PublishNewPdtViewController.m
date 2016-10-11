@@ -22,7 +22,9 @@
 
 
 @interface PublishNewPdtViewController () {
-    NSString *qrCodeUrlString;
+//    NSString *qrCodeUrlString;
+    NSInteger indexCode;
+    NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
 }
 
 @property (nonatomic, strong)UICollectionView *picCollectionView;
@@ -81,14 +83,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.view.backgroundColor = [UIColor backgroundlightGrayColor];
     self.navigationController.navigationBarHidden = NO;
-    
-    [self createNavigationBarWithTitle:@"发布产品" selecotr:@selector(backClickAction)];
+    indexCode = 0;
+    _qrCodeRequestDataIndex = 0;
+//    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
+    [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
-    [self loaderweimaData];
+//    [self loaderweimaData];
+    
     [self dingshishuaxin];
+    if ([NSString isStringEmpty:self.qrCodeUrlString]) {
+        [self loaderweimaData];
+    }else {
+        [self loadPicData];
+    }
+    
     
 }
 
@@ -166,7 +176,6 @@
 - (void)loadPicData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [MBProgressHUD hideHUDForView:self.view];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
@@ -178,11 +187,15 @@
 - (void)loaderweimaData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/qrcode/get_wxpub_qrcode");
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-//        [MBProgressHUD hideHUD];
         [self fetchErweimaData:responseObject];
         [self loadPicData];
     } WithFail:^(NSError *error) {
-//        [MBProgressHUD showError:@"获取信息失败"];
+        _qrCodeRequestDataIndex ++;
+        if (_qrCodeRequestDataIndex <= 3) {
+            [self performSelector:@selector(loaderweimaData) withObject:nil afterDelay:0.5];
+        }else {
+            [self loadPicData];
+        }
     } Progress:^(float progress) {
         
     }];
@@ -191,7 +204,7 @@
 - (void)fetchErweimaData:(NSDictionary *)dict {
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 0) {
-        qrCodeUrlString = dict[@"qrcode_link"];
+        self.qrCodeUrlString = dict[@"qrcode_link"];
     }else {
         [MBProgressHUD showWarning:dict[@"info"]];
     }
@@ -235,19 +248,17 @@
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         return;
     }
-    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
+//    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
     for (NSMutableDictionary *oneTurns in data) {
         NSMutableArray *muArray = [NSMutableArray arrayWithArray:oneTurns[@"pic_arry"]];
         NSInteger countNum = muArray.count;
-        if (countNum < 9) {
-            [muArray addObject:qrCodeUrlString];
-        }else {
-            [muArray replaceObjectAtIndex:4 withObject:qrCodeUrlString];
+        if (![NSString isStringEmpty:self.qrCodeUrlString]) {
+            if (countNum < 9) {
+                [muArray addObject:self.qrCodeUrlString];
+            }else {
+                [muArray replaceObjectAtIndex:4 withObject:self.qrCodeUrlString];
+            }
         }
-//        NSArray *arr = [NSArray arrayWithArray:muArray];
-//        [oneTurns setObject:muArray forKey:@"pic_arry"];
-//        oneTurns[@"pic_arry"] = arr;
-//        [sharePic setValuesForKeysWithDictionary:oneTurns];
         SharePicModel *sharePic = [SharePicModel mj_objectWithKeyValues:oneTurns];
         sharePic.pic_arry = muArray;
         [self.dataArr addObject:sharePic];
@@ -257,6 +268,10 @@
     self.isLoad = YES;
     
     [self.picCollectionView reloadData];
+    
+    [MBProgressHUD hideHUDForView:self.view];
+    
+    
 }
 
 #pragma mark --collection的代理方法
@@ -319,11 +334,11 @@
         
         //改变label的高
         if (self.isLoad) {
-            CGSize titleSize = [picModel.title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+            CGSize titleSize = [picModel.descriptionTitle boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
             headerV.desheight.constant = titleSize.height + 10;
         }
         
-        headerV.propagandaLabel.text = picModel.title;
+        headerV.propagandaLabel.text = picModel.descriptionTitle;
         NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
         return headerV;
@@ -364,7 +379,7 @@
         return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
     }else {
         SharePicModel *picModel = self.dataArr[section];
-        NSString *title = picModel.title;
+        NSString *title = picModel.descriptionTitle;
         CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
         if (titleSize.width < 30) {
             return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
@@ -393,7 +408,7 @@
     NSInteger saveIndex = sender.tag - 100;
     self.saveIndex = saveIndex;
     SharePicModel *picModel = self.dataArr[saveIndex];
-    
+//    NSDictionary *dict = [picModel mj_keyValues];
     //判断是否有用户权限
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
     if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
@@ -404,8 +419,8 @@
         [alert show];
     }else {
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
-//        NSLog(@"---------%@", picModel.title);
-        [pab setString:picModel.title];
+//        NSLog(@"---------%@", picModel.descriptionTitle);
+        [pab setString:picModel.descriptionTitle];
         if (pab == nil) {
             [MobClick event:@"DaysPush_fail"];
             [MBProgressHUD showError:@"请重新复制文案"];
@@ -432,10 +447,15 @@
 }
 
 - (void)saveNext {
-    if (self.currentArr.count > 0) {
+    NSInteger countNum = self.currentArr.count;
+    if (countNum > 0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
-            NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg/quality/90", self.currentArr[0]];
-            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:joinUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
+            NSString *picImageUrl = self.currentArr[0];
+            if ([picImageUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
+                picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg/quality/90", picImageUrl];
+            }else {
+            }
+            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
     }
 }

@@ -95,7 +95,7 @@
     
 }
 - (void)loadMore {
-    if ([self.nextPageUrlString isKindOfClass:[NSNull class]] || self.nextPageUrlString == nil || [self.nextPageUrlString isEqual:@""]) {
+    if ([NSString isStringEmpty:self.nextPageUrlString]) {
         [self endRefresh];
         [self.collection.mj_footer endRefreshingWithNoMoreData];
         [self endRefresh];
@@ -162,12 +162,14 @@
             NSLog(@"%@",responseObject);
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
+                [MobClick event:@"cancleStoreUpSuccess"];
                 [self.collection.mj_header beginRefreshing];
             }else {
+                [MobClick event:@"cancleStoreUpFail"];
                 [MBProgressHUD showWarning:responseObject[@"info"]];
             }
         } WithFail:^(NSError *error) {
-            
+            [MobClick event:@"cancleStoreUpFail"];
         } Progress:^(float progress) {
             
         }];

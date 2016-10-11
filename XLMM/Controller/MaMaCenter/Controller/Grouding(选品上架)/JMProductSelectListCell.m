@@ -9,7 +9,6 @@
 #import "JMProductSelectListCell.h"
 #import "MMClass.h"
 #import "JMLevelinfoModel.h"
-#import "NSString+Encrypto.h"
 
 @interface JMProductSelectListCell ()
 

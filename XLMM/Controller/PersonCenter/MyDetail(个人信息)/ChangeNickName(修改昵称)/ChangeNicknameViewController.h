@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^changeNameBlock)(NSString *nameStr);
+
 @interface ChangeNicknameViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *changeNicknameButton;
 @property (weak, nonatomic) IBOutlet UITextField *nicknameField;
 - (IBAction)changeNicknameButtonClick:(id)sender;
 
 @property (nonatomic, copy) NSString *nickNameText;
+@property (nonatomic, copy) changeNameBlock blcok;
+
 
 @end

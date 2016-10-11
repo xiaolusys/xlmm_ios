@@ -117,7 +117,7 @@
     }else {
         self.nameLabel.text = model.nick;
     }
-    self.timeLabel.text = [self composeString:model.modified];
+    self.timeLabel.text = [NSString jm_cutOutYearWihtSec:model.modified];
     self.descLabel.text = model.note;
     
     if (model.mobile == nil) {
@@ -147,7 +147,7 @@
     
     self.descLabel.text = model.visitor_description;
     
-    self.timeLabel.text = [self composeString:model.created];
+    self.timeLabel.text = [NSString jm_cutOutYearWihtSec:model.created];
     
     
     
@@ -167,7 +167,7 @@
     self.nameLabel.text = model.fans_nick;
     
     self.descLabel.text = model.fans_description;
-    self.timeLabel.text = [self composeString:model.created];
+    self.timeLabel.text = [NSString jm_cutOutYearWihtSec:model.created];
     
     if (model.fans_mobile == nil) {
         [self.descLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -181,34 +181,10 @@
     
     
 }
-- (NSString *)dealTime:(NSString *)str {
-    NSArray *arr = [str componentsSeparatedByString:@"T"];
-    NSString *year = arr[0];
-    NSString *time = [year substringFromIndex:5];
-    return time;
-}
 
-- (NSString *)dealVisitorTime:(NSString *)str {
-    NSArray *arr = [str componentsSeparatedByString:@"T"];
-    NSString *year = arr[1];
-    NSString *time = [year substringToIndex:5];
-    return time;
-}
 
-- (NSString *)dealDate:(NSString *)str {
-    NSMutableString *String1 = [[NSMutableString alloc] initWithString:str];
-    [String1 replaceCharactersInRange:NSMakeRange(10, 1) withString:@" "];
-    
-    NSString *string2 = [NSString stringWithFormat:@"%@",String1];
-    NSString *string3 = [string2 substringWithRange:NSMakeRange(5,11)];
-    return string3;
-}
-- (NSString *)composeString:(NSString *)str {
-    NSArray *arr = [str componentsSeparatedByString:@"T"];
-    NSString *string1 = [arr componentsJoinedByString:@" "];
-    NSString *string2 = [string1 substringWithRange:NSMakeRange(5,11)];
-    return string2;
-}
+
+
 @end
 
 

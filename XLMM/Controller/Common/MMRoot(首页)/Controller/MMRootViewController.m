@@ -20,7 +20,6 @@
 #import "WXApi.h"
 #import "MaMaViewController.h"
 #import "MMLoginStatus.h"
-#import "NSString+Encrypto.h"
 #import "PublishNewPdtViewController.h"
 #import "ActivityView.h"
 #import "MMAdvertiseView.h"
@@ -704,7 +703,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
         homeCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
             NSString *nextStr = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
             NSLog(@"MJFresh nextstr= %@ currentindex=%ld",nextStr, (long)self.currentIndex);
-            if ([nextStr isKindOfClass:[NSNull class]] || nextStr == nil || [nextStr isEqual:@""]) {
+            if ([NSString isStringEmpty:nextStr]) {
                 [homeCollectionView.mj_footer endRefreshingWithNoMoreData];
                 return;
             }
@@ -1136,7 +1135,7 @@ static NSString *kbrandCell = @"JMRootScrolCell";
     NSString *url = [self.nextdic objectForKey:self.dickey[self.currentIndex]];
     
     NSLog(@"loadmore index=%@ url=%@",self.dickey[self.currentIndex], url);
-    if ([url isKindOfClass:[NSNull class]] || url == nil || [url isEqual:@""]) {
+    if ([NSString isStringEmpty:url]) {
         UICollectionView *collection = self.collectionArr[self.currentIndex];
         [collection.mj_footer endRefreshing];
         [collection.mj_footer endRefreshingWithNoMoreData];

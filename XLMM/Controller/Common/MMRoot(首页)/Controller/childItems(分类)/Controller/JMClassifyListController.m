@@ -84,7 +84,7 @@ static NSString * cellId = @"JMClassifyListController";
 }
 - (void)loadDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,self.cid];
-    [self.dataSource removeAllObjects];
+//    [self.dataSource removeAllObjects];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
         NSLog(@"%@",responseObject);
@@ -99,7 +99,7 @@ static NSString * cellId = @"JMClassifyListController";
     
 }
 - (void)loadMore {
-    if ([_nextPageUrlString isKindOfClass:[NSNull class]] || _nextPageUrlString == nil || [_nextPageUrlString isEqual:@""]) {
+    if ([NSString isStringEmpty:_nextPageUrlString]) {
         [self endRefresh];
         [self.collectionView.mj_footer endRefreshingWithNoMoreData];
         return;

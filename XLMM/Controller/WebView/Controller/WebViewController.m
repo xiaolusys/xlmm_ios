@@ -616,7 +616,7 @@
             [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_shareImage)];
         } else if ([platform isEqualToString:@"web"]){
             UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            if ([sharelink isKindOfClass:[NSNull class]] || sharelink == nil || [sharelink isEqual:@""]) {
+            if ([NSString isStringEmpty:sharelink]) {
                 [MBProgressHUD showMessage:@"复制失败"];
             }else {
                 [pab setString:sharelink];

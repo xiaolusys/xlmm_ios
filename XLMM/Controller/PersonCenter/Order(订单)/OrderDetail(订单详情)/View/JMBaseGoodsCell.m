@@ -54,6 +54,11 @@
     self.iconImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapViewClick:)];
     [self.iconImage addGestureRecognizer:tap];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
     
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];
@@ -159,11 +164,7 @@
     NSString *string = goodsModel.pic_path;
 
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
-    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImage.layer.masksToBounds = YES;
-    self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5;
+    
 //    if (packageModel) {
 //        self.iconImage.userInteractionEnabled = YES;
 //    }else {

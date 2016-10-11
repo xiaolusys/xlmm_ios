@@ -10,6 +10,16 @@
 
 @implementation JMHelper
 
++ (BOOL)isFileExist:(NSString *)fileName {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    NSString *filePath = [path stringByAppendingPathComponent:fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL result = [fileManager fileExistsAtPath:filePath];
+    NSLog(@"这个文件已经存在：%@",result?@"是的":@"不存在");
+    return result;
+}
+
 
 //获取 一个文件 在沙盒Library/Caches/ 目录下的路径
 + (NSString *)getFullPathWithFile {

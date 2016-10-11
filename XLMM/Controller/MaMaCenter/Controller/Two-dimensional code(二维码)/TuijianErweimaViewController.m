@@ -258,7 +258,7 @@
 
 - (void)linkCopyBtnClick:(UIButton *)btn {
     UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    if ([self.mamalink isKindOfClass:[NSNull class]] || self.mamalink == nil || [self.mamalink isEqual:@""]) {
+    if ([NSString isStringEmpty:self.mamalink]) {
         [MBProgressHUD showMessage:@"复制失败"];
     }else {
         [pab setString:self.mamalink];

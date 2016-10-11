@@ -215,7 +215,7 @@
         //调用此方法来获取二维码信息
         [scan successfulGetQRCodeInfo:^(NSString *QRCodeInfo) {
             NSLog(@"%@",QRCodeInfo);
-            if ([QRCodeInfo isKindOfClass:[NSNull class]] || QRCodeInfo == nil || [QRCodeInfo isEqual:@""]) {
+            if ([NSString isStringEmpty:QRCodeInfo]) {
                 [MBProgressHUD showError:@"扫描有误,请重试"];
             }else {
                 self.expressListTF.text = QRCodeInfo;

@@ -33,7 +33,7 @@
 }
 - (void)setUrlString:(NSString *)urlString {
     _urlString = urlString;
-    if ([urlString isKindOfClass:[NSNull class]] || urlString == nil || [urlString isEqual:@""]) {
+    if ([NSString isStringEmpty:urlString]) {
         [MBProgressHUD showError:@"加载失败~"];
     }else {
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];

@@ -171,13 +171,6 @@
     return date;
 }
 
-//只含有年月日
-- (NSString *)yearDeal:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *year = strarray[0];
-    return year;
-}
-
 //将所有的key排序
 - (NSMutableArray *)sortAllKeyArray:(NSMutableArray *)keyArr {
     for (int i = 0; i < keyArr.count; i++) {
@@ -209,7 +202,7 @@
 }
 //加载更多
 - (void)loadMore {
-    if ([self.nextPage isKindOfClass:[NSNull class]] || self.nextPage == nil || [self.nextPage isEqual:@""]) {
+    if ([NSString isStringEmpty:self.nextPage]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
         return;
@@ -256,9 +249,6 @@
     
     return cell;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
-}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     NSArray *nibView = [[NSBundle mainBundle] loadNibNamed:@"CarryLogHeaderView"owner:self options:nil];
@@ -285,8 +275,8 @@
     NSMutableArray *orderArr = self.dataDic[key];
     MaMaOrderModel *orderM = orderArr[indexPath.row];
     NSLog(@"%@",[orderM mj_keyValues]);
-    BOOL isComanyCode = [orderM.company_code isKindOfClass:[NSNull class]] || orderM.company_code == nil || [orderM.company_code isEqual:@""];
-    BOOL isPacketId = [orderM.packetid isKindOfClass:[NSNull class]] || orderM.packetid == nil || [orderM.packetid isEqual:@""];
+    BOOL isComanyCode = [NSString isStringEmpty:orderM.company_code];
+    BOOL isPacketId = [NSString isStringEmpty:orderM.packetid];
     if (isComanyCode || isPacketId) {
         
     }else {

@@ -43,7 +43,7 @@
 }
 
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([timeString isKindOfClass:[NSNull class]] || timeString == nil || [timeString isEqual:@""]) {
+    if ([NSString isStringEmpty:timeString]) {
         return nil;
     }else {
         NSMutableString *ms = [NSMutableString stringWithString:timeString];
@@ -156,7 +156,7 @@
         self.Label1.text = @"距本场结束";
     }
     NSString *todayTimeString = self.timeArray[num];
-    if ([todayTimeString isKindOfClass:[NSNull class]] || todayTimeString == nil || [todayTimeString isEqual:@""]) {
+    if ([NSString isStringEmpty:todayTimeString]) {
         //        self.timerLabel.text = @"即将上架";
         self.timeLabel.text = @"--:--:--:--";
     }else {

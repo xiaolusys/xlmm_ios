@@ -16,9 +16,9 @@
 #import "ActivityView.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
-#import "sys/utsname.h"
 #import "Udesk.h"
 #import "JMHomeRootController.h"
+#import "JMDevice.h"
 
 #define login @"login"
 #import "JMFirstOpen.h"
@@ -112,13 +112,8 @@ static BOOL isNetPrompt;
             default:
                 break;
         }
-        NSDictionary* infoDict =[[NSBundle mainBundle] infoDictionary];
-        NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];                          // 手机系统版本
-        NSString *appCurVersion = [infoDict objectForKey:@"CFBundleShortVersionString"];            // 当前应用版本
-        NSString* phoneModel = [self phoneDeviceVersion];                                           // 手机型号
-        
-        NSString *userAgent = [NSString stringWithFormat:@"iOS/%@ XLMM/%@ Mobile/(%@) NetType/%@",phoneVersion,appCurVersion,phoneModel,httpStatus];
-        NSLog(@"%@",userAgent);
+        NSString* phoneModel = [[JMDevice defaultDecice] getUserAgent];
+        NSString *userAgent = [NSString stringWithFormat:@"%@ NetType/%@",phoneModel,httpStatus];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:userAgent forKey:kUserAgent];
@@ -305,7 +300,7 @@ static BOOL isNetPrompt;
 - (void)startDeal:(NSDictionary *)dic {
     self.imageUrl = [dic objectForKey:@"picture"];
     NSLog(@"startDeal imageUrl %@", self.imageUrl);
-    if ([self.imageUrl isKindOfClass:[NSNull class]] || self.imageUrl == nil || [self.imageUrl isEqual:@""]) {
+    if ([NSString isStringEmpty:self.imageUrl]) {
         [self.sttime invalidate];
         self.sttime = nil;
         
@@ -1006,32 +1001,8 @@ static BOOL isNetPrompt;
 {
     // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
-- (NSString*)phoneDeviceVersion
-{
-    // 需要#import "sys/utsname.h"
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    NSString * deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-    //iPhone
-    if ([deviceString isEqualToString:@"iPhone1,1"])    return @"iPhone 1G";
-    if ([deviceString isEqualToString:@"iPhone1,2"])    return @"iPhone 3G";
-    if ([deviceString isEqualToString:@"iPhone2,1"])    return @"iPhone 3GS";
-    if ([deviceString isEqualToString:@"iPhone3,1"])    return @"iPhone 4";
-    if ([deviceString isEqualToString:@"iPhone3,2"])    return @"Verizon iPhone 4";
-    if ([deviceString isEqualToString:@"iPhone4,1"])    return @"iPhone 4S";
-    if ([deviceString isEqualToString:@"iPhone5,1"])    return @"iPhone 5";
-    if ([deviceString isEqualToString:@"iPhone5,2"])    return @"iPhone 5";
-    if ([deviceString isEqualToString:@"iPhone5,3"])    return @"iPhone 5C";
-    if ([deviceString isEqualToString:@"iPhone5,4"])    return @"iPhone 5C";
-    if ([deviceString isEqualToString:@"iPhone6,1"])    return @"iPhone 5S";
-    if ([deviceString isEqualToString:@"iPhone6,2"])    return @"iPhone 5S";
-    if ([deviceString isEqualToString:@"iPhone7,1"])    return @"iPhone 6 Plus";
-    if ([deviceString isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
-    if ([deviceString isEqualToString:@"iPhone8,1"])    return @"iPhone 6s";
-    if ([deviceString isEqualToString:@"iPhone8,2"])    return @"iPhone 6s Plus";
-    
-    return deviceString;
-}
+
+
 
 @end
 

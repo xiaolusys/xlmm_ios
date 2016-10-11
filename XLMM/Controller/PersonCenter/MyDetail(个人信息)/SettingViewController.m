@@ -150,7 +150,6 @@
 
 - (IBAction)phoneButtonClicked:(id)sender {
     NSLog(@"手机号");
-    //return;
 //    [self ishavemobel];
     if ([mobile isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];

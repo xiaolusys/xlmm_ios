@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMPageViewBaseController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
+@interface PublishNewPdtViewController : JMPageViewBaseController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
-
+@property (nonatomic, copy) NSString *qrCodeUrlString;
 
 @end
