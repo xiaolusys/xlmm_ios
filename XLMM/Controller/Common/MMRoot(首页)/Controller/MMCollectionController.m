@@ -9,9 +9,7 @@
 #import "MMCollectionController.h"
 #import "BrandGoodsModel.h"
 #import "MMClass.h"
-#import "JMRootgoodsCell.h"
-#import "LoadingAnimation.h"
-#import "MMLoadingAnimation.h"
+#import "JMRootgoodsCell.h"hom
 #import "CollectionModel.h"
 #import "JMGoodsDetailController.h"
 

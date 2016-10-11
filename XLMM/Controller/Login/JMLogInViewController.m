@@ -93,12 +93,12 @@
     self.bottomView = bottomView;
     bottomView.backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:244/255. alpha:1.];
     
-    UIButton *cancleBtn = [[UIButton alloc] init];
-    [self.headView addSubview:cancleBtn];
-    self.cancleBtn = cancleBtn;
-    [cancleBtn setBackgroundImage:[UIImage imageNamed:@"cancle_login"] forState:UIControlStateNormal];
-    [cancleBtn addTarget:self action:@selector(cancleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [cancleBtn setAdjustsImageWhenHighlighted:NO];
+//    UIButton *cancleBtn = [[UIButton alloc] init];
+//    [self.headView addSubview:cancleBtn];
+//    self.cancleBtn = cancleBtn;
+//    [cancleBtn setBackgroundImage:[UIImage imageNamed:@"cancle_login"] forState:UIControlStateNormal];
+//    [cancleBtn addTarget:self action:@selector(cancleBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [cancleBtn setAdjustsImageWhenHighlighted:NO];
     //========微信登录按钮
     JMSelecterButton *wechatBtn = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:wechatBtn];
@@ -280,9 +280,9 @@
 
 #pragma mark ---- 选择使用手机号登录 或者 验证码 或者 注册新的账号
 
-- (void)cancleBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)cancleBtnClick {
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 //跳转到手机号登陆
 - (void)jumpToPhoneLoginVC:(UIButton *)btn {
@@ -417,11 +417,11 @@
         make.height.mas_equalTo(@40);
     }];
     
-    [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.view).offset(27);
-        make.left.equalTo(weakSelf.view).offset(10);
-        make.width.height.mas_equalTo(@28);
-    }];
+//    [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(weakSelf.view).offset(27);
+//        make.left.equalTo(weakSelf.view).offset(10);
+//        make.width.height.mas_equalTo(@28);
+//    }];
     
     [self.wexImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.wechatBtn).offset(10);

@@ -36,17 +36,17 @@
     
     
     if (self.myCouponBlance >= 50) {
-        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquankeyongbg"] forState:UIControlStateNormal];
-        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
-        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquankeyongbg"] forState:UIControlStateNormal];
-        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+        [self.twentyButton setImage:[UIImage imageNamed:@"noUsed_coupon"] forState:UIControlStateNormal];
+        [self.twentyButton setImage:[UIImage imageNamed:@"used_nomalcoupon"] forState:UIControlStateSelected];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"noUsed_coupon"] forState:UIControlStateNormal];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"used_nomalcoupon"] forState:UIControlStateSelected];
     }else if (self.myCouponBlance >= 20 && self.myCouponBlance < 50) {
         self.twentyButton.enabled = YES;
         self.fiftyButton.enabled = NO;
-        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquankeyongbg"] forState:UIControlStateNormal];
-        [self.twentyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+        [self.twentyButton setImage:[UIImage imageNamed:@"noUsed_coupon"] forState:UIControlStateNormal];
+        [self.twentyButton setImage:[UIImage imageNamed:@"used_nomalcoupon"] forState:UIControlStateSelected];
         [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanbukeyongbg"] forState:UIControlStateNormal];
-        [self.fiftyButton setImage:[UIImage imageNamed:@"newyouhuiquanxuanzhongbg"] forState:UIControlStateSelected];
+        [self.fiftyButton setImage:[UIImage imageNamed:@"used_nomalcoupon"] forState:UIControlStateSelected];
     }else if (self.myCouponBlance < 20) {
         self.twentyButton.enabled = NO;
         self.fiftyButton.enabled = NO;

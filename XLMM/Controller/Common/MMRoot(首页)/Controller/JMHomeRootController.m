@@ -28,7 +28,6 @@
 #import "JMUpdataAppPopView.h"
 #import "AppDelegate.h"
 #import "ChildViewController.h"
-#import "JMMaMaPersonCenterController.h"
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"

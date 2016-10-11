@@ -86,9 +86,9 @@
     _scrollView.tag = 1000;
     [self.view addSubview:_scrollView];
     
-    UIImage *circleImageNormal = [UIImage imageNamed:@"Circle_Normal"];
+    UIImage *circleImageNormal = [UIImage imageNamed:@"circle_wallet_Normal1"];
     
-    UIImage *circleImageHighlighted = [UIImage imageNamed:@"Circle_Selected"];
+    UIImage *circleImageHighlighted = [UIImage imageNamed:@"circle_wallet_Selected1"];
     
     _radioButtons1 = [[LGRadioButtonsView alloc] initWithNumberOfButtons:7
        actionHandler:^(LGRadioButtonsView *radioButtonsView, NSString *title, NSUInteger index)
@@ -124,6 +124,7 @@
     _radioButtons1.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.f];
     _radioButtons1.contentEdgeInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
     [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumeimei.com", @"192.168.1.8:8888",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.50:8000", @"192.168.1.57:8000"] forState:UIControlStateNormal];
+//    [_radioButtons1 setButtonsContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [_radioButtons1 setButtonsTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageNormal forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageHighlighted forState:UIControlStateHighlighted];

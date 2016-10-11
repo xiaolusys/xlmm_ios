@@ -191,7 +191,7 @@
  */
 + (NSString *)jm_stringDate {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss.SSSSSS"];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     return dateString;
 }

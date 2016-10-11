@@ -110,7 +110,7 @@
     NSInteger index = tapView.tag - 100;
     NSDictionary *dic = categoryArray[index];
     PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-    pushVC.categoryCidString = [NSString stringWithFormat:@"sale_category=%@",@"69"];
+    pushVC.categoryCidString = [NSString stringWithFormat:@"sale_category=%@",dic[@"id"]];
     [self.navigationController pushViewController:pushVC animated:YES];
     
 }

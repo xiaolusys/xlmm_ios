@@ -634,7 +634,7 @@
  *  110 --> 折线图 -- > 收益
  */
 - (void)mamaButtonClick:(UIButton *)button {
-    NSLog(@"button.tag --> %ld",button.tag);
+//    NSLog(@"button.tag --> %ld",button.tag);
     NSInteger index = button.tag;
     if (index == 100) {
         [self earning:1];
@@ -804,7 +804,7 @@
             lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
             if (6 - quxiaodays + 1 < 7) {
                 point = [linechart getPointForIndex:(6 - quxiaodays + 1)];
-                NSLog(@"%@", NSStringFromCGPoint(point));
+//                NSLog(@"%@", NSStringFromCGPoint(point));
                 
                 UIView *whiteLine = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y - 1, SCREENWIDTH - point.x, 2)];
                 whiteLine.backgroundColor = [UIColor whiteColor];
@@ -826,7 +826,7 @@
         for (int j = 0; j < 7; j++) {
             CGPoint point2 = [linechart getPointForIndex:j];
             
-            NSLog(@"%@", NSStringFromCGPoint(point2));
+//            NSLog(@"%@", NSStringFromCGPoint(point2));
             UIColor *lineColor = [UIColor orangeColor];
             if (i == 1) {
                 if ([self.weekDay integerValue] != 1 && [self.weekDay integerValue] < j+2  ) {
@@ -868,16 +868,16 @@
     NSHourCalendarUnit |NSMinuteCalendarUnit | NSSecondCalendarUnit;
     now=[NSDate date];
     
-    NSLog(@"now = %@", now);
+//    NSLog(@"now = %@", now);
     comps = [calendar components:unitFlags fromDate:now];
-    NSLog(@"comps = %@", comps);
+//    NSLog(@"comps = %@", comps);
     now = [calendar dateFromComponents:comps];
     
-    NSLog(@"now = %@", now);
+//    NSLog(@"now = %@", now);
     self.weekDay = [NSNumber numberWithInteger:[comps weekday]];
     
     //self.weekDay
-    NSLog(@"%@", self.weekDay);
+//    NSLog(@"%@", self.weekDay);
     int today = (int)[self.weekDay integerValue];
     int lastday = 0;
     switch (today) {
@@ -907,7 +907,7 @@
             break;
     }
     lastday += 7;
-    NSLog(@"lastDay = %d", lastday);
+//    NSLog(@"lastDay = %d", lastday);
     
     int tag = (today + 6)%7;
     if (tag == 0) {
@@ -928,13 +928,13 @@
         
         comps = [calendar components:unitFlags fromDate:lastDate];
         
-        NSLog(@"lastDate = %@", comps);
+//        NSLog(@"lastDate = %@", comps);
         
         NSString *string = [NSString stringWithFormat:@"%ld/%ld", (long)[comps month], (long)[comps day]];
         [self.lastweeknames addObject:string];
     }
     
-    NSLog(@"%@", self.lastweeknames);
+//    NSLog(@"%@", self.lastweeknames);
     for (int i = 0; i < 7; i++) {
         UILabel *label = [[UILabel alloc]  initWithFrame:CGRectMake(i * (SCREENWIDTH - 50)/6 + 5, 8, 40, 20)];
         label.text = self.lastweeknames[i];
@@ -972,7 +972,7 @@
     
 }
 - (void)btn2Clicked{
-    NSLog(@"quxiazhou");
+//    NSLog(@"quxiazhou");
     
     [UIView animateWithDuration:0.3 animations:^{
         self.foldLineScrollView.contentOffset = CGPointMake(0, 0);
@@ -981,7 +981,7 @@
     }];
 }
 - (void)btn1Clicked{
-    NSLog(@"qubenzhou");
+//    NSLog(@"qubenzhou");
     [UIView animateWithDuration:0.3 animations:^{
         self.foldLineScrollView.contentOffset = CGPointMake(SCREENWIDTH, 0);
     } completion:^(BOOL finished) {
@@ -998,7 +998,7 @@
     } else if (week == 1){
         week = 2;
     }
-    NSLog(@"第 %ld 周订单数据", week);
+//    NSLog(@"第 %ld 周订单数据", week);
     // NSLog(@"weekView subView = %@", [weekView subviews]);
     CGPoint location = [recognizer locationInView:recognizer.view];
     //  NSLog(@"location = %@", NSStringFromCGPoint(location));
@@ -1008,7 +1008,7 @@
     //  NSLog(@"unit = %.0f", unitwidth);
     int index = (int)((width + unitwidth/2 - 5 ) /unitwidth);
     
-    NSLog(@"index = %d", index);
+//    NSLog(@"index = %d", index);
     NSInteger days = (6 - index) + (week - 1)*7;
     if (days - quxiaodays < 0) {
         return;
@@ -1024,7 +1024,7 @@
     lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
     
     self.visitorDate = [NSNumber numberWithInteger:days - quxiaodays];
-    NSLog(@"days = %ld", days - quxiaodays);
+//    NSLog(@"days = %ld", days - quxiaodays);
     // NSLog(@"array = %@", self.mamaOrderArray);
     // NSLog(@"%ld", quxiaodays);
     NSDictionary *dic = self.mamaOrderArray[days - quxiaodays];
@@ -1039,7 +1039,7 @@
         CGRect rect = label.frame;
         
         label = [self.foldLineScrollView viewWithTag:(8000 + index)];
-        NSLog(@"label = %@", label);
+//        NSLog(@"label = %@", label);
         
         for (int i = 0; i < 7; i++) {
             UILabel *theLabel = [self.foldLineScrollView viewWithTag:(8000 + i)];
@@ -1051,13 +1051,13 @@
             label.textColor = [UIColor whiteColor];
         }];
     } else if(week == 2) {
-        NSLog(@"index = %ld", (long)index);
+//        NSLog(@"index = %ld", (long)index);
         
         __block UILabel *label = (UILabel *)self.anotherLabelArray[index];
         CGRect rect = label.frame;
         
         label = [self.foldLineScrollView viewWithTag:(80 + index)];
-        NSLog(@"label = %@", label);
+//        NSLog(@"label = %@", label);
         
         for (int i = 0; i < 7; i++) {
             UILabel *theLabel = [self.foldLineScrollView viewWithTag:(80 + i)];
@@ -1109,7 +1109,7 @@
     NSInteger days = (count - page - 1)*7;
     self.visitorDate = [NSNumber numberWithInteger:days];
     
-    NSLog(@"days = %ld", (long)days);
+//    NSLog(@"days = %ld", (long)days);
     
     NSDictionary *dic = self.mamaOrderArray[days];
     // NSLog(@"dic = %@", dic);
