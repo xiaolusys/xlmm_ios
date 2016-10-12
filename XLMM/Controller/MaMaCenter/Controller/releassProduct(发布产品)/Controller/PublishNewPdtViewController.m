@@ -92,11 +92,9 @@
     self.navigationController.navigationBarHidden = NO;
     sharImageArray = [NSMutableArray array];
     parameDic = [NSMutableDictionary dictionary];
-    parameDic[@"save_times"] = @1;
     indexCode = 0;
     _qrCodeRequestDataIndex = 0;
     _isNeedAleartMessage = YES;
-//    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
 //    [self loaderweimaData];
@@ -463,7 +461,7 @@
             }
         }
         
-        [MBProgressHUD showLoading:@"文案复制完成，正在保存图片，尽情分享吧！"];
+        [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
         
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
@@ -480,6 +478,7 @@
 }
 #pragma mark 统计保存次数
 - (void)statisticsSaveNum:(NSNumber *)piID {
+    parameDic[@"save_times"] = @1;
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/%@",Root_URL,piID];
     [JMHTTPManager requestWithType:RequestTypePATCH WithURLString:urlString WithParaments:parameDic WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
