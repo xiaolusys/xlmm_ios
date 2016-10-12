@@ -35,10 +35,14 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"个人信息" selecotr:@selector(backClick:)];
     cellDataArr = [NSMutableArray array];
-    [self getData:nil];
+    
     [self createTableView];
-    [self ishavemobel];
-    [self loadUserData];
+    [self getData:self.userInfoDict];
+    [self.tableView reloadData];
+    self.tableView.scrollEnabled = self.tableView.contentSize.height > SCREENHEIGHT ? YES : NO;
+    
+//    [self ishavemobel];
+//    [self loadUserData];
     
 
 }
@@ -192,13 +196,11 @@
 }
 
 - (void)getData:(NSDictionary *)dic {
-    NSArray *resultArr = [dic objectForKey:@"results"];
-    if (resultArr.count == 0) {
+    if (dic.count == 0) {
         return ;
     }
-    NSDictionary *result = resultArr[0];
-    nameString = result[@"nick"];
-    phoneString = result[@"mobile"];
+    nameString = dic[@"nick"];
+    phoneString = dic[@"mobile"];
     NSMutableString * mutablePhoneNumber = [phoneString mutableCopy];
     NSRange range = {3,4};
     if (mutablePhoneNumber.length == 11) {
@@ -210,7 +212,7 @@
                         @"title":@"头像",
                         @"descTitle":@"",
                         @"iconImage":@"rightArrow",
-                        @"cellImage":result[@"thumbnail"]
+                        @"cellImage":dic[@"thumbnail"]
                         },
                     @{
                         @"title":@"账户昵称",
@@ -257,6 +259,8 @@
                     ];
 
     cellDataArr = [NSMutableArray arrayWithArray:arr];
+    
+    
 }
 
 

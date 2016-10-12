@@ -25,7 +25,7 @@
     
     NSString *loadLink = self.fansUrlString;
     
-    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 99) usingUIWebView:NO];
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     [self.view addSubview:self.baseWebView];
     

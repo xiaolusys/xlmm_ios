@@ -62,7 +62,7 @@
 
 - (void)setMessageString:(NSString *)messageString {
     _messageString = messageString;
-    NSLog(@"%@",messageString);
+//    NSLog(@"%@",messageString);
     self.titleLabel.text = messageString;
 }
 

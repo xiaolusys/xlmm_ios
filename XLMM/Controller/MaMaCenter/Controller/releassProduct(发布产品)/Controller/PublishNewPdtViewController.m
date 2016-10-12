@@ -15,16 +15,20 @@
 #import "SharePicModel.h"
 #import "CountdownView.h"
 #import "UILabel+CustomLabel.h"
-
-
+#import "JMStoreManager.h"
+#import "WXApi.h"
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
-
 @interface PublishNewPdtViewController () {
-//    NSString *qrCodeUrlString;
+    NSString *_qrCodeUrlString;
     NSInteger indexCode;
     NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
+    NSMutableDictionary *parameDic;
+    NSMutableArray *sharImageArray;
+    NSNumber *_currentSaveIndex;
+    BOOL _isNeedAleartMessage;
+    NSMutableDictionary *_currentSaveDataSource;
 }
 
 @property (nonatomic, strong)UICollectionView *picCollectionView;
@@ -39,6 +43,7 @@
 @property (nonatomic, assign)BOOL isLoad;
 
 @property (nonatomic, assign)NSInteger cellNum;
+
 @end
 
 @implementation PublishNewPdtViewController{
@@ -82,18 +87,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    _currentSaveDataSource = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor backgroundlightGrayColor];
     self.navigationController.navigationBarHidden = NO;
+    sharImageArray = [NSMutableArray array];
+    parameDic = [NSMutableDictionary dictionary];
     indexCode = 0;
     _qrCodeRequestDataIndex = 0;
-//    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
+    _isNeedAleartMessage = YES;
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
 //    [self loaderweimaData];
-    
+    _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
     [self dingshishuaxin];
-    if ([NSString isStringEmpty:self.qrCodeUrlString]) {
+    if ([NSString isStringEmpty:_qrCodeUrlString]) {
         [self loaderweimaData];
     }else {
         [self loadPicData];
@@ -144,9 +151,13 @@
 //    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;
-    
-    
-    self.picCollectionView = [[UICollectionView alloc]initWithFrame:[UIScreen mainScreen].bounds collectionViewLayout:flowLayout];
+    CGFloat layoutHeight;
+    if (self.categoryCidString) {
+        layoutHeight = 0;
+    }else {
+        layoutHeight = 104;
+    }
+    self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - layoutHeight) collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
     
     if (hour > 6 || hour == 6) {
@@ -175,6 +186,10 @@
 }
 - (void)loadPicData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
+    if (self.categoryCidString) {
+        urlString = [NSString stringWithFormat:@"%@?%@",urlString,self.categoryCidString];
+    }
+    
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
@@ -204,7 +219,7 @@
 - (void)fetchErweimaData:(NSDictionary *)dict {
     NSInteger code = [dict[@"code"] integerValue];
     if (code == 0) {
-        self.qrCodeUrlString = dict[@"qrcode_link"];
+        _qrCodeUrlString = dict[@"qrcode_link"];
     }else {
         [MBProgressHUD showWarning:dict[@"info"]];
     }
@@ -228,9 +243,9 @@
 }
 
 - (void)requestData:(NSArray *)data {
-    
-    
+
     if (data.count == 0) {
+        [MBProgressHUD hideHUDForView:self.view];
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
         [self.view addSubview:timeView];
         
@@ -252,11 +267,11 @@
     for (NSMutableDictionary *oneTurns in data) {
         NSMutableArray *muArray = [NSMutableArray arrayWithArray:oneTurns[@"pic_arry"]];
         NSInteger countNum = muArray.count;
-        if (![NSString isStringEmpty:self.qrCodeUrlString]) {
+        if (![NSString isStringEmpty:_qrCodeUrlString]) {
             if (countNum < 9) {
-                [muArray addObject:self.qrCodeUrlString];
+                [muArray addObject:_qrCodeUrlString];
             }else {
-                [muArray replaceObjectAtIndex:4 withObject:self.qrCodeUrlString];
+                [muArray replaceObjectAtIndex:4 withObject:_qrCodeUrlString];
             }
         }
         SharePicModel *sharePic = [SharePicModel mj_objectWithKeyValues:oneTurns];
@@ -404,10 +419,10 @@
 #pragma mark --保存事件
 - (void)tapSaveImageToIphone:(UIButton *)sender
                currentPicArr:(NSMutableArray *)currentPicArr {
-    
     NSInteger saveIndex = sender.tag - 100;
     self.saveIndex = saveIndex;
     SharePicModel *picModel = self.dataArr[saveIndex];
+    _currentSaveIndex = picModel.piID;
 //    NSDictionary *dict = [picModel mj_keyValues];
     //判断是否有用户权限
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
@@ -426,11 +441,27 @@
             [MBProgressHUD showError:@"请重新复制文案"];
         }else{
             [MobClick event:@"DaysPush_success"];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            alert.tag = 102;
-            [alert show];
+            [self statisticsSaveNum:picModel.piID];
+            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            alert.tag = 102;
+//            [alert show];
         }
         
+        NSArray *arr = [_currentSaveDataSource allKeys];
+        for (NSNumber *num in arr) {
+            if (num == _currentSaveIndex) {
+                sharImageArray = [_currentSaveDataSource[_currentSaveIndex] mutableCopy];
+                if (_isNeedAleartMessage) {
+                    [self alertMessage];
+                }else {
+                    [self UIActivityMessage];
+                }
+                return ;
+            }
+        }
+        
+        [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
         
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
@@ -445,6 +476,19 @@
     }
   
 }
+#pragma mark 统计保存次数
+- (void)statisticsSaveNum:(NSNumber *)piID {
+    parameDic[@"save_times"] = @1;
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/%@",Root_URL,piID];
+    [JMHTTPManager requestWithType:RequestTypePATCH WithURLString:urlString WithParaments:parameDic WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+        
+    }];
+    
+}
+
 
 - (void)saveNext {
     NSInteger countNum = self.currentArr.count;
@@ -457,18 +501,66 @@
             }
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
+    }else {
+        NSArray *array = [NSArray array];
+        array = [sharImageArray copy];
+        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
+        if ([WXApi isWXAppInstalled]) {
+            [MBProgressHUD hideHUD];
+            if (_isNeedAleartMessage) {
+                [self alertMessage];
+            }else {
+                [self UIActivityMessage];
+            }
+            
+        }else {
+            [MBProgressHUD showWarning:@"没有安装微信哦~"];
+        }
+        
+        
+        
     }
+}
+- (void)alertMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'不在提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 102;
+    [alert show];
 }
 
 -(void)savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
     if (error) {
 //        NSLog(@"-------%@", error.localizedDescription);
     }else {
+        [sharImageArray addObject:image];
         [self.currentArr removeObjectAtIndex:0];
     }
     [self saveNext];
 }
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 102) {
+        if (buttonIndex == 1) {
+            [self UIActivityMessage];
+        }else {
+            _isNeedAleartMessage = NO;
+        }
+    }
+}
+- (void)UIActivityMessage {
+    [MBProgressHUD showLoading:@"火速加载~"];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:sharImageArray applicationActivities:nil];
+    activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
+    
+    UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
+//        NSMutableArray *array = [NSMutableArray array];
+//        array = [sharImageArray mutableCopy];
+//        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
+        [sharImageArray removeAllObjects];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    activityVC.completionHandler = myBlock;
+    [self presentViewController:activityVC animated:TRUE completion:nil];
+    [MBProgressHUD hideHUD];
+}
 #pragma mark -- scrollView代理
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.photoView.contentOffY = scrollView.contentOffset.y;

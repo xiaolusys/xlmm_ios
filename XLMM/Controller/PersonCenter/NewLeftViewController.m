@@ -10,7 +10,6 @@
 #import <RESideMenu.h>
 #import "MMUserCoupons.h"
 #import "AddressViewController.h"
-#import "SettingViewController.h"
 #import "JMLogInViewController.h"
 #import "Account1ViewController.h"
 #import "PersonOrderViewController.h"
@@ -27,6 +26,7 @@
 #import "JMWithDrawDetailController.h"
 #import "JMSettingController.h"
 #import "JMMaMaRootController.h"
+
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -283,7 +283,6 @@
 }
 #pragma mark -- 投诉建议
 - (IBAction)suggestionClicked:(id)sender {
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
@@ -409,6 +408,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
 //        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         JMSettingController *addressVC = [[JMSettingController alloc] init];
+        addressVC.userInfoDict = _persinCenterDict;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
             [self.pushVCDelegate rootVCPushOtherVC:addressVC];
         }

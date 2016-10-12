@@ -382,7 +382,7 @@
     self.showViewVC = [[JMPopLogistcsController alloc] init];
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     if (self.showViewVC.view == nil) {
         self.showViewVC = [[JMPopLogistcsController alloc] init];
     }
@@ -508,7 +508,7 @@
             if (_isPopChoiseRefundWay == YES) {
                 JMShareView *cover = [JMShareView show];
                 cover.delegate = self;
-                JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
+                JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260)];
                 self.refundVC.ordergoodsModel = model;
                 self.refundVC.refundDic = _refundDic;
                 self.refundVC.delegate = self;
@@ -563,7 +563,7 @@
     }else if (index == 101) { // 继续支付
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 260, SCREENWIDTH, 260)];
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260)];
         self.refundVC.continuePayDic = _refundDic;
         self.refundVC.delegate = self;
         menu.contentView = self.refundVC.view;
@@ -576,7 +576,7 @@
             JMShareView *cover = [JMShareView show];
             cover.delegate = self;
             //弹出视图
-            JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+            JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
             shareMenu.contentView = self.shareView.view;
         }else {
            [self createClassPopView:@"分享提示" Message:@"红包数量不足,分享失败。如有疑问,请咨询小鹿客服哦~!" Index:4];

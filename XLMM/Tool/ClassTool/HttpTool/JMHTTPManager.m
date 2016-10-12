@@ -81,6 +81,28 @@
             break;
         }
         case RequestTypePUT: {
+            [[JMHTTPManager shareManager] PUT:urlString parameters:paraments success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (success) {
+                    success(responseObject);
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                if (fail) {
+                    fail(error);
+                }
+            }];
+            
+            break;
+        }
+        case RequestTypePATCH: {
+            [[JMHTTPManager shareManager] PATCH:urlString parameters:paraments success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                if (success) {
+                    success(responseObject);
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                if (fail) {
+                    fail(error);
+                }
+            }];
             
             break;
         }

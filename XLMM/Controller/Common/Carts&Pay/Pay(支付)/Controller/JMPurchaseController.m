@@ -410,7 +410,7 @@ static BOOL isAgreeTerms = YES;
         self.showViewVC.dataSource = self.logisticsArr;
         NSInteger count = self.logisticsArr.count;
         self.showViewVC.count = count;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 60 * (count + 1), SCREENWIDTH, 60 * count + 60)];
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 60 * count + 60)];
         self.showViewVC.delegate = self;
         menu.contentView = self.showViewVC.view;
     }else { }

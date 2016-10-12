@@ -10,4 +10,6 @@
 
 @interface JMSettingController : UIViewController
 
+@property (nonatomic, strong) NSDictionary *userInfoDict;
+
 @end

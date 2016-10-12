@@ -15,8 +15,7 @@
 @implementation JMShareView
 
 // 设置浅灰色蒙板
-- (void)setDimBackground:(BOOL)dimBackground
-{
+- (void)setDimBackground:(BOOL)dimBackground {
     _dimBackground = dimBackground;
     
     if (dimBackground) {
@@ -30,8 +29,7 @@
 }
 
 // 显示蒙板
-+ (instancetype)show
-{
++ (instancetype)show {
     JMShareView *cover = [[JMShareView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     cover.backgroundColor = [UIColor blackColor];
     cover.alpha = 0.4;
@@ -51,8 +49,7 @@
 }
 
 // 点击蒙板的时候做事情
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     // 移除蒙板
     [self removeFromSuperview];
     
@@ -66,3 +63,11 @@
 }
 
 @end
+
+
+
+
+
+
+
+

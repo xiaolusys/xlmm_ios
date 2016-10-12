@@ -10,7 +10,6 @@
 #import "MMClass.h"
 #import "CollectionModel.h"
 #import "UIImage+ChangeGray.h"
-#import "PromoteModel.h"
 #import "CollectionModel.h"
 #import "JMStoreUpModel.h"
 #import "JMRootGoodsModel.h"

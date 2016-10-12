@@ -105,7 +105,7 @@
     JMShareView *cover = [JMShareView show];
     cover.delegate = ((WebViewController *)vc);
     //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     menu.contentView = shareView.view;
 }
 

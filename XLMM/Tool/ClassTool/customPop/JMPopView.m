@@ -28,29 +28,40 @@
 }
 
 // 显示弹出菜单
-+ (instancetype)showInRect:(CGRect)rect
-{
++ (instancetype)showInRect:(CGRect)rect {
     JMPopView *menu = [[JMPopView alloc] initWithFrame:rect];
+    CGFloat height = rect.size.height;
     menu.userInteractionEnabled = YES;
     [JMKeyWindow addSubview:menu];
-
+    [UIView animateWithDuration:0.3 animations:^{
+        menu.transform = CGAffineTransformTranslate(menu.transform, 0, -height);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 animations:^{
+            
+        }];
+    }];
     
     return menu;
 }
 
 // 隐藏弹出菜单
-+ (void)hide
-{
++ (void)hide {
     for (UIView *popMenu in JMKeyWindow.subviews) {
         if ([popMenu isKindOfClass:self]) {
-            [popMenu removeFromSuperview];
+            [UIView animateWithDuration:0.3 animations:^{
+                popMenu.transform = CGAffineTransformIdentity;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.2 animations:^{
+                } completion:^(BOOL finished) {
+                    [popMenu removeFromSuperview];
+                }];
+            }];
         }
     }
 }
 
 // 设置内容视图
-- (void)setContentView:(UIView *)contentView
-{
+- (void)setContentView:(UIView *)contentView {
     // 先移除之前内容视图
     [_contentView removeFromSuperview];
     
@@ -64,8 +75,7 @@
     
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     
     // 计算内容视图尺寸

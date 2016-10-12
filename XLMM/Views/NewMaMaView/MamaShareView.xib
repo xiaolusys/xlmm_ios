@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MamaShareView"/>
@@ -12,14 +13,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AtK-Fl-Bo5">
-                    <rect key="frame" x="10" y="407" width="355" height="200"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9A-9S-cZB">
-                            <rect key="frame" x="0.0" y="0.0" width="89" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7j-JB-X1l">
-                                    <rect key="frame" x="17" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="TMg-Gb-h80"/>
                                         <constraint firstAttribute="height" constant="75" id="YfF-gd-WfH"/>
@@ -27,18 +25,16 @@
                                     <state key="normal" image="shareweixin.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="q7j-JB-X1l" firstAttribute="centerX" secondItem="Z9A-9S-cZB" secondAttribute="centerX" id="A4S-NI-CJy"/>
                                 <constraint firstItem="q7j-JB-X1l" firstAttribute="centerY" secondItem="Z9A-9S-cZB" secondAttribute="centerY" id="igf-1P-ZEV"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BE1-fh-OAk">
-                            <rect key="frame" x="89" y="0.0" width="89" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQp-cj-AR4">
-                                    <rect key="frame" x="17" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="py8-7C-ai4"/>
                                         <constraint firstAttribute="width" constant="55" id="tEe-w2-YSk"/>
@@ -46,18 +42,16 @@
                                     <state key="normal" image="shareFirends.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="aQp-cj-AR4" firstAttribute="centerX" secondItem="BE1-fh-OAk" secondAttribute="centerX" id="BLK-tq-tuA"/>
                                 <constraint firstItem="aQp-cj-AR4" firstAttribute="centerY" secondItem="BE1-fh-OAk" secondAttribute="centerY" id="wqB-9s-fWn"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hFS-Hw-AxR">
-                            <rect key="frame" x="178" y="0.0" width="88" height="100"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hFS-Hw-AxR">
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDW-jE-5X4">
-                                    <rect key="frame" x="16" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="lKz-2M-sxl"/>
                                         <constraint firstAttribute="height" constant="75" id="mzX-XB-srO"/>
@@ -65,18 +59,16 @@
                                     <state key="normal" image="shareqq.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="mDW-jE-5X4" firstAttribute="centerY" secondItem="hFS-Hw-AxR" secondAttribute="centerY" id="5TQ-W3-vSg"/>
                                 <constraint firstItem="mDW-jE-5X4" firstAttribute="centerX" secondItem="hFS-Hw-AxR" secondAttribute="centerX" id="hwb-1D-V5F"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zcw-m6-0Gd">
-                            <rect key="frame" x="266" y="0.0" width="89" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gca-Bw-Ura">
-                                    <rect key="frame" x="17" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="QCt-Km-W3K"/>
                                         <constraint firstAttribute="height" constant="75" id="nCa-mL-BIO"/>
@@ -84,18 +76,16 @@
                                     <state key="normal" image="shareQQSpacing.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="Gca-Bw-Ura" firstAttribute="centerX" secondItem="Zcw-m6-0Gd" secondAttribute="centerX" id="ToS-nC-JUz"/>
                                 <constraint firstItem="Gca-Bw-Ura" firstAttribute="centerY" secondItem="Zcw-m6-0Gd" secondAttribute="centerY" id="Tt2-ra-UMf"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ag-0v-9Y8">
-                            <rect key="frame" x="266" y="100" width="89" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EiE-If-N9W">
-                                    <rect key="frame" x="17" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="9Bl-ID-C2U"/>
                                         <constraint firstAttribute="height" constant="75" id="VKV-O7-kh9"/>
@@ -103,18 +93,16 @@
                                     <state key="normal" image="friendskuaizhao.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="EiE-If-N9W" firstAttribute="centerY" secondItem="5ag-0v-9Y8" secondAttribute="centerY" id="2su-gI-WTa"/>
                                 <constraint firstItem="EiE-If-N9W" firstAttribute="centerX" secondItem="5ag-0v-9Y8" secondAttribute="centerX" id="4xB-Bk-LYc"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wcc-Uf-48S">
-                            <rect key="frame" x="178" y="100" width="88" height="100"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcc-Uf-48S">
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igY-Aw-Qa3">
-                                    <rect key="frame" x="16" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="6Ts-FS-efY"/>
                                         <constraint firstAttribute="width" constant="55" id="FsI-OK-1K6"/>
@@ -122,18 +110,16 @@
                                     <state key="normal" image="wxkuaizhao.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="igY-Aw-Qa3" firstAttribute="centerX" secondItem="wcc-Uf-48S" secondAttribute="centerX" id="6Mj-23-YQe"/>
                                 <constraint firstItem="igY-Aw-Qa3" firstAttribute="centerY" secondItem="wcc-Uf-48S" secondAttribute="centerY" id="vML-ZF-Ykl"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="deH-0b-Gwb">
-                            <rect key="frame" x="89" y="100" width="89" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1t-aM-9DC">
-                                    <rect key="frame" x="17" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="6nH-cS-7AM"/>
                                         <constraint firstAttribute="height" constant="75" id="Mqq-EX-nVv"/>
@@ -141,18 +127,16 @@
                                     <state key="normal" image="sharecopylink.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="m1t-aM-9DC" firstAttribute="centerX" secondItem="deH-0b-Gwb" secondAttribute="centerX" id="kBV-VE-yZe"/>
                                 <constraint firstItem="m1t-aM-9DC" firstAttribute="centerY" secondItem="deH-0b-Gwb" secondAttribute="centerY" id="x9I-tM-SSh"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21g-k6-BHq">
-                            <rect key="frame" x="0.0" y="100" width="89" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hc2-hg-zXm">
-                                    <rect key="frame" x="17" y="13" width="55" height="75"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="55" id="OLK-gR-YMl"/>
                                         <constraint firstAttribute="height" constant="75" id="fbn-4H-4SO"/>
@@ -160,14 +144,14 @@
                                     <state key="normal" image="shareweibo.png"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="Hc2-hg-zXm" firstAttribute="centerX" secondItem="21g-k6-BHq" secondAttribute="centerX" id="fQH-xI-Weg"/>
                                 <constraint firstItem="Hc2-hg-zXm" firstAttribute="centerY" secondItem="21g-k6-BHq" secondAttribute="centerY" id="rP2-Bh-fNI"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="21g-k6-BHq" firstAttribute="top" secondItem="Z9A-9S-cZB" secondAttribute="bottom" id="0Ie-dX-c35"/>
                         <constraint firstItem="hFS-Hw-AxR" firstAttribute="width" secondItem="Z9A-9S-cZB" secondAttribute="width" id="0oV-Vn-3jd"/>
@@ -209,17 +193,16 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRm-lv-9CX">
-                    <rect key="frame" x="10" y="617" width="355" height="40"/>
-                    <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="Hf7-Tj-dmm"/>
                     </constraints>
                     <state key="normal" title="取消">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="GRm-lv-9CX" secondAttribute="trailing" constant="10" id="4nf-KQ-jeY"/>
                 <constraint firstAttribute="bottom" secondItem="AtK-Fl-Bo5" secondAttribute="bottom" constant="60" id="Oyi-R3-vZm"/>
@@ -229,7 +212,6 @@
                 <constraint firstAttribute="bottom" secondItem="GRm-lv-9CX" secondAttribute="bottom" constant="10" id="obH-fW-WTO"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <connections>
                 <outlet property="cancleBtn" destination="GRm-lv-9CX" id="19U-uc-ruS"/>
                 <outlet property="friendBtn" destination="aQp-cj-AR4" id="Ocf-K8-Edi"/>
