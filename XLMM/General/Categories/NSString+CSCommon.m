@@ -240,9 +240,44 @@
     return year;
 }
 
+/**
+ *  获取N天前的日期
+ *  dayNum : 前后的天数 (+后,-前)
+ *  @return N天前的日期
+ */
++ (NSString *)getBeforeDay:(NSInteger)dayNum {
+    NSDate *nowDate = [NSDate date];
+    NSDate *theDate;
 
+    if(dayNum != 0) {
+        NSTimeInterval oneDay = 24 * 3600;
+        theDate = [nowDate initWithTimeIntervalSinceNow:oneDay * dayNum];
+    }else {
+        theDate = nowDate;
+        
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
+    NSString *getDayString = [dateFormatter stringFromDate:theDate];
+//    NSString *date = [getDayString stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    return getDayString;
 
-
+    
+}
+/**
+ *  获取当前时间
+ *
+ *  @return 当前的日期
+ */
++ (NSString *)getCurrentTime {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    
+    return currentTime;
+    
+    
+}
 
 
 @end

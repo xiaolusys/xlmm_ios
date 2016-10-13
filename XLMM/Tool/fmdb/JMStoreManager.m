@@ -92,6 +92,9 @@
     根据文件名删除沙盒中的 plist 文件
  */
 + (void)removeFileByFileName:(NSString*)fileName {
+    if (![self isFileExist:fileName]) {
+        return ;
+    }
     NSString *path  = [self appendFilePath:fileName];
     
     [[NSFileManager defaultManager] removeItemAtPath:path error:nil];

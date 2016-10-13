@@ -204,11 +204,12 @@
     }
     
     NSInteger status = [refundModel.status integerValue];
+    NSInteger goodsSatus = [refundModel.good_status integerValue];
     if (!isGoodsReturn) {
         // 退货
         refundImageStr = @"refund_tuihuoImage";
         self.refundWayLabel.text = @"退货退款";
-        if (status == REFUND_STATUS_SELLER_AGREED) {
+        if (status == REFUND_STATUS_SELLER_AGREED && goodsSatus == 1) {
             self.refunStatusImage.hidden = NO;
             self.refundStatusLabel.textColor = [UIColor redColor];
             self.refundStatusLabel.text = @"请寄回商品";

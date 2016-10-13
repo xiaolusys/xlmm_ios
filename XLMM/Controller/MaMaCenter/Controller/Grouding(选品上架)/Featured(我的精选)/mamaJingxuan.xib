@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="418" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="小鹿妈妈de精选集" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60S-BL-i6W">
+                    <frame key="frameInset" minX="140" minY="144" width="139" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wodejingxuantouxiangicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="wck-aM-1MF">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="74" id="4YN-j9-TBD"/>
+                        <constraint firstAttribute="height" constant="74" id="hoa-4h-Blx"/>
+                    </constraints>
+                </imageView>
+                <view tag="200" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKZ-IS-eUi">
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" tag="888" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-76.png" translatesAutoresizingMaskIntoConstraints="NO" id="rHi-ss-e7f"/>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="rHi-ss-e7f" secondAttribute="trailing" constant="3" id="0I3-va-7cV"/>
+                        <constraint firstAttribute="bottom" secondItem="rHi-ss-e7f" secondAttribute="bottom" constant="3" id="4cC-7v-Hft"/>
+                        <constraint firstAttribute="height" constant="60" id="LPC-y6-0Ya"/>
+                        <constraint firstItem="rHi-ss-e7f" firstAttribute="top" secondItem="nKZ-IS-eUi" secondAttribute="top" constant="3" id="S6w-N3-ddb"/>
+                        <constraint firstItem="rHi-ss-e7f" firstAttribute="leading" secondItem="nKZ-IS-eUi" secondAttribute="leading" constant="3" id="SyQ-gi-ZeQ"/>
+                        <constraint firstAttribute="width" constant="60" id="gSq-jH-Or7"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkX-iE-agD">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="O5f-nb-YKh"/>
+                        <constraint firstAttribute="width" constant="40" id="h45-Fw-be7"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="wodejingxuanfanhui.png"/>
+                </button>
+                <button opaque="NO" tag="2000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isj-YZ-Ngt">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="MLA-B4-lP1"/>
+                        <constraint firstAttribute="width" constant="40" id="gzg-vI-u3B"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="wodejingxuanyulan.png"/>
+                </button>
+                <button opaque="NO" tag="3000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E2t-lt-iT7">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="HaT-Rk-ZMR"/>
+                        <constraint firstAttribute="width" constant="40" id="lI4-rw-2jh"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="wodejingxuanfenxiang.png"/>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wodejingxuanback.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xm0-h7-8p3"/>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="wck-aM-1MF" firstAttribute="centerX" secondItem="Xm0-h7-8p3" secondAttribute="centerX" id="31f-zp-MQJ"/>
+                <constraint firstItem="nKZ-IS-eUi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="72" id="9Kj-RM-NXC"/>
+                <constraint firstItem="Xm0-h7-8p3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Dec-1z-ugU"/>
+                <constraint firstItem="wck-aM-1MF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="Dlf-tz-j1j"/>
+                <constraint firstAttribute="trailing" secondItem="Xm0-h7-8p3" secondAttribute="trailing" id="Oyi-JY-oJK"/>
+                <constraint firstItem="Xm0-h7-8p3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TXx-sI-s0t"/>
+                <constraint firstAttribute="trailing" secondItem="E2t-lt-iT7" secondAttribute="trailing" constant="8" id="TmF-Po-yIb"/>
+                <constraint firstItem="LkX-iE-agD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ZAQ-Y5-Mzs"/>
+                <constraint firstItem="E2t-lt-iT7" firstAttribute="leading" secondItem="isj-YZ-Ngt" secondAttribute="trailing" constant="12" id="ZcM-tq-klh"/>
+                <constraint firstItem="E2t-lt-iT7" firstAttribute="top" secondItem="isj-YZ-Ngt" secondAttribute="top" id="aBe-ZG-waP"/>
+                <constraint firstItem="nKZ-IS-eUi" firstAttribute="centerX" secondItem="Xm0-h7-8p3" secondAttribute="centerX" id="cMw-aF-Wmy"/>
+                <constraint firstItem="LkX-iE-agD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="24" id="hzM-5M-DAc"/>
+                <constraint firstItem="60S-BL-i6W" firstAttribute="top" secondItem="wck-aM-1MF" secondAttribute="bottom" constant="5" id="iex-tn-5Qy"/>
+                <constraint firstItem="isj-YZ-Ngt" firstAttribute="top" secondItem="LkX-iE-agD" secondAttribute="top" id="oxr-EO-kfX"/>
+                <constraint firstAttribute="bottom" secondItem="Xm0-h7-8p3" secondAttribute="bottom" id="x5z-0d-HOo"/>
+                <constraint firstItem="60S-BL-i6W" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xWq-ZR-nnL"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="455" y="202"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Icon-76.png" width="76" height="76"/>
+        <image name="wodejingxuanback.png" width="748" height="375"/>
+        <image name="wodejingxuanfanhui.png" width="80" height="80"/>
+        <image name="wodejingxuanfenxiang.png" width="80" height="80"/>
+        <image name="wodejingxuantouxiangicon.png" width="144" height="144"/>
+        <image name="wodejingxuanyulan.png" width="80" height="80"/>
+    </resources>
+</document>

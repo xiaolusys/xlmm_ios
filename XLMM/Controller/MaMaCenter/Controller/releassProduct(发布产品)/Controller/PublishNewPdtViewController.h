@@ -10,8 +10,12 @@
 #import "JMPageViewBaseController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+
+
 @interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
 @property (nonatomic, copy) NSString *categoryCidString;
+
+
 
 @end

@@ -18,12 +18,12 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSinaSSOHandler.h"
 #import "WeiboSDK.h"
+#import "MiPushSDK.h"
 
 
 
 
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RESideMenuDelegate, WXApiDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UNUserNotificationCenterDelegate,MiPushSDKDelegate,RESideMenuDelegate, WXApiDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

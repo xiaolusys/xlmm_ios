@@ -85,52 +85,33 @@
     }
     return _mamaWebDict;
 }
-- (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"viewDidAppear -------- > ");
-}
-- (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"viewDidDisappear -------- > ");
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear -------- > 111111");
     _indexCode = 0;
     [self loadEarningMessage];
     [self loadMaMaMessage];
     [MobClick beginLogPageView:@"JMMaMaRootController"];
-    NSLog(@"viewWillAppear -------- > 222222");
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear -------- > 111111");
     [MobClick endLogPageView:@"JMMaMaRootController"];
-    NSLog(@"viewWillDisappear -------- > 222222");
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad -------- > 111111");
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _indexCode = 0;
     _qrCodeRequestDataIndex = 0;
     qrCodeUrlString = @"";
     _isActiveClick = NO;
-    NSLog(@"viewDidLoad -------- > 222222");
     [self createSegmentView];
-    NSLog(@"viewDidLoad -------- > 222222");
     [self craeteNavRightButton];
-    NSLog(@"viewDidLoad -------- > 222222");
     [self customUserInfo];
     
     [self loadMaMaWeb];
-    NSLog(@"viewDidLoad -------- > 222222");
     [self loadDataSource];
-    NSLog(@"viewDidLoad -------- > 222222");
     [self loadfoldLineData];
-    NSLog(@"viewDidLoad -------- > 222222");
     [self loaderweimaData];
-    NSLog(@"viewDidLoad -------- > 222222");
 }
 
 - (void)loadMaMaMessage {

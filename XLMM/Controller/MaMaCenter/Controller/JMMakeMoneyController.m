@@ -8,7 +8,6 @@
 
 #import "JMMakeMoneyController.h"
 #import "MMClass.h"
-#import "ShopPreviousViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "WebViewController.h"
 #import "ProductSelectionListViewController.h"
@@ -53,6 +52,7 @@
 @property (nonatomic, copy) NSString *myInvitation;
 
 @property (nonatomic, strong) UILabel *addEarningLabel;
+@property (nonatomic, strong) UILabel *addWeekEarningLabel;
 
 @property (nonatomic, strong) UILabel *weekRankLabel;
 
@@ -144,6 +144,7 @@
     NSDictionary *exDic = centerModel.extra_info;
     NSDictionary *extraFiguresDic = centerModel.extra_figures;
     self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
+    self.addWeekEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
     NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
     NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
     self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
@@ -279,9 +280,25 @@
     topImageView.image = [UIImage imageNamed:@"wodejingxuanback"];
     topImageView.userInteractionEnabled = YES;
     
+    
+    UILabel *addWeekEarningL = [UILabel new];
+    [topImageView addSubview:addWeekEarningL];
+    addWeekEarningL.textColor = [UIColor buttonTitleColor];
+    addWeekEarningL.textAlignment = NSTextAlignmentCenter;
+    addWeekEarningL.font = [UIFont systemFontOfSize:14.];
+    addWeekEarningL.text = @"本周累计收益";
+    
+    UILabel *addWeekEarningLabel = [UILabel new];
+    [topImageView addSubview:addWeekEarningLabel];
+    addWeekEarningLabel.textColor = [UIColor whiteColor];
+    addWeekEarningLabel.font = [UIFont systemFontOfSize:36.];
+    //    addEarningLabel.text = @"666.66";
+    self.addWeekEarningLabel = addWeekEarningLabel;
+    
     UILabel *addEarningL = [UILabel new];
     [topImageView addSubview:addEarningL];
     addEarningL.textColor = [UIColor buttonTitleColor];
+    addEarningL.textAlignment = NSTextAlignmentCenter;
     addEarningL.font = [UIFont systemFontOfSize:14.];
     addEarningL.text = @"今日累计收益";
     
@@ -317,13 +334,23 @@
     worldRankLabel.font = [UIFont systemFontOfSize:12.];
     worldRankLabel.textColor = [UIColor buttonTitleColor];
     worldRankLabel.text = @"世界排名TOP10";
+    [addWeekEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topImageView).offset(25);
+        make.left.equalTo(topImageView);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+    }];
+    [addWeekEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(addWeekEarningL.mas_bottom).offset(10);
+        make.centerX.equalTo(addWeekEarningL.mas_centerX);
+    }];
     [addEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView).offset(25);
-        make.centerX.equalTo(topImageView.mas_centerX);
+        make.right.equalTo(topImageView);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
     }];
     [addEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(addEarningL.mas_bottom).offset(10);
-        make.centerX.equalTo(topImageView.mas_centerX);
+        make.centerX.equalTo(addEarningL.mas_centerX);
     }];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(topImageView);
@@ -644,14 +671,18 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-        ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
-        [self.navigationController pushViewController:previous animated:YES];
+        NSString *urlString = [NSString stringWithFormat:@"http://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:urlString forKey:@"web_url"];
+        [dict setValue:@"mamaShop" forKey:@"type_title"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = true;
+        [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 104) {
         JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
         [self.navigationController pushViewController:pushingVC animated:YES];
-//        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-//        publish.qrCodeUrlString = self.qrCodeUrlString;
-//        [self.navigationController pushViewController:publish animated:YES];
     }else if (index == 105) {
         ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
         [self.navigationController pushViewController:product animated:YES];
