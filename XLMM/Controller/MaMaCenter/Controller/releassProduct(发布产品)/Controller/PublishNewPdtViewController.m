@@ -435,13 +435,12 @@
     SharePicModel *picModel = self.dataArr[saveIndex];
     _currentSaveIndex = picModel.piID;
     //判断是否有用户权限
-    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
-    if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied){
-        [MobClick event:@"DaysPush_success"];
+    if (![self isPhotoPermission]) {
         //无权限
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         alert.tag = 101;
         [alert show];
+        
     }else {
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
 //        NSLog(@"---------%@", picModel.descriptionTitle);
@@ -550,12 +549,16 @@
 
 -(void)savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
     if (error) {
-//        NSLog(@"-------%@", error.localizedDescription);
+        if (![self isPhotoPermission]) {
+            [MBProgressHUD hideHUD];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+        }
     }else {
         [sharImageArray addObject:image];
         [self.currentArr removeObjectAtIndex:0];
+        [self saveNext];
     }
-    [self saveNext];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 102) {
@@ -615,6 +618,14 @@
     }else { }
     return compCount;
 }
+- (BOOL)isPhotoPermission {
+    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+    if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied) {
+        return NO;
+    }
+    return YES;
+}
+
 
 
 @end

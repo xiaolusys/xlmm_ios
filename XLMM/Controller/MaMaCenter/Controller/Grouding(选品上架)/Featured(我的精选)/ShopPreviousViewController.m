@@ -116,7 +116,9 @@
     NSLog(@"分享");
     [MobClick event:@"MaMaShop_share"];
     shareView = [MamaShareView new];
-
+    
+    
+    
     NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:shareView options:nil];
     shareView = array[0];
     shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
@@ -128,6 +130,11 @@
     }];
     backView.hidden = NO;
     [self.view addSubview:shareView];
+    
+    
+    
+    
+    
     
     [self createShareButtonTarget];
 }

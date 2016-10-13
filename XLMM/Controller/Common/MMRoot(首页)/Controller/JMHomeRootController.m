@@ -989,6 +989,7 @@
         NSLog(@"当前下载进度为:%lf", 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSLog(@"默认下载地址%@",targetPath);
+        [JMStoreManager removeFileByFileName:@"GoodsItemFile.json"];
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *path=[paths objectAtIndex:0];
         NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
@@ -1052,9 +1053,7 @@
     NSString *addressPath = [JMStoreManager getFullPathWithFile:@"addressInfo.json"];
     NSURL *pathUrl = [NSURL fileURLWithPath:addressPath];
     NSError *errorCopy;
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
     [fileManager removeItemAtURL:pathUrl error:NULL];
     
     BOOL success = [fileManager copyItemAtURL:location toURL:pathUrl error:nil];

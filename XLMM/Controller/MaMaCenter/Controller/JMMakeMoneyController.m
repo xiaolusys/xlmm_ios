@@ -8,7 +8,6 @@
 
 #import "JMMakeMoneyController.h"
 #import "MMClass.h"
-#import "ShopPreviousViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "WebViewController.h"
 #import "ProductSelectionListViewController.h"
@@ -672,14 +671,18 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-        ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
-        [self.navigationController pushViewController:previous animated:YES];
+        NSString *urlString = [NSString stringWithFormat:@"http://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:urlString forKey:@"web_url"];
+        [dict setValue:@"mamaShop" forKey:@"type_title"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = true;
+        [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 104) {
         JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
         [self.navigationController pushViewController:pushingVC animated:YES];
-//        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-//        publish.qrCodeUrlString = self.qrCodeUrlString;
-//        [self.navigationController pushViewController:publish animated:YES];
     }else if (index == 105) {
         ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
         [self.navigationController pushViewController:product animated:YES];
