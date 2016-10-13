@@ -29,6 +29,8 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>so.xiaolu.m.xiaolumeimei</string>
 			<key>CFBundleURLSchemes</key>

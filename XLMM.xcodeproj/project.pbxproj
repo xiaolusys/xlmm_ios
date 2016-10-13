@@ -312,6 +312,15 @@
 		1F12ED791DAC986600511B58 /* category.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12ED781DAC986600511B58 /* category.png */; };
 		1F12ED7F1DAC99A300511B58 /* JMDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12ED7C1DAC99A300511B58 /* JMDevice.m */; };
 		1F12ED801DAC99A300511B58 /* UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12ED7E1DAC99A300511B58 /* UUID.m */; };
+		1F12EDBC1DADF77B00511B58 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F12EDBB1DADF77B00511B58 /* CoreData.framework */; };
+		1F12EE201DAE04D500511B58 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE151DAE04D500511B58 /* FMDatabase.m */; };
+		1F12EE211DAE04D500511B58 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE171DAE04D500511B58 /* FMDatabaseAdditions.m */; };
+		1F12EE221DAE04D500511B58 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE191DAE04D500511B58 /* FMDatabasePool.m */; };
+		1F12EE231DAE04D500511B58 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE1B1DAE04D500511B58 /* FMDatabaseQueue.m */; };
+		1F12EE241DAE04D500511B58 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE1E1DAE04D500511B58 /* FMResultSet.m */; };
+		1F12EE2A1DAE071500511B58 /* Tool_FMDBGetDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE271DAE071500511B58 /* Tool_FMDBGetDatabase.m */; };
+		1F12EE2B1DAE071500511B58 /* Tool_FMDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE291DAE071500511B58 /* Tool_FMDBModel.m */; };
+		1F12EE2E1DAE074800511B58 /* JMPushSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F12EE2D1DAE074800511B58 /* JMPushSaveModel.m */; };
 		1F1351471CE7193700D6138D /* JMLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1351461CE7193600D6138D /* JMLogInViewController.m */; };
 		1F1407181D8647D2001B13EE /* JMMaMaRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1407171D8647D2001B13EE /* JMMaMaRootController.m */; };
 		1F14071B1D8649FC001B13EE /* JMMakeMoneyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F14071A1D8649FC001B13EE /* JMMakeMoneyController.m */; };
@@ -1143,6 +1152,24 @@
 		1F12ED7C1DAC99A300511B58 /* JMDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDevice.m; sourceTree = "<group>"; };
 		1F12ED7D1DAC99A300511B58 /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
 		1F12ED7E1DAC99A300511B58 /* UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUID.m; sourceTree = "<group>"; };
+		1F12EDBB1DADF77B00511B58 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1F12EE141DAE04D500511B58 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		1F12EE151DAE04D500511B58 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		1F12EE161DAE04D500511B58 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		1F12EE171DAE04D500511B58 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		1F12EE181DAE04D500511B58 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		1F12EE191DAE04D500511B58 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		1F12EE1A1DAE04D500511B58 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		1F12EE1B1DAE04D500511B58 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		1F12EE1C1DAE04D500511B58 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		1F12EE1D1DAE04D500511B58 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		1F12EE1E1DAE04D500511B58 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		1F12EE261DAE071500511B58 /* Tool_FMDBGetDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool_FMDBGetDatabase.h; sourceTree = "<group>"; };
+		1F12EE271DAE071500511B58 /* Tool_FMDBGetDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tool_FMDBGetDatabase.m; sourceTree = "<group>"; };
+		1F12EE281DAE071500511B58 /* Tool_FMDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool_FMDBModel.h; sourceTree = "<group>"; };
+		1F12EE291DAE071500511B58 /* Tool_FMDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tool_FMDBModel.m; sourceTree = "<group>"; };
+		1F12EE2C1DAE074800511B58 /* JMPushSaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushSaveModel.h; sourceTree = "<group>"; };
+		1F12EE2D1DAE074800511B58 /* JMPushSaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushSaveModel.m; sourceTree = "<group>"; };
 		1F1351451CE7193600D6138D /* JMLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLogInViewController.h; sourceTree = "<group>"; };
 		1F1351461CE7193600D6138D /* JMLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLogInViewController.m; sourceTree = "<group>"; };
 		1F1407161D8647D2001B13EE /* JMMaMaRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaRootController.h; sourceTree = "<group>"; };
@@ -1672,6 +1699,7 @@
 		1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JMHUD.m"; sourceTree = "<group>"; };
 		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
 		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
+		1FB004391DAF2EFF003B7CE2 /* XLMM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XLMM.entitlements; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayOutdateView.h; sourceTree = "<group>"; };
@@ -1992,6 +2020,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F12EDBC1DADF77B00511B58 /* CoreData.framework in Frameworks */,
 				1FE52DF91D94CCA50051D5A0 /* CoreMotion.framework in Frameworks */,
 				1FE52DF71D94CC9D0051D5A0 /* libstdc++.tbd in Frameworks */,
 				1FE52DF51D94CC8F0051D5A0 /* libsqlite3.0.tbd in Frameworks */,
@@ -2060,6 +2089,7 @@
 		1463567F77B797326B629CFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F12EDBB1DADF77B00511B58 /* CoreData.framework */,
 				1FE52DFE1D94D3580051D5A0 /* JavaScriptCore.framework */,
 				1FE52DF81D94CCA50051D5A0 /* CoreMotion.framework */,
 				1FE52DF61D94CC9D0051D5A0 /* libstdc++.tbd */,
@@ -3055,6 +3085,24 @@
 				1F12ED7E1DAC99A300511B58 /* UUID.m */,
 			);
 			path = helpers;
+			sourceTree = "<group>";
+		};
+		1F12EE131DAE04D500511B58 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				1F12EE141DAE04D500511B58 /* FMDatabase.h */,
+				1F12EE151DAE04D500511B58 /* FMDatabase.m */,
+				1F12EE161DAE04D500511B58 /* FMDatabaseAdditions.h */,
+				1F12EE171DAE04D500511B58 /* FMDatabaseAdditions.m */,
+				1F12EE181DAE04D500511B58 /* FMDatabasePool.h */,
+				1F12EE191DAE04D500511B58 /* FMDatabasePool.m */,
+				1F12EE1A1DAE04D500511B58 /* FMDatabaseQueue.h */,
+				1F12EE1B1DAE04D500511B58 /* FMDatabaseQueue.m */,
+				1F12EE1C1DAE04D500511B58 /* FMDB.h */,
+				1F12EE1D1DAE04D500511B58 /* FMResultSet.h */,
+				1F12EE1E1DAE04D500511B58 /* FMResultSet.m */,
+			);
+			path = fmdb;
 			sourceTree = "<group>";
 		};
 		1F14D60B1CC6044C00410EC0 /* NewHome */ = {
@@ -4959,6 +5007,10 @@
 		1F56E2AD1D38D2B00092EC91 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				1F12EE261DAE071500511B58 /* Tool_FMDBGetDatabase.h */,
+				1F12EE271DAE071500511B58 /* Tool_FMDBGetDatabase.m */,
+				1F12EE281DAE071500511B58 /* Tool_FMDBModel.h */,
+				1F12EE291DAE071500511B58 /* Tool_FMDBModel.m */,
 				1FD540C51DAB7FD500E159DB /* JMStoreManager.h */,
 				1FD540C61DAB7FD500E159DB /* JMStoreManager.m */,
 			);
@@ -4977,6 +5029,7 @@
 		1F6CEC011D33849F00E1F4DF /* Cache */ = {
 			isa = PBXGroup;
 			children = (
+				1F12EE131DAE04D500511B58 /* fmdb */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -5285,6 +5338,8 @@
 			children = (
 				1FE52E641D98B4640051D5A0 /* SharePicModel.h */,
 				1FE52E651D98B4640051D5A0 /* SharePicModel.m */,
+				1F12EE2C1DAE074800511B58 /* JMPushSaveModel.h */,
+				1F12EE2D1DAE074800511B58 /* JMPushSaveModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5486,6 +5541,7 @@
 		325BA0F01B68B18A006D64BD /* XLMM */ = {
 			isa = PBXGroup;
 			children = (
+				1FB004391DAF2EFF003B7CE2 /* XLMM.entitlements */,
 				3A5214E81CC764AA00F4E699 /* Images.xcassets */,
 				183072941C97D17800B7665E /* Venders(第三方库) */,
 				1F27A61E1D275A6300A0F80B /* Tool */,
@@ -5839,6 +5895,9 @@
 						DevelopmentTeam = QM2A85BC28;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
 								enabled = 0;
 							};
 						};
@@ -6319,6 +6378,7 @@
 				1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */,
 				1FDD07291D45BA910010231F /* JMDisableCouponController.m in Sources */,
 				1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */,
+				1F12EE2B1DAE071500511B58 /* Tool_FMDBModel.m in Sources */,
 				1F498C4D1D2772D0007E77FC /* JMTimeInfoModel.m in Sources */,
 				1FE52E461D950BBE0051D5A0 /* JMHomeRootCategoryCell.m in Sources */,
 				1F4C9E811D9912600089CE74 /* UdeskBaseMessage.m in Sources */,
@@ -6328,6 +6388,7 @@
 				1830728B1C97C00900B7665E /* UIImage+UIImageExt.m in Sources */,
 				1FE52E721D98B5420051D5A0 /* HuoyuezhiTableViewCell.m in Sources */,
 				1F27A5DA1D2520E200A0F80B /* JMFetureFansCell.m in Sources */,
+				1F12EE201DAE04D500511B58 /* FMDatabase.m in Sources */,
 				1F27A6611D275FB400A0F80B /* JMRootScrolCell.m in Sources */,
 				1F4C9E7E1D9912600089CE74 /* UdeskAgentHttpData.m in Sources */,
 				1F27A5E91D2520E200A0F80B /* MaMaOrderListViewController.m in Sources */,
@@ -6423,6 +6484,7 @@
 				1F1FB89B1D87E79D004C60CE /* SystemFunctions.m in Sources */,
 				1F27A5EC1D2520E200A0F80B /* TodayVisitorViewController.m in Sources */,
 				1FDD07551D4878EF0010231F /* JMMaMaTeamController.m in Sources */,
+				1F12EE211DAE04D500511B58 /* FMDatabaseAdditions.m in Sources */,
 				1F498C701D2772D0007E77FC /* JMTimeLineView.m in Sources */,
 				1F7D99301D62C7FC00E18FD1 /* JMCategoryListController.m in Sources */,
 				1FFF7D901D755555003222F6 /* JMPopMenuView.m in Sources */,
@@ -6473,11 +6535,13 @@
 				1F1FB89A1D87E79D004C60CE /* HCScanQRViewController.m in Sources */,
 				1FE52E5E1D98B4130051D5A0 /* PicFooterCollectionReusableView.m in Sources */,
 				1FE52E431D94E2330051D5A0 /* JMHomeRootCategoryController.m in Sources */,
+				1F12EE241DAE04D500511B58 /* FMResultSet.m in Sources */,
 				18315F7C1CA41549003A9AFD /* ActivityView.m in Sources */,
 				1FF533E81D2DFAB9003DEABF /* JMOrderDetailHeaderView.m in Sources */,
 				1F498C2D1D2772D0007E77FC /* BoundingNewPhoneController.m in Sources */,
 				1FF3FA201D4083C600FABBCE /* JMPurchaseHeaderView.m in Sources */,
 				1F498AED1D276197007E77FC /* JMShareModel.m in Sources */,
+				1F12EE221DAE04D500511B58 /* FMDatabasePool.m in Sources */,
 				1FE52E7A1D98B5CB0051D5A0 /* DotLineView.m in Sources */,
 				325B79E81C97E7160022F930 /* YoumengShare.m in Sources */,
 				1F498B011D2761BE007E77FC /* IMY_NJKWebViewProgress.m in Sources */,
@@ -6577,6 +6641,7 @@
 				1F498B001D2761BE007E77FC /* IMYWebView.m in Sources */,
 				1F66A2E11D8E96A400FDCFFA /* JMVisitorModel.m in Sources */,
 				1F2F9E7D1D5C1C3D00E3A68B /* JMGoodsSafeGuardCell.m in Sources */,
+				1F12EE2E1DAE074800511B58 /* JMPushSaveModel.m in Sources */,
 				3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */,
 				1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */,
 				1F498C4F1D2772D0007E77FC /* JMGoodsListCell.m in Sources */,
@@ -6607,8 +6672,10 @@
 				1F4C9EBB1D9912600089CE74 /* UdeskPhotoView.m in Sources */,
 				1F498C471D2772D0007E77FC /* JMPackAgeModel.m in Sources */,
 				1F4C9EAF1D9912600089CE74 /* UdeskImageUtil.m in Sources */,
+				1F12EE2A1DAE071500511B58 /* Tool_FMDBGetDatabase.m in Sources */,
 				1F3EE5C41D7FE1A8006033FC /* JMPageViewBaseController.m in Sources */,
 				1F1407181D8647D2001B13EE /* JMMaMaRootController.m in Sources */,
+				1F12EE231DAE04D500511B58 /* FMDatabaseQueue.m in Sources */,
 				3A1E05961CE1C3FB001018AC /* LGTextFieldDelegateObject.m in Sources */,
 				183070E91C97B83900B7665E /* ShareClickModel.m in Sources */,
 				1F4C9EA21D9912600089CE74 /* UIViewController+UdeskKeyboardAnimation.m in Sources */,
@@ -6846,6 +6913,7 @@
 					"$(PROJECT_DIR)/XLMM/Venders/lib/One",
 				);
 				MiSDKRun = debug;
+				NEW_SETTING = "";
 				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -6932,6 +7000,7 @@
 					"$(PROJECT_DIR)/XLMM/Venders/lib/One",
 				);
 				MiSDKRun = online;
+				NEW_SETTING = "";
 				New_Setting = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

@@ -17,6 +17,9 @@
 #import "UILabel+CustomLabel.h"
 #import "JMStoreManager.h"
 #import "WXApi.h"
+#import "JMPushSaveModel.h"
+#import "JMRichTextTool.h"
+
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
 
@@ -29,6 +32,7 @@
     NSNumber *_currentSaveIndex;
     BOOL _isNeedAleartMessage;
     NSMutableDictionary *_currentSaveDataSource;
+    NSString *_getBeforeDayFive;
 }
 
 @property (nonatomic, strong)UICollectionView *picCollectionView;
@@ -43,16 +47,33 @@
 @property (nonatomic, assign)BOOL isLoad;
 
 @property (nonatomic, assign)NSInteger cellNum;
+@property (nonatomic, strong) JMPushSaveModel *pushSaveModel;
 
 @end
 
 @implementation PublishNewPdtViewController{
-  
     NSTimer *theTimer;
     UIView *bottomView;
     CountdownView *countdowmView;
 }
-
+- (instancetype)init {
+    if (self == [super init]) {
+        _currentSaveDataSource = [NSMutableDictionary dictionary];
+        sharImageArray = [NSMutableArray array];
+        parameDic = [NSMutableDictionary dictionary];
+        indexCode = 0;
+        _qrCodeRequestDataIndex = 0;
+        _isNeedAleartMessage = YES;
+        _getBeforeDayFive = [NSString getBeforeDay:-5];
+    }
+    return self;
+}
+- (JMPushSaveModel *)pushSaveModel {
+    if (!_pushSaveModel) {
+        _pushSaveModel = [[JMPushSaveModel alloc] init];
+    }
+    return _pushSaveModel;
+}
 - (NSMutableArray *)dataArr {
     if (!_dataArr) {
         self.dataArr = [NSMutableArray arrayWithCapacity:0];
@@ -64,9 +85,16 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"PublishNewPdtViewController"];
-
+    
+    NSArray *arr = [JMPushSaveModel findAll];
+    for (int i = 0; i < arr.count; i++) {
+        self.pushSaveModel = arr[i];
+        if ([self compareData:_getBeforeDayFive SaveData:self.pushSaveModel.currentTime] == -1) {
+            // 删除此条数据
+            [JMPushSaveModel deleteObjectsByCriteria:[self.pushSaveModel.pushID stringValue]];
+        }
+    }
 }
-
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
@@ -75,7 +103,7 @@
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PublishNewPdtViewController"];
-
+    
 }
 
 //- (PhotoView *)photoView {
@@ -87,17 +115,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _currentSaveDataSource = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor backgroundlightGrayColor];
     self.navigationController.navigationBarHidden = NO;
-    sharImageArray = [NSMutableArray array];
-    parameDic = [NSMutableDictionary dictionary];
-    indexCode = 0;
-    _qrCodeRequestDataIndex = 0;
-    _isNeedAleartMessage = YES;
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
-//    [self loaderweimaData];
+    
     _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
     [self dingshishuaxin];
     if ([NSString isStringEmpty:_qrCodeUrlString]) {
@@ -105,8 +127,7 @@
     }else {
         [self loadPicData];
     }
-    
-    
+
 }
 
 - (void)dingshishuaxin{
@@ -345,7 +366,7 @@
         //返回页眉
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
-        headerV.timeLabel.text = [self turnsTime:picModel.start_time];
+        headerV.timeLabel.text = [NSString jm_cutOutYearWihtSec:picModel.start_time];
         
         //改变label的高
         if (self.isLoad) {
@@ -356,6 +377,9 @@
         headerV.propagandaLabel.text = picModel.descriptionTitle;
         NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
         headerV.turnsImageView.image = [UIImage imageNamed:name];
+        NSString *saveYet = @"666";
+        NSString *allSaveYet = [NSString stringWithFormat:@"%@人已下载",saveYet];
+        headerV.saveYetNumLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:18.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allSaveYet SubStringArray:@[saveYet]];
         return headerV;
         
     }else{
@@ -374,19 +398,6 @@
         }
        
     }
-}
-
-- (NSString *)turnsTime:(NSString *)timeStr {
-    NSMutableString *timestext= [NSMutableString stringWithString:timeStr];
-    NSRange range;
-    range = [timestext rangeOfString:@"T"];
-    [timestext replaceCharactersInRange:range withString:@" "];
-    
-    range = NSMakeRange(0, 5);
-    [timestext deleteCharactersInRange:range];
-    range = NSMakeRange(timestext.length - 4, 3);
-    [timestext deleteCharactersInRange:range];
-    return timestext;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -423,10 +434,9 @@
     self.saveIndex = saveIndex;
     SharePicModel *picModel = self.dataArr[saveIndex];
     _currentSaveIndex = picModel.piID;
-//    NSDictionary *dict = [picModel mj_keyValues];
     //判断是否有用户权限
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
-    if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+    if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied){
         [MobClick event:@"DaysPush_success"];
         //无权限
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -438,20 +448,21 @@
         [pab setString:picModel.descriptionTitle];
         if (pab == nil) {
             [MobClick event:@"DaysPush_fail"];
-            [MBProgressHUD showError:@"请重新复制文案"];
+            [MBProgressHUD showError:@"出错啦~! 请重新复制文案"];
+            return ;
         }else{
             [MobClick event:@"DaysPush_success"];
             [self statisticsSaveNum:picModel.piID];
-            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"文案复制完成，正在保存图片，尽情分享吧！" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//            alert.tag = 102;
-//            [alert show];
         }
-        
-        NSArray *arr = [_currentSaveDataSource allKeys];
-        for (NSNumber *num in arr) {
-            if (num == _currentSaveIndex) {
-                sharImageArray = [_currentSaveDataSource[_currentSaveIndex] mutableCopy];
+        NSArray *arr = [JMPushSaveModel findAll];
+        for (int i = 0; i < arr.count; i++) {
+            self.pushSaveModel = arr[i];
+            if ([self.pushSaveModel.pushID isEqualToNumber:_currentSaveIndex]) {
+                NSInteger count = self.pushSaveModel.imageArray.count;
+                for (int j = 0; j < count; j++) {
+                    UIImage *image = [UIImage imageWithData:self.pushSaveModel.imageArray[j]];
+                    [sharImageArray addObject:image];
+                }
                 if (_isNeedAleartMessage) {
                     [self alertMessage];
                 }else {
@@ -460,9 +471,7 @@
                 return ;
             }
         }
-        
         [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
-        
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
             [self saveNext];
@@ -496,15 +505,27 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
             NSString *picImageUrl = self.currentArr[0];
             if ([picImageUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
-                picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg/quality/90", picImageUrl];
+                picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picImageUrl]; // /quality/90
             }else {
             }
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
     }else {
         NSArray *array = [NSArray array];
+        NSMutableArray *muArrau = [NSMutableArray array];
         array = [sharImageArray copy];
-        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
+        for (int i = 0; i < array.count; i++) {
+            NSData *data = UIImageJPEGRepresentation(array[i], 0.5);
+            NSLog(@"sharImageArray ------ > %ld",data.length);
+            [muArrau addObject:data];
+        }
+//        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
+        self.pushSaveModel.pushID = _currentSaveIndex;
+        self.pushSaveModel.imageArray = [muArrau copy];
+        self.pushSaveModel.currentTime = [NSString getCurrentTime];
+        [self.pushSaveModel save];
+        
+        
         if ([WXApi isWXAppInstalled]) {
             [MBProgressHUD hideHUD];
             if (_isNeedAleartMessage) {
@@ -541,7 +562,9 @@
         if (buttonIndex == 1) {
             [self UIActivityMessage];
         }else {
+            [sharImageArray removeAllObjects];
             _isNeedAleartMessage = NO;
+            [MBProgressHUD hideHUD];
         }
     }
 }
@@ -579,7 +602,19 @@
 //        }
 //    }
 //}
-
+- (NSInteger)compareData:(NSString *)befoData SaveData:(NSString *)saveData {
+    NSInteger compCount;
+    NSComparisonResult result = [befoData compare:saveData];
+    if (result == NSOrderedSame) {
+        compCount = 0;
+    }else if (result == NSOrderedAscending) {
+        // saveData 大
+        compCount = 1;
+    }else if (result == NSOrderedDescending) {
+        compCount = -1;
+    }else { }
+    return compCount;
+}
 
 
 @end

@@ -160,26 +160,16 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
     NSString *timeString = _timeArray[1];
-    if ([timeString isEqualToString:@"00:00:00"] || timeString == nil || [timeString isKindOfClass:[NSNull class]]) {
+    if ([NSString isStringEmpty:timeString]) {
         [self.tableView.mj_header beginRefreshing];
     }else {
-        NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:timeString]]; // 结束时间
+        NSDate *date = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:timeString]]; // 结束时间
         NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
         int timer = time;
         NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
         if ([timeStr isEqual:@"0"]) {
             [self.tableView.mj_header beginRefreshing];
         }
-    }
-}
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([timeString isEqualToString:@"00:00:00"]) {
-        return 0;
-    }else {
-        NSMutableString *ms = [NSMutableString stringWithString:timeString];
-        NSRange range = {10,1};
-        [ms replaceCharactersInRange:range withString:@" "];
-        return ms;
     }
 }
 - (void)viewDidAppear:(BOOL)animated {

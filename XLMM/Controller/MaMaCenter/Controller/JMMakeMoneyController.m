@@ -53,6 +53,7 @@
 @property (nonatomic, copy) NSString *myInvitation;
 
 @property (nonatomic, strong) UILabel *addEarningLabel;
+@property (nonatomic, strong) UILabel *addWeekEarningLabel;
 
 @property (nonatomic, strong) UILabel *weekRankLabel;
 
@@ -144,6 +145,7 @@
     NSDictionary *exDic = centerModel.extra_info;
     NSDictionary *extraFiguresDic = centerModel.extra_figures;
     self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
+    self.addWeekEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
     NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
     NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
     self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
@@ -279,9 +281,25 @@
     topImageView.image = [UIImage imageNamed:@"wodejingxuanback"];
     topImageView.userInteractionEnabled = YES;
     
+    
+    UILabel *addWeekEarningL = [UILabel new];
+    [topImageView addSubview:addWeekEarningL];
+    addWeekEarningL.textColor = [UIColor buttonTitleColor];
+    addWeekEarningL.textAlignment = NSTextAlignmentCenter;
+    addWeekEarningL.font = [UIFont systemFontOfSize:14.];
+    addWeekEarningL.text = @"本周累计收益";
+    
+    UILabel *addWeekEarningLabel = [UILabel new];
+    [topImageView addSubview:addWeekEarningLabel];
+    addWeekEarningLabel.textColor = [UIColor whiteColor];
+    addWeekEarningLabel.font = [UIFont systemFontOfSize:36.];
+    //    addEarningLabel.text = @"666.66";
+    self.addWeekEarningLabel = addWeekEarningLabel;
+    
     UILabel *addEarningL = [UILabel new];
     [topImageView addSubview:addEarningL];
     addEarningL.textColor = [UIColor buttonTitleColor];
+    addEarningL.textAlignment = NSTextAlignmentCenter;
     addEarningL.font = [UIFont systemFontOfSize:14.];
     addEarningL.text = @"今日累计收益";
     
@@ -317,13 +335,23 @@
     worldRankLabel.font = [UIFont systemFontOfSize:12.];
     worldRankLabel.textColor = [UIColor buttonTitleColor];
     worldRankLabel.text = @"世界排名TOP10";
+    [addWeekEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topImageView).offset(25);
+        make.left.equalTo(topImageView);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+    }];
+    [addWeekEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(addWeekEarningL.mas_bottom).offset(10);
+        make.centerX.equalTo(addWeekEarningL.mas_centerX);
+    }];
     [addEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView).offset(25);
-        make.centerX.equalTo(topImageView.mas_centerX);
+        make.right.equalTo(topImageView);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
     }];
     [addEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(addEarningL.mas_bottom).offset(10);
-        make.centerX.equalTo(topImageView.mas_centerX);
+        make.centerX.equalTo(addEarningL.mas_centerX);
     }];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(topImageView);
