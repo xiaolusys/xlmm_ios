@@ -144,7 +144,7 @@
     NSInteger minute = [comps minute];
     NSInteger second = [comps second];
     
-    if (hour == 10 && minute == 0 && second == 0) {
+    if (hour == 6 && minute == 0 && second == 0) { // 每日6点开始
         self.picCollectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
         
         [self.picCollectionView reloadData];
@@ -471,9 +471,12 @@
             }
         }
         [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
+        
+        
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
-            [self saveNext];
+//            [self saveNext];
+            [self downLoadImage];
         }else if (self.currentArr.count > 0){
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
         }else {
@@ -496,7 +499,45 @@
     }];
     
 }
-
+- (void)downLoadImage {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    NSMutableArray *indexArray = [NSMutableArray array];
+    for (int i = 0; i < self.currentArr.count; i++) {
+        NSString *picUrl = self.currentArr[i];
+        NSString *index ;
+        if ([picUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
+            index = [picUrl substringFromIndex:picUrl.length - 5];
+            [indexArray addObject:index];
+            picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+        }else {
+            [indexArray addObject:@"qrcodeNil"];
+        }
+        
+        dispatch_group_async(group, queue, ^{
+            UIImage *image = [UIImage imagewithURLString:picUrl Index:index];
+            [sharImageArray addObject:image];
+        });
+        
+    }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        NSMutableArray *array = [NSMutableArray array];
+        for (int i = 0 ; i < self.currentArr.count; i++) {
+            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            //计算出文件的全路径
+            NSString *file = [cachesPath stringByAppendingPathComponent:indexArray[i]];
+            
+            UIImage *image = [UIImage imageWithContentsOfFile:file];
+            [array addObject:image];
+        }
+        NSLog(@"%@",sharImageArray);
+        [MBProgressHUD hideHUD];
+        
+    });
+    
+    
+    
+}
 
 - (void)saveNext {
     NSInteger countNum = self.currentArr.count;
@@ -507,7 +548,7 @@
                 picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picImageUrl]; // /quality/90
             }else {
             }
-            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
+//            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
     }else {
         NSArray *array = [NSArray array];

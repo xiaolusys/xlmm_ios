@@ -604,6 +604,7 @@
 		1FB428941DAF7724002F98B4 /* mamaJingxuan.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB428901DAF7724002F98B4 /* mamaJingxuan.xib */; };
 		1FB428951DAF7724002F98B4 /* mamaJingxuanNav.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB428911DAF7724002F98B4 /* mamaJingxuanNav.xib */; };
 		1FB428961DAF7724002F98B4 /* ShopPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB428931DAF7724002F98B4 /* ShopPreviousViewController.m */; };
+		1FB4289A1DB070E9002F98B4 /* downloadYetImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FB428991DB070E9002F98B4 /* downloadYetImage.png */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
 		1FD158CB1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */; };
@@ -1698,6 +1699,7 @@
 		1FB428911DAF7724002F98B4 /* mamaJingxuanNav.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mamaJingxuanNav.xib; sourceTree = "<group>"; };
 		1FB428921DAF7724002F98B4 /* ShopPreviousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopPreviousViewController.h; sourceTree = "<group>"; };
 		1FB428931DAF7724002F98B4 /* ShopPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopPreviousViewController.m; sourceTree = "<group>"; };
+		1FB428991DB070E9002F98B4 /* downloadYetImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloadYetImage.png; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
 		1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayOutdateView.h; sourceTree = "<group>"; };
@@ -2729,6 +2731,7 @@
 		1F12EBBA1DAC97E600511B58 /* pushingDaysImage */ = {
 			isa = PBXGroup;
 			children = (
+				1FB428991DB070E9002F98B4 /* downloadYetImage.png */,
 				1F12EBBB1DAC97E600511B58 /* 0lun@2x.png */,
 				1F12EBBC1DAC97E600511B58 /* 1lun@2x.png */,
 				1F12EBBD1DAC97E600511B58 /* 2lun@2x.png */,
@@ -6100,6 +6103,7 @@
 				1F12ECBE1DAC97E600511B58 /* wodejingxuanfanhui.png in Resources */,
 				1F12ED5D1DAC97E700511B58 /* wexImage_wither@2x.png in Resources */,
 				1F12ECD71DAC97E600511B58 /* ice_Image@2x.png in Resources */,
+				1FB4289A1DB070E9002F98B4 /* downloadYetImage.png in Resources */,
 				1F12ED5E1DAC97E700511B58 /* placeHolderImage.png in Resources */,
 				1F12ECB01DAC97E600511B58 /* MaMaRenewHalfyear_Nomal@2x.png in Resources */,
 				1F12ED711DAC97E700511B58 /* shareFirends.png in Resources */,

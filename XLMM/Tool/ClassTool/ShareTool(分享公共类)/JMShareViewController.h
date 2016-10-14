@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class JMShareModel;
+typedef void(^shareCancelBlock)(UIButton *button);
 @interface JMShareViewController : UIViewController
 
 @property (nonatomic,strong) JMShareModel *model;
@@ -18,5 +19,7 @@
 //@property (nonatomic,strong) NSMutableDictionary *otherDict;
 
 //@property (nonatomic,copy) NSString *urlStr;
+@property (nonatomic, copy) shareCancelBlock blcok;
+
 
 @end

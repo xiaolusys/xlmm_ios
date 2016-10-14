@@ -49,16 +49,25 @@
                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="downloadYetImage" translatesAutoresizingMaskIntoConstraints="NO" id="n6v-IS-rPx">
+                    <frame key="frameInset" minX="246" minY="5" width="22" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="qwd-XK-Bf9"/>
+                        <constraint firstAttribute="width" constant="22" id="t0j-da-Boc"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="EbK-T6-Hjh" secondAttribute="trailing" constant="15" id="213-7w-gcV"/>
                 <constraint firstItem="EbK-T6-Hjh" firstAttribute="centerY" secondItem="YhJ-qJ-9pc" secondAttribute="centerY" id="8LX-lu-XAe"/>
                 <constraint firstAttribute="trailing" secondItem="efz-2w-itb" secondAttribute="trailing" constant="10" id="MGo-Iq-gxL"/>
                 <constraint firstItem="YhJ-qJ-9pc" firstAttribute="leading" secondItem="lQm-rt-3uE" secondAttribute="trailing" constant="10" id="MqP-RX-GlH"/>
-                <constraint firstItem="efz-2w-itb" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="bottom" id="VLN-RS-SeP"/>
-                <constraint firstItem="YhJ-qJ-9pc" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="6" id="aUg-CN-Y4t"/>
+                <constraint firstItem="n6v-IS-rPx" firstAttribute="leading" secondItem="EbK-T6-Hjh" secondAttribute="leading" constant="-30" id="SGj-ad-uIs"/>
+                <constraint firstItem="efz-2w-itb" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="bottom" constant="5" id="VLN-RS-SeP"/>
+                <constraint firstItem="YhJ-qJ-9pc" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="aUg-CN-Y4t"/>
                 <constraint firstItem="lQm-rt-3uE" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="c8n-gY-rw1"/>
                 <constraint firstItem="lQm-rt-3uE" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="dtK-dH-ZMF"/>
+                <constraint firstItem="n6v-IS-rPx" firstAttribute="centerY" secondItem="YhJ-qJ-9pc" secondAttribute="centerY" id="eax-Xr-XV9"/>
                 <constraint firstItem="efz-2w-itb" firstAttribute="leading" secondItem="lQm-rt-3uE" secondAttribute="trailing" constant="10" id="jgH-vD-iPl"/>
                 <constraint firstItem="EbK-T6-Hjh" firstAttribute="top" secondItem="YhJ-qJ-9pc" secondAttribute="top" id="z7S-xS-yPU"/>
             </constraints>
@@ -72,4 +81,7 @@
             <point key="canvasLocation" x="558.5" y="359"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="downloadYetImage" width="750" height="120"/>
+    </resources>
 </document>
