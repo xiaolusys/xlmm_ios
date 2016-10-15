@@ -10,7 +10,14 @@
 
 @interface PicFooterCollectionReusableView : UICollectionReusableView
 
+@property (weak, nonatomic) IBOutlet UIView *statisticsView;
+
 @property (weak, nonatomic) IBOutlet UIButton *savePhotoBtn;
 @property (nonatomic, assign)NSInteger sectionNum;
+
+@property (nonatomic, strong) UIButton *seeButton;
+@property (nonatomic, strong) UIButton *likeButton;
+@property (nonatomic, strong) UIButton *shareButton;
+
 
 @end

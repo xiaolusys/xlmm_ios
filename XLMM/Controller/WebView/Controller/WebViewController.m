@@ -357,12 +357,16 @@
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
     if ([_webDiction[@"type_title"] isEqual:@"active"]) {
-        [MobClick event:@"Active_share"];
+        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
+        [MobClick event:@"Active_share" attributes:temp_dict];
     }else if ([_webDiction[@"type_title"] isEqual:@"myInvite"]) {
-        if ([self.activityId isEqual:@38]) {
-            [MobClick event:@"MyInvite_share"];
-        }
-    }
+//        if ([self.activityId isEqual:@38]) {
+        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
+        [MobClick event:@"MyInvite_share" attributes:temp_dict];
+//        }
+    }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
+        [MobClick event:@"mamaShop_share"];
+    }else { }
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
     _shareDic = nil;
@@ -374,6 +378,9 @@
     //弹出视图
     JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     menu.contentView = self.shareView.view;
+    self.shareView.blcok = ^(UIButton *button) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    };
 }
 
 - (void)universeShare:(NSDictionary *)data {
@@ -401,6 +408,7 @@
 }
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
+    [MobClick event:@"WebViewController_shareFail_masking"];
     //隐藏pop菜单
     [JMPopView hide];
     

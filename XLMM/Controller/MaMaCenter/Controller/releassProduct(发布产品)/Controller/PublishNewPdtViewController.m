@@ -19,9 +19,9 @@
 #import "WXApi.h"
 #import "JMPushSaveModel.h"
 #import "JMRichTextTool.h"
+#import <Photos/Photos.h>
 
-
-#define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 82)/3)
+#define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 24)/3)
 
 @interface PublishNewPdtViewController () {
     NSString *_qrCodeUrlString;
@@ -33,6 +33,7 @@
     BOOL _isNeedAleartMessage;
     NSMutableDictionary *_currentSaveDataSource;
     NSString *_getBeforeDayFive;
+    NSArray *categoryArray;
 }
 
 @property (nonatomic, strong)UICollectionView *picCollectionView;
@@ -120,6 +121,8 @@
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
+    categoryArray = [JMStoreManager getObjectByFileName:@"categorysArray"];
+    
     _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
     [self dingshishuaxin];
     if ([NSString isStringEmpty:_qrCodeUrlString]) {
@@ -127,7 +130,7 @@
     }else {
         [self loadPicData];
     }
-
+    
 }
 
 - (void)dingshishuaxin{
@@ -144,7 +147,7 @@
     NSInteger minute = [comps minute];
     NSInteger second = [comps second];
     
-    if (hour == 10 && minute == 0 && second == 0) {
+    if (hour == 6 && minute == 0 && second == 0) { // 每日6点开始
         self.picCollectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
         
         [self.picCollectionView reloadData];
@@ -168,8 +171,8 @@
 
 - (void)createCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-   // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
-//    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
+    // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
+    //    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;
     CGFloat layoutHeight;
@@ -264,7 +267,7 @@
 }
 
 - (void)requestData:(NSArray *)data {
-
+    
     if (data.count == 0) {
         [MBProgressHUD hideHUDForView:self.view];
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
@@ -284,7 +287,7 @@
         self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         return;
     }
-//    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
+    //    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
     for (NSMutableDictionary *oneTurns in data) {
         NSMutableArray *muArray = [NSMutableArray arrayWithArray:oneTurns[@"pic_arry"]];
         NSInteger countNum = muArray.count;
@@ -318,7 +321,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     SharePicModel *picModel = self.dataArr[section];
-//    self.cellNum = picModel.pic_arry.count;
+    //    self.cellNum = picModel.pic_arry.count;
     return picModel.pic_arry.count;
 }
 
@@ -337,7 +340,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     SharePicModel *picModel = self.dataArr[indexPath.section];
     self.cellNum = picModel.pic_arry.count;
-
+    
     if (self.cellNum == 1) {
         return CGSizeMake(CELLWIDTH + 30, CELLWIDTH + 80);
     }
@@ -355,7 +358,7 @@
     
     self.photoView.picArr = [picModel.pic_arry mutableCopy];
     self.photoView.index = indexPath.row;
-
+    
     [self.photoView createScrollView];
     [self.photoView fillData:indexPath.row cellFrame:cell.frame];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
@@ -369,22 +372,38 @@
         headerV.timeLabel.text = [NSString jm_cutOutYearWihtSec:picModel.start_time];
         
         //改变label的高
-        if (self.isLoad) {
-            CGSize titleSize = [picModel.descriptionTitle boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
-            headerV.desheight.constant = titleSize.height + 10;
-        }
-        
+//        if (self.isLoad) {
+//            CGSize titleSize = [picModel.descriptionTitle boundingRectWithSize:CGSizeMake(SCREENWIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+//            headerV.desheight.constant = titleSize.height + 30;
+//        }
         headerV.propagandaLabel.text = picModel.descriptionTitle;
-        NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
-        headerV.turnsImageView.image = [UIImage imageNamed:name];
-        NSString *saveYet = @"666";
-        NSString *allSaveYet = [NSString stringWithFormat:@"%@人已下载",saveYet];
-        headerV.saveYetNumLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:18.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allSaveYet SubStringArray:@[saveYet]];
+//        if ([NSString isStringEmpty:picModel.sale_category]) {
+//            headerV.turnsImageView.image = [UIImage imageNamed:@""];
+//        }else {
+//            NSInteger categoryCode = [picModel.sale_category integerValue] - 1;
+//            if (categoryCode >= 8) {
+//                headerV.turnsImageView.image = [UIImage imageNamed:@""];
+//            }else {
+//                NSDictionary *categoryDic = categoryArray[categoryCode];
+//                headerV.propagandaLabel.text = picModel.descriptionTitle;
+//                //        NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
+//                //        headerV.turnsImageView.image = [UIImage imageNamed:name];
+//                [headerV.turnsImageView sd_setImageWithURL:[NSURL URLWithString:[categoryDic[@"cat_img"] JMUrlEncodedString]] placeholderImage:nil];
+//            }
+//        }
+//        NSString *allSaveYet = [NSString stringWithFormat:@"%@人已下载",picModel.save_times];
+//        headerV.saveYetLabel.text = allSaveYet;
+//        headerV.saveYetLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:18.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allSaveYet SubStringArray:@[saveYet]];
         return headerV;
         
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
+        
+        [footerV.seeButton setTitle:picModel.save_times forState:UIControlStateNormal];
+        [footerV.likeButton setTitle:picModel.share_times forState:UIControlStateNormal];
+        [footerV.shareButton setTitle:picModel.share_times forState:UIControlStateNormal];
+        
         if ([picModel.could_share intValue]) {
             footerV.savePhotoBtn.userInteractionEnabled=YES;
             footerV.savePhotoBtn.alpha=1.0;
@@ -396,35 +415,39 @@
             footerV.savePhotoBtn.alpha=0.5;
             return footerV;
         }
-       
+        
+        
+        
+        
+        
     }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (!self.isLoad) {
-        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
-    }else {
+//    if (!self.isLoad) {
+//        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
+//    }else {
         SharePicModel *picModel = self.dataArr[section];
-        NSString *title = picModel.descriptionTitle;
-        CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 78, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
-        if (titleSize.width < 30) {
-            return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
-        }
-        return CGSizeMake([UIScreen mainScreen].bounds.size.width, titleSize.height + 35);
-    }
+//        NSString *title = picModel.descriptionTitle;
+//        CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
+//        if (titleSize.width < 30) {
+//            return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
+//        }
+        return CGSizeMake(SCREENWIDTH, picModel.headerHeight);
+//    }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width, 54);
+    return CGSizeMake(SCREENWIDTH, 100);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     SharePicModel *picModel = self.dataArr[section];
     self.cellNum = picModel.pic_arry.count;
-
+    
     if (self.cellNum == 4) {
-        return UIEdgeInsetsMake(10, 68, 10, CELLWIDTH + 10);
+        return UIEdgeInsetsMake(10, 10, 10, CELLWIDTH + 10);
     }
-    return UIEdgeInsetsMake(10, 68, 10, 10);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 #pragma mark --保存事件
@@ -443,7 +466,7 @@
         
     }else {
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
-//        NSLog(@"---------%@", picModel.descriptionTitle);
+        //        NSLog(@"---------%@", picModel.descriptionTitle);
         [pab setString:picModel.descriptionTitle];
         if (pab == nil) {
             [MobClick event:@"DaysPush_fail"];
@@ -471,18 +494,22 @@
             }
         }
         [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
+        
+        
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
-            [self saveNext];
+            //            [self saveNext];
+            [self downLoadImage];
         }else if (self.currentArr.count > 0){
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
         }else {
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
-            [self saveNext];
+            //            [self saveNext];
+            [self downLoadImage];
         }
         
     }
-  
+    
 }
 #pragma mark 统计保存次数
 - (void)statisticsSaveNum:(NSNumber *)piID {
@@ -496,20 +523,41 @@
     }];
     
 }
-
-
-- (void)saveNext {
-    NSInteger countNum = self.currentArr.count;
-    if (countNum > 0) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
-            NSString *picImageUrl = self.currentArr[0];
-            if ([picImageUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
-                picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picImageUrl]; // /quality/90
-            }else {
-            }
-            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
+- (void)downLoadImage {
+    [self saveNextimage];
+    NSArray *curArr = [self.currentArr copy];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    NSMutableArray *indexArray = [NSMutableArray array];
+    for (int i = 0; i < curArr.count; i++) {
+        NSString *picUrl = curArr[i];
+        NSString *index = @"10086";
+        if ([picUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
+            index = [picUrl substringFromIndex:picUrl.length - 5];
+            [indexArray addObject:index];
+            picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+        }else {
+            [indexArray addObject:index];
+        }
+        dispatch_group_async(group, queue, ^{
+            [UIImage imagewithURLString:picUrl Index:index];
+//            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//            NSString *file = [cachesPath stringByAppendingPathComponent:index];
+//            [UIImageJPEGRepresentation(image, 0.5)writeToFile:file atomically:YES];
         });
-    }else {
+    }
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        for (int i = 0 ; i < curArr.count; i++) {
+            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            //计算出文件的全路径
+            NSString *file = [cachesPath stringByAppendingPathComponent:indexArray[i]];
+            UIImage *image = [UIImage imageWithContentsOfFile:file];
+            NSData *data = UIImageJPEGRepresentation(image, 0.5);
+            UIImage *newImage = [UIImage imageWithData:data];
+            [sharImageArray addObject:newImage];
+            [JMStoreManager removeFileByFileName:indexArray[i]];
+        }
+        
         NSArray *array = [NSArray array];
         NSMutableArray *muArrau = [NSMutableArray array];
         array = [sharImageArray copy];
@@ -518,12 +566,16 @@
             NSLog(@"sharImageArray ------ > %ld",data.length);
             [muArrau addObject:data];
         }
-//        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
+        
+        //        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
         self.pushSaveModel.pushID = _currentSaveIndex;
         self.pushSaveModel.imageArray = [muArrau copy];
         self.pushSaveModel.currentTime = [NSString getCurrentTime];
         [self.pushSaveModel save];
         
+        
+        
+        [MBProgressHUD hideHUD];
         
         if ([WXApi isWXAppInstalled]) {
             [MBProgressHUD hideHUD];
@@ -537,12 +589,35 @@
             [MBProgressHUD showWarning:@"没有安装微信哦~"];
         }
         
+        NSLog(@"%@",sharImageArray);
         
+        
+        
+    });
+    
+    
+    
+}
+
+- (void)saveNextimage {
+    NSInteger countNum = self.currentArr.count;
+    if (countNum > 0) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
+            NSString *picImageUrl = self.currentArr[0];
+            if ([picImageUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
+                picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picImageUrl]; // /quality/90
+            }else {
+            }
+            UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
+        });
+    }else {
         
     }
+    
+    
 }
 - (void)alertMessage {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'不在提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不在提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.tag = 102;
     [alert show];
 }
@@ -555,9 +630,9 @@
             [alert show];
         }
     }else {
-        [sharImageArray addObject:image];
+        //        [sharImageArray addObject:image];
         [self.currentArr removeObjectAtIndex:0];
-        [self saveNext];
+        [self saveNextimage];
     }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -577,9 +652,9 @@
     activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
     
     UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
-//        NSMutableArray *array = [NSMutableArray array];
-//        array = [sharImageArray mutableCopy];
-//        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
+        //        NSMutableArray *array = [NSMutableArray array];
+        //        array = [sharImageArray mutableCopy];
+        //        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
         [sharImageArray removeAllObjects];
         [self dismissViewControllerAnimated:YES completion:nil];
     };
@@ -597,9 +672,9 @@
 //    if (101 == alertView.tag) {
 //        //跳转到设置页
 //        NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-//        
+//
 //        if([[UIApplication sharedApplication] canOpenURL:url]) {
-//            
+//
 //            NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
 //            [[UIApplication sharedApplication] openURL:url];
 //        }
@@ -629,6 +704,10 @@
 
 
 @end
+
+
+
+
 
 
 

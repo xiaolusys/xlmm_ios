@@ -37,7 +37,7 @@
 - (void)createSegmentView {
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
-    self.segmentedControl.sectionTitles = @[@"按分类展示",@"按日期展示"];
+    self.segmentedControl.sectionTitles = @[@"按日期展示",@"按分类展示"];
     self.segmentedControl.selectedSegmentIndex = 0;
     self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
     self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
@@ -60,17 +60,18 @@
     [self.view addSubview:self.scrollView];
     
     
-    self.pushingCategoryVC = [[JMPushingCategoryController alloc] init];
-    self.pushingCategoryVC.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-    [self addChildViewController:self.pushingCategoryVC];
-    [self.scrollView addSubview:self.pushingCategoryVC.view];
-    
-    
     self.pushingNewVC = [[PublishNewPdtViewController alloc] init];
-    self.pushingNewVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.pushingNewVC.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.pushingNewVC];
     [self.scrollView addSubview:self.pushingNewVC.view];
     
+    
+    self.pushingCategoryVC = [[JMPushingCategoryController alloc] init];
+    self.pushingCategoryVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
+    [self addChildViewController:self.pushingCategoryVC];
+    [self.scrollView addSubview:self.pushingCategoryVC.view];
+    
+
     
     
     

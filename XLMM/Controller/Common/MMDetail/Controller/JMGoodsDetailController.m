@@ -394,10 +394,14 @@
         cover.delegate = self;
         JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
         menu.contentView = self.goodsShareView.view;
+        self.goodsShareView.blcok = ^(UIButton *button) {
+            [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
+        };
     }
 }
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
+    [MobClick event:@"GoodsDetail_share_fail_clickMasking"];
     [JMPopView hide];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -453,7 +457,8 @@
                         }else {
                             button.selected = NO;
                             [MBProgressHUD showWarning:responseObject[@"info"]];
-                            [MobClick event:@"addStoreUpFail"];
+                            NSDictionary *addStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+                            [MobClick event:@"addStoreUpFail" attributes:addStoreUpFaildict];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = NO;
@@ -477,7 +482,8 @@
                         }else {
                             button.selected = YES;
                             [MBProgressHUD showWarning:responseObject[@"info"]];
-                            [MobClick event:@"cancleStoreUpFail"];
+                            NSDictionary *cancleStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+                            [MobClick event:@"cancleStoreUpFail" attributes:cancleStoreUpFaildict];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = YES;
@@ -617,7 +623,7 @@
         }];
     }
 }
-#pragma mark -- 加入购物车
+#pragma mark -- 加入购物车选择商品属性回调
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
     [self addCartUrlString:urlString Paramer:attrubuteDic];
@@ -640,6 +646,8 @@
             }
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
+            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+            [MobClick event:@"addShoppingCartFail" attributes:temp_dict];
         }
         if (!_isTeamBuyGoods) [self hideMaskView];
     } WithFail:^(NSError *error) {
@@ -853,7 +861,10 @@
     self.groupBuyPersonal.hidden = YES;
     self.groupBuyTeam.hidden = YES;
 }
+#pragma mark 加入购物车按钮点击事件
 - (void)cartButton:(UIButton *)button {
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
     BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == kBottomViewTag + 0) {
@@ -889,6 +900,9 @@
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     }else { }
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
 }
 - (void)getCartsFirstGoodsInfo {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {

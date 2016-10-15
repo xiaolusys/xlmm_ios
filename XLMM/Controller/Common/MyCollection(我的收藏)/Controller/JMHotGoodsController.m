@@ -165,7 +165,8 @@
                 [MobClick event:@"cancleStoreUpSuccess"];
                 [self.collection.mj_header beginRefreshing];
             }else {
-                [MobClick event:@"cancleStoreUpFail"];
+                NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+                [MobClick event:@"cancleStoreUpFail" attributes:temp_dict];
                 [MBProgressHUD showWarning:responseObject[@"info"]];
             }
         } WithFail:^(NSError *error) {

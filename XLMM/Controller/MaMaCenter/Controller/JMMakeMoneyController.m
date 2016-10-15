@@ -765,7 +765,7 @@
     
 }
 
-#pragma mark 活动点击事件(跳转webView)
+#pragma mark 活动点击事件(跳转webView)  // http://m.xiaolumeimei.com/mall/activity/exam
 - (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
     if(appLink.length == 0){
         WebViewController *huodongVC = [[WebViewController alloc] init];

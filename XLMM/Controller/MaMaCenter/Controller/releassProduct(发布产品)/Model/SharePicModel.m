@@ -24,6 +24,15 @@
              @"descriptionTitle":@"description"};
 }
 
+- (CGFloat)headerHeight {
+    if (!_headerHeight) {
+        CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 20;
+        CGFloat contentH = [self.descriptionTitle boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.]} context:nil].size.height;
+        _headerHeight = contentH + 60;
+    }
+    return _headerHeight;
+}
+
 
 
 @end

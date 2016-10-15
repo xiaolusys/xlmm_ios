@@ -12,4 +12,6 @@
 
 +(UIImage *)imagewithURLString:(NSString *)urlString;
 
++(UIImage *)imagewithURLString:(NSString *)urlString Index:(NSString *)index;
+
 @end

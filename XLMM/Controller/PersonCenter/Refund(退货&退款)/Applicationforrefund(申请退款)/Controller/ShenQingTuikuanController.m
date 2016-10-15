@@ -474,10 +474,12 @@
         NSInteger code = [dic[@"code"] integerValue];
         if (code == 0) {
             [MBProgressHUD hideHUD];
+            [MobClick event:@"refundChannel_audit_budget_success"];
             [self returnPopView];
-            
         }else {
             [MBProgressHUD showError:dic[@"info"]];
+            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+            [MobClick event:@"refundChannel_audit_budget_fail" attributes:temp_dict];
         }
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"退款失败,请稍后重试."];
