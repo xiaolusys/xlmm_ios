@@ -97,22 +97,16 @@
             NSString *urlStr = [urlString JMUrlEncodedString];
             data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlStr] options:NSDataReadingMapped error:&imageError];
         }
-       
-        
     }
-    
         // NSLog(@"data = %@", data);
     NSLog(@"imagewithURLString data.length %ld", (unsigned long)data.length);
     
     image = [UIImage imageWithData:data];
     
     NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    //计算出文件的全路径
     NSString *file = [cachesPath stringByAppendingPathComponent:index];
-//    //加载沙盒的文件数据
-//    NSData *data1 = [NSData dataWithContentsOfFile:file];
     [UIImageJPEGRepresentation(image, 0.5)writeToFile:file atomically:YES];
-    
+
 //    [JMStoreManager storeobject:data FileName:urlString];
     return image;
 }

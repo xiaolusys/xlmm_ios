@@ -7,6 +7,7 @@
 //
 
 #import "JMStoreManager.h"
+#import "MMClass.h"
 #define kAppLoadNum @"kAppLoadNum"
 
 

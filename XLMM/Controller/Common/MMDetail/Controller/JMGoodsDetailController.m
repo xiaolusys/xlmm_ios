@@ -623,7 +623,7 @@
         }];
     }
 }
-#pragma mark -- 加入购物车
+#pragma mark -- 加入购物车选择商品属性回调
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
     [self addCartUrlString:urlString Paramer:attrubuteDic];
@@ -861,7 +861,10 @@
     self.groupBuyPersonal.hidden = YES;
     self.groupBuyTeam.hidden = YES;
 }
+#pragma mark 加入购物车按钮点击事件
 - (void)cartButton:(UIButton *)button {
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
     BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == kBottomViewTag + 0) {
@@ -897,6 +900,9 @@
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     }else { }
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
 }
 - (void)getCartsFirstGoodsInfo {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {
