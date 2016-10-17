@@ -12,8 +12,10 @@
             <rect key="frame" x="0.0" y="0.0" width="365" height="78"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-2w-itb">
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-2w-itb">
+                    <frame key="frameInset" minX="10" minY="55" width="345" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -25,7 +27,7 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10-15 09:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71m-L2-0ih">
                     <frame key="frameInset" minX="10" minY="30" width="60" height="20"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -33,11 +35,8 @@
             <constraints>
                 <constraint firstItem="L0o-dL-h6v" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="GD2-pr-zts"/>
                 <constraint firstItem="L0o-dL-h6v" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="10" id="Kl1-XU-MDZ"/>
-                <constraint firstAttribute="trailing" secondItem="efz-2w-itb" secondAttribute="trailing" constant="10" id="MGo-Iq-gxL"/>
-                <constraint firstItem="efz-2w-itb" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="brd-yn-NYJ"/>
                 <constraint firstItem="71m-L2-0ih" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="f09-5h-tQ7"/>
                 <constraint firstItem="71m-L2-0ih" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="35" id="w73-J6-bXF"/>
-                <constraint firstItem="efz-2w-itb" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="60" id="yub-3I-aoe"/>
             </constraints>
             <connections>
                 <outlet property="propagandaLabel" destination="efz-2w-itb" id="HAG-V2-anS"/>

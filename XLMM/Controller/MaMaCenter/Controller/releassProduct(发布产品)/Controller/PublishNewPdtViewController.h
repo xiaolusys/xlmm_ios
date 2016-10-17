@@ -10,12 +10,15 @@
 #import "JMPageViewBaseController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-
+// 主页分类 比例布局
+#define HomeCategoryRatio               SCREENWIDTH / 320.0
+#define HomeCategorySpaceW              25 * HomeCategoryRatio
+#define HomeCategorySpaceH              20 * HomeCategoryRatio
 
 @interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
 @property (nonatomic, copy) NSString *categoryCidString;
-
+@property (nonatomic, strong)UICollectionView *picCollectionView;
 
 
 @end

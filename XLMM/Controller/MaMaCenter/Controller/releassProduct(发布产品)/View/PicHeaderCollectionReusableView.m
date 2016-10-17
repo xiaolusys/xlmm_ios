@@ -13,10 +13,15 @@
 
 - (void)awakeFromNib {
     // Initialization code
-//    self.propagandaLabel.numberOfLines = 0;
-//    self.propagandaLabel.lineBreakMode = 0;
-//    self.propagandaLabel.font = [UIFont systemFontOfSize:14];
-//    [self.propagandaLabel sizeToFit];
+    self.propagandaLabel.numberOfLines = 0;
+    self.propagandaLabel.lineBreakMode = 0;
+    self.propagandaLabel.font = [UIFont systemFontOfSize:15.];
+    [self.propagandaLabel sizeToFit];
+    [self.propagandaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.timeLabel.mas_bottom).offset(5);
+        make.left.equalTo(self).offset(10);
+        make.width.mas_equalTo(SCREENWIDTH - 20);
+    }];
     
 //    self.saveYetLabel = [UILabel new];
 //    self.saveYetLabel.textColor = [UIColor dingfanxiangqingColor];

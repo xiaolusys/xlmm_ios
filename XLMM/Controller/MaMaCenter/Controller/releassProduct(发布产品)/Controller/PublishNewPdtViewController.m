@@ -23,6 +23,7 @@
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 24)/3)
 
+
 @interface PublishNewPdtViewController () {
     NSString *_qrCodeUrlString;
     NSInteger indexCode;
@@ -33,10 +34,9 @@
     BOOL _isNeedAleartMessage;
     NSMutableDictionary *_currentSaveDataSource;
     NSString *_getBeforeDayFive;
-    NSArray *categoryArray;
 }
 
-@property (nonatomic, strong)UICollectionView *picCollectionView;
+
 @property (nonatomic, strong)PhotoView *photoView;
 
 @property (nonatomic, strong)UIView *watchesView;
@@ -57,6 +57,7 @@
     UIView *bottomView;
     CountdownView *countdowmView;
 }
+
 - (instancetype)init {
     if (self == [super init]) {
         _currentSaveDataSource = [NSMutableDictionary dictionary];
@@ -121,8 +122,6 @@
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
     [self createCollectionView];
     
-    categoryArray = [JMStoreManager getObjectByFileName:@"categorysArray"];
-    
     _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
     [self dingshishuaxin];
     if ([NSString isStringEmpty:_qrCodeUrlString]) {
@@ -184,18 +183,24 @@
     self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - layoutHeight) collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
     
-    if (hour > 6 || hour == 6) {
-        self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    NSString *className = NSStringFromClass([self class]);
+    if ([className isEqual:@"PublishNewPdtViewController"]) {
+        if (hour > 6 || hour == 6) {
+            self.picCollectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+            [self.view addSubview:self.picCollectionView];
+        }else {
+            self.watchesView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 200)];
+            self.watchesView.backgroundColor = [UIColor backgroundlightGrayColor];
+            [self.picCollectionView addSubview:self.watchesView];
+            [self showDefaultView];
+            self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
+            [self.view addSubview:self.picCollectionView];
+        }
+    }else {  // JMPushingCategoryController
+        self.picCollectionView.contentInset = UIEdgeInsetsMake((SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 60 + HomeCategorySpaceH, 0, 0, 0);
         [self.view addSubview:self.picCollectionView];
-    }else {
-        self.watchesView = [[UIView alloc] initWithFrame:CGRectMake(0, -200, SCREENWIDTH, 200)];
-        self.watchesView.backgroundColor = [UIColor backgroundlightGrayColor];
-        [self.picCollectionView addSubview:self.watchesView];
-        [self showDefaultView];
-        self.picCollectionView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
-        [self.view addSubview:self.picCollectionView];
+        
     }
-    
     self.picCollectionView.backgroundColor = [UIColor whiteColor];
     
     self.picCollectionView.delegate = self;
@@ -210,10 +215,14 @@
 }
 - (void)loadPicData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
-    if (self.categoryCidString) {
-        urlString = [NSString stringWithFormat:@"%@?%@",urlString,self.categoryCidString];
+    NSString *className = NSStringFromClass([self class]);
+    if ([className isEqual:@"PublishNewPdtViewController"]) {
+        if (self.categoryCidString) {
+            urlString = [NSString stringWithFormat:@"%@?%@",urlString,self.categoryCidString];
+        }
+    }else {
+        urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic?ordering=-save_times",Root_URL];
     }
-    
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
@@ -340,7 +349,6 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     SharePicModel *picModel = self.dataArr[indexPath.section];
     self.cellNum = picModel.pic_arry.count;
-    
     if (self.cellNum == 1) {
         return CGSizeMake(CELLWIDTH + 30, CELLWIDTH + 80);
     }
@@ -369,40 +377,16 @@
         //返回页眉
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
+        headerV.titleLabel.text = picModel.title_content;
         headerV.timeLabel.text = [NSString jm_cutOutYearWihtSec:picModel.start_time];
-        
-        //改变label的高
-//        if (self.isLoad) {
-//            CGSize titleSize = [picModel.descriptionTitle boundingRectWithSize:CGSizeMake(SCREENWIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
-//            headerV.desheight.constant = titleSize.height + 30;
-//        }
         headerV.propagandaLabel.text = picModel.descriptionTitle;
-//        if ([NSString isStringEmpty:picModel.sale_category]) {
-//            headerV.turnsImageView.image = [UIImage imageNamed:@""];
-//        }else {
-//            NSInteger categoryCode = [picModel.sale_category integerValue] - 1;
-//            if (categoryCode >= 8) {
-//                headerV.turnsImageView.image = [UIImage imageNamed:@""];
-//            }else {
-//                NSDictionary *categoryDic = categoryArray[categoryCode];
-//                headerV.propagandaLabel.text = picModel.descriptionTitle;
-//                //        NSString *name = [NSString stringWithFormat:@"%dlun", [picModel.turns_num intValue] - 1];
-//                //        headerV.turnsImageView.image = [UIImage imageNamed:name];
-//                [headerV.turnsImageView sd_setImageWithURL:[NSURL URLWithString:[categoryDic[@"cat_img"] JMUrlEncodedString]] placeholderImage:nil];
-//            }
-//        }
-//        NSString *allSaveYet = [NSString stringWithFormat:@"%@人已下载",picModel.save_times];
-//        headerV.saveYetLabel.text = allSaveYet;
-//        headerV.saveYetLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:18.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allSaveYet SubStringArray:@[saveYet]];
         return headerV;
         
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
-        
-        [footerV.seeButton setTitle:picModel.save_times forState:UIControlStateNormal];
-        [footerV.likeButton setTitle:picModel.share_times forState:UIControlStateNormal];
-        [footerV.shareButton setTitle:picModel.share_times forState:UIControlStateNormal];
+        [footerV.likeButton setTitle:picModel.save_times forState:UIControlStateNormal];
+        [footerV.shareButton setTitle:picModel.save_times forState:UIControlStateNormal];
         
         if ([picModel.could_share intValue]) {
             footerV.savePhotoBtn.userInteractionEnabled=YES;
@@ -415,29 +399,15 @@
             footerV.savePhotoBtn.alpha=0.5;
             return footerV;
         }
-        
-        
-        
-        
-        
     }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-//    if (!self.isLoad) {
-//        return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
-//    }else {
-        SharePicModel *picModel = self.dataArr[section];
-//        NSString *title = picModel.descriptionTitle;
-//        CGSize titleSize = [title boundingRectWithSize:CGSizeMake(SCREENWIDTH - 20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size;
-//        if (titleSize.width < 30) {
-//            return CGSizeMake([UIScreen mainScreen].bounds.size.width, 58);
-//        }
-        return CGSizeMake(SCREENWIDTH, picModel.headerHeight);
-//    }
+    SharePicModel *picModel = self.dataArr[section];
+    return CGSizeMake(SCREENWIDTH, picModel.headerHeight);
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeMake(SCREENWIDTH, 100);
+    return CGSizeMake(SCREENWIDTH, 75);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -445,9 +415,9 @@
     self.cellNum = picModel.pic_arry.count;
     
     if (self.cellNum == 4) {
-        return UIEdgeInsetsMake(10, 10, 10, CELLWIDTH + 10);
+        return UIEdgeInsetsMake(5, 10, 5, CELLWIDTH + 10);
     }
-    return UIEdgeInsetsMake(10, 10, 10, 10);
+    return UIEdgeInsetsMake(5, 10, 5, 10);
 }
 
 #pragma mark --保存事件
@@ -474,7 +444,6 @@
             return ;
         }else{
             [MobClick event:@"DaysPush_success"];
-            [self statisticsSaveNum:picModel.piID];
         }
         NSArray *arr = [JMPushSaveModel findAll];
         for (int i = 0; i < arr.count; i++) {
@@ -499,13 +468,13 @@
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
             //            [self saveNext];
-            [self downLoadImage];
+            [self downLoadImage:picModel.piID];
         }else if (self.currentArr.count > 0){
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
         }else {
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
             //            [self saveNext];
-            [self downLoadImage];
+            [self downLoadImage:picModel.piID];
         }
         
     }
@@ -523,7 +492,8 @@
     }];
     
 }
-- (void)downLoadImage {
+- (void)downLoadImage:(NSNumber *)pushID {
+    [self statisticsSaveNum:pushID];
     [self saveNextimage];
     NSArray *curArr = [self.currentArr copy];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -700,6 +670,11 @@
     }
     return YES;
 }
+
+
+
+
+
 
 
 
