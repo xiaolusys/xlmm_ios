@@ -234,7 +234,7 @@ static BOOL isAgreeTerms = YES;
         [self.purchaseGoodsArr addObject:model];
     }
     NSInteger isTeamCode = [[teamGoodsDic objectForKey:@"type"] integerValue];
-    if ([teamGoodsDic isKindOfClass:[NSMutableDictionary class]] && isTeamCode == 3) {
+    if ([teamGoodsDic isKindOfClass:[NSDictionary class]] && isTeamCode == 3) {
         _isTeamBuyGoods = YES;
     }else {
         _isTeamBuyGoods = NO;

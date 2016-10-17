@@ -21,20 +21,20 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t0p-iF-wHb">
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="ghU-H4-PhI"/>
+                        <constraint firstAttribute="height" constant="30" id="ghU-H4-PhI"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wg5-4A-ihU">
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="4XL-j3-g9v"/>
-                        <constraint firstAttribute="height" constant="35" id="lCt-dh-4Xz"/>
+                        <constraint firstAttribute="height" constant="30" id="lCt-dh-4Xz"/>
                     </constraints>
                     <color key="tintColor" red="1" green="0.56862745100000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal">
                         <attributedString key="attributedTitle">
                             <fragment content="立即分享">
                                 <attributes>
-                                    <font key="NSFont" size="16" name="PingFangSC-Regular"/>
+                                    <font key="NSFont" size="14" name="PingFangSC-Regular"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>

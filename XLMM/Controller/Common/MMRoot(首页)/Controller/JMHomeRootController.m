@@ -160,7 +160,7 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
     NSString *timeString = _timeArray[1];
-    if ([NSString isStringEmpty:timeString]) {
+    if ([NSString isStringEmpty:timeString] || [timeString isEqual:@"00:00:00"]) {
         [self.tableView.mj_header beginRefreshing];
     }else {
         NSDate *date = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:timeString]]; // 结束时间

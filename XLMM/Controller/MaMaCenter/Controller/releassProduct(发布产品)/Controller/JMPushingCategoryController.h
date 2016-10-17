@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PublishNewPdtViewController.h"
 
 
-
-@interface JMPushingCategoryController : UIViewController
+@interface JMPushingCategoryController : PublishNewPdtViewController
 
 
 @end
