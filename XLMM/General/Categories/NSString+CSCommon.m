@@ -279,6 +279,29 @@
     
 }
 
+/**
+ *  获取两个日期之间的天数
+ *
+ *  @return 相差天数
+ */
++ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *fromDate1 = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:fromDate]];
+    NSDate *toDate1 = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:toDate]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comp = [calendar components:NSCalendarUnitDay
+                                             fromDate:fromDate1
+                                               toDate:toDate1
+                                              options:NSCalendarWrapComponents];
+    NSLog(@" -- >>  两个日期之间相差的天数 == comp : %@  << --",comp);
+    NSString *dayString = [NSString stringWithFormat:@"%ld",comp.day];
+    return dayString;
+}
+
+
+
+
 
 @end
 

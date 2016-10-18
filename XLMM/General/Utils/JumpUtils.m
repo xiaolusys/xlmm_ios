@@ -119,7 +119,7 @@
     }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
         [self jumpToCategoryProduct:target_url viewController:vc];
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_forum"]){
-        //  跳转到小鹿妈妈forum界面
+        //  跳转到小鹿妈妈forum界面 (论坛)
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:@"http://forum.xiaolumeimei.com/accounts/xlmm/login/" forKey:@"web_url"];
