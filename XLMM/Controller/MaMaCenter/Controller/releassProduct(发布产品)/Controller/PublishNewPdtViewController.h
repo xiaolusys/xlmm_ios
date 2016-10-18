@@ -10,8 +10,16 @@
 #import "JMPageViewBaseController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface PublishNewPdtViewController : JMPageViewBaseController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
+// 主页分类 比例布局
+#define HomeCategoryRatio               SCREENWIDTH / 320.0
+#define HomeCategorySpaceW              25 * HomeCategoryRatio
+#define HomeCategorySpaceH              20 * HomeCategoryRatio
 
-@property (nonatomic, copy) NSString *qrCodeUrlString;
+@interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
+
+@property (nonatomic, copy) NSString *categoryCidString;
+@property (nonatomic, strong)UICollectionView *picCollectionView;
+
 
 @end
+

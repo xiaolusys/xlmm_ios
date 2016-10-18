@@ -142,6 +142,7 @@
     [self.userName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImageView).offset(5);
         make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
+        make.width.mas_equalTo(@(100));
     }];
     
     [self.payState mas_makeConstraints:^(MASConstraintMaker *make) {

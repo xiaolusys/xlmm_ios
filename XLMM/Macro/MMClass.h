@@ -10,7 +10,6 @@
 #import "UIColor+RGBColor.h"
 #import "UIImage+ImageWithUrl.h"
 #import "NSArray+Log.h"
-#import <SVProgressHUD.h>
 #import <AFNetworking.h>
 #import <MJExtension.h>
 #import <Masonry.h>

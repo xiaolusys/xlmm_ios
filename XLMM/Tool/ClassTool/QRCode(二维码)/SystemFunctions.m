@@ -43,10 +43,10 @@
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
     if (sounding) {
-        //设置自定义声音
-        SystemSoundID soundID;
-        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"ring" ofType:@"wav"]], &soundID);
-        AudioServicesPlaySystemSound(soundID);
+        //设置自定义声音  (可以不需要设置提示音,资源已删除,如有需要请重新添加)
+//        SystemSoundID soundID;
+//        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"ring" ofType:@"wav"]], &soundID);
+//        AudioServicesPlaySystemSound(soundID);
     }
 }
 

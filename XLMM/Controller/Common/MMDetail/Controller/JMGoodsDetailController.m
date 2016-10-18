@@ -25,6 +25,7 @@
 #import "JMPurchaseController.h"
 #import "JMAutoLoopPageView.h"
 #import "JMGoodsLoopRollCell.h"
+#import "JMPopViewAnimationDrop.h"
 
 
 #define BottomHeitht 60.0
@@ -150,6 +151,12 @@
     }
     return _popView;
 }
+- (JMShareViewController *)goodsShareView {
+    if (!_goodsShareView) {
+        _goodsShareView = [[JMShareViewController alloc] init];
+    }
+    return _goodsShareView;
+}
 - (NSMutableArray *)topImageArray {
     if (_topImageArray == nil) {
         _topImageArray = [NSMutableArray array];
@@ -182,7 +189,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor countLabelColor];
-//    self.navigationController.navigationBar.alpha = 0.0;
+    //    self.navigationController.navigationBar.alpha = 0.0;
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     _paramer = [NSMutableDictionary dictionary];
@@ -193,7 +200,7 @@
     [self setupHeadView];           // 创建头部滚动视图
     [self createBottomView];        // 底部购物车,购买按钮
     [self createNavigationView];    // 自定义导航控制器视图
-
+    
 }
 - (void)createContentView {
     self.allContentView = [UIView new];
@@ -237,15 +244,6 @@
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
-//    JMAutoLoopScrollView *scrollView = [[JMAutoLoopScrollView alloc] initWithStyle:JMAutoLoopScrollStyleHorizontal];
-//    self.goodsScrollView = scrollView;
-//    scrollView.jm_scrollDataSource = self;
-//    scrollView.jm_scrollDelegate = self;
-//    scrollView.frame = CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight);
-//    scrollView.jm_isStopScrollForSingleCount = NO;
-//    scrollView.jm_autoScrollInterval = 3.;
-//    [scrollView jm_registerClass:[JMGoodsLoopRollView class]];
-//    self.tableView.tableHeaderView = scrollView;
 }
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
@@ -286,7 +284,7 @@
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
     self.topImageArray = detailContentDic[@"head_imgs"];
-//    [self.goodsScrollView jm_reloadData];
+    //    [self.goodsScrollView jm_reloadData];
     [self.pageView reloadData];
     NSDictionary *comparison = goodsDetailDic[@"comparison"];
     NSArray *attributes = comparison[@"attributes"];
@@ -300,7 +298,7 @@
     
     // 在这里拿到数据后先判断是否是团购商品 | 团购商品有teambuy_info字段 非团购无   --> 如果是团购商品,购买按钮为单人购买和团购
     if ([goodsDetailDic isKindOfClass:[NSDictionary class]] && [goodsDetailDic objectForKey:@"teambuy_info"]) {
-//        NSArray *teamNumBuy = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
+        //        NSArray *teamNumBuy = @[@"零",@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十"];
         NSDictionary *dic = goodsDetailDic[@"teambuy_info"];
         NSInteger code1 = [dic[@"teambuy_person_num"] integerValue];
         if ([dic[@"teambuy"] boolValue]) {
@@ -391,17 +389,19 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         [MobClick event:@"GoodsDetail_share"];
-        JMShareViewController *shareView = [[JMShareViewController alloc] init];
-        self.goodsShareView = shareView;
         self.goodsShareView.model = self.shareModel;
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
         menu.contentView = self.goodsShareView.view;
+        self.goodsShareView.blcok = ^(UIButton *button) {
+            [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
+        };
     }
 }
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
+    [MobClick event:@"GoodsDetail_share_fail_clickMasking"];
     [JMPopView hide];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -457,7 +457,8 @@
                         }else {
                             button.selected = NO;
                             [MBProgressHUD showWarning:responseObject[@"info"]];
-                            [MobClick event:@"addStoreUpFail"];
+                            NSDictionary *addStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+                            [MobClick event:@"addStoreUpFail" attributes:addStoreUpFaildict];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = NO;
@@ -481,7 +482,8 @@
                         }else {
                             button.selected = YES;
                             [MBProgressHUD showWarning:responseObject[@"info"]];
-                            [MobClick event:@"cancleStoreUpFail"];
+                            NSDictionary *cancleStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+                            [MobClick event:@"cancleStoreUpFail" attributes:cancleStoreUpFaildict];
                         }
                     } WithFail:^(NSError *error) {
                         button.selected = YES;
@@ -537,13 +539,14 @@
         if (self.tableView.contentOffset.y >= 0 &&  self.tableView.contentOffset.y <= HeaderScrolHeight) {
             self.pageView.mj_origin = CGPointMake(self.pageView.mj_origin.x, -offset / 2.0f);
             CGFloat scrolHeight = HeaderScrolHeight - 80;
-            NSLog(@"%.f ------ %.f ",offset,scrolHeight);
-            self.navigationView.alpha = (offset / scrolHeight);
-            self.backToRootView.alpha = 0.7 - (offset / scrolHeight);
-            self.shareView.alpha = 0.7 - (offset / scrolHeight);
-        }else {
+            CGFloat yOffset = offset / scrolHeight;
+            yOffset = MAX(0, MIN(1, yOffset));
+            self.navigationView.alpha = yOffset;
+            self.backToRootView.alpha = 0.7 - yOffset;
+            self.shareView.alpha = 0.7 - yOffset;
+        }else if (self.tableView.contentOffset.y <= 0 && self.tableView.contentOffset.y <= HeaderScrolHeight) {
             self.navigationView.alpha = 0.;
-        }
+        }else { }
         if (offset <= self.tableView.contentSize.height - SCREENHEIGHT + RollHeight + BottomHeitht) {
             self.upViewLabel.text = @"继续拖动,查看图文详情";
         }else { }
@@ -591,13 +594,13 @@
     isTop = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.maskView];
     [[UIApplication sharedApplication].keyWindow addSubview:self.popView];
-
+    
     [UIView animateWithDuration:0.2 animations:^{
-        self.view.layer.transform = [self firstStepTransform];
+        self.view.layer.transform = [JMPopViewAnimationDrop firstStepTransform];
         self.maskView.alpha = 1.0;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.3 animations:^{
-            self.view.layer.transform = [self secondStepTransform];
+            self.view.layer.transform = [JMPopViewAnimationDrop secondStepTransform];
             self.popView.transform = CGAffineTransformTranslate(self.popView.transform, 0, -POPHeight);
         }];
     }];
@@ -607,7 +610,7 @@
         isShowTop = NO;
     }else {
         [UIView animateWithDuration:0.3 animations:^{
-            self.view.layer.transform = [self firstStepTransform];
+            self.view.layer.transform = [JMPopViewAnimationDrop firstStepTransform];
             self.popView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.2 animations:^{
@@ -620,24 +623,7 @@
         }];
     }
 }
-// 动画1
-- (CATransform3D)firstStepTransform {
-    CATransform3D transform = CATransform3DIdentity;
-    transform.m34 = 1.0 / -500.0;
-    transform = CATransform3DScale(transform, 0.98, 0.98, 1.0);
-    transform = CATransform3DRotate(transform, 5.0 * M_PI / 180.0, 1, 0, 0);
-    transform = CATransform3DTranslate(transform, 0, 0, -30.0);
-    return transform;
-}
-// 动画2
-- (CATransform3D)secondStepTransform {
-    CATransform3D transform = CATransform3DIdentity;
-    transform.m34 = [self firstStepTransform].m34;
-    transform = CATransform3DTranslate(transform, 0, SCREENHEIGHT * -0.08, 0);
-    transform = CATransform3DScale(transform, 0.8, 0.8, 1.0);
-    return transform;
-}
-#pragma mark -- 加入购物车
+#pragma mark -- 加入购物车选择商品属性回调
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
     [self addCartUrlString:urlString Paramer:attrubuteDic];
@@ -660,6 +646,8 @@
             }
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
+            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+            [MobClick event:@"addShoppingCartFail" attributes:temp_dict];
         }
         if (!_isTeamBuyGoods) [self hideMaskView];
     } WithFail:^(NSError *error) {
@@ -692,7 +680,7 @@
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
 }
 //- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
-//    
+//
 //}
 //- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMGoodsLoopRollView *)rollView {
 //    rollView.imageString = self.topImageArray[index];
@@ -842,7 +830,7 @@
         make.bottom.equalTo(shopCartImage.mas_top).offset(15);
         make.width.height.mas_equalTo(@16);
     }];
-
+    
     // === 如果是团购商品 === //
     self.groupBuyPersonal = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:self.groupBuyPersonal];
@@ -873,7 +861,10 @@
     self.groupBuyPersonal.hidden = YES;
     self.groupBuyTeam.hidden = YES;
 }
+#pragma mark 加入购物车按钮点击事件
 - (void)cartButton:(UIButton *)button {
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
     NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
     BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == kBottomViewTag + 0) {
@@ -909,6 +900,9 @@
             [self.navigationController pushViewController:loginVC animated:YES];
         }
     }else { }
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
 }
 - (void)getCartsFirstGoodsInfo {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {

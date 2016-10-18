@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <UserNotifications/UserNotifications.h>
 
 @protocol MiPushSDKDelegate <NSObject>
 
@@ -46,9 +47,9 @@
  *      type: apns推送类型. (Badge, Alert, Sound)
  *      connect: 是否启动长连接, 它跟APNSs是不同的通道(不管是否启动系统推送, app在前台都可以收到在线或离线消息)
  */
-+ (void)registerMiPush:(id<MiPushSDKDelegate>)delegate;
-+ (void)registerMiPush:(id<MiPushSDKDelegate>)delegate type:(UIRemoteNotificationType)type;
-+ (void)registerMiPush:(id<MiPushSDKDelegate>)delegate type:(UIRemoteNotificationType)type connect:(BOOL)connect;
++ (void)registerMiPush:(id<MiPushSDKDelegate, UNUserNotificationCenterDelegate>)delegate;
++ (void)registerMiPush:(id<MiPushSDKDelegate, UNUserNotificationCenterDelegate>)delegate type:(UIRemoteNotificationType)type;
++ (void)registerMiPush:(id<MiPushSDKDelegate, UNUserNotificationCenterDelegate>)delegate type:(UIRemoteNotificationType)type connect:(BOOL)connect;
 
 /**
  * 客户端设备注销
@@ -168,4 +169,9 @@
  */
 + (NSString*)getSDKVersion;
 
+/**
+ * 获取RegId
+ * 如果没有RegId返回nil
+ */
++ (NSString*)getRegId;
 @end

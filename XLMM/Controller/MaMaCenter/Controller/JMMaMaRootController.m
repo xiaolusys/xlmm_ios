@@ -18,7 +18,7 @@
 #import "JMMaMaExtraModel.h"
 #import "JMHomeActiveModel.h"
 #import "Udesk.h"
-
+#import "JMStoreManager.h"
 
 @interface JMMaMaRootController () {
     NSInteger _indexCode;
@@ -104,7 +104,6 @@
     _qrCodeRequestDataIndex = 0;
     qrCodeUrlString = @"";
     _isActiveClick = NO;
-    
     [self createSegmentView];
     [self craeteNavRightButton];
     [self customUserInfo];
@@ -113,24 +112,17 @@
     [self loadDataSource];
     [self loadfoldLineData];
     [self loaderweimaData];
-    
 }
 
 - (void)loadMaMaMessage {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/message/self_list",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        [self mamaMesageData:responseObject];
+        self.makeMoneyVC.messageDic = responseObject;
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
 }
-- (void)mamaMesageData:(NSDictionary *)messageDic {
-//    self.mineVC.messageDic = messageDic;
-    self.makeMoneyVC.messageDic = messageDic;
-    
-}
-
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
@@ -154,25 +146,18 @@
 //    _mamaID = self.mamaCenterModel.mama_id;
 //    self.mineVC.extraModel = self.extraModel;
     self.mineVC.mamaCenterModel = self.mamaCenterModel;
-    
     self.makeMoneyVC.centerModel = self.mamaCenterModel;
 //    self.makeMoneyVC.extraFiguresDic = fortuneDic[@"extra_figures"];
     self.mineVC.extraFiguresDic = fortuneDic[@"extra_figures"];
-    
 }
 - (void)loadMaMaWeb {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
-        if (responseObject == nil) {
-            return ;
-        }else {
-            [self.activeArray removeAllObjects];
-            [self mamaWebViewData:responseObject];
-        }
+        if (!responseObject) return ;
+        [self.activeArray removeAllObjects];
+        [self mamaWebViewData:responseObject];
     } WithFail:^(NSError *error) {
-        
     } Progress:^(float progress) {
-        
     }];
 }
 // MaMaWebView跳转链接
@@ -196,18 +181,13 @@
     self.makeMoneyVC.makeMoneyDic = self.mamaWebDict;
     self.mineVC.webDict = self.mamaWebDict;
 //    self.activityVC.urlString = extraDict[@"forum"];
-    
     NSArray *activeArr = resultsDict[@"mama_activities"];
-    if (activeArr.count == 0) {
-        return ;
-    }
+    if (activeArr.count == 0) return ;
     for (NSDictionary *dict in activeArr) {
         JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];
         [self.activeArray addObject:model];
     }
     self.makeMoneyVC.activeArray = self.activeArray;
-    
-    
 }
 - (void)loadEarningMessage {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/ordercarry/get_latest_order_carry",Root_URL];
@@ -221,9 +201,7 @@
     }];
 }
 - (void)fetchEarning:(NSArray *)array {
-    if (array.count == 0) {
-        return ;
-    }
+    if (array.count == 0) return ;
     for (NSDictionary *dic in array) {
         [self.earningArray addObject:dic[@"content"]];
         [self.earningImageArray addObject:dic[@"avatar"]];
@@ -239,9 +217,7 @@
         if (arr.count == 0)return;
         self.makeMoneyVC.mamaResults = arr;
     } WithFail:^(NSError *error) {
-        
     } Progress:^(float progress) {
-        
     }];
 }
 - (void)loaderweimaData {
@@ -251,23 +227,17 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             qrCodeUrlString = responseObject[@"qrcode_link"];
-            self.makeMoneyVC.qrCodeUrlString = qrCodeUrlString;
+            [JMStoreManager storeUserDefults:qrCodeUrlString forKey:@"qrCodeUrlString"];
         }else {
-            
         }
-
     } WithFail:^(NSError *error) {
         _qrCodeRequestDataIndex ++;
         if (_qrCodeRequestDataIndex <= 3) {
             [self performSelector:@selector(loaderweimaData) withObject:nil afterDelay:1.0];
         }
     } Progress:^(float progress) {
-        
     }];
-    
 }
-
-
 #pragma mark 创建小鹿客服入口
 - (void)craeteNavRightButton {
     UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 80)];
@@ -275,7 +245,6 @@
     [serViceButton setTitle:@"小鹿客服" forState:UIControlStateNormal];
     [serViceButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     serViceButton.titleLabel.font = [UIFont systemFontOfSize:14.];
-    
 //    UIImageView *serviceImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 5, 30, 30)];
 //    [serViceButton addSubview:serviceImage];
 //    serviceImage.image = [UIImage imageNamed:@"serviceEnter"];
@@ -291,7 +260,6 @@
 //    [self.navigationController pushViewController:robot animated:YES];
     UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
     [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
-    
 }
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;
@@ -352,22 +320,15 @@
 }
 - (void)waitTimer {
     UIViewController *controller = [self.navigationController.viewControllers lastObject];
-    NSLog(@"controller ==== %@",self.navigationController.viewControllers);
     if ([controller isKindOfClass:[JMMaMaRootController class]]) {
-        NSLog(@"controller ==== %@",controller);
-        NSLog(@"_indexCode ==== %ld",_indexCode);
         if (_indexCode >= (self.earningArray.count - 1)) {
             _indexCode = 0;
         }
         [self showNewStatusCount:self.earningArray Image:self.earningImageArray Index:_indexCode];
-        
     }
-    
 }
 - (void)showNewStatusCount:(NSArray *)message Image:(NSArray *)imageArr Index:(NSInteger)index {
-    if (message.count == 0) {
-        return ;
-    }
+    if (message.count == 0) return ;
     CGFloat h = 40.;
     CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) + 20;
     CGFloat x = 10;
@@ -404,7 +365,6 @@
             _indexCode ++;
             int x = arc4random() % 5 + 5;
             [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
-            
         }];
     }];
 }

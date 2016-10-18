@@ -8,7 +8,6 @@
 
 #import "JMMakeMoneyController.h"
 #import "MMClass.h"
-#import "ShopPreviousViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "WebViewController.h"
 #import "ProductSelectionListViewController.h"
@@ -28,6 +27,7 @@
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
+#import "JMPushingDaysController.h"
 
 
 
@@ -52,6 +52,7 @@
 @property (nonatomic, copy) NSString *myInvitation;
 
 @property (nonatomic, strong) UILabel *addEarningLabel;
+@property (nonatomic, strong) UILabel *addWeekEarningLabel;
 
 @property (nonatomic, strong) UILabel *weekRankLabel;
 
@@ -143,6 +144,7 @@
     NSDictionary *exDic = centerModel.extra_info;
     NSDictionary *extraFiguresDic = centerModel.extra_figures;
     self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
+    self.addWeekEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
     NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
     NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
     self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
@@ -278,9 +280,25 @@
     topImageView.image = [UIImage imageNamed:@"wodejingxuanback"];
     topImageView.userInteractionEnabled = YES;
     
+    
+    UILabel *addWeekEarningL = [UILabel new];
+    [topImageView addSubview:addWeekEarningL];
+    addWeekEarningL.textColor = [UIColor buttonTitleColor];
+    addWeekEarningL.textAlignment = NSTextAlignmentCenter;
+    addWeekEarningL.font = [UIFont systemFontOfSize:14.];
+    addWeekEarningL.text = @"本周累计收益";
+    
+    UILabel *addWeekEarningLabel = [UILabel new];
+    [topImageView addSubview:addWeekEarningLabel];
+    addWeekEarningLabel.textColor = [UIColor whiteColor];
+    addWeekEarningLabel.font = [UIFont systemFontOfSize:36.];
+    //    addEarningLabel.text = @"666.66";
+    self.addWeekEarningLabel = addWeekEarningLabel;
+    
     UILabel *addEarningL = [UILabel new];
     [topImageView addSubview:addEarningL];
     addEarningL.textColor = [UIColor buttonTitleColor];
+    addEarningL.textAlignment = NSTextAlignmentCenter;
     addEarningL.font = [UIFont systemFontOfSize:14.];
     addEarningL.text = @"今日累计收益";
     
@@ -316,13 +334,23 @@
     worldRankLabel.font = [UIFont systemFontOfSize:12.];
     worldRankLabel.textColor = [UIColor buttonTitleColor];
     worldRankLabel.text = @"世界排名TOP10";
+    [addWeekEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topImageView).offset(25);
+        make.left.equalTo(topImageView);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+    }];
+    [addWeekEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(addWeekEarningL.mas_bottom).offset(10);
+        make.centerX.equalTo(addWeekEarningL.mas_centerX);
+    }];
     [addEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView).offset(25);
-        make.centerX.equalTo(topImageView.mas_centerX);
+        make.right.equalTo(topImageView);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
     }];
     [addEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(addEarningL.mas_bottom).offset(10);
-        make.centerX.equalTo(topImageView.mas_centerX);
+        make.centerX.equalTo(addEarningL.mas_centerX);
     }];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(topImageView);
@@ -633,7 +661,7 @@
  *  110 --> 折线图 -- > 收益
  */
 - (void)mamaButtonClick:(UIButton *)button {
-    NSLog(@"button.tag --> %ld",button.tag);
+//    NSLog(@"button.tag --> %ld",button.tag);
     NSInteger index = button.tag;
     if (index == 100) {
         [self earning:1];
@@ -643,12 +671,18 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-        ShopPreviousViewController *previous = [[ShopPreviousViewController alloc] init];
-        [self.navigationController pushViewController:previous animated:YES];
+        NSString *urlString = [NSString stringWithFormat:@"http://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
+        WebViewController *webVC = [[WebViewController alloc] init];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:urlString forKey:@"web_url"];
+        [dict setValue:@"mamaShop" forKey:@"type_title"];
+        webVC.webDiction = dict;
+        webVC.isShowNavBar = true;
+        webVC.isShowRightShareBtn = true;
+        [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 104) {
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
-        publish.qrCodeUrlString = self.qrCodeUrlString;
-        [self.navigationController pushViewController:publish animated:YES];
+        JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
+        [self.navigationController pushViewController:pushingVC animated:YES];
     }else if (index == 105) {
         ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
         [self.navigationController pushViewController:product animated:YES];
@@ -731,7 +765,7 @@
     
 }
 
-#pragma mark 活动点击事件(跳转webView)
+#pragma mark 活动点击事件(跳转webView)  // http://m.xiaolumeimei.com/mall/activity/exam
 - (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
     if(appLink.length == 0){
         WebViewController *huodongVC = [[WebViewController alloc] init];
@@ -801,7 +835,7 @@
             lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
             if (6 - quxiaodays + 1 < 7) {
                 point = [linechart getPointForIndex:(6 - quxiaodays + 1)];
-                NSLog(@"%@", NSStringFromCGPoint(point));
+//                NSLog(@"%@", NSStringFromCGPoint(point));
                 
                 UIView *whiteLine = [[UIView alloc] initWithFrame:CGRectMake(point.x, point.y - 1, SCREENWIDTH - point.x, 2)];
                 whiteLine.backgroundColor = [UIColor whiteColor];
@@ -823,7 +857,7 @@
         for (int j = 0; j < 7; j++) {
             CGPoint point2 = [linechart getPointForIndex:j];
             
-            NSLog(@"%@", NSStringFromCGPoint(point2));
+//            NSLog(@"%@", NSStringFromCGPoint(point2));
             UIColor *lineColor = [UIColor orangeColor];
             if (i == 1) {
                 if ([self.weekDay integerValue] != 1 && [self.weekDay integerValue] < j+2  ) {
@@ -865,16 +899,16 @@
     NSHourCalendarUnit |NSMinuteCalendarUnit | NSSecondCalendarUnit;
     now=[NSDate date];
     
-    NSLog(@"now = %@", now);
+//    NSLog(@"now = %@", now);
     comps = [calendar components:unitFlags fromDate:now];
-    NSLog(@"comps = %@", comps);
+//    NSLog(@"comps = %@", comps);
     now = [calendar dateFromComponents:comps];
     
-    NSLog(@"now = %@", now);
+//    NSLog(@"now = %@", now);
     self.weekDay = [NSNumber numberWithInteger:[comps weekday]];
     
     //self.weekDay
-    NSLog(@"%@", self.weekDay);
+//    NSLog(@"%@", self.weekDay);
     int today = (int)[self.weekDay integerValue];
     int lastday = 0;
     switch (today) {
@@ -904,7 +938,7 @@
             break;
     }
     lastday += 7;
-    NSLog(@"lastDay = %d", lastday);
+//    NSLog(@"lastDay = %d", lastday);
     
     int tag = (today + 6)%7;
     if (tag == 0) {
@@ -925,13 +959,13 @@
         
         comps = [calendar components:unitFlags fromDate:lastDate];
         
-        NSLog(@"lastDate = %@", comps);
+//        NSLog(@"lastDate = %@", comps);
         
         NSString *string = [NSString stringWithFormat:@"%ld/%ld", (long)[comps month], (long)[comps day]];
         [self.lastweeknames addObject:string];
     }
     
-    NSLog(@"%@", self.lastweeknames);
+//    NSLog(@"%@", self.lastweeknames);
     for (int i = 0; i < 7; i++) {
         UILabel *label = [[UILabel alloc]  initWithFrame:CGRectMake(i * (SCREENWIDTH - 50)/6 + 5, 8, 40, 20)];
         label.text = self.lastweeknames[i];
@@ -969,7 +1003,7 @@
     
 }
 - (void)btn2Clicked{
-    NSLog(@"quxiazhou");
+//    NSLog(@"quxiazhou");
     
     [UIView animateWithDuration:0.3 animations:^{
         self.foldLineScrollView.contentOffset = CGPointMake(0, 0);
@@ -978,7 +1012,7 @@
     }];
 }
 - (void)btn1Clicked{
-    NSLog(@"qubenzhou");
+//    NSLog(@"qubenzhou");
     [UIView animateWithDuration:0.3 animations:^{
         self.foldLineScrollView.contentOffset = CGPointMake(SCREENWIDTH, 0);
     } completion:^(BOOL finished) {
@@ -995,7 +1029,7 @@
     } else if (week == 1){
         week = 2;
     }
-    NSLog(@"第 %ld 周订单数据", week);
+//    NSLog(@"第 %ld 周订单数据", week);
     // NSLog(@"weekView subView = %@", [weekView subviews]);
     CGPoint location = [recognizer locationInView:recognizer.view];
     //  NSLog(@"location = %@", NSStringFromCGPoint(location));
@@ -1005,7 +1039,7 @@
     //  NSLog(@"unit = %.0f", unitwidth);
     int index = (int)((width + unitwidth/2 - 5 ) /unitwidth);
     
-    NSLog(@"index = %d", index);
+//    NSLog(@"index = %d", index);
     NSInteger days = (6 - index) + (week - 1)*7;
     if (days - quxiaodays < 0) {
         return;
@@ -1021,7 +1055,7 @@
     lineView.frame = CGRectMake(point.x - 1, point.y, 2, 115- point.y);
     
     self.visitorDate = [NSNumber numberWithInteger:days - quxiaodays];
-    NSLog(@"days = %ld", days - quxiaodays);
+//    NSLog(@"days = %ld", days - quxiaodays);
     // NSLog(@"array = %@", self.mamaOrderArray);
     // NSLog(@"%ld", quxiaodays);
     NSDictionary *dic = self.mamaOrderArray[days - quxiaodays];
@@ -1036,7 +1070,7 @@
         CGRect rect = label.frame;
         
         label = [self.foldLineScrollView viewWithTag:(8000 + index)];
-        NSLog(@"label = %@", label);
+//        NSLog(@"label = %@", label);
         
         for (int i = 0; i < 7; i++) {
             UILabel *theLabel = [self.foldLineScrollView viewWithTag:(8000 + i)];
@@ -1048,13 +1082,13 @@
             label.textColor = [UIColor whiteColor];
         }];
     } else if(week == 2) {
-        NSLog(@"index = %ld", (long)index);
+//        NSLog(@"index = %ld", (long)index);
         
         __block UILabel *label = (UILabel *)self.anotherLabelArray[index];
         CGRect rect = label.frame;
         
         label = [self.foldLineScrollView viewWithTag:(80 + index)];
-        NSLog(@"label = %@", label);
+//        NSLog(@"label = %@", label);
         
         for (int i = 0; i < 7; i++) {
             UILabel *theLabel = [self.foldLineScrollView viewWithTag:(80 + i)];
@@ -1106,7 +1140,7 @@
     NSInteger days = (count - page - 1)*7;
     self.visitorDate = [NSNumber numberWithInteger:days];
     
-    NSLog(@"days = %ld", (long)days);
+//    NSLog(@"days = %ld", (long)days);
     
     NSDictionary *dic = self.mamaOrderArray[days];
     // NSLog(@"dic = %@", dic);

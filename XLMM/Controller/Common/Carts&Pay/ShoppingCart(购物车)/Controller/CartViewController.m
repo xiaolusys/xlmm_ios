@@ -9,7 +9,6 @@
 #import "CartViewController.h"
 #import "CartTableCellTableViewCell1.h"
 #import "MMClass.h"
-#import "ShoppingCartModel.h"
 #import "CartListModel.h"
 #import "ReBuyTableViewCell.h"
 #import "WebViewController.h"
@@ -494,7 +493,6 @@
  */
 - (IBAction)purchaseClicked:(id)sender {
     [MobClick event:@"purchase"];
-    
 //    PurchaseViewController1 *purchaseVC = [[PurchaseViewController1 alloc] initWithNibName:@"PurchaseViewController1" bundle:nil];
 //    purchaseVC.cartsArray = self.dataArray;
     JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
@@ -511,6 +509,7 @@
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         NSInteger codeNum = [responseObject[@"code"] integerValue];
         if (codeNum == 0) {
+            [MobClick event:@"cart_buy_again_success"];
             [self downloadData];
             [self downloadHistoryData];
             if (self.dataArray.count >= 18) {
@@ -518,6 +517,8 @@
                 [self.myTableView scrollToRowAtIndexPath:(indexpath) atScrollPosition:(UITableViewScrollPositionTop) animated:YES];
             }
         }else {
+            NSDictionary *buy_again = @{@"code" : [NSString stringWithFormat:@"%ld",codeNum]};
+            [MobClick event:@"cart_buy_again_fail" attributes:buy_again];
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }
     } WithFail:^(NSError *error) {

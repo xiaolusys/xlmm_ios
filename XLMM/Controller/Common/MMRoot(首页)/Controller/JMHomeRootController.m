@@ -25,12 +25,9 @@
 #import "CartViewController.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMRepopView.h"
-#import "JMFirstOpen.h"
 #import "JMUpdataAppPopView.h"
-#import "JMHelper.h"
 #import "AppDelegate.h"
 #import "ChildViewController.h"
-#import "JMMaMaPersonCenterController.h"
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"
@@ -38,6 +35,7 @@
 #import "JMAutoLoopPageView.h"
 #import "JMHomeHeaderCell.h"
 #import "JMHomeRootCategoryController.h"
+#import "JMStoreManager.h"
 
 // 主页分类 比例布局
 #define HomeCategoryRatio               SCREENWIDTH / 320.0
@@ -49,6 +47,7 @@
     NSString *_cartTimeString;      // 购物车时间
     NSInteger oneRowCellH;
     NSInteger twoRowCellH;
+    NSString *_dayDifferString;     // 上架时间与结束时间相差天数
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
@@ -162,26 +161,17 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
     NSString *timeString = _timeArray[1];
-    if ([timeString isEqualToString:@"00:00:00"] || timeString == nil || [timeString isKindOfClass:[NSNull class]]) {
+    _dayDifferString = [NSString stringWithFormat:@"%ld",[_dayDifferString integerValue] - 2];
+    if ([NSString isStringEmpty:timeString] || [timeString isEqual:@"00:00:00"]) {
         [self.tableView.mj_header beginRefreshing];
     }else {
-        NSDate *date = [dateFormatter dateFromString:[self spaceFormatTimeString:timeString]]; // 结束时间
+        NSDate *date = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:timeString]]; // 结束时间
         NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
         int timer = time;
         NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
-        if ([timeStr isEqual:@"0"]) {
+        if ([timeStr isEqual:_dayDifferString]) {
             [self.tableView.mj_header beginRefreshing];
         }
-    }
-}
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([timeString isEqualToString:@"00:00:00"]) {
-        return 0;
-    }else {
-        NSMutableString *ms = [NSMutableString stringWithString:timeString];
-        NSRange range = {10,1};
-        [ms replaceCharactersInRange:range withString:@" "];
-        return ms;
     }
 }
 - (void)viewDidAppear:(BOOL)animated {
@@ -207,6 +197,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
+    _dayDifferString = @"2";
     _urlArray = @[@"yesterday",@"today",@"tomorrow"];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     _topImageArray = [NSMutableArray array];
@@ -228,7 +219,7 @@
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    _isFirstOpenApp = [JMFirstOpen isFirstLoadApp];    // 判断程序是否第一次打开5
+    _isFirstOpenApp = [JMStoreManager isFirstLoadApp]; // 判断程序是否第一次打开5
     if (_isFirstOpenApp) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
@@ -289,6 +280,7 @@
                 flageArr[1] = @1;
                 self.todayVC.dataDict = responseObject;
                 _timeArray[1] = responseObject[@"offshelf_deadline"];
+                _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] toDate:responseObject[@"offshelf_deadline"]];
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
@@ -356,6 +348,7 @@
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
+//    self.pageView.hidePageControl = YES;
     self.tableView.tableHeaderView = self.pageView;
 }
 #pragma mark 创建自定义 navigationView
@@ -406,11 +399,14 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
+    self.pageView.pageControlNum = _topImageArray.count;
     [self.pageView reloadData];
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
         [_categorysArray addObject:dicts];
     }
+    [JMStoreManager storeobject:_categorysArray FileName:@"categorysArray"];
+    
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
         JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];
@@ -983,7 +979,7 @@
     if (oldVersion == nil) {
         [self downLoadUrl:urlCategory];
     }else {
-        if ([oldVersion isEqualToString:isUpData] && [JMHelper isFileExist:@"GoodsItemFile.json"]) {
+        if ([oldVersion isEqualToString:isUpData] && [JMStoreManager isFileExist:@"GoodsItemFile.json"]) {
         }else {
             [self downLoadUrl:urlCategory];
         }
@@ -999,6 +995,7 @@
         NSLog(@"当前下载进度为:%lf", 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSLog(@"默认下载地址%@",targetPath);
+        [JMStoreManager removeFileByFileName:@"GoodsItemFile.json"];
         NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *path=[paths objectAtIndex:0];
         NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
@@ -1032,7 +1029,7 @@
     if (oldVersion == nil) {
         [self startDownload:_downloadURLString];
     }else {
-        [oldVersion isEqualToString:_hash] && [JMHelper isFileExist:@"addressInfo.json"] ? : [self startDownload:_downloadURLString];
+        [oldVersion isEqualToString:_hash] && [JMStoreManager isFileExist:@"addressInfo.json"] ? : [self startDownload:_downloadURLString];
     }
     [defaults setObject:_hash forKey:@"hash"];
     [defaults synchronize];
@@ -1059,12 +1056,10 @@
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
 }
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
-    NSString *addressPath = [JMHelper getFullPathWithFile];
+    NSString *addressPath = [JMStoreManager getFullPathWithFile:@"addressInfo.json"];
     NSURL *pathUrl = [NSURL fileURLWithPath:addressPath];
     NSError *errorCopy;
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
     [fileManager removeItemAtURL:pathUrl error:NULL];
     
     BOOL success = [fileManager copyItemAtURL:location toURL:pathUrl error:nil];

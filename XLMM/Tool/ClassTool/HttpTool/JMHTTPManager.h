@@ -13,7 +13,8 @@ typedef NS_ENUM(NSUInteger,HttpRequestType) {
     RequestTypeGET = 0,           //  GET请求
     RequestTypePOST,              //  POST请求
     RequestTypeDELETE,            //  DELETE请求
-    RequestTypePUT                //  PUT请求
+    RequestTypePUT,                //  PUT请求
+    RequestTypePATCH              //  PATCH请求
 };
 
 

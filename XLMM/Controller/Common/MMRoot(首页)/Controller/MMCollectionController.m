@@ -10,10 +10,8 @@
 #import "BrandGoodsModel.h"
 #import "MMClass.h"
 #import "JMRootgoodsCell.h"
-#import "MMDetailsViewController.h"
-#import "LoadingAnimation.h"
-#import "MMLoadingAnimation.h"
 #import "CollectionModel.h"
+#import "JMGoodsDetailController.h"
 
 @interface MMCollectionController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -284,6 +282,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     BrandGoodsModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    
+    
+    JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
+    detailVC.goodsID = model.brandID;
+    
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
     
 //    WebViewController *webView = [[WebViewController alloc] init];
 //    webView.eventLink = model.web_url;

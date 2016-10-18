@@ -15,7 +15,6 @@
 #import "YoumengShare.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
-#import "MMDetailsViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "UUID.h"
@@ -216,6 +215,10 @@
         self.activityId = _webDiction[@"activity_id"];//[self.diction objectForKey:@"id"];
         loadStr = _webDiction[@"web_url"];//[self.diction objectForKey:@"act_link"];
         [self loadData];
+    }else if ([active isEqualToString:@"mamaShop"]){
+        super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
+        loadStr = _webDiction[@"web_url"];
+        [self loadDataMaMaShop];
     }else {
         statusBarView.hidden = NO;
         if (_isShowNavBar) {
@@ -282,6 +285,17 @@
         
     }];
 }
+- (void)loadDataMaMaShop {
+    NSString *shareString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushop/customer_shop", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:shareString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchMaMaShopShare:responseObject];
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+}
 //#pragma mark IMYWebView代理方法
 //- (void)webViewDidStartLoad:(IMYWebView *)webView {
 ////    [WebViewJavascriptBridge enableLogging];
@@ -291,6 +305,16 @@
 //    }];
 //    
 //}
+- (void)fetchMaMaShopShare:(NSDictionary *)dic {
+    NSDictionary *shopInfo = dic[@"shop_info"];
+    [self createNavigationBarWithTitle:shopInfo[@"name"] selecotr:@selector(backClicked:)];
+    self.share_model.share_type = @"link";
+    self.share_model.share_img = [shopInfo objectForKey:@"thumbnail"]; //图片
+    self.share_model.desc = [shopInfo objectForKey:@"desc"]; // 文字详情
+    self.share_model.title = [shopInfo objectForKey:@"name"]; //标题
+    self.share_model.share_link = [shopInfo objectForKey:@"shop_link"];
+    
+}
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
     //    NSDictionary *dic = _model.mj_keyValues;
@@ -333,12 +357,16 @@
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
     if ([_webDiction[@"type_title"] isEqual:@"active"]) {
-        [MobClick event:@"Active_share"];
+        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
+        [MobClick event:@"Active_share" attributes:temp_dict];
     }else if ([_webDiction[@"type_title"] isEqual:@"myInvite"]) {
-        if ([self.activityId isEqual:@38]) {
-            [MobClick event:@"MyInvite_share"];
-        }
-    }
+//        if ([self.activityId isEqual:@38]) {
+        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
+        [MobClick event:@"MyInvite_share" attributes:temp_dict];
+//        }
+    }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
+        [MobClick event:@"mamaShop_share"];
+    }else { }
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     self.shareView = shareView;
     _shareDic = nil;
@@ -348,8 +376,11 @@
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     menu.contentView = self.shareView.view;
+    self.shareView.blcok = ^(UIButton *button) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    };
 }
 
 - (void)universeShare:(NSDictionary *)data {
@@ -372,11 +403,12 @@
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT - 240, SCREENWIDTH, 240)];
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
     menu.contentView = self.shareView.view;
 }
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
+    [MobClick event:@"WebViewController_shareFail_masking"];
     //隐藏pop菜单
     [JMPopView hide];
     

@@ -75,7 +75,7 @@
     self.canelButton = cancelButton;
     [self.canelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"取消" TitleFont:13. CornerRadius:15];
     self.canelButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-    [self.canelButton addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.canelButton addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.canelButton];
     
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,7 +148,7 @@
     _imageData = [UIImage imagewithURLString:_imageUrlString];
     _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
-    _titleUrlString = [NSString stringWithFormat:@"%@ %@",_content,_url];
+    _titleUrlString = [NSString stringWithFormat:@"%@",_content];
     
     NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
 }
@@ -163,7 +163,7 @@
         }
         if (_isPic) {
             _isWeixin = YES;
-            [self cancelBtnClick];
+            [self cancelBtnClick:nil];
         }else {
             [UMSocialData defaultData].extConfig.wechatSessionData.title = _titleStr;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = _url;
@@ -178,7 +178,7 @@
             }];
 
         }
-        [self cancelBtnClick];
+        [self cancelBtnClick:nil];
     }else if (index == 101) {
         if (_url == nil) {
             [self createPrompt];
@@ -190,7 +190,7 @@
             //        [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
 //            [self createKuaiZhaoImage];
             //        [self createKuaiZhaoImage];
-            [self cancelBtnClick];
+            [self cancelBtnClick:nil];
         }else {
             [UMSocialData defaultData].extConfig.wechatTimelineData.url = _url;
             [UMSocialData defaultData].extConfig.wechatTimelineData.title = _titleUrlString;
@@ -198,7 +198,7 @@
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
             }];
-            [self cancelBtnClick];
+            [self cancelBtnClick:nil];
         }
     }else if (index == 102) {
         if (_url == nil) {
@@ -211,7 +211,7 @@
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_titleUrlString image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
         }];
         
-        [self cancelBtnClick];
+        [self cancelBtnClick:nil];
     }else if (index == 103) {
         if (_url == nil) {
             [self createPrompt];
@@ -223,7 +223,7 @@
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_titleUrlString image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //            [self hiddenNavigationView];
         }];
-        [self cancelBtnClick];
+        [self cancelBtnClick:nil];
 
     }else if (index == 104) {
         if (_url == nil) {
@@ -232,7 +232,7 @@
         }
         NSString *sina_content = [NSString stringWithFormat:@"%@%@",_content, _url];
         [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_imageData)];
-        [self cancelBtnClick];
+        [self cancelBtnClick:nil];
 
     }else if (index == 105) {
         _isCopy = YES;
@@ -249,7 +249,7 @@
             }
         }
         //    [self createKuaiZhaoImagewithlink:self.kuaizhaoLink];
-        [self cancelBtnClick];
+        [self cancelBtnClick:nil];
 
     }else { // 6
         NSLog(@"分享按钮被点击了 ===== index == 6");
@@ -257,9 +257,11 @@
     }
 }
 
-- (void)cancelBtnClick {
+- (void)cancelBtnClick:(UIButton *)button {
     NSLog(@"cancelBtnClick");
-    
+    if (self.blcok) {
+        self.blcok(button);
+    }
     [JMShareView hide];
     
     [JMPopView hide];

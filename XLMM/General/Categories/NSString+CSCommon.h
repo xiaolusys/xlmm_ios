@@ -132,9 +132,26 @@
  */
 + (NSString *)yearDeal:(NSString *)str;
 
+/**
+ *  获取N天前的日期
+ *  dayNum : 前后的天数 (+后,-前)
+ *  @return N天前的日期
+ */
++ (NSString *)getBeforeDay:(NSInteger)dayNum;
 
+/**
+ *  获取当前时间
+ *
+ *  @return 当前的日期
+ */
++ (NSString *)getCurrentTime;
 
-
+/**
+ *  获取两个日期之间的天数
+ *
+ *  @return 相差天数
+ */
++ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate;
 
 
 @end
