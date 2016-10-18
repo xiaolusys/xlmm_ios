@@ -146,6 +146,12 @@
  */
 + (NSString *)getCurrentTime;
 
+/**
+ *  获取两个日期之间的天数
+ *
+ *  @return 相差天数
+ */
++ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate;
 
 
 @end

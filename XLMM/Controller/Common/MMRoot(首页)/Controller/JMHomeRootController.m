@@ -47,6 +47,7 @@
     NSString *_cartTimeString;      // 购物车时间
     NSInteger oneRowCellH;
     NSInteger twoRowCellH;
+    NSString *_dayDifferString;     // 上架时间与结束时间相差天数
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
@@ -160,6 +161,7 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
     NSString *timeString = _timeArray[1];
+    _dayDifferString = [NSString stringWithFormat:@"%ld",[_dayDifferString integerValue] - 2];
     if ([NSString isStringEmpty:timeString] || [timeString isEqual:@"00:00:00"]) {
         [self.tableView.mj_header beginRefreshing];
     }else {
@@ -167,7 +169,7 @@
         NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
         int timer = time;
         NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
-        if ([timeStr isEqual:@"0"]) {
+        if ([timeStr isEqual:_dayDifferString]) {
             [self.tableView.mj_header beginRefreshing];
         }
     }
@@ -195,6 +197,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
+    _dayDifferString = @"2";
     _urlArray = @[@"yesterday",@"today",@"tomorrow"];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     _topImageArray = [NSMutableArray array];
@@ -277,6 +280,7 @@
                 flageArr[1] = @1;
                 self.todayVC.dataDict = responseObject;
                 _timeArray[1] = responseObject[@"offshelf_deadline"];
+                _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] toDate:responseObject[@"offshelf_deadline"]];
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
@@ -344,6 +348,7 @@
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
+//    self.pageView.hidePageControl = YES;
     self.tableView.tableHeaderView = self.pageView;
 }
 #pragma mark 创建自定义 navigationView
@@ -394,6 +399,7 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
+    self.pageView.pageControlNum = _topImageArray.count;
     [self.pageView reloadData];
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {

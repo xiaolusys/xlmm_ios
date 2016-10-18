@@ -202,7 +202,6 @@
         
     }
     self.picCollectionView.backgroundColor = [UIColor whiteColor];
-    
     self.picCollectionView.delegate = self;
     self.picCollectionView.dataSource = self;
     
@@ -533,7 +532,7 @@
         array = [sharImageArray copy];
         for (int i = 0; i < array.count; i++) {
             NSData *data = UIImageJPEGRepresentation(array[i], 0.5);
-            NSLog(@"sharImageArray ------ > %ld",data.length);
+//            NSLog(@"sharImageArray ------ > %ld",data.length);
             [muArrau addObject:data];
         }
         
@@ -619,8 +618,7 @@
 - (void)UIActivityMessage {
     [MBProgressHUD showLoading:@"火速加载~"];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:sharImageArray applicationActivities:nil];
-    activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
-    
+//    activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
     UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
         //        NSMutableArray *array = [NSMutableArray array];
         //        array = [sharImageArray mutableCopy];
