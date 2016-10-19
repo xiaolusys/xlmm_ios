@@ -9,7 +9,7 @@
 #import "JMFetureFansCell.h"
 #import "MMClass.h"
 #import "JMFetureFansModel.h"
-#import "VisitorModel.h"
+#import "JMVisitorModel.h"
 
 @interface JMFetureFansCell ()
 
@@ -132,7 +132,7 @@
     
 }
 
-- (void)fillVisitorData:(VisitorModel *)model {
+- (void)fillVisitorData:(JMVisitorModel *)model {
     if (model.visitor_img.length == 0) {
         self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     }else {

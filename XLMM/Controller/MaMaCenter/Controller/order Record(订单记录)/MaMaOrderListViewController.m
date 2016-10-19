@@ -9,7 +9,6 @@
 #import "MaMaOrderListViewController.h"
 #import "MMClass.h"
 #import "MaMaOrderModel.h"
-#import "MaMaOrderTableViewCell.h"
 #import "CarryLogHeaderView.h"
 #import "JMMaMaOrderListCell.h"
 #import "JMQueryLogInfoController.h"

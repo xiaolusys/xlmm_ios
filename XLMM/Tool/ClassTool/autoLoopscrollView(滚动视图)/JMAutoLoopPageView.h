@@ -116,14 +116,8 @@ typedef NS_ENUM(NSInteger,JMAtuoLoopScrollViewDirectionStyle) {
  *  是否无限滚动
  */
 @property (nonatomic, assign) BOOL scrollFuture;
-/**
- *  是否隐藏pageControl
- */
-@property (nonatomic, assign)  BOOL hidePageControl;
-/**
- *  pageControl个数
- */
-@property (nonatomic, assign) NSUInteger pageControlNum;
+
+
 
 /**
  *  通过class，identifier注册cell（UICollectionViewCell）

@@ -17,6 +17,8 @@
     self.savePhotoBtn.layer.borderWidth = 1.0;
     self.savePhotoBtn.layer.cornerRadius = 15;
     self.savePhotoBtn.titleLabel.textColor = [UIColor buttonEmptyBorderColor];
+    self.savePhotoBtn.userInteractionEnabled = YES;
+    self.savePhotoBtn.alpha = 1.0;
     
 //    self.seeButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [self.statisticsView addSubview:self.seeButton];

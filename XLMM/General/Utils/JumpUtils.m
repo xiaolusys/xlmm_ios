@@ -164,16 +164,19 @@
     NSLog(@"firstparams %@  %@", firstparam, firstvalue);
     if ([firstparam isEqualToString:@"model_id"]) {
         //跳到集合页面
-        NSLog(@"model_id = %@", firstvalue);
-        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
-        [web_dic setValue:firstvalue forKey:@"web_url"];
-        [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
-        
-        WebViewController *webView = [[WebViewController alloc] init];
-        webView.webDiction = web_dic;
-        webView.isShowNavBar =false;
-        webView.isShowRightShareBtn=false;
-        [vc.navigationController pushViewController:webView animated:YES];
+        JMGoodsDetailController *goodsDetailVC = [[JMGoodsDetailController alloc] init];
+        goodsDetailVC.goodsID = firstvalue;
+        [vc.navigationController pushViewController:goodsDetailVC animated:YES];
+//        NSLog(@"model_id = %@", firstvalue);
+//        NSMutableDictionary *web_dic = [NSMutableDictionary dictionary];
+//        [web_dic setValue:firstvalue forKey:@"web_url"];
+//        [web_dic setValue:@"ProductDetail" forKey:@"type_title"];
+//        
+//        WebViewController *webView = [[WebViewController alloc] init];
+//        webView.webDiction = web_dic;
+//        webView.isShowNavBar =false;
+//        webView.isShowRightShareBtn=false;
+//        [vc.navigationController pushViewController:webView animated:YES];
         
     }
 

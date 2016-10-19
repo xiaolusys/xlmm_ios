@@ -278,16 +278,16 @@
     }];
 
 }
-- (void)changeButtonStatus:(UIButton *)button {
-    NSLog(@"button ======= 222222222222");
-    button.userInteractionEnabled = YES;
-}
+//- (void)changeButtonStatus:(UIButton *)button {
+//    NSLog(@"button ======= 222222222222");
+//    button.userInteractionEnabled = YES;
+//}
 - (void)buttonClick:(UIButton *)button {
-    button.userInteractionEnabled = NO;
+//    button.userInteractionEnabled = NO;
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterButtonView:UIButton:)]) {
         [_delegate composeFooterButtonView:self UIButton:button];
     }
-    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.3f];//防止重复点击
+//    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.3f];//防止重复点击
 }
 - (void)termsTapClick:(UITapGestureRecognizer *)tap {
     if (_delegate && [_delegate respondsToSelector:@selector(composeFooterTapView:)]) {

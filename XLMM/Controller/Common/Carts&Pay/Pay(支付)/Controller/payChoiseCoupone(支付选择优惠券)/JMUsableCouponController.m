@@ -95,7 +95,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanmodel:)]) {
         [self.delegate updateYouhuiquanmodel:nil];
     }
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)changeButtonStatus:(UIButton *)button {
@@ -103,7 +102,7 @@
 }
 - (void)emptyView {
     kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {

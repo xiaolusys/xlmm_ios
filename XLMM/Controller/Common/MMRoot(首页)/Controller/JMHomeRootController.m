@@ -37,10 +37,6 @@
 #import "JMHomeRootCategoryController.h"
 #import "JMStoreManager.h"
 
-// 主页分类 比例布局
-#define HomeCategoryRatio               SCREENWIDTH / 320.0
-#define HomeCategorySpaceW              25 * HomeCategoryRatio
-#define HomeCategorySpaceH              20 * HomeCategoryRatio
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -203,6 +199,7 @@
     _topImageArray = [NSMutableArray array];
     _categorysArray = [NSMutableArray array];
     _timeArray = [NSMutableArray arrayWithObjects:@"00:00:00",@"00:00:00",@"00:00:00", nil];
+    self.isPopUpdataView = NO;
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
@@ -348,7 +345,6 @@
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
-//    self.pageView.hidePageControl = YES;
     self.tableView.tableHeaderView = self.pageView;
 }
 #pragma mark 创建自定义 navigationView
@@ -399,7 +395,6 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
-    self.pageView.pageControlNum = _topImageArray.count;
     [self.pageView reloadData];
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
@@ -578,6 +573,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)rightNavigationClick:(UIButton *)button {
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL islogin = [defaults boolForKey:kIsLogin];
     if (islogin == YES) {
@@ -602,6 +599,9 @@
         JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
 }
 #pragma mark 顶部视图滚动协议方法
 - (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {

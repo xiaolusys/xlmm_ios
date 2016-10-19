@@ -10,11 +10,6 @@
 #import "MMClass.h"
 
 
-// 主页分类 比例布局
-#define HomeCategoryRatio               SCREENWIDTH / 320.0
-#define HomeCategorySpaceW              25 * HomeCategoryRatio
-#define HomeCategorySpaceH              20 * HomeCategoryRatio
-
 
 NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 

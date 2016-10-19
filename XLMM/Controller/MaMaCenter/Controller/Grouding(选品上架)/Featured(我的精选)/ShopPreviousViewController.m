@@ -8,12 +8,16 @@
 
 #import "ShopPreviousViewController.h"
 #import "MMClass.h"
-#import "MamaShareView.h"
 #import "UMSocial.h"
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"
+#import "JMShareModel.h"
+#import "JMShareViewController.h"
+#import "JMShareView.h"
+#import "JMPopView.h"
 
-@interface ShopPreviousViewController ()<UIWebViewDelegate>
+
+@interface ShopPreviousViewController ()<UIWebViewDelegate,JMShareViewDelegate>
 @property (nonatomic, strong)UIWebView *webView;
 
 @property (nonatomic, copy) NSString *shopShareLink;
@@ -22,13 +26,20 @@
 @property (nonatomic, copy) NSString *shopDesc;
 
 @property (nonatomic, copy) NSString *webViewUrl;
+@property (nonatomic,strong) JMShareModel *share_model;
+@property (nonatomic,strong) JMShareViewController *shareViewContro;
 
 @end
 
-@implementation ShopPreviousViewController{
-    MamaShareView *shareView;
-    UIView *backView;
+@implementation ShopPreviousViewController
+
+- (JMShareModel*)share_model {
+    if (!_share_model) {
+        _share_model = [[JMShareModel alloc] init];
+    }
+    return _share_model;
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -54,7 +65,6 @@
     NSLog(@"url = %@", shareString);
     [self downLoadWithURLString:shareString andSelector:@selector(fetchedShareData:)];
     
-   
     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     self.webView.backgroundColor = [UIColor whiteColor];
     self.webView.delegate = self;
@@ -64,10 +74,7 @@
     
     [self createrightItem];
 
-    [self createBackView];
-    
     [self createbutton];
-    
 
 }
 
@@ -115,194 +122,26 @@
 - (void)sharedMethod{
     NSLog(@"分享");
     [MobClick event:@"MaMaShop_share"];
-    shareView = [MamaShareView new];
+    JMShareViewController *shareView1 = [[JMShareViewController alloc] init];
+    self.shareViewContro = shareView1;
+    self.shareViewContro.model = self.share_model;
     
-    NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"MamaShareView" owner:shareView options:nil];
-    shareView = array[0];
-    shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-    //    NSLog(@"shareView  = %@", shareView.subviews);
-    
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        shareView.frame = self.view.bounds;
-    }];
-    backView.hidden = NO;
-    [self.view addSubview:shareView];
-    
-    
-    
-    
-    
-    
-    [self createShareButtonTarget];
-}
-- (void)createShareButtonTarget{
-    UIView *view = (UIView *)[shareView.subviews objectAtIndex:0];
-    view.layer.cornerRadius = 20;
-    // shareView.cancleBtn.layer.masksToBounds = YES;
-    shareView.cancleBtn.layer.cornerRadius = 20;
-    shareView.cancleBtn.layer.borderWidth = 1;
-    shareView.cancleBtn.layer.borderColor = [UIColor buttonEnabledBorderColor].CGColor;
-    
-    [shareView.cancleBtn addTarget:self action:@selector(cancleBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    shareView.weixinBtn.tag = 100;
-    [shareView.weixinBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    shareView.friendBtn.tag = 101;
-    shareView.qqBtn.tag = 102;
-    shareView.spaceBtn.tag = 103;
-    shareView.weiboBtn.tag = 104;
-    shareView.fuzhiBtn.tag = 105;
-    shareView.wxkuaizhaoBtn.tag = 106;
-    shareView.wxkuaizhaoBtn.hidden = YES;
-    shareView.friendkuaizhaoBtn.tag = 107;
-    shareView.friendkuaizhaoBtn.hidden = YES;
-    
-    [shareView.weixinBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.friendBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.qqBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.spaceBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.weiboBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.fuzhiBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.wxkuaizhaoBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [shareView.friendkuaizhaoBtn addTarget:self action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    
-    
-    
-}
-
-- (void)shareClicked:(UIButton *)button{
-    
-    if (self.shopShareImage == nil) {
-        self.shopShareImage = [UIImage imageNamed:@"logo.png"];
-    }
-    if (self.shopShareLink == nil) {
-        [self cancleBtnClicked:nil];
-        return;
-    }
-    switch (button.tag) {
-        case 100:{
-            //            NSLog(@"微信");
-            
-            [UMSocialData defaultData].extConfig.wechatSessionData.title = self.shopShareName;
-            [UMSocialData defaultData].extConfig.wechatSessionData.url = self.shopShareLink;
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                
-            }];
-            
-            [self cancleBtnClicked:nil];
-            break;
-        }
-        case 101:{
-            NSString *title = [NSString stringWithFormat:@"%@", self.shopDesc];
-            
-            
-            [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;
-            [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.shopShareLink;
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                
-            }];
-            
-            
-            [self cancleBtnClicked:nil];
-            break;
-        }
-        case 102:{
-            
-            [UMSocialData defaultData].extConfig.qqData.title = self.shopShareName;
-            [UMSocialData defaultData].extConfig.qqData.url = self.shopShareLink;
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                
-            }];
-            [self cancleBtnClicked:nil];
-            
-            break;
-        }
-        case 103:{
-            [UMSocialData defaultData].extConfig.qzoneData.title = self.shopShareName;
-            [UMSocialData defaultData].extConfig.qzoneData.url = self.shopShareLink;
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:self.shopDesc image:self.shopShareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                
-            }];
-            [self cancleBtnClicked:nil];
-            
-            break;
-        }
-        case 104:{
-            
-            //            NSLog(@"微博");
-            NSData *data = UIImagePNGRepresentation(self.shopShareImage);
-            
-            NSString *sinaContent = [NSString stringWithFormat:@"%@%@",self.shopDesc, self.shopShareLink];
-            
-            [SendMessageToWeibo sendMessageWithText:sinaContent andPicture:data];
-            
-            [self cancleBtnClicked:nil];
-            
-            break;
-        }
-        case 105:{
-            UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            if ([NSString isStringEmpty:self.shopShareLink]) {
-                [MBProgressHUD showMessage:@"复制失败"];
-            }else {
-                [pab setString:self.shopShareLink];
-                if (pab == nil) {
-                    [MBProgressHUD showMessage:@"请重新复制"];
-                }else
-                {
-                    [MBProgressHUD showMessage:@"已复制"];
-                }
-            }
-            [self cancleBtnClicked:nil];
-            
-            break;
-        }
-        case 106:{
-            //            NSLog(@"微信快照");
-            break;
-        }
-        case 107:{
-            //            NSLog(@"朋友圈快照");
-            break;
-        }
-        default:{
-            //            NSLog(@"其他");
-            break;
-        }
-            
-    }
-}
-- (void)cancleBtnClicked:(UIButton *)button{
-    NSLog(@"quxiao");
-    [UIView animateWithDuration:0.3 animations:^{
-        shareView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
-    } completion:^(BOOL finished) {
-        
-        [shareView removeFromSuperview];
-        
-        backView.hidden = YES;
-    }];
+    JMShareView *cover = [JMShareView show];
+    cover.delegate = self;
+    //弹出视图
+    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
+    menu.contentView = self.shareViewContro.view;
+    self.shareViewContro.blcok = ^(UIButton *button) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    };
 
 }
-
-
-- (void)createBackView{
-    backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    backView.alpha = 0.3;
-    backView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:backView];
-    backView.hidden = YES;
+- (void)coverDidClickCover:(JMShareView *)cover {
+    [MobClick event:@"WebViewController_shareFail_masking"];
+    //隐藏pop菜单
+    [JMPopView hide];
     
 }
-
 - (void)fetchedShareData:(NSData *)data{
     
     if (data == nil) {
@@ -316,30 +155,18 @@
         NSLog(@"shop_info = null");
         return;
     }
-    NSDictionary *shopInfoDict = dic[@"shop_info"];
-    self.shopShareName = shopInfoDict[@"name"];
-    
-    NSString *urlString = shopInfoDict[@"thumbnail"];
-    if(urlString != nil){
-        self.shopShareImage = [UIImage imagewithURLString:[urlString imageShareCompression]];
-    }
-    if ([dic[@"shop_info"][@"name"] class] == [NSNull class]) {
-        self.shopShareName = @"小鹿妈妈";
-    }
-    
-    self.shopShareLink = [dic[@"shop_info"] objectForKey:@"shop_link"];
-    self.shopDesc = [dic[@"shop_info"] objectForKey:@"desc"];
-    
+    NSDictionary *shopInfo = dic[@"shop_info"];
+    [self createNavigationBarWithTitle:shopInfo[@"name"] selecotr:@selector(backClickAction)];
+    self.share_model.share_type = @"link";
+    self.share_model.share_img = [shopInfo objectForKey:@"thumbnail"]; //图片
+    self.share_model.desc = [shopInfo objectForKey:@"desc"]; // 文字详情
+    self.share_model.title = [shopInfo objectForKey:@"name"]; //标题
+    self.share_model.share_link = [shopInfo objectForKey:@"shop_link"];
+
     self.webViewUrl = [[dic objectForKey:@"shop_info"] objectForKey:@"preview_shop_link"];
-    NSLog(@"web url = %@", self.webViewUrl);
-    
     if(self.webViewUrl != nil){
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webViewUrl]]];
     }
-    self.title = [NSString stringWithFormat:@"%@de精选集", self.shopShareName];
-    
-    [self createNavigationBarWithTitle:[NSString stringWithFormat:@"%@de精选集", self.shopShareName] selecotr:@selector(backClickAction)];
-
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];

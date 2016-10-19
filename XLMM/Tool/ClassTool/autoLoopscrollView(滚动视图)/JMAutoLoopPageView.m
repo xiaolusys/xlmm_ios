@@ -25,21 +25,9 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
 
 @property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, weak)  UIPageControl *pageControl;
-
 @end
 
 @implementation JMAutoLoopPageView
-
-- (UIPageControl *)pageControl{
-    if (!_pageControl) {
-        UIPageControl *pageC = [[UIPageControl alloc]init];
-        pageC.currentPage = 0;
-        [self addSubview:pageC];
-        _pageControl = pageC;
-    }
-    return _pageControl;
-}
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
@@ -57,14 +45,9 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     return self;
 }
 
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [super layoutSubviews];
-    CGFloat width = CGRectGetWidth(self.frame);
-    CGFloat height = 30.;
-    CGFloat y = CGRectGetHeight(self.frame) - height;
-    self.pageControl.frame = CGRectMake(0, y, width, height);
-    self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-    self.pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
     //兼容横竖屏切换
     [self.mainCollectionView.collectionViewLayout invalidateLayout];
     
@@ -74,8 +57,6 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
         //调整位置
         [self scrollToIndex:self.currentIndex animated:NO];
     }
-    
-    
     
 }
 //视图消失时停止计时器，否则无法释放
@@ -103,7 +84,6 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     _scrollFuture = YES;
     [self addSubview:self.mainCollectionView];
 }
-
 
 - (UICollectionView *)mainCollectionView {
     if (!_mainCollectionView) {
@@ -133,10 +113,6 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     [(UICollectionViewFlowLayout *)self.mainCollectionView.collectionViewLayout setScrollDirection:scrollStyle == JMAutoLoopScrollStyleHorizontal ? UICollectionViewScrollDirectionHorizontal : UICollectionViewScrollDirectionVertical];
     
 }
-- (void)setHidePageControl:(BOOL)hidePageControl{
-    _hidePageControl = hidePageControl;
-    self.pageControl.hidden = hidePageControl;
-}
 - (void)setPageEnable:(BOOL)pageEnable {
     _pageEnable = pageEnable;
     self.mainCollectionView.pagingEnabled = _pageEnable;
@@ -154,13 +130,6 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
         [self endAutoScroll];
     }
     
-}
-- (void)setPageControlNum:(NSUInteger)pageControlNum {
-    _pageControlNum = pageControlNum;
-    self.pageControl.numberOfPages = pageControlNum;
-    if (pageControlNum == 1) {
-        self.pageControl.hidden = YES;
-    }
 }
 
 - (NSTimer *)timer {
@@ -400,10 +369,7 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     
     //设置真实的pageindex
     _realPageIndex = [self realIndexForContentOffset:scrollView.contentOffset];
-    self.pageControl.currentPage = _realPageIndex;
-    if (_realPageIndex == DataSourceItemCount) {
-        self.pageControl.currentPage = 0;
-    }
+    
     //如果应该滚到世界尽头
     if (self.scrollFuture) {
         switch (self.scrollStyle) {

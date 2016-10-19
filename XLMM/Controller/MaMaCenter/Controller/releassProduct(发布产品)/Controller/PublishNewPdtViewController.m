@@ -35,18 +35,11 @@
     NSMutableDictionary *_currentSaveDataSource;
     NSString *_getBeforeDayFive;
 }
-
-
 @property (nonatomic, strong)PhotoView *photoView;
-
 @property (nonatomic, strong)UIView *watchesView;
-
 @property (nonatomic, strong)NSMutableArray *dataArr;
 @property (nonatomic, assign)NSInteger saveIndex;
 @property (nonatomic, strong)NSMutableArray *currentArr;
-
-@property (nonatomic, assign)BOOL isLoad;
-
 @property (nonatomic, assign)NSInteger cellNum;
 @property (nonatomic, strong) JMPushSaveModel *pushSaveModel;
 
@@ -56,19 +49,6 @@
     NSTimer *theTimer;
     UIView *bottomView;
     CountdownView *countdowmView;
-}
-
-- (instancetype)init {
-    if (self == [super init]) {
-        _currentSaveDataSource = [NSMutableDictionary dictionary];
-        sharImageArray = [NSMutableArray array];
-        parameDic = [NSMutableDictionary dictionary];
-        indexCode = 0;
-        _qrCodeRequestDataIndex = 0;
-        _isNeedAleartMessage = YES;
-        _getBeforeDayFive = [NSString getBeforeDay:-5];
-    }
-    return self;
 }
 - (JMPushSaveModel *)pushSaveModel {
     if (!_pushSaveModel) {
@@ -85,9 +65,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"PublishNewPdtViewController"];
-    
     NSArray *arr = [JMPushSaveModel findAll];
     for (int i = 0; i < arr.count; i++) {
         self.pushSaveModel = arr[i];
@@ -99,13 +77,11 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     if ([theTimer isValid]) {
         [theTimer invalidate];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PublishNewPdtViewController"];
-    
 }
 
 //- (PhotoView *)photoView {
@@ -118,8 +94,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor backgroundlightGrayColor];
-    self.navigationController.navigationBarHidden = NO;
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
+    _currentSaveDataSource = [NSMutableDictionary dictionary];
+    sharImageArray = [NSMutableArray array];
+    parameDic = [NSMutableDictionary dictionary];
+    indexCode = 0;
+    _qrCodeRequestDataIndex = 0;
+    _isNeedAleartMessage = YES;
+    _getBeforeDayFive = [NSString getBeforeDay:-5];
     [self createCollectionView];
     
     _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
@@ -129,30 +111,22 @@
     }else {
         [self loadPicData];
     }
-    
 }
-
 - (void)dingshishuaxin{
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimeView) userInfo:nil repeats:YES];
 }
-
 - (void)updateTimeView {
     NSDate *date = [NSDate date];
-    
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
     NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit) fromDate:date];
     NSInteger hour = [comps hour];
     NSInteger minute = [comps minute];
     NSInteger second = [comps second];
-    
     if (hour == 6 && minute == 0 && second == 0) { // 每日6点开始
         self.picCollectionView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-        
         [self.picCollectionView reloadData];
     }
 }
-
 - (void)showDefaultView{
     bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, SCREENWIDTH, 180)];
     bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
@@ -161,13 +135,7 @@
     [bottomView addSubview:countdowmView];
     [self.watchesView addSubview:bottomView];
     theTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:countdowmView selector:@selector(updateTimeView) userInfo:nil repeats:YES];
-    
 }
-
-- (void)backClickAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)createCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     // CGFloat rightSize = ([UIScreen mainScreen].bounds.size.width - 78)/3;
@@ -208,7 +176,6 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
-    
     [MBProgressHUD showLoading:@"正在加载..." ToView:self.view];
     
 }
@@ -228,7 +195,6 @@
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"获取信息失败"];
     } Progress:^(float progress) {
-        
     }];
 }
 - (void)loaderweimaData {
@@ -244,9 +210,7 @@
             [self loadPicData];
         }
     } Progress:^(float progress) {
-        
     }];
-    
 }
 - (void)fetchErweimaData:(NSDictionary *)dict {
     NSInteger code = [dict[@"code"] integerValue];
@@ -255,9 +219,7 @@
     }else {
         [MBProgressHUD showWarning:dict[@"info"]];
     }
-    
 }
-
 - (NSInteger)getCurrentTime{
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
@@ -273,14 +235,11 @@
     int hour = (int)[comps hour];
     return hour;
 }
-
 - (void)requestData:(NSArray *)data {
-    
     if (data.count == 0) {
         [MBProgressHUD hideHUDForView:self.view];
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
         [self.view addSubview:timeView];
-        
         UIImageView *timeImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
         timeImageV.image = [UIImage imageNamed:@"shizhong.png"];
         [timeView addSubview:timeImageV];
@@ -310,15 +269,8 @@
         sharePic.pic_arry = muArray;
         [self.dataArr addObject:sharePic];
     }
-    
-    
-    self.isLoad = YES;
-    
     [self.picCollectionView reloadData];
-    
     [MBProgressHUD hideHUDForView:self.view];
-    
-    
 }
 
 #pragma mark --collection的代理方法
@@ -357,15 +309,11 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     //图片查看
     PicCollectionViewCell *cell = (PicCollectionViewCell *)[self.picCollectionView cellForItemAtIndexPath:indexPath];
-    
     //取到当前数组
     SharePicModel *picModel = self.dataArr[indexPath.section];
-    
     self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
     self.photoView.picArr = [picModel.pic_arry mutableCopy];
     self.photoView.index = indexPath.row;
-    
     [self.photoView createScrollView];
     [self.photoView fillData:indexPath.row cellFrame:cell.frame];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
@@ -373,31 +321,20 @@
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
-        //返回页眉
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
         headerV.titleLabel.text = picModel.title_content;
         headerV.timeLabel.text = [NSString jm_cutOutYearWihtSec:picModel.start_time];
         headerV.propagandaLabel.text = picModel.descriptionTitle;
         return headerV;
-        
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
         SharePicModel *picModel = self.dataArr[indexPath.section];
         [footerV.likeButton setTitle:picModel.save_times forState:UIControlStateNormal];
         [footerV.shareButton setTitle:picModel.save_times forState:UIControlStateNormal];
-        
-        if ([picModel.could_share intValue]) {
-            footerV.savePhotoBtn.userInteractionEnabled=YES;
-            footerV.savePhotoBtn.alpha=1.0;
-            footerV.savePhotoBtn.tag = 100 + indexPath.section;
-            [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:currentPicArr:) forControlEvents:UIControlEventTouchUpInside];
-            return footerV;
-        }else {
-            footerV.savePhotoBtn.userInteractionEnabled=NO;
-            footerV.savePhotoBtn.alpha=0.5;
-            return footerV;
-        }
+        footerV.savePhotoBtn.tag = 100 + indexPath.section;
+        [footerV.savePhotoBtn addTarget:self action:@selector(tapSaveImageToIphone:currentPicArr:) forControlEvents:UIControlEventTouchUpInside];
+        return footerV;
     }
 }
 
@@ -462,8 +399,6 @@
             }
         }
         [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
-        
-        
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
             //            [self saveNext];
@@ -487,9 +422,7 @@
         if (!responseObject) return ;
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
-        
     }];
-    
 }
 - (void)downLoadImage:(NSNumber *)pushID {
     [self statisticsSaveNum:pushID];
@@ -510,9 +443,6 @@
         }
         dispatch_group_async(group, queue, ^{
             [UIImage imagewithURLString:picUrl Index:index];
-//            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-//            NSString *file = [cachesPath stringByAppendingPathComponent:index];
-//            [UIImageJPEGRepresentation(image, 0.5)writeToFile:file atomically:YES];
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
@@ -532,20 +462,14 @@
         array = [sharImageArray copy];
         for (int i = 0; i < array.count; i++) {
             NSData *data = UIImageJPEGRepresentation(array[i], 0.5);
-//            NSLog(@"sharImageArray ------ > %ld",data.length);
+            NSLog(@"sharImageArray ------ > %ld",data.length);
             [muArrau addObject:data];
         }
-        
-        //        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
         self.pushSaveModel.pushID = _currentSaveIndex;
         self.pushSaveModel.imageArray = [muArrau copy];
         self.pushSaveModel.currentTime = [NSString getCurrentTime];
         [self.pushSaveModel save];
-        
-        
-        
         [MBProgressHUD hideHUD];
-        
         if ([WXApi isWXAppInstalled]) {
             [MBProgressHUD hideHUD];
             if (_isNeedAleartMessage) {
@@ -553,21 +477,12 @@
             }else {
                 [self UIActivityMessage];
             }
-            
         }else {
             [MBProgressHUD showWarning:@"没有安装微信哦~"];
         }
-        
         NSLog(@"%@",sharImageArray);
-        
-        
-        
     });
-    
-    
-    
 }
-
 - (void)saveNextimage {
     NSInteger countNum = self.currentArr.count;
     if (countNum > 0) {
@@ -579,11 +494,7 @@
             }
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
-    }else {
-        
-    }
-    
-    
+    }else { }
 }
 - (void)alertMessage {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不在提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -619,10 +530,8 @@
     [MBProgressHUD showLoading:@"火速加载~"];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:sharImageArray applicationActivities:nil];
 //    activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
+    
     UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
-        //        NSMutableArray *array = [NSMutableArray array];
-        //        array = [sharImageArray mutableCopy];
-        //        [_currentSaveDataSource setObject:array forKey:_currentSaveIndex];
         [sharImageArray removeAllObjects];
         [self dismissViewControllerAnimated:YES completion:nil];
     };
@@ -669,6 +578,9 @@
     return YES;
 }
 
+- (void)backClickAction {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 
