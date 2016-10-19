@@ -135,9 +135,6 @@
 - (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
     _makeMoneyDic = makeMoneyDic;
     self.myInvitation = makeMoneyDic[@"invite"];
-    
-    
-    
 }
 - (void)setCenterModel:(JMMaMaCenterModel *)centerModel {
     _centerModel = centerModel;
@@ -165,12 +162,6 @@
     NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[centerModel.cash_value floatValue]];
     _carryValue = [carryValueStr floatValue];
 }
-//- (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
-//    _extraFiguresDic = extraFiguresDic;
-//    
-//
-//    
-//}
 - (void)setActiveArray:(NSMutableArray *)activeArray {
     _activeArray = activeArray;
     
@@ -635,8 +626,7 @@
 - (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
     return @"JMMaMaMessageCell";
 }
-- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
-}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index { }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     WebViewController *message = [[WebViewController alloc] init];
     [self.diction setValue:self.makeMoneyDic[@"notice"] forKey:@"web_url"];

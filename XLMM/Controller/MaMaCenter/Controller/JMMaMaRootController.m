@@ -309,11 +309,19 @@
 //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
-    }else {
-        
-    }
+    }else { }
     self.scrollView.contentOffset = CGPointMake(page * SCREENWIDTH, 0);
     [MobClick event:_titleArr[page]];
+}
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = scrollView.contentOffset.x / pageWidth;
+    if (page == 1 && _isActiveClick) {
+        self.activityVC.urlString = self.mamaWebDict[@"forum"];
+        _isActiveClick = NO;
+    }else { }
+    [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
 }
 - (void)earningPrompt {
     [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
@@ -368,13 +376,7 @@
         }];
     }];
 }
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat pageWidth = scrollView.frame.size.width;
-    NSInteger page = scrollView.contentOffset.x / pageWidth;
-    
-    [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
-}
+
 - (void)customUserInfo {
     if (self.userInfoDic.count == 0) {
         return ;

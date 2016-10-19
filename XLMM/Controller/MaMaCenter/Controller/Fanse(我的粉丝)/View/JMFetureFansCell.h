@@ -10,13 +10,13 @@
 #import "FanceModel.h"
 
 @class JMFetureFansModel;
-@class VisitorModel;
+@class JMVisitorModel;
 @interface JMFetureFansCell : UITableViewCell
 
 // 未来粉丝
 - (void)fillData:(JMFetureFansModel *)model;
 // 我的访客
-- (void)fillVisitorData:(VisitorModel *)model;
+- (void)fillVisitorData:(JMVisitorModel *)model;
 // 今日粉丝
 - (void)configNowFnas:(FanceModel *)model;
 @end

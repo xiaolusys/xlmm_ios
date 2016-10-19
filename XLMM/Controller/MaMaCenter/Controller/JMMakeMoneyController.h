@@ -13,8 +13,6 @@
 
 @property (nonatomic, strong) NSDictionary *makeMoneyDic;
 
-//@property (nonatomic, strong) NSDictionary *extraFiguresDic;
-
 @property (nonatomic, strong) NSMutableArray *activeArray;
 
 @property (nonatomic, strong) NSDictionary *messageDic;

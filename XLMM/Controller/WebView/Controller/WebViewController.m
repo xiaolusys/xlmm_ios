@@ -12,7 +12,6 @@
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
 #import "UIImage+ImageWithSelectedView.h"
-#import "YoumengShare.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "PublishNewPdtViewController.h"
@@ -22,10 +21,8 @@
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "CartViewController.h"
-#import "JMShareViewController.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "JMShareModel.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -50,8 +47,7 @@
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
 //遮罩层
 @property (nonatomic, strong) UIView *shareBackView;
-//分享页面
-@property (nonatomic, strong) YoumengShare *youmengShare;
+
 @property (nonatomic, assign)BOOL isPic;
 @property (nonatomic, strong)UIImage *imageData;
 @property (nonatomic, copy)NSString *kuaizhaoLink;
@@ -109,13 +105,6 @@
     NSString *shareUrllink;
     BOOL isTeamBuy;
 }
-- (YoumengShare *)youmengShare {
-    if (!_youmengShare) {
-        _youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    }
-    return _youmengShare;
-}
-
 //- (WebViewJavascriptBridge *)bridge {
 //
 //    return _bridge;

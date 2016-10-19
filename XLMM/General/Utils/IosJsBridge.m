@@ -18,7 +18,6 @@
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
-#import "YoumengShare.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 

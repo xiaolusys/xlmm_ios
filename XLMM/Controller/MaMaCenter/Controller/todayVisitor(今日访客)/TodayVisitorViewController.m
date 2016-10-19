@@ -9,7 +9,7 @@
 #import "TodayVisitorViewController.h"
 #import "MMClass.h"
 #import "JMFetureFansCell.h"
-#import "VisitorModel.h"
+#import "JMVisitorModel.h"
 
 @interface TodayVisitorViewController () {
     NSInteger VisitorNum;
@@ -192,7 +192,7 @@
         
     }else {
         for (NSDictionary *dic in array) {
-            VisitorModel *visitorM = [VisitorModel mj_objectWithKeyValues:dic];
+            JMVisitorModel *visitorM = [JMVisitorModel mj_objectWithKeyValues:dic];
             NSString *data = [self dateDeal:visitorM.created];
             self.dataArray = [[self.dataDic allKeys] mutableCopy];
             //判断对应的键值数组是否存在
@@ -260,7 +260,7 @@
     
     NSString *key = self.dataArray[section];
     NSMutableArray *orderArr = self.dataDic[key];
-    VisitorModel *visitorM = [orderArr firstObject];
+    JMVisitorModel *visitorM = [orderArr firstObject];
     label.text = [self yearDeal:visitorM.created];
 
     return headerV;
@@ -274,7 +274,7 @@
     }
     NSString *key = self.dataArray[indexPath.section];
     NSMutableArray *orderArr = self.dataDic[key];
-    VisitorModel *model = orderArr[indexPath.row];
+    JMVisitorModel *model = orderArr[indexPath.row];
     
     [cell fillVisitorData:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
