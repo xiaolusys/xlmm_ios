@@ -98,6 +98,7 @@
     self.usableCouponVC.delegate = self;
     self.usableCouponVC.isSelectedYHQ = self.isSelectedYHQ;
     self.usableCouponVC.selectedModelID = self.selectedModelID;
+    self.usableCouponVC.couponNumber = self.couponNumber;
     [self addChildViewController:self.usableCouponVC];
     [self.scrollView addSubview:self.usableCouponVC.view];
     self.usableCouponVC.dataSource = self.usableCouponArr;
@@ -134,9 +135,9 @@
         [MBProgressHUD showWarning:couponData[@"info"]];
     }
 }
-- (void)updateYouhuiquanmodel:(JMCouponModel *)model {
+- (void)updateYouhuiquanmodel:(NSArray *)modelArr {
     if (_delegate && [_delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
-        [_delegate updateYouhuiquanWithmodel:model];
+        [_delegate updateYouhuiquanWithmodel:modelArr];
     }
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {

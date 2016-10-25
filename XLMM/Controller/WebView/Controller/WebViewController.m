@@ -345,6 +345,7 @@
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
+    [MobClick event:@"webViewController_allShare"];
     if ([_webDiction[@"type_title"] isEqual:@"active"]) {
         NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
         [MobClick event:@"Active_share" attributes:temp_dict];

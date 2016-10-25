@@ -425,16 +425,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_categorysArray.count <= 4) {
-//            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
             return oneRowCellH;
         }else {
-//            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 20;
             return twoRowCellH;
         }
     }else if (indexPath.section == 1) {
         return SCREENWIDTH * 0.5 + 10;
-//        JMHomeActiveModel *model = self.activeArray[indexPath.row];
-//        return model.cellHeight;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {

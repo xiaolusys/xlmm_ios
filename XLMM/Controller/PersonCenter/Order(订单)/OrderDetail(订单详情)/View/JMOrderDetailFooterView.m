@@ -30,6 +30,11 @@
  *  结算
  */
 @property (nonatomic, strong) UILabel *clearingMoneyLabel;
+/**
+ *  零钱支付
+ */
+@property (nonatomic, strong) UILabel *dibMoneyLabel;
+
 
 
 @end
@@ -39,7 +44,7 @@
 }
 
 + (instancetype)enterFooterView {
-    JMOrderDetailFooterView *footerView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 220)];
+    JMOrderDetailFooterView *footerView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
     return footerView;
 }
 
@@ -64,7 +69,10 @@
     self.goodsAllMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.total_fee floatValue]];
     self.couponMoneyLabel.text = [NSString stringWithFormat:@"－¥%.2f",[orderDetailModel.discount_fee floatValue]];
     self.freightMoneyLabel.text = [NSString stringWithFormat:@"＋¥%.2f",[orderDetailModel.post_fee floatValue]];
-    self.clearingMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.payment floatValue]];
+    CGFloat actualPayMent = [orderDetailModel.payment floatValue] - [orderDetailModel.pay_cash floatValue];
+    self.clearingMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",actualPayMent];
+    self.dibMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.pay_cash floatValue]];
+    
 }
 - (void)createUI {
     // == 视图一 == //
@@ -117,6 +125,19 @@
     self.freightMoneyLabel.font = [UIFont systemFontOfSize:14.];
     self.freightMoneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     
+    UILabel *dibMoneyL = [UILabel new];
+    [oneView addSubview:dibMoneyL];
+    dibMoneyL.font = [UIFont systemFontOfSize:14.];
+    dibMoneyL.textColor = [UIColor buttonTitleColor];
+    dibMoneyL.text = @"零钱支付";
+    
+    UILabel *dibMoneyLabel = [UILabel new];
+    [oneView addSubview:dibMoneyLabel];
+    self.dibMoneyLabel = dibMoneyLabel;
+    self.dibMoneyLabel.font = [UIFont systemFontOfSize:14.];
+    self.dibMoneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    
+    
     // == 视图二 == //
     UIView *twoView = [UIView new];
     [self addSubview:twoView];
@@ -125,7 +146,7 @@
     [twoView addSubview:clearingMoneyL];
     clearingMoneyL.font = [UIFont systemFontOfSize:14.];
     clearingMoneyL.textColor = [UIColor buttonTitleColor];
-    clearingMoneyL.text = @"实付款";
+    clearingMoneyL.text = @"实付金额";
     
     UILabel *clearingMoneyLabel = [UILabel new];
     [twoView addSubview:clearingMoneyLabel];
@@ -140,7 +161,7 @@
     
     [oneView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(weakSelf);
-        make.height.mas_equalTo(@150);
+        make.height.mas_equalTo(@190);
     }];
     [payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(oneView).offset(20);
@@ -174,6 +195,14 @@
     [self.freightMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(oneView).offset(-10);
         make.centerY.equalTo(freightMoneyL.mas_centerY);
+    }];
+    [dibMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(freightMoneyL.mas_bottom).offset(20);
+        make.left.equalTo(oneView).offset(10);
+    }];
+    [self.dibMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(oneView).offset(-10);
+        make.centerY.equalTo(dibMoneyL.mas_centerY);
     }];
     
     

@@ -646,6 +646,7 @@
 		1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
+		1FCF19B01DBB634D004D5CEC /* JMSpecialCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCF19AF1DBB634D004D5CEC /* JMSpecialCouponController.m */; };
 		1FD158CB1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */; };
 		1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */; };
 		1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158D01D2E8387006C4B14 /* JMOrderDetailSectionView.m */; };
@@ -1749,6 +1750,8 @@
 		1FB4287D1DAF4FF9002F98B4 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
 		1FBDA3651CE94BB00047BEF2 /* JMAuthcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAuthcodeViewController.h; sourceTree = "<group>"; };
 		1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAuthcodeViewController.m; sourceTree = "<group>"; };
+		1FCF19AE1DBB634D004D5CEC /* JMSpecialCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSpecialCouponController.h; sourceTree = "<group>"; };
+		1FCF19AF1DBB634D004D5CEC /* JMSpecialCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSpecialCouponController.m; sourceTree = "<group>"; };
 		1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayOutdateView.h; sourceTree = "<group>"; };
 		1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayOutdateView.m; sourceTree = "<group>"; };
 		1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAllOrderModel.h; sourceTree = "<group>"; };
@@ -4473,6 +4476,8 @@
 				1F56E2791D347EF70092EC91 /* JMExpiredCouponController.m */,
 				1F56E27E1D347F390092EC91 /* JMUsedCouponController.h */,
 				1F56E27F1D347F390092EC91 /* JMUsedCouponController.m */,
+				1FCF19AE1DBB634D004D5CEC /* JMSpecialCouponController.h */,
+				1FCF19AF1DBB634D004D5CEC /* JMSpecialCouponController.m */,
 			);
 			name = "youhuiquan ";
 			sourceTree = "<group>";
@@ -4509,7 +4514,7 @@
 				1F5877291DB8A60D00949302 /* mamaTeam(我的团队) */,
 				1F5877351DB8A60D00949302 /* myInvitation(我的邀请) */,
 				1F5877381DB8A60D00949302 /* order Record(订单记录) */,
-				1F58773F1DB8A60D00949302 /* releassProduct(发布产品) */,
+				1F58773F1DB8A60D00949302 /* releassProduct(每日推送) */,
 				1F5877561DB8A60D00949302 /* todayVisitor(今日访客) */,
 				1F58775B1DB8A60D00949302 /* VipRenew(续费) */,
 				1F58775E1DB8A60D00949302 /* weekRewards(业绩奖励) */,
@@ -4774,13 +4779,14 @@
 			path = "order Record(订单记录)";
 			sourceTree = "<group>";
 		};
-		1F58773F1DB8A60D00949302 /* releassProduct(发布产品) */ = {
+		1F58773F1DB8A60D00949302 /* releassProduct(每日推送) */ = {
 			isa = PBXGroup;
 			children = (
 				1F5877401DB8A60D00949302 /* Controller */,
 				1F5877471DB8A60D00949302 /* Model */,
 				1F58774C1DB8A60D00949302 /* View */,
 			);
+			name = "releassProduct(每日推送)";
 			path = "releassProduct(发布产品)";
 			sourceTree = "<group>";
 		};
@@ -6716,6 +6722,7 @@
 				1F4C9EBB1D9912600089CE74 /* UdeskPhotoView.m in Sources */,
 				1F498C471D2772D0007E77FC /* JMPackAgeModel.m in Sources */,
 				1F5878041DB8A80C00949302 /* JMMaMaOrderListCell.m in Sources */,
+				1FCF19B01DBB634D004D5CEC /* JMSpecialCouponController.m in Sources */,
 				1F5878911DB8ABFE00949302 /* TixianSucceedViewController.m in Sources */,
 				1F4C9EAF1D9912600089CE74 /* UdeskImageUtil.m in Sources */,
 				1F12EE2A1DAE071500511B58 /* Tool_FMDBGetDatabase.m in Sources */,
@@ -7055,7 +7062,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "754e85db-d802-42a0-a817-eee073ff4bf4";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				PROVISIONING_PROFILE_SPECIFIER = iOS_dev0412;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s arm64";

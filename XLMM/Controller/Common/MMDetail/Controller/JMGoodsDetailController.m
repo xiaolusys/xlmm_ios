@@ -105,6 +105,7 @@
     NSInteger _cartsGoodsNum;   // 购物车数量
     BOOL _isAddcart;            // 判断商品是否即将开售
     BOOL _isTeamBuyGoods;       // 判断商品是否可以团购
+    BOOL _isDirectBuyGoods;        // 判断商品是否可以直接跳转支付页面
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -636,13 +637,18 @@
         if (code == 0) {
             if ([paramer isKindOfClass:[NSMutableDictionary class]] && [paramer objectForKey:@"type"]) {
                 [MobClick event:@"TeamAddShoppingCartSuccess"];
-                [self getCartsFirstGoodsInfo];
+                [self getCartsFirstGoodsInfo:NO];
             }else {
-                [MobClick event:@"addShoppingCartSuccess"];
-                [MBProgressHUD showSuccess:@"加入购物车成功"];
-                self.cartsLabel.hidden = NO;
-                self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
-                [self loadCatrsNumData];
+                if (_isDirectBuyGoods) {
+                    [MobClick event:@"TspecialAddShoppingCartSuccess"];
+                    [self getCartsFirstGoodsInfo:YES];
+                }else {
+                    [MobClick event:@"AddShoppingCartSuccess"];
+                    [MBProgressHUD showSuccess:@"加入购物车成功"];
+                    self.cartsLabel.hidden = NO;
+                    self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+                    [self loadCatrsNumData];
+                }
             }
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
@@ -904,16 +910,16 @@
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;
 }
-- (void)getCartsFirstGoodsInfo {
+- (void)getCartsFirstGoodsInfo:(BOOL)directBuyGoods {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        [self fetchedCartData:responseObject];
+        [self fetchedCartData:responseObject DirectBuyGoods:directBuyGoods];
     } WithFail:^(NSError *error) {
-        [MBProgressHUD showError:@"拼团失败,请稍后重试"];
+        [MBProgressHUD showError:@"请求失败,请稍后重试"];
     } Progress:^(float progress) {
     }];
 }
-- (void)fetchedCartData:(NSArray *)careArr {
+- (void)fetchedCartData:(NSArray *)careArr DirectBuyGoods:(BOOL)directBuyGoods {
     if (careArr.count == 0) return ;
     JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
     NSMutableArray *cartArray = [NSMutableArray array];
@@ -921,6 +927,7 @@
     CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
     [cartArray addObject:model];
     purchaseVC.purchaseGoodsArr = cartArray;
+    purchaseVC.isDirectBuyGoods = directBuyGoods;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 

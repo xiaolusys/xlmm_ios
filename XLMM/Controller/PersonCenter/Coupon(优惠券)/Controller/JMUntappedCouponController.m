@@ -7,7 +7,6 @@
 //
 
 #import "JMUntappedCouponController.h"
-#import "MMClass.h"
 #import "JMCouponModel.h"
 #import "JMCouponRootCell.h"
 #import "JMEmptyView.h"
@@ -86,6 +85,12 @@
     [cell configData:self.couponModel Index:[self couponCount]];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self couponCount] == 8) {
+        NSLog(@"couponCount == 8 被点击");
+    }
+}
+
 
 - (void)emptyView {
     kWeakSelf

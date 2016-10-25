@@ -98,6 +98,7 @@ static BOOL isAgreeTerms = YES;
     NSString *_payMethod;             //支付方式
     float _totalPayment;              //应付款金额
     float _discountfee;               //优惠券金额
+    NSString *_couponStringID;        // 优惠券ID
     float _rightAmount;               //app优惠
     float _availableFloat;            //小鹿钱包余额
     
@@ -117,6 +118,7 @@ static BOOL isAgreeTerms = YES;
     NSString *_orderTidNum;           //订单编号
     NSInteger _flagCount;             //标志是否弹出延迟框
     BOOL _isTeamBuyGoods;             //是否为团购
+    NSInteger _couponNumber;          // 优惠券购买商品个数
 }
 - (NSMutableArray *)logisticsArr {
     if (!_logisticsArr) {
@@ -229,6 +231,11 @@ static BOOL isAgreeTerms = YES;
     [self.purchaseGoodsArr removeAllObjects];
     NSArray *goodsArr = purchaseDic[@"cart_list"];
     NSDictionary *teamGoodsDic = goodsArr[0];
+    if (self.isDirectBuyGoods) {
+        _couponNumber = [teamGoodsDic[@"num"] integerValue];
+    }else {
+        _couponNumber = 1;
+    }
     for (NSDictionary *dic in goodsArr) {
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.purchaseGoodsArr addObject:model];
@@ -438,6 +445,7 @@ static BOOL isAgreeTerms = YES;
         segmentVC.cartID = _cartIDs;
         segmentVC.isSelectedYHQ = YES;
         segmentVC.selectedModelID = _yhqModelID;
+        segmentVC.couponNumber = _couponNumber;
 //        segmentVC.couponData = _couponData;
         segmentVC.delegate = self;
         [self.navigationController pushViewController:segmentVC animated:YES];
@@ -568,12 +576,12 @@ static BOOL isAgreeTerms = YES;
     if (self.isUserCoupon && self.isEnoughCoupon && self.isCouponEnoughPay) {
         _totalPayment = 0.00;
         _discountfee = _discountfee + _couponValue;
-        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  _couponInfo[@"pid"], self.yhqModel.couponID, _couponValue];
+        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  _couponInfo[@"pid"], _couponStringID, _couponValue];
         _parmsStr = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",_parmsStr,_discount,[NSNumber numberWithFloat:_totalPayment], @"budget", parms];
         [self submitBuyGoods];
     }else {
         if (self.isUserCoupon && self.isEnoughCoupon) {//使用不足
-            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms, _couponInfo[@"pid"], self.yhqModel.couponID, _couponValue];
+            parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms, _couponInfo[@"pid"], _couponStringID, _couponValue];
             _discountfee = _discountfee + _couponValue;
         }else {//未使用
             if (!self.isUseXLW && _payMethod.length == 0) {
@@ -702,10 +710,28 @@ static BOOL isAgreeTerms = YES;
     }];
 }
 #pragma mark  选择优惠券回调过来的代理方法
-- (void)updateYouhuiquanWithmodel:(JMCouponModel *)model {
-    self.yhqModel = model;
-    _couponValue = [model.coupon_value floatValue];
-    if (model == nil) {
+- (void)updateYouhuiquanWithmodel:(NSArray *)modelArray {
+    NSMutableString *couponID = [[NSMutableString alloc] init];
+    _couponValue = 0.;
+    _couponStringID = @"";
+    if (modelArray.count > 1) {
+        for (JMCouponModel *model in modelArray) {
+            _couponValue += [model.coupon_value floatValue];
+            [couponID appendFormat:@"%@%@",model.couponID,@"/"];
+        }
+        if ([couponID hasSuffix:@"/"]) {
+            [couponID deleteCharactersInRange:NSMakeRange(couponID.length - 1, 1)];
+        }
+        _couponStringID = [couponID copy];
+    }else {
+        for (JMCouponModel *model in modelArray) {
+            _couponValue += [model.coupon_value floatValue];
+            _couponStringID = model.couponID;
+        }
+    }
+//    self.yhqModel = model;
+//    _couponValue = [model.coupon_value floatValue];
+    if (modelArray.count == 0) {
         self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
         self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
         _yhqModelID = @"";
@@ -714,18 +740,17 @@ static BOOL isAgreeTerms = YES;
         [self calculationLabelValue];
     }else {
         self.isUserCoupon = YES;
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,_couponStringID];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             NSString *couponMessage = goodsModel.coupon_message;
             if (couponMessage.length == 0) {
                 self.isEnoughCoupon = YES;
-                self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%@元优惠券", model.coupon_value];   // === > 返回可以减少的金额
+                self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.f元优惠券", _couponValue];   // === > 返回可以减少的金额
                 self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-                _yhqModelID = [NSString stringWithFormat:@"%@", model.couponID];
+                _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
                 [self calculationLabelValue];
             }else {
-//                [SVProgressHUD showInfoWithStatus:goodsModel.coupon_message];
                 [MBProgressHUD showWarning:goodsModel.coupon_message];
                 self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
                 self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
@@ -735,7 +760,6 @@ static BOOL isAgreeTerms = YES;
             }
         } WithFail:^(NSError *error) {
             self.isEnoughCoupon = NO;
-//            [SVProgressHUD showInfoWithStatus:@"网络出错，优惠券暂不可选"];
             [MBProgressHUD showWarning:@"网络出错，优惠券暂不可选"];
         } Progress:^(float progress) {
             

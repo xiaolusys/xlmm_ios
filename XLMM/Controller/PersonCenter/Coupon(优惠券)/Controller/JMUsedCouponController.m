@@ -7,7 +7,6 @@
 //
 
 #import "JMUsedCouponController.h"
-#import "MMClass.h"
 
 @interface JMUsedCouponController ()
 

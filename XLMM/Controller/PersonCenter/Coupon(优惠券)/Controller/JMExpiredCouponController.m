@@ -7,7 +7,6 @@
 //
 
 #import "JMExpiredCouponController.h"
-#import "MMClass.h"
 
 @interface JMExpiredCouponController ()
 

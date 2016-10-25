@@ -176,13 +176,12 @@
 
 - (void)setSectionTitles:(NSArray *)sectionTitles {
     _sectionTitles = sectionTitles;
-    
+    [self setNeedsDisplay]; // 添加这一行后,会重新执行 drawRect 方法
     [self setNeedsLayout];
 }
 
 - (void)setSectionImages:(NSArray *)sectionImages {
     _sectionImages = sectionImages;
-    
     [self setNeedsLayout];
 }
 

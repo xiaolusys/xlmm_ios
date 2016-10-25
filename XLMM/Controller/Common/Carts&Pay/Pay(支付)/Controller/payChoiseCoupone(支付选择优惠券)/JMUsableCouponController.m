@@ -80,9 +80,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMCouponModel *couponModel = [[JMCouponModel alloc] init];
     couponModel = self.dataSource[indexPath.row];
-    
+    NSMutableArray *array = [NSMutableArray array];
+    if (self.couponNumber > 1) {
+        for (int i = 0; i < self.couponNumber; i++) {
+            if ([couponModel.coupon_type integerValue] == 8) {
+                [array addObject:couponModel];
+            }
+        }
+    }else {
+        [array addObject:couponModel];
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanmodel:)]) {
-        [self.delegate updateYouhuiquanmodel:couponModel];
+        [self.delegate updateYouhuiquanmodel:array];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
