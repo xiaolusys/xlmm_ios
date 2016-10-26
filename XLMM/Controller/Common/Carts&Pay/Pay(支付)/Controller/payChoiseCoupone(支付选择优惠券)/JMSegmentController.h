@@ -23,6 +23,7 @@
 
 @property (nonatomic, copy) NSString *cartID;
 @property (nonatomic, assign) NSInteger couponNumber;
+@property (nonatomic, strong) NSNumber *directBuyGoodsTypeNumber;
 
 @property (nonatomic, assign) BOOL isSelectedYHQ;
 

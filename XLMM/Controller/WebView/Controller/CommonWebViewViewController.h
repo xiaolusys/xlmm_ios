@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "IMYWebView.h"
+#import <WebKit/WebKit.h>
 
 @interface CommonWebViewViewController : UIViewController
 

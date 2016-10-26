@@ -20,6 +20,7 @@
 @interface JMUsableCouponController : UIViewController
 
 @property (nonatomic, assign) NSInteger couponNumber;
+@property (nonatomic, strong) NSNumber *directBuyGoodsTypeNumber;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 

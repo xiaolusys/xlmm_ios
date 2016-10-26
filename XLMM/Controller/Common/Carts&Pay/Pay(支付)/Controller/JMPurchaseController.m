@@ -231,7 +231,7 @@ static BOOL isAgreeTerms = YES;
     [self.purchaseGoodsArr removeAllObjects];
     NSArray *goodsArr = purchaseDic[@"cart_list"];
     NSDictionary *teamGoodsDic = goodsArr[0];
-    if (self.isDirectBuyGoods) {
+    if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
         _couponNumber = [teamGoodsDic[@"num"] integerValue];
     }else {
         _couponNumber = 1;
@@ -446,6 +446,7 @@ static BOOL isAgreeTerms = YES;
         segmentVC.isSelectedYHQ = YES;
         segmentVC.selectedModelID = _yhqModelID;
         segmentVC.couponNumber = _couponNumber;
+        segmentVC.directBuyGoodsTypeNumber = self.directBuyGoodsTypeNumber;
 //        segmentVC.couponData = _couponData;
         segmentVC.delegate = self;
         [self.navigationController pushViewController:segmentVC animated:YES];
@@ -625,7 +626,9 @@ static BOOL isAgreeTerms = YES;
     NSMutableString *paramString = [NSMutableString stringWithFormat:@"%@",_parmsStr];
     [paramString appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsID],nil];
     NSMutableDictionary *params = [self stringChangeDictionary:paramString];
-    
+    if (_isTeamBuyGoods) {
+        params[@"order_type"] = @"3";
+    }
     NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
     JMPurchaseController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
@@ -714,23 +717,11 @@ static BOOL isAgreeTerms = YES;
     NSMutableString *couponID = [[NSMutableString alloc] init];
     _couponValue = 0.;
     _couponStringID = @"";
-    if (modelArray.count > 1) {
-        for (JMCouponModel *model in modelArray) {
-            _couponValue += [model.coupon_value floatValue];
-            [couponID appendFormat:@"%@%@",model.couponID,@"/"];
-        }
-        if ([couponID hasSuffix:@"/"]) {
-            [couponID deleteCharactersInRange:NSMakeRange(couponID.length - 1, 1)];
-        }
-        _couponStringID = [couponID copy];
-    }else {
-        for (JMCouponModel *model in modelArray) {
-            _couponValue += [model.coupon_value floatValue];
-            _couponStringID = model.couponID;
-        }
+    if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+        self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
+        [MBProgressHUD showWarning:@"优惠券不足哦~!"];
+        return ;
     }
-//    self.yhqModel = model;
-//    _couponValue = [model.coupon_value floatValue];
     if (modelArray.count == 0) {
         self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
         self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
@@ -739,14 +730,32 @@ static BOOL isAgreeTerms = YES;
         _couponValue = 0;
         [self calculationLabelValue];
     }else {
+        JMCouponModel *model = modelArray[0];
+        if (modelArray.count > 1) {
+            for (JMCouponModel *model in modelArray) {
+                _couponValue += [model.coupon_value floatValue];
+                [couponID appendFormat:@"%@%@",model.couponID,@"/"];
+            }
+            if ([couponID hasSuffix:@"/"]) {
+                [couponID deleteCharactersInRange:NSMakeRange(couponID.length - 1, 1)];
+            }
+            _couponStringID = [couponID copy];
+        }else {
+            _couponValue = [model.coupon_value floatValue];
+            _couponStringID = model.couponID;
+        }
         self.isUserCoupon = YES;
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,_couponStringID];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
             GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
             NSString *couponMessage = goodsModel.coupon_message;
             if (couponMessage.length == 0) {
                 self.isEnoughCoupon = YES;
-                self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.f元优惠券", _couponValue];   // === > 返回可以减少的金额
+                if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
+                }else {
+                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
+                }
                 self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
                 _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
                 [self calculationLabelValue];

@@ -48,7 +48,7 @@
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick:)];
     self.view.backgroundColor = [UIColor countLabelColor];
     [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
-    _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"购物券",@"已过期",@"已使用", nil];
+    _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"精品券",@"已过期",@"已使用", nil];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     [self loadCouponData];
     [self createSegmentView];
@@ -84,7 +84,7 @@
         self.untappedCouponVC.couponArray = responseArr;
         self.spacialVC.couponArray = resArr;
         _titleArr[0] = [NSString stringWithFormat:@"未使用(%ld)",responseArr.count];
-        _titleArr[1] = [NSString stringWithFormat:@"购物券(%ld)",resArr.count];
+        _titleArr[1] = [NSString stringWithFormat:@"精品券(%ld)",resArr.count];
     }else if ([statusCount isEqualToString:@"3"]) {
         flageArr[1] = @1;
         self.expiredCouponVC.couponArray = responseArr;

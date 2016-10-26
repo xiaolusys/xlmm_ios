@@ -31,7 +31,7 @@
     if (dataSource.count == 0) {
         [self emptyView];
     }else {
-        
+        [self.tableView reloadData];
     }
 }
 - (void)createTableView {

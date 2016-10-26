@@ -105,7 +105,7 @@
     NSInteger _cartsGoodsNum;   // 购物车数量
     BOOL _isAddcart;            // 判断商品是否即将开售
     BOOL _isTeamBuyGoods;       // 判断商品是否可以团购
-    BOOL _isDirectBuyGoods;        // 判断商品是否可以直接跳转支付页面
+    BOOL _isDirectBuyGoods;     // 判断商品是否可以直接跳转支付页面
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -322,6 +322,7 @@
         self.addCartButton.hidden = NO;
     }
     // === 显示商品出售状态 === //
+    _isDirectBuyGoods = [detailContentDic[@"is_onsale"] boolValue];
     NSString *saleStatus = detailContentDic[@"sale_state"];
     
     if (_isTeamBuyGoods) { // 团购
@@ -627,6 +628,9 @@
 #pragma mark -- 加入购物车选择商品属性回调
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
+    if (_isDirectBuyGoods) {
+        attrubuteDic[@"type"] = @"5";
+    }
     [self addCartUrlString:urlString Paramer:attrubuteDic];
 }
 - (void)addCartUrlString:(NSString *)urlString Paramer:(NSMutableDictionary *)paramer {
@@ -635,20 +639,19 @@
         NSLog(@"%@",responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
-            if ([paramer isKindOfClass:[NSMutableDictionary class]] && [paramer objectForKey:@"type"]) {
+            NSInteger typeNumber = [paramer[@"type"] integerValue];
+            if (typeNumber == 3) {
                 [MobClick event:@"TeamAddShoppingCartSuccess"];
-                [self getCartsFirstGoodsInfo:NO];
+                [self getCartsFirstGoodsInfoGoodsTypeNumber:@(typeNumber) Parmer:paramer];
+            }else if (typeNumber == 5) {
+                [MobClick event:@"TspecialAddShoppingCartSuccess"];
+                [self getCartsFirstGoodsInfoGoodsTypeNumber:@(typeNumber) Parmer:paramer];
             }else {
-                if (_isDirectBuyGoods) {
-                    [MobClick event:@"TspecialAddShoppingCartSuccess"];
-                    [self getCartsFirstGoodsInfo:YES];
-                }else {
-                    [MobClick event:@"AddShoppingCartSuccess"];
-                    [MBProgressHUD showSuccess:@"加入购物车成功"];
-                    self.cartsLabel.hidden = NO;
-                    self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
-                    [self loadCatrsNumData];
-                }
+                [MobClick event:@"AddShoppingCartSuccess"];
+                [MBProgressHUD showSuccess:@"加入购物车成功"];
+                self.cartsLabel.hidden = NO;
+                self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
+                [self loadCatrsNumData];
             }
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
@@ -910,16 +913,16 @@
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;
 }
-- (void)getCartsFirstGoodsInfo:(BOOL)directBuyGoods {
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:_paramer WithSuccess:^(id responseObject) {
+- (void)getCartsFirstGoodsInfoGoodsTypeNumber:(NSNumber *)directBuyGoodsTypeNumber Parmer:(NSMutableDictionary *)parmer {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:parmer WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        [self fetchedCartData:responseObject DirectBuyGoods:directBuyGoods];
+        [self fetchedCartData:responseObject DirectBuyGoodsTypeNumber:directBuyGoodsTypeNumber];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"请求失败,请稍后重试"];
     } Progress:^(float progress) {
     }];
 }
-- (void)fetchedCartData:(NSArray *)careArr DirectBuyGoods:(BOOL)directBuyGoods {
+- (void)fetchedCartData:(NSArray *)careArr DirectBuyGoodsTypeNumber:(NSNumber *)directBuyGoodsTypeNumber {
     if (careArr.count == 0) return ;
     JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
     NSMutableArray *cartArray = [NSMutableArray array];
@@ -927,7 +930,7 @@
     CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
     [cartArray addObject:model];
     purchaseVC.purchaseGoodsArr = cartArray;
-    purchaseVC.isDirectBuyGoods = directBuyGoods;
+    purchaseVC.directBuyGoodsTypeNumber = directBuyGoodsTypeNumber;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 
