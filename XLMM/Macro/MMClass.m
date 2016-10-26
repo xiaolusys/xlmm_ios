@@ -8,7 +8,7 @@
 
 #import "MMClass.h"
 
-#if 1
+#if 0
 
 //#define Root_URL @"http://192.168.1.57:8000"
 //NSString *Root_URL = @"http://192.168.1.31:9000";
