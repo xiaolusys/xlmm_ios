@@ -44,8 +44,6 @@
 
 @property (nonatomic, strong) NSMutableArray *goodsSizeArray;
 
-@property (nonatomic, strong) UIButton *sureButton;
-
 @property (nonatomic, strong) UIImageView *iconImage;
 
 @property (nonatomic, strong) UILabel *nameTitle;
@@ -448,10 +446,13 @@
 }
 
 - (void)sureButtonClick:(UIButton *)button {
+    button.enabled = NO;
     if (_isGoodsEnough) {
+        button.enabled = YES;
         [MBProgressHUD showWarning:@"商品库存不足~"];
         return ;
     }
+    
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];
     paramer[@"item_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
     paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsSizeID];
@@ -461,17 +462,17 @@
     //    if (self.block) {
     //        self.block(self.goodsAttributeDic);
     //    }
-    button.enabled = NO;
-    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:2.0f];
+//    button.enabled = NO;
+//    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:2.0f];
     if (_delegate && [_delegate respondsToSelector:@selector(composeGoodsInfoView:AttrubuteDic:)]) {
         [_delegate composeGoodsInfoView:self AttrubuteDic:paramer];
     }
     
 }
-- (void)changeButtonStatus:(UIButton *)button {
-    NSLog(@"button.enabled = YES; ========== ");
-    button.enabled = YES;
-}
+//- (void)changeButtonStatus:(UIButton *)button {
+//    NSLog(@"button.enabled = YES; ========== ");
+//    button.enabled = YES;
+//}
 
 @end
 
