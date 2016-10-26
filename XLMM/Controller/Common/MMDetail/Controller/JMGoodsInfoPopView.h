@@ -26,6 +26,7 @@ typedef void(^sureButtonBlock)(NSDictionary *dic);
 @property (nonatomic, strong) JMGoodsAttributeTypeView *sizeView;
 @property (nonatomic, strong) JMGoodsAttributeTypeView *colorView;
 @property (nonatomic, strong) JMBuyNumberView *buyNumView;
+@property (nonatomic, strong) UIButton *sureButton;
 
 @property (nonatomic, copy) sureButtonBlock block;
 @property (nonatomic, weak) id<JMGoodsInfoPopViewDelegate>delegate;

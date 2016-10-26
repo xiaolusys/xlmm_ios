@@ -650,16 +650,19 @@
                 [MobClick event:@"AddShoppingCartSuccess"];
                 [MBProgressHUD showSuccess:@"加入购物车成功"];
                 self.cartsLabel.hidden = NO;
+                self.popView.sureButton.enabled = YES;
                 self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
                 [self loadCatrsNumData];
             }
         }else {
+            self.popView.sureButton.enabled = YES;
             [MBProgressHUD showWarning:responseObject[@"info"]];
             NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
             [MobClick event:@"addShoppingCartFail" attributes:temp_dict];
         }
         if (!_isTeamBuyGoods) [self hideMaskView];
     } WithFail:^(NSError *error) {
+        self.popView.sureButton.enabled = YES;
         if (!_isTeamBuyGoods) {
             [self hideMaskView];
             [MobClick event:@"addShoppingCartFail"];
@@ -916,8 +919,10 @@
 - (void)getCartsFirstGoodsInfoGoodsTypeNumber:(NSNumber *)directBuyGoodsTypeNumber Parmer:(NSMutableDictionary *)parmer {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:parmer WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
+        self.popView.sureButton.enabled = YES;
         [self fetchedCartData:responseObject DirectBuyGoodsTypeNumber:directBuyGoodsTypeNumber];
     } WithFail:^(NSError *error) {
+        self.popView.sureButton.enabled = YES;
         [MBProgressHUD showError:@"请求失败,请稍后重试"];
     } Progress:^(float progress) {
     }];
@@ -933,6 +938,8 @@
     purchaseVC.directBuyGoodsTypeNumber = directBuyGoodsTypeNumber;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
+
+
 
 @end
 
