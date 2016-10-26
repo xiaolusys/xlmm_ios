@@ -35,6 +35,7 @@
     if (dataSource.count == 0) {
         [self emptyView];
     }else {
+        [self.tableView reloadData];
     }
 }
 
@@ -80,9 +81,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMCouponModel *couponModel = [[JMCouponModel alloc] init];
     couponModel = self.dataSource[indexPath.row];
-    
+    NSMutableArray *couponArray = [NSMutableArray array];
+    if (self.couponNumber >= 1 && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+        NSInteger count = self.dataSource.count > self.couponNumber ? self.couponNumber : self.dataSource.count;
+        for (int i = 0; i < count; i++) {
+            [couponArray addObject:self.dataSource[i]];
+        }
+    }else {
+        [couponArray addObject:couponModel];
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanmodel:)]) {
-        [self.delegate updateYouhuiquanmodel:couponModel];
+        [self.delegate updateYouhuiquanmodel:couponArray];
     }
     
     [self.navigationController popViewControllerAnimated:YES];

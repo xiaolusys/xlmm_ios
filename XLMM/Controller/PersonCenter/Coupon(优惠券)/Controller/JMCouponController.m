@@ -12,7 +12,7 @@
 #import "JMUsedCouponController.h"
 #import "JMExpiredCouponController.h"
 #import "JMUntappedCouponController.h"
-
+#import "JMSpecialCouponController.h"
 
 
 @interface JMCouponController ()
@@ -29,6 +29,7 @@
 
 @property (nonatomic, strong) JMUsedCouponController *usedCouponVC;
 
+@property (nonatomic, strong) JMSpecialCouponController *spacialVC;
 
 @end
 
@@ -46,15 +47,15 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick:)];
     self.view.backgroundColor = [UIColor countLabelColor];
-    
-    _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"已过期",@"已使用", nil];
+    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
+    _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"精品券",@"已过期",@"已使用", nil];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     [self loadCouponData];
     [self createSegmentView];
+    [self createSegement];
 }
 
 - (void)loadCouponData {
-    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
     NSArray *countArr = @[@"0",@"3",@"1"];
     for (int i = 0; i < countArr.count; i++) {
         [self loadData:countArr[i]];
@@ -62,39 +63,47 @@
 }
 - (void)loadData:(NSString *)statusCount {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%ld",Root_URL,[statusCount integerValue]];
-    
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        if (responseObject) {
-            if ([statusCount isEqualToString:@"0"]) {
-                flageArr[0] = @1;
-                untappedArr = [NSArray arrayWithArray:responseObject];
-                _titleArr[0] = [NSString stringWithFormat:@"未使用(%ld)",untappedArr.count];
-            }else if ([statusCount isEqualToString:@"3"]) {
-                flageArr[1] = @1;
-                expiredArr = [NSArray arrayWithArray:responseObject];
-                //                self.dataSource[1] = responseObject;
-                _titleArr[1] = [NSString stringWithFormat:@"已过期(%ld)",expiredArr.count];
-            }else {
-                flageArr[2] = @1;
-                usedArr = [NSArray arrayWithArray:responseObject];
-                _titleArr[2] = [NSString stringWithFormat:@"已使用(%ld)",usedArr.count];
-            }
-            BOOL isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
-            if (isCreateSegment == YES) {
-                [self createSegmentView];
-                [self createSegement];
-            }else{}
-            
-        }else {
-            
-        }
+        if (!responseObject) return ;
+        [self fetchStatus:statusCount responseArr:responseObject];
     } WithFail:^(NSError *error) {
-        [MBProgressHUD showError:@"优惠券加载失败,请稍后重试~!"];
+        [self fetchStatus:statusCount responseArr:nil];
     } Progress:^(float progress) {
-        
     }];
-
+    
 }
+- (void)fetchStatus:(NSString *)statusCount responseArr:(NSArray *)responseArr {
+    if ([statusCount isEqualToString:@"0"]) {
+        flageArr[0] = @1;
+        NSMutableArray *resArr = [NSMutableArray array];
+        for (NSDictionary *dic in responseArr) {
+            if ([dic[@"coupon_type"] integerValue] == 8) {
+                [resArr addObject:dic];
+            }
+        }
+        self.untappedCouponVC.couponArray = responseArr;
+        self.spacialVC.couponArray = resArr;
+        _titleArr[0] = [NSString stringWithFormat:@"未使用(%ld)",responseArr.count];
+        _titleArr[1] = [NSString stringWithFormat:@"精品券(%ld)",resArr.count];
+    }else if ([statusCount isEqualToString:@"3"]) {
+        flageArr[1] = @1;
+        self.expiredCouponVC.couponArray = responseArr;
+        _titleArr[2] = [NSString stringWithFormat:@"已过期(%ld)",responseArr.count];
+    }else if ([statusCount isEqualToString:@"1"]) {
+        flageArr[2] = @1;
+        self.usedCouponVC.couponArray = responseArr;
+        _titleArr[3] = [NSString stringWithFormat:@"已使用(%ld)",responseArr.count];
+    }else {
+    }
+    BOOL isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
+    if (isCreateSegment == YES) {
+        self.segmentedControl.sectionTitles = _titleArr;
+        [MBProgressHUD hideHUD];
+    }else{
+        
+    }
+}
+
 - (void)createSegmentView {
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
@@ -115,7 +124,7 @@
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 104, SCREENWIDTH, SCREENHEIGHT)];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.contentSize = CGSizeMake(SCREENWIDTH * 3, SCREENHEIGHT);
+    self.scrollView.contentSize = CGSizeMake(SCREENWIDTH * 4, SCREENHEIGHT);
     self.scrollView.delegate = self;
     [self.scrollView scrollRectToVisible:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) animated:NO];
     [self.view addSubview:self.scrollView];
@@ -126,24 +135,27 @@
     [self addChildViewController:self.untappedCouponVC];
     [self.scrollView addSubview:self.untappedCouponVC.view];
     
+    self.spacialVC = [[JMSpecialCouponController alloc] init];
+    self.spacialVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
+    [self addChildViewController:self.spacialVC];
+    [self.scrollView addSubview:self.spacialVC.view];
     
     self.expiredCouponVC = [[JMExpiredCouponController alloc] init];
-    self.expiredCouponVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.expiredCouponVC.view.frame = CGRectMake(SCREENWIDTH * 2, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.expiredCouponVC];
     [self.scrollView addSubview:self.expiredCouponVC.view];
     
     
     self.usedCouponVC = [[JMUsedCouponController alloc] init];
-    self.usedCouponVC.view.frame = CGRectMake(SCREENWIDTH * 2, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.usedCouponVC.view.frame = CGRectMake(SCREENWIDTH * 3, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.usedCouponVC];
     [self.scrollView addSubview:self.usedCouponVC.view];
     
-    self.untappedCouponVC.couponArray = untappedArr;
-    self.expiredCouponVC.couponArray = expiredArr;
-    self.usedCouponVC.couponArray = usedArr;
     
     
-    [MBProgressHUD hideHUD];
+    
+    
+
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);

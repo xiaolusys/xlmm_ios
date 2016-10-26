@@ -70,7 +70,7 @@
     [self.view addSubview:baseScrollV];
     self.baseScrollV = baseScrollV;
     self.baseScrollV.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 620);
     self.baseScrollV.scrollEnabled = YES;
 
     
@@ -90,7 +90,7 @@
         make.top.equalTo(weakSelf.baseScrollV);
         make.left.equalTo(weakSelf.baseScrollV);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@380);
+        make.height.mas_equalTo(@420);
     }];
     
     UIButton *expressBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -327,7 +327,7 @@
     }
     _isPopup = YES;
     self.expressBtn.enabled = NO;
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 620);
     CGPoint center = self.baseScrollV.center;
     center.y -= 260;
     self.baseScrollV.center = center;
@@ -341,7 +341,7 @@
     }
 }
 - (void)viewDidLayoutSubviews {
-    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 580);
+    self.baseScrollV.contentSize = CGSizeMake(SCREENWIDTH, 620);
 }
 - (void)backClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

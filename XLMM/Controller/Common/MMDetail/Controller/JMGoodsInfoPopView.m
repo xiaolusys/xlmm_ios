@@ -246,21 +246,20 @@
     // == 购买数量视图 == //
     self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
     [headerView addSubview:self.buyNumView];
-    
-    kWeakSelf
+    JMBuyNumberView * __weak buyWeakSelf = self.buyNumView;
     self.buyNumView.numblock = ^(NSInteger index) {
         if (index == 100) {
-            NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
+            NSInteger count = [buyWeakSelf.numLabel.text integerValue];
             if (count > 1) {
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count - 1];
+                buyWeakSelf.numLabel.text = [NSString stringWithFormat:@"%ld",count - 1];
                 _goodsNum -= 1;
             }else {
                 return ;
             }
         }else {
-            NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
+            NSInteger count = [buyWeakSelf.numLabel.text integerValue];
             if (count < _stockValue) { //  == >>  这里是商品的数量
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count + 1];
+                buyWeakSelf.numLabel.text = [NSString stringWithFormat:@"%ld",count + 1];
                 _goodsNum += 1;
             }else {
                 return ;
@@ -269,15 +268,7 @@
     };
     
     if (self.goodsColorArray.count == 1 && self.goodsSizeArray.count == 1) {
-        
-        //        self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-        [self.buyNumView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(headerView).offset(20);
-            make.left.equalTo(headerView);
-            make.width.mas_equalTo(SCREENWIDTH);
-            make.height.mas_equalTo(@60);
-        }];
-        
+        self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
     }else {
         self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色"];
         self.colorView.delegate = self;

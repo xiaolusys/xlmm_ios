@@ -31,10 +31,8 @@
 
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
-
 //static BOOL isLogin;
-
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate>
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
@@ -54,10 +52,6 @@
 @property (nonatomic, assign)BOOL isWeixin;
 @property (nonatomic, assign)BOOL isWeixinFriends;
 @property (nonatomic, assign)BOOL isCopy;
-
-
-
-
 
 @property (nonatomic, strong)NSDictionary *nativeShare;
 
@@ -109,6 +103,7 @@
 //
 //    return _bridge;
 //}
+
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
     if ([webDiction isKindOfClass:[NSMutableDictionary class]] && [webDiction objectForKey:@"titleName"]) {
@@ -168,7 +163,7 @@
         [weakSelf.progressView setProgress:estimatedProgress animated:YES];
     };
     [self.view addSubview:super.baseWebView];
-
+    
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
 //    self.baseWebView.delegate = self;
@@ -180,7 +175,6 @@
         NSLog(@"7.0 UIWebView");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
 //        [self registerJsBridge];
-        
 //        self.baseWebView.delegate = self;
     }else {
         NSLog(@"bigger than8.0 WKWebView");
@@ -345,6 +339,7 @@
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
+    [MobClick event:@"webViewController_allShare"];
     if ([_webDiction[@"type_title"] isEqual:@"active"]) {
         NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
         [MobClick event:@"Active_share" attributes:temp_dict];
@@ -723,6 +718,21 @@
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
+
+#pragma mark alert弹出框
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    NSLog(@"%s",__FUNCTION__);
+    // 确定按钮
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }];
+    // alert弹出框
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:alertAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
 #pragma mark ----- 分享调用 -- 调用原生的分享这里就不需要了
 //- (void)shareForPlatform:(NSDictionary *)data{
 //    
