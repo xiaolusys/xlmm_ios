@@ -145,11 +145,11 @@
 
 
 - (void)createHeaderView {
-    NSArray *imageArr = @[@"wodetixian",@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"huoyuedu",@"wodefensi",@"gerenpaiming",@"tuanduipaiming"];
-    NSArray *titleArr = @[@"我的提现",@"累计收益",@"访客记录",@"订单记录",@"活跃度",@"我的粉丝",@"个人排名",@"团队排名"];
+    NSArray *imageArr = @[@"wodetixian",@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"huoyuedu",@"wodefensi"]; // ,@"gerenpaiming",@"tuanduipaiming"
+    NSArray *titleArr = @[@"我的提现",@"累计收益",@"访客记录",@"订单记录",@"活跃度",@"我的粉丝"]; // ,@"个人排名",@"团队排名" --> 暂时注释掉
 //    NSArray *descTitleArr = @[@"888.88元",@"888.88元",@"88人访问",@"88个",@"888点",@"888人",@"第1名",@"第1名"];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 485)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 420)];
     self.tableView.tableHeaderView = headerView;
     
     UIView *mineInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 90)];
@@ -261,7 +261,7 @@
 //        make.height.mas_equalTo(@(45));
 //    }];
     
-    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 275)];
+    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 210)];
 //    selectBoxView.backgroundColor = [UIColor countLabelColor];
     [headerView addSubview:selectBoxView];
     
@@ -322,8 +322,8 @@
     self.label4 = (UILabel *)[self.view viewWithTag:203];
     self.label5 = (UILabel *)[self.view viewWithTag:204];
     self.label6 = (UILabel *)[self.view viewWithTag:205];
-    self.label7 = (UILabel *)[self.view viewWithTag:206];
-    self.label8 = (UILabel *)[self.view viewWithTag:207];
+//    self.label7 = (UILabel *)[self.view viewWithTag:206];
+//    self.label8 = (UILabel *)[self.view viewWithTag:207];
 
     
 }
@@ -384,24 +384,26 @@
         mamaCenterFansVC.fansUrlStr = _fansWebUrl;
         mamaCenterFansVC.index = 100;
         [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
-    }else if (index == 106) {
-        JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
-        earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
-        NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank", nil];
-        earningsRankVC.urlArray = array;
-        earningsRankVC.isTeamEarningsRank = NO;
-        earningsRankVC.selectIndex = 1;
-        [self.navigationController pushViewController:earningsRankVC animated:YES];
-    }else if (index == 107) {
-        JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
-        teamVC.mamaID = _mamaID;
-        teamVC.explainUrl = _teamExplainUrl;
-        [self.navigationController pushViewController:teamVC animated:YES];
-    }else if (index == 108) {
-        JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
-        renewVC.cashValue = _carryValue;
-        [self.navigationController pushViewController:renewVC animated:YES];
-    }else { }
+    }
+//    else if (index == 106) {
+//        JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
+//        earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
+//        NSMutableArray *array = [NSMutableArray arrayWithObjects:@"/rest/v2/mama/rank/carry_total_rank",@"/rest/v2/mama/rank/carry_duration_rank", nil];
+//        earningsRankVC.urlArray = array;
+//        earningsRankVC.isTeamEarningsRank = NO;
+//        earningsRankVC.selectIndex = 1;
+//        [self.navigationController pushViewController:earningsRankVC animated:YES];
+//    }else if (index == 107) {
+//        JMMaMaTeamController *teamVC = [[JMMaMaTeamController alloc] init];
+//        teamVC.mamaID = _mamaID;
+//        teamVC.explainUrl = _teamExplainUrl;
+//        [self.navigationController pushViewController:teamVC animated:YES];
+//    }else if (index == 108) {
+//        JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+//        renewVC.cashValue = _carryValue;
+//        [self.navigationController pushViewController:renewVC animated:YES];
+//    }
+    else { }
   
 }
 //#pragma mark - LPAutoScrollViewDatasource

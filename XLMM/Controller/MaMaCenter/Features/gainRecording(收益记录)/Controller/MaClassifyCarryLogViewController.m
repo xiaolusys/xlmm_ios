@@ -128,7 +128,7 @@ static NSString *cellIdentifier = @"carryLogCell";
         }
     }
     [self createButton];
-    [self createRightButonItem];
+//    [self createRightButonItem];
 }
 - (void) createRightButonItem{
     UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 40)];

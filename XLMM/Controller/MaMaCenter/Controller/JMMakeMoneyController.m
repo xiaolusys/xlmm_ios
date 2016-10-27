@@ -654,9 +654,9 @@
 //    NSLog(@"button.tag --> %ld",button.tag);
     NSInteger index = button.tag;
     if (index == 100) {
-        [self earning:1];
+//        [self earning:1];  // 暂时注释掉
     }else if (index == 101) {
-        [self earning:0];
+//        [self earning:0];  // 暂时注释掉
     }else if (index == 102) {
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
@@ -719,10 +719,6 @@
     earningsRankVC.selectIndex = index;
     [self.navigationController pushViewController:earningsRankVC animated:YES];
 }
-
-
-
-
 
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
