@@ -3806,12 +3806,12 @@
 		1F498BCA1D2772D0007E77FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1FF533E51D2DFA8C003DEABF /* header */,
+				1FF533E41D2DFA8A003DEABF /* footer */,
 				1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */,
 				1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */,
 				1FD158CF1D2E8387006C4B14 /* JMOrderDetailSectionView.h */,
 				1FD158D01D2E8387006C4B14 /* JMOrderDetailSectionView.m */,
-				1FF533E51D2DFA8C003DEABF /* header */,
-				1FF533E41D2DFA8A003DEABF /* footer */,
 				1F498BCB1D2772D0007E77FC /* JMBaseGoodsCell.h */,
 				1F498BCC1D2772D0007E77FC /* JMBaseGoodsCell.m */,
 				1F498BCD1D2772D0007E77FC /* JMGoodsShowView.h */,

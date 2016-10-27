@@ -165,7 +165,7 @@
         NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
         int timer = time;
         NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
-        if ([timeStr isEqual:_dayDifferString]) {
+        if ([timeStr compare:_dayDifferString options:NSNumericSearch] == NSOrderedAscending || [timeStr isEqualToString:_dayDifferString]) {
             [self.tableView.mj_header beginRefreshing];
         }
     }
@@ -1120,6 +1120,7 @@
  *           └─┐  ┐  ┌───────┬──┐  ┌──┘
  *             │ ─┤ ─┤       │ ─┤ ─┤
  *             └──┴──┘       └──┴──┘
+ *
  *                 神兽保佑
  *                 代码无BUG!
  */

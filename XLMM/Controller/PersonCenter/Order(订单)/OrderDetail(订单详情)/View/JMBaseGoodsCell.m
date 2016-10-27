@@ -173,7 +173,8 @@
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.total_fee floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    NSInteger goodsNum = [goodsModel.num integerValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment / goodsNum];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
 
     NSInteger orderStatus = [goodsModel.status integerValue];
@@ -238,7 +239,8 @@
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.total_fee floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    NSInteger goodsNum = [goodsModel.num integerValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment / goodsNum];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
     
 }
@@ -258,7 +260,8 @@
     self.titleLabel.text = cartModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",cartModel.sku_name];
     CGFloat payment = [cartModel.total_fee floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    NSInteger goodsNum = [cartModel.num integerValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment / goodsNum];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",cartModel.num];
     
 }
