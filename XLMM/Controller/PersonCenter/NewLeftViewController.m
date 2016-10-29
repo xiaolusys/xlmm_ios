@@ -18,7 +18,6 @@
 #import "JMReturnedGoodsController.h"
 #import "JMRefundBaseController.h"
 #import "JMCouponController.h"
-#import "MMClass.h"
 #import "JMGoodsDetailController.h"
 #import "JMHomeRootController.h"
 #import "JMMineIntegralController.h"

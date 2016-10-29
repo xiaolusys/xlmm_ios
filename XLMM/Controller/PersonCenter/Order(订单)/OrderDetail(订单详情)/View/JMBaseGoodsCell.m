@@ -230,11 +230,11 @@
 - (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel {
     NSString *string = goodsModel.pic_path;
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
-    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImage.layer.masksToBounds = YES;
-    self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5;
+//    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+//    self.iconImage.layer.masksToBounds = YES;
+//    self.iconImage.layer.borderWidth = 0.5;
+//    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+//    self.iconImage.layer.cornerRadius = 5;
     
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
@@ -251,11 +251,11 @@
 - (void)configPurchaseModel:(CartListModel *)cartModel {
     NSString *string = cartModel.pic_path;
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
-    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImage.layer.masksToBounds = YES;
-    self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5;
+//    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+//    self.iconImage.layer.masksToBounds = YES;
+//    self.iconImage.layer.borderWidth = 0.5;
+//    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+//    self.iconImage.layer.cornerRadius = 5;
     
     self.titleLabel.text = cartModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",cartModel.sku_name];

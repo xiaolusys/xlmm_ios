@@ -96,7 +96,9 @@
 
 
 
-
+- (void)viewDidDisappear:(BOOL)animated {
+    self.webView = nil;
+}
 
 
 

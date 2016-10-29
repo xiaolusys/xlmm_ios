@@ -668,7 +668,9 @@
     if ([_cartTimer isValid]) {
         [_cartTimer invalidate];
     }
-    _cartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    _cartTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+//    _cartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_cartTimer forMode:NSRunLoopCommonModes];
 }
 - (void)timerFireMethod:(NSTimer*)thetimer {
     NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[_cartTimeString doubleValue]];

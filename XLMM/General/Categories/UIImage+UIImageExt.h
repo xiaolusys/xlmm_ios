@@ -13,4 +13,8 @@
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size;
 - (UIImage *)imageByScalingAndCroppingForSize:(CGSize)targetSize;
 
+
+
+
+
 @end

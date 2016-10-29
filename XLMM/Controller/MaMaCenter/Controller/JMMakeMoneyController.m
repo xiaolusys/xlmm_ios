@@ -1103,6 +1103,7 @@
     return self.lineChart;
 }
 
+
 #pragma mark 获得星期数
 - (void)createWeekDay{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -1139,6 +1140,10 @@
     [self createChart:allDingdan];
     
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    self.lineChart = nil;
+}
+
 
 @end
 
