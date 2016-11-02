@@ -372,12 +372,12 @@
 - (void)createRightItem {
     if(self.navigationItem.rightBarButtonItem == nil) {
         NSString *titleStr = @"我的微店";
-        CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:16.].width;
+        CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
         self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
         [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.navRightButton setTitle:titleStr forState:UIControlStateNormal];
         [self.navRightButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:16.];
+        self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:14.];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
     }else {}
 }
