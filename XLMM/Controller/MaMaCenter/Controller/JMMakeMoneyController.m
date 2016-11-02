@@ -137,7 +137,11 @@
 }
 - (void)setCurrentTurnsNum:(NSString *)currentTurnsNum {
     _currentTurnsNum = currentTurnsNum;
-    self.currentTurnsLabel.text = currentTurnsNum;
+    if ([currentTurnsNum isEqual:@"0"]) {
+    }else {
+        self.currentTurnsLabel.hidden = NO;
+        self.currentTurnsLabel.text = currentTurnsNum;
+    }
 }
 - (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
     _makeMoneyDic = makeMoneyDic;
@@ -477,10 +481,10 @@
     self.currentTurnsLabel.font = CS_SYSTEMFONT(9.);
     self.currentTurnsLabel.layer.masksToBounds = YES;
     self.currentTurnsLabel.layer.cornerRadius = 7.;
-    [self.currentTurnsLabel.layer addAnimation:[self opacityForeverAnimation:2.] forKey:nil];
+    self.currentTurnsLabel.hidden = YES;
     [self.currentTurnsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.animationImage).offset(10);
-        make.centerY.equalTo(weakSelf.animationImage).offset(-10);
+        make.centerX.equalTo(weakSelf.animationImage).offset(15);
+        make.centerY.equalTo(weakSelf.animationImage).offset(-15);
         make.width.height.mas_equalTo(@(14));
     }];
     
@@ -696,7 +700,7 @@
         [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 104) {
         if (self.block) {
-            self.block(@"0");
+            self.block(self.currentTurnsLabel);
         }
         JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
         [self.navigationController pushViewController:pushingVC animated:YES];
@@ -1170,22 +1174,6 @@
 - (void)viewDidDisappear:(BOOL)animated {
     self.lineChart = nil;
 }
-
-- (CABasicAnimation *)opacityForeverAnimation:(CGFloat)time {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    animation.fromValue = [NSNumber numberWithFloat:1.0f];
-    animation.toValue = [NSNumber numberWithFloat:0.5f];
-    animation.autoreverses = YES;
-    animation.duration = time;
-    //重复次数。永久重复的话设置为HUGE_VALF。
-    animation.repeatCount = MAXFLOAT;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    return animation;
-    
-}
-
 
 
 @end
