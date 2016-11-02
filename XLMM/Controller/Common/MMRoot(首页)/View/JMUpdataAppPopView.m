@@ -7,7 +7,6 @@
 //
 
 #import "JMUpdataAppPopView.h"
-#import "MMClass.h"
 
 @interface JMUpdataAppPopView ()
 

@@ -7,7 +7,6 @@
 //
 
 #import "JMRepopView.h"
-#import "MMClass.h"
 
 @interface JMRepopView ()
 

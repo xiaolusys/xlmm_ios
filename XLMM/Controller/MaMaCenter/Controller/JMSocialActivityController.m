@@ -7,7 +7,6 @@
 //
 
 #import "JMSocialActivityController.h"
-#import "MMClass.h"
 #import "WebViewController.h"
 #import "NJKWebViewProgressView.h"
 
@@ -96,7 +95,9 @@
 
 
 
-
+- (void)viewDidDisappear:(BOOL)animated {
+    self.webView = nil;
+}
 
 
 

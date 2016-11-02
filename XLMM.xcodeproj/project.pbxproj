@@ -655,6 +655,7 @@
 		1FD158E01D2F8444006C4B14 /* JMRefundBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158DF1D2F8444006C4B14 /* JMRefundBaseController.m */; };
 		1FD158E31D2F86C4006C4B14 /* JMRefundBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158E21D2F86C4006C4B14 /* JMRefundBaseCell.m */; };
 		1FD540C71DAB7FD500E159DB /* JMStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD540C61DAB7FD500E159DB /* JMStoreManager.m */; };
+		1FD5D9121DC88EED007E8DDE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321857C21CA109990085FF21 /* WebKit.framework */; };
 		1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07181D4303790010231F /* JMUpdataAppPopView.m */; };
 		1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD071C1D45AABF0010231F /* JMSegmentController.m */; };
 		1FDD07261D45BA7F0010231F /* JMUsableCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07251D45BA7F0010231F /* JMUsableCouponController.m */; };
@@ -697,7 +698,6 @@
 		321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B91CA109550085FF21 /* WebViewJavascriptBridge_JS.m */; };
 		321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857BB1CA109550085FF21 /* WebViewJavascriptBridgeBase.m */; };
 		321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857BD1CA109550085FF21 /* WKWebViewJavascriptBridge.m */; };
-		321857C31CA109990085FF21 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321857C21CA109990085FF21 /* WebKit.framework */; };
 		321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321951D01BFC77D600AA0AB8 /* CoreGraphics.framework */; };
 		325BA0F41B68B18A006D64BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA0F31B68B18A006D64BD /* main.m */; };
 		325BA10E1B68B18A006D64BD /* XLMMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 325BA10D1B68B18A006D64BD /* XLMMTests.m */; };
@@ -1728,6 +1728,7 @@
 		1F7D993A1D632E4A00E18FD1 /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMBProgressHUD.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/MBProgressHUD/libMBProgressHUD.a"; sourceTree = "<group>"; };
 		1F7D993E1D63FD7000E18FD1 /* JMRootGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootGoodsModel.h; sourceTree = "<group>"; };
 		1F7D993F1D63FD7000E18FD1 /* JMRootGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootGoodsModel.m; sourceTree = "<group>"; };
+		1F8411931DC216B1009BF329 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		1F9169DB1D5055BC00327408 /* libHappyDNS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHappyDNS.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/HappyDNS/libHappyDNS.a"; sourceTree = "<group>"; };
 		1F9169DD1D5055BF00327408 /* libQiniu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQiniu.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/Qiniu/libQiniu.a"; sourceTree = "<group>"; };
 		1F9169DF1D5055C300327408 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
@@ -1968,6 +1969,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD5D9121DC88EED007E8DDE /* WebKit.framework in Frameworks */,
 				1F7C10911DB0CA2F00609BC4 /* Photos.framework in Frameworks */,
 				1F12EDBC1DADF77B00511B58 /* CoreData.framework in Frameworks */,
 				1FE52DF91D94CCA50051D5A0 /* CoreMotion.framework in Frameworks */,
@@ -1997,7 +1999,6 @@
 				3A2BC1CE1D2CFF6E00F6F54B /* TencentOpenAPI.framework in Frameworks */,
 				3A2BC1D01D2CFF6E00F6F54B /* libSocialWechat.a in Frameworks */,
 				1FE52E321D94D5FC0051D5A0 /* libpingpp+alipay.a in Frameworks */,
-				321857C31CA109990085FF21 /* WebKit.framework in Frameworks */,
 				1FE52E381D94D5FC0051D5A0 /* libpingpp+network.a in Frameworks */,
 				3A2BC1CD1D2CFF6E00F6F54B /* libSocialQQ.a in Frameworks */,
 				3A2BC1CB1D2CFF6E00F6F54B /* libWeiboSDK.a in Frameworks */,
@@ -5646,6 +5647,7 @@
 			children = (
 				325BA0F21B68B18A006D64BD /* Info.plist */,
 				325BA0F31B68B18A006D64BD /* main.m */,
+				1F8411931DC216B1009BF329 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -6917,6 +6919,8 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -7005,6 +7009,8 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",

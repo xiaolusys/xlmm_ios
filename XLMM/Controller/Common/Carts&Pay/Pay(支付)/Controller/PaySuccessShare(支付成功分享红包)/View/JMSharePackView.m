@@ -7,7 +7,6 @@
 //
 
 #import "JMSharePackView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "JMRichTextTool.h"
 

@@ -215,16 +215,28 @@
     [self callback_webViewDidFailLoadWithError:error];
 }
 #pragma mark- WKUIDelegate
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
-{
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
     NSLog(@"runJavaScriptAlertPanelWithMessage %@", message);
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         completionHandler();
+    }]];
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
+}
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        completionHandler(YES);
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        completionHandler(NO);
     }]];
     [self.viewController presentViewController:alertController animated:YES completion:nil];
     
 }
+
+
 
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
@@ -629,9 +641,7 @@
 /**
  *  OC在JS调用方法做的处理
  */
-- (void)userContentController:(WKUserContentController *)userContentController
-
-      didReceiveScriptMessage:(WKScriptMessage *)message {
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     
     NSLog(@"WKScriptMessageHandler %@ %@",message.name, message.body);
     [IosJsBridge dispatchJsBridgeFunc:self.viewController name:message.name para:message.body];
@@ -679,6 +689,13 @@
      *  我的邀请
      */
     [configuration.userContentController addScriptMessageHandler:self name:@"changeId"];
+    
+    /**
+     *  支付
+     */
+    [configuration.userContentController addScriptMessageHandler:self name:@"callNativePurchase"];
+    
+    
     
     
 }

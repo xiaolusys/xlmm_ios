@@ -7,7 +7,6 @@
 //
 
 #import "WXLoginController.h"
-#import "MMClass.h"
 #import "SetPasswordController.h"
 
 

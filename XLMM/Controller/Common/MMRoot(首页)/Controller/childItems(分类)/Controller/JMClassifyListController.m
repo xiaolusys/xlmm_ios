@@ -7,7 +7,6 @@
 //
 
 #import "JMClassifyListController.h"
-#import "MMClass.h"
 #import "JMRootgoodsCell.h"
 #import "JMGoodsDetailController.h"
 #import "JMSelecterButton.h"
@@ -53,7 +52,7 @@ static NSString * cellId = @"JMClassifyListController";
     [self createCollectionView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-    
+    [self.collectionView.mj_header beginRefreshing];
 }
 
 #pragma mrak 刷新界面
@@ -235,7 +234,6 @@ static NSString * cellId = @"JMClassifyListController";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"JMClassifyListController"];
-    [self.collectionView.mj_header beginRefreshing];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

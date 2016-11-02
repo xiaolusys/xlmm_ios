@@ -7,7 +7,6 @@
 //
 
 #import "JMOrderPayView.h"
-#import "MMClass.h"
 
 @interface JMOrderPayView ()
 

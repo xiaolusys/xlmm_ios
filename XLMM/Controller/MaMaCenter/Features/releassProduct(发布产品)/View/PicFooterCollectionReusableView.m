@@ -7,7 +7,6 @@
 //
 
 #import "PicFooterCollectionReusableView.h"
-#import "MMClass.h"
 
 @implementation PicFooterCollectionReusableView
 

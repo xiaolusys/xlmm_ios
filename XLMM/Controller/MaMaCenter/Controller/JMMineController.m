@@ -7,7 +7,6 @@
 //
 
 #import "JMMineController.h"
-#import "MMClass.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
 #import "TixianViewController.h"

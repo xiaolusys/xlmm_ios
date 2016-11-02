@@ -7,7 +7,6 @@
 //
 
 #import "CommonWebViewViewController.h"
-#import "MMClass.h"
 #import "IMYWebView.h"
 
 @interface CommonWebViewViewController ()

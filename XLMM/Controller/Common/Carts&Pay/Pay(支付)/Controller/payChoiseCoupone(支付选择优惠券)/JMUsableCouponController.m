@@ -7,7 +7,6 @@
 //
 
 #import "JMUsableCouponController.h"
-#import "MMClass.h"
 #import "JMCouponRootCell.h"
 #import "JMCouponModel.h"
 #import "JMSelecterButton.h"

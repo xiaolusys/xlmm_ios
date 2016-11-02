@@ -9,7 +9,6 @@
 
 #import "JMCompSugView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "MMClass.h"
 
 @interface JMCompSugView ()
 

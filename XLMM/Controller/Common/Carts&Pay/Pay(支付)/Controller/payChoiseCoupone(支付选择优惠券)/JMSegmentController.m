@@ -8,7 +8,6 @@
 
 #import "JMSegmentController.h"
 #import "HMSegmentedControl.h"
-#import "MMClass.h"
 #import "JMCouponModel.h"
 #import "JMUsableCouponController.h"
 #import "JMDisableCouponController.h"

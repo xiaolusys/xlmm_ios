@@ -7,7 +7,6 @@
 //
 
 #import "JMWithdrawCashController.h"
-#import "MMClass.h"
 #import "TixianSucceedViewController.h"
 #import "JMSelecterButton.h"
 #import "WXLoginController.h"

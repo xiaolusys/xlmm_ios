@@ -7,7 +7,6 @@
 //
 
 #import "JMOrderDetailFooterView.h"
-#import "MMClass.h"
 
 @interface JMOrderDetailFooterView ()
 /**
@@ -62,8 +61,10 @@
         _imageStr = @"payWay_xiaoluPay";
     }else if ([orderDetailModel.channel isEqualToString:@"wx"]) {
         _imageStr = @"weixinIcon";
-    }else {
+    }else if ([orderDetailModel.channel isEqualToString:@"alipay"]){
         _imageStr = @"zhifubaoiconthird";
+    }else {
+        
     }
     self.payWayImage.image = [UIImage imageNamed:_imageStr];
     self.goodsAllMoneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[orderDetailModel.total_fee floatValue]];

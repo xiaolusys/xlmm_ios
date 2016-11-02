@@ -7,7 +7,6 @@
 //
 
 #import "TodayVisitorViewController.h"
-#import "MMClass.h"
 #import "JMFetureFansCell.h"
 #import "JMVisitorModel.h"
 

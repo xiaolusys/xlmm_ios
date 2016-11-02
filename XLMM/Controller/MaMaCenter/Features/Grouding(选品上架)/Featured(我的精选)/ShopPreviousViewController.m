@@ -7,7 +7,6 @@
 //
 
 #import "ShopPreviousViewController.h"
-#import "MMClass.h"
 #import "UMSocial.h"
 #import "WeiboSDK.h"
 #import "SendMessageToWeibo.h"

@@ -7,7 +7,6 @@
 //
 
 #import "JMDisableCouponController.h"
-#import "MMClass.h"
 #import "JMCouponRootCell.h"
 #import "JMCouponModel.h"
 #import "JMEmptyView.h"

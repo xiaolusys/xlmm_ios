@@ -8,7 +8,6 @@
 
 #import "MMCollectionController.h"
 #import "BrandGoodsModel.h"
-#import "MMClass.h"
 #import "JMRootgoodsCell.h"
 #import "CollectionModel.h"
 #import "JMGoodsDetailController.h"

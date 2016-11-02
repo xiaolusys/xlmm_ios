@@ -8,7 +8,6 @@
 
 #import "TSettingViewController.h"
 #import "VersionController.h"
-#import "MMClass.h"
 #import "MiPushSDK.h"
 
 @interface TSettingViewController ()<MiPushSDKDelegate>

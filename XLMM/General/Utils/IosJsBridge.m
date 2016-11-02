@@ -13,7 +13,6 @@
 #import "JMShareViewController.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "MMClass.h"
 #import "WebViewController.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
@@ -21,11 +20,15 @@
 #import "UUID.h"
 #import "SSKeychain.h"
 
+
 #define kService [NSBundle mainBundle].bundleIdentifier
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
 
 @implementation IosJsBridge
 + (void)dispatchJsBridgeFunc:(UIViewController *)vc name:(NSString *)name para:(NSString*)para{
+//    [[NSNotificationCenter defaultCenter] addObserver:vc selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:vc selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    
     NSDictionary *data = [self dictionaryWithJsonString:para];
     if ([name isEqualToString:@"jumpToNativeLocation"]) {
         
@@ -48,10 +51,34 @@
     }
     else if ([name isEqualToString:@"showLoading"]){
         [self showLoading:data];
-    }
+    }else if ([name isEqualToString:@"callNativePurchase"]) {
+        [self jumpToCallNativePurchase:vc para:data];
+    }else { }
 
 
 }
+
+/*
+    支付
+ */
++ (void)jumpToCallNativePurchase:(UIViewController *)vc para:(NSDictionary *)data{
+    NSDictionary *dataDic = data[@"charge"];
+    NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
+    [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:vc];
+    
+
+//    [Pingpp createPayment:data appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//        
+//        
+//        
+//        
+//    }];
+    
+    
+    
+}
+
 
 /*!
  * @brief 把格式化的JSON格式的字符串转换成字典

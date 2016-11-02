@@ -7,7 +7,6 @@
 //
 
 #import "MMLoginStatus.h"
-#import "MMClass.h"
 
 @implementation MMLoginStatus
 

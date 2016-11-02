@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsDetailController.h"
-#import "MMClass.h"
 #import "JMGoodsAttributeCell.h"
 #import "JMGoodsExplainCell.h"
 #import "JMGoodsInfoPopView.h"
@@ -189,6 +188,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MBProgressHUD showLoading:@""];
     self.view.backgroundColor = [UIColor countLabelColor];
     //    self.navigationController.navigationBar.alpha = 0.0;
     [self createNavigationBarWithTitle:@"" selecotr:nil];
@@ -202,6 +202,9 @@
     [self createBottomView];        // 底部购物车,购买按钮
     [self createNavigationView];    // 自定义导航控制器视图
     
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [MBProgressHUD hideHUD];
 }
 - (void)createContentView {
     self.allContentView = [UIView new];
@@ -252,6 +255,7 @@
         if (!responseObject) return ;
         self.shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
         self.shareModel.share_type = @"link";
+        self.goodsShareView.model = self.shareModel;
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
@@ -386,12 +390,12 @@
         self.addCartButton.hidden = YES;
     }
 }
+#pragma mark ==== 导航栏点击事件 ====
 - (void)navigationBarButton:(UIButton *)button {
     if (button.tag == 100 || button.tag == 102) {
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         [MobClick event:@"GoodsDetail_share"];
-        self.goodsShareView.model = self.shareModel;
         JMShareView *cover = [JMShareView show];
         cover.delegate = self;
         JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
@@ -445,6 +449,7 @@
             }else {
                 if (button.selected == NO) {
                     // 收藏
+                    [MBProgressHUD showLoading:@"添加收藏~"];
                     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
                     NSMutableDictionary *param = [NSMutableDictionary dictionary];
                     param[@"model_id"] = self.goodsID;
@@ -470,6 +475,7 @@
                     }];
                 }else {
                     // 取消收藏
+                    [MBProgressHUD showLoading:@"取消收藏~"];
                     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
                     NSMutableDictionary *param = [NSMutableDictionary dictionary];
                     param[@"model_id"] = self.goodsID;
@@ -634,7 +640,9 @@
     [self addCartUrlString:urlString Paramer:attrubuteDic];
 }
 - (void)addCartUrlString:(NSString *)urlString Paramer:(NSMutableDictionary *)paramer {
+    [MBProgressHUD showLoading:@"正在加入购物车~"];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:paramer WithSuccess:^(id responseObject) {
+        [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
         NSInteger code = [responseObject[@"code"] integerValue];
@@ -647,8 +655,8 @@
                 [MobClick event:@"TspecialAddShoppingCartSuccess"];
                 [self getCartsFirstGoodsInfoGoodsTypeNumber:@(typeNumber) Parmer:paramer];
             }else {
-                [MobClick event:@"AddShoppingCartSuccess"];
                 [MBProgressHUD showSuccess:@"加入购物车成功"];
+                [MobClick event:@"AddShoppingCartSuccess"];
                 self.cartsLabel.hidden = NO;
                 self.popView.sureButton.enabled = YES;
                 self.cartsLabel.text = [NSString stringWithFormat:@"%ld",_cartsGoodsNum];
@@ -662,6 +670,7 @@
         }
         if (!_isTeamBuyGoods) [self hideMaskView];
     } WithFail:^(NSError *error) {
+        [MBProgressHUD hideHUD];
         self.popView.sureButton.enabled = YES;
         if (!_isTeamBuyGoods) {
             [self hideMaskView];
@@ -917,13 +926,17 @@
     button.enabled = YES;
 }
 - (void)getCartsFirstGoodsInfoGoodsTypeNumber:(NSNumber *)directBuyGoodsTypeNumber Parmer:(NSMutableDictionary *)parmer {
+    [MBProgressHUD showLoading:@"购物车加载中~"];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:parmer WithSuccess:^(id responseObject) {
+        [MBProgressHUD hideHUD];
         if (!responseObject) return ;
+        [MBProgressHUD showSuccess:@"加入购物车成功"];
         self.popView.sureButton.enabled = YES;
         [self fetchedCartData:responseObject DirectBuyGoodsTypeNumber:directBuyGoodsTypeNumber];
     } WithFail:^(NSError *error) {
         self.popView.sureButton.enabled = YES;
-        [MBProgressHUD showError:@"请求失败,请稍后重试"];
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"加入购物车失败"];
     } Progress:^(float progress) {
     }];
 }

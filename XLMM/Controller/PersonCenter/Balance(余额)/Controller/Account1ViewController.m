@@ -7,7 +7,6 @@
 //
 
 #import "Account1ViewController.h"
-#import "MMClass.h"
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"

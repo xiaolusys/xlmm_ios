@@ -7,7 +7,6 @@
 //
 
 #import "MaMaViewController.h"
-#import "MMClass.h"
 
 @interface MaMaViewController ()
 

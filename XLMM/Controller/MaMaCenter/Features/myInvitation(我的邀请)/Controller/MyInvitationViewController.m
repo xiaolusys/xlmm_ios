@@ -7,7 +7,6 @@
 //
 
 #import "MyInvitationViewController.h"
-#import "MMClass.h"
 
 @interface MyInvitationViewController ()
 @property (nonatomic, strong)UIWebView *webView;

@@ -7,7 +7,6 @@
 //
 
 #import "JMCouponRootCell.h"
-#import "MMClass.h"
 #import "JMCouponModel.h"
 
 

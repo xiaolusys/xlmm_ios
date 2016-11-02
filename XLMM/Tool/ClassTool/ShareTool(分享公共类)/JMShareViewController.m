@@ -8,7 +8,6 @@
 
 #import "JMShareViewController.h"
 #import "JMSelecterButton.h"
-#import "MMClass.h"
 #import "JMShareButtonView.h"
 #import "JMShareView.h"
 #import "JMShareModel.h"
@@ -55,7 +54,7 @@
 
 //    self.view.frame = CGRectMake(0, 0, SCREENWIDTH, 230);
     [self createShareButtom];
-    [self createData];
+    
     
 }
 
@@ -105,6 +104,7 @@
 
 - (void)setModel:(JMShareModel *)model {
     _model = model;
+    [self createData];
 }
 
 //- (void)setOtherDict:(NSMutableDictionary *)otherDict {

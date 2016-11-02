@@ -7,7 +7,6 @@
 //
 
 #import "JMPersonAllOrderController.h"
-#import "MMClass.h"
 #import "JMBaseGoodsCell.h"
 #import "JMFetureFansModel.h"
 #import "JMOrderGoodsModel.h"

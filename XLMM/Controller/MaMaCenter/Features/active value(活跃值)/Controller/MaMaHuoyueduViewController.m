@@ -7,7 +7,6 @@
 //
 
 #import "MaMaHuoyueduViewController.h"
-#import "MMClass.h"
 #import "HuoyuezhiTableViewCell.h"
 #import "HuoyuezhiModel.h"
 #import "CarryLogHeaderView.h"

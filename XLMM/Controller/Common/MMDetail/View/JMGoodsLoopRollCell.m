@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsLoopRollCell.h"
-#import "MMClass.h"
 
 @interface JMGoodsLoopRollCell ()
 

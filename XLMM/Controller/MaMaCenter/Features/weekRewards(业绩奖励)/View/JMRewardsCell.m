@@ -7,7 +7,6 @@
 //
 
 #import "JMRewardsCell.h"
-#import "MMClass.h"
 
 @interface JMRewardsCell ()
 

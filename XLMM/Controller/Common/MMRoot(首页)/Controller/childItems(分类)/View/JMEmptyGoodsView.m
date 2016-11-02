@@ -7,7 +7,6 @@
 //
 
 #import "JMEmptyGoodsView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
 
 @interface JMEmptyGoodsView ()

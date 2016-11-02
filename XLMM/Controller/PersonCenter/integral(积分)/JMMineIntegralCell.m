@@ -8,7 +8,6 @@
 
 #import "JMMineIntegralCell.h"
 #import "JMMineIntegralModel.h"
-#import "MMClass.h"
 
 @interface JMMineIntegralCell ()
 

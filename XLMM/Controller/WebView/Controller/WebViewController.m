@@ -7,7 +7,6 @@
 //
 
 #import "WebViewController.h"
-#import "MMClass.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
@@ -28,11 +27,14 @@
 #import "IosJsBridge.h"
 #import "PersonOrderViewController.h"
 #import "NJKWebViewProgressView.h"
+#import "JMPayShareController.h"
 
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
 //static BOOL isLogin;
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
+    NSString *_fineCouponTid;
+}
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
@@ -90,6 +92,7 @@
 
 
 
+
 @end
 
 @implementation WebViewController{
@@ -103,6 +106,15 @@
 //
 //    return _bridge;
 //}
+- (JMShareViewController *)shareView {
+    if (!_shareView) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
+
+
+
 
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
@@ -141,8 +153,37 @@
     }else {
         self.navigationController.navigationBarHidden = YES;
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
+    
     
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+}
+- (void)paySuccessful {
+    NSLog(@"支付成功");
+    [MobClick event:@"fineCoupon_buySuccess"];
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = _fineCouponTid;
+    [self.navigationController pushViewController:payShareVC animated:YES];
+}
+- (void)popview {
+    NSLog(@"支付取消/支付失败");
+    [MobClick event:@"fineCoupon_buyCancel_buyFail"];
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
+}
+- (void)couponTid:(NSNotification *)sender {
+    _fineCouponTid = sender.object;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
@@ -170,6 +211,9 @@
 //    super.baseWebView.scalesPageToFit = YES;
 //    super.baseWebView.userInteractionEnabled = YES;
     super.baseWebView.viewController = self;
+    
+//    JMShareViewController *shareView = [[JMShareViewController alloc] init];
+//    self.shareView = shareView;
     
     if(super.baseWebView.usingUIWebView) {
         NSLog(@"7.0 UIWebView");
@@ -296,34 +340,25 @@
     self.share_model.desc = [shopInfo objectForKey:@"desc"]; // 文字详情
     self.share_model.title = [shopInfo objectForKey:@"name"]; //标题
     self.share_model.share_link = [shopInfo objectForKey:@"shop_link"];
-    
+    self.shareView.model = self.share_model;
 }
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
-    //    NSDictionary *dic = _model.mj_keyValues;
-//    NSLog(@"Share para=%@",dic);
-    
     self.share_model.share_type = [dic objectForKey:@"share_type"];
-
     self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
     self.share_model.desc = [dic objectForKey:@"active_dec"]; // 文字详情
-
     self.share_model.title = [dic objectForKey:@"title"]; //标题
     self.share_model.share_link = [dic objectForKey:@"share_link"];
-
+    self.shareView.model = self.share_model;
 }
 
 - (void)resolveProductShareParam:(NSDictionary *)dic {
-    NSLog(@"Product Share para=%@",dic);
-    
     self.share_model.share_type = [dic objectForKey:@"share_type"];
-    
     self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
     self.share_model.desc = [dic objectForKey:@"share_desc"]; // 文字详情
-    
     self.share_model.title = [dic objectForKey:@"share_title"]; //标题
     self.share_model.share_link = [dic objectForKey:@"link"];
-    
+    self.shareView.model = self.share_model;
 }
 
 #pragma mark ----- 创建导航栏按钮
@@ -336,6 +371,9 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
     button1.hidden = NO;
+    
+
+    
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
@@ -351,12 +389,6 @@
     }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
         [MobClick event:@"mamaShop_share"];
     }else { }
-    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-    self.shareView = shareView;
-    _shareDic = nil;
-
-    self.shareView.model = self.share_model;
-
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
@@ -368,9 +400,6 @@
 }
 
 - (void)universeShare:(NSDictionary *)data {
-    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-    self.shareView = shareView;
-
 //    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
 //        [self resolveProductShareParam:data];
 //    }
@@ -714,7 +743,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [MBProgressHUD hideHUDForView:self.view];
 }
-
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
@@ -731,6 +759,10 @@
     [alertController addAction:alertAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
+
+
+
 
 
 #pragma mark ----- 分享调用 -- 调用原生的分享这里就不需要了

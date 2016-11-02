@@ -7,7 +7,6 @@
 //
 
 #import "JMMaMateamCell.h"
-#import "MMClass.h"
 #import "JMMaMaSelfTeamModel.h"
 
 

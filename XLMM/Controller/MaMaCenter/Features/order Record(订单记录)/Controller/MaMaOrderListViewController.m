@@ -7,7 +7,6 @@
 //
 
 #import "MaMaOrderListViewController.h"
-#import "MMClass.h"
 #import "MaMaOrderModel.h"
 #import "CarryLogHeaderView.h"
 #import "JMMaMaOrderListCell.h"

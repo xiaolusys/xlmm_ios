@@ -7,7 +7,6 @@
 //
 
 #import "ReBuyTableViewCell.h"
-#import "MMClass.h"
 
 
 @implementation ReBuyTableViewCell

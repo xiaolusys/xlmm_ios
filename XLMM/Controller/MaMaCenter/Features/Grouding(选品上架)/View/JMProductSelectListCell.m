@@ -7,7 +7,6 @@
 //
 
 #import "JMProductSelectListCell.h"
-#import "MMClass.h"
 #import "JMLevelinfoModel.h"
 
 @interface JMProductSelectListCell ()

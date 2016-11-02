@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsListCell.h"
-#import "MMClass.h"
 #import "JMOrderGoodsModel.h"
 
 @interface JMGoodsListCell ()

@@ -8,7 +8,6 @@
 
 #import "JMMaMaOrderListCell.h"
 #import "MaMaOrderModel.h"
-#import "MMClass.h"
 
 
 

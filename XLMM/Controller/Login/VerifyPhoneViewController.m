@@ -8,7 +8,6 @@
 
 #import "SetPasswordViewController.h"
 #import "VerifyPhoneViewController.h"
-#import "MMClass.h"
 #import "MiPushSDK.h"
 
 #define PHONE_NUM_LIMIT 11

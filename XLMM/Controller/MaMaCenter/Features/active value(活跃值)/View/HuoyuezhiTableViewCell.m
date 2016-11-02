@@ -8,7 +8,6 @@
 
 #import "HuoyuezhiTableViewCell.h"
 #import "HuoyuezhiModel.h"
-#import "MMClass.h"
 
 @implementation HuoyuezhiTableViewCell
 

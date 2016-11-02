@@ -7,7 +7,6 @@
 //
 
 #import "TixianViewController.h"
-#import "MMClass.h"
 #import "TixianSucceedViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"

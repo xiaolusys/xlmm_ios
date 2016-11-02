@@ -10,7 +10,6 @@
 #import "JMTextView.h"
 #import "JMCompSugView.h"
 #import "JMSelecterButton.h"
-#import "MMClass.h"
 #import "WebViewController.h"
 
 

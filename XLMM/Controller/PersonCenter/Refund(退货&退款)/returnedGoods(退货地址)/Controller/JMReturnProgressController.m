@@ -9,7 +9,6 @@
 #import "JMReturnProgressController.h"
 #import "JMReGoodsAddView.h"
 #import "JMRefundModel.h"
-#import "MMClass.h"
 #import "JMTimeInfoModel.h"
 #import "JMRichTextTool.h"
 
@@ -39,6 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    _logisticsDic = [NSDictionary dictionary];
     [self createNavigationBarWithTitle:@"物流信息" selecotr:@selector(backClicked:)];
     [self createTableView];
     [self loadDataSource];
@@ -63,7 +63,6 @@
     
 }
 - (void)fetchData:(NSDictionary *)dataDic {
-    _logisticsDic = [NSDictionary dictionary];
     _logisticsDic = dataDic;
     NSArray *dataArr = dataDic[@"data"];
     
@@ -89,7 +88,7 @@
     
     JMReGoodsAddView *reGoodsV = [JMReGoodsAddView new];
     self.reGoodsV =reGoodsV;
-    self.reGoodsV.frame = CGRectMake(0, 0, SCREENWIDTH, 380);
+    self.reGoodsV.frame = CGRectMake(0, 0, SCREENWIDTH, 420);
     NSString *nameStr = self.refundModelr.buyer_nick;
     NSString *phoneStr = self.refundModelr.mobile;
     NSString *addStr = self.refundModelr.return_address;
@@ -145,16 +144,32 @@
     numLabe.font = [UIFont systemFontOfSize:14.];
     numLabe.textColor = [UIColor dingfanxiangqingColor];
     
-    NSString *nameStr = _logisticsDic[@"name"];
+    NSString *nameStr = @"";
+    NSString *logStr = @"";
+    NSString *numStr = @"";
+    if (_logisticsDic.count == 0) {
+        NSInteger statusCode = [self.refundModelr.status integerValue];
+        if (statusCode < REFUND_STATUS_BUYER_RETURNED_GOODS){
+            logStr = @"暂无";
+        }else if (statusCode < REFUND_STATUS_REFUND_SUCCESS && statusCode >= REFUND_STATUS_BUYER_RETURNED_GOODS) {
+            logStr = @"运输中";
+        }else {
+            logStr = @"已验收";
+        }
+        nameStr = self.refundModelr.company_name;
+        numStr = self.refundModelr.sid;
+    }else {
+        nameStr = _logisticsDic[@"name"];
+        logStr = _logisticsDic[@"status"];
+        numStr = _logisticsDic[@"order"];
+    }
     nameStr = IF_NULL_TO_STRING(nameStr);
     nameLabel.text = [NSString stringWithFormat:@"承运来源: %@",nameStr];
     
-    NSString *logStr = _logisticsDic[@"status"];
     logStr = IF_NULL_TO_STRING(logStr);
     NSString *string = [NSString stringWithFormat:@"物流状态: %@",logStr];
     statusLabel.attributedText = [JMRichTextTool cs_changeColorWithColor:[UIColor buttonEnabledBackgroundColor] AllString:string SubStringArray:@[logStr]];
     
-    NSString *numStr = _logisticsDic[@"order"];
     numStr = IF_NULL_TO_STRING(numStr);
     numLabe.text = [NSString stringWithFormat:@"运单编号: %@",numStr];
     

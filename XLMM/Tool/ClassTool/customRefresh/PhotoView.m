@@ -7,7 +7,6 @@
 //
 
 #import "PhotoView.h"
-#import "MMClass.h"
 
 
 #define SWIDTH [UIScreen mainScreen].bounds.size.width

@@ -7,7 +7,6 @@
 //
 
 #import "JMClassPopView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
 
 #define FONT_SIZE 14.

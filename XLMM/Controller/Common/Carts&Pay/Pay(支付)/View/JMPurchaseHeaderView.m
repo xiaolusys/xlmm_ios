@@ -7,7 +7,6 @@
 //
 
 #import "JMPurchaseHeaderView.h"
-#import "MMClass.h"
 
 
 @interface JMPurchaseHeaderView ()

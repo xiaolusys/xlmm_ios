@@ -11,7 +11,6 @@
 #import "PicHeaderCollectionReusableView.h"
 #import "PicFooterCollectionReusableView.h"
 #import "PhotoView.h"
-#import "MMClass.h"
 #import "SharePicModel.h"
 #import "CountdownView.h"
 #import "UILabel+CustomLabel.h"
@@ -20,6 +19,7 @@
 #import "JMPushSaveModel.h"
 #import "JMRichTextTool.h"
 #import <Photos/Photos.h>
+#import "NSArray+Reverse.h"
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 24)/3)
 
@@ -84,6 +84,7 @@
     [MobClick endLogPageView:@"PublishNewPdtViewController"];
 }
 
+
 //- (PhotoView *)photoView {
 //    if (!_photoView) {
 //        self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -104,7 +105,7 @@
     _getBeforeDayFive = [NSString getBeforeDay:-5];
     [self createCollectionView];
     
-    _qrCodeUrlString = [JMStoreManager getObjectByFileName:@"qrCodeUrlString"];
+    _qrCodeUrlString = [JMStoreManager getDataString:@"qrCodeUrlString.txt"];
     [self dingshishuaxin];
     if ([NSString isStringEmpty:_qrCodeUrlString]) {
         [self loaderweimaData];
@@ -255,8 +256,14 @@
         return;
     }
     //    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
-    for (NSMutableDictionary *oneTurns in data) {
-        NSMutableArray *muArray = [NSMutableArray arrayWithArray:oneTurns[@"pic_arry"]];
+    for (NSDictionary *oneTurns in data) {
+        NSMutableArray *muArray = [NSMutableArray array];
+        NSArray *picArr = oneTurns[@"pic_arry"];
+        if ([NSArray isEmptyForArray:picArr]) {
+        }else {
+            [muArray addObjectsFromArray:picArr];
+        }
+        
         NSInteger countNum = muArray.count;
         if (![NSString isStringEmpty:_qrCodeUrlString]) {
             if (countNum < 9) {
@@ -399,11 +406,14 @@
             }
         }
         [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
+        NSLog(@"%@",self.currentArr);
         if (self.currentArr == nil) {
             self.currentArr = [picModel.pic_arry mutableCopy];
             //            [self saveNext];
             [self downLoadImage:picModel.piID];
         }else if (self.currentArr.count > 0){
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showWarning:@"亲~您操作太快啦! ~(>_<)~"];
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
         }else {
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
@@ -431,18 +441,24 @@
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_group_t group = dispatch_group_create();
     NSMutableArray *indexArray = [NSMutableArray array];
-    for (int i = 0; i < curArr.count; i++) {
+    NSInteger curArrCount = curArr.count;
+    for (int i = 0; i < curArrCount; i++) {
         NSString *picUrl = curArr[i];
-        NSString *index = @"10086";
-        if ([picUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
-            index = [picUrl substringFromIndex:picUrl.length - 5];
-            [indexArray addObject:index];
-            picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+        NSString *indexString = [picUrl md5];
+        [indexArray addObject:indexString];
+        if (curArrCount < 9) {
+            if (i == (curArrCount - 1)) {
+            }else {
+                picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+            }
         }else {
-            [indexArray addObject:index];
+            if (i == 4) {
+            }else {
+                picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+            }
         }
         dispatch_group_async(group, queue, ^{
-            [UIImage imagewithURLString:picUrl Index:index];
+            [UIImage imagewithURLString:picUrl Index:indexString];
         });
     }
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
@@ -508,6 +524,9 @@
             [MBProgressHUD hideHUD];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+        }else {
+            [self.currentArr removeObjectAtIndex:0];
+            [self saveNextimage];
         }
     }else {
         //        [sharImageArray addObject:image];

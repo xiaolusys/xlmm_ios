@@ -7,7 +7,6 @@
 //
 
 #import "JMWithdrawShortController.h"
-#import "MMClass.h"
 #import "JMCouponView.h"
 #import "JMCouponSuccessController.h"
 #import "TixianHistoryViewController.h"

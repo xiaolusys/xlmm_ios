@@ -7,7 +7,6 @@
 //
 
 #import "JMAboutFansController.h"
-#import "MMClass.h"
 #import "IMYWebView.h"
 
 @interface JMAboutFansController ()

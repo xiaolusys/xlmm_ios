@@ -278,6 +278,12 @@
     
     
 }
++ (NSString *)getCurrentYMD {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYYMMdd"];
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    return currentTime;
+}
 
 /**
  *  获取两个日期之间的天数

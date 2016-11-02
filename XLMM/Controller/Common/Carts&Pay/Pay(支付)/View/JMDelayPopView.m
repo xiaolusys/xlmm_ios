@@ -7,7 +7,6 @@
 //
 
 #import "JMDelayPopView.h"
-#import "MMClass.h"
 
 @implementation JMDelayPopView
 

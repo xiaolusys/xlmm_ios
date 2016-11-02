@@ -8,7 +8,6 @@
 
 #import "JMReturnedGoodsController.h"
 #import "JMReGoodsAddView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "JMChooseLogisticsController.h"
 #import "JMRefundModel.h"
@@ -147,7 +146,7 @@
     self.expressListTF.placeholder = @"点击输入快递单号";
     self.expressListTF.textColor = [UIColor titleDarkGrayColor];
     self.expressListTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.expressListTF.keyboardType = UIKeyboardTypeDefault;
+    self.expressListTF.keyboardType = UIKeyboardTypeDecimalPad;
     self.expressListTF.delegate = self;
     
     [self.expressListTF mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -258,6 +257,11 @@
         [MBProgressHUD showError:@"请填写快递单号信息"];
         return;
     }
+    if ([self deptNumInputShouldNumber]) {
+        [MBProgressHUD showError:@"快递单号只能是数字哦~"];
+        return ;
+    }
+    
     
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"确定要退吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alterView.tag = 1234;
@@ -375,6 +379,16 @@
     [self.baseScrollV endEditing:YES];
     NSLog(@"点击了");
 }
+
+- (BOOL)deptNumInputShouldNumber {
+    NSString *regex =@"[0-9]*";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+    if (![pred evaluateWithObject:self.expressListTF.text]) {
+        return YES;
+    }
+    return NO;
+}
+
 
 @end
 

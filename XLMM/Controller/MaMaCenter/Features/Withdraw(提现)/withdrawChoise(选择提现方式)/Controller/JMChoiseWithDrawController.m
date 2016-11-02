@@ -7,7 +7,6 @@
 //
 
 #import "JMChoiseWithDrawController.h"
-#import "MMClass.h"
 #import "JMChoiseWithDrawCell.h"
 #import "TixianViewController.h"
 #import "JMWithdrawShortController.h"

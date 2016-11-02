@@ -7,7 +7,6 @@
 //
 
 #import "YixuanTableViewCell.h"
-#import "MMClass.h"
 
 
 @implementation YixuanTableViewCell

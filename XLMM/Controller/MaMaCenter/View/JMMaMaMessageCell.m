@@ -7,7 +7,6 @@
 //
 
 #import "JMMaMaMessageCell.h"
-#import "MMClass.h"
 
 @interface JMMaMaMessageCell ()
 

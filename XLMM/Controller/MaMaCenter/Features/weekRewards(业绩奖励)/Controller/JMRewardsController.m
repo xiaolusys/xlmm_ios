@@ -7,7 +7,6 @@
 //
 
 #import "JMRewardsController.h"
-#import "MMClass.h"
 #import "JMRewardsCell.h"
 
 @interface JMRewardsController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>

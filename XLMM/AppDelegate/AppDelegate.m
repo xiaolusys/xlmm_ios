@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "JMStoreManager.h"
 #import "Pingpp.h"
-#import "MMClass.h"
 #import "NewLeftViewController.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
@@ -709,8 +708,7 @@ static BOOL isNetPrompt;
 }
 
 - (void)pingppPay:(NSURL *)url {
-    [Pingpp handleOpenURL:url
-           withCompletion:^(NSString *result, PingppError *error) {
+    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
                
                if ([result isEqualToString:@"success"]) {
                    // 支付成功

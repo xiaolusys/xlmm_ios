@@ -8,7 +8,6 @@
 
 #import "JMRefundController.h"
 #import "JMAppForRefundModel.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
 #import "JMShareView.h"
 #import "JMPopView.h"

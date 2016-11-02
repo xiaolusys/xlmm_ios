@@ -7,8 +7,6 @@
 //
 
 #import "ShenQingTuikuanController.h"
-#import "MMClass.h"
-
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "JMAppForRefundModel.h"

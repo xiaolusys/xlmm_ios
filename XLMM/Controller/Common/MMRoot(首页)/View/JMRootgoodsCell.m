@@ -7,7 +7,6 @@
 //
 
 #import "JMRootgoodsCell.h"
-#import "MMClass.h"
 #import "CollectionModel.h"
 #import "UIImage+ChangeGray.h"
 #import "CollectionModel.h"

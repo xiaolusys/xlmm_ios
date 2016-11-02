@@ -8,7 +8,6 @@
 
 #import "YixuanTableViewController.h"
 #import "YixuanTableViewCell.h"
-#import "MMClass.h"
 #import "ShopPreviousViewController.h"
 #import "JMAlreadyChooseModel.h"
 

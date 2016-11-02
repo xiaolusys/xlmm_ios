@@ -8,7 +8,6 @@
 
 #import "ChangeNicknameViewController.h"
 #import "JMSettingController.h"
-#import "MMClass.h"
 #define NICK_LOWER_LIMIT 4
 #define NICK_UPPER_LIMIT 20
 
