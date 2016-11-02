@@ -7,7 +7,6 @@
 //
 
 #import "JMCategoryContentCell.h"
-#import "MMClass.h"
 
 #define TabWidth SCREENWIDTH * 0.25
 #define ColWidth SCREENWIDTH * 0.75

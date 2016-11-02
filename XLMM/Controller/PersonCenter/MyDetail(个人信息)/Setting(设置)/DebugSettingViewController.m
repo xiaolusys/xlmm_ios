@@ -8,7 +8,6 @@
 
 #import "DebugSettingViewController.h"
 #import "LGViews.h"
-#import "MMClass.h"
 #import "MiPushSDK.h"
 
 //动画时间

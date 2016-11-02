@@ -10,7 +10,6 @@
 #import "JMSelecterButton.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "MMClass.h"
 #import "JMPopLogistcsCell.h"
 #import "JMPopLogistcsModel.h"
 

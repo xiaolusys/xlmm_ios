@@ -7,7 +7,6 @@
 //
 
 #import "JMPushingDaysController.h"
-#import "MMClass.h"
 #import "HMSegmentedControl.h"
 #import "JMPushingCategoryController.h"
 #import "PublishNewPdtViewController.h"

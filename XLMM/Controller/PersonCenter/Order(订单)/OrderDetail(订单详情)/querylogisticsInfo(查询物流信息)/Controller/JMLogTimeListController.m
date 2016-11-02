@@ -8,7 +8,6 @@
 
 #import "JMLogTimeListController.h"
 #import "JMOrderGoodsModel.h"
-#import "MMClass.h"
 #import "JMTimeInfoModel.h"
 
 @interface JMLogTimeListController ()<UITableViewDelegate,UITableViewDataSource>

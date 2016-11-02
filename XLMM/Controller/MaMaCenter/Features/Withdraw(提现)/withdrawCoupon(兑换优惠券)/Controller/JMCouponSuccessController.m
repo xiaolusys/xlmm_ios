@@ -7,7 +7,6 @@
 //
 
 #import "JMCouponSuccessController.h"
-#import "MMClass.h"
 
 @interface JMCouponSuccessController ()
 /*

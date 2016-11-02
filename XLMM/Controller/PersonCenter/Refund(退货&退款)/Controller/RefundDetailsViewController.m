@@ -7,8 +7,6 @@
 //
 
 #import "RefundDetailsViewController.h"
-#import "XlmmMall.h"
-#import "MMClass.h"
 #import "JMReturnedGoodsController.h"
 #import "JMTimeLineView.h"
 #import "JMRefundModel.h"

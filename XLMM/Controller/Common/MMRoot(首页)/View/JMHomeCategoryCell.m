@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeCategoryCell.h"
-#import "MMClass.h"
 
 
 

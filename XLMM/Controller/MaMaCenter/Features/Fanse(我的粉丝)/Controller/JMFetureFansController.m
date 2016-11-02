@@ -7,7 +7,6 @@
 //
 
 #import "JMFetureFansController.h"
-#import "MMClass.h"
 #import "JMFetureFansModel.h"
 #import "JMFetureFansCell.h"
 #import "JMEmptyView.h"

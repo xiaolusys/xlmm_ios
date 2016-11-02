@@ -11,5 +11,7 @@
 
 @interface JumpUtils : NSObject
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc;
++ (void)jumpToCallNativePurchase:(NSDictionary *)data Tid:(NSString *)tid viewController:(UIViewController *)vc;
+
 @end
 

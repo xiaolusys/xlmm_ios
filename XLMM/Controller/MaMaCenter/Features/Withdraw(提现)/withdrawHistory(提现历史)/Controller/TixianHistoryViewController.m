@@ -7,7 +7,6 @@
 //
 
 #import "TixianHistoryViewController.h"
-#import "MMClass.h"
 #import "TixianTableViewCell.h"
 #import "TixianModel.h"
 #import "JMWithDrawDetailController.h"

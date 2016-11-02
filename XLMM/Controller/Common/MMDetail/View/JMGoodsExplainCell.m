@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsExplainCell.h"
-#import "MMClass.h"
 #import "JMCountDownView.h"
 
 NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";

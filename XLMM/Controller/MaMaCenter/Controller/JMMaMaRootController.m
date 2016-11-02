@@ -7,12 +7,10 @@
 //
 
 #import "JMMaMaRootController.h"
-#import "MMClass.h"
 #import "HMSegmentedControl.h"
 #import "JMMakeMoneyController.h"
 #import "JMSocialActivityController.h"
 #import "JMMineController.h"
-//#import "UdeskRobotIMViewController.h"
 #import "UdeskManager.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
@@ -20,12 +18,16 @@
 #import "Udesk.h"
 #import "JMStoreManager.h"
 
+static NSString *currentTurnsNumberString;
+
 @interface JMMaMaRootController () {
     NSInteger _indexCode;
     BOOL _isActiveClick;
     NSArray *_titleArr;
     NSString *qrCodeUrlString;          // 二维码图片
     NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
+    NSString *_currentTurnsNum;         // 当天阅读每日推送轮数
+    
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -54,7 +56,7 @@
  */
 @property (nonatomic, strong) NSMutableArray *earningArray;
 @property (nonatomic, strong) NSMutableArray *earningImageArray;
-
+//@property (nonatomic, strong) NSMutableDictionary *currentTurnsData; // 保存每日推送轮数
 @property (nonatomic, strong) NSMutableArray *activeArray;
 
 @property (nonatomic, strong) UIView *msgBottomView;
@@ -89,6 +91,12 @@
     }
     return _mamaWebDict;
 }
+//- (NSMutableDictionary *)currentTurnsData {
+//    if (_currentTurnsData == nil) {
+//        _currentTurnsData = [NSMutableDictionary dictionary];
+//    }
+//    return _currentTurnsData;
+//}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _indexCode = 0;
@@ -100,6 +108,7 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMMaMaRootController"];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -116,6 +125,7 @@
     [self loadDataSource];
     [self loadfoldLineData];
     [self loaderweimaData];
+    
 }
 
 - (void)loadMaMaMessage {
@@ -144,6 +154,7 @@
 //新接口数据
 - (void)updateMaMaHome:(NSDictionary *)dic {
     NSDictionary *fortuneDic = dic[@"mama_fortune"];
+    _currentTurnsNum = fortuneDic[@"current_dp_turns_num"];
     self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
     NSDictionary *extraDic = self.mamaCenterModel.extra_info;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
@@ -153,6 +164,28 @@
     self.makeMoneyVC.centerModel = self.mamaCenterModel;
 //    self.makeMoneyVC.extraFiguresDic = fortuneDic[@"extra_figures"];
     self.mineVC.extraFiguresDic = fortuneDic[@"extra_figures"];
+    
+    NSString *currentTime = [NSString getCurrentYMD];
+    if ([JMStoreManager isFileExist:@"currentTurnsData.plist"]) { // 存在这个字典
+        NSDictionary *dict = [JMStoreManager getDataDictionary:@"currentTurnsData.plist"];
+        NSString *saveTime = dict[@"currentTime"];
+        NSString *saveNum = dict[@"currentNum"];
+        [JMStoreManager removeFileByFileName:@"currentTurnsData.plist"];
+        NSDictionary *currentDict = [NSDictionary dictionaryWithObjectsAndKeys:currentTime,@"currentTime",_currentTurnsNum,@"currentNum", nil];
+        [JMStoreManager saveDataFromDictionary:@"currentTurnsData.plist" WithData:currentDict];
+        if ([currentTime isEqualToString:saveTime]) { // 判断是否为当天
+            NSInteger turnsNum = labs([_currentTurnsNum integerValue] - [saveNum integerValue] + [currentTurnsNumberString integerValue]);
+            _currentTurnsNum = [NSString stringWithFormat:@"%ld",turnsNum];
+        }else {
+        }
+    }else {  // 不存在这个字典
+        NSDictionary *currentDict = [NSDictionary dictionaryWithObjectsAndKeys:currentTime,@"currentTime",_currentTurnsNum,@"currentNum", nil];
+        [JMStoreManager saveDataFromDictionary:@"currentTurnsData.plist" WithData:currentDict];
+    }
+    currentTurnsNumberString = _currentTurnsNum;
+    self.makeMoneyVC.currentTurnsNum = [NSString stringWithFormat:@"%@",currentTurnsNumberString];
+    
+    
 }
 - (void)loadMaMaWeb {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
@@ -230,8 +263,9 @@
         if (!responseObject) return ;
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
+            [JMStoreManager removeFileByFileName:@"qrCodeUrlString.txt"];
             qrCodeUrlString = responseObject[@"qrcode_link"];
-            [JMStoreManager storeUserDefults:qrCodeUrlString forKey:@"qrCodeUrlString"];
+            [JMStoreManager saveDataFromArray:@"qrCodeUrlString.txt" WithString:qrCodeUrlString];
         }else {
         }
     } WithFail:^(NSError *error) {
@@ -270,6 +304,7 @@
 }
 #pragma mark 创建segment(tabBar)
 - (void)createSegmentView {
+    kWeakSelf
     _titleArr = @[@"我要赚钱",@"社交活动",@"我的"];
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 50, SCREENWIDTH, 50)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
@@ -295,6 +330,11 @@
     self.makeMoneyVC.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.makeMoneyVC];
     [self.scrollView addSubview:self.makeMoneyVC.view];
+    
+    self.makeMoneyVC.block = ^(NSString *currentNum) {
+        currentTurnsNumberString = currentNum;
+        weakSelf.makeMoneyVC.currentTurnsNum = currentTurnsNumberString;
+    };
     
     self.activityVC = [[JMSocialActivityController alloc] init];
     self.activityVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);

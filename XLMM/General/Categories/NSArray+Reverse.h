@@ -12,4 +12,7 @@
 
 + (NSArray *)reverse:(NSArray *)array;
 
+// 判断数组是否为空
++ (BOOL)isEmptyForArray:(NSArray *)array;
+
 @end

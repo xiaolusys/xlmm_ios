@@ -7,7 +7,6 @@
 //
 
 #import "RegisterViewController.h"
-#import "MMClass.h"
 
 
 @interface RegisterViewController ()

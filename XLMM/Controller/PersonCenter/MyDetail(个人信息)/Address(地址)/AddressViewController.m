@@ -9,7 +9,6 @@
 #import "AddressViewController.h"
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
-#import "MMClass.h"
 #import "AddressTableCell.h"
 #import "JMEmptyView.h"
 

@@ -8,7 +8,6 @@
 
 #import "TixianSucceedViewController.h"
 #import "PublishNewPdtViewController.h"
-#import "MMClass.h"
 #import "JMBillDetailController.h"
 #import "JMWithDrawDetailController.h"
 

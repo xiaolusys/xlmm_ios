@@ -8,7 +8,6 @@
 
 #import "JMAuthcodeViewController.h"
 #import "JMAuthcodeViewController.h"
-#import "MMClass.h"
 #import "WXApi.h"
 #import "JMLineView.h"
 #import "JMSelecterButton.h"

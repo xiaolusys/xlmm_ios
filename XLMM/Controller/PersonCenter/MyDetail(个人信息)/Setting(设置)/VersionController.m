@@ -7,7 +7,6 @@
 //
 
 #import "VersionController.h"
-#import "MMClass.h"
 #import "DebugSettingViewController.h"
 
 @interface VersionController (){

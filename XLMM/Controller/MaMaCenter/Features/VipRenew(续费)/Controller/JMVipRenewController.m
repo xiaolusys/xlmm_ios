@@ -7,7 +7,6 @@
 //
 
 #import "JMVipRenewController.h"
-#import "MMClass.h"
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
 #import "WXApi.h"

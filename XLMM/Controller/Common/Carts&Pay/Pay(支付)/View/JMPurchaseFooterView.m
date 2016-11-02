@@ -7,7 +7,6 @@
 //
 
 #import "JMPurchaseFooterView.h"
-#import "MMClass.h"
 #import "JMRichTextTool.h"
 
 @interface JMPurchaseFooterView ()

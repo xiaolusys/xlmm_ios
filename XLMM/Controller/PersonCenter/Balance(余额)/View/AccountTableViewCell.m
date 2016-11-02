@@ -8,7 +8,6 @@
 
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
-#import "MMClass.h"
 
 @implementation AccountTableViewCell
 

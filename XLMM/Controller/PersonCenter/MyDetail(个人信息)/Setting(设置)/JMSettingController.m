@@ -7,7 +7,6 @@
 //
 
 #import "JMSettingController.h"
-#import "MMClass.h"
 #import "JMChoiseWithDrawCell.h"
 #import "ChangeNicknameViewController.h"
 #import "WXLoginController.h"
@@ -120,16 +119,11 @@
         };
         [self.navigationController pushViewController:changeNicknameView animated:YES];
     }else if (index == 2) {
-        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
-            NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
-            ;
-            NSLog(@"请绑定手机");
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-            wxloginVC.userInfo = dic;
-            [self.navigationController pushViewController:wxloginVC animated:YES];
-        }
-        
-        
+        NSDictionary *dic = [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfo"];
+//        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) // -- > 不做判断
+        WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
+        wxloginVC.userInfo = dic;
+        [self.navigationController pushViewController:wxloginVC animated:YES];
     }else if (index == 3) {
         VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
         verifyVC.config = @{@"title":@"请验证手机",@"isUpdateMobile":@YES};

@@ -7,7 +7,6 @@
 //
 
 #import "SetPasswordController.h"
-#import "MMClass.h"
 
 @interface SetPasswordController ()<UITextFieldDelegate>
 

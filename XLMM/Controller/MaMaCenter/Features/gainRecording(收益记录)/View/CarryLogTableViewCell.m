@@ -8,7 +8,6 @@
 
 #import "CarryLogTableViewCell.h"
 #import "CarryLogModel.h"
-#import "MMClass.h"
 
 
 @interface CarryLogTableViewCell()

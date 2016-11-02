@@ -7,7 +7,6 @@
 //
 
 #import "JMChoiseWithDrawCell.h"
-#import "MMClass.h"
 
 @interface JMChoiseWithDrawCell ()
 

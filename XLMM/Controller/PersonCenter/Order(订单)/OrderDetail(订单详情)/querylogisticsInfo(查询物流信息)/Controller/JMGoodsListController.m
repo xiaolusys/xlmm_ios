@@ -9,7 +9,6 @@
 #import "JMGoodsListController.h"
 #import "JMGoodsListCell.h"
 #import "JMOrderGoodsModel.h"
-#import "MMClass.h"
 
 @interface JMGoodsListController ()<UITableViewDelegate,UITableViewDataSource>
 

@@ -7,9 +7,7 @@
 //
 
 #import "JMBaseGoodsCell.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
-#import "XlmmMall.h"
 #import "JMPackAgeModel.h"
 
 @interface JMBaseGoodsCell ()

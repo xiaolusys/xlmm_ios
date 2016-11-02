@@ -7,7 +7,6 @@
 //
 
 #import "JMWithDrawDetailController.h"
-#import "MMClass.h"
 #import "JMTimeLineView.h"
 #import "JMWithDrawDetailCell.h"
 #import "TixianViewController.h"

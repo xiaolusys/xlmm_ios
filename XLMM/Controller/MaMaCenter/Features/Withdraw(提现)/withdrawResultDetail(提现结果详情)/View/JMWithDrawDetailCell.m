@@ -7,7 +7,6 @@
 //
 
 #import "JMWithDrawDetailCell.h"
-#import "MMClass.h"
 
 @interface JMWithDrawDetailCell ()
 

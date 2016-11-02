@@ -8,7 +8,6 @@
 
 #import "JMDevice.h"
 #import "sys/utsname.h"
-#import "MMClass.h"
 
 @implementation JMDevice
 

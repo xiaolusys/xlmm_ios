@@ -7,7 +7,6 @@
 //
 
 #import "ProductSelectionListViewController.h"
-#import "MMClass.h"
 #import "YixuanTableViewController.h"
 #import "JMProductSelectionListModel.h"
 #import "JMProductSelectListCell.h"
@@ -320,7 +319,7 @@
 - (void)selectedClicked:(UIButton *)button{
     self.selectImageView.image = [UIImage imageNamed:@"uparrowicon"];
     CGFloat width = 100;
-    CGFloat height = 300;
+    CGFloat height = 360;
     CGFloat originX = 10;
     CGFloat originY = 110;
     CGPoint point = CGPointMake(0.5, 0);

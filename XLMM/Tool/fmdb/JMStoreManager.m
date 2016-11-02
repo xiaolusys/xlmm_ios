@@ -7,10 +7,6 @@
 //
 
 #import "JMStoreManager.h"
-#import "MMClass.h"
-#define kAppLoadNum @"kAppLoadNum"
-
-
 
 @implementation JMStoreManager
 /**
@@ -156,6 +152,60 @@
     }
     return NO;
 }
+
+
+
+
+
+
+// 存储字典
++ (void)saveDataFromDictionary:(NSString *)fileName WithData:(NSDictionary *)dic {
+    NSString *documentPath = [self getLastFilePath:fileName];
+    [dic writeToFile:documentPath atomically:YES];
+}
+// 存储数组
++ (void)saveDataFromString:(NSString *)fileName WithArray:(NSArray *)arr {
+    NSString *documentPath = [self getLastFilePath:fileName];
+    [arr writeToFile:documentPath atomically:YES];
+}
+// 存储字符串
++ (void)saveDataFromArray:(NSString *)fileName WithString:(NSString *)str {
+    NSString *documentPath = [self getLastFilePath:fileName];
+    [str writeToFile:documentPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
++ (NSArray *)getDataArray:(NSString *)fileName {
+    NSString *documentPath = [self getLastFilePath:fileName];
+    return [NSArray arrayWithContentsOfFile:documentPath];
+}
++ (NSDictionary *)getDataDictionary:(NSString *)fileName {
+    NSString *documentPath = [self getLastFilePath:fileName];
+    return [NSDictionary dictionaryWithContentsOfFile:documentPath];
+}
++ (NSString *)getDataString:(NSString *)fileName {
+    NSString *documentPath = [self getLastFilePath:fileName];
+    return [NSString stringWithContentsOfFile:documentPath encoding:NSUTF8StringEncoding error:nil];
+}
++ (NSString *)getLastFilePath:(NSString *)fileName {
+    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [array lastObject];
+    NSString *documentPath = [documents stringByAppendingPathComponent:fileName];
+    return documentPath;
+}
++ (BOOL)isLastFileExist:(NSString *)fileName {
+    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [array lastObject];
+    NSString *filePath = [documents stringByAppendingPathComponent:fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL result = [fileManager fileExistsAtPath:filePath];
+    return result;
+}
+
+
+
+
+
+
+
 
 
 @end

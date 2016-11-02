@@ -7,7 +7,6 @@
 //
 
 #import "CartTableCellTableViewCell1.h"
-#import "MMClass.h"
 
 @implementation CartTableCellTableViewCell1
 

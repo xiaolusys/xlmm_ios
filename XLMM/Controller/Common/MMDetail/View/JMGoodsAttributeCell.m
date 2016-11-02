@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsAttributeCell.h"
-#import "MMClass.h"
 
 NSString *const JMGoodsAttributeCellIdentifier = @"JMGoodsAttributeCellIdentifier";
 

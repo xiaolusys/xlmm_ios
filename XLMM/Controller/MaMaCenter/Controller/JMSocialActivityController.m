@@ -7,7 +7,6 @@
 //
 
 #import "JMSocialActivityController.h"
-#import "MMClass.h"
 #import "WebViewController.h"
 #import "NJKWebViewProgressView.h"
 

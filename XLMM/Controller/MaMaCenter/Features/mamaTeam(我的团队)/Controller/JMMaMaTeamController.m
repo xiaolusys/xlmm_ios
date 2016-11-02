@@ -7,7 +7,6 @@
 //
 
 #import "JMMaMaTeamController.h"
-#import "MMClass.h"
 #import "JMMaMateamCell.h"
 #import "JMMaMaEarningsRankController.h"
 #import "JMMaMaSelfTeamModel.h"

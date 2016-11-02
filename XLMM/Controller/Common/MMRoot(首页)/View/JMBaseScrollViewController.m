@@ -7,7 +7,6 @@
 //
 
 #import "JMBaseScrollViewController.h"
-#import "MMClass.h"
 
 @interface JMBaseScrollViewController ()<UIGestureRecognizerDelegate>
 

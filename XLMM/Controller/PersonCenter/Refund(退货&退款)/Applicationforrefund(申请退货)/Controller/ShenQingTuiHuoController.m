@@ -8,7 +8,6 @@
 
 #import "ShenQingTuiHuoController.h"
 #import "JMOrderGoodsModel.h"
-#import "MMClass.h"
 #import "QiniuSDK.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationDrop.h"

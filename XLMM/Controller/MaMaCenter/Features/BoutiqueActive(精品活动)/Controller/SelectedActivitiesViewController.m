@@ -7,7 +7,6 @@
 //
 
 #import "SelectedActivitiesViewController.h"
-#import "MMClass.h"
 
 @interface SelectedActivitiesViewController ()
 @property (nonatomic, strong)UIWebView *webView;

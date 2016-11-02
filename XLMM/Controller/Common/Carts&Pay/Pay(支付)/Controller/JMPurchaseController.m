@@ -7,7 +7,6 @@
 //
 
 #import "JMPurchaseController.h"
-#import "MMClass.h"
 #import "JMPurchaseHeaderView.h"
 #import "JMPurchaseFooterView.h"
 #import "JMBaseGoodsCell.h"
@@ -32,7 +31,7 @@
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
 
-#define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
 
 @interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate,JMShareViewDelegate> {
     NSDictionary *_couponData;

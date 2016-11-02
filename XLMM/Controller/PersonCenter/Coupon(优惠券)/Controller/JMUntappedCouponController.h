@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MMClass.h"
 
 //@class JMCouponModel;
 //@protocol JMUsableCouponControllerDelegate <NSObject>

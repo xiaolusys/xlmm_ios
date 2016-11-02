@@ -7,7 +7,6 @@
 //
 
 #import "JMReGoodsAddView.h"
-#import "MMClass.h"
 #import "JMRichTextTool.h"
 
 @interface JMReGoodsAddView ()

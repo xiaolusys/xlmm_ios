@@ -7,9 +7,6 @@
 //
 
 #import "TixianTableViewCell.h"
-#import "UIColor+RGBColor.h"
-#import "AFNetworking.h"
-#import "MMClass.h"
 
 
 

@@ -7,7 +7,6 @@
 //
 
 #import "JMPushingCategoryController.h"
-#import "MMClass.h"
 #import "PublishNewPdtViewController.h"
 #import "JMStoreManager.h"
 
@@ -66,7 +65,7 @@
 - (void)createHeaderView {
     CGFloat oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 60;
     CGFloat twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 60 + HomeCategorySpaceH;
-    categoryArray = [JMStoreManager getObjectByFileName:@"categorysArray"];
+    categoryArray = (NSMutableArray *)[JMStoreManager getDataArray:@"categorysArray.xml"];
     
     UIView *headerV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, twoRowCellH)];
     headerV.backgroundColor = [UIColor whiteColor];

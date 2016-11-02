@@ -8,7 +8,6 @@
 
 #import "CartViewController.h"
 #import "CartTableCellTableViewCell1.h"
-#import "MMClass.h"
 #import "CartListModel.h"
 #import "ReBuyTableViewCell.h"
 #import "WebViewController.h"

@@ -7,9 +7,7 @@
 //
 
 #import "JMOrderPayOutdateView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
-#import "XlmmMall.h"
 
 @interface JMOrderPayOutdateView ()
 @property (nonatomic, strong) UILabel *outDateTitleLabel;

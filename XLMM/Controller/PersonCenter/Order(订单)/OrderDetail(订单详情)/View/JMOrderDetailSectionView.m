@@ -7,7 +7,6 @@
 //
 
 #import "JMOrderDetailSectionView.h"
-#import "MMClass.h"
 
 @interface JMOrderDetailSectionView ()
 

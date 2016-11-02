@@ -7,8 +7,6 @@
 //
 
 #import "JMOrderDetailHeaderView.h"
-#import "MMClass.h"
-#import "XlmmMall.h"
 #import "JMOrderGoodsModel.h"
 #import "JMTimeLineView.h"
 

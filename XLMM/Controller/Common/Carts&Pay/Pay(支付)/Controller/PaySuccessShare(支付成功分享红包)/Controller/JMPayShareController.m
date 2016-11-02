@@ -9,7 +9,6 @@
 #import "JMPayShareController.h"
 #import "JMPaySucTitleView.h"
 #import "JMSelecterButton.h"
-#import "MMClass.h"
 #import "JMSharePackView.h"
 #import "JMShareView.h"
 #import "JMShareViewController.h"

@@ -7,7 +7,6 @@
 //
 
 #import "JMCouponView.h"
-#import "MMClass.h"
 
 @interface JMCouponView ()
 

@@ -7,7 +7,6 @@
 //
 
 #import "MaClassifyCarryLogViewController.h"
-#import "MMClass.h"
 #import "CarryLogModel.h"
 #import "CarryLogTableViewCell.h"
 #import "CarryLogHeaderView.h"

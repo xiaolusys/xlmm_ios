@@ -7,7 +7,6 @@
 //
 
 #import "JMBaseScrollViewController.h"
-#import "MMClass.h"
 #import "JMRootGoodsModel.h"
 #import "JMRootgoodsCell.h"
 

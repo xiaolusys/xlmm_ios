@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeActiveCell.h"
-#import "MMClass.h"
 
 NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
 

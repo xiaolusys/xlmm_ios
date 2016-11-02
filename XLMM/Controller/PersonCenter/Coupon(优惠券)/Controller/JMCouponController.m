@@ -7,7 +7,6 @@
 //
 
 #import "JMCouponController.h"
-#import "MMClass.h"
 #import "HMSegmentedControl.h"
 #import "JMUsedCouponController.h"
 #import "JMExpiredCouponController.h"

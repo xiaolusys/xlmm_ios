@@ -7,7 +7,6 @@
 //
 
 #import "JMPersonWaitGoodsController.h"
-#import "MMClass.h"
 
 @interface JMPersonWaitGoodsController ()
 

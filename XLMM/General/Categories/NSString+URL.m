@@ -7,7 +7,6 @@
 //
 
 #import "NSString+URL.h"
-#import "MMClass.h"
 
 @implementation NSString (URL)
     

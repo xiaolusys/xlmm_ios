@@ -8,7 +8,6 @@
 
 #import "GuanzhuViewController.h"
 #import "UIImage+ChangeGray.h"
-#import "MMClass.h"
 
 
 @interface GuanzhuViewController ()

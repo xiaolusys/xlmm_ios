@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeRootCategoryController.h"
-#import "MMClass.h"
 #import "JMCategoryListCell.h"
 #import "JMHomeRootCategoryCell.h"
 #import "JMEmptyView.h"

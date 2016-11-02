@@ -7,7 +7,6 @@
 //
 
 #import "JMRefundView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
 
 @interface JMRefundView ()

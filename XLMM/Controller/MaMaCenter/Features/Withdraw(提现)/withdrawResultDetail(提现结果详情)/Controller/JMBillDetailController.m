@@ -7,7 +7,6 @@
 //
 
 #import "JMBillDetailController.h"
-#import "MMClass.h"
 #import "TixianModel.h"
 #import "TixianViewController.h"
 #import "JMWithdrawCashController.h"

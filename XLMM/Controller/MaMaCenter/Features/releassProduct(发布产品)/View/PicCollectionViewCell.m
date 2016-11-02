@@ -7,7 +7,6 @@
 //
 
 #import "PicCollectionViewCell.h"
-#import "MMClass.h"
 
 
 @interface PicCollectionViewCell ()

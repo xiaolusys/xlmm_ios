@@ -7,7 +7,6 @@
 //
 
 #import "JMEarningsRankCell.h"
-#import "MMClass.h"
 #import "JMEarningsRankModel.h"
 #import "JMMaMaTeamModel.h"
 

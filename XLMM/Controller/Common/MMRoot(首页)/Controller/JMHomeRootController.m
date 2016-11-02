@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeRootController.h"
-#import "MMClass.h"
 #import <RESideMenu.h>
 #import "JMHomeActiveCell.h"
 #import "JMHomeCategoryCell.h"
@@ -121,6 +120,9 @@
         _activeArray = [NSMutableArray array];
     }
     return _activeArray;
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [MBProgressHUD hideHUD];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -369,11 +371,13 @@
 }
 - (void)createRightItem {
     if(self.navigationItem.rightBarButtonItem == nil) {
-        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        NSString *titleStr = @"我的微店";
+        CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:16.].width;
+        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
         [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
-        UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category"]];
-        rightImageview.frame = CGRectMake(18, 11, 26, 26);
-        [self.navRightButton addSubview:rightImageview];
+        [self.navRightButton setTitle:titleStr forState:UIControlStateNormal];
+        [self.navRightButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:16.];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
     }else {}
 }
@@ -400,7 +404,8 @@
     for (NSDictionary *dicts in categoryArr) {
         [_categorysArray addObject:dicts];
     }
-    [JMStoreManager storeobject:_categorysArray FileName:@"categorysArray"];
+    [JMStoreManager removeFileByFileName:@"categorysArray.xml"];
+    [JMStoreManager saveDataFromString:@"categorysArray.xml" WithArray:_categorysArray];
     
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
@@ -569,6 +574,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)rightNavigationClick:(UIButton *)button {
+    [MBProgressHUD showLoading:@""];
     button.enabled = NO;
     [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
