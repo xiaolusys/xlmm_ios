@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^currentBlock)(NSString *currentNum);
+typedef void(^currentBlock)(UILabel *currentLabel);
 
 @class JMMaMaCenterModel;
 @interface JMMakeMoneyController : UIViewController

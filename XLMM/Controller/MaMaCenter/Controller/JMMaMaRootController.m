@@ -304,7 +304,6 @@ static NSString *currentTurnsNumberString;
 }
 #pragma mark 创建segment(tabBar)
 - (void)createSegmentView {
-    kWeakSelf
     _titleArr = @[@"我要赚钱",@"社交活动",@"我的"];
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 50, SCREENWIDTH, 50)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
@@ -331,9 +330,9 @@ static NSString *currentTurnsNumberString;
     [self addChildViewController:self.makeMoneyVC];
     [self.scrollView addSubview:self.makeMoneyVC.view];
     
-    self.makeMoneyVC.block = ^(NSString *currentNum) {
-        currentTurnsNumberString = currentNum;
-        weakSelf.makeMoneyVC.currentTurnsNum = currentTurnsNumberString;
+    self.makeMoneyVC.block = ^(UILabel *currentLabel) {
+        currentTurnsNumberString = @"0";
+        currentLabel.hidden = YES;
     };
     
     self.activityVC = [[JMSocialActivityController alloc] init];
