@@ -7,7 +7,6 @@
 //
 
 #import "JMRefundCell.h"
-#import "MMClass.h"
 
 @interface JMRefundCell ()
 

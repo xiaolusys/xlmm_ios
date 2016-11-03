@@ -8,7 +8,6 @@
 //
 
 #import "MMUserCoupons.h"
-#import "MMClass.h"
 
 @implementation MMUserCoupons
 

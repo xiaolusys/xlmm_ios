@@ -7,14 +7,12 @@
 //
 
 #import "JMOrderDetailController.h"
-#import "MMClass.h"
 #import "JMOrderDetailHeaderView.h"
 #import "JMOrderDetailFooterView.h"
 #import "JMOrderDetailModel.h"
 #import "JMOrderGoodsModel.h"
 #import "JMEditAddressModel.h"
 #import "JMPackAgeModel.h"
-#import "XlmmMall.h"
 #import "JMBaseGoodsCell.h"
 #import "JMQueryLogInfoController.h"
 #import "ShenQingTuikuanController.h"

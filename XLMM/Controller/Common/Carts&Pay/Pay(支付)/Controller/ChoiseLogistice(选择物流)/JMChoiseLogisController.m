@@ -8,8 +8,6 @@
 
 #import "JMChoiseLogisController.h"
 #import "JMSelecterButton.h"
-#import "UIColor+RGBColor.h"
-#import "MMClass.h"
 #import "JMPopLogistcsCell.h"
 #import "JMShareView.h"
 #import "JMPopView.h"

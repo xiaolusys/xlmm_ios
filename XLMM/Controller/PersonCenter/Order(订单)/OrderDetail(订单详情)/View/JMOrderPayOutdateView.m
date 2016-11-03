@@ -7,9 +7,7 @@
 //
 
 #import "JMOrderPayOutdateView.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
-#import "XlmmMall.h"
 
 @interface JMOrderPayOutdateView ()
 @property (nonatomic, strong) UILabel *outDateTitleLabel;
@@ -279,7 +277,6 @@
     self.orderOutdateTime.text = string;
     if ([d minute] < 0 || [d second] < 0) {
         self.orderOutdateTime.text = @"00:00";
-
 //        self.shareImage.hidden = NO;
 //        self.descLabel.hidden = NO;
 //        self.shareButton.hidden = NO;

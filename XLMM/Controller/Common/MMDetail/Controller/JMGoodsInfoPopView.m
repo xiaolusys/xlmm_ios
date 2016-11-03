@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsInfoPopView.h"
-#import "MMClass.h"
 #import "JMGoodsAttributeTypeView.h"
 #import "JMBuyNumberView.h"
 
@@ -43,8 +42,6 @@
 @property (nonatomic, strong) NSMutableArray *goodsColorArray;
 
 @property (nonatomic, strong) NSMutableArray *goodsSizeArray;
-
-@property (nonatomic, strong) UIButton *sureButton;
 
 @property (nonatomic, strong) UIImageView *iconImage;
 
@@ -246,21 +243,20 @@
     // == 购买数量视图 == //
     self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
     [headerView addSubview:self.buyNumView];
-    
-    kWeakSelf
+    JMBuyNumberView * __weak buyWeakSelf = self.buyNumView;
     self.buyNumView.numblock = ^(NSInteger index) {
         if (index == 100) {
-            NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
+            NSInteger count = [buyWeakSelf.numLabel.text integerValue];
             if (count > 1) {
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count - 1];
+                buyWeakSelf.numLabel.text = [NSString stringWithFormat:@"%ld",count - 1];
                 _goodsNum -= 1;
             }else {
                 return ;
             }
         }else {
-            NSInteger count = [weakSelf.buyNumView.numLabel.text integerValue];
+            NSInteger count = [buyWeakSelf.numLabel.text integerValue];
             if (count < _stockValue) { //  == >>  这里是商品的数量
-                weakSelf.buyNumView.numLabel.text = [NSString stringWithFormat:@"%d",count + 1];
+                buyWeakSelf.numLabel.text = [NSString stringWithFormat:@"%ld",count + 1];
                 _goodsNum += 1;
             }else {
                 return ;
@@ -269,15 +265,7 @@
     };
     
     if (self.goodsColorArray.count == 1 && self.goodsSizeArray.count == 1) {
-        
-        //        self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
-        [self.buyNumView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(headerView).offset(20);
-            make.left.equalTo(headerView);
-            make.width.mas_equalTo(SCREENWIDTH);
-            make.height.mas_equalTo(@60);
-        }];
-        
+        self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
     }else {
         self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色"];
         self.colorView.delegate = self;
@@ -316,11 +304,11 @@
     NSDictionary *colorD = _goodsArr[0];
     
     _goodsColorID = [colorD[@"product_id"] integerValue];
-    _goodsSizeID = [sizeD[@"sku_id"] integerValue];
+    //    _goodsSizeID = [sizeD[@"sku_id"] integerValue];
     _skuColorString = colorD[@"name"];
-    _skuSizeString = sizeD[@"name"];
+    //    _skuSizeString = sizeD[@"name"];
     self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
-    
+    NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
 }
 - (void)composeAttrubuteTypeView:(JMGoodsAttributeTypeView *)typeView Index:(NSInteger)index {
     
@@ -351,10 +339,10 @@
         _skuColorString = _choiseGoodsColor;
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
         [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
-        _skuSizeString = _isGoodsEnough ? @"库存不足" : _skuSizeString;
+        //        _skuSizeString = _isGoodsEnough ? @"库存不足" : _skuSizeString;
         self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
         
-        NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
+        
         
     }else if ([typeView isEqual:self.sizeView]) {
         NSDictionary *sizeDic = [_stockDict objectForKey:_choiseGoodsColor];
@@ -398,66 +386,112 @@
 }
 - (void)reloadTypeButton:(NSDictionary *)sizeDic SizeArr:(NSArray *)sizeArr TypeView:(JMGoodsAttributeTypeView *)typeView {
     NSInteger sizeCountNum = sizeArr.count;
-    NSInteger code = 1;
-    NSInteger flag = 0;
-    do {
-        if (_sizeSelectedIndex > sizeCountNum) {
-            _sizeSelectedIndex = 1;
-            flag ++;
-            //            code = 1;
+    NSMutableArray *countArr = [NSMutableArray array];
+    for (int i = 1 ; i <= sizeCountNum; i++) {
+        NSString *size = sizeArr[i - 1];
+        NSDictionary *sizeDict = [sizeDic objectForKey:size];
+        NSInteger count = [sizeDict[@"free_num"] integerValue];
+        UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
+        if (count == 0) {
+            button.enabled = NO;
+            button.layer.borderColor = [UIColor titleDarkGrayColor].CGColor;
+            [button setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
+        }else {
+            button.enabled = YES;
+            button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+            [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+            [countArr addObject:@(i)];
         }
-        for (NSInteger i = _sizeSelectedIndex; i <= sizeCountNum; i++) {
-            NSString *size = sizeArr[i - 1];
-            NSDictionary *sizeDict = [sizeDic objectForKey:size];
-            NSInteger count = [sizeDict[@"free_num"] integerValue];
-//            _goodsSizeID = (sizeDict != nil && count == 0) ? -1 : _goodsSizeID;
-            _isGoodsEnough = (sizeDict != nil && count == 0);
-            _goodsSizeID = _isGoodsEnough ? [sizeDict[@"sku_id"] integerValue] : _goodsSizeID;
-            UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
-            // -- > 在这里面给尺码 赋值
-            
-            if (count == 0) {
-                button.enabled = NO;
-                button.layer.borderColor = [UIColor titleDarkGrayColor].CGColor;
-                [button setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
-                
-            }else {
-                
-                button.enabled = YES;
-                button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
-                [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-            }
-            
-            if (button.enabled == NO && code == 1) {
-                _sizeSelectedIndex += 1;
-            
-            }
-            
-            
-            if ((i - _sizeSelectedIndex) == 0) {
-                button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-                [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
-                
-                NSString *size = sizeArr[i - 1];
-                NSDictionary *sizeDict = [sizeDic objectForKey:size];
-                _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
-                _stockValue =  [sizeDict[@"free_num"] integerValue];
-                _skuSizeString = sizeDict[@"name"];
-                self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
-                self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
-                //            _sizeSelectedIndex = code;
-                code ++;
-            }else {
-                
-            }
-        }
-    } while (flag == 0 && code == 1);
-    
+    }
+    if (countArr.count == 0) {
+        _isGoodsEnough = YES;
+        return ;
+    }else {
+        _isGoodsEnough = NO;
+    }
+    BOOL isbool = [countArr containsObject:[NSNumber numberWithInteger:_sizeSelectedIndex]];
+    NSInteger maxIndex = [[countArr firstObject] integerValue];
+    //    NSInteger maxIndex = [[countArr valueForKeyPath:@"@max.intValue"] integerValue]; // -- > 取出数组中最大值
+    if (maxIndex >= _sizeSelectedIndex) {
+        _sizeSelectedIndex = maxIndex;
+    }else {
+        _sizeSelectedIndex = isbool ? _sizeSelectedIndex : maxIndex;
+    }
+    UIButton *button1 = (UIButton *)[self.sizeView viewWithTag:_sizeSelectedIndex];
+    button1.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    [button1 setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+    NSString *size = sizeArr[_sizeSelectedIndex - 1];
+    NSDictionary *sizeDict = [sizeDic objectForKey:size];
+    _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
+    _stockValue =  [sizeDict[@"free_num"] integerValue];
+    _skuSizeString = sizeDict[@"name"];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
     NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
+    
+    
+    //    NSInteger code = 1;
+    //    NSInteger flag = 0;
+    //    do {
+    //        if (_sizeSelectedIndex > sizeCountNum) {
+    //            _sizeSelectedIndex = 1;
+    //            flag ++;
+    //            //            code = 1;
+    //        }
+    //        for (NSInteger i = _sizeSelectedIndex; i <= sizeCountNum; i++) {
+    //            NSString *size = sizeArr[i - 1];
+    //            NSDictionary *sizeDict = [sizeDic objectForKey:size];
+    //            NSInteger count = [sizeDict[@"free_num"] integerValue];
+    ////            _goodsSizeID = (sizeDict != nil && count == 0) ? -1 : _goodsSizeID;
+    //            _isGoodsEnough = (sizeDict != nil && count == 0);
+    //            _goodsSizeID = !_isGoodsEnough ? [sizeDict[@"sku_id"] integerValue] : _goodsSizeID;
+    //            UIButton *button = (UIButton *)[self.sizeView viewWithTag:i];
+    //            // -- > 在这里面给尺码 赋值
+    //
+    //            if (count == 0) {
+    //                button.enabled = NO;
+    //                button.layer.borderColor = [UIColor titleDarkGrayColor].CGColor;
+    //                [button setTitleColor:[UIColor titleDarkGrayColor] forState:UIControlStateNormal];
+    //
+    //            }else {
+    //
+    //                button.enabled = YES;
+    //                button.layer.borderColor = [UIColor buttonTitleColor].CGColor;
+    //                [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    //            }
+    //
+    //            if (button.enabled == NO && code == 1) {
+    //                _sizeSelectedIndex += 1;
+    //
+    //            }
+    //
+    //
+    //            if ((i - _sizeSelectedIndex) == 0) {
+    //                button.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    //                [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+    //
+    //                NSString *size = sizeArr[i - 1];
+    //                NSDictionary *sizeDict = [sizeDic objectForKey:size];
+    //                _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
+    //                _stockValue =  [sizeDict[@"free_num"] integerValue];
+    //                _skuSizeString = sizeDict[@"name"];
+    //                self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
+    //                self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
+    //                //            _sizeSelectedIndex = code;
+    //                code ++;
+    //            }else {
+    //
+    //            }
+    //        }
+    //    } while (flag == 0 && code == 1);
+    //
+    
 }
 
 - (void)sureButtonClick:(UIButton *)button {
+    button.enabled = NO;
     if (_isGoodsEnough) {
+        button.enabled = YES;
         [MBProgressHUD showWarning:@"商品库存不足~"];
         return ;
     }
@@ -470,17 +504,17 @@
     //    if (self.block) {
     //        self.block(self.goodsAttributeDic);
     //    }
-    button.enabled = NO;
-    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:2.0f];
+    //    button.enabled = NO;
+    //    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:2.0f];
     if (_delegate && [_delegate respondsToSelector:@selector(composeGoodsInfoView:AttrubuteDic:)]) {
         [_delegate composeGoodsInfoView:self AttrubuteDic:paramer];
     }
     
 }
-- (void)changeButtonStatus:(UIButton *)button {
-    NSLog(@"button.enabled = YES; ========== ");
-    button.enabled = YES;
-}
+//- (void)changeButtonStatus:(UIButton *)button {
+//    NSLog(@"button.enabled = YES; ========== ");
+//    button.enabled = YES;
+//}
 
 @end
 

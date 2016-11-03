@@ -7,7 +7,6 @@
 //
 
 #import "SetPasswordViewController.h"
-#import "MMClass.h"
 #import "TiaoKuanViewController.h"
 
 

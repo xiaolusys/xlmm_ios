@@ -7,7 +7,6 @@
 //
 
 #import "JMPopViewAnimationDrop.h"
-#import "MMClass.h"
 
 
 

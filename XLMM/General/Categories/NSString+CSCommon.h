@@ -154,6 +154,9 @@
 + (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate;
 
 
++ (NSString *)getCurrentYMD;
+
+
 @end
 
 

@@ -7,12 +7,10 @@
 //
 
 #import "WebViewController.h"
-#import "MMClass.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
 #import "UIImage+ImageWithSelectedView.h"
-#import "YoumengShare.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "PublishNewPdtViewController.h"
@@ -22,22 +20,21 @@
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "CartViewController.h"
-#import "JMShareViewController.h"
 #import "JMShareView.h"
 #import "JMPopView.h"
-#import "JMShareModel.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
 #import "PersonOrderViewController.h"
 #import "NJKWebViewProgressView.h"
+#import "JMPayShareController.h"
 
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
-
 //static BOOL isLogin;
-
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate>
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
+    NSString *_fineCouponTid;
+}
 
 @property (nonatomic, strong)WebViewJavascriptBridge* bridge;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
@@ -50,18 +47,13 @@
 @property (nonatomic, strong) UIWebView *erweimaShareWebView;
 //遮罩层
 @property (nonatomic, strong) UIView *shareBackView;
-//分享页面
-@property (nonatomic, strong) YoumengShare *youmengShare;
+
 @property (nonatomic, assign)BOOL isPic;
 @property (nonatomic, strong)UIImage *imageData;
 @property (nonatomic, copy)NSString *kuaizhaoLink;
 @property (nonatomic, assign)BOOL isWeixin;
 @property (nonatomic, assign)BOOL isWeixinFriends;
 @property (nonatomic, assign)BOOL isCopy;
-
-
-
-
 
 @property (nonatomic, strong)NSDictionary *nativeShare;
 
@@ -100,6 +92,7 @@
 
 
 
+
 @end
 
 @implementation WebViewController{
@@ -109,17 +102,20 @@
     NSString *shareUrllink;
     BOOL isTeamBuy;
 }
-- (YoumengShare *)youmengShare {
-    if (!_youmengShare) {
-        _youmengShare = [[YoumengShare alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    }
-    return _youmengShare;
-}
-
 //- (WebViewJavascriptBridge *)bridge {
 //
 //    return _bridge;
 //}
+- (JMShareViewController *)shareView {
+    if (!_shareView) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
+
+
+
+
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
     if ([webDiction isKindOfClass:[NSMutableDictionary class]] && [webDiction objectForKey:@"titleName"]) {
@@ -157,8 +153,37 @@
     }else {
         self.navigationController.navigationBarHidden = YES;
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
+    
     
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+}
+- (void)paySuccessful {
+    NSLog(@"支付成功");
+    [MobClick event:@"fineCoupon_buySuccess"];
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = _fineCouponTid;
+    [self.navigationController pushViewController:payShareVC animated:YES];
+}
+- (void)popview {
+    NSLog(@"支付取消/支付失败");
+    [MobClick event:@"fineCoupon_buyCancel_buyFail"];
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
+}
+- (void)couponTid:(NSNotification *)sender {
+    _fineCouponTid = sender.object;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
@@ -179,7 +204,7 @@
         [weakSelf.progressView setProgress:estimatedProgress animated:YES];
     };
     [self.view addSubview:super.baseWebView];
-
+    
 //    super.baseWebView.backgroundColor = [UIColor whiteColor];
 //    super.baseWebView.tag = 111;
 //    self.baseWebView.delegate = self;
@@ -187,11 +212,13 @@
 //    super.baseWebView.userInteractionEnabled = YES;
     super.baseWebView.viewController = self;
     
+//    JMShareViewController *shareView = [[JMShareViewController alloc] init];
+//    self.shareView = shareView;
+    
     if(super.baseWebView.usingUIWebView) {
         NSLog(@"7.0 UIWebView");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
 //        [self registerJsBridge];
-        
 //        self.baseWebView.delegate = self;
     }else {
         NSLog(@"bigger than8.0 WKWebView");
@@ -313,34 +340,25 @@
     self.share_model.desc = [shopInfo objectForKey:@"desc"]; // 文字详情
     self.share_model.title = [shopInfo objectForKey:@"name"]; //标题
     self.share_model.share_link = [shopInfo objectForKey:@"shop_link"];
-    
+    self.shareView.model = self.share_model;
 }
 
 - (void)resolveActivityShareParam:(NSDictionary *)dic {
-    //    NSDictionary *dic = _model.mj_keyValues;
-//    NSLog(@"Share para=%@",dic);
-    
     self.share_model.share_type = [dic objectForKey:@"share_type"];
-
     self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
     self.share_model.desc = [dic objectForKey:@"active_dec"]; // 文字详情
-
     self.share_model.title = [dic objectForKey:@"title"]; //标题
     self.share_model.share_link = [dic objectForKey:@"share_link"];
-
+    self.shareView.model = self.share_model;
 }
 
 - (void)resolveProductShareParam:(NSDictionary *)dic {
-    NSLog(@"Product Share para=%@",dic);
-    
     self.share_model.share_type = [dic objectForKey:@"share_type"];
-    
     self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
     self.share_model.desc = [dic objectForKey:@"share_desc"]; // 文字详情
-    
     self.share_model.title = [dic objectForKey:@"share_title"]; //标题
     self.share_model.share_link = [dic objectForKey:@"link"];
-    
+    self.shareView.model = self.share_model;
 }
 
 #pragma mark ----- 创建导航栏按钮
@@ -353,9 +371,13 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button1];
     self.navigationItem.rightBarButtonItem = rightItem;
     button1.hidden = NO;
+    
+
+    
 }
 #pragma mark ----- 点击分享
 - (void)rightBarButtonAction {
+    [MobClick event:@"webViewController_allShare"];
     if ([_webDiction[@"type_title"] isEqual:@"active"]) {
         NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%@",self.activityId]};
         [MobClick event:@"Active_share" attributes:temp_dict];
@@ -367,12 +389,6 @@
     }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
         [MobClick event:@"mamaShop_share"];
     }else { }
-    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-    self.shareView = shareView;
-    _shareDic = nil;
-
-    self.shareView.model = self.share_model;
-
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图
@@ -384,9 +400,6 @@
 }
 
 - (void)universeShare:(NSDictionary *)data {
-    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-    self.shareView = shareView;
-
 //    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
 //        [self resolveProductShareParam:data];
 //    }
@@ -730,10 +743,28 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [MBProgressHUD hideHUDForView:self.view];
 }
-
 - (void)hiddenNavigationView{
     self.navigationController.navigationBarHidden = YES;
 }
+
+#pragma mark alert弹出框
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+    NSLog(@"%s",__FUNCTION__);
+    // 确定按钮
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler();
+    }];
+    // alert弹出框
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:alertAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+
+
+
+
 #pragma mark ----- 分享调用 -- 调用原生的分享这里就不需要了
 //- (void)shareForPlatform:(NSDictionary *)data{
 //    

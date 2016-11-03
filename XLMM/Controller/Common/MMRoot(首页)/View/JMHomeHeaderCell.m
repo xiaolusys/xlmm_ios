@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeHeaderCell.h"
-#import "MMClass.h"
 
 
 @interface JMHomeHeaderCell ()

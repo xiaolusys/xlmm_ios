@@ -7,7 +7,6 @@
 //
 
 #import "JMBaseScrollViewController.h"
-#import "MMClass.h"
 
 @interface JMBaseScrollViewController ()<UIGestureRecognizerDelegate>
 
@@ -19,22 +18,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    
-    
-}
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"gotoTop" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
-    
-    
-    
-    
-    
-    
 }
 
 - (void)scrollMessage:(NSNotification *)notification {

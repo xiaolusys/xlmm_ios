@@ -19,7 +19,6 @@
 #import "JMHTTPManager.h"
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
-#import "JMToolMacro.h"
 #import "NSString+CSCommon.h"
 
 
@@ -61,7 +60,7 @@
 // ios8之上的系统
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)
 
-
+#define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 #define kVisitorDay @14      // 加载访客记录(天数)
 #define KTITLENAME @"小鹿美美"
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
@@ -77,6 +76,7 @@
 #define kPhoneLogin @"phonelogin"
 #define kLoginMethod @"loginMethod"
 #define kWeiXinLogin @"weixinlogin"
+#define kAppLoadNum @"kAppLoadNum"
 
 #define kWeiXinauthorize @"kWeiXinauthorize"
 #define kPhoneNumberUserInfo @"phoneUserInfo"

@@ -7,7 +7,6 @@
 //
 
 #import "JMBuyNumberView.h"
-#import "MMClass.h"
 
 @implementation JMBuyNumberView
 

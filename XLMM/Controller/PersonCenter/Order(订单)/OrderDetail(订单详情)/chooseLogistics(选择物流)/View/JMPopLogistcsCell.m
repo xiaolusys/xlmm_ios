@@ -7,7 +7,6 @@
 //
 
 #import "JMPopLogistcsCell.h"
-#import "MMClass.h"
 
 @interface JMPopLogistcsCell ()
 

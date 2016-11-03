@@ -7,8 +7,7 @@
 //
 
 #import "JMReGoodsAddView.h"
-#import "MMClass.h"
-
+#import "JMRichTextTool.h"
 
 @interface JMReGoodsAddView ()
 /**
@@ -137,21 +136,23 @@
     UILabel *titleL = [UILabel new];
     [self.masBackView addSubview:titleL];
     self.titleL = titleL;
-    self.titleL.text = @"为提高您的退货退款效率,请注意一下事项";
+    self.titleL.text = @"为提高您的退货退款效率,请注意以下事项";
     self.titleL.font = [UIFont systemFontOfSize:12.];
+//    
+//    UILabel *firstRightL = [UILabel new];
+//    [self.masBackView addSubview:firstRightL];
+//    self.firstRightL = firstRightL;
+//    self.firstRightL.textColor = [UIColor buttonEnabledBackgroundColor];
+//    self.firstRightL.numberOfLines = 0;
+//    self.firstRightL.text = @"微信昵称、联系电话、退换货原因";
+//    self.firstRightL.font = [UIFont systemFontOfSize:12.];
     
-    UILabel *firstRightL = [UILabel new];
-    [self.masBackView addSubview:firstRightL];
-    self.firstRightL = firstRightL;
-    self.firstRightL.textColor = [UIColor buttonEnabledBackgroundColor];
-    self.firstRightL.numberOfLines = 0;
-    self.firstRightL.text = @"微信昵称、联系电话、退换货原因";
-    self.firstRightL.font = [UIFont systemFontOfSize:12.];
     UILabel *firstL = [UILabel new];
-    
     [self.masBackView addSubview:firstL];
     self.firstL = firstL;
-    self.firstL.text = [NSString stringWithFormat:@"1.填写退货单or小纸条一并寄回写明您的%@",self.firstRightL.text];
+    NSString *colorTitle = @"微信昵称、联系电话、退换货原因";
+    NSString *allString = [NSString stringWithFormat:@"1.填写退货单or小纸条一并寄回写明您的%@。请务必在退货申请里填写退货物流信息，以方便我们最快给您退款",colorTitle];
+    self.firstL.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:12.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allString SubStringArray:@[colorTitle]];
     self.firstL.numberOfLines = 0;
     self.firstL.font = [UIFont systemFontOfSize:12.];
 
@@ -167,7 +168,7 @@
     self.thirdL = thirdL;
     self.thirdL.numberOfLines = 0;
     self.thirdL.font = [UIFont systemFontOfSize:12.];
-    self.thirdL.text = @"3.请先支付邮费,拒收到付件。到货验收后,贷款和运费将分开退还至您的相应账户";
+    self.thirdL.text = @"3.质量问题退货请事先拍照并联系在线客服，客服审核通过后会包邮退，但请您先支付邮费，仓库拒收到付件，到货验收后，货款和邮费将分开退还至您相应的账户";
     
     UILabel *fourthL = [UILabel new];
     [self.masBackView addSubview:fourthL];

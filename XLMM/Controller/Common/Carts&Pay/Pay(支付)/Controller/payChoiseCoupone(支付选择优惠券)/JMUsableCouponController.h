@@ -12,13 +12,15 @@
 @protocol YouhuiquanDelegate <NSObject>
 
 
-- (void)updateYouhuiquanmodel:(JMCouponModel *)model;
+- (void)updateYouhuiquanmodel:(NSArray *)modelArr;
 
 @end
 
 
 @interface JMUsableCouponController : UIViewController
 
+@property (nonatomic, assign) NSInteger couponNumber;
+@property (nonatomic, strong) NSNumber *directBuyGoodsTypeNumber;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 

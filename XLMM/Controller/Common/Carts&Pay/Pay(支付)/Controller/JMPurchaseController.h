@@ -12,7 +12,7 @@
 
 
 @property (nonatomic, strong) NSMutableArray *purchaseGoodsArr;
-
+@property (nonatomic, strong) NSNumber * directBuyGoodsTypeNumber;
 
 
 @end

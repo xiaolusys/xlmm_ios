@@ -7,7 +7,6 @@
 //
 
 #import "JMCouponRootCell.h"
-#import "MMClass.h"
 #import "JMCouponModel.h"
 
 
@@ -26,6 +25,7 @@
  *  使用场景
  */
 @property (nonatomic, strong) UILabel *couponProsdescLabel;
+@property (nonatomic, strong) UILabel *couponTypeLabel;
 /**
  *  开始时间
  */
@@ -62,19 +62,25 @@
     UILabel *couponValueLabel = [UILabel new];
     [self.couponBackImage addSubview:couponValueLabel];
     self.couponValueLabel = couponValueLabel;
-    self.couponValueLabel.font = [UIFont systemFontOfSize:52.];
+    self.couponValueLabel.font = [UIFont systemFontOfSize:32.];
     
     UILabel *couponUsefeeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponUsefeeLabel];
     self.couponUsefeeLabel = couponUsefeeLabel;
-    self.couponUsefeeLabel.font = [UIFont systemFontOfSize:14.];
+    self.couponUsefeeLabel.font = [UIFont systemFontOfSize:13.];
     self.couponUsefeeLabel.textColor = [UIColor buttonTitleColor];
     
     UILabel *couponProsdescLabel = [UILabel new];
     [self.couponBackImage addSubview:couponProsdescLabel];
     self.couponProsdescLabel = couponProsdescLabel;
-    self.couponProsdescLabel.font = [UIFont systemFontOfSize:16.];
+    self.couponProsdescLabel.font = [UIFont systemFontOfSize:13.];
     self.couponProsdescLabel.textColor = [UIColor buttonTitleColor];
+    
+    UILabel *couponTypeLabel = [UILabel new];
+    [self.couponBackImage addSubview:couponTypeLabel];
+    self.couponTypeLabel = couponTypeLabel;
+    self.couponTypeLabel.font = [UIFont systemFontOfSize:13.];
+    self.couponTypeLabel.textColor = [UIColor buttonTitleColor];
     
     UILabel *couponCreatedTimeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponCreatedTimeLabel];
@@ -101,6 +107,7 @@
     deadOfLabel.text = @" 至 ";
     
     kWeakSelf
+    CGFloat spaceLeft = HomeCategoryRatio * 55;
     
     [self.couponBackImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.contentView).offset(10);
@@ -110,27 +117,33 @@
     }];
     
     [self.couponValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.couponBackImage).offset(65);
-        make.top.equalTo(weakSelf.couponBackImage).offset(5);
-    }];
-    
-    [self.couponUsefeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.couponValueLabel.mas_right).offset(15);
-        make.top.equalTo(weakSelf.couponValueLabel).offset(10);
+        make.left.equalTo(weakSelf.couponBackImage).offset(spaceLeft);
+        make.top.equalTo(weakSelf.couponBackImage).offset(20);
+        make.width.mas_equalTo(@75);
     }];
     
     [self.couponProsdescLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.couponUsefeeLabel.mas_bottom).offset(10);
+        make.left.equalTo(weakSelf.couponValueLabel.mas_right).offset(5);
+        make.top.equalTo(weakSelf.couponBackImage).offset(8);
+    }];
+    [self.couponUsefeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.couponProsdescLabel.mas_bottom).offset(5);
+        make.left.equalTo(weakSelf.couponProsdescLabel);
+    }];
+    [self.couponTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.couponUsefeeLabel.mas_bottom).offset(5);
         make.left.equalTo(weakSelf.couponUsefeeLabel);
+        make.width.mas_equalTo(@(SCREENWIDTH - 100 - spaceLeft));
     }];
     
+    
     [self.rightImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.couponBackImage).offset(-25);
+        make.right.equalTo(weakSelf.couponBackImage).offset(-20);
         make.centerY.equalTo(weakSelf.couponValueLabel.mas_centerY);
     }];
     
     [deadLineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.couponBackImage).offset(55);
+        make.left.equalTo(weakSelf.couponBackImage).offset(spaceLeft);
         make.bottom.equalTo(weakSelf.couponBackImage).offset(-10);
     }];
     [self.couponCreatedTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -164,13 +177,17 @@
         self.couponValueLabel.textColor = [UIColor timeLabelColor];
     }else if (index == 2) {
         //不可使用
-        //未使用优惠券
         imageStr = @"noUsed_coupon";
         self.couponValueLabel.textColor = [UIColor redColor];
     }else if (index == 3) {
         //已过期
         imageStr = @"outDate_coupon";
         self.couponValueLabel.textColor = [UIColor timeLabelColor];
+    }else if (index == 8) {
+        //未使用优惠券
+        imageStr = @"noUsed_coupon";
+        self.couponValueLabel.textColor = [UIColor redColor];
+        self.rightImage.hidden = NO;
     }else {
         imageStr = @"noUsed_coupon";
         self.couponValueLabel.textColor = [UIColor redColor];
@@ -181,15 +198,17 @@
     
     self.couponUsefeeLabel.text = couponModel.use_fee_des;
     self.couponProsdescLabel.text = couponModel.pros_desc;
-    
+    self.couponTypeLabel.text = couponModel.title;
     self.couponCreatedTimeLabel.text = [self composeString:couponModel.created];
     self.couponDeadLineLabel.text = [self composeString:couponModel.deadline];
     
 }
 - (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID {
     NSString *imageStr = @"";
+    NSArray *selectedIDArr = [selectedID componentsSeparatedByString:@"/"];
+    NSString *selectedFirstID = selectedIDArr[0];
     if (isselectedYHQ == YES) {
-        if ([selectedID isEqualToString:couponModel.couponID]) {
+        if ([selectedFirstID isEqualToString:couponModel.couponID]) {
             imageStr = @"used_nomalcoupon";
             self.couponValueLabel.textColor = [UIColor redColor];
         }else {
@@ -201,6 +220,7 @@
     self.couponValueLabel.text = [NSString stringWithFormat:@"¥%@",couponModel.coupon_value];
     self.couponUsefeeLabel.text = couponModel.use_fee_des;
     self.couponProsdescLabel.text = couponModel.pros_desc;
+    self.couponTypeLabel.text = couponModel.title;
     self.couponCreatedTimeLabel.text = [self composeString:couponModel.created];
     self.couponDeadLineLabel.text = [self composeString:couponModel.deadline];
 }

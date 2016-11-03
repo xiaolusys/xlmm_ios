@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeGoodsCell.h"
-#import "MMClass.h"
 #import "JMRootgoodsCell.h"
 #import "JMRootGoodsModel.h"
 

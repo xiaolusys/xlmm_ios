@@ -7,7 +7,6 @@
 //
 
 #import "JMQueryLogInfoController.h"
-#import "MMClass.h"
 #import "JMPopView.h"
 #import "JMGoodsListController.h"
 #import "JMLogTimeListController.h"

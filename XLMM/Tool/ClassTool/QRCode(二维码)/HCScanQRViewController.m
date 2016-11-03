@@ -10,7 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SystemFunctions.h"
 #import "UIView+RGSize.h"
-#import "MMClass.h"
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 

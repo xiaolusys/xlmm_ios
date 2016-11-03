@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsSafeGuardCell.h"
-#import "MMClass.h"
 
 
 NSString *const JMGoodsSafeGuardCellIdentifier = @"JMGoodsSafeGuardCellIdentifier";

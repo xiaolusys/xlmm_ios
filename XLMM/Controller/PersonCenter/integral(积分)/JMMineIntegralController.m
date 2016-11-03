@@ -7,7 +7,6 @@
 //
 
 #import "JMMineIntegralController.h"
-#import "MMClass.h"
 #import "JMMineIntegralCell.h"
 #import "JMEmptyView.h"
 #import "JMMineIntegralModel.h"

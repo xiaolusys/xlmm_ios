@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MMClass.h"
 #import "JMPageViewBaseController.h"
 
 @interface JMHotGoodsController : JMPageViewBaseController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>

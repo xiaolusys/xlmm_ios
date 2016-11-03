@@ -7,9 +7,7 @@
 //
 
 #import "JMBaseGoodsCell.h"
-#import "MMClass.h"
 #import "JMSelecterButton.h"
-#import "XlmmMall.h"
 #import "JMPackAgeModel.h"
 
 @interface JMBaseGoodsCell ()
@@ -40,7 +38,7 @@
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self createUI];
         [self layoutUI];
     }
@@ -173,7 +171,8 @@
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.total_fee floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    NSInteger goodsNum = [goodsModel.num integerValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment / goodsNum];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
 
     NSInteger orderStatus = [goodsModel.status integerValue];
@@ -229,16 +228,17 @@
 - (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel {
     NSString *string = goodsModel.pic_path;
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
-    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImage.layer.masksToBounds = YES;
-    self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5;
+//    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+//    self.iconImage.layer.masksToBounds = YES;
+//    self.iconImage.layer.borderWidth = 0.5;
+//    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+//    self.iconImage.layer.cornerRadius = 5;
     
     self.titleLabel.text = goodsModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",goodsModel.sku_name];
     CGFloat payment = [goodsModel.total_fee floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    NSInteger goodsNum = [goodsModel.num integerValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment / goodsNum];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",goodsModel.num];
     
 }
@@ -249,16 +249,17 @@
 - (void)configPurchaseModel:(CartListModel *)cartModel {
     NSString *string = cartModel.pic_path;
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
-    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImage.layer.masksToBounds = YES;
-    self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImage.layer.cornerRadius = 5;
+//    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+//    self.iconImage.layer.masksToBounds = YES;
+//    self.iconImage.layer.borderWidth = 0.5;
+//    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+//    self.iconImage.layer.cornerRadius = 5;
     
     self.titleLabel.text = cartModel.title;
     self.sizeLabel.text = [NSString stringWithFormat:@"尺码:%@",cartModel.sku_name];
     CGFloat payment = [cartModel.total_fee floatValue];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment];
+    NSInteger goodsNum = [cartModel.num integerValue];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",payment / goodsNum];
     self.numLabel.text = [NSString stringWithFormat:@"x%@",cartModel.num];
     
 }

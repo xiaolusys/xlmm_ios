@@ -7,7 +7,6 @@
 //
 
 #import "JMHTTPManager.h"
-#import "MMClass.h"
 
 @implementation JMHTTPManager
 

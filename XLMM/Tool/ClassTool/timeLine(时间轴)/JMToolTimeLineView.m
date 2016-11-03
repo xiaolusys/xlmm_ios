@@ -7,7 +7,6 @@
 //
 
 #import "JMToolTimeLineView.h"
-#import "MMClass.h"
 
 @interface JMToolTimeLineView () {
     NSArray *imageNomal;

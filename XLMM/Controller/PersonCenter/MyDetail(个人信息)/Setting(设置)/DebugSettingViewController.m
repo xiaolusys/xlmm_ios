@@ -8,7 +8,6 @@
 
 #import "DebugSettingViewController.h"
 #import "LGViews.h"
-#import "MMClass.h"
 #import "MiPushSDK.h"
 
 //动画时间
@@ -111,10 +110,10 @@
                                   serverip = @"http://192.168.1.31:9000";
                                   break;
                               case 5:
-                                  serverip = @"http://192.168.1.50:8000";
+                                  serverip = @"http://staging.xiaolumm.com";
                                   break;
                               case 6:
-                                  serverip = @"http://192.168.1.57:8000";
+                                  serverip = @"http://warden.xiaolumm.com";
                                   break;
                                   
                               default:
@@ -123,7 +122,7 @@
                       }];
     _radioButtons1.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.f];
     _radioButtons1.contentEdgeInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumeimei.com", @"192.168.1.8:8888",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.50:8000", @"192.168.1.57:8000"] forState:UIControlStateNormal];
+    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumeimei.com", @"192.168.1.8:8888",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"staging.xiaolumm.com", @"warden.xiaolumm.com"] forState:UIControlStateNormal];
 //    [_radioButtons1 setButtonsContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [_radioButtons1 setButtonsTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageNormal forState:UIControlStateNormal];

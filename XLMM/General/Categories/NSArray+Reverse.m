@@ -19,5 +19,12 @@
     return [reserveArray copy];
     
 }
++ (BOOL)isEmptyForArray:(NSArray *)array {
+    if (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0) {
+        return YES;
+    }
+    return NO;
+}
+
 
 @end

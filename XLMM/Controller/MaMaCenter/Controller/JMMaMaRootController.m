@@ -7,12 +7,10 @@
 //
 
 #import "JMMaMaRootController.h"
-#import "MMClass.h"
 #import "HMSegmentedControl.h"
 #import "JMMakeMoneyController.h"
 #import "JMSocialActivityController.h"
 #import "JMMineController.h"
-//#import "UdeskRobotIMViewController.h"
 #import "UdeskManager.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
@@ -20,12 +18,16 @@
 #import "Udesk.h"
 #import "JMStoreManager.h"
 
+static NSString *currentTurnsNumberString;
+
 @interface JMMaMaRootController () {
     NSInteger _indexCode;
     BOOL _isActiveClick;
     NSArray *_titleArr;
     NSString *qrCodeUrlString;          // 二维码图片
     NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
+    NSString *_currentTurnsNum;         // 当天阅读每日推送轮数
+    
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
@@ -54,8 +56,12 @@
  */
 @property (nonatomic, strong) NSMutableArray *earningArray;
 @property (nonatomic, strong) NSMutableArray *earningImageArray;
-
+//@property (nonatomic, strong) NSMutableDictionary *currentTurnsData; // 保存每日推送轮数
 @property (nonatomic, strong) NSMutableArray *activeArray;
+
+@property (nonatomic, strong) UIView *msgBottomView;
+@property (nonatomic, strong) UIImageView *msgImage;
+@property (nonatomic, strong) UILabel *msgLabel;
 
 @end
 
@@ -85,6 +91,12 @@
     }
     return _mamaWebDict;
 }
+//- (NSMutableDictionary *)currentTurnsData {
+//    if (_currentTurnsData == nil) {
+//        _currentTurnsData = [NSMutableDictionary dictionary];
+//    }
+//    return _currentTurnsData;
+//}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _indexCode = 0;
@@ -96,6 +108,7 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMMaMaRootController"];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -112,6 +125,7 @@
     [self loadDataSource];
     [self loadfoldLineData];
     [self loaderweimaData];
+    
 }
 
 - (void)loadMaMaMessage {
@@ -140,6 +154,7 @@
 //新接口数据
 - (void)updateMaMaHome:(NSDictionary *)dic {
     NSDictionary *fortuneDic = dic[@"mama_fortune"];
+    _currentTurnsNum = fortuneDic[@"current_dp_turns_num"];
     self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
     NSDictionary *extraDic = self.mamaCenterModel.extra_info;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
@@ -149,6 +164,28 @@
     self.makeMoneyVC.centerModel = self.mamaCenterModel;
 //    self.makeMoneyVC.extraFiguresDic = fortuneDic[@"extra_figures"];
     self.mineVC.extraFiguresDic = fortuneDic[@"extra_figures"];
+    
+    NSString *currentTime = [NSString getCurrentYMD];
+    if ([JMStoreManager isFileExist:@"currentTurnsData.plist"]) { // 存在这个字典
+        NSDictionary *dict = [JMStoreManager getDataDictionary:@"currentTurnsData.plist"];
+        NSString *saveTime = dict[@"currentTime"];
+        NSString *saveNum = dict[@"currentNum"];
+        [JMStoreManager removeFileByFileName:@"currentTurnsData.plist"];
+        NSDictionary *currentDict = [NSDictionary dictionaryWithObjectsAndKeys:currentTime,@"currentTime",_currentTurnsNum,@"currentNum", nil];
+        [JMStoreManager saveDataFromDictionary:@"currentTurnsData.plist" WithData:currentDict];
+        if ([currentTime isEqualToString:saveTime]) { // 判断是否为当天
+            NSInteger turnsNum = labs([_currentTurnsNum integerValue] - [saveNum integerValue] + [currentTurnsNumberString integerValue]);
+            _currentTurnsNum = [NSString stringWithFormat:@"%ld",turnsNum];
+        }else {
+        }
+    }else {  // 不存在这个字典
+        NSDictionary *currentDict = [NSDictionary dictionaryWithObjectsAndKeys:currentTime,@"currentTime",_currentTurnsNum,@"currentNum", nil];
+        [JMStoreManager saveDataFromDictionary:@"currentTurnsData.plist" WithData:currentDict];
+    }
+    currentTurnsNumberString = _currentTurnsNum;
+    self.makeMoneyVC.currentTurnsNum = [NSString stringWithFormat:@"%@",currentTurnsNumberString];
+    
+    
 }
 - (void)loadMaMaWeb {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
@@ -226,8 +263,9 @@
         if (!responseObject) return ;
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
+            [JMStoreManager removeFileByFileName:@"qrCodeUrlString.txt"];
             qrCodeUrlString = responseObject[@"qrcode_link"];
-            [JMStoreManager storeUserDefults:qrCodeUrlString forKey:@"qrCodeUrlString"];
+            [JMStoreManager saveDataFromArray:@"qrCodeUrlString.txt" WithString:qrCodeUrlString];
         }else {
         }
     } WithFail:^(NSError *error) {
@@ -292,6 +330,11 @@
     [self addChildViewController:self.makeMoneyVC];
     [self.scrollView addSubview:self.makeMoneyVC.view];
     
+    self.makeMoneyVC.block = ^(UILabel *currentLabel) {
+        currentTurnsNumberString = @"0";
+        currentLabel.hidden = YES;
+    };
+    
     self.activityVC = [[JMSocialActivityController alloc] init];
     self.activityVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.activityVC];
@@ -309,12 +352,24 @@
 //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
-    }else {
-        
-    }
+    }else { }
     self.scrollView.contentOffset = CGPointMake(page * SCREENWIDTH, 0);
     [MobClick event:_titleArr[page]];
 }
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = scrollView.contentOffset.x / pageWidth;
+    if (page == 1 && _isActiveClick) {
+        self.activityVC.urlString = self.mamaWebDict[@"forum"];
+        _isActiveClick = NO;
+    }else { }
+    [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
+}
+#pragma mark - 妈妈页面消息弹出展示
+// ============================================================================= //
+//                      妈妈页面消息弹出展示
+// ============================================================================= //
 - (void)earningPrompt {
     [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
 }
@@ -329,52 +384,61 @@
 }
 - (void)showNewStatusCount:(NSArray *)message Image:(NSArray *)imageArr Index:(NSInteger)index {
     if (message.count == 0) return ;
-    CGFloat h = 40.;
-    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) + 20;
-    CGFloat x = 10;
-    CGFloat w = SCREENWIDTH;
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(x, y, w - 50, h)];
-    view.layer.cornerRadius = 20;
-    view.layer.masksToBounds = YES;
-    [self.view addSubview:view];
-    //    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
-    view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.70f;
-    
-    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(x, 5, 30, 30)];
-    image.layer.cornerRadius = 15;
-    image.layer.masksToBounds = YES;
-    [view addSubview:image];
-    
-    UILabel *label6 = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, w - 105, h)];
-    [view addSubview:label6];
-    label6.font = [UIFont systemFontOfSize:13.];
-    label6.textColor = [UIColor whiteColor];
-    label6.text = message[index];
-    
-    [image sd_setImageWithURL:[NSURL URLWithString:[[imageArr[index] JMUrlEncodedString] imageMoreCompression]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    [self.view addSubview:self.msgBottomView];
+    [self.msgBottomView addSubview:self.msgImage];
+    [self.msgBottomView addSubview:self.msgLabel];
+    self.msgLabel.text = message[index];
+    [self.msgImage sd_setImageWithURL:[NSURL URLWithString:[[imageArr[index] JMUrlEncodedString] imageMoreCompression]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     [UIView animateWithDuration:1.0 animations:^{
         //        view.transform = CGAffineTransformMakeTranslation(0, h * 2);
-        view.alpha = 1.0f;
+        self.msgBottomView.alpha = 1.0f;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.5 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
             //            view.transform = CGAffineTransformIdentity;
-            view.alpha = 0.0f;
+            self.msgBottomView.alpha = 0.0f;
         } completion:^(BOOL finished) {
-            [view removeFromSuperview];
+            [self.msgBottomView removeFromSuperview];
             _indexCode ++;
             int x = arc4random() % 5 + 5;
             [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
         }];
     }];
 }
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat pageWidth = scrollView.frame.size.width;
-    NSInteger page = scrollView.contentOffset.x / pageWidth;
-    
-    [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
+- (UIView *)msgBottomView {
+    if (_msgBottomView == nil) {
+        CGFloat h = 40.;
+        CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) + 20;
+        CGFloat x = 10;
+        CGFloat w = SCREENWIDTH;
+        _msgBottomView = [[UIView alloc] initWithFrame:CGRectMake(x, y, w - 50, h)];
+        _msgBottomView.layer.cornerRadius = 20;
+        _msgBottomView.layer.masksToBounds = YES;
+        //    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
+        _msgBottomView.backgroundColor = [UIColor blackColor];
+        _msgBottomView.alpha = 0.70f;
+    }
+    return _msgBottomView;
 }
+- (UIImageView *)msgImage {
+    if (_msgImage == nil) {
+        CGFloat x = 10;
+        _msgImage = [[UIImageView alloc] initWithFrame:CGRectMake(x, 5, 30, 30)];
+        _msgImage.layer.cornerRadius = 15;
+        _msgImage.layer.masksToBounds = YES;
+    }
+    return _msgImage;
+}
+- (UILabel *)msgLabel {
+    if (_msgLabel == nil) {
+        CGFloat h = 40.;
+        CGFloat w = SCREENWIDTH;
+        _msgLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 0, w - 105, h)];
+        _msgLabel.font = [UIFont systemFontOfSize:13.];
+        _msgLabel.textColor = [UIColor whiteColor];
+    }
+    return _msgLabel;
+}
+#pragma mark - 小鹿客服注册个人信息
 - (void)customUserInfo {
     if (self.userInfoDic.count == 0) {
         return ;

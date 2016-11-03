@@ -18,7 +18,6 @@
 #import "JMReturnedGoodsController.h"
 #import "JMRefundBaseController.h"
 #import "JMCouponController.h"
-#import "MMClass.h"
 #import "JMGoodsDetailController.h"
 #import "JMHomeRootController.h"
 #import "JMMineIntegralController.h"
@@ -42,9 +41,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentLeftMenuVC:) name:@"presentLeftMenuVC" object:nil];
     
 }
@@ -495,18 +492,14 @@
     }
     
 }
-
 - (void) displayLoginView{
     JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-    // zhifuVC.menuDelegate = ;
     if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
         [self.pushVCDelegate rootVCPushOtherVC:loginVC];
     }
 }
 
 - (void)updateMoneyLabel:(NSNotification *)center {
-//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//    NSString *str = [user objectForKey:@"DrawCashM"];
     self.accountLabel.text = center.object;
 }
 @end

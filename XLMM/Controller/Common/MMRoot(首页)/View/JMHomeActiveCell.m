@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeActiveCell.h"
-#import "MMClass.h"
 
 NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
 
@@ -36,9 +35,9 @@ NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
     kWeakSelf
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.contentView).offset(5);
-        make.bottom.equalTo(weakSelf.contentView).offset(-5);
         make.left.equalTo(weakSelf.contentView);
         make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(SCREENWIDTH / 2));
     }];
     
 }

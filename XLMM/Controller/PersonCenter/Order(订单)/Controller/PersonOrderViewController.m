@@ -7,7 +7,6 @@
 //
 
 #import "PersonOrderViewController.h"
-#import "MMClass.h"
 #import "JMPersonAllOrderController.h"
 #import "JMPersonWaitPayController.h"
 #import "JMPersonWaitGoodsController.h"

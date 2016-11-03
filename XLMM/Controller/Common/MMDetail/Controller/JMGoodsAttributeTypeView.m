@@ -7,7 +7,6 @@
 //
 
 #import "JMGoodsAttributeTypeView.h"
-#import "MMClass.h"
 
 @implementation JMGoodsAttributeTypeView
 

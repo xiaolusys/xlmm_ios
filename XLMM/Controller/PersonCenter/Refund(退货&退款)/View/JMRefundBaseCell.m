@@ -8,8 +8,6 @@
 
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
-#import "MMClass.h"
-#import "XlmmMall.h"
 
 @interface JMRefundBaseCell ()
 

@@ -7,7 +7,6 @@
 //
 
 #import "JMDisableCouponController.h"
-#import "MMClass.h"
 #import "JMCouponRootCell.h"
 #import "JMCouponModel.h"
 #import "JMEmptyView.h"
@@ -31,7 +30,7 @@
     if (dataSource.count == 0) {
         [self emptyView];
     }else {
-        
+        [self.tableView reloadData];
     }
 }
 - (void)createTableView {

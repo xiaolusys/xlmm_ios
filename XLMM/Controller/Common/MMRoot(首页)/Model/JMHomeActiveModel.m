@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeActiveModel.h"
-#import "MMClass.h"
 
 @implementation JMHomeActiveModel
 

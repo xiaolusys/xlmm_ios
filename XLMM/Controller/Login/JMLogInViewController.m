@@ -7,13 +7,11 @@
 //
 
 #import "JMLogInViewController.h"
-#import "MMClass.h"
 #import "WXApi.h"
 #import "JMPhonenumViewController.h"
 #import "JMAuthcodeViewController.h"
 #import "RegisterViewController.h"
 #import "MiPushSDK.h"
-//#import "MobClick.h"
 #import "JMSelecterButton.h"
 #import "VerifyPhoneViewController.h"
 

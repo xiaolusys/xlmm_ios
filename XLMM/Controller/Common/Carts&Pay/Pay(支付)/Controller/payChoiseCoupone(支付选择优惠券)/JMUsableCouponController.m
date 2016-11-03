@@ -7,7 +7,6 @@
 //
 
 #import "JMUsableCouponController.h"
-#import "MMClass.h"
 #import "JMCouponRootCell.h"
 #import "JMCouponModel.h"
 #import "JMSelecterButton.h"
@@ -35,6 +34,7 @@
     if (dataSource.count == 0) {
         [self emptyView];
     }else {
+        [self.tableView reloadData];
     }
 }
 
@@ -80,9 +80,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMCouponModel *couponModel = [[JMCouponModel alloc] init];
     couponModel = self.dataSource[indexPath.row];
-    
+    NSMutableArray *couponArray = [NSMutableArray array];
+    if (self.couponNumber >= 1 && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+        NSInteger count = self.dataSource.count > self.couponNumber ? self.couponNumber : self.dataSource.count;
+        for (int i = 0; i < count; i++) {
+            [couponArray addObject:self.dataSource[i]];
+        }
+    }else {
+        [couponArray addObject:couponModel];
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanmodel:)]) {
-        [self.delegate updateYouhuiquanmodel:couponModel];
+        [self.delegate updateYouhuiquanmodel:couponArray];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -95,7 +103,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(updateYouhuiquanmodel:)]) {
         [self.delegate updateYouhuiquanmodel:nil];
     }
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)changeButtonStatus:(UIButton *)button {
@@ -103,7 +110,7 @@
 }
 - (void)emptyView {
     kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {

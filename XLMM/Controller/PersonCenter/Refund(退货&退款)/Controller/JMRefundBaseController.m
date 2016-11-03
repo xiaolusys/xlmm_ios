@@ -7,7 +7,6 @@
 //
 
 #import "JMRefundBaseController.h"
-#import "MMClass.h"
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "RefundDetailsViewController.h"
@@ -154,7 +153,6 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMRefundModel *refundModel = self.dataSource[indexPath.row];
-    
     RefundDetailsViewController *refundDetailVC = [[RefundDetailsViewController alloc] init];
     refundDetailVC.refundModelr = refundModel;
     [self.navigationController pushViewController:refundDetailVC animated:YES];

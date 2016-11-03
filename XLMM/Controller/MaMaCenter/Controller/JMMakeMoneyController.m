@@ -7,7 +7,6 @@
 //
 
 #import "JMMakeMoneyController.h"
-#import "MMClass.h"
 #import "PublishNewPdtViewController.h"
 #import "WebViewController.h"
 #import "ProductSelectionListViewController.h"
@@ -99,6 +98,10 @@
 @property (nonatomic, strong) UILabel *rankingLabel;
 @property (nonatomic, strong) NSNumber *weekDay;
 
+// 测试动画效果
+@property (nonatomic, strong) UIImageView *animationImage;
+@property (nonatomic, strong) UILabel *currentTurnsLabel;
+
 @end
 
 @implementation JMMakeMoneyController
@@ -132,12 +135,17 @@
     [self createChart:dataArray];
     
 }
+- (void)setCurrentTurnsNum:(NSString *)currentTurnsNum {
+    _currentTurnsNum = currentTurnsNum;
+    if ([currentTurnsNum isEqual:@"0"]) {
+    }else {
+        self.currentTurnsLabel.hidden = NO;
+        self.currentTurnsLabel.text = currentTurnsNum;
+    }
+}
 - (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
     _makeMoneyDic = makeMoneyDic;
     self.myInvitation = makeMoneyDic[@"invite"];
-    
-    
-    
 }
 - (void)setCenterModel:(JMMaMaCenterModel *)centerModel {
     _centerModel = centerModel;
@@ -165,12 +173,6 @@
     NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[centerModel.cash_value floatValue]];
     _carryValue = [carryValueStr floatValue];
 }
-//- (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
-//    _extraFiguresDic = extraFiguresDic;
-//    
-//
-//    
-//}
 - (void)setActiveArray:(NSMutableArray *)activeArray {
     _activeArray = activeArray;
     
@@ -447,6 +449,7 @@
         
         
         UIImageView *iconImage = [UIImageView new];
+        iconImage.tag = 10 + i;
         [button addSubview:iconImage];
         iconImage.image = [UIImage imageNamed:imageArr[i]];
         
@@ -469,7 +472,23 @@
         
     
     }
-
+    self.animationImage = (UIImageView *)[self.view viewWithTag:11];
+    self.currentTurnsLabel = [UILabel new];
+    [self.animationImage addSubview:self.currentTurnsLabel];
+    self.currentTurnsLabel.textColor = [UIColor whiteColor];
+    self.currentTurnsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    self.currentTurnsLabel.textAlignment = NSTextAlignmentCenter;
+    self.currentTurnsLabel.font = CS_SYSTEMFONT(9.);
+    self.currentTurnsLabel.layer.masksToBounds = YES;
+    self.currentTurnsLabel.layer.cornerRadius = 7.;
+    self.currentTurnsLabel.hidden = YES;
+    [self.currentTurnsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.animationImage).offset(15);
+        make.centerY.equalTo(weakSelf.animationImage).offset(-15);
+        make.width.height.mas_equalTo(@(14));
+    }];
+    
+    
     UIView *currentView = [[UIView alloc] initWithFrame:CGRectMake(0, 440, SCREENWIDTH, 15)];
     [headerView addSubview:currentView];
     headerView.backgroundColor = [UIColor countLabelColor];
@@ -635,8 +654,7 @@
 - (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
     return @"JMMaMaMessageCell";
 }
-- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
-}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index { }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     WebViewController *message = [[WebViewController alloc] init];
     [self.diction setValue:self.makeMoneyDic[@"notice"] forKey:@"web_url"];
@@ -664,9 +682,9 @@
 //    NSLog(@"button.tag --> %ld",button.tag);
     NSInteger index = button.tag;
     if (index == 100) {
-        [self earning:1];
+//        [self earning:1];  // 暂时注释掉
     }else if (index == 101) {
-        [self earning:0];
+//        [self earning:0];  // 暂时注释掉
     }else if (index == 102) {
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
@@ -681,6 +699,9 @@
         webVC.isShowRightShareBtn = true;
         [self.navigationController pushViewController:webVC animated:YES];
     }else if (index == 104) {
+        if (self.block) {
+            self.block(self.currentTurnsLabel);
+        }
         JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
         [self.navigationController pushViewController:pushingVC animated:YES];
     }else if (index == 105) {
@@ -730,10 +751,6 @@
     [self.navigationController pushViewController:earningsRankVC animated:YES];
 }
 
-
-
-
-
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -748,7 +765,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return SCREENWIDTH * 0.5;
+    return SCREENWIDTH * 0.5 + 10;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JMHomeActiveCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeActiveCellIdentifier];
@@ -1117,6 +1134,7 @@
     return self.lineChart;
 }
 
+
 #pragma mark 获得星期数
 - (void)createWeekDay{
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -1153,6 +1171,10 @@
     [self createChart:allDingdan];
     
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    self.lineChart = nil;
+}
+
 
 @end
 

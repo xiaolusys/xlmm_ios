@@ -32,7 +32,10 @@
 // 图片处理
 #define CS_IMAGE(name) [UIImage imageNamed:name]
 
-
+// 主页分类 比例布局
+#define HomeCategoryRatio               SCREENWIDTH / 320.0
+#define HomeCategorySpaceW              25 * HomeCategoryRatio
+#define HomeCategorySpaceH              20 * HomeCategoryRatio
 
 
 

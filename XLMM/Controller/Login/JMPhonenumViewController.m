@@ -7,7 +7,6 @@
 //
 
 #import "JMPhonenumViewController.h"
-#import "MMClass.h"
 #import "WXApi.h"
 #import "MiPushSDK.h"
 #import "VerifyPhoneViewController.h"

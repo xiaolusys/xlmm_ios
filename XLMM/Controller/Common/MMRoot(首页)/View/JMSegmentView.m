@@ -8,7 +8,6 @@
 
 #import "JMSegmentView.h"
 #import "HMSegmentedControl.h"
-#import "MMClass.h"
 #import "JMCountDownView.h"
 
 @interface JMSegmentView ()<UIScrollViewDelegate> {

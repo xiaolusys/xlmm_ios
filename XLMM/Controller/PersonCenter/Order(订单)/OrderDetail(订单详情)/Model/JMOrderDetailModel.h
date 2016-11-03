@@ -49,6 +49,10 @@
 
 @property (nonatomic,copy) NSString *payment;
 
+@property (nonatomic, assign) bool has_budget_paid;
+
+@property (nonatomic, copy) NSString *pay_cash;
+
 @property (nonatomic,copy) NSString *post_fee;
 /**
  *  订单状态
@@ -130,6 +134,7 @@
  }
  );
  };
+ "has_budget_paid" = 0;
  id = 436236;
  "logistics_company" = "<null>";
  "order_type" = 0;
@@ -176,6 +181,7 @@
  "ware_by_display" = "\U4e0a\U6d77\U4ed3";
  }
  );
+ "pay_cash" = 0;
  "pay_time" = "2016-09-23T17:13:36";
  payment = "47.9";
  "post_fee" = 0;

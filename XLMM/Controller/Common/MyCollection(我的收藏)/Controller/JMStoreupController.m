@@ -7,7 +7,6 @@
 //
 
 #import "JMStoreupController.h"
-#import "MMClass.h"
 #import "JMHotGoodsController.h"
 #import "JMOutStockGoodsController.h"
 

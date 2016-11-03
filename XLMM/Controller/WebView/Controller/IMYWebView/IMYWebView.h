@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WKScriptMessageHandler.h>
+#import <WebKit/WebKit.h>
 
 typedef void (^IMYWebViewProgressBlock)(double estimatedProgress);
 @class IMYWebView;
@@ -18,7 +19,7 @@ typedef void (^IMYWebViewProgressBlock)(double estimatedProgress);
 - (void)webViewDidFinishLoad:(IMYWebView *)webView;
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error;
 - (BOOL)webView:(IMYWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
-
+- (void)webView:(IMYWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler;
 
 @end
 

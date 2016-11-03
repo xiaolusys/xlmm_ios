@@ -9,7 +9,6 @@
 #import "JMTimeLineView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MASViewAttribute.h"
-#import "MMClass.h"
 
 
 @interface JMTimeLineView () {

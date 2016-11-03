@@ -9,9 +9,7 @@
 #import "AppDelegate.h"
 #import "JMStoreManager.h"
 #import "Pingpp.h"
-#import "MMClass.h"
 #import "NewLeftViewController.h"
-#import "ActivityView.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
 #import "Udesk.h"
@@ -32,7 +30,6 @@ static BOOL isNetPrompt;
 @property (nonatomic, strong) NSDictionary *tokenInfo;
 @property (nonatomic, strong) NSDictionary *userInfo;
 
-
 @property (nonatomic) BOOL isLaunchedByNotification;
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, copy) NSString *deviceUUID;
@@ -40,7 +37,6 @@ static BOOL isNetPrompt;
 @property (nonatomic, copy) NSDictionary *pushInfo;
 @property (nonatomic, assign) BOOL isFirst;
 
-@property (nonatomic, strong)ActivityView *startV;
 @property (nonatomic, strong)NSTimer *sttime;
 @property (nonatomic, assign)NSInteger timeCount;
 
@@ -54,22 +50,10 @@ static BOOL isNetPrompt;
 @implementation AppDelegate{
     NSString *httpStatus;
 }
-
 //监测当前网络状态（网络监听）
 - (void)AFNetworkStatus{
-    
     //1.创建网络监测者
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
-    
-    /*枚举里面四个状态  分别对应 未知 无网络 数据 WiFi
-     typedef NS_ENUM(NSInteger, AFNetworkReachabilityStatus) {
-     AFNetworkReachabilityStatusUnknown          = -1,      未知
-     AFNetworkReachabilityStatusNotReachable     = 0,       无网络
-     AFNetworkReachabilityStatusReachableViaWWAN = 1,       蜂窝数据网络
-     AFNetworkReachabilityStatusReachableViaWiFi = 2,       WiFi
-     };
-     */
-    
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         //这里是监测到网络改变的block  可以写成switch方便
         //在里面可以随便写事件
@@ -91,7 +75,6 @@ static BOOL isNetPrompt;
                 }else {
                     
                 }
-                
 
                 break;
             }
@@ -120,26 +103,10 @@ static BOOL isNetPrompt;
     }] ;
     [manager startMonitoring];
 }
-
-- (void)ActivityTimeUpdate {
-    self.timeCount++;
-    if (self.timeCount > 2) {
-        [self.sttime invalidate];
-        self.sttime = nil;
-        
-        [self.startV removeFromSuperview];
-        
-        //发送通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
-        
-    }
-}
-
 - (void)udeskInit{
     //uDesk 客服
     [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
 }
-
 - (void)umengTrackInit {
     //[MobClick setLogEnabled:YES];
     //version标识
@@ -154,111 +121,36 @@ static BOOL isNetPrompt;
     [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
     //qq分享
     [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
-    
     //微信分享
     [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
-    
     //微博分享
     [WeiboSDK registerApp:@"2475629754"];
-    
-    
     [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
 
 }
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
     [self udeskInit];
     [self umengTrackInit];
-    
     isNetPrompt = YES;
     [self AFNetworkStatus];
-
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
-//    [NSThread sleepForTimeInterval:2.0];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
-    
     [self getServerIP];
     [self updateLoginState];
-    
-    self.startV = [[ActivityView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    [window addSubview:self.startV];
-    self.sttime = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(ActivityTimeUpdate) userInfo:nil repeats:YES];
-    
-    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:activityUrl WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        if (responseObject[@"picture"] == nil)return;
-        [self startDeal:responseObject];
-    } WithFail:^(NSError *error) {
-        
-    } Progress:^(float progress) {
-    }];
-
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    NSInteger count = [userDefaults integerForKey:@"StartCount"];
-    
-    NSLog(@"count = %ld", (long)count);
-    
-    count++;
-    
-    [userDefaults setInteger:count forKey:@"StartCount"];
-    [userDefaults synchronize];
-    if (count == 22) {
-        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"去评价" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好的", nil];
-        //        [alertView show];
-        
-    }
-
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
     [JMStoreManager recoderAppLoadNum];
-    
     self.isFirst = YES;
-    
-    
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
-    
     if ([string isEqual:@"1"] || string == nil) {
-        
         [MiPushSDK registerMiPush:self type:0 connect:YES];
-        
-    }else {
-        
-    }
-    
-    
+    }else { }
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    __unused NSString *plistPath1 = [paths objectAtIndex:0];
-    NSLog(@"%@", plistPath1);
-    
-    
-    NSLog(@"%d", self.isLaunchedByNotification);
-    
-    
-    //    Class cls = NSClassFromString(@"UMANUtil");
-    //    SEL deviceIDSelector = @selector(openUDIDString);
-    //    NSString *deviceID = nil;
-    //    if(cls && [cls respondsToSelector:deviceIDSelector]){
-    //        deviceID = [cls performSelector:deviceIDSelector];
-    //    }
-    //    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
-    //                                                       options:NSJSONWritingPrettyPrinted
-    //                                                         error:nil];
-    //
-    //    NSLog(@"－－－－－－－－－－－－%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-    
     [self umengShareInit];
-    
     //创建导航控制器，添加根视图控制器
-//    MMRootViewController *root = [[MMRootViewController alloc] initWithNibName:@"MMRootViewController" bundle:nil];
     JMHomeRootController *root = [[JMHomeRootController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
@@ -272,14 +164,8 @@ static BOOL isNetPrompt;
     menuVC.contentViewShadowOpacity = 0.6;
     menuVC.contentViewShadowRadius = 12;
     menuVC.contentViewShadowEnabled = YES;
-    
-    
     self.window.rootViewController = menuVC;
-    
-    
     [self.window makeKeyAndVisible];
-    
-    
     if (launchOptions != nil) {
         NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (remoteNotification != nil) {
@@ -294,28 +180,6 @@ static BOOL isNetPrompt;
 - (void)openPushMessage {
     [MiPushSDK registerMiPush:self type:0 connect:YES];
 }
-
-- (void)startDeal:(NSDictionary *)dic {
-    self.imageUrl = [dic objectForKey:@"picture"];
-    NSLog(@"startDeal imageUrl %@", self.imageUrl);
-    if ([NSString isStringEmpty:self.imageUrl]) {
-        [self.sttime invalidate];
-        self.sttime = nil;
-        
-        [self.startV removeFromSuperview];
-        
-        //发送通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"bombbox" object:self];
-    }
-    self.startV.imageV.alpha = 1;
-    
-    [self.startV.imageV sd_setImageWithURL:[NSURL URLWithString:[self.imageUrl imageNormalCompression]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [UIView animateWithDuration:.3 animations:^{
-            self.startV.imageV.alpha = 0;
-        }];
-    }];
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     //  https://itunes.apple.com/us/app/xiao-lu-mei-mei/id1051166985
@@ -844,8 +708,7 @@ static BOOL isNetPrompt;
 }
 
 - (void)pingppPay:(NSURL *)url {
-    [Pingpp handleOpenURL:url
-           withCompletion:^(NSString *result, PingppError *error) {
+    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
                
                if ([result isEqualToString:@"success"]) {
                    // 支付成功
@@ -936,11 +799,13 @@ static BOOL isNetPrompt;
 - (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
 {
     //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
 {
     // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    
 }
 
 - (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController

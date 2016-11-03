@@ -48,7 +48,6 @@
 
 - (IBAction)presentLeftMenuViewController:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
     [self.sideMenuViewController presentLeftMenuViewController];
 }
 

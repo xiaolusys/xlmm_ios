@@ -7,7 +7,6 @@
 //
 
 #import "JMCategoryListCell.h"
-#import "MMClass.h"
 
 @interface JMCategoryListCell ()
 

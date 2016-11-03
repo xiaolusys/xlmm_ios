@@ -7,7 +7,6 @@
 //
 
 #import "Account1ViewController.h"
-#import "MMClass.h"
 #import "AccountTableViewCell.h"
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"
@@ -54,42 +53,21 @@ static NSString *identifier = @"AccountCell";
     }
     return _dataArr;
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel) name:@"drawCashMoeny" object:nil];
-}
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"BlanceAccount"];
-    
-
-    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
-//    [SVProgressHUD dismiss];
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
 }
-
-
-- (void)updateMoneyLabel{
-   NSUserDefaults *drawCashM = [NSUserDefaults standardUserDefaults];
-    NSString *str = [drawCashM objectForKey:@"DrawCashM"];
-    self.moneyLabel.text = str;
-
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
     [self createNavigationBarWithTitle:@"钱包" selecotr:@selector(backBtnClicked:)];
-    
     [self createRightbutton];
     [self createTableView];
     [self createButton];

@@ -7,7 +7,6 @@
 //
 
 #import "JMHomeRootController.h"
-#import "MMClass.h"
 #import <RESideMenu.h>
 #import "JMHomeActiveCell.h"
 #import "JMHomeCategoryCell.h"
@@ -37,10 +36,6 @@
 #import "JMHomeRootCategoryController.h"
 #import "JMStoreManager.h"
 
-// 主页分类 比例布局
-#define HomeCategoryRatio               SCREENWIDTH / 320.0
-#define HomeCategorySpaceW              25 * HomeCategoryRatio
-#define HomeCategorySpaceH              20 * HomeCategoryRatio
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -126,6 +121,9 @@
     }
     return _activeArray;
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    [MBProgressHUD hideHUD];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.cartsCountLabel.hidden = YES;
@@ -169,7 +167,7 @@
         NSTimeInterval time=[date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
         int timer = time;
         NSString *timeStr = [NSString stringWithFormat:@"%d",timer / (3600 * 24)];
-        if ([timeStr isEqual:_dayDifferString]) {
+        if ([timeStr compare:_dayDifferString options:NSNumericSearch] == NSOrderedAscending || [timeStr isEqualToString:_dayDifferString]) {
             [self.tableView.mj_header beginRefreshing];
         }
     }
@@ -203,6 +201,7 @@
     _topImageArray = [NSMutableArray array];
     _categorysArray = [NSMutableArray array];
     _timeArray = [NSMutableArray arrayWithObjects:@"00:00:00",@"00:00:00",@"00:00:00", nil];
+    self.isPopUpdataView = NO;
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
@@ -348,7 +347,6 @@
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
-//    self.pageView.hidePageControl = YES;
     self.tableView.tableHeaderView = self.pageView;
 }
 #pragma mark 创建自定义 navigationView
@@ -373,11 +371,13 @@
 }
 - (void)createRightItem {
     if(self.navigationItem.rightBarButtonItem == nil) {
-        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        NSString *titleStr = @"我的微店";
+        CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
+        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
         [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
-        UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"category"]];
-        rightImageview.frame = CGRectMake(18, 11, 26, 26);
-        [self.navRightButton addSubview:rightImageview];
+        [self.navRightButton setTitle:titleStr forState:UIControlStateNormal];
+        [self.navRightButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:14.];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
     }else {}
 }
@@ -399,13 +399,13 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
-    self.pageView.pageControlNum = _topImageArray.count;
     [self.pageView reloadData];
     NSArray *categoryArr = dic[@"categorys"];
     for (NSDictionary *dicts in categoryArr) {
         [_categorysArray addObject:dicts];
     }
-    [JMStoreManager storeobject:_categorysArray FileName:@"categorysArray"];
+    [JMStoreManager removeFileByFileName:@"categorysArray.xml"];
+    [JMStoreManager saveDataFromString:@"categorysArray.xml" WithArray:_categorysArray];
     
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
@@ -430,16 +430,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_categorysArray.count <= 4) {
-//            return (SCREENWIDTH - 25) / 4 * 1.25 + 20;
             return oneRowCellH;
         }else {
-//            return (SCREENWIDTH - 25) / 4 * 1.25 * 2 + 20;
             return twoRowCellH;
         }
     }else if (indexPath.section == 1) {
         return SCREENWIDTH * 0.5 + 10;
-//        JMHomeActiveModel *model = self.activeArray[indexPath.row];
-//        return model.cellHeight;
     }else if (indexPath.section == 2) {
         return SCREENHEIGHT - 64;
     }else {
@@ -578,6 +574,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)rightNavigationClick:(UIButton *)button {
+    [MBProgressHUD showLoading:@""];
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL islogin = [defaults boolForKey:kIsLogin];
     if (islogin == YES) {
@@ -602,6 +601,9 @@
         JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
 }
 #pragma mark 顶部视图滚动协议方法
 - (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
@@ -672,7 +674,9 @@
     if ([_cartTimer isValid]) {
         [_cartTimer invalidate];
     }
-    _cartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    _cartTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+//    _cartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_cartTimer forMode:NSRunLoopCommonModes];
 }
 - (void)timerFireMethod:(NSTimer*)thetimer {
     NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[_cartTimeString doubleValue]];
@@ -1124,6 +1128,7 @@
  *           └─┐  ┐  ┌───────┬──┐  ┌──┘
  *             │ ─┤ ─┤       │ ─┤ ─┤
  *             └──┴──┘       └──┴──┘
+ *
  *                 神兽保佑
  *                 代码无BUG!
  */
