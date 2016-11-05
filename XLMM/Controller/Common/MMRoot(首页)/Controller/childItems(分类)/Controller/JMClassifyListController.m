@@ -58,7 +58,7 @@ static NSString * cellId = @"JMClassifyListController";
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collectionView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [self.collectionView.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];

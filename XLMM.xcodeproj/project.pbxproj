@@ -656,6 +656,9 @@
 		1FD158E31D2F86C4006C4B14 /* JMRefundBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158E21D2F86C4006C4B14 /* JMRefundBaseCell.m */; };
 		1FD540C71DAB7FD500E159DB /* JMStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD540C61DAB7FD500E159DB /* JMStoreManager.m */; };
 		1FD5D9121DC88EED007E8DDE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321857C21CA109990085FF21 /* WebKit.framework */; };
+		1FD5D9391DCB2349007E8DDE /* MJAnimationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD5D9381DCB2349007E8DDE /* MJAnimationHeader.m */; };
+		1FD5D93F1DCB40A6007E8DDE /* JMLaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD5D93E1DCB40A6007E8DDE /* JMLaunchView.m */; };
+		1FD5D9451DCB5CA8007E8DDE /* JMRefreshLoadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD5D9441DCB5CA8007E8DDE /* JMRefreshLoadView.m */; };
 		1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07181D4303790010231F /* JMUpdataAppPopView.m */; };
 		1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD071C1D45AABF0010231F /* JMSegmentController.m */; };
 		1FDD07261D45BA7F0010231F /* JMUsableCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07251D45BA7F0010231F /* JMUsableCouponController.m */; };
@@ -1769,6 +1772,12 @@
 		1FD158E21D2F86C4006C4B14 /* JMRefundBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundBaseCell.m; sourceTree = "<group>"; };
 		1FD540C51DAB7FD500E159DB /* JMStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMStoreManager.h; sourceTree = "<group>"; };
 		1FD540C61DAB7FD500E159DB /* JMStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMStoreManager.m; sourceTree = "<group>"; };
+		1FD5D9371DCB2349007E8DDE /* MJAnimationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJAnimationHeader.h; sourceTree = "<group>"; };
+		1FD5D9381DCB2349007E8DDE /* MJAnimationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJAnimationHeader.m; sourceTree = "<group>"; };
+		1FD5D93D1DCB40A6007E8DDE /* JMLaunchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLaunchView.h; sourceTree = "<group>"; };
+		1FD5D93E1DCB40A6007E8DDE /* JMLaunchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLaunchView.m; sourceTree = "<group>"; };
+		1FD5D9431DCB5CA8007E8DDE /* JMRefreshLoadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefreshLoadView.h; sourceTree = "<group>"; };
+		1FD5D9441DCB5CA8007E8DDE /* JMRefreshLoadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefreshLoadView.m; sourceTree = "<group>"; };
 		1FDD07171D4303790010231F /* JMUpdataAppPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUpdataAppPopView.h; sourceTree = "<group>"; };
 		1FDD07181D4303790010231F /* JMUpdataAppPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUpdataAppPopView.m; sourceTree = "<group>"; };
 		1FDD071B1D45AABF0010231F /* JMSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSegmentController.h; sourceTree = "<group>"; };
@@ -2968,6 +2977,8 @@
 		1F27A61F1D275A6300A0F80B /* ClassTool */ = {
 			isa = PBXGroup;
 			children = (
+				1FD5D9301DCB21DA007E8DDE /* refresh */,
+				1FD5D9291DCAE184007E8DDE /* advertisingView(广告) */,
 				1FEDCB7A1D9117EB00CB7D97 /* timeLine(时间轴) */,
 				1FEDCB081D8FBABF00CB7D97 /* NSMutableAttributedString(富文本) */,
 				1F1FB8951D87E775004C60CE /* QRCode(二维码) */,
@@ -5357,6 +5368,26 @@
 			path = SDK;
 			sourceTree = "<group>";
 		};
+		1FD5D9291DCAE184007E8DDE /* advertisingView(广告) */ = {
+			isa = PBXGroup;
+			children = (
+				1FD5D93D1DCB40A6007E8DDE /* JMLaunchView.h */,
+				1FD5D93E1DCB40A6007E8DDE /* JMLaunchView.m */,
+			);
+			path = "advertisingView(广告)";
+			sourceTree = "<group>";
+		};
+		1FD5D9301DCB21DA007E8DDE /* refresh */ = {
+			isa = PBXGroup;
+			children = (
+				1FD5D9371DCB2349007E8DDE /* MJAnimationHeader.h */,
+				1FD5D9381DCB2349007E8DDE /* MJAnimationHeader.m */,
+				1FD5D9431DCB5CA8007E8DDE /* JMRefreshLoadView.h */,
+				1FD5D9441DCB5CA8007E8DDE /* JMRefreshLoadView.m */,
+			);
+			path = refresh;
+			sourceTree = "<group>";
+		};
 		1FDD071A1D45A6240010231F /* payChoiseCoupone(支付选择优惠券) */ = {
 			isa = PBXGroup;
 			children = (
@@ -6456,6 +6487,7 @@
 				1F5877B31DB8A60D00949302 /* JMPushSaveModel.m in Sources */,
 				1FD158E31D2F86C4006C4B14 /* JMRefundBaseCell.m in Sources */,
 				1830728B1C97C00900B7665E /* UIImage+UIImageExt.m in Sources */,
+				1FD5D9391DCB2349007E8DDE /* MJAnimationHeader.m in Sources */,
 				1F12EE201DAE04D500511B58 /* FMDatabase.m in Sources */,
 				1F4C9E7E1D9912600089CE74 /* UdeskAgentHttpData.m in Sources */,
 				1F4C9E911D9912600089CE74 /* UdeskVoiceRecordView.m in Sources */,
@@ -6578,6 +6610,7 @@
 				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
 				1F23F9CC1D6C19EF00C78EAE /* JMSegmentView.m in Sources */,
 				1F4C9E901D9912600089CE74 /* UdeskVoiceRecordHUD.m in Sources */,
+				1FD5D9451DCB5CA8007E8DDE /* JMRefreshLoadView.m in Sources */,
 				1F5877F11DB8A7AF00949302 /* YixuanTableViewCell.m in Sources */,
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
 				1F498C3C1D2772D0007E77FC /* NewLeftViewController.m in Sources */,
@@ -6624,6 +6657,7 @@
 				1F56E27D1D347F0B0092EC91 /* JMUntappedCouponController.m in Sources */,
 				1F4C9E881D9912600089CE74 /* UdeskChatCell.m in Sources */,
 				1F4C9E7A1D9912600089CE74 /* UdeskContentController.m in Sources */,
+				1FD5D93F1DCB40A6007E8DDE /* JMLaunchView.m in Sources */,
 				1F4C9EA91D9912600089CE74 /* UdeskAudioPlayerHelper.m in Sources */,
 				1F5877971DB8A60D00949302 /* MaMaCarryLogViewController.m in Sources */,
 				1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */,

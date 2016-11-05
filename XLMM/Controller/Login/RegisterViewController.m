@@ -21,13 +21,11 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"RegisterViewController"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"RegisterViewController"];
 }
 

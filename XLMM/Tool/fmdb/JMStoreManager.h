@@ -56,8 +56,8 @@
 
 
 + (void)saveDataFromDictionary:(NSString *)fileName WithData:(NSDictionary *)dic; // 存储字典
-+ (void)saveDataFromString:(NSString *)fileName WithArray:(NSArray *)arr;     // 存储数组
-+ (void)saveDataFromArray:(NSString *)fileName WithString:(NSString *)str;      // 存储字符串
++ (void)saveDataFromArray:(NSString *)fileName WithArray:(NSArray *)arr;     // 存储数组
++ (void)saveDataFromString:(NSString *)fileName WithString:(NSString *)str;      // 存储字符串
 
 + (NSArray *)getDataArray:(NSString *)fileName;
 + (NSDictionary *)getDataDictionary:(NSString *)fileName;

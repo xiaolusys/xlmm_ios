@@ -20,6 +20,7 @@
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
 #import "NSString+CSCommon.h"
+#import "MJAnimationHeader.h"
 
 
 //#import "NSDictionary+Log.h"
@@ -43,6 +44,7 @@
 #endif
 
 
+#define JMKeyWindow [UIApplication sharedApplication].keyWindow
 /**
  *  循环引用
  */

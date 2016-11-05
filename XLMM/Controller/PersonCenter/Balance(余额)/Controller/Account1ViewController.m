@@ -73,13 +73,12 @@ static NSString *identifier = @"AccountCell";
     [self createButton];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-    
     accountMoneyValue = [self.accountMoney floatValue];
 }
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{  // MJAnimationHeader
         _isPullDown = YES;
         [self.tableView.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];

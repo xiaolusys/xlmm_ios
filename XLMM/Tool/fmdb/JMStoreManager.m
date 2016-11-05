@@ -164,12 +164,12 @@
     [dic writeToFile:documentPath atomically:YES];
 }
 // 存储数组
-+ (void)saveDataFromString:(NSString *)fileName WithArray:(NSArray *)arr {
++ (void)saveDataFromArray:(NSString *)fileName WithArray:(NSArray *)arr {
     NSString *documentPath = [self getLastFilePath:fileName];
     [arr writeToFile:documentPath atomically:YES];
 }
 // 存储字符串
-+ (void)saveDataFromArray:(NSString *)fileName WithString:(NSString *)str {
++ (void)saveDataFromString:(NSString *)fileName WithString:(NSString *)str {
     NSString *documentPath = [self getLastFilePath:fileName];
     [str writeToFile:documentPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }

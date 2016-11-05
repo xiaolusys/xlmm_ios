@@ -265,7 +265,7 @@ static NSString *currentTurnsNumberString;
         if (code == 0) {
             [JMStoreManager removeFileByFileName:@"qrCodeUrlString.txt"];
             qrCodeUrlString = responseObject[@"qrcode_link"];
-            [JMStoreManager saveDataFromArray:@"qrCodeUrlString.txt" WithString:qrCodeUrlString];
+            [JMStoreManager saveDataFromString:@"qrCodeUrlString.txt" WithString:qrCodeUrlString];
         }else {
         }
     } WithFail:^(NSError *error) {

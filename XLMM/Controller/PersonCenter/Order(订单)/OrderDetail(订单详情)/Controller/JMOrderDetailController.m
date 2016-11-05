@@ -186,7 +186,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [weakSelf loadDataSource];
     }];
@@ -255,7 +255,7 @@
 #pragma mark 请求数据
 - (void)loadDataSource {
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//    params[@"device"] = @"app";
+//    params[@"device"] = @"app";  http://m.xiaolumeimei.com/rest/v2/trades/订单商品id?device=app
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.orderGoodsDataSource removeAllObjects];
@@ -496,7 +496,7 @@
     NSArray *arr = self.dataSource[section];
     JMOrderGoodsModel *model = arr[row];
     if (button.tag == 100) {
-        self.packageModel = self.logisticsArr[section];
+        self.packageModel = self.logisticsArr.count > 0 ? self.logisticsArr[section] : nil;
 //        NSDictionary *dcit = [self.packageModel mj_keyValues];
         NSInteger statusCode = [self.orderDetailModel.status integerValue];
         BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.finish_time == nil && statusCode == 2);

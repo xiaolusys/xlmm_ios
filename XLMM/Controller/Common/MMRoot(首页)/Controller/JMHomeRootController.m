@@ -35,7 +35,7 @@
 #import "JMHomeHeaderCell.h"
 #import "JMHomeRootCategoryController.h"
 #import "JMStoreManager.h"
-
+#import "JMLaunchView.h"
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -84,7 +84,7 @@
 @property (nonatomic, copy) NSString *trackName;
 
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
-
+@property (nonatomic, strong) JMLaunchView *launchView;
 @end
 
 @implementation JMHomeRootController {
@@ -202,11 +202,17 @@
     _categorysArray = [NSMutableArray array];
     _timeArray = [NSMutableArray arrayWithObjects:@"00:00:00",@"00:00:00",@"00:00:00", nil];
     self.isPopUpdataView = NO;
+    _isFirstOpenApp = [JMStoreManager isFirstLoadApp]; // 判断程序是否第一次打开5
     //订阅展示视图消息，将直接打开某个分支视图
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
+    NSString *imageUrl = _isFirstOpenApp ? @"" : [JMStoreManager getDataString:@"advertisingImageUrl.txt"];
+    self.launchView = [[JMLaunchView alloc] initImageWithframe:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) imageURL:imageUrl timeSecond:3. hideSkip:YES ImageClick:^{ // 图片点击可以进入 webView (原生页面)
+    } endPlays:^{   // 此处点击'跳过' 可以设置root.但是这里实际是在window上展示了一个图片..所以不做处理
+    }];
+    [JMKeyWindow addSubview:self.launchView];
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
     [self createCartsView];                            // 创建购物车
@@ -218,11 +224,19 @@
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    _isFirstOpenApp = [JMStoreManager isFirstLoadApp]; // 判断程序是否第一次打开5
     if (_isFirstOpenApp) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
     }
+//    if (IS_IOS8) { //iOS8以上包含iOS8
+//        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone) {
+//            NSLog(@"");
+//        }
+//    }else{ // ios7 一下
+//        if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes]  == UIRemoteNotificationTypeNone) {
+//            NSLog(@"");
+//        }
+//    }
 }
 #pragma mark 通知事件
 - (void)presentView:(NSNotification *)notification{
@@ -302,8 +316,8 @@
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
-    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
-    header.lastUpdatedTimeLabel.hidden = YES;
+    MJAnimationHeader *header = [MJAnimationHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
+//    header.lastUpdatedTimeLabel.hidden = YES;
     self.tableView.mj_header = header;
 }
 - (void)refreshView {
@@ -405,7 +419,7 @@
         [_categorysArray addObject:dicts];
     }
     [JMStoreManager removeFileByFileName:@"categorysArray.xml"];
-    [JMStoreManager saveDataFromString:@"categorysArray.xml" WithArray:_categorysArray];
+    [JMStoreManager saveDataFromArray:@"categorysArray.xml" WithArray:_categorysArray];
     
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
