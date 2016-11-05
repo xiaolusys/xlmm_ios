@@ -95,25 +95,25 @@
                           NSLog(@"%@, %i", title, (int)index);
                           switch (index) {
                               case 0:
-                                  serverip = @"http://m.xiaolumeimei.com";
+                                  serverip = @"https://m.xiaolumeimei.com";
                                   break;
                               case 1:
-                                  serverip = @"http://staging.xiaolumeimei.com";
+                                  serverip = @"https://staging.xiaolumeimei.com";
                                   break;
                               case 2:
-                                  serverip = @"http://192.168.1.8:8888";
+                                  serverip = @"https://192.168.1.8:8888";
                                   break;
                               case 3:
-                                  serverip = @"http://192.168.1.56:8000";
+                                  serverip = @"https://192.168.1.56:8000";
                                   break;
                               case 4:
-                                  serverip = @"http://192.168.1.31:9000";
+                                  serverip = @"https://192.168.1.31:9000";
                                   break;
                               case 5:
-                                  serverip = @"http://staging.xiaolumm.com";
+                                  serverip = @"https://staging.xiaolumm.com";
                                   break;
                               case 6:
-                                  serverip = @"http://warden.xiaolumm.com";
+                                  serverip = @"https://warden.xiaolumm.com";
                                   break;
                                   
                               default:

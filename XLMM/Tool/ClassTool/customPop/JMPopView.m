@@ -9,7 +9,7 @@
 #import "JMPopView.h"
 
 
-#define JMKeyWindow [UIApplication sharedApplication].keyWindow
+
 
 //@interface JMPopView ()
 //

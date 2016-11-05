@@ -94,7 +94,6 @@
     if (state == MJRefreshStateIdle) {
         if (oldState == MJRefreshStateRefreshing) {
             self.arrowView.transform = CGAffineTransformIdentity;
-            
             [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
                 self.loadingView.alpha = 0.0;
             } completion:^(BOOL finished) {
@@ -125,3 +124,48 @@
     }
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

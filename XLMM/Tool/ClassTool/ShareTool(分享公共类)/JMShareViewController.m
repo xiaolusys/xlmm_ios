@@ -71,7 +71,7 @@
     
     JMSelecterButton *cancelButton = [[JMSelecterButton alloc] init];
     self.canelButton = cancelButton;
-    [self.canelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"取消" TitleFont:13. CornerRadius:15];
+    [self.canelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"取消" TitleFont:15. CornerRadius:20];
     self.canelButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [self.canelButton addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.canelButton];
@@ -79,14 +79,14 @@
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
         make.centerX.equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH - 20);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(180);
     }];
     
     [self.canelButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.shareButton.mas_bottom).offset(10);
+        make.top.equalTo(self.shareButton.mas_bottom).offset(15);
         make.centerX.equalTo(self.shareButton.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH - 20);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(40);
     }];
     

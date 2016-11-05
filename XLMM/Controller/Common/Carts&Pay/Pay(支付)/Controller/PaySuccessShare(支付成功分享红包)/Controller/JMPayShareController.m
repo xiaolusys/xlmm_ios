@@ -39,6 +39,12 @@
     NSString *_orderNum;
     NSString *_limitStr;
 }
+- (JMShareViewController *)shareView {
+    if (!_shareView) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
 - (JMShareModel*)share_model {
     if (!_share_model) {
         _share_model = [[JMShareModel alloc] init];
@@ -110,7 +116,7 @@
     self.share_model.share_link = [dic objectForKey:@"share_link"];
     _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
     self.sharePackView.limitStr = _limitStr;
-    
+    self.shareView.model = self.share_model;
     
     
 }
@@ -132,11 +138,6 @@
 
 
 - (void)composeGetRedpackBtn:(JMSharePackView *)renPack didClick:(UIButton *)button {
-    
-    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-    self.shareView = shareView;
-    _shareDic = nil;
-    self.shareView.model = self.share_model;
     JMShareView *cover = [JMShareView show];
     cover.delegate = self;
     //弹出视图

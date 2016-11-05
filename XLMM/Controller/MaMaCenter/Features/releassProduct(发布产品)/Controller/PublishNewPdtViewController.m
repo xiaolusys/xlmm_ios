@@ -469,7 +469,7 @@
             UIImage *image = [UIImage imageWithContentsOfFile:file];
             NSData *data = UIImageJPEGRepresentation(image, 0.5);
             UIImage *newImage = [UIImage imageWithData:data];
-            [sharImageArray addObject:newImage];
+            newImage == nil ? : [sharImageArray addObject:newImage];
             [JMStoreManager removeFileByFileName:indexArray[i]];
         }
         

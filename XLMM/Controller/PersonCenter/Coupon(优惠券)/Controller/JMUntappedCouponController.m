@@ -19,8 +19,6 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 @property (nonatomic, strong) JMCouponModel *couponModel;
-//下拉的标志
-//@property (nonatomic) BOOL isPullDown;
 
 //@property (nonatomic, strong) JMSelecterButton *sureButton;
 @end

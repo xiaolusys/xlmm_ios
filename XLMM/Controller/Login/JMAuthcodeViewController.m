@@ -427,14 +427,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"JMAuthcodeViewController"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MBProgressHUD hideHUD];
-    self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"JMAuthcodeViewController"];
 }
 - (void)backApointInterface {

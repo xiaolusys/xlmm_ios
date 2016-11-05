@@ -41,9 +41,6 @@ static BOOL isNetPrompt;
 @property (nonatomic, assign)NSInteger timeCount;
 
 @property (nonatomic, strong)NSString *imageUrl;
-/**
- *  判断是否为支付页面跳转过来的
- */
 
 @end
 
@@ -118,17 +115,58 @@ static BOOL isNetPrompt;
 }
 
 - (void)umengShareInit{
-    [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
-    //qq分享
-    [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
-    //微信分享
-    [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
-    //微博分享
-    [WeiboSDK registerApp:@"2475629754"];
-    [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+    @try {
+        [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
+        //qq分享
+        [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
+        //微信分享
+        [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
+        //微博分享
+        [WeiboSDK registerApp:@"2475629754"];
+        [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];
+    } @catch (NSException *exception) {
+        NSLog(@"DEBUG: failure to batch update.  %@", exception.description);
+    } @finally {
+        
+    }
+    
 
 }
+- (void)fetchRootVC {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    JMHomeRootController *root = [[JMHomeRootController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
+    leftMenu.pushVCDelegate = root;
+    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
+    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
+    menuVC.menuPreferredStatusBarStyle = 1;
+    menuVC.delegate = self;
+    menuVC.contentViewShadowColor = [UIColor blackColor];
+    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
+    menuVC.contentViewShadowOpacity = 0.6;
+    menuVC.contentViewShadowRadius = 12;
+    menuVC.contentViewShadowEnabled = YES;
+    self.window.rootViewController = menuVC;
+    [self.window makeKeyAndVisible];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:activityUrl WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        self.imageUrl = responseObject[@"picture"];
+        if ([NSString isStringEmpty:self.imageUrl]) {
+            return ;
+        }
+        [JMStoreManager removeFileByFileName:@"advertisingImageUrl.txt"];
+        [JMStoreManager saveDataFromString:@"advertisingImageUrl.txt" WithString:self.imageUrl];
+        [self fetchRootVC];
+    } WithFail:^(NSError *error) {
+        [self fetchRootVC];
+    } Progress:^(float progress) {
+        
+    }];
     //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
     [self udeskInit];
     [self umengTrackInit];
@@ -147,25 +185,11 @@ static BOOL isNetPrompt;
     if ([string isEqual:@"1"] || string == nil) {
         [MiPushSDK registerMiPush:self type:0 connect:YES];
     }else { }
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
+    
     [self umengShareInit];
     //创建导航控制器，添加根视图控制器
-    JMHomeRootController *root = [[JMHomeRootController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    leftMenu.pushVCDelegate = root;
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
-    menuVC.menuPreferredStatusBarStyle = 1;
-    menuVC.delegate = self;
-    menuVC.contentViewShadowColor = [UIColor blackColor];
-    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
-    menuVC.contentViewShadowOpacity = 0.6;
-    menuVC.contentViewShadowRadius = 12;
-    menuVC.contentViewShadowEnabled = YES;
-    self.window.rootViewController = menuVC;
-    [self.window makeKeyAndVisible];
+    
+    
     if (launchOptions != nil) {
         NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (remoteNotification != nil) {
@@ -175,6 +199,7 @@ static BOOL isNetPrompt;
     }
     // -- 添加UserAgent
     [self createUserAgent];
+    
     return YES;
 }
 - (void)openPushMessage {
