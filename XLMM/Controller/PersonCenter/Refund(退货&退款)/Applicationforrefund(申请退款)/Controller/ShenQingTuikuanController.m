@@ -132,7 +132,7 @@
     
     [self createNavigationBarWithTitle:@"申请退款" selecotr:@selector(backClicked:)];
         
-    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[[self.dingdanModel.pic_path imageOrderCompression] JMUrlEncodedString]]];
+    [self.myImageView sd_setImageWithURL:[NSURL URLWithString:[[self.dingdanModel.pic_path imageGoodsOrderCompression] JMUrlEncodedString]]];
     self.myImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.myImageView.layer.cornerRadius = 5;
     self.myImageView.layer.masksToBounds = YES;

@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface JMPopView : UIView
+
++ (JMPopView *)popView;
+
 /**
  *  显示弹出菜单
  */

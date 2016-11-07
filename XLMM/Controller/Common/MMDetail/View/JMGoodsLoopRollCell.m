@@ -36,16 +36,10 @@
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@(SCREENWIDTH * 4 / 3));
     }];
-    
-    
 }
-
 - (void)setImageString:(NSString *)imageString {
     _imageString = imageString;
-    NSMutableString *newImageUrl = [NSMutableString stringWithString:imageString];
-    [newImageUrl appendString:@"?"];
-    //    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageNormalCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"]];
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageNormalCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"] options:SDWebImageProgressiveDownload];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[imageString JMUrlEncodedString] imageNormalCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"] options:SDWebImageProgressiveDownload];
 }
 
 @end

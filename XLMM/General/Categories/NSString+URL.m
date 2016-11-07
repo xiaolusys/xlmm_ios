@@ -33,31 +33,36 @@
     NSString *string = [NSString stringWithFormat:@"%@imageMogr2/thumbnail/%.0f/format/jpg/quality/70",self, [self imageWidth]];
     return string;
 }
-
-
-
-//购物车pop等使用参数
+// 商品详情参数 , 主页活动列表
+- (NSString *)imageNormalCompression{
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/640/format/jpg/quality/90",self];
+    return string;
+}
+// 商品列表参数
+- (NSString *)imageGoodsListCompression {
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/279/format/jpg/quality/70",self];
+    return string;
+}
+// 商品订单 , 订单详情图片 , 购物车
+- (NSString *)imageGoodsOrderCompression {
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/jpg/quality/80",self];
+    return string;
+}
+// 收益信息弹出头像
 - (NSString *)imageMoreCompression{
     NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/50/format/jpg/quality/50",self];
     return string;
 }
-
+// 分享图片
+- (NSString *)imageShareCompression{
+    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/100/format/jpg/quality/90",self];
+    return string;
+}
 - (NSString *)ImageNoCompression{
     NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/100",self];
     return string;
 }
 
-//  imageMogr2/thumbnail/289/format/jpg/quality/90
-//订单里面展示的图片大小
-- (NSString *)imageOrderCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/200/format/jpg/quality/90",self];
-    return string;
-}
-
-- (NSString *)imageShareCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/100/format/jpg/quality/90",self];
-    return string;
-}
 //http://image.xiaolu.so/MG_1460339008848%E5%A4%B4%E5%9B%BE%E8%83%8C%E6%99%AF.png?imageMogr2/thumbnail/200/format/png/quality/90
 - (NSString *)imagePostersCompression{
     NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/format/jpg/quality/90",self];
@@ -69,11 +74,16 @@
     return string;
 }
 
-//商品详情参数
-- (NSString *)imageNormalCompression{
-    NSString *string = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/640/format/jpg/quality/90",self];
-    return string;
-}
+
+
+
+
+
+
+
+
+
+
 
 
 - (float)imageWidth{

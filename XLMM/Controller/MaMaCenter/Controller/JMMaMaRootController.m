@@ -214,6 +214,7 @@ static NSString *currentTurnsNumberString;
     self.mamaWebDict[@"notice"] = extraDict[@"notice"];                 // --> 小鹿妈妈消息
     self.mamaWebDict[@"forum"] = extraDict[@"forum"];                   // --> 论坛入口
     self.mamaWebDict[@"team_explain"] = extraDict[@"team_explain"];     // --> 团队说明
+    self.mamaWebDict[@"boutique"] = extraDict[@"boutique"];             // --> 精品汇
     _isActiveClick = YES;                                               // --> 如果想要点击论坛才开始加载需要设置这个属性,否则就不用设置
     self.makeMoneyVC.makeMoneyDic = self.mamaWebDict;
     self.mineVC.webDict = self.mamaWebDict;

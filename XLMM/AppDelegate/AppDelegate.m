@@ -156,9 +156,6 @@ static BOOL isNetPrompt;
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:activityUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         self.imageUrl = responseObject[@"picture"];
-        if ([NSString isStringEmpty:self.imageUrl]) {
-            return ;
-        }
         [JMStoreManager removeFileByFileName:@"advertisingImageUrl.txt"];
         [JMStoreManager saveDataFromString:@"advertisingImageUrl.txt" WithString:self.imageUrl];
         [self fetchRootVC];

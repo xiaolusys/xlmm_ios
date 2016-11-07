@@ -59,10 +59,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"订单列表" selecotr:@selector(backClickAction)];
     
     [self createTableView];
@@ -102,7 +100,7 @@
     }
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;

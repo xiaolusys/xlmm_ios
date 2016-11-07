@@ -75,10 +75,10 @@
     
     // 当前的contentOffset
     CGFloat offsetY = self.scrollView.mj_offsetY;
-    NSLog(@" 当前的contentOffset ==== > %.2f",offsetY);
+//    NSLog(@" 当前的contentOffset ==== > %.2f",offsetY);
     // 头部控件刚好出现的offsetY
     CGFloat happenOffsetY = - self.scrollViewOriginalInset.top;
-    NSLog(@"  头部控件刚好出现的offsetY === > %.2f",happenOffsetY);
+//    NSLog(@"  头部控件刚好出现的offsetY === > %.2f",happenOffsetY);
     
     // 如果是向上滚动到看不见头部控件，直接返回
     // >= -> >

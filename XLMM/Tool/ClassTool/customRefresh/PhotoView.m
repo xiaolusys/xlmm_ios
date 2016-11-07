@@ -86,7 +86,7 @@
     UIImageView *imageIndex = [[UIImageView alloc] initWithFrame:CGRectMake(smallX, smallY, 80, 80)];
     NSString *url = self.picArr[self.index];
     NSInteger countNum = self.picArr.count;
-    NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", url];
+    NSString *joinUrl = [url imageNormalCompression]; // [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", url];
     if (countNum < 9) {
         if (self.index == (countNum - 1)) {
             joinUrl = self.picArr[self.index];
@@ -124,7 +124,7 @@
 //        activityIndicator.center = imageV.center;
 //        [activityIndicator startAnimating];
         
-        NSString *joinUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.picArr[i]];
+        NSString *joinUrl = [self.picArr[i] imageNormalCompression]; // [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", self.picArr[i]];
         if (countNum < 9) {
             if (i == countNum - 1) {
                 joinUrl = self.picArr[i];

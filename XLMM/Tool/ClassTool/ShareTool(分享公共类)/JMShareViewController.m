@@ -142,10 +142,10 @@
     _content = _model.desc;
     _imageUrlString = _model.share_img;
     _url = _model.share_link;
-    _kuaizhaoLink = _url;
+//    _kuaizhaoLink = _url;
 //    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
     _imageData = [UIImage imagewithURLString:_imageUrlString];
-    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
+//    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
     _titleUrlString = [NSString stringWithFormat:@"%@",_content];
     
@@ -156,7 +156,7 @@
     NSLog(@"composeShareBtn Index=%ld", index);
     if (index == 100) {
         //微信分享
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return ;
         }
@@ -179,7 +179,7 @@
         }
         [self cancelBtnClick:nil];
     }else if (index == 101) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }
@@ -200,7 +200,7 @@
             [self cancelBtnClick:nil];
         }
     }else if (index == 102) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }
@@ -212,7 +212,7 @@
         
         [self cancelBtnClick:nil];
     }else if (index == 103) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }
@@ -225,7 +225,7 @@
         [self cancelBtnClick:nil];
 
     }else if (index == 104) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }

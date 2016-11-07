@@ -143,7 +143,7 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
         return cell;
     }
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
-    [cell fillData:model];
+    [cell fillDataWithGoodsList:model];
     return cell;
 }
 

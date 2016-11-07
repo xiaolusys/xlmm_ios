@@ -174,14 +174,23 @@
     [str writeToFile:documentPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 + (NSArray *)getDataArray:(NSString *)fileName {
+    if (![self isFileExist:fileName]) {
+        return nil;
+    }
     NSString *documentPath = [self getLastFilePath:fileName];
     return [NSArray arrayWithContentsOfFile:documentPath];
 }
 + (NSDictionary *)getDataDictionary:(NSString *)fileName {
+    if (![self isFileExist:fileName]) {
+        return nil;
+    }
     NSString *documentPath = [self getLastFilePath:fileName];
     return [NSDictionary dictionaryWithContentsOfFile:documentPath];
 }
 + (NSString *)getDataString:(NSString *)fileName {
+    if (![self isFileExist:fileName]) {
+        return nil;
+    }
     NSString *documentPath = [self getLastFilePath:fileName];
     return [NSString stringWithContentsOfFile:documentPath encoding:NSUTF8StringEncoding error:nil];
 }

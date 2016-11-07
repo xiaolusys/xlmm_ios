@@ -19,6 +19,17 @@
 
 @implementation JMPopView
 
++ (JMPopView *)popView {
+    
+    static dispatch_once_t onceToken;
+    static JMPopView *popView = nil;
+    dispatch_once(&onceToken, ^{
+        popView = [[JMPopView alloc] init];
+    });
+    return popView;
+}
+
+
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {

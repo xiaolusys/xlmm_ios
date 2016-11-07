@@ -110,16 +110,24 @@ static NSString * ksimpleCell = @"simpleCell";
 }
 
 #pragma mrak 刷新界面
+//- (void)createPullHeaderRefresh {
+//    MJAnimationHeader *header = [MJAnimationHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
+//    self.childCollectionView.mj_header = header;
+//}
 - (void)createPullHeaderRefresh {
-    MJPullGifHeader *header = [MJPullGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
-    header.lastUpdatedTimeLabel.hidden = YES;
-    self.childCollectionView.mj_header = header;
+    kWeakSelf
+    self.childCollectionView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{  // MJAnimationHeader
+        _isPullDown = YES;
+        [self.childCollectionView.mj_footer resetNoMoreData];
+        [weakSelf reloadGoods];
+    }];
+    
 }
-- (void)refreshView {
-    _isPullDown = YES;
-    [self.childCollectionView.mj_footer resetNoMoreData];
-    [self reloadGoods];
-}
+//- (void)refreshView {
+//    _isPullDown = YES;
+//    [self.childCollectionView.mj_footer resetNoMoreData];
+//    [self reloadGoods];
+//}
 
 - (void)createPullFooterRefresh {
     kWeakSelf
@@ -226,7 +234,6 @@ static NSString * ksimpleCell = @"simpleCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self itemDataSource];
-    [self craeteRight];
     isOrder = NO;
     _isFirst = YES;
     _isupdate = YES;
@@ -234,23 +241,27 @@ static NSString * ksimpleCell = @"simpleCell";
     _ModelListArray = [[NSMutableArray alloc] init];
     self.dataArray = [[NSMutableArray alloc] init];
     self.orderDataArray = [[NSMutableArray alloc] init];
-    [self.view addSubview:[[UIView alloc] init]];
+//    [self.view addSubview:[[UIView alloc] init]];
+    [self createNavigationBarWithTitle:self.titleString selector:@selector(backClicked:)];
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
+    
     [self setLayout];
     self.topdistant.constant = 64;
-    self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
-    [self createNavigationBarWithTitle:self.titleString selector:@selector(backClicked:)];
+//    self.view.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64);
+    
+    
   //  self.childCollectionView.bounces = NO;
     [self.childCollectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:ksimpleCell];
     self.childCollectionView.backgroundColor = [UIColor backgroundlightGrayColor];
     
-    [self.view addSubview:self.containerView];
+    [self.view bringSubviewToFront:self.containerView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveCurrentState) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restoreCurrentState) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [self createTopButton];
     [self craeteRight];
-    [self createPullHeaderRefresh];
-    [self createPullFooterRefresh];
+    
     
     [self.childCollectionView.mj_header beginRefreshing];
     
@@ -422,12 +433,12 @@ static NSString * ksimpleCell = @"simpleCell";
     if (isOrder) {
         if (_orderDataArray.count > indexPath.row) {
             JMRootGoodsModel *model = [_orderDataArray objectAtIndex:indexPath.row];
-            [cell fillData:model];
+            [cell fillDataWithGoodsList:model];
         }
     }else{
         if (_dataArray.count > indexPath.row) {
             JMRootGoodsModel *model = [_dataArray objectAtIndex:indexPath.row];
-            [cell fillData:model];
+            [cell fillDataWithGoodsList:model];
         }
     }
     return cell;

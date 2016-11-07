@@ -122,6 +122,7 @@
     return _activeArray;
 }
 - (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [MBProgressHUD hideHUD];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -173,6 +174,7 @@
     }
 }
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self autologin];
     } else {
@@ -194,6 +196,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
     _dayDifferString = @"2";
     _urlArray = @[@"yesterday",@"today",@"tomorrow"];
@@ -208,7 +211,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    NSString *imageUrl = _isFirstOpenApp ? @"" : [JMStoreManager getDataString:@"advertisingImageUrl.txt"];
+    NSString *imageUrl = _isFirstOpenApp ? nil : [JMStoreManager getDataString:@"advertisingImageUrl.txt"];
     self.launchView = [[JMLaunchView alloc] initImageWithframe:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) imageURL:imageUrl timeSecond:3. hideSkip:YES ImageClick:^{ // 图片点击可以进入 webView (原生页面)
     } endPlays:^{   // 此处点击'跳过' 可以设置root.但是这里实际是在window上展示了一个图片..所以不做处理
     }];
@@ -339,7 +342,7 @@
     oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
     twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
     
-    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -555,7 +558,7 @@
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat tabOffsetY = [self.tableView rectForSection:2].origin.y - 64;
+    CGFloat tabOffsetY = [self.tableView rectForSection:2].origin.y;
     CGFloat offsetY = scrollView.contentOffset.y;
     _isTopIsCanNotMoveTabViewPre = _isTopIsCanNotMoveTabView;
     if (offsetY>=tabOffsetY) {
