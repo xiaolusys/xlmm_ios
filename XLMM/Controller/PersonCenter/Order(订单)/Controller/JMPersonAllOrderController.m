@@ -75,7 +75,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [self.tableView.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];

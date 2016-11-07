@@ -152,22 +152,16 @@
     
 }
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
-    
     NSString *string = model.picPath;
-    
-    NSMutableString *newString = [NSMutableString stringWithString:string];
-    if (![model.watermark_op isEqualToString:@""]) {
-        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
-        
-    } else{
-        [newString appendString:@"?"];
-    }
-    
-    
-    NSLog(@"newString = %@", [newString imageCompression]);
-    
+//    NSMutableString *newString = [NSMutableString stringWithString:string];
+//    if (![model.watermark_op isEqualToString:@""]) {
+//        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
+//        
+//    } else{
+//        [newString appendString:@"?"];
+//    }
     self.iconImage.alpha = 0.0;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
@@ -201,24 +195,21 @@
         }
     }
 }
-- (void)fillData:(JMRootGoodsModel *)model{
+- (void)fillDataWithGoodsList:(JMRootGoodsModel *)model{
     NSString *string = model.head_img;
-    
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
-    if (![model.watermark_op isEqualToString:@""]) {
-        [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
-    } else{
-        [newImageUrl appendString:@"?"];
-    }
-    
+//    if (![model.watermark_op isEqualToString:@""]) {       // 此处为图片添加水印,暂时不添加
+//        [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
+//    } else{
+//        [newImageUrl appendString:@"?"];
+//    }
     if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
     }else {
         [newImageUrl insertString:@"http:" atIndex:0];
     }
 //    NSLog(@"name = %@ %@ %@ %@", model.name, model.isSaleopen, model.isSaleout , model.productModel);
-
     self.iconImage.alpha = 0.3;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsListCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
         }];
@@ -277,7 +268,7 @@
     NSString *string = dic[@"head_img"];
 
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
-    [newImageUrl appendString:@"?"];
+//    [newImageUrl appendString:@"?"];
     
     if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
         
@@ -285,7 +276,7 @@
         [newImageUrl insertString:@"http:" atIndex:0];
     }
     self.iconImage.alpha = 0.3;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsListCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
         }];
@@ -305,7 +296,7 @@
     
     NSString *string = itemDict[@"head_img"];
     NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
-    [newImageUrl appendString:@"?"];
+//    [newImageUrl appendString:@"?"];
     
     if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
         

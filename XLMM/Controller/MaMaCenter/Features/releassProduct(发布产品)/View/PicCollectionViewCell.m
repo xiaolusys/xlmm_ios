@@ -23,7 +23,7 @@
 
 - (void)createImageForCellImageView:(NSString *)imageUrl Index:(NSInteger)index {
     //图片处理小图
-    NSString *url = [imageUrl imageShareCompression];
+    NSString *url = [imageUrl imageGoodsOrderCompression];
     if (index) {
         url = imageUrl;
     }

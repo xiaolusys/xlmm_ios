@@ -47,11 +47,14 @@ static NSString * cellId = @"JMClassifyListController";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
+    
     
     [self createCollectionView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    
     [self.collectionView.mj_header beginRefreshing];
 }
 
@@ -166,7 +169,7 @@ static NSString * cellId = @"JMClassifyListController";
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -186,7 +189,7 @@ static NSString * cellId = @"JMClassifyListController";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JMRootgoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
-    [cell fillData:model];
+    [cell fillDataWithGoodsList:model];
     return cell;
 }
 

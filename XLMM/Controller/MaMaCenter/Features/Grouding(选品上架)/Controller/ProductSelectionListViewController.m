@@ -83,7 +83,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hidePopMenuView:) name:@"hideSelectedPopView" object:nil];
-    self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"ProductSelectionListViewController"];
 
@@ -91,7 +90,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [MBProgressHUD hideHUDForView:self.view];
     [MobClick endLogPageView:@"ProductSelectionListViewController"];
 

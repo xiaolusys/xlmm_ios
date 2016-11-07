@@ -8,7 +8,7 @@
 
 #import "JMRefreshLoadView.h"
 
-const CGFloat SURefreshHeaderHeight = 36.0;
+const CGFloat SURefreshHeaderHeight = 35.0;
 const CGFloat SURefreshPointRadius = 5.0;
 
 const CGFloat SURefreshPullLen     = 54.;
@@ -98,31 +98,27 @@ const CGFloat SURefreshTranslatLen = 5.0;
 - (void)setProgress:(CGFloat)progress {
     _progress = progress;
     //如果不是正在刷新，则渐变动画
-    NSLog(@"%.2f",progress);
     if (!self.animating) {
-        if (progress > 0) {
-            self.mj_y = self.mj_h * 0.5 - 18;
-            NSLog(@"%.2f",self.mj_y);
+        if (progress >= 0) {
+            self.mj_y = self.mj_h * 0.5 - 9;
         }else {
             if (progress <= self.mj_h) {
-                self.mj_y = -progress;
-                NSLog(@"%.2f",self.mj_y);
+                self.mj_y = -progress + 9;
             }else {
                 self.mj_y = - (self.mj_h + (progress - self.mj_h) / 2);
-                NSLog(@"%.2f",self.mj_y);
             }
         }
         [self setLineLayerStrokeWithProgress:progress];
     }
     //如果到达临界点，则执行刷新动画
-    if (progress >= (SURefreshPullLen - self.progressOffsetY) && !self.animating && !self.scrollView.isDragging) {
+    if (progress >= SURefreshPullLen && !self.animating && !self.scrollView.isDragging) {
         [self startAni];
     }
 }
 #pragma mark - Adjustment
 - (void)setLineLayerStrokeWithProgress:(CGFloat)progress {
-    progress += self.progressOffsetY;
-    NSLog(@"%.2f",self.progressOffsetY);
+//    progress += self.progressOffsetY;
+//    NSLog(@"%.2f",self.progressOffsetY);
     float startProgress = 0.f;
     float endProgress = 0.f;
     float spaceProgress = 45;
@@ -140,6 +136,7 @@ const CGFloat SURefreshTranslatLen = 5.0;
         self.TopPointLayer.opacity = 1.0;
         //大阶段 0 ~ 3
         NSInteger stage = (progress - (SURefreshPullLen - spaceProgress)) / 10;
+        NSLog(@"stage --- > %ld",stage);
         //大阶段的前半段
         CGFloat subProgress = (progress - (SURefreshPullLen - spaceProgress)) - (stage * 10);
         if (subProgress >= 0 && subProgress <= 5) {

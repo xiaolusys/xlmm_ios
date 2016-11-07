@@ -161,7 +161,7 @@
 - (void)configWithModel:(JMOrderGoodsModel *)goodsModel SectionCount:(NSInteger)sectionCount RowCount:(NSInteger)rowCount     {
     NSString *string = goodsModel.pic_path;
 
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     
 //    if (packageModel) {
 //        self.iconImage.userInteractionEnabled = YES;
@@ -227,7 +227,7 @@
 }
 - (void)configWithAllOrder:(JMOrderGoodsModel *)goodsModel {
     NSString *string = goodsModel.pic_path;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
 //    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
 //    self.iconImage.layer.masksToBounds = YES;
 //    self.iconImage.layer.borderWidth = 0.5;
@@ -248,7 +248,7 @@
  */
 - (void)configPurchaseModel:(CartListModel *)cartModel {
     NSString *string = cartModel.pic_path;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[string imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
 //    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
 //    self.iconImage.layer.masksToBounds = YES;
 //    self.iconImage.layer.borderWidth = 0.5;

@@ -35,12 +35,39 @@ typedef void(^cacleStoreBlock)(NSString *storID);
 
 @property (nonatomic, copy)  cacleStoreBlock block;
 
-- (void)fillDataWithCollectionModel:(CollectionModel *)model;
+- (void)fillDataWithCollectionModel:(CollectionModel *)model; // 没有用到
 
-- (void)fillData:(JMRootGoodsModel *)model;
+- (void)fillDataWithGoodsList:(JMRootGoodsModel *)model;      // 商品展示列表
 
-- (void)fillStoreUpData:(JMStoreUpModel *)model;
+- (void)fillStoreUpData:(JMStoreUpModel *)model;              // 我的收藏
 
 @property (nonatomic, strong) NSDictionary *itemDict;
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -55,18 +55,18 @@ static NSString *identifier = @"AccountCell";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"BlanceAccount"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"钱包" selecotr:@selector(backBtnClicked:)];
     [self createRightbutton];
     [self createTableView];
@@ -162,12 +162,11 @@ static NSString *identifier = @"AccountCell";
     self.navigationController.navigationBarHidden = NO;
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.view addSubview:self.tableView];
     
     //添加header

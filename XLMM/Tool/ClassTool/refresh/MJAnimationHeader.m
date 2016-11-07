@@ -20,7 +20,7 @@
 @implementation MJAnimationHeader
 - (JMRefreshLoadView *)refreshLoadView {
     if (!_refreshLoadView) {
-        _refreshLoadView = [[JMRefreshLoadView alloc] init];
+        _refreshLoadView = [[JMRefreshLoadView alloc] initWithFrame:CGRectMake((SCREENWIDTH - 36) / 2, 9, 36, 36)];
     }
     return _refreshLoadView;
 }
@@ -40,15 +40,17 @@
 #pragma mark 在这里设置子控件的位置和尺寸
 - (void)placeSubviews {
     [super placeSubviews];
-//    CGFloat arrowCenterX = self.mj_w * 0.5 - 18;
-//    CGFloat arrowCenterY = self.mj_h * 0.5 - 18;
-//    self.refreshLoadView.frame = CGRectMake(arrowCenterX, arrowCenterY, 35, 35);
-    kWeakSelf
-    [self.refreshLoadView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.mas_centerX);
-        make.centerY.equalTo(weakSelf.mas_centerY);
-        make.width.height.mas_equalTo(@(36));
-    }];
+//    CGFloat arrowCenterX = self.mj_w * 0.5 ;
+//    CGFloat arrowCenterY = self.mj_h * 0.5 ;
+//    self.refreshLoadView.center = CGPointMake(arrowCenterX, arrowCenterY);
+    self.refreshLoadView.frame = CGRectMake((SCREENWIDTH - 36) / 2, 9, 36, 36); 
+//    kWeakSelf
+//    [self.refreshLoadView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(weakSelf.mas_centerX);
+//        make.centerY.equalTo(weakSelf.mas_centerY);
+//        make.width.height.mas_equalTo(@(36));
+//    }];
+    
     
     
 }
@@ -56,15 +58,18 @@
 - (void)scrollViewContentOffsetDidChange:(NSDictionary *)change {
     [super scrollViewContentOffsetDidChange:change];
     CGFloat offsetY = - self.scrollView.mj_offsetY;
-    NSLog(@" 当前的contentOffset ==== > %.2f",offsetY);
+//    NSLog(@" 当前的contentOffset ==== > %.2f",offsetY);
     // 头部控件刚好出现的offsetY
     CGFloat happenOffsetY = fabs(self.scrollViewOriginalInset.top);
-    NSLog(@"  头部控件刚好出现的offsetY === > %.2f",happenOffsetY);
-    CGFloat currentOffsetY = happenOffsetY == 0 ? 0 : 64;
-    CGFloat currentOffsetY1 = happenOffsetY == 0 ? 64 : 54;
-    self.refreshLoadView.progressOffsetY = currentOffsetY1;
+//    NSLog(@"  头部控件刚好出现的offsetY === > %.2f",happenOffsetY);
+//    CGFloat currentOffsetY = happenOffsetY == 0 ? 0 : 64;
+//    CGFloat currentOffsetY1 = happenOffsetY == 0 ? 64 : 54;
+    NSLog(@" progress === %.2f",offsetY);
+    NSLog(@" self.progressOffsetY === %.2f",happenOffsetY);
+    
+    self.refreshLoadView.progressOffsetY = happenOffsetY;
     self.refreshLoadView.scrollView = self.scrollView;
-    self.refreshLoadView.progress = offsetY - currentOffsetY - currentOffsetY1;
+    self.refreshLoadView.progress = offsetY - happenOffsetY;
     
     
     

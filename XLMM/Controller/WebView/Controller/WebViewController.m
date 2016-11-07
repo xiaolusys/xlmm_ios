@@ -132,11 +132,11 @@
 }
 
 - (BOOL)isShowNavBar {
-    _isShowNavBar = false;
+    _isShowNavBar = NO;
     return _isShowNavBar;
 }
 - (BOOL)isShowRightShareBtn {
-    _isShowRightShareBtn = false;
+    _isShowRightShareBtn = NO;
     return _isShowRightShareBtn;
 }
 
@@ -397,7 +397,20 @@
     self.shareView.blcok = ^(UIButton *button) {
         [MobClick event:@"WebViewController_shareFail_cancel"];
     };
+    
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
 
 - (void)universeShare:(NSDictionary *)data {
 //    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){

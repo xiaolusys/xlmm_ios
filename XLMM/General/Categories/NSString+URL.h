@@ -20,8 +20,6 @@
 
 - (NSString *)ImageNoCompression;
 
-- (NSString *)imageOrderCompression;
-
 - (NSString *)imageShareCompression;
 
 - (NSString *)imagePostersCompression;
@@ -30,7 +28,8 @@
 
 - (NSString *)imageNormalCompression;
 
+- (NSString *)imageGoodsListCompression;
 
-
+- (NSString *)imageGoodsOrderCompression;
 
 @end

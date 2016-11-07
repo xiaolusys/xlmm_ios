@@ -44,7 +44,8 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"提现历史" selecotr:@selector(backClicked:)];
     
     [self createTableView];
@@ -139,7 +140,7 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 #pragma mark ---- 创建tableView
 - (void)createTableView{
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
 //    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentify];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -186,13 +187,11 @@ static NSString *CellIdentify = @"TixianCellIdentify";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"TixianHistoryViewController"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"TixianHistoryViewController"];
 }
 
