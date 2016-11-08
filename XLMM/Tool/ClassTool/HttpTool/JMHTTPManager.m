@@ -22,14 +22,11 @@
 
 - (instancetype)initWithBaseURL:(NSURL *)url {
     if (self = [super initWithBaseURL:url]) {
-        
-        NSUserDefaults *defaulte = [NSUserDefaults standardUserDefaults];
-        NSString *userAgent = [defaulte objectForKey:kUserAgent];
-        if (userAgent.length != 0) {
-            [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
-        }
-        
-        
+//        NSUserDefaults *defaulte = [NSUserDefaults standardUserDefaults];
+//        NSString *userAgent = [defaulte objectForKey:kUserAgent];
+//        if (userAgent.length != 0) {
+//            [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+//        }
     }
     return self;
 }

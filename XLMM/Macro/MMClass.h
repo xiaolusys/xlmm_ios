@@ -21,6 +21,10 @@
 #import "UMMobClick/MobClick.h"
 #import "NSString+CSCommon.h"
 #import "MJAnimationHeader.h"
+#import "JMGlobal.h"
+
+
+
 
 //#import "NSDictionary+Log.h"
 

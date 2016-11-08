@@ -20,8 +20,6 @@
 
 #define appleID @"so.xiaolu.m.xiaolumeimei"
 
-static BOOL isNetPrompt;
-
 @interface AppDelegate ()
 
 @property (nonatomic ,copy) NSString *wxCode;
@@ -44,62 +42,8 @@ static BOOL isNetPrompt;
 
 @end
 
-@implementation AppDelegate{
-    NSString *httpStatus;
-}
-//监测当前网络状态（网络监听）
-- (void)AFNetworkStatus{
-    //1.创建网络监测者
-    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
-    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        //这里是监测到网络改变的block  可以写成switch方便
-        //在里面可以随便写事件
-        switch (status) {
-            case AFNetworkReachabilityStatusUnknown:
-            {
-                httpStatus = @"other";
-                NSLog(@"未知网络状态");
-                break;
-            }
-            case AFNetworkReachabilityStatusNotReachable:
-            {
-                httpStatus = @"noNet";
-                NSLog(@"无网络");
-                if (isNetPrompt) {
-                    isNetPrompt = NO;
-                    UIAlertView *alterView = [[UIAlertView alloc]  initWithTitle:nil message:@"无网络连接，请检查您的网络" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alterView show];
-                }else {
-                    
-                }
+@implementation AppDelegate
 
-                break;
-            }
-            case AFNetworkReachabilityStatusReachableViaWWAN:
-            {
-                httpStatus = @"2G";
-                NSLog(@"蜂窝数据网");
-                break;
-            }
-            case AFNetworkReachabilityStatusReachableViaWiFi:
-            {
-                NSLog(@"WiFi网络");
-                httpStatus = @"wifi";
-                break;
-            }
-            default:
-                break;
-        }
-        NSString* phoneModel = [[JMDevice defaultDecice] getUserAgent];
-        NSString *userAgent = [NSString stringWithFormat:@"%@ NetType/%@",phoneModel,httpStatus];
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:userAgent forKey:kUserAgent];
-        [defaults synchronize];
-        
-    }] ;
-    [manager startMonitoring];
-}
 - (void)udeskInit{
     //uDesk 客服
     [UdeskManager initWithAppkey:@"e7bfd4447bf206d17fb536240a9f4fbb" domianName:@"xiaolumeimei.udesk.cn"];
@@ -152,6 +96,10 @@ static BOOL isNetPrompt;
     [self.window makeKeyAndVisible];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
+    [self udeskInit];
+    [self umengTrackInit];
+    [[JMGlobal global] monitoringNetworkStatus];
     NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:activityUrl WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
@@ -164,11 +112,6 @@ static BOOL isNetPrompt;
     } Progress:^(float progress) {
         
     }];
-    //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
-    [self udeskInit];
-    [self umengTrackInit];
-    isNetPrompt = YES;
-    [self AFNetworkStatus];
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     [self getServerIP];
@@ -185,8 +128,6 @@ static BOOL isNetPrompt;
     
     [self umengShareInit];
     //创建导航控制器，添加根视图控制器
-    
-    
     if (launchOptions != nil) {
         NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (remoteNotification != nil) {
@@ -196,9 +137,15 @@ static BOOL isNetPrompt;
     }
     // -- 添加UserAgent
     [self createUserAgent];
+    // 是否清除缓存的判断,这里处理每隔2天清除自动清除一次
+    if ([[JMGlobal global] currentTimeWithBeforeDays:-2]) {
+        [[JMGlobal global] clearCacheWithSDImageCache:^(NSString *sdImageCacheString) {
+        }];
+    }
     
     return YES;
 }
+
 - (void)openPushMessage {
     [MiPushSDK registerMiPush:self type:0 connect:YES];
 }

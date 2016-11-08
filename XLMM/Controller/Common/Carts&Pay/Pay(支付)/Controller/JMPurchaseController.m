@@ -641,7 +641,7 @@ static BOOL isAgreeTerms = YES;
                 [MobClick event:@"buy_fail" attributes:temp_dict];
                 [MBProgressHUD hideHUD];
                 NSString *errorStr = responseObject[@"info"];
-                NSString *messageStr = [NSString stringWithFormat:@"%@,请在购物车重新选择提交.",errorStr];
+                NSString *messageStr = [NSString stringWithFormat:@"%@",errorStr];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"支付异常" message:messageStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                 alert.tag = 101;
                 [alert show];
@@ -718,7 +718,9 @@ static BOOL isAgreeTerms = YES;
     _couponStringID = @"";
     if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
         self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
-        [MBProgressHUD showWarning:@"优惠券不足哦~!"];
+//        [MBProgressHUD showWarning:@"优惠券不足哦~!"];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"购买提示" message:@"精品汇优惠券不足，请购买优惠券或减少商品购买数量。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
         return ;
     }
     if (modelArray.count == 0) {
