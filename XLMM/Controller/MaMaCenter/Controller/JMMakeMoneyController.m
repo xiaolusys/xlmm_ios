@@ -262,7 +262,7 @@
 - (void)createHeaderView {
     kWeakSelf
     NSArray *imageArr = @[@"mamaeryaoqingColor",@"EverydayPushNormalColor",@"selectionShopNormalColor",@"inviteShopNormalColor"];
-    NSArray *titleArr = @[@"分享店铺",@"每日推送",@"选品佣金",@"邀请开店"];
+    NSArray *titleArr = @[@"分享店铺",@"每日推送",@"精品汇",@"邀请开店"];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 590)];
     self.tableView.tableHeaderView = headerView;
@@ -660,7 +660,7 @@
  *  102 --> 马上执行
  *  103 --> 分享店铺
  *  104 --> 每日推送
- *  105 --> 选品佣金
+ *  105 --> 精品汇
  *  106 --> 邀请开店
  *  107 --> 续费按钮
  *  108 --> 折线图 -- > 访客

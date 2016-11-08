@@ -288,7 +288,17 @@
 - (void)fetchData:(NSDictionary *)goodsDetailDic {
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
-    self.topImageArray = detailContentDic[@"head_imgs"];
+    NSString *waterMark = detailContentDic[@"watermark_op"];
+    if ([NSString isStringEmpty:waterMark]) {
+        self.topImageArray = detailContentDic[@"head_imgs"];
+    }else {
+        NSArray *topImageArr = detailContentDic[@"head_imgs"];
+        for (NSString *urlString in topImageArr) {
+            NSMutableString *newImageUrl = [NSMutableString stringWithString:urlString];
+            [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", waterMark]];
+            [self.topImageArray addObject:newImageUrl];
+        }
+    }
     //    [self.goodsScrollView jm_reloadData];
     [self.pageView reloadData];
     NSDictionary *comparison = goodsDetailDic[@"comparison"];

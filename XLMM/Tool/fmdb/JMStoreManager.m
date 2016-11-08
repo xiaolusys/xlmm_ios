@@ -160,16 +160,25 @@
 
 // 存储字典
 + (void)saveDataFromDictionary:(NSString *)fileName WithData:(NSDictionary *)dic {
+    if ([self isFileExist:fileName]) {
+        return ;
+    }
     NSString *documentPath = [self getLastFilePath:fileName];
     [dic writeToFile:documentPath atomically:YES];
 }
 // 存储数组
 + (void)saveDataFromArray:(NSString *)fileName WithArray:(NSArray *)arr {
+    if ([self isFileExist:fileName]) {
+        return ;
+    }
     NSString *documentPath = [self getLastFilePath:fileName];
     [arr writeToFile:documentPath atomically:YES];
 }
 // 存储字符串
 + (void)saveDataFromString:(NSString *)fileName WithString:(NSString *)str {
+    if ([self isFileExist:fileName]) {
+        return ;
+    }
     NSString *documentPath = [self getLastFilePath:fileName];
     [str writeToFile:documentPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }

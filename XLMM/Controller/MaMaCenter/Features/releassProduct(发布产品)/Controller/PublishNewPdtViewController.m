@@ -194,6 +194,7 @@
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
+        [MBProgressHUD hideHUD];
         [MBProgressHUD showError:@"获取信息失败"];
     } Progress:^(float progress) {
     }];
@@ -278,6 +279,7 @@
     }
     [self.picCollectionView reloadData];
     [MBProgressHUD hideHUDForView:self.view];
+
 }
 
 #pragma mark --collection的代理方法
