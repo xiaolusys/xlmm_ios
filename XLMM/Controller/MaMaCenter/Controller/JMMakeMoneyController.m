@@ -647,11 +647,10 @@
 }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index { }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
-    WebViewController *message = [[WebViewController alloc] init];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:self.makeMoneyDic[@"notice"] forKey:@"web_url"];
     [dict setValue:@"MaMaMessage" forKey:@"type_title"];
-    [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO];
+    [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO Title:@"消息通知"];
 }
 #pragma mark 点击事件处理
 /**
@@ -682,7 +681,7 @@
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:urlString forKey:@"web_url"];
         [dict setValue:@"mamaShop" forKey:@"type_title"];
-        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
     }else if (index == 104) {
         if (self.block) {
             self.block(self.currentTurnsLabel);
@@ -695,7 +694,7 @@
         if ([NSString isStringEmpty:_boutiqueString]) return;
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:_boutiqueString forKey:@"web_url"];
-        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO Title:@"精品汇"];
     }else if (index == 106) {
         if ([NSString isStringEmpty:_myInvitation]) return;
         NSString *active = @"myInvite";
@@ -705,7 +704,7 @@
         [dict setValue:_myInvitation forKey:@"web_url"];
         [dict setValue:active forKey:@"type_title"];
         [dict setValue:titleName forKey:@"name_title"];
-        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
     }else if (index == 107) {
         JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
         renewVC.cashValue = _carryValue;
@@ -727,8 +726,11 @@
     
     
 }
-- (void)pushWebView:(NSMutableDictionary *)dict ShowNavBar:(BOOL)isShowNavBar ShowRightShareBar:(BOOL)isShowRightShareBar {
+- (void)pushWebView:(NSMutableDictionary *)dict ShowNavBar:(BOOL)isShowNavBar ShowRightShareBar:(BOOL)isShowRightShareBar Title:(NSString *)title {
     WebViewController *activity = [[WebViewController alloc] init];
+    if (title != nil) {
+        activity.titleName = title;
+    }
     activity.webDiction = dict;
     activity.isShowNavBar = isShowNavBar;
     activity.isShowRightShareBtn = isShowRightShareBar;

@@ -289,16 +289,21 @@
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
     NSString *waterMark = detailContentDic[@"watermark_op"];
+    NSArray *imageArr = detailContentDic[@"head_imgs"];
     if ([NSString isStringEmpty:waterMark]) {
-        self.topImageArray = detailContentDic[@"head_imgs"];
-    }else {
-        NSArray *topImageArr = detailContentDic[@"head_imgs"];
-        for (NSString *urlString in topImageArr) {
-            NSMutableString *newImageUrl = [NSMutableString stringWithString:urlString];
-            [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", waterMark]];
-            [self.topImageArray addObject:newImageUrl];
+        for (NSString *imageUrl in imageArr) {
+            NSString *imageUrlStr = [imageUrl imageNormalCompression];
+            [self.topImageArray addObject:imageUrlStr];
         }
+    }else {
+        for (NSString *imageUrl in imageArr) {
+            NSString *imageUrlStr = [NSString stringWithFormat:@"%@|%@",[imageUrl imageNormalCompression],waterMark];
+            [self.topImageArray addObject:imageUrlStr];
+        }
+        
     }
+
+    self.topImageArray = detailContentDic[@"head_imgs"];
     //    [self.goodsScrollView jm_reloadData];
     [self.pageView reloadData];
     NSDictionary *comparison = goodsDetailDic[@"comparison"];

@@ -152,15 +152,15 @@
     
 }
 - (void)fillDataWithCollectionModel:(CollectionModel *)model{
-    NSString *string = model.picPath;
-    NSMutableString *newString = [NSMutableString stringWithString:string];
-    if (![model.watermark_op isEqualToString:@""]) {
-        [newString appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
+    NSString *picString = model.picPath;
+//    NSMutableString *newString = [NSMutableString stringWithString:string];
+    if ([NSString isStringEmpty:model.watermark_op]) {
+        picString = [picString imageNormalCompression];
     } else{
-//        [newString appendString:@"?"];
+        picString = [NSString stringWithFormat:@"%@|%@",[picString imageGoodsListCompression],model.watermark_op];
     }
     self.iconImage.alpha = 0.0;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newString imageCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[picString JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
@@ -195,20 +195,21 @@
     }
 }
 - (void)fillDataWithGoodsList:(JMRootGoodsModel *)model{
-    NSString *string = model.head_img;
-    NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
-    if (![model.watermark_op isEqualToString:@""]) {       // 此处为图片添加水印,暂时不添加
-        [newImageUrl appendString:[NSString stringWithFormat:@"?%@|", model.watermark_op]];
+    NSString *picString = model.head_img;
+    
+    if ([NSString isStringEmpty:model.watermark_op]) {
+        picString = [picString imageNormalCompression];
     } else{
-//        [newImageUrl appendString:@"?"];
+        picString = [NSString stringWithFormat:@"%@|%@",[picString imageGoodsListCompression],model.watermark_op];
     }
-    if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:picString];
+    if ([picString hasPrefix:@"http:"] || [picString hasPrefix:@"https:"]) {
     }else {
         [newImageUrl insertString:@"http:" atIndex:0];
     }
 //    NSLog(@"name = %@ %@ %@ %@", model.name, model.isSaleopen, model.isSaleout , model.productModel);
     self.iconImage.alpha = 0.3;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsListCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[newImageUrl JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [UIView animateWithDuration:0.3f animations:^{
             self.iconImage.alpha = 1.0;
         }];
