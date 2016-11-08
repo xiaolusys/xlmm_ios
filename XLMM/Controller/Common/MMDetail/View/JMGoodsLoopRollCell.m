@@ -39,7 +39,7 @@
 }
 - (void)setImageString:(NSString *)imageString {
     _imageString = imageString;
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[imageString JMUrlEncodedString] imageNormalCompression]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"] options:SDWebImageProgressiveDownload];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[imageString JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"] options:SDWebImageProgressiveDownload];
 }
 
 @end
