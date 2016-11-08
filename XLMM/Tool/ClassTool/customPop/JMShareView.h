@@ -10,6 +10,7 @@
 
 @class JMShareView;
 
+typedef void(^coverBlock)(JMShareView *cover);
 
 @protocol JMShareViewDelegate <NSObject>
 
@@ -31,6 +32,8 @@
 
 
 @property (nonatomic, weak) id<JMShareViewDelegate> delegate;
+
+@property (nonatomic, copy) coverBlock blcok;
 
 
 @end

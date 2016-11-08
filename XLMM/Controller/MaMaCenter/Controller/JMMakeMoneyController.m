@@ -695,7 +695,7 @@
         if ([NSString isStringEmpty:_boutiqueString]) return;
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:_boutiqueString forKey:@"web_url"];
-        [self pushWebView:dict ShowNavBar:NO ShowRightShareBar:NO];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO];
     }else if (index == 106) {
         if ([NSString isStringEmpty:_myInvitation]) return;
         NSString *active = @"myInvite";

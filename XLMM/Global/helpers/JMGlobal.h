@@ -7,8 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JMPopView.h"
+#import "JMShareView.h"
+
+typedef NS_ENUM(NSUInteger, popType) {
+    popViewTypeShare,        // 分享
+    popViewTypeBox           // 选择框
+};
+
+
+
 
 typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
+
+
+
 
 @interface JMGlobal : NSObject
 
@@ -27,7 +40,20 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
  */
 - (void)clearCacheWithSDImageCache:(clearCacheBlock)cacheBlock;
 
+/*
+    监听网络,配置网络请求头信息
+ */
 - (void)monitoringNetworkStatus;
+
+
+
+
+- (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock;
+
+
+
+
+
 
 
 
