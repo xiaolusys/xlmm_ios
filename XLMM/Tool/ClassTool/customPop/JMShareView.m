@@ -50,15 +50,20 @@
 
 // 点击蒙板的时候做事情
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
     // 移除蒙板
     [self removeFromSuperview];
-    
+    if (self.blcok) {
+        self.blcok(self);
+    }
     // 通知代理移除菜单
     if ([_delegate respondsToSelector:@selector(coverDidClickCover:)]) {
         
         [_delegate coverDidClickCover:self];
         
     }
+    
+    
     
 }
 

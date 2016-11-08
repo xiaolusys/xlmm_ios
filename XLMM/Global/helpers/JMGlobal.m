@@ -18,10 +18,8 @@ static BOOL isNetPrompt;
     NSString *httpStatus;
 }
 
-
-
-
 @end
+
 
 @implementation JMGlobal
 
@@ -33,6 +31,22 @@ static BOOL isNetPrompt;
     });
     return global;
 }
+
+#pragma mark ---------- 弹出视图 (分享,选择框等) ----------
+- (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock {
+    if (type == popViewTypeShare) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    }
+    JMShareView *cover = [JMShareView show];
+    JMPopView *menu = [JMPopView showInRect:frame];
+    menu.contentView = viewController.view;
+    cover.blcok = ^(JMShareView *coverView) {
+        [JMPopView hide];
+    };
+//    cover.blcok = clickBlock;
+    
+}
+
 
 #pragma mark ---- 获取 dayNumber (-前,+后) 的时间 ----
 - (BOOL)currentTimeWithBeforeDays:(NSInteger)dayNumber {
@@ -114,6 +128,10 @@ static BOOL isNetPrompt;
     [manager startMonitoring];
     
 }
+
+
+
+
 
 
 

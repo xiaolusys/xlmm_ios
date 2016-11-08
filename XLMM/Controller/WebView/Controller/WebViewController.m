@@ -389,11 +389,17 @@
     }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
         [MobClick event:@"mamaShop_share"];
     }else { }
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = self.shareView.view;
+//    JMShareView *cover = [JMShareView show];
+//    cover.delegate = self;
+//    //弹出视图
+//    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
+//    menu.contentView = self.shareView.view;
+//    self.shareView.blcok = ^(UIButton *button) {
+//        [MobClick event:@"WebViewController_shareFail_cancel"];
+//    };
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+        
+    }];
     self.shareView.blcok = ^(UIButton *button) {
         [MobClick event:@"WebViewController_shareFail_cancel"];
     };
@@ -425,12 +431,13 @@
     self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
     self.shareView.model.share_link = [data objectForKey:@"link"];
 //    self.shareView.model = self.share_model;
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+        
+    }];
+    self.shareView.blcok = ^(UIButton *button) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    };
     
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = self.shareView.view;
 }
 #pragma mark --- 点击隐藏弹出视图
 - (void)coverDidClickCover:(JMShareView *)cover {
