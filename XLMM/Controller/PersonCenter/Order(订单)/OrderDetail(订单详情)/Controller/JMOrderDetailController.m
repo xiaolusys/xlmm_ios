@@ -22,8 +22,8 @@
 #import "JMOrderPayOutdateView.h"
 #import "Pingpp.h"
 #import "JMPopLogistcsController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
+//#import "JMShareView.h"
+//#import "JMPopView.h"
 #import "JMEditAddressController.h"
 #import "JMOrderDetailSectionView.h"
 #import "JMRefundController.h"
@@ -39,7 +39,7 @@
 
 #define kUrlScheme @"wx25fcb32689872499"
 
-@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMShareViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
+@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
     NSMutableArray *_refundStatusArray;        //退款状态
     NSMutableArray *_refundStatusDisplayArray; // 退款状态描述
     NSMutableArray *_orderStatusDisplay;
@@ -142,10 +142,23 @@
     }
     return _dataSource;
 }
-
+- (JMShareViewController *)shareView {
+    if (_shareView == nil) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
+- (JMPopLogistcsController *)showViewVC {
+    if (_showViewVC == nil) {
+        _showViewVC = [[JMPopLogistcsController alloc] init];
+        _showViewVC.delegate = self;
+    }
+    return _showViewVC;
+}
 - (JMRefundController *)refundVC {
     if (_refundVC == nil) {
         _refundVC = [[JMRefundController alloc] init];
+        self.refundVC.delegate = self;
     }
     return _refundVC;
 }
@@ -251,6 +264,7 @@
     self.shareModel.title = [shareDict objectForKey:@"title"]; //标题
     self.shareModel.share_link = [shareDict objectForKey:@"share_link"];
     redPageNumber = [shareDict[@"share_times_limit"] integerValue];
+    self.shareView.model = self.shareModel;
 }
 #pragma mark 请求数据
 - (void)loadDataSource {
@@ -304,6 +318,10 @@
         [_refundStatusArray addObject:goodsDic[@"refund_status"]];
         [_refundStatusDisplayArray addObject:goodsDic[@"refund_status_display"]];
     }
+    // ===== 这里修改物流视图赋值 =====
+    self.showViewVC.goodsID = _addressGoodsID;
+    self.showViewVC.logisticsStr = tid;
+    
     // ===== 订单详情包裹分包数据源模型 =======
     NSArray *packArr = dicJson[@"package_orders"];
     NSLog(@"%@",packArr);
@@ -376,26 +394,13 @@
         [self createClassPopView:@"提示" Message:@"非服装类商品是由供应商直接发货，只能尽量满足您选择的快递公司，如需确认能否满足您的快递需求，请联系客服。" Index:0];
     }
 }
-- (void)createChangeLogisticsView {
-    self.showViewVC = [[JMPopLogistcsController alloc] init];
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    if (self.showViewVC.view == nil) {
-        self.showViewVC = [[JMPopLogistcsController alloc] init];
-    }
-    self.showViewVC.goodsID = _addressGoodsID;
-    self.showViewVC.logisticsStr = tid;
-    self.showViewVC.delegate = self;
-    menu.contentView = self.showViewVC.view;
+- (void)createChangeLogisticsView {  // Index == 0  修改物流
+    [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.showViewVC WithBlock:^(UIView *maskView) {
+    }];
 }
 - (void)ClickLogistics:(JMPopLogistcsController *)click Title:(NSString *)title {
     [self.tableView.mj_header beginRefreshing];
 //    self.orderDetailHeaderView.logisticsStr = title;
-}
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [JMPopView hide];
-    [MBProgressHUD hideHUD];
 }
 #pragma mark UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -503,14 +508,11 @@
         if (isWarehouseOrder) {
             [self createClassPopView:@"提示" Message:@"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。" Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
-            if (_isPopChoiseRefundWay == YES) {
-                JMShareView *cover = [JMShareView show];
-                cover.delegate = self;
-                JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260)];
+            if (_isPopChoiseRefundWay) {
                 self.refundVC.ordergoodsModel = model;
                 self.refundVC.refundDic = _refundDic;
-                self.refundVC.delegate = self;
-                menu.contentView = self.refundVC.view;
+                [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
+                }];
             }else {
                 [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
             }
@@ -559,23 +561,14 @@
     if (index == 100) { // 取消支付
         [self createClassPopView:@"小鹿美美" Message:@"取消的产品可能会被人抢走哦~\n要取消吗？" Index:2];
     }else if (index == 101) { // 继续支付
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260)];
         self.refundVC.continuePayDic = _refundDic;
-        self.refundVC.delegate = self;
-        menu.contentView = self.refundVC.view;
+        [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
+        }];
     }else if (index == 102) {
         //分享红包
         if (redPageNumber > 0) {
-            JMShareViewController *shareView = [[JMShareViewController alloc] init];
-            self.shareView = shareView;
-            self.shareView.model = self.shareModel;
-            JMShareView *cover = [JMShareView show];
-            cover.delegate = self;
-            //弹出视图
-            JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-            shareMenu.contentView = self.shareView.view;
+            [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+            }];
         }else {
            [self createClassPopView:@"分享提示" Message:@"红包数量不足,分享失败。如有疑问,请咨询小鹿客服哦~!" Index:4];
         }

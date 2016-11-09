@@ -11,8 +11,6 @@
 #import "JumpUtils.h"
 #import "JMLogInViewController.h"
 #import "JMShareViewController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "WebViewController.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
@@ -123,12 +121,11 @@
     shareView.model.title = [data objectForKey:@"share_title"]; //标题
     shareView.model.share_link = [data objectForKey:@"link"];
     shareView.model = shareView.model;
-    NSLog(@"%@ %@", shareView.model, data);
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = ((WebViewController *)vc);
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = shareView.view;
+    
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:shareView WithBlock:^(UIView *maskView) {
+    }];
+
+    
 }
 
 + (NSString *)getMobileSNCode {

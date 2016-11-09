@@ -9,8 +9,6 @@
 #import "JMChoiseLogisController.h"
 #import "JMSelecterButton.h"
 #import "JMPopLogistcsCell.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 
 @interface JMChoiseLogisController ()<UITableViewDelegate,UITableViewDataSource>
 

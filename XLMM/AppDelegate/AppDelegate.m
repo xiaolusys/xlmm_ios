@@ -15,6 +15,8 @@
 #import "Udesk.h"
 #import "JMHomeRootController.h"
 #import "JMDevice.h"
+#import "UIImage+UIImageExt.h"
+
 
 #define login @"login"
 
@@ -76,9 +78,24 @@
     
 
 }
+- (void)getLaunchImage {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        self.imageUrl = responseObject[@"picture"];
+//        NSURL *url = [NSURL URLWithString:[[self.imageUrl ImageNoCompression] JMUrlEncodedString]];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+            UIImage *image = [UIImage imagewithURLString:[NSString stringWithFormat:@"%@?imageMogr2/thumbnail/1320/format/jpg/quality/90",self.imageUrl]];
+            [JMStoreManager removeFileByFileName:@"launchImageCache"];
+            [JMStoreManager saveDataFromImage:image WithFilePath:@"launchImageCache" Quality:0.5];
+        });
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) { 
+        
+    }];
+}
 - (void)fetchRootVC {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
     JMHomeRootController *root = [[JMHomeRootController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
@@ -96,23 +113,13 @@
     [self.window makeKeyAndVisible];
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
     //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
     [self udeskInit];
     [self umengTrackInit];
     [[JMGlobal global] monitoringNetworkStatus];
-    NSString *activityUrl = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:activityUrl WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return ;
-        self.imageUrl = responseObject[@"picture"];
-        [JMStoreManager removeFileByFileName:@"advertisingImageUrl.txt"];
-        [JMStoreManager saveDataFromString:@"advertisingImageUrl.txt" WithString:self.imageUrl];
-        [self fetchRootVC];
-    } WithFail:^(NSError *error) {
-        [self fetchRootVC];
-    } Progress:^(float progress) {
-        
-    }];
-    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     [self getServerIP];
     [self updateLoginState];
@@ -128,6 +135,8 @@
     
     [self umengShareInit];
     //创建导航控制器，添加根视图控制器
+    [self getLaunchImage];
+    [self fetchRootVC];
     if (launchOptions != nil) {
         NSDictionary* remoteNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (remoteNotification != nil) {

@@ -57,11 +57,11 @@
         self.blcok(self);
     }
     // 通知代理移除菜单
-    if ([_delegate respondsToSelector:@selector(coverDidClickCover:)]) {
-        
-        [_delegate coverDidClickCover:self];
-        
-    }
+//    if ([_delegate respondsToSelector:@selector(coverDidClickCover:)]) {
+//        
+//        [_delegate coverDidClickCover:self];
+//        
+//    }
     
     
     

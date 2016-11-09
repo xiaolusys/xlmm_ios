@@ -12,13 +12,13 @@
 
 typedef void(^coverBlock)(JMShareView *cover);
 
-@protocol JMShareViewDelegate <NSObject>
-
-@optional
-// 点击蒙板的时候调用
-- (void)coverDidClickCover:(JMShareView *)cover;
-
-@end
+//@protocol JMShareViewDelegate <NSObject>
+//
+//@optional
+//// 点击蒙板的时候调用
+//- (void)coverDidClickCover:(JMShareView *)cover;
+//
+//@end
 
 
 @interface JMShareView : UIView
@@ -31,7 +31,7 @@ typedef void(^coverBlock)(JMShareView *cover);
 @property (nonatomic, assign) BOOL dimBackground;
 
 
-@property (nonatomic, weak) id<JMShareViewDelegate> delegate;
+//@property (nonatomic, weak) id<JMShareViewDelegate> delegate;
 
 @property (nonatomic, copy) coverBlock blcok;
 
