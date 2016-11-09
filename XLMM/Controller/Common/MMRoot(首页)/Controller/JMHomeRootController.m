@@ -37,6 +37,7 @@
 #import "JMStoreManager.h"
 #import "JMLaunchView.h"
 
+
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
     NSString *_cartTimeString;      // 购物车时间
@@ -211,11 +212,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    NSString *imageUrl = _isFirstOpenApp ? nil : [JMStoreManager getDataString:@"advertisingImageUrl.txt"];
-    self.launchView = [[JMLaunchView alloc] initImageWithframe:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) imageURL:imageUrl timeSecond:3. hideSkip:YES ImageClick:^{ // 图片点击可以进入 webView (原生页面)
-    } endPlays:^{   // 此处点击'跳过' 可以设置root.但是这里实际是在window上展示了一个图片..所以不做处理
+    
+    UIImage *launchImage = [JMStoreManager getDataImage:@"launchImageCache" Quality:0.];
+    self.launchView = [JMLaunchView initImageWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Image:launchImage TimeSecond:3. HideSkip:YES LaunchAdClick:^{
+    } TimeEnd:^{
     }];
-    [JMKeyWindow addSubview:self.launchView];
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    [window addSubview:self.launchView];
+
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
     [self createCartsView];                            // 创建购物车
@@ -231,15 +235,8 @@
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
     }
-//    if (IS_IOS8) { //iOS8以上包含iOS8
-//        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types  == UIRemoteNotificationTypeNone) {
-//            NSLog(@"");
-//        }
-//    }else{ // ios7 一下
-//        if ([[UIApplication sharedApplication] enabledRemoteNotificationTypes]  == UIRemoteNotificationTypeNone) {
-//            NSLog(@"");
-//        }
-//    }
+    
+    
 }
 #pragma mark 通知事件
 - (void)presentView:(NSNotification *)notification{

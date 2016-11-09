@@ -66,7 +66,8 @@
 + (NSString *)getLastFilePath:(NSString *)fileName;
 + (BOOL)isLastFileExist:(NSString *)fileName;
 
-
++ (void)saveDataFromImage:(UIImage *)image WithFilePath:(NSString *)fileName Quality:(CGFloat)quality;
++ (UIImage *)getDataImage:(NSString *)fileName Quality:(CGFloat)quality;
 
 @end
 

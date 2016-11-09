@@ -9,8 +9,6 @@
 #import "JMRefundController.h"
 #import "JMAppForRefundModel.h"
 #import "JMSelecterButton.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "JMRefundCell.h"
 #import "JMContinuePayModel.h"
 
@@ -167,6 +165,8 @@
     [JMShareView hide];
     [JMPopView hide];
 }
+
+
 @end
 
 

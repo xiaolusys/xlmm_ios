@@ -8,8 +8,6 @@
 
 #import "JMPopLogistcsController.h"
 #import "JMSelecterButton.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "JMPopLogistcsCell.h"
 #import "JMPopLogistcsModel.h"
 
@@ -51,7 +49,6 @@
             JMPopLogistcsModel *model = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
             [dataSourceArr addObject:model];
         }
-        
         [self.dataSource addObjectsFromArray:dataSourceArr];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {

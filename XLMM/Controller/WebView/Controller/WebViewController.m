@@ -20,8 +20,8 @@
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "CartViewController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
+//#import "JMShareView.h"
+//#import "JMPopView.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -32,7 +32,7 @@
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
 //static BOOL isLogin;
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
     NSString *_fineCouponTid;
 }
 
@@ -398,25 +398,12 @@
 //        [MobClick event:@"WebViewController_shareFail_cancel"];
 //    };
     [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
-        
     }];
     self.shareView.blcok = ^(UIButton *button) {
         [MobClick event:@"WebViewController_shareFail_cancel"];
     };
     
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
 
 - (void)universeShare:(NSDictionary *)data {
 //    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
@@ -432,21 +419,12 @@
     self.shareView.model.share_link = [data objectForKey:@"link"];
 //    self.shareView.model = self.share_model;
     [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
-        
     }];
     self.shareView.blcok = ^(UIButton *button) {
         [MobClick event:@"WebViewController_shareFail_cancel"];
     };
     
 }
-#pragma mark --- 点击隐藏弹出视图
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [MobClick event:@"WebViewController_shareFail_masking"];
-    //隐藏pop菜单
-    [JMPopView hide];
-    
-}
-
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

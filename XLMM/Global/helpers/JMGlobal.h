@@ -15,13 +15,7 @@ typedef NS_ENUM(NSUInteger, popType) {
     popViewTypeBox           // 选择框
 };
 
-
-
-
 typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
-
-
-
 
 @interface JMGlobal : NSObject
 

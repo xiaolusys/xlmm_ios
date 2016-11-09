@@ -12,11 +12,9 @@
 #import "SendMessageToWeibo.h"
 #import "JMShareModel.h"
 #import "JMShareViewController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 
 
-@interface ShopPreviousViewController ()<UIWebViewDelegate,JMShareViewDelegate>
+@interface ShopPreviousViewController ()<UIWebViewDelegate>
 @property (nonatomic, strong)UIWebView *webView;
 
 @property (nonatomic, copy) NSString *shopShareLink;
@@ -37,6 +35,12 @@
         _share_model = [[JMShareModel alloc] init];
     }
     return _share_model;
+}
+- (JMShareViewController*)shareViewContro {
+    if (!_shareViewContro) {
+        _shareViewContro = [[JMShareViewController alloc] init];
+    }
+    return _shareViewContro;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -121,25 +125,12 @@
 - (void)sharedMethod{
     NSLog(@"分享");
     [MobClick event:@"MaMaShop_share"];
-    JMShareViewController *shareView1 = [[JMShareViewController alloc] init];
-    self.shareViewContro = shareView1;
-    self.shareViewContro.model = self.share_model;
-    
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = self.shareViewContro.view;
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareViewContro WithBlock:^(UIView *maskView) {
+    }];
     self.shareViewContro.blcok = ^(UIButton *button) {
         [MobClick event:@"WebViewController_shareFail_cancel"];
     };
 
-}
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [MobClick event:@"WebViewController_shareFail_masking"];
-    //隐藏pop菜单
-    [JMPopView hide];
-    
 }
 - (void)fetchedShareData:(NSData *)data{
     
@@ -162,6 +153,8 @@
     self.share_model.title = [shopInfo objectForKey:@"name"]; //标题
     self.share_model.share_link = [shopInfo objectForKey:@"shop_link"];
 
+    self.shareViewContro.model = self.share_model;
+    
     self.webViewUrl = [[dic objectForKey:@"shop_info"] objectForKey:@"preview_shop_link"];
     if(self.webViewUrl != nil){
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webViewUrl]]];

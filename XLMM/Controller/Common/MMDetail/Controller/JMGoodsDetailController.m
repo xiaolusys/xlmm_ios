@@ -13,8 +13,6 @@
 #import "JMGoodsSafeGuardCell.h"
 #import "IMYWebView.h"
 #import "JMShareViewController.h"
-#import "JMPopView.h"
-#import "JMShareView.h"
 #import "JMShareModel.h"
 #import "CartViewController.h"
 #import "JMDescLabelModel.h"
@@ -34,7 +32,7 @@
 #define NavigationMaskWH 36
 #define kBottomViewTag 100
 
-@interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
+@interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     CGFloat maxY;
     CGFloat minY;
     
@@ -411,20 +409,14 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         [MobClick event:@"GoodsDetail_share"];
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-        menu.contentView = self.goodsShareView.view;
+        [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+        }];
         self.goodsShareView.blcok = ^(UIButton *button) {
             [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
         };
     }
 }
 #pragma mark --- 点击隐藏弹出视图
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [MobClick event:@"GoodsDetail_share_fail_clickMasking"];
-    [JMPopView hide];
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }

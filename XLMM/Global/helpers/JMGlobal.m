@@ -12,6 +12,7 @@
 #import "JMHTTPManager.h"
 
 
+
 static BOOL isNetPrompt;
 
 @interface JMGlobal () <UIAlertViewDelegate> {
@@ -34,17 +35,15 @@ static BOOL isNetPrompt;
 
 #pragma mark ---------- 弹出视图 (分享,选择框等) ----------
 - (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock {
-    if (type == popViewTypeShare) {
-        [MobClick event:@"WebViewController_shareFail_cancel"];
-    }
     JMShareView *cover = [JMShareView show];
     JMPopView *menu = [JMPopView showInRect:frame];
     menu.contentView = viewController.view;
     cover.blcok = ^(JMShareView *coverView) {
         [JMPopView hide];
+        [MobClick event:@"WebViewController_shareFail_masking"];
     };
 //    cover.blcok = clickBlock;
-    
+
 }
 
 
@@ -108,7 +107,7 @@ static BOOL isNetPrompt;
             }
             case AFNetworkReachabilityStatusReachableViaWWAN:
             {
-                httpStatus = @"2G";
+                httpStatus = @"2G|3G|4G";
                 NSLog(@"蜂窝数据网");
                 break;
             }

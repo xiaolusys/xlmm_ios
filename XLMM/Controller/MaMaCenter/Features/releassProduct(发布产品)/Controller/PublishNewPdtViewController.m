@@ -415,8 +415,10 @@
             [self downLoadImage:picModel.piID];
         }else if (self.currentArr.count > 0){
             [MBProgressHUD hideHUD];
-            [MBProgressHUD showWarning:@"亲~您操作太快啦! ~(>_<)~"];
-            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+//            [MBProgressHUD showWarning:@"亲~您操作太快啦! ~(>_<)~"];
+            [MBProgressHUD showLoading:@"亲~ 慢点! (*^__^*) " ToView:self.view];
+//            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+            [self saveNextimage];
         }else {
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
             //            [self saveNext];
@@ -512,7 +514,9 @@
             }
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
-    }else { }
+    }else {
+        [MBProgressHUD hideHUDForView:self.view];
+    }
 }
 - (void)alertMessage {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不在提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -527,13 +531,18 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
         }else {
-            [self.currentArr removeObjectAtIndex:0];
-            [self saveNextimage];
+            if (self.currentArr.count != 0) {
+                [self.currentArr removeObjectAtIndex:0];
+                [self saveNextimage];
+            }
         }
     }else {
         //        [sharImageArray addObject:image];
-        [self.currentArr removeObjectAtIndex:0];
-        [self saveNextimage];
+        if (self.currentArr.count != 0) {
+            [self.currentArr removeObjectAtIndex:0];
+            [self saveNextimage];
+        }
+        
     }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

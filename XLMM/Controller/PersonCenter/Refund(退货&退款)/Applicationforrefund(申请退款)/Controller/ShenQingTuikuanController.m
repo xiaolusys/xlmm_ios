@@ -11,8 +11,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "JMAppForRefundModel.h"
 #import "UIView+RGSize.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "JMOrderGoodsModel.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"

@@ -11,9 +11,7 @@
 #import "JMPurchaseFooterView.h"
 #import "JMBaseGoodsCell.h"
 #import "CartListModel.h"
-#import "JMShareView.h"
 #import "JMChoiseLogisController.h"
-#import "JMPopView.h"
 #import "JMPopLogistcsModel.h"
 #import "AddressViewController.h"
 #import "AddressModel.h"
@@ -33,7 +31,7 @@
 
 
 
-@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate,JMShareViewDelegate> {
+@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
     NSDictionary *_couponData;
     NSTimer *_timer;
 }
@@ -131,6 +129,14 @@ static BOOL isAgreeTerms = YES;
     }
     return _purchaseGoodsArr;
 }
+- (JMChoiseLogisController *)showViewVC {
+    if (!_showViewVC) {
+        _showViewVC = [[JMChoiseLogisController alloc] init];
+        _showViewVC.delegate = self;
+    }
+    return _showViewVC;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -252,6 +258,8 @@ static BOOL isAgreeTerms = YES;
         JMPopLogistcsModel *logisticsModel = [JMPopLogistcsModel mj_objectWithKeyValues:dic];
         [self.logisticsArr addObject:logisticsModel];
     }
+    self.showViewVC.dataSource = self.logisticsArr;
+    self.showViewVC.count = self.logisticsArr.count;
     
     _amontPayment = [[purchaseDic objectForKey:@"total_payment"] floatValue];
     _totalPayment = [[purchaseDic objectForKey:@"total_payment"] floatValue];
@@ -406,23 +414,11 @@ static BOOL isAgreeTerms = YES;
         addVC.isSelected = YES;
         addVC.delegate = self;
         [self.navigationController pushViewController:addVC animated:YES];
-        
     }else if (index == 101) {
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        if (self.showViewVC.view == nil) {
-            self.showViewVC = [[JMChoiseLogisController alloc] init];
-        }
-        self.showViewVC.dataSource = self.logisticsArr;
         NSInteger count = self.logisticsArr.count;
-        self.showViewVC.count = count;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 60 * count + 60)];
-        self.showViewVC.delegate = self;
-        menu.contentView = self.showViewVC.view;
+        [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 60 * (count + 1)) ViewController:self.showViewVC WithBlock:^(UIView *maskView) {
+        }];
     }else { }
-}
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [JMPopView hide];
 }
 #pragma mark 选择地址,选择物流回调
 - (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
@@ -753,9 +749,9 @@ static BOOL isAgreeTerms = YES;
             if (couponMessage.length == 0) {
                 self.isEnoughCoupon = YES;
                 if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
-                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
+                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
                 }else {
-                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
+                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
                 }
                 self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
                 _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];

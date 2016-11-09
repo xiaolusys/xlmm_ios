@@ -9,14 +9,12 @@
 #import "JMShareViewController.h"
 #import "JMSelecterButton.h"
 #import "JMShareButtonView.h"
-#import "JMShareView.h"
 #import "JMShareModel.h"
 #import "UMSocial.h"
 #import "WXApi.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 #import "SendMessageToWeibo.h"
-#import "JMPopView.h"
 
 @interface JMShareViewController ()<JMShareButtonViewDelegate>
 

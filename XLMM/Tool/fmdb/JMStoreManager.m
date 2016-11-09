@@ -219,8 +219,22 @@
 }
 
 
-
-
++ (void)saveDataFromImage:(UIImage *)image WithFilePath:(NSString *)fileName Quality:(CGFloat)quality {
+    if ([self isFileExist:fileName]) {
+        return ;
+    }
+    NSString *documentPath = [self getLastFilePath:fileName];
+    [UIImageJPEGRepresentation(image, quality)writeToFile:documentPath atomically:YES];
+    
+}
++ (UIImage *)getDataImage:(NSString *)fileName Quality:(CGFloat)quality {
+    if (![self isFileExist:fileName]) {
+        return nil;
+    }
+    NSString *documentPath = [self getLastFilePath:fileName];
+    UIImage *image = [UIImage imageWithContentsOfFile:documentPath];
+    return image;
+}
 
 
 
