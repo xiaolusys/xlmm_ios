@@ -509,7 +509,7 @@
     if (countNum > 0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
             NSString *picImageUrl = self.currentArr[0];
-            if ([picImageUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
+            if ([picImageUrl hasPrefix:@"https://img.xiaolumeimei.com"]) {
                 picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picImageUrl]; // /quality/90
             }else {
             }

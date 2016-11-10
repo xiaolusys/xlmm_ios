@@ -677,7 +677,7 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-        NSString *urlString = [NSString stringWithFormat:@"http://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
+        NSString *urlString = [NSString stringWithFormat:@"https://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:urlString forKey:@"web_url"];
         [dict setValue:@"mamaShop" forKey:@"type_title"];
@@ -778,7 +778,7 @@
     
 }
 
-#pragma mark 活动点击事件(跳转webView)  // http://m.xiaolumeimei.com/mall/activity/exam
+#pragma mark 活动点击事件(跳转webView)  // https://m.xiaolumeimei.com/mall/activity/exam
 - (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
     if(appLink.length == 0){
         WebViewController *huodongVC = [[WebViewController alloc] init];
