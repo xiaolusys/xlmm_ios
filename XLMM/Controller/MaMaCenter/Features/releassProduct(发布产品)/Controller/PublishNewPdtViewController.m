@@ -326,6 +326,7 @@
     [self.photoView createScrollView];
     [self.photoView fillData:indexPath.row cellFrame:cell.frame];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
+
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {

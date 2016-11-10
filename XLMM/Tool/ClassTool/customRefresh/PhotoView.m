@@ -136,6 +136,9 @@
         }
         __block float imagew = 0.0;
         __block float imageh = 0.0;
+        
+
+        
         [imageV sd_setImageWithURL:[NSURL URLWithString:joinUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
 //            [activityIndicator removeFromSuperview];
 //            activityIndicator = nil;
