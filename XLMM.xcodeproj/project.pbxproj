@@ -606,6 +606,7 @@
 		1F5878931DB8ABFE00949302 /* TixianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58788F1DB8ABFE00949302 /* TixianModel.m */; };
 		1F5917DB1D5DCD7A003BB786 /* JMDescLabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */; };
 		1F6B78A71DD4055A009AB446 /* JMPhotoBrowesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */; };
+		1F6B78DB1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1697,6 +1698,7 @@
 		1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDescLabelModel.m; sourceTree = "<group>"; };
 		1F6B78A51DD4055A009AB446 /* JMPhotoBrowesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotoBrowesView.h; sourceTree = "<group>"; };
 		1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotoBrowesView.m; sourceTree = "<group>"; };
+		1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectionShopNormal_Small@2x.png"; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -2534,6 +2536,7 @@
 		1F12EBB11DAC97E600511B58 /* mine */ = {
 			isa = PBXGroup;
 			children = (
+				1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */,
 				1F12EBB21DAC97E600511B58 /* dingdanjilu@2x.png */,
 				1F12EBB31DAC97E600511B58 /* fangkejilu@2x.png */,
 				1F12EBB41DAC97E600511B58 /* gerenpaiming@2x.png */,
@@ -6143,6 +6146,7 @@
 				1F498C5C1D2772D0007E77FC /* RefundAddressInfoView.xib in Resources */,
 				1F12ED3B1DAC97E700511B58 /* newyouhuiquanbukeyongbg.png in Resources */,
 				1F12ED451DAC97E700511B58 /* emptyStoreUp@2x.png in Resources */,
+				1F6B78DB1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png in Resources */,
 				3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */,
 				1F12ED3A1DAC97E700511B58 /* waitsend.png in Resources */,
 				1F12EC8B1DAC97E600511B58 /* zhifubao.png in Resources */,

@@ -677,7 +677,7 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-        NSString *urlString = [NSString stringWithFormat:@"https://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
+        NSString *urlString = [NSString stringWithFormat:@"%@/mall/?mm_linkid=%@",Root_URL,self.centerModel.mama_id];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:urlString forKey:@"web_url"];
         [dict setValue:@"mamaShop" forKey:@"type_title"];

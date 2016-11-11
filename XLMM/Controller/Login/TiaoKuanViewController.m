@@ -35,7 +35,7 @@
     self.myWebView.scalesPageToFit = YES;//自动对页面进行缩放以适应屏幕
     [self.view addSubview:self.myWebView];
     
-    NSURL* url = [NSURL URLWithString:@"https://m.xiaolu.so/contact.html"];//创建URL
+    NSURL* url = [NSURL URLWithString:@"http://m.xiaolu.so/contact.html"];//创建URL
     NSURLRequest* request = [NSURLRequest requestWithURL:url];//创建NSURLRequest
     [self.myWebView loadRequest:request];//加载
     

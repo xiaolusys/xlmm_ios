@@ -252,7 +252,7 @@
     for (int i = 0; i < 3; i++) {
        NSString *key = [self keysWithTime:([[NSDate date] timeIntervalSince1970] + 100 * i) AndUserID:userID];
         [self.keysArray addObject:key];
-        NSString *link = [NSString stringWithFormat:@"https://7xkyoy.com2.z0.glb.qiniucdn.com/%@", key];
+        NSString *link = [NSString stringWithFormat:@"http://7xkyoy.com2.z0.glb.qiniucdn.com/%@", key];
         [self.linksArray addObject:link];
         
     }
