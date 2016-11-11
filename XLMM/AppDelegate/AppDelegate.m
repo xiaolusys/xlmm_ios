@@ -64,9 +64,9 @@
     @try {
         [UMSocialData setAppKey:@"5665541ee0f55aedfc0034f4"];
         //qq分享
-        [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"http://www.umeng.com/social"];
+        [UMSocialQQHandler setQQWithAppId:@"1105009062" appKey:@"V5H2L8ij9BNx6qQw" url:@"https://www.umeng.com/social"];
         //微信分享
-        [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"http://www.umeng.com/social"];
+        [UMSocialWechatHandler setWXAppId:@"3c7b4e3eb5ae4cfb132b2ac060a872ee" appSecret:@"wx25fcb32689872499" url:@"https://www.umeng.com/social"];
         //微博分享
         [WeiboSDK registerApp:@"2475629754"];
         [WXApi registerApp:@"wx25fcb32689872499" withDescription:@"weixin"];

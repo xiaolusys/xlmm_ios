@@ -34,7 +34,7 @@
     
 //    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64)];
     
-    NSString *str = @"http://xiaolu.so/m/m/?debug=123&code=3445&uopenid=oMt59uGYVCQy4gb4e0Iz6QVJ676w&sunionid=o29cQsxMBKSS1eh31-xMHVEUVYNA";
+    NSString *str = @"https://xiaolu.so/m/m/?debug=123&code=3445&uopenid=oMt59uGYVCQy4gb4e0Iz6QVJ676w&sunionid=o29cQsxMBKSS1eh31-xMHVEUVYNA";
     NSURL *url = [NSURL URLWithString:str];
     NSURLRequest *resuqest = [NSURLRequest requestWithURL:url];
     [webView loadRequest:resuqest];

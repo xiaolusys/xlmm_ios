@@ -605,6 +605,8 @@
 		1F5878921DB8ABFE00949302 /* TixianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58788C1DB8ABFE00949302 /* TixianViewController.m */; };
 		1F5878931DB8ABFE00949302 /* TixianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58788F1DB8ABFE00949302 /* TixianModel.m */; };
 		1F5917DB1D5DCD7A003BB786 /* JMDescLabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */; };
+		1F6B78A71DD4055A009AB446 /* JMPhotoBrowesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */; };
+		1F6B78DB1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1694,6 +1696,9 @@
 		1F58788F1DB8ABFE00949302 /* TixianModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TixianModel.m; sourceTree = "<group>"; };
 		1F5917D91D5DCD7A003BB786 /* JMDescLabelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDescLabelModel.h; sourceTree = "<group>"; };
 		1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDescLabelModel.m; sourceTree = "<group>"; };
+		1F6B78A51DD4055A009AB446 /* JMPhotoBrowesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotoBrowesView.h; sourceTree = "<group>"; };
+		1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotoBrowesView.m; sourceTree = "<group>"; };
+		1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectionShopNormal_Small@2x.png"; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -2531,6 +2536,7 @@
 		1F12EBB11DAC97E600511B58 /* mine */ = {
 			isa = PBXGroup;
 			children = (
+				1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */,
 				1F12EBB21DAC97E600511B58 /* dingdanjilu@2x.png */,
 				1F12EBB31DAC97E600511B58 /* fangkejilu@2x.png */,
 				1F12EBB41DAC97E600511B58 /* gerenpaiming@2x.png */,
@@ -2982,6 +2988,7 @@
 		1F27A61F1D275A6300A0F80B /* ClassTool */ = {
 			isa = PBXGroup;
 			children = (
+				1F6B78A41DD40517009AB446 /* PhotoBrowesView */,
 				1FD5D9301DCB21DA007E8DDE /* refresh */,
 				1FD5D9291DCAE184007E8DDE /* advertisingView(广告) */,
 				1FEDCB7A1D9117EB00CB7D97 /* timeLine(时间轴) */,
@@ -5296,6 +5303,15 @@
 			path = "autoLoopscrollView(滚动视图)";
 			sourceTree = "<group>";
 		};
+		1F6B78A41DD40517009AB446 /* PhotoBrowesView */ = {
+			isa = PBXGroup;
+			children = (
+				1F6B78A51DD4055A009AB446 /* JMPhotoBrowesView.h */,
+				1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */,
+			);
+			path = PhotoBrowesView;
+			sourceTree = "<group>";
+		};
 		1F6CEC011D33849F00E1F4DF /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -6130,6 +6146,7 @@
 				1F498C5C1D2772D0007E77FC /* RefundAddressInfoView.xib in Resources */,
 				1F12ED3B1DAC97E700511B58 /* newyouhuiquanbukeyongbg.png in Resources */,
 				1F12ED451DAC97E700511B58 /* emptyStoreUp@2x.png in Resources */,
+				1F6B78DB1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png in Resources */,
 				3A5214E91CC764AA00F4E699 /* Images.xcassets in Resources */,
 				1F12ED3A1DAC97E700511B58 /* waitsend.png in Resources */,
 				1F12EC8B1DAC97E600511B58 /* zhifubao.png in Resources */,
@@ -6630,6 +6647,7 @@
 				1F498C4C1D2772D0007E77FC /* JMQueryLogInfoModel.m in Sources */,
 				1F56E2831D3486CF0092EC91 /* JMCouponModel.m in Sources */,
 				1F5917DB1D5DCD7A003BB786 /* JMDescLabelModel.m in Sources */,
+				1F6B78A71DD4055A009AB446 /* JMPhotoBrowesView.m in Sources */,
 				1F498C4E1D2772D0007E77FC /* JMCleanView.m in Sources */,
 				1F1FB89A1D87E79D004C60CE /* HCScanQRViewController.m in Sources */,
 				1FE52E431D94E2330051D5A0 /* JMHomeRootCategoryController.m in Sources */,

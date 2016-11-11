@@ -151,7 +151,7 @@ extern NSString *Root_URL;
 #define HISTORYCOMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/complaint/history", Root_URL]
 #define LOGINFORAPP_URL [NSString stringWithFormat:@"%@/sale/promotion/activity/", Root_URL]
 
-#define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
+#define UPDATE_URLSTRING [NSString stringWithFormat:@"https://itunes.apple.com/lookup?id=%@",@"1051166985"]
 
 #endif
 

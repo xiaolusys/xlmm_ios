@@ -514,7 +514,7 @@
                 [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
                 }];
             }else {
-                [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
+                [self createClassPopView:@"小鹿退款说明" Message:@"退款立即退到小鹿零钱账户，该退款可以用于重新购买商品或者提现。" Index:1];
             }
         }
     }else if (button.tag == 101) {
@@ -554,7 +554,7 @@
  */
 - (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic {
     _choiseRefundDict = refundDic;
-    [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
+    [self createClassPopView:@"小鹿退款说明" Message:@"退款立即退到小鹿零钱账户，该退款可以用于重新购买商品或者提现。" Index:1];
 }
 #pragma mark 订单倒计时点击时间
 - (void)composeOutDateView:(JMOrderPayOutdateView *)outDateView Index:(NSInteger)index {

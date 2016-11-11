@@ -146,7 +146,7 @@
         //  跳转到小鹿妈妈forum界面 (论坛)
         WebViewController *webVC = [[WebViewController alloc] init];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:@"http://forum.xiaolumeimei.com/accounts/xlmm/login/" forKey:@"web_url"];
+        [dict setValue:@"https://forum.xiaolumeimei.com/accounts/xlmm/login/" forKey:@"web_url"];
         webVC.webDiction = dict;
         webVC.isShowNavBar = true;
         webVC.isShowRightShareBtn = false;
