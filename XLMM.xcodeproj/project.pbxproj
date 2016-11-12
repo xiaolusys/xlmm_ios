@@ -615,6 +615,7 @@
 		1F6B79BF1DD6F4A2009AB446 /* openssl in Resources */ = {isa = PBXBuildFile; fileRef = 1F6B79BD1DD6F4A2009AB446 /* openssl */; };
 		1F6B79C01DD6F4A2009AB446 /* Util in Resources */ = {isa = PBXBuildFile; fileRef = 1F6B79BE1DD6F4A2009AB446 /* Util */; };
 		1F6B79C21DD6F51B009AB446 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6B79C11DD6F51B009AB446 /* CoreText.framework */; };
+		1F6B79C51DD70CC1009AB446 /* JMWechatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B79C41DD70CC1009AB446 /* JMWechatManager.m */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1709,6 +1710,8 @@
 		1F6B79BD1DD6F4A2009AB446 /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = openssl; sourceTree = "<group>"; };
 		1F6B79BE1DD6F4A2009AB446 /* Util */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Util; sourceTree = "<group>"; };
 		1F6B79C11DD6F51B009AB446 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1F6B79C31DD70CC1009AB446 /* JMWechatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMWechatManager.h; sourceTree = "<group>"; };
+		1F6B79C41DD70CC1009AB446 /* JMWechatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMWechatManager.m; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -5303,6 +5306,8 @@
 		1F6B78DC1DD6E89A009AB446 /* xiaoluPayment */ = {
 			isa = PBXGroup;
 			children = (
+				1F6B79C31DD70CC1009AB446 /* JMWechatManager.h */,
+				1F6B79C41DD70CC1009AB446 /* JMWechatManager.m */,
 				1F6B78DD1DD6E923009AB446 /* JMPayment.h */,
 				1F6B78DE1DD6E923009AB446 /* JMPayment.m */,
 			);
@@ -6678,6 +6683,7 @@
 				1F760EB21DB704E300307093 /* JMAutoLoopPageView.m in Sources */,
 				1F1FB8AA1D88E92F004C60CE /* JMMineIntegralController.m in Sources */,
 				1FD158E01D2F8444006C4B14 /* JMRefundBaseController.m in Sources */,
+				1F6B79C51DD70CC1009AB446 /* JMWechatManager.m in Sources */,
 				1F2F9E321D58864200E3A68B /* JMGoodsExplainCell.m in Sources */,
 				1F5878781DB8ABB200949302 /* JMWithDrawDetailCell.m in Sources */,
 				1F27A6261D275A6300A0F80B /* JMPopViewAnimationSpring.m in Sources */,

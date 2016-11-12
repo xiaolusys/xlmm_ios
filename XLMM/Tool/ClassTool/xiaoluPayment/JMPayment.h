@@ -7,37 +7,81 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WXApi.h"
+#import "JMWechatManager.h"
+
 
 typedef NS_ENUM(NSInteger, thirdPartyPayMentType) {
     thirdPartyPayMentTypeForWechat,
     thirdPartyPayMentTypeForAliPay
 };
 
-typedef NS_ENUM(NSInteger, payMentError) {
-    payMentErrorType,
-    
-};
-
-
 @interface JMPayError : NSObject
-
-@property (nonatomic, assign) payMentError errorCode;
-
 @end
 
 
-typedef void(^payMentBlock)(JMPayError *error);
+typedef void(^payMentErrorBlock)(int errorCode);
 
-@interface JMPayment : NSObject
+@interface JMPayment : NSObject <WXApiDelegate>
 
 //@property (nonatomic, assign) thirdPartyPayMentType payMentType;
-
+@property (nonatomic, copy) payMentErrorBlock errorCodeBlock;
 
 + (instancetype)payMentManager;
 
 
-+ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme PayMentComplection:(payMentBlock)complection;
++ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme;
 
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

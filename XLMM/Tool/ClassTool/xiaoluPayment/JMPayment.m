@@ -13,7 +13,15 @@
 @end
 
 
+@interface JMPayment ()
 
+@property (nonatomic ,copy) NSString *wxCode;
+@property (nonatomic ,copy) NSString *access_token;
+@property (nonatomic ,copy) NSString *openid;
+@property (nonatomic, strong) NSDictionary *tokenInfo;
+@property (nonatomic, strong) NSDictionary *userInfo;
+
+@end
 
 @implementation JMPayment
 
@@ -22,35 +30,33 @@
     static JMPayment *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        manager = [[self alloc] initWithBaseURL:nil];
+        manager = [[JMPayment alloc] init];
     });
     return manager;
 }
 
 
-+ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme PayMentComplection:(payMentBlock)complection {
++ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme {
     switch (payMentType) {
         case thirdPartyPayMentTypeForWechat: {
             /*
              *  微信支付调用方法
              *
-             *  @param prepay_id 后台提供的prepay_id
-             *  @param nonce_str 后台提供的nonce_str
+             *  @param prepayId 后台提供的prepayId
+             *  @param nonceStr 后台提供的nonceStr
              
              
              */
             NSDictionary *credentialDic = parame[@"credential"];
             NSDictionary *wxDic = credentialDic[@"wx"];
-            NSString *parepayID = wxDic[@"partnerId"];
-            NSString *nonceStr = wxDic[@"nonceStr"];
-            
-            
-            
-            
-            
-            
-            
-            
+            PayReq *req = [[PayReq alloc] init];
+            req.partnerId = wxDic[@"partnerId"];
+            req.prepayId  = wxDic[@"prepayId"];
+            req.nonceStr  = wxDic[@"nonceStr"];
+            req.timeStamp = [wxDic[@"timeStamp"] intValue];
+            req.package   = wxDic[@"packageValue"];
+            req.sign      = wxDic[@"sign"];
+            [WXApi sendReq:req];
             
         }
             break;
@@ -61,9 +67,9 @@
             /**
              *  支付宝支付调用方法
              *
-             *  @param orderId    订单id（一般是后台生成之后返给你，你把这个id填到这里）
+             *  @param orderId    订单id - > 后台生成.....
              *  @param totalMoney 钱数
-             *  @param payTitle   支付页面的标题（说白了就是让客户知道这是花得什么钱，买了什么）
+             *  @param payTitle   支付页面的标题（让客户知道这是花得什么钱，买了什么）
              */
             
             
@@ -75,6 +81,158 @@
     
 
 
+}
+
+- (void)onResp:(BaseResp *)resp {
+    if([resp isKindOfClass:[PayResp class]]) {
+        int errorCode = resp.errCode;
+        if ([JMPayment payMentManager].errorCodeBlock) {
+            [JMPayment payMentManager].errorCodeBlock(errorCode);
+        }
+        switch (resp.errCode) {
+            case WXSuccess:
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
+                break;
+                
+            default:{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+            }
+                
+                break;
+        }
+    }else if ([resp isKindOfClass:[SendAuthResp class]]) {
+        //[SVProgressHUD showInfoWithStatus:@"登录中....."];
+        SendAuthResp *aresp = (SendAuthResp *)resp;
+        if (aresp.errCode== 0) {
+            NSString *code = aresp.code;
+            self.wxCode = code;
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setValue:code forKey:@"wxCode"];
+            [userDefaults synchronize];
+        }else {
+            NSLog(@"取消登录");
+            return;
+        }
+        //获取token和openid；
+        [self getAccess_token];
+    }else { }
+    
+    
+    
+}
+-(void)getAccess_token
+{
+    
+    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",@"wx25fcb32689872499",@"3c7b4e3eb5ae4cfb132b2ac060a872ee",self.wxCode];
+    
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        self.tokenInfo = responseObject;
+        self.access_token = [responseObject objectForKey:@"access_token"];
+        self.openid = [responseObject objectForKey:@"openid"];
+        
+        [self getUserInfo];
+    } WithFail:^(NSError *error) {
+        NSLog(@"%@",error);
+    } Progress:^(float progress) {
+    }];
+    
+//    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSURL *zoneUrl = [NSURL URLWithString:url];
+//        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+//        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (data) {
+//                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+//                
+//                self.tokenInfo = dic;
+//                
+//                NSLog(@"dic = %@", dic);
+//                /*
+//                 {
+//                 "access_token" = "OezXcEiiBSKSxW0eoylIeJDUKD6z6dmr42JANLPjNN7Kaf3e4GZ2OncrCfiKnGWiusJMZwzQU8kXcnT1hNs_ykAFDfDEuNp6waj-bDdepEzooL_k1vb7EQzhP8plTbD0AgR8zCRi1It3eNS7yRyd5A";
+//                 "expires_in" = 7200;
+//                 openid = oyAaTjsDx7pl4Q42O3sDzDtA7gZs;
+//                 "refresh_token" = "OezXcEiiBSKSxW0eoylIeJDUKD6z6dmr42JANLPjNN7Kaf3e4GZ2OncrCfiKnGWi2ZzH_XfVVxZbmha9oSFnKAhFsS0iyARkXCa7zPu4MqVRdwyb8J16V8cWw7oNIff0l-5F-4-GJwD8MopmjHXKiA";
+//                 scope = "snsapi_userinfo,snsapi_base";
+//                 }
+//                 */
+//                self.access_token = [dic objectForKey:@"access_token"];
+//                self.openid = [dic objectForKey:@"openid"];
+//                
+//                [self getUserInfo];
+//                //传入openID and
+//            }
+//            
+//        });
+//    });
+}
+
+-(void)getUserInfo
+{
+    // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
+    
+    NSString *url =[NSString stringWithFormat:@"http://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",self.access_token,self.openid];
+    
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *zoneUrl = [NSURL URLWithString:url];
+        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (data) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                NSLog(@"dic2 = %@", dic);
+                /*
+                 {
+                 city = Haidian;
+                 country = CN;
+                 headimgurl = "http://wx.qlogo.cn/mmopen/FrdAUicrPIibcpGzxuD0kjfnvc2klwzQ62a1brlWq1sjNfWREia6W8Cf8kNCbErowsSUcGSIltXTqrhQgPEibYakpl5EokGMibMPU/0";
+                 language = "zh_CN";
+                 nickname = "xxx";
+                 openid = oyAaTjsDx7pl4xxxxxxx;
+                 privilege =     (
+                 );
+                 province = Beijing;
+                 sex = 1;
+                 unionid = oyAaTjsxxxxxxQ42O3xxxxxxs;
+                 }
+                 */
+                self.userInfo = dic;
+                //                NSLog(@"tokeninfo = %@", self.tokenInfo);
+                //                NSLog(@"userInfo = %@", self.userInfo);
+                
+                NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+                [userdefault setObject:self.userInfo forKey:@"userInfo"];
+                [userdefault setBool:YES forKey:kIsLogin];
+                [userdefault setObject:kWeiXinLogin forKey:kLoginMethod];
+                NSDictionary *wxUserInfo = @{@"nickname":[dic objectForKey:@"nickname"],
+                                             @"headimgurl":[dic objectForKey:@"headimgurl"]
+                                             };
+                [userdefault setObject:wxUserInfo forKey:kWeiXinUserInfo];
+                [userdefault synchronize];
+                
+                //                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
+                //  发送微信登录成功的通知
+                
+                NSUserDefaults *userdefault0 = [NSUserDefaults standardUserDefaults];
+                NSString *author = [userdefault0 objectForKey:kWeiXinauthorize];
+                
+                if ([author isEqualToString:@"wxlogin"]) {
+                    
+                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"login" object:self];
+                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+                    [notificationCenter postNotification: broadcastMessage];
+                } else if([author isEqualToString:@"binding"]){
+                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"bindingwx" object:self];
+                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+                    [notificationCenter postNotification: broadcastMessage];
+                }
+                
+            }
+        });
+        
+    });
 }
 
 

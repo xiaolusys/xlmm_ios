@@ -28,6 +28,7 @@
 #import "JMPopViewAnimationSpring.h"
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
+#import "JMPayment.h"
 
 
 
@@ -666,6 +667,10 @@ static BOOL isAgreeTerms = YES;
         
         if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme];
+                [JMPayment payMentManager].errorCodeBlock = ^(int errorCode) {
+                    NSLog(@"%d",errorCode);
+                };
 //                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
 //                    if (error == nil) {
 //                        [MBProgressHUD hideHUD];

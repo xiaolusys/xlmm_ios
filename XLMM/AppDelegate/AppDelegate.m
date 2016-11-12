@@ -16,7 +16,7 @@
 #import "JMHomeRootController.h"
 #import "JMDevice.h"
 #import "UIImage+UIImageExt.h"
-
+#import "JMPayment.h"
 
 #define login @"login"
 
@@ -656,10 +656,15 @@
 
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:[JMPayment payMentManager]] || [UMSocialSnsService handleOpenURL:url];
     //  return [UMSocialSnsService handleOpenURL:url];
+    
+    
+    
+    
+    
+    
 }
-
 
 //   [PayResp code]....
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
@@ -672,17 +677,17 @@
     NSString *urlString = [url absoluteString];
     
     NSLog(@"----------url = %@", urlString);
-    [self pingppPay:url];
+//    [self pingppPay:url];
     
     //    return [UMSocialSnsService handleOpenURL:url];
-    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:[JMPayment payMentManager]] || [UMSocialSnsService handleOpenURL:url];
 
     
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
-    [self pingppPay:url];
+//    [self pingppPay:url];
     //    return [UMSocialSnsService handleOpenURL:url];
-    return [WXApi handleOpenURL:url delegate:self] || [UMSocialSnsService handleOpenURL:url];
+    return [WXApi handleOpenURL:url delegate:[JMPayment payMentManager]] || [UMSocialSnsService handleOpenURL:url];
 }
 
 - (void)pingppPay:(NSURL *)url {
