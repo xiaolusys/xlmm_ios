@@ -120,59 +120,52 @@
     
     
 }
+
+
+
 -(void)getAccess_token
 {
     
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",@"wx25fcb32689872499",@"3c7b4e3eb5ae4cfb132b2ac060a872ee",self.wxCode];
     
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:url WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        self.tokenInfo = responseObject;
-        self.access_token = [responseObject objectForKey:@"access_token"];
-        self.openid = [responseObject objectForKey:@"openid"];
-        
-        [self getUserInfo];
-    } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
-    } Progress:^(float progress) {
-    }];
-    
-//    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSURL *zoneUrl = [NSURL URLWithString:url];
-//        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
-//        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (data) {
-//                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//                
-//                self.tokenInfo = dic;
-//                
-//                NSLog(@"dic = %@", dic);
-//                /*
-//                 {
-//                 "access_token" = "OezXcEiiBSKSxW0eoylIeJDUKD6z6dmr42JANLPjNN7Kaf3e4GZ2OncrCfiKnGWiusJMZwzQU8kXcnT1hNs_ykAFDfDEuNp6waj-bDdepEzooL_k1vb7EQzhP8plTbD0AgR8zCRi1It3eNS7yRyd5A";
-//                 "expires_in" = 7200;
-//                 openid = oyAaTjsDx7pl4Q42O3sDzDtA7gZs;
-//                 "refresh_token" = "OezXcEiiBSKSxW0eoylIeJDUKD6z6dmr42JANLPjNN7Kaf3e4GZ2OncrCfiKnGWi2ZzH_XfVVxZbmha9oSFnKAhFsS0iyARkXCa7zPu4MqVRdwyb8J16V8cWw7oNIff0l-5F-4-GJwD8MopmjHXKiA";
-//                 scope = "snsapi_userinfo,snsapi_base";
-//                 }
-//                 */
-//                self.access_token = [dic objectForKey:@"access_token"];
-//                self.openid = [dic objectForKey:@"openid"];
-//                
-//                [self getUserInfo];
-//                //传入openID and
-//            }
-//            
-//        });
-//    });
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *zoneUrl = [NSURL URLWithString:url];
+        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (data) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                self.tokenInfo = dic;
+                
+                NSLog(@"dic = %@", dic);
+                /*
+                 {
+                 "access_token" = "OezXcEiiBSKSxW0eoylIeJDUKD6z6dmr42JANLPjNN7Kaf3e4GZ2OncrCfiKnGWiusJMZwzQU8kXcnT1hNs_ykAFDfDEuNp6waj-bDdepEzooL_k1vb7EQzhP8plTbD0AgR8zCRi1It3eNS7yRyd5A";
+                 "expires_in" = 7200;
+                 openid = oyAaTjsDx7pl4Q42O3sDzDtA7gZs;
+                 "refresh_token" = "OezXcEiiBSKSxW0eoylIeJDUKD6z6dmr42JANLPjNN7Kaf3e4GZ2OncrCfiKnGWi2ZzH_XfVVxZbmha9oSFnKAhFsS0iyARkXCa7zPu4MqVRdwyb8J16V8cWw7oNIff0l-5F-4-GJwD8MopmjHXKiA";
+                 scope = "snsapi_userinfo,snsapi_base";
+                 }
+                 */
+                self.access_token = [dic objectForKey:@"access_token"];
+                self.openid = [dic objectForKey:@"openid"];
+                
+                [self getUserInfo];
+                //传入openID and
+            }
+            
+        });
+    });
 }
+
+
 
 -(void)getUserInfo
 {
     // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
     
-    NSString *url =[NSString stringWithFormat:@"http://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",self.access_token,self.openid];
+    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",self.access_token,self.openid];
     
     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURL *zoneUrl = [NSURL URLWithString:url];
@@ -234,7 +227,6 @@
         
     });
 }
-
 
 
 
