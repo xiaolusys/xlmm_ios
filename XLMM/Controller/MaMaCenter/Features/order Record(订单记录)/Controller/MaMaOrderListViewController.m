@@ -279,6 +279,7 @@
         JMQueryLogInfoController *loginfoVC = [[JMQueryLogInfoController alloc] init];
         loginfoVC.packetId = orderM.packetid;
         loginfoVC.companyCode = orderM.company_code;
+        loginfoVC.logName = orderM.company_code;
         [self.navigationController pushViewController:loginfoVC animated:YES];
     }
 

@@ -180,7 +180,11 @@
     self.logNameLabel.text = self.logName;
     self.logNameLabel.font = [UIFont systemFontOfSize:13.];
     if (self.packageModel.assign_status_display.length == 0) {
-        self.logNumLabel.text = @"未揽件";
+        if ([NSString isStringEmpty:self.packetId]) {
+            self.logNumLabel.text = @"未揽件";
+        }else {
+            self.logNumLabel.text = self.packetId;
+        }
     }else {
         self.logNumLabel.text = self.packetId;//self.packageModel.assign_status_display;
     }
