@@ -13,9 +13,20 @@ typedef NS_ENUM(NSInteger, thirdPartyPayMentType) {
     thirdPartyPayMentTypeForAliPay
 };
 
+typedef NS_ENUM(NSInteger, payMentError) {
+    payMentErrorType,
+    
+};
 
 
+@interface JMPayError : NSObject
 
+@property (nonatomic, assign) payMentError errorCode;
+
+@end
+
+
+typedef void(^payMentBlock)(JMPayError *error);
 
 @interface JMPayment : NSObject
 
@@ -25,7 +36,7 @@ typedef NS_ENUM(NSInteger, thirdPartyPayMentType) {
 + (instancetype)payMentManager;
 
 
-//+ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType URLScheme:(NSString *)scheme
++ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme PayMentComplection:(payMentBlock)complection;
 
 
 
