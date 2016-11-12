@@ -19,7 +19,7 @@
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
 #import "WXApi.h"
-#import "Pingpp.h"
+//#import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "JMPayShareController.h"
 #import "JMSegmentController.h"
@@ -666,35 +666,35 @@ static BOOL isAgreeTerms = YES;
         
         if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                    if (error == nil) {
-                        [MBProgressHUD hideHUD];
-                        [_timer invalidate];
-                        [MBProgressHUD showSuccess:@"支付成功"];
-                        [MobClick event:@"buy_succ"];
-                        if (_isTeamBuyGoods) {
-                            [self getTeam:_orderTidNum]; // == > 团购信息
-                        }else {
-                            [self pushShareVC];
-                        }
-                    } else {
-                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                            [MBProgressHUD hideHUD];
-                            [_timer invalidate];
-                            [MBProgressHUD showError:@"用户取消支付"];
-                            [MobClick event:@"buy_cancel"];
-                            [self popview];
-                        } else {
-                            [MBProgressHUD hideHUD];
-                            [_timer invalidate];
-                            [MBProgressHUD showError:@"支付失败"];
-                            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-                            [MobClick event:@"buy_fail" attributes:temp_dict];
-                            NSLog(@"%@",error);
-                            [self performSelector:@selector(backClick) withObject:nil afterDelay:1.0];
-                        }
-                    }
-                }];
+//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                    if (error == nil) {
+//                        [MBProgressHUD hideHUD];
+//                        [_timer invalidate];
+//                        [MBProgressHUD showSuccess:@"支付成功"];
+//                        [MobClick event:@"buy_succ"];
+//                        if (_isTeamBuyGoods) {
+//                            [self getTeam:_orderTidNum]; // == > 团购信息
+//                        }else {
+//                            [self pushShareVC];
+//                        }
+//                    } else {
+//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                            [MBProgressHUD hideHUD];
+//                            [_timer invalidate];
+//                            [MBProgressHUD showError:@"用户取消支付"];
+//                            [MobClick event:@"buy_cancel"];
+//                            [self popview];
+//                        } else {
+//                            [MBProgressHUD hideHUD];
+//                            [_timer invalidate];
+//                            [MBProgressHUD showError:@"支付失败"];
+//                            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                            [MobClick event:@"buy_fail" attributes:temp_dict];
+//                            NSLog(@"%@",error);
+//                            [self performSelector:@selector(backClick) withObject:nil afterDelay:1.0];
+//                        }
+//                    }
+//                }];
             });
         }
         [MBProgressHUD hideHUD];

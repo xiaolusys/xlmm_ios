@@ -8,7 +8,7 @@
 #import "MiPushSDK.h"
 #import "AppDelegate.h"
 #import "JMStoreManager.h"
-#import "Pingpp.h"
+//#import "Pingpp.h"
 #import "NewLeftViewController.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
@@ -686,21 +686,21 @@
 }
 
 - (void)pingppPay:(NSURL *)url {
-    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
-               
-               if ([result isEqualToString:@"success"]) {
-                   // 支付成功
-                   NSLog(@"支付成功");
-                   //  发送支付成功的 通知
-                   NSLog(@"url = %@", url);
-                   [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
-                   
-               } else {
-                   // 支付失败或取消
-                   // 发送支付不成功的 通知
-                   [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
-               }
-           }];
+//    [Pingpp handleOpenURL:url withCompletion:^(NSString *result, PingppError *error) {
+//               
+//               if ([result isEqualToString:@"success"]) {
+//                   // 支付成功
+//                   NSLog(@"支付成功");
+//                   //  发送支付成功的 通知
+//                   NSLog(@"url = %@", url);
+//                   [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
+//                   
+//               } else {
+//                   // 支付失败或取消
+//                   // 发送支付不成功的 通知
+//                   [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+//               }
+//           }];
 }
 
 

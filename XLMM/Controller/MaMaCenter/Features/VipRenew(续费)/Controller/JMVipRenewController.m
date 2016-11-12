@@ -10,7 +10,7 @@
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
 #import "WXApi.h"
-#import "Pingpp.h"
+//#import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
@@ -448,23 +448,23 @@
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
         NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                if (error == nil) {
-                    [MBProgressHUD showSuccess:@"支付成功"];
-                    [MobClick event:@"renewBuy_succ"];
-                } else {
-                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                        [MBProgressHUD showError:@"用户取消支付"];
-                        [MobClick event:@"renewBuy_cancel"];
-                    } else {
-                        [MBProgressHUD showError:@"支付失败"];
-                        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-                        [MobClick event:@"renewBuy_fail" attributes:temp_dict];
-                    }
-                    
-                }
-                
-            }];
+//            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                if (error == nil) {
+//                    [MBProgressHUD showSuccess:@"支付成功"];
+//                    [MobClick event:@"renewBuy_succ"];
+//                } else {
+//                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                        [MBProgressHUD showError:@"用户取消支付"];
+//                        [MobClick event:@"renewBuy_cancel"];
+//                    } else {
+//                        [MBProgressHUD showError:@"支付失败"];
+//                        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                        [MobClick event:@"renewBuy_fail" attributes:temp_dict];
+//                    }
+//                    
+//                }
+//                
+//            }];
         });
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {

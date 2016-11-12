@@ -20,10 +20,7 @@
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMOrderPayOutdateView.h"
-#import "Pingpp.h"
 #import "JMPopLogistcsController.h"
-//#import "JMShareView.h"
-//#import "JMPopView.h"
 #import "JMEditAddressController.h"
 #import "JMOrderDetailSectionView.h"
 #import "JMRefundController.h"
@@ -618,27 +615,27 @@
             JMOrderDetailController * __weak weakSelf = self;
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                    NSLog(@"completion block: %@", result);
-                    
-                    if (error == nil) {
-                        [MBProgressHUD showSuccess:@"支付成功"];
-                        [MobClick event:@"buy_succ"];
-                        [self pushShareVC];
-                    } else {
-                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                            [MBProgressHUD showError:@"用户取消支付"];
-                            [MobClick event:@"buy_cancel"];
-                            [self popview];
-                        } else {
-                            [MBProgressHUD showError:@"支付失败"];
-                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-                            [MobClick event:@"buy_fail" attributes:temp_dict];
-                            NSLog(@"%@",error);
-                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
-                        }
-                    }
-                }];
+//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                    NSLog(@"completion block: %@", result);
+//                    
+//                    if (error == nil) {
+//                        [MBProgressHUD showSuccess:@"支付成功"];
+//                        [MobClick event:@"buy_succ"];
+//                        [self pushShareVC];
+//                    } else {
+//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                            [MBProgressHUD showError:@"用户取消支付"];
+//                            [MobClick event:@"buy_cancel"];
+//                            [self popview];
+//                        } else {
+//                            [MBProgressHUD showError:@"支付失败"];
+//                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                            [MobClick event:@"buy_fail" attributes:temp_dict];
+//                            NSLog(@"%@",error);
+//                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
+//                        }
+//                    }
+//                }];
             });
             
         }
@@ -661,11 +658,11 @@
     NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     JMOrderDetailController * __weak weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-            if (error == nil) {
-            } else {
-            }
-        }];
+//        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//            if (error == nil) {
+//            } else {
+//            }
+//        }];
     });
 }
 - (void)popToview {

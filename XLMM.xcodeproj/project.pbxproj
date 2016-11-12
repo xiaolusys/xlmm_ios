@@ -607,6 +607,7 @@
 		1F5917DB1D5DCD7A003BB786 /* JMDescLabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */; };
 		1F6B78A71DD4055A009AB446 /* JMPhotoBrowesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */; };
 		1F6B78DB1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */; };
+		1F6B78DF1DD6E923009AB446 /* JMPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B78DE1DD6E923009AB446 /* JMPayment.m */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -676,14 +677,6 @@
 		1FE52DF51D94CC8F0051D5A0 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326676291BB51FFD00307EC4 /* libsqlite3.0.tbd */; };
 		1FE52DF71D94CC9D0051D5A0 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52DF61D94CC9D0051D5A0 /* libstdc++.tbd */; };
 		1FE52DF91D94CCA50051D5A0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52DF81D94CCA50051D5A0 /* CoreMotion.framework */; };
-		1FE52E301D94D5FC0051D5A0 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1FE52E191D94D5FC0051D5A0 /* AlipaySDK.bundle */; };
-		1FE52E311D94D5FC0051D5A0 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52E1A1D94D5FC0051D5A0 /* AlipaySDK.framework */; };
-		1FE52E321D94D5FC0051D5A0 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52E1B1D94D5FC0051D5A0 /* libpingpp+alipay.a */; };
-		1FE52E381D94D5FC0051D5A0 /* libpingpp+network.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52E261D94D5FC0051D5A0 /* libpingpp+network.a */; };
-		1FE52E391D94D5FC0051D5A0 /* libpingpp+webview.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52E291D94D5FC0051D5A0 /* libpingpp+webview.a */; };
-		1FE52E3A1D94D5FC0051D5A0 /* libpingppcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52E2A1D94D5FC0051D5A0 /* libpingppcore.a */; };
-		1FE52E3B1D94D5FC0051D5A0 /* libpingpp+one.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52E2C1D94D5FC0051D5A0 /* libpingpp+one.a */; };
-		1FE52E3C1D94D5FC0051D5A0 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1FE52E2E1D94D5FC0051D5A0 /* Pingpp.bundle */; };
 		1FE52E431D94E2330051D5A0 /* JMHomeRootCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */; };
 		1FE52E461D950BBE0051D5A0 /* JMHomeRootCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */; };
 		1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */; };
@@ -1699,6 +1692,8 @@
 		1F6B78A51DD4055A009AB446 /* JMPhotoBrowesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotoBrowesView.h; sourceTree = "<group>"; };
 		1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotoBrowesView.m; sourceTree = "<group>"; };
 		1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectionShopNormal_Small@2x.png"; sourceTree = "<group>"; };
+		1F6B78DD1DD6E923009AB446 /* JMPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPayment.h; sourceTree = "<group>"; };
+		1F6B78DE1DD6E923009AB446 /* JMPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPayment.m; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -1810,17 +1805,6 @@
 		1FE52DF61D94CC9D0051D5A0 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		1FE52DF81D94CCA50051D5A0 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		1FE52DFE1D94D3580051D5A0 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		1FE52E191D94D5FC0051D5A0 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
-		1FE52E1A1D94D5FC0051D5A0 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		1FE52E1B1D94D5FC0051D5A0 /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
-		1FE52E261D94D5FC0051D5A0 /* libpingpp+network.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+network.a"; sourceTree = "<group>"; };
-		1FE52E271D94D5FC0051D5A0 /* PingppURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingppURLResponse.h; sourceTree = "<group>"; };
-		1FE52E291D94D5FC0051D5A0 /* libpingpp+webview.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+webview.a"; sourceTree = "<group>"; };
-		1FE52E2A1D94D5FC0051D5A0 /* libpingppcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpingppcore.a; sourceTree = "<group>"; };
-		1FE52E2C1D94D5FC0051D5A0 /* libpingpp+one.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+one.a"; sourceTree = "<group>"; };
-		1FE52E2D1D94D5FC0051D5A0 /* Pingpp+One.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Pingpp+One.h"; sourceTree = "<group>"; };
-		1FE52E2E1D94D5FC0051D5A0 /* Pingpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Pingpp.bundle; sourceTree = "<group>"; };
-		1FE52E2F1D94D5FC0051D5A0 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		1FE52E411D94E2330051D5A0 /* JMHomeRootCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootCategoryController.h; sourceTree = "<group>"; };
 		1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootCategoryController.m; sourceTree = "<group>"; };
 		1FE52E441D950BBE0051D5A0 /* JMHomeRootCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootCategoryCell.h; sourceTree = "<group>"; };
@@ -2006,7 +1990,6 @@
 				1F7D993B1D632E4A00E18FD1 /* libMBProgressHUD.a in Frameworks */,
 				1F9169EE1D50662D00327408 /* libRESideMenu.a in Frameworks */,
 				1F9169EA1D5064D700327408 /* libMJRefresh.a in Frameworks */,
-				1FE52E311D94D5FC0051D5A0 /* AlipaySDK.framework in Frameworks */,
 				1F9169EB1D5064D700327408 /* libSDWebImage.a in Frameworks */,
 				1F9169E61D5064D100327408 /* libMJExtension.a in Frameworks */,
 				1F9169E41D5063AD00327408 /* libMasonry.a in Frameworks */,
@@ -2015,8 +1998,6 @@
 				1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */,
 				3A2BC1CE1D2CFF6E00F6F54B /* TencentOpenAPI.framework in Frameworks */,
 				3A2BC1D01D2CFF6E00F6F54B /* libSocialWechat.a in Frameworks */,
-				1FE52E321D94D5FC0051D5A0 /* libpingpp+alipay.a in Frameworks */,
-				1FE52E381D94D5FC0051D5A0 /* libpingpp+network.a in Frameworks */,
 				3A2BC1CD1D2CFF6E00F6F54B /* libSocialQQ.a in Frameworks */,
 				3A2BC1CB1D2CFF6E00F6F54B /* libWeiboSDK.a in Frameworks */,
 				1808FAC51C8AA3860090EC17 /* AssetsLibrary.framework in Frameworks */,
@@ -2024,11 +2005,9 @@
 				327367071C182800008AAE86 /* libsqlite3.dylib in Frameworks */,
 				327367051C1827D3008AAE86 /* libiconv.2.dylib in Frameworks */,
 				327367031C1827A5008AAE86 /* libstdc++.6.0.9.dylib in Frameworks */,
-				1FE52E3B1D94D5FC0051D5A0 /* libpingpp+one.a in Frameworks */,
 				327367011C182783008AAE86 /* libz.1.dylib in Frameworks */,
 				3A2BC1C01D2CFF6D00F6F54B /* libUMSocial_Sdk_5.2.1.a in Frameworks */,
 				321951D11BFC77D600AA0AB8 /* CoreGraphics.framework in Frameworks */,
-				1FE52E3A1D94D5FC0051D5A0 /* libpingppcore.a in Frameworks */,
 				1830744A1C97D17900B7665E /* libWeChatSDK.a in Frameworks */,
 				3A2BC1CA1D2CFF6D00F6F54B /* libSocialSinaSSO.a in Frameworks */,
 				32E329631B708A4000A6F0BC /* Foundation.framework in Frameworks */,
@@ -2038,7 +2017,6 @@
 				32F3D9721B6CCBDC008530BA /* MobileCoreServices.framework in Frameworks */,
 				1F4C9E791D9912600089CE74 /* libUdesk.a in Frameworks */,
 				A38F3AA3A6E06ED6EE005C85 /* libPods-XLMM.a in Frameworks */,
-				1FE52E391D94D5FC0051D5A0 /* libpingpp+webview.a in Frameworks */,
 				1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2259,7 +2237,6 @@
 		183072941C97D17800B7665E /* Venders(第三方库) */ = {
 			isa = PBXGroup;
 			children = (
-				1FE52E161D94D5FC0051D5A0 /* lib */,
 				3A2BC1781D2CFF6D00F6F54B /* umeng_ios_social_sdk_5.2.1_arm64_custom */,
 				1F4C9DC51D9912600089CE74 /* UdeskSDK */,
 				3A1E057A1CE1C3FB001018AC /* LGViews */,
@@ -2978,6 +2955,7 @@
 		1F27A61E1D275A6300A0F80B /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1F6B78DC1DD6E89A009AB446 /* xiaoluPayment */,
 				1F6CEC011D33849F00E1F4DF /* Cache */,
 				1F6CEC021D33849F00E1F4DF /* fmdb */,
 				1F27A61F1D275A6300A0F80B /* ClassTool */,
@@ -5312,6 +5290,16 @@
 			path = PhotoBrowesView;
 			sourceTree = "<group>";
 		};
+		1F6B78DC1DD6E89A009AB446 /* xiaoluPayment */ = {
+			isa = PBXGroup;
+			children = (
+				1F6B78DD1DD6E923009AB446 /* JMPayment.h */,
+				1F6B78DE1DD6E923009AB446 /* JMPayment.m */,
+			);
+			name = xiaoluPayment;
+			path = ClassTool/xiaoluPayment;
+			sourceTree = "<group>";
+		};
 		1F6CEC011D33849F00E1F4DF /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -5431,72 +5419,6 @@
 				1F760EA21DB635FD00307093 /* CountdownView.m */,
 			);
 			name = EmptyView;
-			sourceTree = "<group>";
-		};
-		1FE52E161D94D5FC0051D5A0 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E171D94D5FC0051D5A0 /* Channels */,
-				1FE52E241D94D5FC0051D5A0 /* Dependencies */,
-				1FE52E2A1D94D5FC0051D5A0 /* libpingppcore.a */,
-				1FE52E2B1D94D5FC0051D5A0 /* One */,
-				1FE52E2E1D94D5FC0051D5A0 /* Pingpp.bundle */,
-				1FE52E2F1D94D5FC0051D5A0 /* Pingpp.h */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		1FE52E171D94D5FC0051D5A0 /* Channels */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E181D94D5FC0051D5A0 /* Alipay */,
-			);
-			path = Channels;
-			sourceTree = "<group>";
-		};
-		1FE52E181D94D5FC0051D5A0 /* Alipay */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E191D94D5FC0051D5A0 /* AlipaySDK.bundle */,
-				1FE52E1A1D94D5FC0051D5A0 /* AlipaySDK.framework */,
-				1FE52E1B1D94D5FC0051D5A0 /* libpingpp+alipay.a */,
-			);
-			path = Alipay;
-			sourceTree = "<group>";
-		};
-		1FE52E241D94D5FC0051D5A0 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E251D94D5FC0051D5A0 /* Network */,
-				1FE52E281D94D5FC0051D5A0 /* WebView */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		1FE52E251D94D5FC0051D5A0 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E261D94D5FC0051D5A0 /* libpingpp+network.a */,
-				1FE52E271D94D5FC0051D5A0 /* PingppURLResponse.h */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		1FE52E281D94D5FC0051D5A0 /* WebView */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E291D94D5FC0051D5A0 /* libpingpp+webview.a */,
-			);
-			path = WebView;
-			sourceTree = "<group>";
-		};
-		1FE52E2B1D94D5FC0051D5A0 /* One */ = {
-			isa = PBXGroup;
-			children = (
-				1FE52E2C1D94D5FC0051D5A0 /* libpingpp+one.a */,
-				1FE52E2D1D94D5FC0051D5A0 /* Pingpp+One.h */,
-			);
-			path = One;
 			sourceTree = "<group>";
 		};
 		1FE52E3D1D94E0BD0051D5A0 /* Category(分类) */ = {
@@ -6211,7 +6133,6 @@
 				3A2BC1C11D2CFF6D00F6F54B /* UMSCommentDetailController.xib in Resources */,
 				1F498C151D2772D0007E77FC /* GuanzhuViewController.xib in Resources */,
 				1F12ECA31DAC97E600511B58 /* EverydayPushNormalColor@2x.png in Resources */,
-				1FE52E301D94D5FC0051D5A0 /* AlipaySDK.bundle in Resources */,
 				1F12EC901DAC97E600511B58 /* profiles.png in Resources */,
 				1F760E721DB62CA200307093 /* ReBuyTableViewCell.xib in Resources */,
 				1F498C3D1D2772D0007E77FC /* NewLeftViewController.xib in Resources */,
@@ -6318,7 +6239,6 @@
 				1F12ECC21DAC97E600511B58 /* wodejingxuanyulan.png in Resources */,
 				3A2BC1BF1D2CFF6D00F6F54B /* UMSocialLocalizable.strings in Resources */,
 				1F12ED321DAC97E700511B58 /* guanyuIcon.png in Resources */,
-				1FE52E3C1D94D5FC0051D5A0 /* Pingpp.bundle in Resources */,
 				1F12ECF41DAC97E600511B58 /* 圈圈加载0006@2x.png in Resources */,
 				1F5877F21DB8A7AF00949302 /* YixuanTableViewCell.xib in Resources */,
 				1830744B1C97D17900B7665E /* read_me.txt in Resources */,
@@ -6554,6 +6474,7 @@
 				1F498B311D276450007E77FC /* JMPaySucTitleView.m in Sources */,
 				1F41B2B61CEAE0BA00E63E6F /* JMLineView.m in Sources */,
 				1F498C3E1D2772D0007E77FC /* JMPopLogistcsController.m in Sources */,
+				1F6B78DF1DD6E923009AB446 /* JMPayment.m in Sources */,
 				1F5877EB1DB8A7AF00949302 /* ProductSelectionListViewController.m in Sources */,
 				1F27A62C1D275CD600A0F80B /* JMPopView.m in Sources */,
 				1F498C521D2772D0007E77FC /* JMGoodsShowView.m in Sources */,
