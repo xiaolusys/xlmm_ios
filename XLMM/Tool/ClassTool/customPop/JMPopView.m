@@ -31,13 +31,11 @@
 
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    
     if (self = [super initWithFrame:frame]) {
-        
+    
     }
     return self;
 }
-
 // 显示弹出菜单
 + (instancetype)showInRect:(CGRect)rect {
     JMPopView *menu = [[JMPopView alloc] initWithFrame:rect];

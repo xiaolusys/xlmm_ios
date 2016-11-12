@@ -11,8 +11,9 @@
 #import "JMShareView.h"
 
 typedef NS_ENUM(NSUInteger, popType) {
-    popViewTypeShare,        // 分享
-    popViewTypeBox           // 选择框
+    popViewTypeShare,               // 分享
+    popViewTypeBox,                 // 选择框
+    popViewTypeReceiveCoupon        // 领取优惠券
 };
 
 typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
@@ -41,7 +42,7 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 
 
 
-
+- (void)showpopForReceiveCouponFrame:(CGRect)frame WithBlock:(void (^)(UIView *maskView))clickBlock ActivePopBlock:(void (^)(UIButton *button))activeBlock;
 - (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock;
 
 

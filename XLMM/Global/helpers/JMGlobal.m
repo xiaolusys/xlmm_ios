@@ -10,7 +10,8 @@
 #import "JMStoreManager.h"
 #import "JMDevice.h"
 #import "JMHTTPManager.h"
-
+#import "JMRepopView.h"
+#import "JMPopViewAnimationSpring.h"
 
 
 static BOOL isNetPrompt;
@@ -39,11 +40,31 @@ static BOOL isNetPrompt;
     JMPopView *menu = [JMPopView showInRect:frame];
     menu.contentView = viewController.view;
     cover.blcok = ^(JMShareView *coverView) {
+        [JMShareView hide];
         [JMPopView hide];
         [MobClick event:@"WebViewController_shareFail_masking"];
     };
+    
 //    cover.blcok = clickBlock;
-
+}
+#pragma mark ---------- 弹出视图 (活动信息) ----------
+- (void)showpopForReceiveCouponFrame:(CGRect)frame WithBlock:(void (^)(UIView *maskView))clickBlock ActivePopBlock:(void (^)(UIButton *button))activeBlock {
+    JMShareView *cover = [JMShareView show];
+    JMRepopView *popView = [JMRepopView showInRect:frame];
+    cover.blcok = ^(JMShareView *coverView) {
+        // 这里点击蒙版没有效果
+    };
+    popView.activeBlock = activeBlock;
+//    popView.activeBlock = ^(UIButton *button) {
+//        if (button.tag == 100) {
+//            
+//        }else {
+//            [JMShareView hide];
+//            [JMRepopView hide];
+//        }
+//    };
+    
+    [JMPopViewAnimationSpring showView:popView overlayView:cover];
 }
 
 
