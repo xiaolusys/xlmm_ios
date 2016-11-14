@@ -14,8 +14,9 @@
 #import "PersonOrderViewController.h"
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
+#import "JMPayment.h"
 
-#define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
 
 @interface JMVipRenewController ()<JMOrderPayViewDelegate>
 
@@ -434,20 +435,28 @@
     params[@"discount_fee"] = @"0.00";
     params[@"total_fee"] = renewDic[@"std_sale_price"];
     params[@"channel"] = _channel;
-    params[@"wallet_renew_deposit"] = [NSString stringWithFormat:@"%.2f",_walletCash];
-    params[@"payment"] = [NSString stringWithFormat:@"%.2f",_wxOraliPayment];
+    params[@"wallet_renew_deposit"] = @"0.00";//[NSString stringWithFormat:@"%.2f",_walletCash];
+    params[@"payment"] = @"99.00";//[NSString stringWithFormat:@"%.2f",_wxOraliPayment];
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/mama_register_pay",Root_URL];
     
-    JMVipRenewController * __weak weakSelf = self;
+//    JMVipRenewController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [MBProgressHUD hideHUD];
         
-        NSError *parseError = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
-        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        NSError *parseError = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
+//        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:responseObject URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                NSLog(@"%ld",error.errorStatus);
+                if (error.errorStatus == payMentErrorStatusSuccess) {
+                    [self paySuccessful];
+                }else if (error.errorStatus == payMentErrorStatusFail) { // 取消
+                    [self popview];
+                }else { }
+            }];
 //            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
 //                if (error == nil) {
 //                    [MBProgressHUD showSuccess:@"支付成功"];
@@ -566,7 +575,7 @@
         self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else if (button.tag == 102){
         if (isAgreeTerms) {
-            if (self.isEnoughBudgetPay) {
+            if (!self.isEnoughBudgetPay) {
                 _channel = @"budget";
 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确定要全部用妈妈钱包金额续费吗?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];

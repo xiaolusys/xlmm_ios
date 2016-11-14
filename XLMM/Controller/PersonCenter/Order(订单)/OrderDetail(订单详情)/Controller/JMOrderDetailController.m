@@ -33,8 +33,8 @@
 #import "WebViewController.h"
 #import "JMClassPopView.h"
 #import "JMPopViewAnimationDrop.h"
+#import "JMPayment.h"
 
-#define kUrlScheme @"wx25fcb32689872499"
 
 @interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
     NSMutableArray *_refundStatusArray;        //退款状态
@@ -607,14 +607,21 @@
             [MBProgressHUD hideHUD];
             NSDictionary *dic = responseObject[@"charge"];
             
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-            NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+//            NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
             
             
-            JMOrderDetailController * __weak weakSelf = self;
+//            JMOrderDetailController * __weak weakSelf = self;
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:dic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                    NSLog(@"%ld",error.errorStatus);
+                    if (error.errorStatus == payMentErrorStatusSuccess) {
+                        [self paySuccessful];
+                    }else if(error.errorStatus == payMentErrorStatusFail) { // 取消
+                        [self popview];
+                    }else { }
+                }];
 //                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
 //                    NSLog(@"completion block: %@", result);
 //                    
@@ -650,21 +657,21 @@
     payShareVC.ordNum = tid;
     [self.navigationController pushViewController:payShareVC animated:YES];
 }
-#pragma mark --NSURLConnectionDataDelegate--
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-}
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    JMOrderDetailController * __weak weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-//        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-//            if (error == nil) {
-//            } else {
-//            }
-//        }];
-    });
-}
+//#pragma mark --NSURLConnectionDataDelegate--
+//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+//}
+//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+//    __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+//    NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//    JMOrderDetailController * __weak weakSelf = self;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+////        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+////            if (error == nil) {
+////            } else {
+////            }
+////        }];
+//    });
+//}
 - (void)popToview {
     [self.navigationController popViewControllerAnimated:YES];
 }

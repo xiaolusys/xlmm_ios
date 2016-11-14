@@ -10,6 +10,14 @@
 
 
 @implementation JMPayError
++ (instancetype)payErrorManager {
+    static JMPayError *error = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        error = [[JMPayError alloc] init];
+    });
+    return error;
+}
 @end
 
 
@@ -36,70 +44,124 @@
 }
 
 
-+ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme {
-    switch (payMentType) {
-        case thirdPartyPayMentTypeForWechat: {
++ (void)createPaymentWithType:(thirdPartyPayMentType)payMentType Parame:(id)parame URLScheme:(NSString *)scheme ErrorCodeBlock:(payMentErrorBlock)errorCodeBlock {
+    NSString *payType = parame[@"channel"];
+    NSDictionary *credentialDic = parame[@"credential"];
+    if ([payType isEqual:@"wx"]) {
+        NSDictionary *wxDic = credentialDic[@"wx"];
+        PayReq *req = [[PayReq alloc] init];
+        req.partnerId = wxDic[@"partnerId"];
+        req.prepayId  = wxDic[@"prepayId"];
+        req.nonceStr  = wxDic[@"nonceStr"];
+        req.timeStamp = [wxDic[@"timeStamp"] intValue];
+        req.package   = wxDic[@"packageValue"];
+        req.sign      = wxDic[@"sign"];
+        [WXApi sendReq:req];
+
+        [JMPayment payMentManager].errorCodeBlock = errorCodeBlock;
+        
+    }else if ([payType isEqual:@"alipay"]) {
+        
+        NSDictionary *aliDic = credentialDic[@"alipay"];
+        NSString *orderString = aliDic[@"orderInfo"];
+        [[AlipaySDK defaultService] payOrder:orderString fromScheme:kUrlScheme callback:^(NSDictionary *resultDic) {
+            NSLog(@"%@",resultDic);
+            NSInteger errorCode = [resultDic[@"resultStatus"] integerValue];
+            JMPayError *error = [[JMPayError alloc] init];
+            if (errorCode == 9000) {
+                error.errorStatus = payMentErrorStatusSuccess;
+            }else {  // 4000 (支付失败)
+                error.errorStatus = payMentErrorStatusFail;
+            }
+            if (errorCodeBlock) {
+                errorCodeBlock(error);
+            }
             /*
-             *  微信支付调用方法
-             *
-             *  @param prepayId 后台提供的prepayId
-             *  @param nonceStr 后台提供的nonceStr
-             
-             
+             {
+             memo = "";
+             result = "";
+             resultStatus = 6001;
+             }
+
              */
-            NSDictionary *credentialDic = parame[@"credential"];
-            NSDictionary *wxDic = credentialDic[@"wx"];
-            PayReq *req = [[PayReq alloc] init];
-            req.partnerId = wxDic[@"partnerId"];
-            req.prepayId  = wxDic[@"prepayId"];
-            req.nonceStr  = wxDic[@"nonceStr"];
-            req.timeStamp = [wxDic[@"timeStamp"] intValue];
-            req.package   = wxDic[@"packageValue"];
-            req.sign      = wxDic[@"sign"];
-            [WXApi sendReq:req];
-            
-        }
-            break;
-        
-        
-        
-        case thirdPartyPayMentTypeForAliPay: {
-            /**
-             *  支付宝支付调用方法
-             *
-             *  @param orderId    订单id - > 后台生成.....
-             *  @param totalMoney 钱数
-             *  @param payTitle   支付页面的标题（让客户知道这是花得什么钱，买了什么）
+        }];
+//        [[AlipaySDK defaultService] payUrlOrder:orderString fromScheme:kUrlScheme callback:^(NSDictionary *resultDic) {
+//            NSLog(@"%@",resultDic);
+            /*
+             {
+             isProcessUrlPay = 1;
+             resultCode = 6001;
+             returnUrl = "";
+             }
              */
             
             
-        }
-            break;
-        default:
-            break;
-    }
+//        }];
+    }else { }
     
-
-
 }
++ (BOOL)handleOpenURL:(NSURL *)url WithErrorCodeBlock:(payMentErrorBlock)errorCodeBlock {
+    /*
+        微信跳转判断方法 .. kUrlScheme 根据scheme跳转.支付宝使用的scheme和微信相同.所以这里判断url.host .. : 如果不想使用这种方法,就单独为支付宝跳转设置一个scheme
+        [[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",kUrlScheme]].location != NSNotFound
+     */
+    if ([url.host isEqual:@"pay"] || [url.host isEqual:@"oauth"]) {
+        return  [WXApi handleOpenURL:url delegate:[JMPayment payMentManager]];
+    }else if ([url.host isEqual:@"safepay"]) {
+        //由于在跳转支付宝客户端支付的过程中，商户app在后台很可能被系统kill了，所以pay接口的callback就会失效，请商户对standbyCallback返回的回调结果进行处理,就是在这个方法里面处理跟callback一样的逻辑
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSInteger errorCode = [resultDic[@"resultStatus"] integerValue];
+            JMPayError *error = [[JMPayError alloc] init];
+            if (errorCode == 9000) {
+                error.errorStatus = payMentErrorStatusSuccess;
+            }else {
+                error.errorStatus = payMentErrorStatusFail;
+            }
+            /*
+             if (errorCode == 6001) {
+             error.errorStatus = payMentErrorStatusCancel;
+             }else {  // 4000 (支付失败)
+             error.errorStatus = payMentErrorStatusCommon;
+             }
+             */
+            if (errorCodeBlock) {
+                errorCodeBlock(error);
+            }
+        }];
+        return YES;
+    }else {
+        return NO;
+    }
+//    if ([url.host isEqualToString:@"safepay"] || [url.host isEqualToString:@"pay"]) {
+//        
+//    }
+}
+
 
 - (void)onResp:(BaseResp *)resp {
     if([resp isKindOfClass:[PayResp class]]) {
-        int errorCode = resp.errCode;
+//        int errorCode = resp.errCode;
+        JMPayError *error = [[JMPayError alloc] init];
+//        NSInteger errorStatus;
+        if (resp.errCode == 0) {
+            error.errorStatus = payMentErrorStatusSuccess;
+        }else {
+            error.errorStatus = payMentErrorStatusFail;
+        }
         if ([JMPayment payMentManager].errorCodeBlock) {
-            [JMPayment payMentManager].errorCodeBlock(errorCode);
+            [JMPayment payMentManager].errorCodeBlock(error);
         }
-        switch (resp.errCode) {
-            case WXSuccess:
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
-                break;
-                
-            default:{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
-            }
-                
-                break;
-        }
+//        switch (resp.errCode) {
+//            case WXSuccess:
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
+//                break;
+//                
+//            default:{
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+//            }
+//                
+//                break;
+//        }
     }else if ([resp isKindOfClass:[SendAuthResp class]]) {
         //[SVProgressHUD showInfoWithStatus:@"登录中....."];
         SendAuthResp *aresp = (SendAuthResp *)resp;
@@ -120,6 +182,8 @@
     
     
 }
+
+
 
 
 

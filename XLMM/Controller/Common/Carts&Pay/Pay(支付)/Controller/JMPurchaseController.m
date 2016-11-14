@@ -661,16 +661,27 @@ static BOOL isAgreeTerms = YES;
             return;
         }
         NSDictionary *chargeDic = responseObject[@"charge"];
-        NSError *parseError = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:chargeDic options:NSJSONWritingPrettyPrinted error:&parseError];
-        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
+//        NSError *parseError = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:chargeDic options:NSJSONWritingPrettyPrinted error:&parseError];
+//        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme];
-                [JMPayment payMentManager].errorCodeBlock = ^(int errorCode) {
-                    NSLog(@"%d",errorCode);
-                };
+                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                    NSLog(@"%ld",error.errorStatus);
+                    if (error.errorStatus == payMentErrorStatusSuccess) {
+                        [self paySuccessful];
+                    }else if (error.errorStatus == payMentErrorStatusFail) { // 取消
+                        [self popview];
+                    }else { }
+                }];
+//                [JMPayment payMentManager].errorCodeBlock = ^(int errorCode) {
+//                    NSLog(@"%d",errorCode);
+//                    if (errorCode == 0) {
+//                        [self paySuccessful];
+//                    }else {
+//                        [self popview];
+//                    }
+//                };
 //                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
 //                    if (error == nil) {
 //                        [MBProgressHUD hideHUD];
