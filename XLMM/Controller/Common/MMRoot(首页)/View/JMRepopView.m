@@ -29,9 +29,17 @@
     }
     return self;
 }
-
-+ (instancetype)defaultPopView {
-    return [[JMRepopView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH *0.7 , (SCREENWIDTH * 0.7) * 1.3 + 60)];
++ (instancetype)showInRect:(CGRect)rect {
+    JMRepopView *rePop = [[JMRepopView alloc]initWithFrame:rect];
+    [JMKeyWindow addSubview:rePop];
+    return rePop;
+}
++ (void)hide {
+    for (UIView *rePop in JMKeyWindow.subviews) {
+        if ([rePop isKindOfClass:self]) {
+            [rePop removeFromSuperview];
+        }
+    }
 }
 
 - (void)createUI {
@@ -104,9 +112,10 @@
     }];
 }
 - (void)btnClick:(UIButton *)button {
-    if (_delegate && [_delegate respondsToSelector:@selector(composePayButton:didClick:)]) {
-        [_delegate composePayButton:self didClick:button.tag];
+    if (self.activeBlock) {
+        self.activeBlock(button);
     }
+    
 }
 @end
 

@@ -38,7 +38,7 @@
 #import "JMLaunchView.h"
 
 
-@interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,JMRepopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
+@interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
     NSString *_cartTimeString;      // 购物车时间
     NSInteger oneRowCellH;
@@ -886,45 +886,43 @@
 }
 #pragma mark --- 第一次打开程序
 - (void)returnPopView {
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidepopView)]];
-    JMRepopView *popView = [JMRepopView defaultPopView];
-    self.popView = popView;
-    self.popView.delegate = self;
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.popView];
-    [JMPopViewAnimationSpring showView:self.popView overlayView:self.maskView];
-}
-- (void)composePayButton:(JMRepopView *)payButton didClick:(NSInteger)index {
-    if (index == 100) {
-        [self hidepopView];
-        BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-        if (islogin) {
-            NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-            [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-                if (responseObject == nil) {
-                    return ;
-                }else {
-                    NSInteger code = [responseObject[@"code"] integerValue];
-                    NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
-                    if (code == 0) {
-                        if (isPicked == 1) {
-                            [MBProgressHUD showSuccess:responseObject[@"info"]];
-                        }else {
-                            [self pickCoupon];
-                        }
-                    }else {
-                        [MBProgressHUD showError:@"请登录"];
-                    }
-                }
-            } WithFail:^(NSError *error) {
-            } Progress:^(float progress) {
-            }];
+    JMHomeRootController * __weak weakSelf = self;
+    [[JMGlobal global] showpopForReceiveCouponFrame:CGRectMake(0, 0, SCREENWIDTH *0.7 , (SCREENWIDTH * 0.7) * 1.3 + 60) WithBlock:^(UIView *maskView) {
+    } ActivePopBlock:^(UIButton *button) {
+        [JMShareView hide];
+        [JMRepopView hide];
+        if (button.tag == 100) {
+            [weakSelf pockedCoupon];
         }else {
-            JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:logVC animated:YES];
         }
+    }];
+}
+- (void)pockedCoupon {
+    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (islogin) {
+        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
+        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+            if (responseObject == nil) {
+                return ;
+            }else {
+                NSInteger code = [responseObject[@"code"] integerValue];
+                NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
+                if (code == 0) {
+                    if (isPicked == 1) {
+                        [MBProgressHUD showSuccess:responseObject[@"info"]];
+                    }else {
+                        [self pickCoupon];
+                    }
+                }else {
+                    [MBProgressHUD showError:@"请登录"];
+                }
+            }
+        } WithFail:^(NSError *error) {
+        } Progress:^(float progress) {
+        }];
     }else {
-        [self hidepopView];
+        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+        [self.navigationController pushViewController:logVC animated:YES];
     }
 }
 #pragma mark 版本 自动升级

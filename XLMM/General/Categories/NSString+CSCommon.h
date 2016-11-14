@@ -157,6 +157,12 @@
 + (NSString *)getCurrentYMD;
 
 
+
+
++ (NSString *)miPushTetOperateType:(NSString *)selector;
+
+
+
 @end
 
 

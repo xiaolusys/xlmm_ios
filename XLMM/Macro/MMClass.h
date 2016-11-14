@@ -66,6 +66,8 @@
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
+
 #define kVisitorDay @14      // 加载访客记录(天数)
 #define KTITLENAME @"小鹿美美"
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
