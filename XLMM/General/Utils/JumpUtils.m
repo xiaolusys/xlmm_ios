@@ -22,32 +22,53 @@
 #import "JMClassifyListController.h"
 #import "JMMaMaRootController.h"
 #import "JMPayShareController.h"
-#import "Pingpp.h"
+//#import "Pingpp.h"
 #import "PersonOrderViewController.h"
+#import "JMPayment.h"
+
 
 @implementation JumpUtils
 
 #pragma mark ==== 支付跳转
 + (void)jumpToCallNativePurchase:(NSDictionary *)data Tid:(NSString *)tid viewController:(UIViewController *)vc {
-    [Pingpp createPayment:data viewController:vc appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-        if (error == nil) {
+    [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:data URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+        NSLog(@"%ld",error.errorStatus);
+        if (error.errorStatus == payMentErrorStatusSuccess) {
             [MobClick event:@"fineCoupon_buySuccess"];
             [MBProgressHUD showError:@"支付成功~"];
             JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
             payShareVC.ordNum = tid;
             [vc.navigationController pushViewController:payShareVC animated:YES];
-        }else {
+        }else if(error.errorStatus == payMentErrorStatusFail) { // 取消
             [MobClick event:@"fineCoupon_buyCancel_buyFail"];
-            if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                [MBProgressHUD showError:@"支付取消~"];
-                PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-                orderVC.index = 101;
-                [vc.navigationController pushViewController:orderVC animated:YES];
-            }else {
-                [MBProgressHUD showError:@"支付失败~"];
-            }
-        }
+            [MBProgressHUD showError:@"支付失败~"];
+            PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+            orderVC.index = 101;
+            [vc.navigationController pushViewController:orderVC animated:YES];
+        }else { }
     }];
+    
+    
+    
+//    [Pingpp createPayment:data viewController:vc appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//        if (error == nil) {
+//            [MobClick event:@"fineCoupon_buySuccess"];
+//            [MBProgressHUD showError:@"支付成功~"];
+//            JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+//            payShareVC.ordNum = tid;
+//            [vc.navigationController pushViewController:payShareVC animated:YES];
+//        }else {
+//            [MobClick event:@"fineCoupon_buyCancel_buyFail"];
+//            if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                [MBProgressHUD showError:@"支付取消~"];
+//                PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+//                orderVC.index = 101;
+//                [vc.navigationController pushViewController:orderVC animated:YES];
+//            }else {
+//                [MBProgressHUD showError:@"支付失败~"];
+//            }
+//        }
+//    }];
 }
 
 #pragma mark 解析targeturl 跳转到不同的界面

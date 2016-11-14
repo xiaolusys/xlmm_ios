@@ -66,7 +66,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
     [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:vc];
     
-
+    
 //    [Pingpp createPayment:data appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
 //        
 //        
