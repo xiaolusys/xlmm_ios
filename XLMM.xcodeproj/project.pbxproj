@@ -631,6 +631,7 @@
 		1F6B7A8C1DD9C69F009AB446 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B7A821DD9C69F009AB446 /* openssl_wrapper.m */; };
 		1F6B7A8D1DD9C69F009AB446 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B7A841DD9C69F009AB446 /* RSADataSigner.m */; };
 		1F6B7A8E1DD9C69F009AB446 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B7A861DD9C69F009AB446 /* RSADataVerifier.m */; };
+		1F6B7A911DDA99FC009AB446 /* JMMiPushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B7A901DDA99FC009AB446 /* JMMiPushManager.m */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1825,6 +1826,8 @@
 		1F6B7A841DD9C69F009AB446 /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		1F6B7A851DD9C69F009AB446 /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
 		1F6B7A861DD9C69F009AB446 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
+		1F6B7A8F1DDA99FC009AB446 /* JMMiPushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMiPushManager.h; sourceTree = "<group>"; };
+		1F6B7A901DDA99FC009AB446 /* JMMiPushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMiPushManager.m; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -3024,6 +3027,8 @@
 				1F6B7A1F1DD9C25A009AB446 /* JMGlobal.m */,
 				1F6B7A201DD9C25A009AB446 /* UUID.h */,
 				1F6B7A211DD9C25A009AB446 /* UUID.m */,
+				1F6B7A8F1DDA99FC009AB446 /* JMMiPushManager.h */,
+				1F6B7A901DDA99FC009AB446 /* JMMiPushManager.m */,
 				1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */,
 				1F27A6191D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.h */,
 				1F27A61A1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m */,
@@ -6781,6 +6786,7 @@
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
 				1F498C3C1D2772D0007E77FC /* NewLeftViewController.m in Sources */,
 				1F58781C1DB8A87900949302 /* JMRewardsCell.m in Sources */,
+				1F6B7A911DDA99FC009AB446 /* JMMiPushManager.m in Sources */,
 				1F5877F81DB8A7DC00949302 /* MyInvitationViewController.m in Sources */,
 				1F4C9EB31D9912600089CE74 /* UdeskViewExt.m in Sources */,
 				1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */,

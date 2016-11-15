@@ -8,10 +8,13 @@
 
 #import "JMDevice.h"
 #import "sys/utsname.h"
+#import "IMYWebView.h"
+#import "IosJsBridge.h"
+
 
 @implementation JMDevice
 
-+ (JMDevice *)defaultDecice {
++ (instancetype)defaultDecice {
     static dispatch_once_t onceToken;
     static JMDevice *defaultDevice = nil;
     dispatch_once(&onceToken, ^{
@@ -19,7 +22,54 @@
     });
     return defaultDevice;
 }
-
+- (void)getServerIP {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *serverip = [defaults objectForKey:@"serverip"];
+    if((serverip != nil) && (![serverip isEqualToString:@""])){
+        Root_URL = serverip;
+    }
+    NSLog(@"serverip %@, Root_url %@",serverip, Root_URL);
+}
+- (void)cerateUserAgent {
+    IMYWebView *webView = [[IMYWebView alloc] initWithFrame:CGRectZero];
+    NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    
+    //add my info to the new agent
+    if(oldAgent == nil) return;
+    
+    // app版本
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    NSLog(@"oldAgent=%@",oldAgent);
+    if(oldAgent != nil) {
+        
+        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
+        if(range.length > 0)
+        {
+            return;
+        }
+        
+    }
+    
+    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
+    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
+    
+    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
+    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
+    if(newrange.length > 0)
+    {
+        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
+    }
+    
+    NSLog(@"newAgent=%@",newAgent);
+    
+    //regist the new agent
+    NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
+    
+    
+}
 - (NSString *)getUserAgent {
     NSDictionary* infoDict =[[NSBundle mainBundle] infoDictionary];
     NSString* phoneVersion = SSystemVersion;

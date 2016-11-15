@@ -25,7 +25,7 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 
 + (JMGlobal *)global;
 
-
+- (void)clearAllSDCache;
 /*
     判断当前时间与 dayNumber(-前/+后)时间 的判断
  */
@@ -46,7 +46,7 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 - (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock;
 
 
-
+- (void)upDataLoginStatus;
 
 
 

@@ -33,7 +33,12 @@ static BOOL isNetPrompt;
     });
     return global;
 }
-
+- (void)clearAllSDCache {
+    // 停止所有的下载
+    [[SDWebImageManager sharedManager] cancelAll];
+    // 删除缓存
+    [[SDWebImageManager sharedManager].imageCache clearMemory];
+}
 #pragma mark ---------- 弹出视图 (分享,选择框等) ----------
 - (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock {
     JMShareView *cover = [JMShareView show];
@@ -149,7 +154,28 @@ static BOOL isNetPrompt;
     
 }
 
-
+- (void)upDataLoginStatus {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        NSDictionary *result = responseObject;
+        if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
+            // 手机登录成功 ，保存用户信息以及登录途径
+            [defaults setBool:YES forKey:kIsLogin];
+            NSLog(@"Still logined");
+        } else{
+            // 手机登录需要 ，保存用户信息以及登录途径
+            [defaults setBool:NO forKey:kIsLogin];
+            NSLog(@"maybe cookie timeout,need login");
+        }
+    } WithFail:^(NSError *error) {
+        // 手机登录需要 ，保存用户信息以及登录途径
+        [defaults setBool:NO forKey:kIsLogin];
+        NSLog(@"maybe cookie timeout,need login");
+    } Progress:^(float progress) {
+    }];
+}
 
 
 
