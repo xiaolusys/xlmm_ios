@@ -98,22 +98,22 @@
                                   serverip = @"https://m.xiaolumeimei.com";
                                   break;
                               case 1:
-                                  serverip = @"https://staging.xiaolumm.com";
+                                  serverip = @"http://staging.xiaolumm.com";
                                   break;
                               case 2:
-                                  serverip = @"https://warden.xiaolumm.com";
+                                  serverip = @"http://warden.xiaolumm.com";
                                   break;
                               case 3:
-                                  serverip = @"https://192.168.1.56:8000";
+                                  serverip = @"http://192.168.1.56:8000";
                                   break;
                               case 4:
-                                  serverip = @"https://192.168.1.31:9000";
+                                  serverip = @"http://192.168.1.31:9000";
                                   break;
                               case 5:
-                                  serverip = @"https://192.168.1.8:8888";
+                                  serverip = @"http://192.168.1.8:8888";
                                   break;
                               case 6:
-                                  serverip = @"https://192.168.1.8:8888";
+                                  serverip = @"http://192.168.1.8:8888";
                                   break;
                                   
                               default:

@@ -14,7 +14,6 @@
 #import "IMYWebView.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
-#import "CartViewController.h"
 #import "JMDescLabelModel.h"
 #import "JMLogInViewController.h"
 #import "JMSelecterButton.h"
@@ -23,6 +22,7 @@
 #import "JMAutoLoopPageView.h"
 #import "JMGoodsLoopRollCell.h"
 #import "JMPopViewAnimationDrop.h"
+#import "JMCartViewController.h"
 
 
 #define BottomHeitht 60.0
@@ -897,7 +897,7 @@
     BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == kBottomViewTag + 0) {
         if (isLogin) {
-            CartViewController *cartVC = [[CartViewController alloc] init];
+            JMCartViewController *cartVC = [[JMCartViewController alloc] init];
             [self.navigationController pushViewController:cartVC animated:YES];
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];

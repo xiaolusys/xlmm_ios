@@ -8,7 +8,6 @@
 
 #import "ChildViewController.h"
 #import "JMRootgoodsCell.h"
-#import "CartViewController.h"
 #import "MJPullGifHeader.h"
 #import "WebViewController.h"
 #import "JMGoodsDetailController.h"

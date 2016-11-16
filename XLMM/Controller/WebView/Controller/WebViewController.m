@@ -19,9 +19,6 @@
 #import "SSKeychain.h"
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
-#import "CartViewController.h"
-//#import "JMShareView.h"
-//#import "JMPopView.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -122,7 +119,6 @@
         self.titleName = webDiction[@"titleName"];
     }else {
     }
-
 }
 - (JMShareModel*)share_model {
     if (!_share_model) {
@@ -229,6 +225,7 @@
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
     statusBarView.hidden = YES;
+    self.statusBarView = statusBarView;
     
     NSString *loadStr = nil;
     NSString *active = _webDiction[@"type_title"];
@@ -255,23 +252,20 @@
         }
         loadStr = _webDiction[@"web_url"];
     }
-    NSURL *url = [NSURL URLWithString:loadStr];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
-    [super.baseWebView loadRequest:request];
-    
+    if (![NSString isStringEmpty:loadStr]) {
+        NSURL *url = [NSURL URLWithString:loadStr];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
+        [super.baseWebView loadRequest:request];
+    }else {
+        [MBProgressHUD hideHUDForView:self.view];
+    }
     if(_isShowRightShareBtn){
         [self createTabBarButton];
     }
-    
-//    self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//    self.shareWebView.hidden = YES;
-//    self.shareWebView.tag = 102;
-//    [self.view addSubview:self.shareWebView];
-    [self.view bringSubviewToFront:super.baseWebView];
-    
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
+
 
 }
 

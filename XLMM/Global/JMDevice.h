@@ -10,10 +10,14 @@
 
 @interface JMDevice : NSObject
 
-+ (JMDevice *)defaultDecice;
++ (instancetype)defaultDecice;
 
 - (NSString *)getUserAgent;
 
 - (NSString *)getDeviceName;
+
+- (void)cerateUserAgent;
+
+- (void)getServerIP;
 
 @end

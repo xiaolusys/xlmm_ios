@@ -353,7 +353,54 @@
 
 
 
+/*
+ (lldb) po parame
+ {
+ amount = 18650;
+ "amount_refunded" = 0;
+ "amount_settle" = 18650;
+ app = "app_LOOajDn9u9WDjfHa";
+ body = "\U7528\U6237\U8ba2\U5355\U91d1\U989d[863991, 503116, 186.50]";
+ channel = alipay;
+ "client_ip" = "180.97.163.149";
+ created = 1479179755;
+ credential =     {
+ alipay =         {
+ orderInfo = "service=\"mobile.securitypay.pay\"&_input_charset=\"utf-8\"&notify_url=\"https%3A%2F%2Fnotify.pingxx.com%2Fnotify%2Fcharges%2Fch_nDebPSCGKm18Om9OGGOCyXfP\"&partner=\"2088911223385116\"&out_trade_no=\"xd161115582a7b9ee6404\"&subject=\"\U5c0f\U9e7f\U7f8e\U7f8e\U5e73\U53f0\U4ea4\U6613\"&body=\"\U7528\U6237\U8ba2\U5355\U91d1\U989d[863991, 503116, 186.50]\"&total_fee=\"186.50\"&payment_type=\"1\"&seller_id=\"2088911223385116\"&it_b_pay=\"2016-11-16 11:15:55\"&sign=\"CT347b9ayyikBufWIP5NhaxBS6%2BqsvcT2andhcCz%2F0Xc%2FKNTHb%2By5oTAdxE8sR434RsYtwMDHgdhoLtvWE1awlQCbg7yE8AloC2%2FmDujAZ4Ss%2BjRT2vMigSi3gaJdS0gZcsJjLhwCw34CFY2dF%2FThsxIZOklfOLyz1gGJLUj3oE%3D\"&sign_type=\"RSA\"";
+ };
+ object = credential;
+ };
+ currency = cny;
+ description = "<null>";
+ extra =     {
+ };
+ "failure_code" = "<null>";
+ "failure_msg" = "<null>";
+ id = "ch_nDebPSCGKm18Om9OGGOCyXfP";
+ livemode = 1;
+ metadata =     {
+ color = red;
+ };
+ object = charge;
+ "order_no" = xd161115582a7b9ee6404;
+ paid = 0;
+ refunded = 0;
+ refunds =     {
+ data =         (
+ );
+ "has_more" = 0;
+ object = list;
+ url = "/v1/charges/ch_nDebPSCGKm18Om9OGGOCyXfP/refunds";
+ };
+ subject = "\U5c0f\U9e7f\U7f8e\U7f8e\U5e73\U53f0\U4ea4\U6613";
+ "time_expire" = 1479266155;
+ "time_paid" = "<null>";
+ "time_settle" = "<null>";
+ "transaction_no" = "<null>";
+ }
+ 
 
+ */
 
 
 

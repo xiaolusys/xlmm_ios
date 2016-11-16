@@ -23,7 +23,7 @@
 
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,UNUserNotificationCenterDelegate,MiPushSDKDelegate,RESideMenuDelegate, WXApiDelegate,UIAlertViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RESideMenuDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

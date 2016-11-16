@@ -12,7 +12,6 @@
 #import "JMHomeRootController.h"
 #import "ChildViewController.h"
 #import "ProductSelectionListViewController.h"
-#import "CartViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
 #import "JMSegmentController.h"
@@ -22,9 +21,10 @@
 #import "JMClassifyListController.h"
 #import "JMMaMaRootController.h"
 #import "JMPayShareController.h"
-//#import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "JMPayment.h"
+#import "JMCartViewController.h"
+
 
 
 @implementation JumpUtils
@@ -140,9 +140,10 @@
             [vc.navigationController pushViewController:enterVC animated:YES];
             return;
         }else {
-            
-            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+            JMCartViewController *cartVC = [[JMCartViewController alloc] init];
             [vc.navigationController pushViewController:cartVC animated:YES];
+//            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+//            [vc.navigationController pushViewController:cartVC animated:YES];
         }
 
     }
