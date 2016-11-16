@@ -112,7 +112,7 @@ const CGFloat SURefreshTranslatLen = 5.0;
     }
     //如果到达临界点，则执行刷新动画
     if (progress >= SURefreshPullLen && !self.animating && !self.scrollView.isDragging) {
-        [self startAni];
+        [self startLoading];
     }
 }
 #pragma mark - Adjustment
@@ -165,7 +165,7 @@ const CGFloat SURefreshTranslatLen = 5.0;
 }
 
 #pragma mark - Animation
-- (void)startAni {
+- (void)startLoading {
     self.animating = YES;
 //    [UIView animateWithDuration:0.5 animations:^{
 //        UIEdgeInsets inset = self.scrollView.contentInset;
@@ -223,7 +223,7 @@ const CGFloat SURefreshTranslatLen = 5.0;
     self.lineLayer.strokeColor = index > 5 ? rightPointColor : index > 3 ? bottomPointColor : index > 1 ? leftPointColor : topPointColor;
 }
 #pragma mark - Stop
-- (void)endRefreshing {
+- (void)endLoading {
     [self removeAni];
 }
 

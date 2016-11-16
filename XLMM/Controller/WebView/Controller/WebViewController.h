@@ -22,4 +22,7 @@
 
 @property (nonatomic,assign) BOOL isShowNavBar;
 @property (nonatomic,assign) BOOL isShowRightShareBtn;
+
+@property (nonatomic, strong) UIView *statusBarView;
+
 @end

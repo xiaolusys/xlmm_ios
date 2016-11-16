@@ -126,8 +126,7 @@
 
 }
 
-- (void)timerFireMethod:(NSTimer*)theTimer
-{
+- (void)timerFireMethod:(NSTimer*)theTimer {
     if((self.dataArray == nil) || (self.dataArray.count == 0))
         return;
     CollectionModel *model = [self.dataArray objectAtIndex:0];

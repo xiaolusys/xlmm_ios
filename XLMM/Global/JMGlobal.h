@@ -41,12 +41,22 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 - (void)monitoringNetworkStatus;
 
 
-
+/*
+    弹出视图
+ */
 - (void)showpopForReceiveCouponFrame:(CGRect)frame WithBlock:(void (^)(UIView *maskView))clickBlock ActivePopBlock:(void (^)(UIButton *button))activeBlock;
 - (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock;
 
-
+/*
+    请求个人信息,保存登录信息
+ */
 - (void)upDataLoginStatus;
+
+
+
+- (void)showWaitLoadingInView:(UIViewController *)viewController;
+- (void)hideWaitLoading;
+
 
 
 

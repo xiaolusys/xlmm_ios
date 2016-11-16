@@ -21,7 +21,6 @@
 #import "JMHomeTomorrowController.h"
 #import "JMMainTableView.h"
 #import "JMStoreupController.h"
-#import "CartViewController.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMRepopView.h"
 #import "JMUpdataAppPopView.h"
@@ -36,6 +35,7 @@
 #import "JMHomeRootCategoryController.h"
 #import "JMStoreManager.h"
 #import "JMLaunchView.h"
+#import "JMCartViewController.h"
 
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
@@ -688,7 +688,7 @@
     if ([_cartTimer isValid]) {
         [_cartTimer invalidate];
     }
-    _cartTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+    _cartTimer = [NSTimer timerWithTimeInterval:0. target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
 //    _cartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_cartTimer forMode:NSRunLoopCommonModes];
 }
@@ -775,8 +775,10 @@
         [self.navigationController pushViewController:enterVC animated:YES];
         return;
     }
-    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    JMCartViewController *cartVC = [[JMCartViewController alloc] init];
     [self.navigationController pushViewController:cartVC animated:YES];
+//    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+//    [self.navigationController pushViewController:cartVC animated:YES];
 }
 #pragma mark 点击按钮进入我的收藏界面
 - (void)gotoCollection:(UIButton *)sender {

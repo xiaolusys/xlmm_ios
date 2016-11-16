@@ -21,7 +21,7 @@
 
 @property (nonatomic, assign) NSInteger statusCount;
 @property (nonatomic, assign) BOOL isTeamBuy;
-
+@property (nonatomic, strong) NSTimer *orderOutTimer;
 
 @property (nonatomic, weak) id<JMOrderPayOutdateViewDelegate> delegate;
 

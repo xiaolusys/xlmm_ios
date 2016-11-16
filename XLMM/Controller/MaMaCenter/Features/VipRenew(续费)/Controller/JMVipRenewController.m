@@ -435,8 +435,8 @@
     params[@"discount_fee"] = @"0.00";
     params[@"total_fee"] = renewDic[@"std_sale_price"];
     params[@"channel"] = _channel;
-    params[@"wallet_renew_deposit"] = @"0.00";//[NSString stringWithFormat:@"%.2f",_walletCash];
-    params[@"payment"] = @"99.00";//[NSString stringWithFormat:@"%.2f",_wxOraliPayment];
+    params[@"wallet_renew_deposit"] = [NSString stringWithFormat:@"%.2f",_walletCash];
+    params[@"payment"] = [NSString stringWithFormat:@"%.2f",_wxOraliPayment];
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/mama_register_pay",Root_URL];
     
@@ -575,7 +575,7 @@
         self.descLabel.text = [NSString stringWithFormat:@"默认使用小鹿妈妈钱包金额抵扣%.2f元 \n\n 为确保您的权利和权益，请尽快续费。",_descLabelValue];
     }else if (button.tag == 102){
         if (isAgreeTerms) {
-            if (!self.isEnoughBudgetPay) {
+            if (self.isEnoughBudgetPay) {
                 _channel = @"budget";
 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确定要全部用妈妈钱包金额续费吗?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];

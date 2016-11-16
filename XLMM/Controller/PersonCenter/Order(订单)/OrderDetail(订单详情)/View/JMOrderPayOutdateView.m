@@ -26,7 +26,7 @@
 @end
 
 @implementation JMOrderPayOutdateView {
-    NSTimer *_orderOutTimer;
+//    NSTimer *_orderOutTimer;
     NSString *_dateStr;
     BOOL _isShow;
     BOOL _isShowShare;
@@ -69,7 +69,12 @@
         self.bottomView.hidden = NO;
         _createTimeStr = createTimeStr;
         _dateStr = [self formatterTimeString:createTimeStr];
-        _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+        if ([self.orderOutTimer isValid]) {
+            [self.orderOutTimer invalidate];
+            self.orderOutTimer = nil;
+        }
+        self.orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:0. target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:self.orderOutTimer forMode:NSRunLoopCommonModes];
     }else {
         self.sureOrderButton.hidden = YES;
         self.canelOrderButton.hidden = YES;
@@ -277,6 +282,15 @@
     self.orderOutdateTime.text = string;
     if ([d minute] < 0 || [d second] < 0) {
         self.orderOutdateTime.text = @"00:00";
+        if ([self.orderOutTimer isValid]) {
+            [self.orderOutTimer invalidate];
+            self.orderOutTimer = nil;
+        }
+        self.bottomView.hidden = YES;
+        self.canelOrderButton.hidden = YES;
+        self.sureOrderButton.hidden = YES;
+        self.orderOutdateTime.hidden = YES;
+        self.outDateTitleLabel.hidden = YES;
 //        self.shareImage.hidden = NO;
 //        self.descLabel.hidden = NO;
 //        self.shareButton.hidden = NO;

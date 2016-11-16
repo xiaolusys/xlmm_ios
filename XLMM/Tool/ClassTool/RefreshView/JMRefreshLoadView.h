@@ -16,7 +16,7 @@
 @property (nonatomic, assign) CGFloat progressOffsetY;
 
 - (void)setLineLayerStrokeWithProgress:(CGFloat)progress;
-- (void)startAni;
-- (void)endRefreshing;
+- (void)startLoading;
+- (void)endLoading;
 
 @end

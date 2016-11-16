@@ -134,7 +134,7 @@
 - (void)endRefreshing {
     [super endRefreshing];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.refreshLoadView endRefreshing];
+        [self.refreshLoadView endLoading];
     });
     
 }

@@ -30,6 +30,7 @@
     [self createWebView];
     
 }
+
 - (void)setUrlString:(NSString *)urlString {
     _urlString = urlString;
     if ([NSString isStringEmpty:urlString]) {
@@ -96,7 +97,7 @@
 
 
 - (void)viewDidDisappear:(BOOL)animated {
-    self.webView = nil;
+//    self.webView = nil;
 }
 
 

@@ -12,6 +12,8 @@
 #import "JMHTTPManager.h"
 #import "JMRepopView.h"
 #import "JMPopViewAnimationSpring.h"
+#import "JMRefreshLoadView.h"
+
 
 
 static BOOL isNetPrompt;
@@ -19,6 +21,9 @@ static BOOL isNetPrompt;
 @interface JMGlobal () <UIAlertViewDelegate> {
     NSString *httpStatus;
 }
+@property (nonatomic, strong) JMRefreshLoadView *loadView;
+@property (nonatomic, strong) UIView *maskView;
+
 
 @end
 
@@ -154,6 +159,7 @@ static BOOL isNetPrompt;
     
 }
 
+#pragma mark ======== 请求个人信息,保存登录信息 ========
 - (void)upDataLoginStatus {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
@@ -177,8 +183,31 @@ static BOOL isNetPrompt;
     }];
 }
 
-
-
+#pragma mark ======== 跳转页面等待动画 ========
+- (void)showWaitLoadingInView:(UIViewController *)viewController {
+    if (self.loadView) {
+        [self.loadView removeFromSuperview];
+        self.loadView = nil;
+    }
+    if (!self.loadView) {
+        UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+        maskView.backgroundColor = [UIColor whiteColor];
+        [viewController.view addSubview:maskView];
+        self.maskView = maskView;
+        self.loadView = [[JMRefreshLoadView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 2 - 18, SCREENHEIGHT / 2 - 18, 36, 36)];
+        [maskView addSubview:self.loadView];
+    }
+    [self.loadView setLineLayerStrokeWithProgress:100];
+    [self.loadView startLoading];
+}
+- (void)hideWaitLoading {
+    [self.loadView endLoading];
+    if (self.loadView) {
+        [self.loadView removeFromSuperview];
+        self.loadView = nil;
+        [self.maskView removeFromSuperview];
+    }
+}
 
 
 /*

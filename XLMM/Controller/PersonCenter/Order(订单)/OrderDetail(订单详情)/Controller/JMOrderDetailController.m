@@ -597,21 +597,12 @@
     }
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject)return;
-        
-        NSError *parseError = nil;
-        
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code != 0) {
             [MBProgressHUD showError:responseObject[@"info"]];
         }else {
             [MBProgressHUD hideHUD];
             NSDictionary *dic = responseObject[@"charge"];
-            
-//            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-//            NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            
-            
-            
 //            JMOrderDetailController * __weak weakSelf = self;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:dic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
@@ -808,13 +799,30 @@
 }
 #pragma mark 取消待支付订单
 - (void)deletePayOrder {
-    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
-    NSURL *url = [NSURL URLWithString:string];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"DELETE"];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
-    [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+//    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
+//    NSURL *url = [NSURL URLWithString:string];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    [request setHTTPMethod:@"DELETE"];
+//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+//    [connection start];
+//    [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+    [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject)return;
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            if ([self.outDateView.orderOutTimer isValid]) {
+                [self.outDateView.orderOutTimer invalidate];
+                self.outDateView.orderOutTimer = nil;
+            }
+            [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"订单取消失败~!"];
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 
