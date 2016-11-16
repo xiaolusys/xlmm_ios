@@ -49,7 +49,9 @@
     NSDictionary *credentialDic = parame[@"credential"];
     if ([payType isEqual:@"wx"]) {
         NSDictionary *wxDic = credentialDic[@"wx"];
+//        NSLog(@"wxDic ====== > %@",wxDic);
         PayReq *req = [[PayReq alloc] init];
+        req.openID = wxDic[@"appId"];
         req.partnerId = wxDic[@"partnerId"];
         req.prepayId  = wxDic[@"prepayId"];
         req.nonceStr  = wxDic[@"nonceStr"];

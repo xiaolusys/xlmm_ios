@@ -50,7 +50,15 @@
     }
     return _historyCartDataSource;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ShoppingCart"];
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ShoppingCart"];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -362,9 +370,14 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self downloadCurrentCartData];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self downloadCurrentCartData];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
     } WithFail:^(NSError *error) {
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -377,10 +390,14 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self downloadCurrentCartData];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self downloadCurrentCartData];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
     } WithFail:^(NSError *error) {
-        [MBProgressHUD showError:@"商品库存不足"];
-        [self downloadCurrentCartData];
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -403,10 +420,15 @@
     [MBProgressHUD showLoading:@""];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,self.deleteModel.cartID];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self downloadCurrentCartData];
-        [self downloadHistoryCartData];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self downloadCurrentCartData];
+            [self downloadHistoryCartData];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -465,7 +487,6 @@
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 

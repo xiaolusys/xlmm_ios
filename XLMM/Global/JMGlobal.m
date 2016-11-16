@@ -201,6 +201,9 @@ static BOOL isNetPrompt;
     [self.loadView startLoading];
 }
 - (void)hideWaitLoading {
+    if (!self.loadView) {
+        return ;
+    }
     [self.loadView endLoading];
     if (self.loadView) {
         [self.loadView removeFromSuperview];

@@ -64,8 +64,8 @@
 //    NSLog(@"  头部控件刚好出现的offsetY === > %.2f",happenOffsetY);
 //    CGFloat currentOffsetY = happenOffsetY == 0 ? 0 : 64;
 //    CGFloat currentOffsetY1 = happenOffsetY == 0 ? 64 : 54;
-    NSLog(@" progress === %.2f",offsetY);
-    NSLog(@" self.progressOffsetY === %.2f",happenOffsetY);
+//    NSLog(@" progress === %.2f",offsetY);
+//    NSLog(@" self.progressOffsetY === %.2f",happenOffsetY);
     
     self.refreshLoadView.progressOffsetY = happenOffsetY;
     self.refreshLoadView.scrollView = self.scrollView;

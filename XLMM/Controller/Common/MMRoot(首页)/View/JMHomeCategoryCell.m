@@ -33,9 +33,9 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
 
 - (void)createUI {
-    NSLog(@"%f",SCREENWIDTH / 320.0);
-    NSLog(@"%f",HomeCategorySpaceW);
-    NSLog(@"%f",HomeCategorySpaceH);
+//    NSLog(@"%f",SCREENWIDTH / 320.0);
+//    NSLog(@"%f",HomeCategorySpaceW);
+//    NSLog(@"%f",HomeCategorySpaceH);
 //    UIView *baseView = [UIView new];
 //    [self.contentView addSubview:baseView];
 //    
