@@ -19,11 +19,15 @@
 #import "JMStoreManager.h"
 #import "JMFineClassController.h"
 #import "WebViewController.h"
+#import <RESideMenu.h>
+#import "NewLeftViewController.h"
+#import "JMHomeRootController.h"
+
 
 
 static NSString *currentTurnsNumberString;
 
-@interface JMMaMaRootController () {
+@interface JMMaMaRootController () <RESideMenuDelegate> {
     NSInteger _indexCode;
     BOOL _isActiveClick;
     NSArray *_titleArr;
@@ -468,11 +472,12 @@ static NSString *currentTurnsNumberString;
 }
 #pragma mark - 小鹿客服注册个人信息
 - (void)customUserInfo {
-    if (self.userInfoDic.count == 0) {
+    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
+    if (userInfo == nil) {
         return ;
     }
-    NSString *nick_name = self.userInfoDic[@"nick"];
-    NSString *sdk_token = self.userInfoDic[@"user_id"];
+    NSString *nick_name = userInfo[@"nick"];
+    NSString *sdk_token = userInfo[@"user_id"];
     //    NSString *cellphone = self.userInfoDic[@"mobile"];
     NSDictionary *parameters = @{
                                  @"user": @{

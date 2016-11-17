@@ -103,7 +103,7 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     [[JMDevice defaultDecice] getServerIP];
-    [self updateLoginState];
+//    [self updateLoginState];
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -168,7 +168,7 @@
 // 添加你的恢复代码
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
-    [self updateLoginState];
+//    [self updateLoginState];
     [[JMMiPushManager miPushManager] didBecomeActive];
 }
 // 接收到内存警告时候调用

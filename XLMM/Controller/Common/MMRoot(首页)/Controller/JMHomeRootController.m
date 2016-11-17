@@ -36,6 +36,7 @@
 #import "JMStoreManager.h"
 #import "JMLaunchView.h"
 #import "JMCartViewController.h"
+#import "JMGoodsCountTime.h"
 
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
@@ -124,6 +125,7 @@
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [JMGoodsCountTime initCountDownWithCurrentTime:0];
     [MBProgressHUD hideHUD];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -254,19 +256,23 @@
 - (void)setLabelNumber {
     [self loadCatrsNumData];
 }
+// 登录后请求个人信息,这里可以保存下来个人信息
 - (void)loginUpdateIsXiaoluMaMa {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:self WithSuccess:^(id responseObject) {
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-        NSDictionary *dic = responseObject;
+        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
         if (!responseObject){
             self.navigationItem.rightBarButtonItem = nil;
+            [users setBool:NO forKey:kIsLogin];
             [users setBool:NO forKey:kISXLMM];
             return;
         }
-        if([[dic objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
-            [self createRightItem];
+        [users setBool:YES forKey:kIsLogin];
+        if([[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
             [users setBool:YES forKey:kISXLMM];
+            [self createRightItem];
         }else {
             self.navigationItem.rightBarButtonItem = nil;
             [users setBool:NO forKey:kISXLMM];
@@ -275,6 +281,7 @@
         NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
         self.navigationItem.rightBarButtonItem = nil;
         [users setBool:NO forKey:kISXLMM];
+        [users setBool:NO forKey:kIsLogin];
     } Progress:^(float progress) {
     }];
     [self isGetCoupon];
@@ -293,7 +300,7 @@
                 flageArr[1] = @1;
                 self.todayVC.dataDict = responseObject;
                 _timeArray[1] = responseObject[@"offshelf_deadline"];
-                _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] toDate:responseObject[@"offshelf_deadline"]];
+                _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] ToData:responseObject[@"offshelf_deadline"]];
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
@@ -590,28 +597,18 @@
 - (void)rightNavigationClick:(UIButton *)button {
     [MBProgressHUD showLoading:@""];
     button.enabled = NO;
-    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL islogin = [defaults boolForKey:kIsLogin];
-    if (islogin == YES) {
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        NSError *error = nil;
-        NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:string] encoding:NSUTF8StringEncoding error:&error];
-        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
-        if (data == nil) {
-            return;
-        }
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        if ([[json objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]) {
-//            JMMaMaPersonCenterController *mamaCenterVC = [[JMMaMaPersonCenterController alloc] init];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+    if (isLogin) {
+        if (isXLMM) {
+            [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
             JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
-            mamaCenterVC.userInfoDic = json;
             [self.navigationController pushViewController:mamaCenterVC animated:YES];
-        } else {
+        }else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];
         }
-    } else {
+    }else {
         JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
@@ -664,6 +661,8 @@
     kWeakSelf
     NSInteger cartNum = [dic[@"result"] integerValue];
     if (cartNum == 0) {
+        [JMGoodsCountTime initCountDownWithCurrentTime:0];
+//        [JMGoodsCountTime shareCountTime].timer = nil;
         self.cartsLabel.hidden = YES;
         self.cartsCountLabel.hidden = YES;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -681,40 +680,45 @@
             make.centerY.equalTo(weakSelf.cartView.mas_centerY);
         }];
         _cartTimeString = dic[@"last_created"];
-        [self createTimeLabel];
+        [self createTimeLabel:[_cartTimeString intValue]];
     }
 }
-- (void)createTimeLabel {
-    if ([_cartTimer isValid]) {
-        [_cartTimer invalidate];
-    }
-    _cartTimer = [NSTimer timerWithTimeInterval:0. target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-//    _cartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_cartTimer forMode:NSRunLoopCommonModes];
+- (void)createTimeLabel:(int)endSecond {
+    int end = [[JMGlobal global] secondOFCurrentTimeInEndtimeInt:endSecond];
+    [JMGoodsCountTime initCountDownWithCurrentTime:end];
+    kWeakSelf
+    [JMGoodsCountTime shareCountTime].countBlock = ^(int second) {
+        second == -1 ? [weakSelf endTime] : [weakSelf timeFormat:second];
+    };}
+- (void)endTime {
+    self.cartsCountLabel.text = @"";
+    self.cartsCountLabel.hidden = YES;
+    self.cartsLabel.hidden = YES;
+    [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(@44);
+    }];
 }
-- (void)timerFireMethod:(NSTimer*)thetimer {
-    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[_cartTimeString doubleValue]];
-    NSInteger unitFlags = NSCalendarUnitYear |
-    NSCalendarUnitMonth |
-    NSCalendarUnitDay |
-    NSCalendarUnitHour |
-    NSCalendarUnitMinute |
-    NSCalendarUnitSecond;
-    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
-    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
-    if ([d second] < 0) {
-        self.cartsCountLabel.text = @"";
-        self.cartsCountLabel.hidden = YES;
-        self.cartsLabel.hidden = YES;
-        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(@44);
-        }];
-        if ([_cartTimer isValid]) {
-            [_cartTimer invalidate];
-        }
-    }else { self.cartsCountLabel.text = string; }
-    
+- (void)timeFormat:(int)end {
+    self.cartsCountLabel.text = [NSString TimeformatMSFromSeconds:end];
 }
+//- (void)timerFireMethod:(NSTimer*)thetimer {
+//    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[_cartTimeString doubleValue]];
+//    NSInteger unitFlags = NSCalendarUnitYear |
+//    NSCalendarUnitMonth |
+//    NSCalendarUnitDay |
+//    NSCalendarUnitHour |
+//    NSCalendarUnitMinute |
+//    NSCalendarUnitSecond;
+//    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
+//    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+//    if ([d second] < 0) {
+//        
+//        if ([_cartTimer isValid]) {
+//            [_cartTimer invalidate];
+//        }
+//    }else { self.cartsCountLabel.text = string; }
+//    
+//}
 #pragma mark 创建购物车,收藏按钮
 - (void)createCartsView {
     kWeakSelf

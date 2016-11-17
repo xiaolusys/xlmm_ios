@@ -109,7 +109,8 @@
     NSString *allPriceString = [NSString stringWithFormat:@"¥%.2f", allPrice];
     NSString *allString = [NSString stringWithFormat:@"应付款金额%@",allPriceString];
     self.payMentMoneyLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allString SubStringArray:@[allPriceString]];
-    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
     if (currentCartDownLoad && historyCartDownLoad) {
         [[JMGlobal global] hideWaitLoading];
     }
@@ -138,7 +139,8 @@
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.historyCartDataSource addObject:model];
     }
-    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
     if (currentCartDownLoad && historyCartDownLoad) {
         [[JMGlobal global] hideWaitLoading];
     }

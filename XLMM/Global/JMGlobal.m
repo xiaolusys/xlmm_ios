@@ -231,6 +231,31 @@ static BOOL isNetPrompt;
     return compCount;
 }
 
+- (int)secondOFCurrentTimeInEndtimeInt:(int)endTime {
+    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:endTime];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+    NSString *currentTime = [dateFormatter stringFromDate:lastDate];
+    return [self secondOfCurrentTimeInEndTime:currentTime];
+}
+- (int)secondOfCurrentTimeInEndTime:(NSString *)endTime {
+    if ([NSString isStringEmpty:endTime]) {
+        return 0;
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+    //    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    //    [dateFormatter setTimeZone:timeZone]; //设置时区 ＋8:00
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
+    NSDate *date = [dateFormatter dateFromString:endTime]; // 结束时间
+    NSTimeInterval time = [date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+    NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
+    return time;
+}
+
+
+
 
 
 

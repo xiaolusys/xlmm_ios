@@ -34,6 +34,7 @@
 #import "JMClassPopView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPayment.h"
+#import "JMGoodsCountTime.h"
 
 
 @interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
@@ -165,15 +166,19 @@
     }
     return _orderGoodsDataSource;
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [JMGoodsCountTime initCountDownWithCurrentTime:0];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(popToview)];
     
     _isTeamBuy = NO;
     
     [self createTableView];
-    [self createBottomView];
     [self createPullHeaderRefresh];
     [self createTableHeaderView];
     [self createTableFooterView];
@@ -209,18 +214,33 @@
 }
 #pragma mark 创建视图
 - (void)createTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60) style:UITableViewStylePlain];
+    kWeakSelf
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;
-}
-- (void)createBottomView {
-    JMOrderPayOutdateView *outDateView = [[JMOrderPayOutdateView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 60, SCREENWIDTH, 60)];
+    
+    JMOrderPayOutdateView *outDateView = [[JMOrderPayOutdateView alloc] init];
     [self.view addSubview:outDateView];
     self.outDateView = outDateView;
     self.outDateView.delegate = self;
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.view).offset(64);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.bottom.equalTo(weakSelf.outDateView.mas_top);
+    }];
+    [self.outDateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.equalTo(weakSelf.view);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(60));
+    }];
+    
+    
+    
 }
 - (void)createTableHeaderView {
     CGFloat _timeLineHeight = 0.;
@@ -810,10 +830,10 @@
         if (!responseObject)return;
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
-            if ([self.outDateView.orderOutTimer isValid]) {
-                [self.outDateView.orderOutTimer invalidate];
-                self.outDateView.orderOutTimer = nil;
-            }
+//            if ([self.outDateView.orderOutTimer isValid]) {
+//                [self.outDateView.orderOutTimer invalidate];
+//                self.outDateView.orderOutTimer = nil;
+//            }
             [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];

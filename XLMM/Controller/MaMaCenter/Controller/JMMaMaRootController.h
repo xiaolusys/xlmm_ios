@@ -10,7 +10,5 @@
 
 @interface JMMaMaRootController : UIViewController <UIScrollViewDelegate>
 
-@property (nonatomic, strong) NSDictionary *userInfoDic;
-
 
 @end
