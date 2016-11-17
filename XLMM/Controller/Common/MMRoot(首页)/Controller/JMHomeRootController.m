@@ -309,9 +309,8 @@
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {
                 [self endRefresh];
-//                NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:2];
-//                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 //                [self.tableView reloadData];
+//                [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
                 self.segmentView.timeArray = [NSArray arrayWithArray:_timeArray];
             }
         }else {
@@ -701,24 +700,6 @@
 - (void)timeFormat:(int)end {
     self.cartsCountLabel.text = [NSString TimeformatMSFromSeconds:end];
 }
-//- (void)timerFireMethod:(NSTimer*)thetimer {
-//    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[_cartTimeString doubleValue]];
-//    NSInteger unitFlags = NSCalendarUnitYear |
-//    NSCalendarUnitMonth |
-//    NSCalendarUnitDay |
-//    NSCalendarUnitHour |
-//    NSCalendarUnitMinute |
-//    NSCalendarUnitSecond;
-//    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
-//    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
-//    if ([d second] < 0) {
-//        
-//        if ([_cartTimer isValid]) {
-//            [_cartTimer invalidate];
-//        }
-//    }else { self.cartsCountLabel.text = string; }
-//    
-//}
 #pragma mark 创建购物车,收藏按钮
 - (void)createCartsView {
     kWeakSelf
@@ -1176,7 +1157,24 @@
 
 
 
-
+//- (void)timerFireMethod:(NSTimer*)thetimer {
+//    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:[_cartTimeString doubleValue]];
+//    NSInteger unitFlags = NSCalendarUnitYear |
+//    NSCalendarUnitMonth |
+//    NSCalendarUnitDay |
+//    NSCalendarUnitHour |
+//    NSCalendarUnitMinute |
+//    NSCalendarUnitSecond;
+//    NSDateComponents *d = [[NSCalendar currentCalendar] components:unitFlags fromDate:[NSDate date] toDate:lastDate options:0];
+//    NSString *string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+//    if ([d second] < 0) {
+//
+//        if ([_cartTimer isValid]) {
+//            [_cartTimer invalidate];
+//        }
+//    }else { self.cartsCountLabel.text = string; }
+//
+//}
 
 
 

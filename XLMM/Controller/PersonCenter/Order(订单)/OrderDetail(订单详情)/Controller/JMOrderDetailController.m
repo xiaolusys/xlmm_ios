@@ -255,7 +255,7 @@
     self.tableView.tableHeaderView = self.orderDetailHeaderView;
 }
 - (void)createTableFooterView {
-    JMOrderDetailFooterView *orderDetailFooterView = [JMOrderDetailFooterView enterFooterView];
+    JMOrderDetailFooterView *orderDetailFooterView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
     self.orderDetailFooterView = orderDetailFooterView;
     self.tableView.tableFooterView = self.orderDetailFooterView;
 }
@@ -633,27 +633,6 @@
                         [self popview];
                     }else { }
                 }];
-//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-//                    NSLog(@"completion block: %@", result);
-//                    
-//                    if (error == nil) {
-//                        [MBProgressHUD showSuccess:@"支付成功"];
-//                        [MobClick event:@"buy_succ"];
-//                        [self pushShareVC];
-//                    } else {
-//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-//                            [MBProgressHUD showError:@"用户取消支付"];
-//                            [MobClick event:@"buy_cancel"];
-//                            [self popview];
-//                        } else {
-//                            [MBProgressHUD showError:@"支付失败"];
-//                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-//                            [MobClick event:@"buy_fail" attributes:temp_dict];
-//                            NSLog(@"%@",error);
-//                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
-//                        }
-//                    }
-//                }];
             });
             
         }
@@ -668,21 +647,6 @@
     payShareVC.ordNum = tid;
     [self.navigationController pushViewController:payShareVC animated:YES];
 }
-//#pragma mark --NSURLConnectionDataDelegate--
-//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-//}
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-//    __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//    NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    JMOrderDetailController * __weak weakSelf = self;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-////        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-////            if (error == nil) {
-////            } else {
-////            }
-////        }];
-//    });
-//}
 - (void)popToview {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -819,21 +783,12 @@
 }
 #pragma mark 取消待支付订单
 - (void)deletePayOrder {
-//    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
-//    NSURL *url = [NSURL URLWithString:string];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"DELETE"];
-//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [connection start];
-//    [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+    [MBProgressHUD showLoading:@""];
     [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
-//            if ([self.outDateView.orderOutTimer isValid]) {
-//                [self.outDateView.orderOutTimer invalidate];
-//                self.outDateView.orderOutTimer = nil;
-//            }
+            [MBProgressHUD hideHUD];
             [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
@@ -882,7 +837,27 @@
 
 
 
-
+//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                    NSLog(@"completion block: %@", result);
+//
+//                    if (error == nil) {
+//                        [MBProgressHUD showSuccess:@"支付成功"];
+//                        [MobClick event:@"buy_succ"];
+//                        [self pushShareVC];
+//                    } else {
+//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                            [MBProgressHUD showError:@"用户取消支付"];
+//                            [MobClick event:@"buy_cancel"];
+//                            [self popview];
+//                        } else {
+//                            [MBProgressHUD showError:@"支付失败"];
+//                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                            [MobClick event:@"buy_fail" attributes:temp_dict];
+//                            NSLog(@"%@",error);
+//                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
+//                        }
+//                    }
+//                }];
 
 
 
