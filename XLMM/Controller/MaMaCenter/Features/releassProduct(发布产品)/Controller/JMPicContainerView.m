@@ -37,8 +37,7 @@
     self.imageViewsArray = [temp copy];
 }
 
-- (void)setpicUrlArray:(NSArray *)picUrlArray
-{
+- (void)setPicUrlArray:(NSArray *)picUrlArray {
     _picUrlArray = picUrlArray;
     
     for (long i = _picUrlArray.count; i < self.imageViewsArray.count; i++) {
@@ -70,6 +69,7 @@
         long columnIndex = idx % perRowItemCount;
         long rowIndex = idx / perRowItemCount;
         UIImageView *imageView = [_imageViewsArray objectAtIndex:idx];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:obj] placeholderImage:nil];
         imageView.hidden = NO;
         imageView.image = [UIImage imageNamed:obj];
         imageView.frame = CGRectMake(columnIndex * (itemW + margin), rowIndex * (itemH + margin), itemW, itemH);

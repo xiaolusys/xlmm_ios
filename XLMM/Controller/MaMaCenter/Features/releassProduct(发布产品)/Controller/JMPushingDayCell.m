@@ -154,6 +154,16 @@
 }
 
 
+- (CGSize)sizeThatFits:(CGSize)size {
+    CGFloat totalHeight = 0;
+    totalHeight += [self.titleLabel sizeThatFits:size].height;
+    totalHeight += [self.timeLabel sizeThatFits:size].height;
+    totalHeight += [self.desTitleLabel sizeThatFits:size].height;
+    totalHeight += [self.picView sizeThatFits:size].height;
+    totalHeight += 100.;
+    
+    return CGSizeMake(size.width, totalHeight);
+}
 
 
 

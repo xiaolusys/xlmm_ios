@@ -34,7 +34,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClick)];
     [self createTableView];
-    
+    [self loadPicData];
 }
 - (void)loadPicData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic?ordering=-save_times",Root_URL];
@@ -99,8 +99,16 @@
     self.tableView.backgroundColor = [UIColor countLabelColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
     [self.tableView registerClass:[JMPushingDayCell class] forCellReuseIdentifier:@"JMPushingDayCellIdentifier"];
+    [self.view addSubview:self.tableView];
+    kWeakSelf
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.view).offset(64);
+        make.left.equalTo(weakSelf.view);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(SCREENHEIGHT - 64));
+    }];
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.picDataSource.count;
