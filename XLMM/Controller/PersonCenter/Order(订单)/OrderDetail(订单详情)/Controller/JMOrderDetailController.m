@@ -495,7 +495,7 @@
     JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
     packageModel = self.logisticsArr[section];
     NSDictionary *ligisticsDic = packageModel.logistics_company;
-    queryVC.logName = ligisticsDic[@"name"];
+//    queryVC.logName = ligisticsDic[@"name"];
     //    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
     if (ligisticsDic == nil) {
         queryVC.logName = self.orderDetailHeaderView.logisticsStr;

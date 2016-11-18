@@ -22,7 +22,6 @@
     BOOL historyCartDownLoad;
     BOOL isEmpty;
     float allPrice;
-    
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -85,6 +84,7 @@
         [self fetchedCartData:responseObject];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
         
     }];
@@ -114,6 +114,7 @@
     if (currentCartDownLoad && historyCartDownLoad) {
         [[JMGlobal global] hideWaitLoading];
     }
+    
 }
 - (void)downloadHistoryCartData {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
@@ -122,6 +123,7 @@
         [self fetchedHistoryCartData:responseObject];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
         
     }];

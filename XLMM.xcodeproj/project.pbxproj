@@ -666,6 +666,13 @@
 		1F99F87B1D65678800C6B79C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
 		1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */; };
+		1FAA737E1DDEAA8800CEE342 /* JMPushingDayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA737D1DDEAA8800CEE342 /* JMPushingDayController.m */; };
+		1FAA73811DDEAC4D00CEE342 /* JMPushingDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73801DDEAC4D00CEE342 /* JMPushingDayCell.m */; };
+		1FAA738B1DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73841DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m */; };
+		1FAA738C1DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73861DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m */; };
+		1FAA738D1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73881DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m */; };
+		1FAA738E1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA738A1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m */; };
+		1FAA73911DDECB7400CEE342 /* JMPicContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73901DDECB7400CEE342 /* JMPicContainerView.m */; };
 		1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
@@ -1878,6 +1885,21 @@
 		1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+JMHUD.m"; sourceTree = "<group>"; };
 		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
 		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
+		1FAA736B1DDE9BF200CEE342 /* JMPromptMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPromptMessage.h; sourceTree = "<group>"; };
+		1FAA737C1DDEAA8800CEE342 /* JMPushingDayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDayController.h; sourceTree = "<group>"; };
+		1FAA737D1DDEAA8800CEE342 /* JMPushingDayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDayController.m; sourceTree = "<group>"; };
+		1FAA737F1DDEAC4D00CEE342 /* JMPushingDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDayCell.h; sourceTree = "<group>"; };
+		1FAA73801DDEAC4D00CEE342 /* JMPushingDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDayCell.m; sourceTree = "<group>"; };
+		1FAA73831DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDIndexPathHeightCache.h"; sourceTree = "<group>"; };
+		1FAA73841DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDIndexPathHeightCache.m"; sourceTree = "<group>"; };
+		1FAA73851DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDKeyedHeightCache.h"; sourceTree = "<group>"; };
+		1FAA73861DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDKeyedHeightCache.m"; sourceTree = "<group>"; };
+		1FAA73871DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCell.h"; sourceTree = "<group>"; };
+		1FAA73881DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCell.m"; sourceTree = "<group>"; };
+		1FAA73891DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCellDebug.h"; sourceTree = "<group>"; };
+		1FAA738A1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCellDebug.m"; sourceTree = "<group>"; };
+		1FAA738F1DDECB7400CEE342 /* JMPicContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPicContainerView.h; sourceTree = "<group>"; };
+		1FAA73901DDECB7400CEE342 /* JMPicContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPicContainerView.m; sourceTree = "<group>"; };
 		1FB4287A1DAF4ACD002F98B4 /* XLMM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XLMM.entitlements; sourceTree = "<group>"; };
 		1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		1FB4287D1DAF4FF9002F98B4 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
@@ -2345,6 +2367,7 @@
 				3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */,
 				3A3CF7191CE224D000F0463D /* MMClass.m */,
 				1FEDCB0C1D8FDA8200CB7D97 /* JMToolMacro.h */,
+				1FAA736B1DDE9BF200CEE342 /* JMPromptMessage.h */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -2352,6 +2375,7 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				1FAA73821DDEAFA200CEE342 /* Classes */,
 				1F6B7A011DD9C1EE009AB446 /* fmdb */,
 				1F6B78E81DD6F233009AB446 /* AliPaySDK */,
 				1F6B78E01DD6F1C3009AB446 /* WechatSDK */,
@@ -4812,6 +4836,12 @@
 		1F5877401DB8A60D00949302 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1FAA737C1DDEAA8800CEE342 /* JMPushingDayController.h */,
+				1FAA737D1DDEAA8800CEE342 /* JMPushingDayController.m */,
+				1FAA737F1DDEAC4D00CEE342 /* JMPushingDayCell.h */,
+				1FAA73801DDEAC4D00CEE342 /* JMPushingDayCell.m */,
+				1FAA738F1DDECB7400CEE342 /* JMPicContainerView.h */,
+				1FAA73901DDECB7400CEE342 /* JMPicContainerView.m */,
 				1F5877411DB8A60D00949302 /* JMPushingCategoryController.h */,
 				1F5877421DB8A60D00949302 /* JMPushingCategoryController.m */,
 				1F5877431DB8A60D00949302 /* JMPushingDaysController.h */,
@@ -5635,6 +5665,21 @@
 				1F916A5D1D51831200327408 /* JMHTTPManager.m */,
 			);
 			path = HttpTool;
+			sourceTree = "<group>";
+		};
+		1FAA73821DDEAFA200CEE342 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1FAA73831DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.h */,
+				1FAA73841DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m */,
+				1FAA73851DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.h */,
+				1FAA73861DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m */,
+				1FAA73871DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.h */,
+				1FAA73881DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m */,
+				1FAA73891DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.h */,
+				1FAA738A1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		1FB4287B1DAF4FF9002F98B4 /* SDK */ = {
@@ -6622,6 +6667,7 @@
 				1F5877B01DB8A60D00949302 /* JMPushingCategoryController.m in Sources */,
 				183073D51C97D17800B7665E /* FSLineChart.m in Sources */,
 				1F5877A91DB8A60D00949302 /* JMMaMaSelfTeamModel.m in Sources */,
+				1FAA73911DDECB7400CEE342 /* JMPicContainerView.m in Sources */,
 				1F4C9E941D9912600089CE74 /* UdeskAgentMenuViewController.m in Sources */,
 				1F498C6E1D2772D0007E77FC /* JMUserAddressModel.m in Sources */,
 				1F4C9EB61D9912600089CE74 /* UdeskHpple.m in Sources */,
@@ -6677,6 +6723,7 @@
 				1F498B3C1D276450007E77FC /* JMOrderPayView.m in Sources */,
 				1F498C5B1D2772D0007E77FC /* JMRefundController.m in Sources */,
 				1FDF7C8D1D66E64600C7456E /* JMHomeActiveCell.m in Sources */,
+				1FAA738B1DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m in Sources */,
 				1F6B79D91DD9BF95009AB446 /* JMPopMenuView.m in Sources */,
 				1F5877EF1DB8A7AF00949302 /* JMProductSelectionListModel.m in Sources */,
 				1FD158D71D2F7FE4006C4B14 /* JMRefundModel.m in Sources */,
@@ -6828,6 +6875,7 @@
 				1F6B79D81DD9BF95009AB446 /* JMClassPopView.m in Sources */,
 				1F6B7A1A1DD9C224009AB446 /* Tool_FMDBGetDatabase.m in Sources */,
 				1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */,
+				1FAA737E1DDEAA8800CEE342 /* JMPushingDayController.m in Sources */,
 				1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */,
 				1F6B7A191DD9C224009AB446 /* JMStoreManager.m in Sources */,
 				1F498C281D2772D0007E77FC /* AddAdressViewController.m in Sources */,
@@ -6901,6 +6949,7 @@
 				1F2F9E7D1D5C1C3D00E3A68B /* JMGoodsSafeGuardCell.m in Sources */,
 				3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */,
 				1F5877EE1DB8A7AF00949302 /* JMLevelinfoModel.m in Sources */,
+				1FAA73811DDEAC4D00CEE342 /* JMPushingDayCell.m in Sources */,
 				1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */,
 				1F498C4F1D2772D0007E77FC /* JMGoodsListCell.m in Sources */,
 				1FF3FA1D1D40800400FABBCE /* JMPurchaseController.m in Sources */,
@@ -6939,6 +6988,7 @@
 				1F4C9EA21D9912600089CE74 /* UIViewController+UdeskKeyboardAnimation.m in Sources */,
 				1F5877951DB8A60D00949302 /* JMFetureFansCell.m in Sources */,
 				1F5877B21DB8A60D00949302 /* PublishNewPdtViewController.m in Sources */,
+				1FAA738C1DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m in Sources */,
 				321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */,
 				1F58780C1DB8A85900949302 /* TodayVisitorViewController.m in Sources */,
 				1F5877B71DB8A60D00949302 /* PicFooterCollectionReusableView.m in Sources */,
@@ -6958,11 +7008,13 @@
 				1F4C9EA31D9912600089CE74 /* UdeskLanguageTool.m in Sources */,
 				1F4C9EAC1D9912600089CE74 /* UdeskPhotographyHelper.m in Sources */,
 				1F5877B11DB8A60D00949302 /* JMPushingDaysController.m in Sources */,
+				1FAA738E1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
 				1F4C9EBC1D9912600089CE74 /* UdeskReachability.m in Sources */,
 				1F1FB8C81D8E24D2004C60CE /* NJKWebViewProgressView.m in Sources */,
 				1F760E621DB62C0900307093 /* AddressTableCell.m in Sources */,
 				1F5877ED1DB8A7AF00949302 /* JMAlreadyChooseModel.m in Sources */,
 				1F5877A81DB8A60D00949302 /* JMMaMaTeamController.m in Sources */,
+				1FAA738D1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				1F4C9E7F1D9912600089CE74 /* UdeskAgentMenuModel.m in Sources */,
 				1F4C9EB81D9912600089CE74 /* UdeskXPathQuery.m in Sources */,
 				3A1E05951CE1C3FB001018AC /* LGTextField.m in Sources */,

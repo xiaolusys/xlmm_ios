@@ -755,15 +755,13 @@
 - (void)gotoCarts:(UIButton *)sender{
     [MobClick event:@"cart_click"];
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (login == NO) {
+    if (login) {
+        JMCartViewController *cartVC = [[JMCartViewController alloc] init];
+        [self.navigationController pushViewController:cartVC animated:YES];
+    }else {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
-        return;
     }
-    JMCartViewController *cartVC = [[JMCartViewController alloc] init];
-    [self.navigationController pushViewController:cartVC animated:YES];
-//    CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-//    [self.navigationController pushViewController:cartVC animated:YES];
 }
 #pragma mark 点击按钮进入我的收藏界面
 - (void)gotoCollection:(UIButton *)sender {
