@@ -21,7 +21,6 @@
 #import <Photos/Photos.h>
 #import "NSArray+Reverse.h"
 
-
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 24)/3)
 
 
@@ -43,6 +42,7 @@
 @property (nonatomic, strong)NSMutableArray *currentArr;
 @property (nonatomic, assign)NSInteger cellNum;
 @property (nonatomic, strong) JMPushSaveModel *pushSaveModel;
+@property (nonatomic, strong) SharePicModel *picModel;
 
 @end
 
@@ -50,6 +50,12 @@
     NSTimer *theTimer;
     UIView *bottomView;
     CountdownView *countdowmView;
+}
+- (SharePicModel *)picModel {
+    if (!_picModel) {
+        _picModel = [[SharePicModel alloc] init];
+    }
+    return _picModel;
 }
 - (JMPushSaveModel *)pushSaveModel {
     if (!_pushSaveModel) {
