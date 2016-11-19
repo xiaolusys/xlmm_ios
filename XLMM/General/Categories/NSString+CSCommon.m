@@ -290,7 +290,7 @@
  *
  *  @return 相差天数
  */
-+ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate {
++ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate ToData:(NSString *)toDate {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *fromDate1 = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:fromDate]];
@@ -303,6 +303,18 @@
     NSLog(@" -- >>  两个日期之间相差的天数 == comp : %@  << --",comp);
     NSString *dayString = [NSString stringWithFormat:@"%ld",comp.day];
     return dayString;
+}
++ (NSString *)numberOfSecondWithFromData:(NSString *)fromData ToData:(NSString *)toData {
+    return @"";
+}
+
++ (NSString *)TimeformatDHMSFromSeconds:(int)second {
+    NSString *timeString = [NSString stringWithFormat:@"%02d天%02d时%02d分%02d秒",second/(3600*24),(second/(3600))%24,(second%3600)/60,second%60];
+    return timeString;
+}
++ (NSString *)TimeformatMSFromSeconds:(int)second {
+    NSString *timeString = [NSString stringWithFormat:@"%02d:%02d", (second%3600)/60,second%60];
+    return timeString;
 }
 
 + (NSString*)miPushTetOperateType:(NSString*)selector

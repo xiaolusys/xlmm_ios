@@ -68,7 +68,9 @@
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     [self.tableView.mj_header beginRefreshing];
+ 
 }
+
 - (NSString *)urlStr {
     return kQuanbuDingdan_URL;
 }
@@ -154,6 +156,7 @@
         }
         [self.dataSource addObject:_goodsArray];
     }
+    
     
 }
 - (void)createTabelView {

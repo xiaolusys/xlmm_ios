@@ -22,7 +22,6 @@
     BOOL historyCartDownLoad;
     BOOL isEmpty;
     float allPrice;
-    
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -50,7 +49,15 @@
     }
     return _historyCartDataSource;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"ShoppingCart"];
+}
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"ShoppingCart"];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,7 +70,7 @@
     historyCartDownLoad = NO;
     
     [self createTableView];
-    [[JMGlobal global] showWaitLoadingInView:self];
+    [[JMGlobal global] showWaitLoadingInView:self.view];
     [self downloadCurrentCartData];
     [self downloadHistoryCartData];
     
@@ -77,6 +84,7 @@
         [self fetchedCartData:responseObject];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
         
     }];
@@ -101,10 +109,12 @@
     NSString *allPriceString = [NSString stringWithFormat:@"¥%.2f", allPrice];
     NSString *allString = [NSString stringWithFormat:@"应付款金额%@",allPriceString];
     self.payMentMoneyLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allString SubStringArray:@[allPriceString]];
-    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
     if (currentCartDownLoad && historyCartDownLoad) {
         [[JMGlobal global] hideWaitLoading];
     }
+    
 }
 - (void)downloadHistoryCartData {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
@@ -113,6 +123,7 @@
         [self fetchedHistoryCartData:responseObject];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
         
     }];
@@ -130,7 +141,8 @@
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.historyCartDataSource addObject:model];
     }
-    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadData];
     if (currentCartDownLoad && historyCartDownLoad) {
         [[JMGlobal global] hideWaitLoading];
     }
@@ -362,9 +374,14 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/minus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self downloadCurrentCartData];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self downloadCurrentCartData];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
     } WithFail:^(NSError *error) {
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -377,10 +394,14 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/plus_product_carts", Root_URL,cartModel.cartID];
     NSLog(@"url = %@", urlString);
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self downloadCurrentCartData];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self downloadCurrentCartData];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
     } WithFail:^(NSError *error) {
-        [MBProgressHUD showError:@"商品库存不足"];
-        [self downloadCurrentCartData];
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -403,10 +424,15 @@
     [MBProgressHUD showLoading:@""];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/%ld/delete_carts", Root_URL,self.deleteModel.cartID];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        [self downloadCurrentCartData];
-        [self downloadHistoryCartData];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self downloadCurrentCartData];
+            [self downloadHistoryCartData];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -465,7 +491,6 @@
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 
 

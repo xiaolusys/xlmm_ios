@@ -196,12 +196,14 @@
     }];
     [idLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(iconImage.mas_right).offset(15);
-        make.centerY.equalTo(iconImage.mas_centerY);
+        make.top.equalTo(iconImage).offset(5);
+//        make.centerY.equalTo(iconImage.mas_centerY);
     }];
     
     [isMaMaVipImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(idLabel.mas_right).offset(10);
-        make.centerY.equalTo(idLabel.mas_centerY);
+        make.left.equalTo(idLabel);
+//        make.centerY.equalTo(idLabel.mas_centerY);
+        make.top.equalTo(idLabel.mas_bottom).offset(10);
         make.width.mas_equalTo(@15);
         make.height.mas_equalTo(@12);
     }];

@@ -35,6 +35,35 @@
 @interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
     NSDictionary *_couponData;
     NSTimer *_timer;
+    NSString *_logisticsID;           // 选择物流的ID
+    NSDictionary *_couponInfo;        // 优惠券
+    NSDictionary *_rightReduce;       // app立减
+    NSDictionary *_xlWallet;          // 钱包
+    
+    NSString *_payMethod;             //支付方式
+    float _totalPayment;              //应付款金额
+    float _discountfee;               //优惠券金额
+    NSString *_couponStringID;        // 优惠券ID
+    float _rightAmount;               //app优惠
+    float _availableFloat;            //小鹿钱包余额
+    
+    NSString *_uuid;                  //uuid
+    NSString *_cartIDs;               //购物车id
+    float _totalfee;                  //总金额
+    float _postfee;                   //运费金额
+    float _amontPayment;              //总需支付金额
+    float _couponValue;               //优惠券金额
+    float _discount;                  //计算金额
+    
+    NSString *_yhqModelID;            //优惠券ID
+    NSString *_addressID;             //地址信息ID
+    NSString *_parmsStr;              //支付提交参数
+    
+    NSString *_limitStr;              //分享红包数量
+    NSString *_orderTidNum;           //订单编号
+    NSInteger _flagCount;             //标志是否弹出延迟框
+    BOOL _isTeamBuyGoods;             //是否为团购
+    NSInteger _couponNumber;          // 优惠券购买商品个数
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -87,37 +116,9 @@
 
 static BOOL isAgreeTerms = YES;
 
-@implementation JMPurchaseController {
-    NSString *_logisticsID;           // 选择物流的ID
-    NSDictionary *_couponInfo;        // 优惠券
-    NSDictionary *_rightReduce;       // app立减
-    NSDictionary *_xlWallet;          // 钱包
-    
-    NSString *_payMethod;             //支付方式
-    float _totalPayment;              //应付款金额
-    float _discountfee;               //优惠券金额
-    NSString *_couponStringID;        // 优惠券ID
-    float _rightAmount;               //app优惠
-    float _availableFloat;            //小鹿钱包余额
-    
-    NSString *_uuid;                  //uuid
-    NSString *_cartIDs;               //购物车id
-    float _totalfee;                  //总金额
-    float _postfee;                   //运费金额
-    float _amontPayment;              //总需支付金额
-    float _couponValue;               //优惠券金额
-    float _discount;                  //计算金额
-    
-    NSString *_yhqModelID;            //优惠券ID
-    NSString *_addressID;             //地址信息ID
-    NSString *_parmsStr;              //支付提交参数
-    
-    NSString *_limitStr;              //分享红包数量
-    NSString *_orderTidNum;           //订单编号
-    NSInteger _flagCount;             //标志是否弹出延迟框
-    BOOL _isTeamBuyGoods;             //是否为团购
-    NSInteger _couponNumber;          // 优惠券购买商品个数
-}
+@implementation JMPurchaseController
+
+
 - (NSMutableArray *)logisticsArr {
     if (!_logisticsArr) {
         _logisticsArr = [NSMutableArray array];
@@ -163,6 +164,7 @@ static BOOL isAgreeTerms = YES;
     _discount = 0;                  //计算金额
     _flagCount = 0;                 //标志是否弹出延迟框
     
+    [self getCartID];
     [self initView];
     [self createTableView];
     [self createTableHeaderView];
@@ -187,8 +189,7 @@ static BOOL isAgreeTerms = YES;
     self.payView.delegate = self;
 
 }
-#pragma mark 订单支付网络请求
-- (void)loadDataSource {
+- (void)getCartID {
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
     if (self.purchaseGoodsArr.count == 0) {
         return;
@@ -200,6 +201,10 @@ static BOOL isAgreeTerms = YES;
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
     self.paramstring = paramstring;
+    _cartIDs = [paramstring copy];
+}
+#pragma mark 订单支付网络请求
+- (void)loadDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,self.paramstring,@"app"];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
@@ -510,7 +515,7 @@ static BOOL isAgreeTerms = YES;
     button.enabled = YES;
 }
 - (void)composeFooterTapView:(JMPurchaseFooterView *)headerView {
-    NSString *terms = @"购买条款：亲爱的小鹿用户，由于特卖商品购买人数过多和供应商供货原因，可能存在极少数用户出现缺货的情况。为了避免您长时间等待，一旦出现这种情况，我们在购买后1周会帮您自动退款，并补偿给您一张全场通用优惠券，订单向外贸工厂订货后无法退款，需要收货后走退货流程或者换货。质量问题退货会以现金券或小鹿余额形式补偿10元邮费。给您造成不便，敬请谅解！祝您购物愉快！本条款解释权归小鹿美美特卖商城所有。";
+    NSString *terms = promptMessage_termsOfPurchase;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
@@ -661,9 +666,6 @@ static BOOL isAgreeTerms = YES;
             return;
         }
         NSDictionary *chargeDic = responseObject[@"charge"];
-//        NSError *parseError = nil;
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:chargeDic options:NSJSONWritingPrettyPrinted error:&parseError];
-//        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
@@ -674,43 +676,6 @@ static BOOL isAgreeTerms = YES;
                         [self popview];
                     }else { }
                 }];
-//                [JMPayment payMentManager].errorCodeBlock = ^(int errorCode) {
-//                    NSLog(@"%d",errorCode);
-//                    if (errorCode == 0) {
-//                        [self paySuccessful];
-//                    }else {
-//                        [self popview];
-//                    }
-//                };
-//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-//                    if (error == nil) {
-//                        [MBProgressHUD hideHUD];
-//                        [_timer invalidate];
-//                        [MBProgressHUD showSuccess:@"支付成功"];
-//                        [MobClick event:@"buy_succ"];
-//                        if (_isTeamBuyGoods) {
-//                            [self getTeam:_orderTidNum]; // == > 团购信息
-//                        }else {
-//                            [self pushShareVC];
-//                        }
-//                    } else {
-//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-//                            [MBProgressHUD hideHUD];
-//                            [_timer invalidate];
-//                            [MBProgressHUD showError:@"用户取消支付"];
-//                            [MobClick event:@"buy_cancel"];
-//                            [self popview];
-//                        } else {
-//                            [MBProgressHUD hideHUD];
-//                            [_timer invalidate];
-//                            [MBProgressHUD showError:@"支付失败"];
-//                            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-//                            [MobClick event:@"buy_fail" attributes:temp_dict];
-//                            NSLog(@"%@",error);
-//                            [self performSelector:@selector(backClick) withObject:nil afterDelay:1.0];
-//                        }
-//                    }
-//                }];
             });
         }
         [MBProgressHUD hideHUD];
@@ -730,7 +695,6 @@ static BOOL isAgreeTerms = YES;
     _couponStringID = @"";
     if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
         self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
-//        [MBProgressHUD showWarning:@"优惠券不足哦~!"];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"购买提示" message:@"精品汇优惠券不足，请购买优惠券或减少商品购买数量。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alertView show];
         return ;
@@ -953,6 +917,91 @@ static BOOL isAgreeTerms = YES;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        NSError *parseError = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:chargeDic options:NSJSONWritingPrettyPrinted error:&parseError];
+//        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//                [JMPayment payMentManager].errorCodeBlock = ^(int errorCode) {
+//                    NSLog(@"%d",errorCode);
+//                    if (errorCode == 0) {
+//                        [self paySuccessful];
+//                    }else {
+//                        [self popview];
+//                    }
+//                };
+//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                    if (error == nil) {
+//                        [MBProgressHUD hideHUD];
+//                        [_timer invalidate];
+//                        [MBProgressHUD showSuccess:@"支付成功"];
+//                        [MobClick event:@"buy_succ"];
+//                        if (_isTeamBuyGoods) {
+//                            [self getTeam:_orderTidNum]; // == > 团购信息
+//                        }else {
+//                            [self pushShareVC];
+//                        }
+//                    } else {
+//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                            [MBProgressHUD hideHUD];
+//                            [_timer invalidate];
+//                            [MBProgressHUD showError:@"用户取消支付"];
+//                            [MobClick event:@"buy_cancel"];
+//                            [self popview];
+//                        } else {
+//                            [MBProgressHUD hideHUD];
+//                            [_timer invalidate];
+//                            [MBProgressHUD showError:@"支付失败"];
+//                            NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                            [MobClick event:@"buy_fail" attributes:temp_dict];
+//                            NSLog(@"%@",error);
+//                            [self performSelector:@selector(backClick) withObject:nil afterDelay:1.0];
+//                        }
+//                    }
+//                }];
 
 /**
 

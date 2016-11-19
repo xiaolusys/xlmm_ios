@@ -186,9 +186,9 @@
             self.logNumLabel.text = self.packetId;
         }
     }else {
-        self.logNumLabel.text = self.packetId;//self.packageModel.assign_status_display;
+        self.logNumLabel.text = [NSString isStringEmpty:self.packetId] ? @"未揽件" : self.packetId;
+//        self.logNumLabel.text = self.packetId;//self.packageModel.assign_status_display;
     }
-    
     self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
 }

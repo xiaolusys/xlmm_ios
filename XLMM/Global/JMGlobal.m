@@ -184,23 +184,27 @@ static BOOL isNetPrompt;
 }
 
 #pragma mark ======== 跳转页面等待动画 ========
-- (void)showWaitLoadingInView:(UIViewController *)viewController {
+- (void)showWaitLoadingInView:(UIView *)viewController {
     if (self.loadView) {
         [self.loadView removeFromSuperview];
         self.loadView = nil;
     }
     if (!self.loadView) {
-        UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+        UIView *maskView = [[UIView alloc] init];
+        maskView.frame = viewController.bounds;
         maskView.backgroundColor = [UIColor whiteColor];
-        [viewController.view addSubview:maskView];
+        [viewController addSubview:maskView];
         self.maskView = maskView;
-        self.loadView = [[JMRefreshLoadView alloc] initWithFrame:CGRectMake(SCREENWIDTH / 2 - 18, SCREENHEIGHT / 2 - 18, 36, 36)];
+        self.loadView = [[JMRefreshLoadView alloc] initWithFrame:CGRectMake(maskView.mj_w / 2 - 18, maskView.mj_h / 2 - 18, 36, 36)];
         [maskView addSubview:self.loadView];
     }
     [self.loadView setLineLayerStrokeWithProgress:100];
     [self.loadView startLoading];
 }
 - (void)hideWaitLoading {
+    if (!self.loadView) {
+        return ;
+    }
     [self.loadView endLoading];
     if (self.loadView) {
         [self.loadView removeFromSuperview];
@@ -227,6 +231,31 @@ static BOOL isNetPrompt;
     }else { }
     return compCount;
 }
+
+- (int)secondOFCurrentTimeInEndtimeInt:(int)endTime {
+    NSDate *lastDate = [NSDate dateWithTimeIntervalSince1970:endTime];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+    NSString *currentTime = [dateFormatter stringFromDate:lastDate];
+    return [self secondOfCurrentTimeInEndTime:currentTime];
+}
+- (int)secondOfCurrentTimeInEndTime:(NSString *)endTime {
+    if ([NSString isStringEmpty:endTime]) {
+        return 0;
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+    //    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+    //    [dateFormatter setTimeZone:timeZone]; //设置时区 ＋8:00
+    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+    NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
+    NSDate *date = [dateFormatter dateFromString:endTime]; // 结束时间
+    NSTimeInterval time = [date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+    NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
+    return time;
+}
+
+
 
 
 

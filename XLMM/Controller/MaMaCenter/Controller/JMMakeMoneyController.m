@@ -262,7 +262,7 @@
 - (void)createHeaderView {
     kWeakSelf
     NSArray *imageArr = @[@"mamaeryaoqingColor",@"EverydayPushNormalColor",@"selectionShopNormalColor",@"inviteShopNormalColor"];
-    NSArray *titleArr = @[@"分享店铺",@"每日推送",@"精品汇",@"邀请开店"];
+    NSArray *titleArr = @[@"分享店铺",@"每日推送",@"选品佣金",@"邀请开店"];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 590)];
     self.tableView.tableHeaderView = headerView;
@@ -689,12 +689,12 @@
         JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
         [self.navigationController pushViewController:pushingVC animated:YES];
     }else if (index == 105) {
-//        ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
-//        [self.navigationController pushViewController:product animated:YES];
-        if ([NSString isStringEmpty:_boutiqueString]) return;
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:_boutiqueString forKey:@"web_url"];
-        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO Title:@"精品汇"];
+        ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
+        [self.navigationController pushViewController:product animated:YES];
+//        if ([NSString isStringEmpty:_boutiqueString]) return;
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        [dict setValue:_boutiqueString forKey:@"web_url"];
+//        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO Title:@"精品汇"];
     }else if (index == 106) {
         if ([NSString isStringEmpty:_myInvitation]) return;
         NSString *active = @"myInvite";

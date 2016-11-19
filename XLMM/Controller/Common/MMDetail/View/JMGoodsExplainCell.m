@@ -68,19 +68,13 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         self.timerLabel.text = @"即将上架";
     }else {
         endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
-        self.countDownView = [JMCountDownView shareCountDown];
-//            [JMCountDownView countDownWithCurrentTime:endTime];
-        [self.countDownView initWithCountDownTime:endTime];
-        //    self.countDownView.delegate = self;
+        int endSecond = [[JMGlobal global] secondOfCurrentTimeInEndTime:endTime];
+        [JMCountDownView countDownWithCurrentTime:endSecond];
         kWeakSelf
-        self.countDownView.timeBlock = ^(NSString *timeString) {
-            weakSelf.timerLabel.text = timeString;
+        [JMCountDownView shareCountDown].timeBlock = ^(int second) {
+            weakSelf.timerLabel.text = second == -1 ? @"商品已下架" : [NSString TimeformatDHMSFromSeconds:second];
         };
     }
-    
-
-    
-    
 }
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
     if ([NSString isStringEmpty:timeString]) {

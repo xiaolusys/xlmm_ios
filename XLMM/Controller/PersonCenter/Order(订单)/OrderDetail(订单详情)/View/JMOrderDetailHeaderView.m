@@ -241,7 +241,8 @@
     // == 第一行视图 == //
     [oneView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.timeLineView.mas_bottom);
-        make.left.right.equalTo(weakSelf);
+        make.left.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@50);
     }];
     [orderNumber mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -259,7 +260,8 @@
     // == 第二行视图 == //
     [twoView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(oneView.mas_bottom);
-        make.left.right.equalTo(weakSelf);
+        make.left.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@30);
     }];
     [self.orderCreateTime mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -269,7 +271,8 @@
     // == 第三行视图 == //
     [threeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(twoView.mas_bottom);
-        make.left.right.equalTo(weakSelf);
+        make.left.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@90);
     }];
     [addressImage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -301,7 +304,8 @@
     // == 第四行视图 == //
     [fourView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineView.mas_bottom).offset(0);
-        make.left.right.equalTo(weakSelf);
+        make.left.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@40);
     }];
     [logistics mas_makeConstraints:^(MASConstraintMaker *make) {

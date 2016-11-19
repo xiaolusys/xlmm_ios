@@ -11,7 +11,7 @@
 
 @interface JMOrderDetailFooterView : UIView
 
-+ (instancetype)enterFooterView;
+//+ (instancetype)enterFooterView;
 
 @property (nonatomic, strong) JMOrderDetailModel *orderDetailModel;
 

@@ -151,7 +151,9 @@
  *
  *  @return 相差天数
  */
-+ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate;
++ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate ToData:(NSString *)toDate;
+
++ (NSString *)numberOfSecondWithFromData:(NSString *)fromData ToData:(NSString *)toData;
 
 
 + (NSString *)getCurrentYMD;
@@ -161,6 +163,10 @@
 
 + (NSString *)miPushTetOperateType:(NSString *)selector;
 
+
+
++ (NSString *)TimeformatDHMSFromSeconds:(int)second;
++ (NSString *)TimeformatMSFromSeconds:(int)second;
 
 
 @end

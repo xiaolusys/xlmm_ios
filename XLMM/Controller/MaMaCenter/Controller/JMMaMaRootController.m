@@ -19,11 +19,15 @@
 #import "JMStoreManager.h"
 #import "JMFineClassController.h"
 #import "WebViewController.h"
+#import <RESideMenu.h>
+#import "NewLeftViewController.h"
+#import "JMHomeRootController.h"
+
 
 
 static NSString *currentTurnsNumberString;
 
-@interface JMMaMaRootController () {
+@interface JMMaMaRootController () <RESideMenuDelegate> {
     NSInteger _indexCode;
     BOOL _isActiveClick;
     NSArray *_titleArr;
@@ -365,10 +369,6 @@ static NSString *currentTurnsNumberString;
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
     if (page == 1) {
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        dict[@"web_url"] = self.mamaWebDict[@"boutique"];
-//        self.webVC.webDiction = dict;
-        
     } else if (page == 2 && _isActiveClick) {
         //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
@@ -382,10 +382,6 @@ static NSString *currentTurnsNumberString;
     CGFloat pageWidth = scrollView.frame.size.width;
     NSInteger page = scrollView.contentOffset.x / pageWidth;
     if (page == 1) {
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        dict[@"web_url"] = self.mamaWebDict[@"boutique"];
-//        self.webVC.webDiction = dict;
-//        self.fineClassVC.urlString = self.mamaWebDict[@"boutique"];
     } else if (page == 2 && _isActiveClick) {
         //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
@@ -468,11 +464,12 @@ static NSString *currentTurnsNumberString;
 }
 #pragma mark - 小鹿客服注册个人信息
 - (void)customUserInfo {
-    if (self.userInfoDic.count == 0) {
+    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
+    if (userInfo == nil) {
         return ;
     }
-    NSString *nick_name = self.userInfoDic[@"nick"];
-    NSString *sdk_token = self.userInfoDic[@"user_id"];
+    NSString *nick_name = userInfo[@"nick"];
+    NSString *sdk_token = userInfo[@"user_id"];
     //    NSString *cellphone = self.userInfoDic[@"mobile"];
     NSDictionary *parameters = @{
                                  @"user": @{

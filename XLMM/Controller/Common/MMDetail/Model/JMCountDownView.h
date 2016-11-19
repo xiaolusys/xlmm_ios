@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^countDownBlock)(NSString *timeString);
+typedef void(^countDownBlock)(int second);
 
 @protocol JMCountDownViewDelegate <NSObject>
 
@@ -22,7 +22,7 @@ typedef void(^countDownBlock)(NSString *timeString);
 
 + (instancetype)shareCountDown;
 
-@property (nonatomic, copy) NSString *ennTime;
+@property (nonatomic, assign) int ennTime;
 
 @property (nonatomic, strong) dispatch_source_t timer;
 
@@ -31,9 +31,9 @@ typedef void(^countDownBlock)(NSString *timeString);
 @property (nonatomic, copy) countDownBlock timeBlock;
 
 
-- (instancetype)initWithCountDownTime:(NSString *)endTime;
+- (instancetype)initWithCountDownTime:(int)endTime;
 
-+ (instancetype)countDownWithCurrentTime:(NSString *)endTime;
++ (instancetype)countDownWithCurrentTime:(int)endTime;
 //+ (void)endTimer;
 
 @end

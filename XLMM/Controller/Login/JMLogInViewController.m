@@ -41,6 +41,9 @@
 
 @property (nonatomic,strong) UILabel *titleLa;
 
+@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) UIButton *backButton;
+
 @end
 
 @implementation JMLogInViewController {
@@ -53,7 +56,7 @@
 - (void)viewDidLoad {
     
     self.view.backgroundColor = [UIColor whiteColor];
-    [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick:)];
+    [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick1:)];
     
     
     [self initUI];
@@ -76,8 +79,6 @@
 
 
 - (void)initUI {
-    
-    
     UIImageView *headView = [[UIImageView alloc] init];
     [self.view addSubview:headView];
     self.headView = headView;
@@ -86,6 +87,21 @@
     headView.userInteractionEnabled = YES;
     self.headView.clipsToBounds = YES;
     
+//    UIView *backView = [UIView new];
+//    [self.headView addSubview:backView];
+//    backView.backgroundColor = [UIColor blackColor];
+//    backView.hidden = YES;
+//    backView.layer.cornerRadius = 18.;
+//    self.backView = backView;
+//    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.headView addSubview:backButton];
+    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateHighlighted];
+    backButton.layer.cornerRadius = 18.;
+    [backButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.backButton = backButton;
+
     UIView *bottomView = [[UIView alloc] init];
     [self.view addSubview:bottomView];
     self.bottomView = bottomView;
@@ -162,14 +178,13 @@
 
 #pragma mark --- 注册微信登录的通知
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
     if (islogin) {
-        // [self.navigationController popViewControllerAnimated:NO];
-        // test ying's change
     }
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver: self selector: @selector (update:) name: @"login" object: nil ];
+    [notificationCenter addObserver:self selector: @selector(update:) name:@"login" object:nil];
     [MobClick beginLogPageView:@"JMLogInViewController"];
 
 }
@@ -330,7 +345,8 @@
         
     }];
 }
-
+- (void)btnClick1:(UIButton *)btn {
+}
 - (void)btnClick:(UIButton *)btn {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -370,6 +386,17 @@
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(SCREENHEIGHT - 200);
     }];
+    [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.headView).offset(10);
+        make.top.equalTo(weakSelf.headView).offset(30);
+        make.width.height.mas_equalTo(@(36));
+    }];
+//    [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(weakSelf.backView.mas_centerY);
+//        make.centerX.equalTo(weakSelf.backView.mas_centerX);
+//        make.width.height.mas_equalTo(@(36));
+//    }];
+    
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.headView.mas_bottom);

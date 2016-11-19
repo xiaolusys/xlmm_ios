@@ -52,19 +52,20 @@ NSString *const JMCartCurrentCellIdentifier = @"JMCartCurrentCellIdentifier";
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
+    self.titleLabel.textColor = [UIColor settingBackgroundColor];
     self.titleLabel.font = [UIFont systemFontOfSize:14.];
     self.titleLabel.numberOfLines = 2;
     
     UILabel *sizeLabel = [UILabel new];
     [self.contentView addSubview:sizeLabel];
     self.sizeLabel = sizeLabel;
-    self.sizeLabel.font = [UIFont boldSystemFontOfSize:12.];
+    self.sizeLabel.font = [UIFont systemFontOfSize:13.];
     self.sizeLabel.textColor = [UIColor dingfanxiangqingColor];
     
     UILabel *PriceLabel = [UILabel new];
     [self.contentView addSubview:PriceLabel];
     self.PriceLabel = PriceLabel;
-    self.PriceLabel.font = [UIFont boldSystemFontOfSize:17.];
+    self.PriceLabel.font = [UIFont systemFontOfSize:16.];
     self.PriceLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     
     UILabel *curreLabel = [UILabel new];
@@ -75,7 +76,7 @@ NSString *const JMCartCurrentCellIdentifier = @"JMCartCurrentCellIdentifier";
     UILabel *oldPriceLabel = [UILabel new];
     [self.contentView addSubview:oldPriceLabel];
     self.oldPriceLabel = oldPriceLabel;
-    self.oldPriceLabel.font = [UIFont systemFontOfSize:11.];
+    self.oldPriceLabel.font = [UIFont systemFontOfSize:10.];
     self.oldPriceLabel.textColor = [UIColor dingfanxiangqingColor];
     
     UILabel *deletLine = [UILabel new];
@@ -126,11 +127,11 @@ NSString *const JMCartCurrentCellIdentifier = @"JMCartCurrentCellIdentifier";
     }];
     [curreLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(weakSelf.contentView).offset(-10);
-        make.left.equalTo(weakSelf.PriceLabel.mas_right).offset(2);
+        make.left.equalTo(weakSelf.PriceLabel.mas_right);
         make.height.mas_equalTo(@13);
     }];
     [self.oldPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(curreLabel.mas_right).offset(2);
+        make.left.equalTo(curreLabel.mas_right);
         make.centerY.equalTo(curreLabel.mas_centerY);
     }];
     [deletLine mas_makeConstraints:^(MASConstraintMaker *make) {

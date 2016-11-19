@@ -160,15 +160,24 @@
         self.timeLabel.text = @"--:--:--:--";
     }else {
         kWeakSelf
-        
         NSString *endTime = [self spaceFormatTimeString:todayTimeString];
-        self.countDownView = [JMCountDownView shareCountDown];
-        //    [JMCountDownView countDownWithCurrentTime:endTime];
-        [self.countDownView initWithCountDownTime:endTime];
-        //    self.countDownView.delegate = self;
-        self.countDownView.timeBlock = ^(NSString *timeString) {
-            weakSelf.timeLabel.text = timeString;
+        //        self.countDownView = [JMCountDownView shareCountDown];
+        //            [JMCountDownView countDownWithCurrentTime:endTime];
+        //        [self.countDownView initWithCountDownTime:endTime];
+        //        [[JMCountDownView shareCountDown] initWithCountDownTime:endTime];
+        int endSecond = [[JMGlobal global] secondOfCurrentTimeInEndTime:endTime];
+        [JMCountDownView countDownWithCurrentTime:endSecond];
+        [JMCountDownView shareCountDown].timeBlock = ^(int second) {
+            weakSelf.timeLabel.text = second == -1 ? @"商品已下架" : [NSString TimeformatDHMSFromSeconds:second];
         };
+//        NSString *endTime = [self spaceFormatTimeString:todayTimeString];
+//        self.countDownView = [JMCountDownView shareCountDown];
+//        //    [JMCountDownView countDownWithCurrentTime:endTime];
+//        [self.countDownView initWithCountDownTime:endTime];
+//        //    self.countDownView.delegate = self;
+//        self.countDownView.timeBlock = ^(NSString *timeString) {
+//            weakSelf.timeLabel.text = timeString;
+//        };
     }
     
     
