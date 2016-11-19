@@ -666,9 +666,6 @@
 		1F99F87B1D65678800C6B79C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
 		1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */; };
-		1FAA739A1DDEDA9E00CEE342 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73941DDEDA9E00CEE342 /* SDBrowserImageView.m */; };
-		1FAA739B1DDEDA9E00CEE342 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73961DDEDA9E00CEE342 /* SDPhotoBrowser.m */; };
-		1FAA739C1DDEDA9E00CEE342 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73991DDEDA9E00CEE342 /* SDWaitingView.m */; };
 		1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
@@ -1882,13 +1879,6 @@
 		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
 		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
 		1FAA736B1DDE9BF200CEE342 /* JMPromptMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPromptMessage.h; sourceTree = "<group>"; };
-		1FAA73931DDEDA9E00CEE342 /* SDBrowserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBrowserImageView.h; sourceTree = "<group>"; };
-		1FAA73941DDEDA9E00CEE342 /* SDBrowserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBrowserImageView.m; sourceTree = "<group>"; };
-		1FAA73951DDEDA9E00CEE342 /* SDPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowser.h; sourceTree = "<group>"; };
-		1FAA73961DDEDA9E00CEE342 /* SDPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPhotoBrowser.m; sourceTree = "<group>"; };
-		1FAA73971DDEDA9E00CEE342 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
-		1FAA73981DDEDA9E00CEE342 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
-		1FAA73991DDEDA9E00CEE342 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
 		1FB4287A1DAF4ACD002F98B4 /* XLMM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XLMM.entitlements; sourceTree = "<group>"; };
 		1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		1FB4287D1DAF4FF9002F98B4 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
@@ -2364,7 +2354,6 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
-				1FAA73921DDEDA9E00CEE342 /* SDPhotoBrowser */,
 				1F6B7A011DD9C1EE009AB446 /* fmdb */,
 				1F6B78E81DD6F233009AB446 /* AliPaySDK */,
 				1F6B78E01DD6F1C3009AB446 /* WechatSDK */,
@@ -5650,20 +5639,6 @@
 			path = HttpTool;
 			sourceTree = "<group>";
 		};
-		1FAA73921DDEDA9E00CEE342 /* SDPhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				1FAA73931DDEDA9E00CEE342 /* SDBrowserImageView.h */,
-				1FAA73941DDEDA9E00CEE342 /* SDBrowserImageView.m */,
-				1FAA73951DDEDA9E00CEE342 /* SDPhotoBrowser.h */,
-				1FAA73961DDEDA9E00CEE342 /* SDPhotoBrowser.m */,
-				1FAA73971DDEDA9E00CEE342 /* SDPhotoBrowserConfig.h */,
-				1FAA73981DDEDA9E00CEE342 /* SDWaitingView.h */,
-				1FAA73991DDEDA9E00CEE342 /* SDWaitingView.m */,
-			);
-			path = SDPhotoBrowser;
-			sourceTree = "<group>";
-		};
 		1FB4287B1DAF4FF9002F98B4 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -6688,7 +6663,6 @@
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				1F498C461D2772D0007E77FC /* JMOrderGoodsModel.m in Sources */,
 				1F23F9CF1D6C1C4800C78EAE /* JMBaseScrollViewController.m in Sources */,
-				1FAA739C1DDEDA9E00CEE342 /* SDWaitingView.m in Sources */,
 				1F6B7A111DD9C1EE009AB446 /* FMResultSet.m in Sources */,
 				1F5877981DB8A60D00949302 /* CarryLogModel.m in Sources */,
 				1F6B7A231DD9C25A009AB446 /* JMGlobal.m in Sources */,
@@ -6790,7 +6764,6 @@
 				1FE52DF21D93FFF30051D5A0 /* JMGoodsLoopRollCell.m in Sources */,
 				1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */,
 				1FF5335C1D27789D003DEABF /* PersonOrderViewController.m in Sources */,
-				1FAA739A1DDEDA9E00CEE342 /* SDBrowserImageView.m in Sources */,
 				1F5877861DB8A60D00949302 /* MaMaHuoyueduViewController.m in Sources */,
 				1F5877F01DB8A7AF00949302 /* JMProductSelectListCell.m in Sources */,
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
@@ -6967,7 +6940,6 @@
 				3A1E05961CE1C3FB001018AC /* LGTextFieldDelegateObject.m in Sources */,
 				1F4C9EA21D9912600089CE74 /* UIViewController+UdeskKeyboardAnimation.m in Sources */,
 				1F5877951DB8A60D00949302 /* JMFetureFansCell.m in Sources */,
-				1FAA739B1DDEDA9E00CEE342 /* SDPhotoBrowser.m in Sources */,
 				1F5877B21DB8A60D00949302 /* PublishNewPdtViewController.m in Sources */,
 				321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */,
 				1F58780C1DB8A85900949302 /* TodayVisitorViewController.m in Sources */,
