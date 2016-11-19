@@ -54,7 +54,7 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 
 
 
-- (void)showWaitLoadingInView:(UIViewController *)viewController;
+- (void)showWaitLoadingInView:(UIView *)viewController;
 - (void)hideWaitLoading;
 
 

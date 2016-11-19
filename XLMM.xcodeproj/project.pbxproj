@@ -7126,6 +7126,7 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 					"$(PROJECT_DIR)/XLMM/Venders/AliPaySDK",
+					"$(PROJECT_DIR)/XLMM/Venders/YYPhotoBrowseView/YYWebImage/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";
@@ -7220,6 +7221,7 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 					"$(PROJECT_DIR)/XLMM/Venders/AliPaySDK",
+					"$(PROJECT_DIR)/XLMM/Venders/YYPhotoBrowseView/YYWebImage/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";

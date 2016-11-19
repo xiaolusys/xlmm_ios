@@ -70,7 +70,7 @@
     historyCartDownLoad = NO;
     
     [self createTableView];
-    [[JMGlobal global] showWaitLoadingInView:self];
+    [[JMGlobal global] showWaitLoadingInView:self.view];
     [self downloadCurrentCartData];
     [self downloadHistoryCartData];
     

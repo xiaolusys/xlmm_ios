@@ -52,7 +52,7 @@
     [self loadCouponData];
     [self createSegmentView];
     [self createSegement];
-    [[JMGlobal global] showWaitLoadingInView:self];
+    [[JMGlobal global] showWaitLoadingInView:self.view];
 }
 
 - (void)loadCouponData {
