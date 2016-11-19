@@ -666,13 +666,10 @@
 		1F99F87B1D65678800C6B79C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
 		1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */; };
-		1FAA737E1DDEAA8800CEE342 /* JMPushingDayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA737D1DDEAA8800CEE342 /* JMPushingDayController.m */; };
-		1FAA73811DDEAC4D00CEE342 /* JMPushingDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73801DDEAC4D00CEE342 /* JMPushingDayCell.m */; };
 		1FAA738B1DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73841DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m */; };
 		1FAA738C1DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73861DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.m */; };
 		1FAA738D1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73881DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m */; };
 		1FAA738E1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA738A1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m */; };
-		1FAA73911DDECB7400CEE342 /* JMPicContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA73901DDECB7400CEE342 /* JMPicContainerView.m */; };
 		1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
@@ -1886,10 +1883,6 @@
 		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
 		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
 		1FAA736B1DDE9BF200CEE342 /* JMPromptMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPromptMessage.h; sourceTree = "<group>"; };
-		1FAA737C1DDEAA8800CEE342 /* JMPushingDayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDayController.h; sourceTree = "<group>"; };
-		1FAA737D1DDEAA8800CEE342 /* JMPushingDayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDayController.m; sourceTree = "<group>"; };
-		1FAA737F1DDEAC4D00CEE342 /* JMPushingDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDayCell.h; sourceTree = "<group>"; };
-		1FAA73801DDEAC4D00CEE342 /* JMPushingDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDayCell.m; sourceTree = "<group>"; };
 		1FAA73831DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDIndexPathHeightCache.h"; sourceTree = "<group>"; };
 		1FAA73841DDEAFA200CEE342 /* UITableView+FDIndexPathHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDIndexPathHeightCache.m"; sourceTree = "<group>"; };
 		1FAA73851DDEAFA200CEE342 /* UITableView+FDKeyedHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDKeyedHeightCache.h"; sourceTree = "<group>"; };
@@ -1898,8 +1891,6 @@
 		1FAA73881DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCell.m"; sourceTree = "<group>"; };
 		1FAA73891DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCellDebug.h"; sourceTree = "<group>"; };
 		1FAA738A1DDEAFA200CEE342 /* UITableView+FDTemplateLayoutCellDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCellDebug.m"; sourceTree = "<group>"; };
-		1FAA738F1DDECB7400CEE342 /* JMPicContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPicContainerView.h; sourceTree = "<group>"; };
-		1FAA73901DDECB7400CEE342 /* JMPicContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPicContainerView.m; sourceTree = "<group>"; };
 		1FB4287A1DAF4ACD002F98B4 /* XLMM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XLMM.entitlements; sourceTree = "<group>"; };
 		1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		1FB4287D1DAF4FF9002F98B4 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
@@ -4836,12 +4827,6 @@
 		1F5877401DB8A60D00949302 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1FAA737C1DDEAA8800CEE342 /* JMPushingDayController.h */,
-				1FAA737D1DDEAA8800CEE342 /* JMPushingDayController.m */,
-				1FAA737F1DDEAC4D00CEE342 /* JMPushingDayCell.h */,
-				1FAA73801DDEAC4D00CEE342 /* JMPushingDayCell.m */,
-				1FAA738F1DDECB7400CEE342 /* JMPicContainerView.h */,
-				1FAA73901DDECB7400CEE342 /* JMPicContainerView.m */,
 				1F5877411DB8A60D00949302 /* JMPushingCategoryController.h */,
 				1F5877421DB8A60D00949302 /* JMPushingCategoryController.m */,
 				1F5877431DB8A60D00949302 /* JMPushingDaysController.h */,
@@ -6667,7 +6652,6 @@
 				1F5877B01DB8A60D00949302 /* JMPushingCategoryController.m in Sources */,
 				183073D51C97D17800B7665E /* FSLineChart.m in Sources */,
 				1F5877A91DB8A60D00949302 /* JMMaMaSelfTeamModel.m in Sources */,
-				1FAA73911DDECB7400CEE342 /* JMPicContainerView.m in Sources */,
 				1F4C9E941D9912600089CE74 /* UdeskAgentMenuViewController.m in Sources */,
 				1F498C6E1D2772D0007E77FC /* JMUserAddressModel.m in Sources */,
 				1F4C9EB61D9912600089CE74 /* UdeskHpple.m in Sources */,
@@ -6875,7 +6859,6 @@
 				1F6B79D81DD9BF95009AB446 /* JMClassPopView.m in Sources */,
 				1F6B7A1A1DD9C224009AB446 /* Tool_FMDBGetDatabase.m in Sources */,
 				1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */,
-				1FAA737E1DDEAA8800CEE342 /* JMPushingDayController.m in Sources */,
 				1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */,
 				1F6B7A191DD9C224009AB446 /* JMStoreManager.m in Sources */,
 				1F498C281D2772D0007E77FC /* AddAdressViewController.m in Sources */,
@@ -6949,7 +6932,6 @@
 				1F2F9E7D1D5C1C3D00E3A68B /* JMGoodsSafeGuardCell.m in Sources */,
 				3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */,
 				1F5877EE1DB8A7AF00949302 /* JMLevelinfoModel.m in Sources */,
-				1FAA73811DDEAC4D00CEE342 /* JMPushingDayCell.m in Sources */,
 				1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */,
 				1F498C4F1D2772D0007E77FC /* JMGoodsListCell.m in Sources */,
 				1FF3FA1D1D40800400FABBCE /* JMPurchaseController.m in Sources */,
@@ -7176,6 +7158,7 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 					"$(PROJECT_DIR)/XLMM/Venders/AliPaySDK",
+					"$(PROJECT_DIR)/XLMM/Venders/YYPhotoBrowseView/YYWebImage/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";
@@ -7270,6 +7253,7 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.1.1",
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 					"$(PROJECT_DIR)/XLMM/Venders/AliPaySDK",
+					"$(PROJECT_DIR)/XLMM/Venders/YYPhotoBrowseView/YYWebImage/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";

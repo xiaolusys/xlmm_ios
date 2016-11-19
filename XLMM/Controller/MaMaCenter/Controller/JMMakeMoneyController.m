@@ -27,7 +27,6 @@
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
 #import "JMPushingDaysController.h"
-#import "JMPushingDayController.h"
 
 
 
@@ -678,13 +677,11 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-//        NSString *urlString = [NSString stringWithFormat:@"%@/mall/?mm_linkid=%@",Root_URL,self.centerModel.mama_id];
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        [dict setValue:urlString forKey:@"web_url"];
-//        [dict setValue:@"mamaShop" forKey:@"type_title"];
-//        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
-        JMPushingDayController *pushDayVC = [[JMPushingDayController alloc] init];
-        [self.navigationController pushViewController:pushDayVC animated:YES];
+        NSString *urlString = [NSString stringWithFormat:@"%@/mall/?mm_linkid=%@",Root_URL,self.centerModel.mama_id];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:urlString forKey:@"web_url"];
+        [dict setValue:@"mamaShop" forKey:@"type_title"];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
     }else if (index == 104) {
         if (self.block) {
             self.block(self.currentTurnsLabel);

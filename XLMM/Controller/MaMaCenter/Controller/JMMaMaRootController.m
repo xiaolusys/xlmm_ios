@@ -369,10 +369,6 @@ static NSString *currentTurnsNumberString;
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
     if (page == 1) {
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        dict[@"web_url"] = self.mamaWebDict[@"boutique"];
-//        self.webVC.webDiction = dict;
-        
     } else if (page == 2 && _isActiveClick) {
         //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
@@ -386,10 +382,6 @@ static NSString *currentTurnsNumberString;
     CGFloat pageWidth = scrollView.frame.size.width;
     NSInteger page = scrollView.contentOffset.x / pageWidth;
     if (page == 1) {
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//        dict[@"web_url"] = self.mamaWebDict[@"boutique"];
-//        self.webVC.webDiction = dict;
-//        self.fineClassVC.urlString = self.mamaWebDict[@"boutique"];
     } else if (page == 2 && _isActiveClick) {
         //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
