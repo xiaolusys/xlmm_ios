@@ -189,17 +189,15 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.dataSource.count == 0) {
+        return ;
+    }
     JMStoreUpModel *model = self.dataSource[indexPath.row];
-    
     NSDictionary *modelProductDic = model.modelproduct;
-    
 //    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
-    
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     detailVC.goodsID = modelProductDic[@"id"];
     [self.navigationController pushViewController:detailVC animated:YES];
-    
-
     
 //    [dictionDic setValue:modelProductDic[@"web_url"] forKey:@"web_url"];
 //    WebViewController *webView = [[WebViewController alloc] init];

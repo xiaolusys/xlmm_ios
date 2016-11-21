@@ -305,11 +305,8 @@
     PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
     SharePicModel *picModel = self.dataArr[indexPath.section];
     NSInteger countNum = picModel.pic_arry.count;
-    if (countNum < 9) {
-        [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:4];
-    }else {
-        [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:(countNum - 1)];
-    }
+    NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
+    [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:codeNum RowIndex:indexPath.row];
     return cell;
 }
 
@@ -620,7 +617,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [[JMGlobal global] clearCacheWithSDImageCache:^(NSString *sdImageCacheString) {
+        
+    }];
+    // Dispose of any resources that can be recreated.
+}
 
 
 
