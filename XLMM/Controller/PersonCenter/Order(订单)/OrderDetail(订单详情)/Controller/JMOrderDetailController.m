@@ -408,7 +408,7 @@
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
         // 修改物流  (如果需要判断是否可以更改物流在这里弹出一个提示)
-        [self createClassPopView:@"提示" Message:@"非服装类商品是由供应商直接发货，只能尽量满足您选择的快递公司，如需确认能否满足您的快递需求，请联系客服。" Index:0];
+        [self createClassPopView:@"提示" Message:orderDetailModifyLogistics Index:0];
     }
 }
 - (void)createChangeLogisticsView {  // Index == 0  修改物流
@@ -523,7 +523,7 @@
         NSInteger statusCode = [self.orderDetailModel.status integerValue];
         BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.finish_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
-            [self createClassPopView:@"提示" Message:@"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。" Index:3];
+            [self createClassPopView:@"提示" Message:orderDetailAlreadyOrder Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
             if (_isPopChoiseRefundWay) {
                 self.refundVC.ordergoodsModel = model;
@@ -531,7 +531,7 @@
                 [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
                 }];
             }else {
-                [self createClassPopView:@"小鹿退款说明" Message:@"退款立即退到小鹿零钱账户，该退款可以用于重新购买商品或者提现。" Index:1];
+                [self createClassPopView:@"小鹿退款说明" Message:orderDetailReturnMoney Index:1];
             }
         }
     }else if (button.tag == 101) {
@@ -571,12 +571,12 @@
  */
 - (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic {
     _choiseRefundDict = refundDic;
-    [self createClassPopView:@"小鹿退款说明" Message:@"退款立即退到小鹿零钱账户，该退款可以用于重新购买商品或者提现。" Index:1];
+    [self createClassPopView:@"小鹿退款说明" Message:orderDetailReturnMoney Index:1];
 }
 #pragma mark 订单倒计时点击时间
 - (void)composeOutDateView:(JMOrderPayOutdateView *)outDateView Index:(NSInteger)index {
     if (index == 100) { // 取消支付
-        [self createClassPopView:@"小鹿美美" Message:@"取消的产品可能会被人抢走哦~\n要取消吗？" Index:2];
+        [self createClassPopView:@"小鹿美美" Message:orderDetailCancelOrder Index:2];
     }else if (index == 101) { // 继续支付
         self.refundVC.continuePayDic = _refundDic;
         [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
@@ -587,7 +587,7 @@
             [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
             }];
         }else {
-           [self createClassPopView:@"分享提示" Message:@"红包数量不足,分享失败。如有疑问,请咨询小鹿客服哦~!" Index:4];
+           [self createClassPopView:@"分享提示" Message:redPageShareNotEnough Index:4];
         }
     }else {  // 查看拼团进展
         NSDictionary *diction = [NSMutableDictionary dictionary];
