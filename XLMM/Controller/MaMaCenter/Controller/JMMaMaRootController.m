@@ -17,10 +17,17 @@
 #import "JMHomeActiveModel.h"
 #import "Udesk.h"
 #import "JMStoreManager.h"
+#import "JMFineClassController.h"
+#import "WebViewController.h"
+#import <RESideMenu.h>
+#import "NewLeftViewController.h"
+#import "JMHomeRootController.h"
+
+
 
 static NSString *currentTurnsNumberString;
 
-@interface JMMaMaRootController () {
+@interface JMMaMaRootController () <RESideMenuDelegate> {
     NSInteger _indexCode;
     BOOL _isActiveClick;
     NSArray *_titleArr;
@@ -37,6 +44,8 @@ static NSString *currentTurnsNumberString;
 @property (nonatomic, strong) JMMakeMoneyController *makeMoneyVC;
 @property (nonatomic, strong) JMSocialActivityController *activityVC;
 @property (nonatomic, strong) JMMineController *mineVC;
+@property (nonatomic, strong) JMFineClassController *fineClassVC;
+@property (nonatomic, strong) WebViewController *webVC;
 /**
  *  MaMa客服入口
  */
@@ -214,7 +223,9 @@ static NSString *currentTurnsNumberString;
     self.mamaWebDict[@"notice"] = extraDict[@"notice"];                 // --> 小鹿妈妈消息
     self.mamaWebDict[@"forum"] = extraDict[@"forum"];                   // --> 论坛入口
     self.mamaWebDict[@"team_explain"] = extraDict[@"team_explain"];     // --> 团队说明
+    self.mamaWebDict[@"boutique"] = extraDict[@"boutique"];             // --> 精品汇
     _isActiveClick = YES;                                               // --> 如果想要点击论坛才开始加载需要设置这个属性,否则就不用设置
+    self.fineClassVC.urlString = extraDict[@"boutique"];
     self.makeMoneyVC.makeMoneyDic = self.mamaWebDict;
     self.mineVC.webDict = self.mamaWebDict;
 //    self.activityVC.urlString = extraDict[@"forum"];
@@ -265,7 +276,7 @@ static NSString *currentTurnsNumberString;
         if (code == 0) {
             [JMStoreManager removeFileByFileName:@"qrCodeUrlString.txt"];
             qrCodeUrlString = responseObject[@"qrcode_link"];
-            [JMStoreManager saveDataFromArray:@"qrCodeUrlString.txt" WithString:qrCodeUrlString];
+            [JMStoreManager saveDataFromString:@"qrCodeUrlString.txt" WithString:qrCodeUrlString];
         }else {
         }
     } WithFail:^(NSError *error) {
@@ -304,7 +315,7 @@ static NSString *currentTurnsNumberString;
 }
 #pragma mark 创建segment(tabBar)
 - (void)createSegmentView {
-    _titleArr = @[@"我要赚钱",@"社交活动",@"我的"];
+    _titleArr = @[@"我要赚钱",@"精品汇",@"社交活动",@"我的"];
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 50, SCREENWIDTH, 50)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
     self.segmentedControl.sectionTitles = _titleArr;
@@ -320,7 +331,7 @@ static NSString *currentTurnsNumberString;
     self.scrollView.backgroundColor = [UIColor lineGrayColor];
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.contentSize = CGSizeMake(SCREENWIDTH * 3, 0);
+    self.scrollView.contentSize = CGSizeMake(SCREENWIDTH * 4, 0);
     self.scrollView.delegate = self;
 //    [self.scrollView scrollRectToVisible:CGRectMake(0, 64, SCREENWIDTH, 0) animated:NO];
     [self.view addSubview:self.scrollView];
@@ -335,21 +346,31 @@ static NSString *currentTurnsNumberString;
         currentLabel.hidden = YES;
     };
     
+    self.fineClassVC = [[JMFineClassController alloc] init];
+    self.fineClassVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
+    [self addChildViewController:self.fineClassVC];
+    [self.scrollView addSubview:self.fineClassVC.view];
+    self.fineClassVC.isShowNavBar = NO;
+    self.fineClassVC.isShowRightShareBtn = NO;
+    self.fineClassVC.statusBarView.hidden = YES;
+    
+    
     self.activityVC = [[JMSocialActivityController alloc] init];
-    self.activityVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.activityVC.view.frame = CGRectMake(SCREENWIDTH * 2, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.activityVC];
     [self.scrollView addSubview:self.activityVC.view];
     
     self.mineVC = [[JMMineController alloc] init];
-    self.mineVC.view.frame = CGRectMake(SCREENWIDTH * 2, 0, SCREENWIDTH, SCREENHEIGHT);
+    self.mineVC.view.frame = CGRectMake(SCREENWIDTH * 3, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.mineVC];
     [self.scrollView addSubview:self.mineVC.view];
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSInteger page = segmentedControl.selectedSegmentIndex;
     // --> 如果想要点击论坛才开始加载需要打开这个注释
-    if (page == 1 && _isActiveClick) {
-//        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
+    if (page == 1) {
+    } else if (page == 2 && _isActiveClick) {
+        //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
     }else { }
@@ -360,7 +381,9 @@ static NSString *currentTurnsNumberString;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat pageWidth = scrollView.frame.size.width;
     NSInteger page = scrollView.contentOffset.x / pageWidth;
-    if (page == 1 && _isActiveClick) {
+    if (page == 1) {
+    } else if (page == 2 && _isActiveClick) {
+        //        NSString *urlString = @"http://192.168.1.8:8888/accounts/xlmm/login/";
         self.activityVC.urlString = self.mamaWebDict[@"forum"];
         _isActiveClick = NO;
     }else { }
@@ -411,6 +434,7 @@ static NSString *currentTurnsNumberString;
         CGFloat x = 10;
         CGFloat w = SCREENWIDTH;
         _msgBottomView = [[UIView alloc] initWithFrame:CGRectMake(x, y, w - 50, h)];
+        _msgBottomView.userInteractionEnabled = NO;
         _msgBottomView.layer.cornerRadius = 20;
         _msgBottomView.layer.masksToBounds = YES;
         //    [self.navigationController.view insertSubview:view belowSubview:self.navigationController.navigationBar];
@@ -440,11 +464,12 @@ static NSString *currentTurnsNumberString;
 }
 #pragma mark - 小鹿客服注册个人信息
 - (void)customUserInfo {
-    if (self.userInfoDic.count == 0) {
+    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
+    if (userInfo == nil) {
         return ;
     }
-    NSString *nick_name = self.userInfoDic[@"nick"];
-    NSString *sdk_token = self.userInfoDic[@"user_id"];
+    NSString *nick_name = userInfo[@"nick"];
+    NSString *sdk_token = userInfo[@"user_id"];
     //    NSString *cellphone = self.userInfoDic[@"mobile"];
     NSDictionary *parameters = @{
                                  @"user": @{

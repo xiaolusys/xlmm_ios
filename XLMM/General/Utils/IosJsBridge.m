@@ -11,8 +11,6 @@
 #import "JumpUtils.h"
 #import "JMLogInViewController.h"
 #import "JMShareViewController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "WebViewController.h"
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
@@ -25,6 +23,7 @@
 #define kAccount @"so.xiaolu.m.xiaolumeimei"
 
 @implementation IosJsBridge
+
 + (void)dispatchJsBridgeFunc:(UIViewController *)vc name:(NSString *)name para:(NSString*)para{
 //    [[NSNotificationCenter defaultCenter] addObserver:vc selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:vc selector:@selector(popview) name:@"CancleZhifu" object:nil];
@@ -67,7 +66,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
     [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:vc];
     
-
+    
 //    [Pingpp createPayment:data appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
 //        
 //        
@@ -105,7 +104,6 @@
 + (void) universeShare:(UIViewController *)vc para:(NSDictionary *)data {
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     ((WebViewController *)vc).shareView = shareView;
-    
 //    if([((WebViewController *)vc).webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
 //    ((WebViewController *)vc).share_model.share_type = [data objectForKey:@"share_type"];
 //    
@@ -116,23 +114,18 @@
 //    ((WebViewController *)vc).share_model.share_link = [data objectForKey:@"link"];
 //
 //    }
-//    shareView.model = ((WebViewController *)vc).share_model;
-    
-    shareView.model = [[JMShareModel alloc] init];
+    shareView.model = ((WebViewController *)vc).share_model;
     shareView.model.share_type = [data objectForKey:@"share_type"];
-    
     shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
     shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-    
     shareView.model.title = [data objectForKey:@"share_title"]; //标题
     shareView.model.share_link = [data objectForKey:@"link"];
+    shareView.model = shareView.model;
     
-    NSLog(@"%@ %@", shareView.model, data);
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = ((WebViewController *)vc);
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = shareView.view;
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:shareView WithBlock:^(UIView *maskView) {
+    }];
+
+    
 }
 
 + (NSString *)getMobileSNCode {

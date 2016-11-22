@@ -30,11 +30,13 @@
     [self createWebView];
     
 }
+
 - (void)setUrlString:(NSString *)urlString {
     _urlString = urlString;
     if ([NSString isStringEmpty:urlString]) {
         [MBProgressHUD showError:@"加载失败~"];
     }else {
+        [[JMGlobal global] showWaitLoadingInView:self.webView];
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
     }
     
@@ -51,15 +53,17 @@
 
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
+//    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [MBProgressHUD hideHUDForView:self.view];
+//    [MBProgressHUD hideHUDForView:self.view];
+    [[JMGlobal global] hideWaitLoading];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [MBProgressHUD hideHUDForView:self.view];
-    [MBProgressHUD showError:@"加载失败~"];
+//    [MBProgressHUD hideHUDForView:self.view];
+//    [MBProgressHUD showError:@"加载失败~"];
 //    [self backClickAction];
+    [[JMGlobal global] hideWaitLoading];
 }
 - (void)backClickAction {
     [self.navigationController popViewControllerAnimated:YES];
@@ -96,7 +100,7 @@
 
 
 - (void)viewDidDisappear:(BOOL)animated {
-    self.webView = nil;
+//    self.webView = nil;
 }
 
 

@@ -9,14 +9,12 @@
 #import "JMShareViewController.h"
 #import "JMSelecterButton.h"
 #import "JMShareButtonView.h"
-#import "JMShareView.h"
 #import "JMShareModel.h"
 #import "UMSocial.h"
 #import "WXApi.h"
 #import "UUID.h"
 #import "SSKeychain.h"
 #import "SendMessageToWeibo.h"
-#import "JMPopView.h"
 
 @interface JMShareViewController ()<JMShareButtonViewDelegate>
 
@@ -71,7 +69,7 @@
     
     JMSelecterButton *cancelButton = [[JMSelecterButton alloc] init];
     self.canelButton = cancelButton;
-    [self.canelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"取消" TitleFont:13. CornerRadius:15];
+    [self.canelButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"取消" TitleFont:15. CornerRadius:20];
     self.canelButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [self.canelButton addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.canelButton];
@@ -79,14 +77,14 @@
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
         make.centerX.equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH - 20);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(180);
     }];
     
     [self.canelButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.shareButton.mas_bottom).offset(10);
+        make.top.equalTo(self.shareButton.mas_bottom).offset(15);
         make.centerX.equalTo(self.shareButton.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH - 20);
+        make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(40);
     }];
     
@@ -142,10 +140,10 @@
     _content = _model.desc;
     _imageUrlString = _model.share_img;
     _url = _model.share_link;
-    _kuaizhaoLink = _url;
+//    _kuaizhaoLink = _url;
 //    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
     _imageData = [UIImage imagewithURLString:_imageUrlString];
-    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
+//    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
     _titleUrlString = [NSString stringWithFormat:@"%@",_content];
     
@@ -156,7 +154,7 @@
     NSLog(@"composeShareBtn Index=%ld", index);
     if (index == 100) {
         //微信分享
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return ;
         }
@@ -179,7 +177,7 @@
         }
         [self cancelBtnClick:nil];
     }else if (index == 101) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }
@@ -200,7 +198,7 @@
             [self cancelBtnClick:nil];
         }
     }else if (index == 102) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }
@@ -212,7 +210,7 @@
         
         [self cancelBtnClick:nil];
     }else if (index == 103) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }
@@ -225,7 +223,7 @@
         [self cancelBtnClick:nil];
 
     }else if (index == 104) {
-        if (_url == nil) {
+        if ([NSString isStringEmpty:_url]) {
             [self createPrompt];
             return;
         }

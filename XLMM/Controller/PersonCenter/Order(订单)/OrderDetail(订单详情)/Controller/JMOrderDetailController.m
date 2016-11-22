@@ -20,10 +20,7 @@
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMOrderPayOutdateView.h"
-#import "Pingpp.h"
 #import "JMPopLogistcsController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "JMEditAddressController.h"
 #import "JMOrderDetailSectionView.h"
 #import "JMRefundController.h"
@@ -36,10 +33,11 @@
 #import "WebViewController.h"
 #import "JMClassPopView.h"
 #import "JMPopViewAnimationDrop.h"
+#import "JMPayment.h"
+#import "JMGoodsCountTime.h"
 
-#define kUrlScheme @"wx25fcb32689872499"
 
-@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMShareViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
+@interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
     NSMutableArray *_refundStatusArray;        //退款状态
     NSMutableArray *_refundStatusDisplayArray; // 退款状态描述
     NSMutableArray *_orderStatusDisplay;
@@ -142,10 +140,23 @@
     }
     return _dataSource;
 }
-
+- (JMShareViewController *)shareView {
+    if (_shareView == nil) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
+- (JMPopLogistcsController *)showViewVC {
+    if (_showViewVC == nil) {
+        _showViewVC = [[JMPopLogistcsController alloc] init];
+        _showViewVC.delegate = self;
+    }
+    return _showViewVC;
+}
 - (JMRefundController *)refundVC {
     if (_refundVC == nil) {
         _refundVC = [[JMRefundController alloc] init];
+        self.refundVC.delegate = self;
     }
     return _refundVC;
 }
@@ -155,15 +166,19 @@
     }
     return _orderGoodsDataSource;
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [JMGoodsCountTime initCountDownWithCurrentTime:0];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"订单详情" selecotr:@selector(popToview)];
     
     _isTeamBuy = NO;
     
     [self createTableView];
-    [self createBottomView];
     [self createPullHeaderRefresh];
     [self createTableHeaderView];
     [self createTableFooterView];
@@ -186,7 +201,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [weakSelf loadDataSource];
     }];
@@ -199,18 +214,33 @@
 }
 #pragma mark 创建视图
 - (void)createTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 60) style:UITableViewStylePlain];
+    kWeakSelf
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     self.tableView = tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;
-}
-- (void)createBottomView {
-    JMOrderPayOutdateView *outDateView = [[JMOrderPayOutdateView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 60, SCREENWIDTH, 60)];
+    
+    JMOrderPayOutdateView *outDateView = [[JMOrderPayOutdateView alloc] init];
     [self.view addSubview:outDateView];
     self.outDateView = outDateView;
     self.outDateView.delegate = self;
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.view);
+        make.top.equalTo(weakSelf.view).offset(64);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.bottom.equalTo(weakSelf.outDateView.mas_top);
+    }];
+    [self.outDateView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.equalTo(weakSelf.view);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(60));
+    }];
+    
+    
+    
 }
 - (void)createTableHeaderView {
     CGFloat _timeLineHeight = 0.;
@@ -225,7 +255,7 @@
     self.tableView.tableHeaderView = self.orderDetailHeaderView;
 }
 - (void)createTableFooterView {
-    JMOrderDetailFooterView *orderDetailFooterView = [JMOrderDetailFooterView enterFooterView];
+    JMOrderDetailFooterView *orderDetailFooterView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
     self.orderDetailFooterView = orderDetailFooterView;
     self.tableView.tableFooterView = self.orderDetailFooterView;
 }
@@ -251,11 +281,12 @@
     self.shareModel.title = [shareDict objectForKey:@"title"]; //标题
     self.shareModel.share_link = [shareDict objectForKey:@"share_link"];
     redPageNumber = [shareDict[@"share_times_limit"] integerValue];
+    self.shareView.model = self.shareModel;
 }
 #pragma mark 请求数据
 - (void)loadDataSource {
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//    params[@"device"] = @"app";
+//    params[@"device"] = @"app";  http://m.xiaolumeimei.com/rest/v2/trades/订单商品id?device=app
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.orderGoodsDataSource removeAllObjects];
@@ -304,6 +335,10 @@
         [_refundStatusArray addObject:goodsDic[@"refund_status"]];
         [_refundStatusDisplayArray addObject:goodsDic[@"refund_status_display"]];
     }
+    // ===== 这里修改物流视图赋值 =====
+    self.showViewVC.goodsID = _addressGoodsID;
+    self.showViewVC.logisticsStr = tid;
+    
     // ===== 订单详情包裹分包数据源模型 =======
     NSArray *packArr = dicJson[@"package_orders"];
     NSLog(@"%@",packArr);
@@ -373,29 +408,16 @@
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
         // 修改物流  (如果需要判断是否可以更改物流在这里弹出一个提示)
-        [self createClassPopView:@"提示" Message:@"非服装类商品是由供应商直接发货，只能尽量满足您选择的快递公司，如需确认能否满足您的快递需求，请联系客服。" Index:0];
+        [self createClassPopView:@"提示" Message:orderDetailModifyLogistics Index:0];
     }
 }
-- (void)createChangeLogisticsView {
-    self.showViewVC = [[JMPopLogistcsController alloc] init];
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    if (self.showViewVC.view == nil) {
-        self.showViewVC = [[JMPopLogistcsController alloc] init];
-    }
-    self.showViewVC.goodsID = _addressGoodsID;
-    self.showViewVC.logisticsStr = tid;
-    self.showViewVC.delegate = self;
-    menu.contentView = self.showViewVC.view;
+- (void)createChangeLogisticsView {  // Index == 0  修改物流
+    [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.showViewVC WithBlock:^(UIView *maskView) {
+    }];
 }
 - (void)ClickLogistics:(JMPopLogistcsController *)click Title:(NSString *)title {
     [self.tableView.mj_header beginRefreshing];
 //    self.orderDetailHeaderView.logisticsStr = title;
-}
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [JMPopView hide];
-    [MBProgressHUD hideHUD];
 }
 #pragma mark UITableViewDelegate,UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -473,7 +495,7 @@
     JMPackAgeModel *packageModel = [[JMPackAgeModel alloc] init];
     packageModel = self.logisticsArr[section];
     NSDictionary *ligisticsDic = packageModel.logistics_company;
-    queryVC.logName = ligisticsDic[@"name"];
+//    queryVC.logName = ligisticsDic[@"name"];
     //    NSDictionary *ligisticsDic = self.orderDetailModel.logistics_company;
     if (ligisticsDic == nil) {
         queryVC.logName = self.orderDetailHeaderView.logisticsStr;
@@ -496,23 +518,20 @@
     NSArray *arr = self.dataSource[section];
     JMOrderGoodsModel *model = arr[row];
     if (button.tag == 100) {
-        self.packageModel = self.logisticsArr[section];
+        self.packageModel = self.logisticsArr.count > 0 ? self.logisticsArr[section] : nil;
 //        NSDictionary *dcit = [self.packageModel mj_keyValues];
         NSInteger statusCode = [self.orderDetailModel.status integerValue];
         BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.finish_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
-            [self createClassPopView:@"提示" Message:@"您的订单已经向工厂订货，暂不支持退款，请您耐心等待，在收货确认签收后申请退货，如有疑问请咨询小鹿美美公众号或客服4008235355。" Index:3];
+            [self createClassPopView:@"提示" Message:orderDetailAlreadyOrder Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
-            if (_isPopChoiseRefundWay == YES) {
-                JMShareView *cover = [JMShareView show];
-                cover.delegate = self;
-                JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260)];
+            if (_isPopChoiseRefundWay) {
                 self.refundVC.ordergoodsModel = model;
                 self.refundVC.refundDic = _refundDic;
-                self.refundVC.delegate = self;
-                menu.contentView = self.refundVC.view;
+                [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
+                }];
             }else {
-                [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
+                [self createClassPopView:@"小鹿退款说明" Message:orderDetailReturnMoney Index:1];
             }
         }
     }else if (button.tag == 101) {
@@ -552,32 +571,23 @@
  */
 - (void)Clickrefund:(JMRefundController *)click OrderGoods:(JMOrderGoodsModel *)goodsModel Refund:(NSDictionary *)refundDic {
     _choiseRefundDict = refundDic;
-    [self createClassPopView:@"小鹿退款说明" Message:@"如果您选择支付宝或微信退款，退款将在3-5天返还您的帐户，具体取决于支付宝或微信处理时间。如果您选择小鹿急速退款，款项将快速返回至小鹿账户，该退款可以用于购买，可以提现。" Index:1];
+    [self createClassPopView:@"小鹿退款说明" Message:orderDetailReturnMoney Index:1];
 }
 #pragma mark 订单倒计时点击时间
 - (void)composeOutDateView:(JMOrderPayOutdateView *)outDateView Index:(NSInteger)index {
     if (index == 100) { // 取消支付
-        [self createClassPopView:@"小鹿美美" Message:@"取消的产品可能会被人抢走哦~\n要取消吗？" Index:2];
+        [self createClassPopView:@"小鹿美美" Message:orderDetailCancelOrder Index:2];
     }else if (index == 101) { // 继续支付
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260)];
         self.refundVC.continuePayDic = _refundDic;
-        self.refundVC.delegate = self;
-        menu.contentView = self.refundVC.view;
+        [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 260) ViewController:self.refundVC WithBlock:^(UIView *maskView) {
+        }];
     }else if (index == 102) {
         //分享红包
         if (redPageNumber > 0) {
-            JMShareViewController *shareView = [[JMShareViewController alloc] init];
-            self.shareView = shareView;
-            self.shareView.model = self.shareModel;
-            JMShareView *cover = [JMShareView show];
-            cover.delegate = self;
-            //弹出视图
-            JMPopView *shareMenu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-            shareMenu.contentView = self.shareView.view;
+            [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+            }];
         }else {
-           [self createClassPopView:@"分享提示" Message:@"红包数量不足,分享失败。如有疑问,请咨询小鹿客服哦~!" Index:4];
+           [self createClassPopView:@"分享提示" Message:redPageShareNotEnough Index:4];
         }
     }else {  // 查看拼团进展
         NSDictionary *diction = [NSMutableDictionary dictionary];
@@ -607,44 +617,21 @@
     }
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject)return;
-        
-        NSError *parseError = nil;
-        
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code != 0) {
             [MBProgressHUD showError:responseObject[@"info"]];
         }else {
             [MBProgressHUD hideHUD];
             NSDictionary *dic = responseObject[@"charge"];
-            
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-            NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            
-            
-            
-            JMOrderDetailController * __weak weakSelf = self;
+//            JMOrderDetailController * __weak weakSelf = self;
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                    NSLog(@"completion block: %@", result);
-                    
-                    if (error == nil) {
-                        [MBProgressHUD showSuccess:@"支付成功"];
-                        [MobClick event:@"buy_succ"];
-                        [self pushShareVC];
-                    } else {
-                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                            [MBProgressHUD showError:@"用户取消支付"];
-                            [MobClick event:@"buy_cancel"];
-                            [self popview];
-                        } else {
-                            [MBProgressHUD showError:@"支付失败"];
-                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-                            [MobClick event:@"buy_fail" attributes:temp_dict];
-                            NSLog(@"%@",error);
-                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
-                        }
-                    }
+                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:dic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                    NSLog(@"%ld",error.errorStatus);
+                    if (error.errorStatus == payMentErrorStatusSuccess) {
+                        [self paySuccessful];
+                    }else if(error.errorStatus == payMentErrorStatusFail) { // 取消
+                        [self popview];
+                    }else { }
                 }];
             });
             
@@ -659,21 +646,6 @@
     JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
     payShareVC.ordNum = tid;
     [self.navigationController pushViewController:payShareVC animated:YES];
-}
-#pragma mark --NSURLConnectionDataDelegate--
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-}
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    __unused NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSString *charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    JMOrderDetailController * __weak weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-            if (error == nil) {
-            } else {
-            }
-        }];
-    });
 }
 - (void)popToview {
     [self.navigationController popViewControllerAnimated:YES];
@@ -811,13 +783,21 @@
 }
 #pragma mark 取消待支付订单
 - (void)deletePayOrder {
-    NSMutableString *string = [[NSMutableString alloc] initWithString:self.urlString];
-    NSURL *url = [NSURL URLWithString:string];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"DELETE"];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    [connection start];
-    [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+    [MBProgressHUD showLoading:@""];
+    [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject)return;
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [MBProgressHUD hideHUD];
+            [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"订单取消失败~!"];
+    } Progress:^(float progress) {
+        
+    }];
 }
 
 
@@ -857,7 +837,27 @@
 
 
 
-
+//                [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                    NSLog(@"completion block: %@", result);
+//
+//                    if (error == nil) {
+//                        [MBProgressHUD showSuccess:@"支付成功"];
+//                        [MobClick event:@"buy_succ"];
+//                        [self pushShareVC];
+//                    } else {
+//                        if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                            [MBProgressHUD showError:@"用户取消支付"];
+//                            [MobClick event:@"buy_cancel"];
+//                            [self popview];
+//                        } else {
+//                            [MBProgressHUD showError:@"支付失败"];
+//                            NSDictionary *temp_dict = @{@"return" : @"fail", @"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                            [MobClick event:@"buy_fail" attributes:temp_dict];
+//                            NSLog(@"%@",error);
+//                            [self performSelector:@selector(popToview) withObject:nil afterDelay:1.0];
+//                        }
+//                    }
+//                }];
 
 
 

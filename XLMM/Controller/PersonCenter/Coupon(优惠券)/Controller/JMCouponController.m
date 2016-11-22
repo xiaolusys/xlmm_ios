@@ -46,12 +46,13 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick:)];
     self.view.backgroundColor = [UIColor countLabelColor];
-    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
+//    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
     _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"精品券",@"已过期",@"已使用", nil];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
     [self loadCouponData];
     [self createSegmentView];
     [self createSegement];
+    [[JMGlobal global] showWaitLoadingInView:self.view];
 }
 
 - (void)loadCouponData {
@@ -97,7 +98,8 @@
     BOOL isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
     if (isCreateSegment == YES) {
         self.segmentedControl.sectionTitles = _titleArr;
-        [MBProgressHUD hideHUD];
+//        [MBProgressHUD hideHUD];
+        [[JMGlobal global] hideWaitLoading];
     }else{
         
     }

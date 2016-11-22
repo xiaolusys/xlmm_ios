@@ -40,15 +40,11 @@
     NSString *_orderRecord;             // 订单记录
     NSString *_earningsRecord;          // 收益记录
     NSString *_historyEarningsRecord;   // 历史收益记录
+    NSString *_myInvitation;            // 邀请开店
+    NSString *_boutiqueString;          // 精品汇
 }
 
 @property (nonatomic, strong)UITableView *tableView;
-/**
- *  字典中存储在webView中使用的值
- */
-@property (nonatomic,strong) NSMutableDictionary *diction;
-
-@property (nonatomic, copy) NSString *myInvitation;
 
 @property (nonatomic, strong) UILabel *addEarningLabel;
 @property (nonatomic, strong) UILabel *addWeekEarningLabel;
@@ -112,12 +108,6 @@
     }
     return _titlesArray;
 }
-- (NSMutableDictionary *)diction {
-    if (!_diction) {
-        _diction = [NSMutableDictionary dictionary];
-    }
-    return _diction;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.visitorDate = [NSNumber numberWithInt:0];
@@ -145,7 +135,8 @@
 }
 - (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
     _makeMoneyDic = makeMoneyDic;
-    self.myInvitation = makeMoneyDic[@"invite"];
+    _myInvitation = makeMoneyDic[@"invite"];
+    _boutiqueString = makeMoneyDic[@"boutique"];
 }
 - (void)setCenterModel:(JMMaMaCenterModel *)centerModel {
     _centerModel = centerModel;
@@ -656,13 +647,10 @@
 }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index { }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
-    WebViewController *message = [[WebViewController alloc] init];
-    [self.diction setValue:self.makeMoneyDic[@"notice"] forKey:@"web_url"];
-    [self.diction setValue:@"MaMaMessage" forKey:@"type_title"];
-    message.webDiction = self.diction;//[NSMutableDictionary dictionaryWithDictionary:_diction];
-    message.isShowNavBar = true;
-    message.isShowRightShareBtn = false;
-    [self.navigationController pushViewController:message animated:YES];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:self.makeMoneyDic[@"notice"] forKey:@"web_url"];
+    [dict setValue:@"MaMaMessage" forKey:@"type_title"];
+    [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO Title:@"消息通知"];
 }
 #pragma mark 点击事件处理
 /**
@@ -671,7 +659,7 @@
  *  102 --> 马上执行
  *  103 --> 分享店铺
  *  104 --> 每日推送
- *  105 --> 选品佣金
+ *  105 --> 精品汇
  *  106 --> 邀请开店
  *  107 --> 续费按钮
  *  108 --> 折线图 -- > 访客
@@ -689,15 +677,11 @@
         JMRewardsController *rewardsVC = [[JMRewardsController alloc] init];
         [self.navigationController pushViewController:rewardsVC animated:YES];
     }else if (index == 103) {
-        NSString *urlString = [NSString stringWithFormat:@"http://m.xiaolumeimei.com/mall/?mm_linkid=%@",self.centerModel.mama_id];
-        WebViewController *webVC = [[WebViewController alloc] init];
+        NSString *urlString = [NSString stringWithFormat:@"%@/mall/?mm_linkid=%@",Root_URL,self.centerModel.mama_id];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:urlString forKey:@"web_url"];
         [dict setValue:@"mamaShop" forKey:@"type_title"];
-        webVC.webDiction = dict;
-        webVC.isShowNavBar = true;
-        webVC.isShowRightShareBtn = true;
-        [self.navigationController pushViewController:webVC animated:YES];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
     }else if (index == 104) {
         if (self.block) {
             self.block(self.currentTurnsLabel);
@@ -707,19 +691,20 @@
     }else if (index == 105) {
         ProductSelectionListViewController *product = [[ProductSelectionListViewController alloc] init];
         [self.navigationController pushViewController:product animated:YES];
+//        if ([NSString isStringEmpty:_boutiqueString]) return;
+//        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//        [dict setValue:_boutiqueString forKey:@"web_url"];
+//        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:NO Title:@"精品汇"];
     }else if (index == 106) {
-        if ([NSString isStringEmpty:self.myInvitation]) return;
-        WebViewController *activity = [[WebViewController alloc] init];
+        if ([NSString isStringEmpty:_myInvitation]) return;
         NSString *active = @"myInvite";
         NSString *titleName = @"我的邀请";
-        [self.diction setValue:@38 forKey:@"activity_id"];
-        [self.diction setValue:self.myInvitation forKey:@"web_url"];
-        [self.diction setValue:active forKey:@"type_title"];
-        [self.diction setValue:titleName forKey:@"name_title"];
-        activity.webDiction = _diction;
-        activity.isShowNavBar = true;
-        activity.isShowRightShareBtn = true;
-        [self.navigationController pushViewController:activity animated:YES];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:@38 forKey:@"activity_id"];
+        [dict setValue:_myInvitation forKey:@"web_url"];
+        [dict setValue:active forKey:@"type_title"];
+        [dict setValue:titleName forKey:@"name_title"];
+        [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
     }else if (index == 107) {
         JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
         renewVC.cashValue = _carryValue;
@@ -741,6 +726,17 @@
     
     
 }
+- (void)pushWebView:(NSMutableDictionary *)dict ShowNavBar:(BOOL)isShowNavBar ShowRightShareBar:(BOOL)isShowRightShareBar Title:(NSString *)title {
+    WebViewController *activity = [[WebViewController alloc] init];
+    if (title != nil) {
+        activity.titleName = title;
+    }
+    activity.webDiction = dict;
+    activity.isShowNavBar = isShowNavBar;
+    activity.isShowRightShareBtn = isShowRightShareBar;
+    [self.navigationController pushViewController:activity animated:YES];
+}
+
 - (void)earning:(NSInteger)index {
     JMMaMaEarningsRankController *earningsRankVC = [[JMMaMaEarningsRankController alloc] init];
     earningsRankVC.selfInfoUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/rank/self_rank",Root_URL];
@@ -782,7 +778,7 @@
     
 }
 
-#pragma mark 活动点击事件(跳转webView)  // http://m.xiaolumeimei.com/mall/activity/exam
+#pragma mark 活动点击事件(跳转webView)  // https://m.xiaolumeimei.com/mall/activity/exam
 - (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
     if(appLink.length == 0){
         WebViewController *huodongVC = [[WebViewController alloc] init];

@@ -42,6 +42,7 @@
 @property (nonatomic, strong)NSMutableArray *currentArr;
 @property (nonatomic, assign)NSInteger cellNum;
 @property (nonatomic, strong) JMPushSaveModel *pushSaveModel;
+@property (nonatomic, strong) SharePicModel *picModel;
 
 @end
 
@@ -49,6 +50,12 @@
     NSTimer *theTimer;
     UIView *bottomView;
     CountdownView *countdowmView;
+}
+- (SharePicModel *)picModel {
+    if (!_picModel) {
+        _picModel = [[SharePicModel alloc] init];
+    }
+    return _picModel;
 }
 - (JMPushSaveModel *)pushSaveModel {
     if (!_pushSaveModel) {
@@ -194,6 +201,7 @@
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
+        [MBProgressHUD hideHUD];
         [MBProgressHUD showError:@"获取信息失败"];
     } Progress:^(float progress) {
     }];
@@ -278,6 +286,7 @@
     }
     [self.picCollectionView reloadData];
     [MBProgressHUD hideHUDForView:self.view];
+
 }
 
 #pragma mark --collection的代理方法
@@ -296,11 +305,8 @@
     PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
     SharePicModel *picModel = self.dataArr[indexPath.section];
     NSInteger countNum = picModel.pic_arry.count;
-    if (countNum < 9) {
-        [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:4];
-    }else {
-        [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:(countNum - 1)];
-    }
+    NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
+    [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:codeNum RowIndex:indexPath.row];
     return cell;
 }
 
@@ -324,6 +330,7 @@
     [self.photoView createScrollView];
     [self.photoView fillData:indexPath.row cellFrame:cell.frame];
     [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
+
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -413,8 +420,10 @@
             [self downLoadImage:picModel.piID];
         }else if (self.currentArr.count > 0){
             [MBProgressHUD hideHUD];
-            [MBProgressHUD showWarning:@"亲~您操作太快啦! ~(>_<)~"];
-            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+//            [MBProgressHUD showWarning:@"亲~您操作太快啦! ~(>_<)~"];
+            [MBProgressHUD showLoading:@"亲~ 慢点! (*^__^*) " ToView:self.view];
+//            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+            [self saveNextimage];
         }else {
             [self.currentArr addObjectsFromArray:picModel.pic_arry];
             //            [self saveNext];
@@ -469,7 +478,7 @@
             UIImage *image = [UIImage imageWithContentsOfFile:file];
             NSData *data = UIImageJPEGRepresentation(image, 0.5);
             UIImage *newImage = [UIImage imageWithData:data];
-            [sharImageArray addObject:newImage];
+            newImage == nil ? : [sharImageArray addObject:newImage];
             [JMStoreManager removeFileByFileName:indexArray[i]];
         }
         
@@ -504,16 +513,18 @@
     if (countNum > 0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_BLOCK_DETACHED, 0), ^{
             NSString *picImageUrl = self.currentArr[0];
-            if ([picImageUrl hasPrefix:@"http://img.xiaolumeimei.com"]) {
+            if ([picImageUrl hasPrefix:Root_URL]) {
                 picImageUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picImageUrl]; // /quality/90
             }else {
             }
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
-    }else { }
+    }else {
+        [MBProgressHUD hideHUDForView:self.view];
+    }
 }
 - (void)alertMessage {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不在提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不再提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.tag = 102;
     [alert show];
 }
@@ -525,13 +536,18 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
         }else {
-            [self.currentArr removeObjectAtIndex:0];
-            [self saveNextimage];
+            if (self.currentArr.count != 0) {
+                [self.currentArr removeObjectAtIndex:0];
+                [self saveNextimage];
+            }
         }
     }else {
         //        [sharImageArray addObject:image];
-        [self.currentArr removeObjectAtIndex:0];
-        [self saveNextimage];
+        if (self.currentArr.count != 0) {
+            [self.currentArr removeObjectAtIndex:0];
+            [self saveNextimage];
+        }
+        
     }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -601,7 +617,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [[JMGlobal global] clearCacheWithSDImageCache:^(NSString *sdImageCacheString) {
+        
+    }];
+    // Dispose of any resources that can be recreated.
+}
 
 
 

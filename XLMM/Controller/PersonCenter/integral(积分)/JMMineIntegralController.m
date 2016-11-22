@@ -47,6 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"我的积分" selecotr:@selector(backBtnClicked:)];
     
     [self createTableView];
@@ -57,7 +58,7 @@
 
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor countLabelColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -68,7 +69,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     //    kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [self.tableView.mj_footer resetNoMoreData];
         [self loadDataSource];

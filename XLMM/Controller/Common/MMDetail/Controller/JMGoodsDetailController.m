@@ -13,10 +13,7 @@
 #import "JMGoodsSafeGuardCell.h"
 #import "IMYWebView.h"
 #import "JMShareViewController.h"
-#import "JMPopView.h"
-#import "JMShareView.h"
 #import "JMShareModel.h"
-#import "CartViewController.h"
 #import "JMDescLabelModel.h"
 #import "JMLogInViewController.h"
 #import "JMSelecterButton.h"
@@ -25,6 +22,7 @@
 #import "JMAutoLoopPageView.h"
 #import "JMGoodsLoopRollCell.h"
 #import "JMPopViewAnimationDrop.h"
+#import "JMCartViewController.h"
 
 
 #define BottomHeitht 60.0
@@ -34,7 +32,7 @@
 #define NavigationMaskWH 36
 #define kBottomViewTag 100
 
-@interface JMGoodsDetailController ()<JMShareViewDelegate,JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
+@interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     CGFloat maxY;
     CGFloat minY;
     
@@ -288,6 +286,21 @@
 - (void)fetchData:(NSDictionary *)goodsDetailDic {
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
+    NSString *waterMark = detailContentDic[@"watermark_op"];
+    NSArray *imageArr = detailContentDic[@"head_imgs"];
+    if ([NSString isStringEmpty:waterMark]) {
+        for (NSString *imageUrl in imageArr) {
+            NSString *imageUrlStr = [imageUrl imageNormalCompression];
+            [self.topImageArray addObject:imageUrlStr];
+        }
+    }else {
+        for (NSString *imageUrl in imageArr) {
+            NSString *imageUrlStr = [NSString stringWithFormat:@"%@|%@",[imageUrl imageNormalCompression],waterMark];
+            [self.topImageArray addObject:imageUrlStr];
+        }
+        
+    }
+
     self.topImageArray = detailContentDic[@"head_imgs"];
     //    [self.goodsScrollView jm_reloadData];
     [self.pageView reloadData];
@@ -396,20 +409,14 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         [MobClick event:@"GoodsDetail_share"];
-        JMShareView *cover = [JMShareView show];
-        cover.delegate = self;
-        JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-        menu.contentView = self.goodsShareView.view;
+        [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+        }];
         self.goodsShareView.blcok = ^(UIButton *button) {
             [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
         };
     }
 }
 #pragma mark --- 点击隐藏弹出视图
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [MobClick event:@"GoodsDetail_share_fail_clickMasking"];
-    [JMPopView hide];
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
@@ -890,7 +897,7 @@
     BOOL isLogin = [defalts boolForKey:kIsLogin];
     if (button.tag == kBottomViewTag + 0) {
         if (isLogin) {
-            CartViewController *cartVC = [[CartViewController alloc] init];
+            JMCartViewController *cartVC = [[JMCartViewController alloc] init];
             [self.navigationController pushViewController:cartVC animated:YES];
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];

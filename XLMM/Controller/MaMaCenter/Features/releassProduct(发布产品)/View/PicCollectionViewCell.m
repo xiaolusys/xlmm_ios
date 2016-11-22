@@ -21,14 +21,14 @@
     
 }
 
-- (void)createImageForCellImageView:(NSString *)imageUrl Index:(NSInteger)index {
+- (void)createImageForCellImageView:(NSString *)imageUrl Index:(NSInteger)index RowIndex:(NSInteger)rowIndex {
     //图片处理小图
-    NSString *url = [imageUrl imageShareCompression];
-    if (index) {
-        url = imageUrl;
-    }
+    NSString *url = index == rowIndex ? imageUrl : [imageUrl imageGoodsOrderCompression];
     [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
-    self.cellImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    
+    
+    
 
 
 }

@@ -298,15 +298,15 @@
     _sizeSelectedIndex = 1;
     [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
     
-    NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
-    [newImageUrl appendString:@"?"];
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    NSString *newImageUrl = [_imageArray objectAtIndex:0]; // [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
+//    [newImageUrl appendString:@"?"];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     NSDictionary *colorD = _goodsArr[0];
     
     _goodsColorID = [colorD[@"product_id"] integerValue];
-    //    _goodsSizeID = [sizeD[@"sku_id"] integerValue];
+    _goodsSizeID = [sizeD[@"sku_id"] integerValue];
     _skuColorString = colorD[@"name"];
-    //    _skuSizeString = sizeD[@"name"];
+    _skuSizeString = sizeD[@"name"];
     self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
     NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
 }
@@ -328,9 +328,9 @@
             }
         }
         
-        NSMutableString *newImageUrl = [NSMutableString stringWithString:[_imageArray objectAtIndex:index - 1]];
-        [newImageUrl appendString:@"?"];
-        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+        NSString *newImageUrl = [_imageArray objectAtIndex:index - 1]; // [NSMutableString stringWithString:[_imageArray objectAtIndex:index - 1]];
+//        [newImageUrl appendString:@"?"];
+        [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
         
         // -- > 在这里面给颜色 赋值
         NSDictionary *colirD = _goodsArr[index - 1];

@@ -42,10 +42,10 @@
     NSString *_imageStr;
 }
 
-+ (instancetype)enterFooterView {
-    JMOrderDetailFooterView *footerView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
-    return footerView;
-}
+//+ (instancetype)enterFooterView {
+//    JMOrderDetailFooterView *footerView = [[JMOrderDetailFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260)];
+//    return footerView;
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -161,7 +161,8 @@
     kWeakSelf
     
     [oneView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(weakSelf);
+        make.top.left.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@190);
     }];
     [payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -216,7 +217,8 @@
     
     [twoView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineView);
-        make.left.right.equalTo(weakSelf);
+        make.left.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@50);
     }];
     [clearingMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {

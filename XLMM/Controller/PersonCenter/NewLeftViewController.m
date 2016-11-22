@@ -25,7 +25,7 @@
 #import "JMWithDrawDetailController.h"
 #import "JMSettingController.h"
 #import "JMMaMaRootController.h"
-
+#import "JMStoreManager.h"
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -49,36 +49,40 @@
     [self setUserInfo];
 }
 - (void)setUserInfo{
-    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-//    if (islogin) {
-        // http://m.xiaolu.so/rest/v1/users/profile
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-            if (!responseObject) return;
-            if (islogin) {
-                [self updateUserInfo:responseObject];
-            }else {
-                NSLog(@"没有登录---");
-            }
-        } WithFail:^(NSError *error) {
-            NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-            if (response) {
-                if (response.statusCode) {
-                    NSInteger statusCode = response.statusCode;
-                    if (statusCode == 403) {
-                        NSLog(@"%ld",statusCode);
-                        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-                        [users removeObjectForKey:kIsLogin];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                    }else {
-                        
-                    }
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL islogin = [users boolForKey:kIsLogin];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        // 存储个人信息到沙盒
+        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
+        if (islogin) {
+            [self updateUserInfo:responseObject];
+            [users setBool:YES forKey:kIsLogin];
+        }else {
+            NSLog(@"没有登录---");
+            [users setBool:NO forKey:kIsLogin];
+        }
+    } WithFail:^(NSError *error) {
+        [users setBool:NO forKey:kIsLogin];
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    
+                    [users removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }else {
+                    
                 }
             }
-        } Progress:^(float progress) {
-            
-        }];
-//    }
+        }
+    } Progress:^(float progress) {
+        
+    }];
     
     
 }
@@ -472,8 +476,6 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
             JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
-            mamaCenterVC.userInfoDic = _persinCenterDict;
-            
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
                 [self.pushVCDelegate rootVCPushOtherVC:mamaCenterVC];
             }

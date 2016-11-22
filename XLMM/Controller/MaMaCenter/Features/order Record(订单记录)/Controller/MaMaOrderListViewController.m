@@ -59,10 +59,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"订单列表" selecotr:@selector(backClickAction)];
     
     [self createTableView];
@@ -78,7 +76,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [self.tableView.mj_footer resetNoMoreData];
         [weakSelf loadDate];
@@ -102,7 +100,7 @@
     }
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 80;
@@ -281,6 +279,7 @@
         JMQueryLogInfoController *loginfoVC = [[JMQueryLogInfoController alloc] init];
         loginfoVC.packetId = orderM.packetid;
         loginfoVC.companyCode = orderM.company_code;
+        loginfoVC.logName = orderM.company_code;
         [self.navigationController pushViewController:loginfoVC animated:YES];
     }
 

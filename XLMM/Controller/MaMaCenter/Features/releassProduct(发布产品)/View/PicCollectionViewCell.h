@@ -10,5 +10,5 @@
 
 @interface PicCollectionViewCell : UICollectionViewCell
 
-- (void)createImageForCellImageView:(NSString *)imageUrl Index:(NSInteger)index;
+- (void)createImageForCellImageView:(NSString *)imageUrl Index:(NSInteger)index RowIndex:(NSInteger)rowIndex;
 @end

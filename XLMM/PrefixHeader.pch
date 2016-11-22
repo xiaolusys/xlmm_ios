@@ -17,6 +17,7 @@
 #import "MMClass.h"
 #import "JMToolMacro.h"
 #import "XlmmMall.h"
+#import "JMPromptMessage.h"
 
 
 

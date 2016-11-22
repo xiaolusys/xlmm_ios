@@ -10,6 +10,7 @@
 
 @interface JMGoodsLoopRollCell : UICollectionViewCell
 
+
 @property (nonatomic, copy) NSString *imageString;
 
 

@@ -20,10 +20,10 @@
 }
 
 
-- (instancetype)initWithCountDownTime:(NSString *)endTime {
+- (instancetype)initWithCountDownTime:(int)endTime {
     if (self == [super init]) {
         self.ennTime = endTime;
-        [self currentDownTime];        
+        [self currentDownTime:endTime];
     }
     return self;
 }
@@ -35,53 +35,48 @@
     }
     return self;
 }
-+ (instancetype)countDownWithCurrentTime:(NSString *)endTime {
++ (instancetype)countDownWithCurrentTime:(int)endTime {
     return [[self shareCountDown] initWithCountDownTime:endTime];
 }
-- (void)currentDownTime {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
-    
-//    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-//    
-//    [dateFormatter setTimeZone:timeZone]; //设置时区 ＋8:00
-    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
-    
-    NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
-    
-    NSDate *date = [dateFormatter dateFromString:self.ennTime]; // 结束时间
-    
-    NSTimeInterval time = [date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
-    NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
+- (void)currentDownTime:(int)time {
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];  // 设置时间格式
+////    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
+////    [dateFormatter setTimeZone:timeZone]; //设置时区 ＋8:00
+//    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
+//    NSDate *someDayDate = [dateFormatter dateFromString:currentTime];
+//    NSDate *date = [dateFormatter dateFromString:self.ennTime]; // 结束时间
+//    NSTimeInterval time = [date timeIntervalSinceDate:someDayDate];  //结束时间距离当前时间的秒数
+//    NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
     
     __block int timeout  = time;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(self.timer, dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0);//每秒执行
+    dispatch_source_set_timer(self.timer, DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);//每秒执行
     dispatch_source_set_event_handler(self.timer, ^{
+        timeout -- ;
         if (timeout <= 0) { //倒计时结束,关闭
-//            dispatch_source_cancel(self.timer);
+            dispatch_source_cancel(self.timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面显示
-                NSString *endTime = @"商品已下架";
+//                NSString *endTime = @"商品已下架";
 //                [self.delegate countDownEnd:djsArr];
                 if (self.timeBlock) {
-                    self.timeBlock(endTime);
+                    self.timeBlock(-1);
                 }
                 
             });
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面显示
-                NSString *startTime = [self TimeformatFromSeconds:timeout];
+//                NSString *startTime = [self TimeformatFromSeconds:timeout];
 //                [self.delegate countDownStart:djsArr];
                 if (self.timeBlock) {
-                    self.timeBlock(startTime);
+                    self.timeBlock(timeout);
                 }
                 
             });
-            timeout -- ;
+//            timeout -- ;
         }
     });
     dispatch_resume(self.timer);

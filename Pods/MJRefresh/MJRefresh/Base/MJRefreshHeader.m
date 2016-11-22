@@ -9,11 +9,16 @@
 
 #import "MJRefreshHeader.h"
 
+#define NSLog(...) printf(" 第%d行: %s\n\n",__LINE__, [[NSString stringWithFormat:__VA_ARGS__] UTF8String]);
+
+
 @interface MJRefreshHeader()
 @property (assign, nonatomic) CGFloat insetTDelta;
 @end
 
 @implementation MJRefreshHeader
+
+
 #pragma mark - 构造方法
 + (instancetype)headerWithRefreshingBlock:(MJRefreshComponentRefreshingBlock)refreshingBlock
 {
@@ -38,6 +43,7 @@
     
     // 设置高度
     self.mj_h = MJRefreshHeaderHeight;
+    
 }
 
 - (void)placeSubviews
@@ -46,16 +52,15 @@
     
     // 设置y值(当自己的高度发生改变了，肯定要重新调整Y值，所以放到placeSubviews方法中设置y值)
     self.mj_y = - self.mj_h - self.ignoredScrollViewContentInsetTop;
+    
 }
 
 - (void)scrollViewContentOffsetDidChange:(NSDictionary *)change
 {
     [super scrollViewContentOffsetDidChange:change];
-    
     // 在刷新的refreshing状态
     if (self.state == MJRefreshStateRefreshing) {
         if (self.window == nil) return;
-        
         // sectionheader停留解决
         CGFloat insetT = - self.scrollView.mj_offsetY > _scrollViewOriginalInset.top ? - self.scrollView.mj_offsetY : _scrollViewOriginalInset.top;
         insetT = insetT > self.mj_h + _scrollViewOriginalInset.top ? self.mj_h + _scrollViewOriginalInset.top : insetT;
@@ -70,8 +75,10 @@
     
     // 当前的contentOffset
     CGFloat offsetY = self.scrollView.mj_offsetY;
+//    NSLog(@" 当前的contentOffset ==== > %.2f",offsetY);
     // 头部控件刚好出现的offsetY
     CGFloat happenOffsetY = - self.scrollViewOriginalInset.top;
+//    NSLog(@"  头部控件刚好出现的offsetY === > %.2f",happenOffsetY);
     
     // 如果是向上滚动到看不见头部控件，直接返回
     // >= -> >
@@ -151,3 +158,27 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:self.lastUpdatedTimeKey];
 }
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

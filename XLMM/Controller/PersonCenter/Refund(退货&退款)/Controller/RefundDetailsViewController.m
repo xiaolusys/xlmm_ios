@@ -202,7 +202,7 @@
     
     self.reasonLabel.text = self.refundModelr.reason;
     if ([self.refundModelr.pic_path isKindOfClass:[NSString class]] ) {
-        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[self.refundModelr.pic_path imageOrderCompression] JMUrlEncodedString]]];
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[[self.refundModelr.pic_path imageGoodsOrderCompression] JMUrlEncodedString]]];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     self.imageView.layer.masksToBounds = YES;

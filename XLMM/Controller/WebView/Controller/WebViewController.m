@@ -19,9 +19,6 @@
 #import "SSKeychain.h"
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
-#import "CartViewController.h"
-#import "JMShareView.h"
-#import "JMPopView.h"
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
@@ -32,7 +29,7 @@
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
 //static BOOL isLogin;
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,JMShareViewDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
+@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
     NSString *_fineCouponTid;
 }
 
@@ -122,7 +119,6 @@
         self.titleName = webDiction[@"titleName"];
     }else {
     }
-
 }
 - (JMShareModel*)share_model {
     if (!_share_model) {
@@ -132,11 +128,11 @@
 }
 
 - (BOOL)isShowNavBar {
-    _isShowNavBar = false;
+    _isShowNavBar = NO;
     return _isShowNavBar;
 }
 - (BOOL)isShowRightShareBtn {
-    _isShowRightShareBtn = false;
+    _isShowRightShareBtn = NO;
     return _isShowRightShareBtn;
 }
 
@@ -229,6 +225,7 @@
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
     statusBarView.hidden = YES;
+    self.statusBarView = statusBarView;
     
     NSString *loadStr = nil;
     NSString *active = _webDiction[@"type_title"];
@@ -255,23 +252,20 @@
         }
         loadStr = _webDiction[@"web_url"];
     }
-    NSURL *url = [NSURL URLWithString:loadStr];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
-    [super.baseWebView loadRequest:request];
-    
+    if (![NSString isStringEmpty:loadStr]) {
+        NSURL *url = [NSURL URLWithString:loadStr];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        NSLog(@"webview url=%@ NSURLRequest=%@", url, request);
+        [super.baseWebView loadRequest:request];
+    }else {
+        [MBProgressHUD hideHUDForView:self.view];
+    }
     if(_isShowRightShareBtn){
         [self createTabBarButton];
     }
-    
-//    self.shareWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-//    self.shareWebView.hidden = YES;
-//    self.shareWebView.tag = 102;
-//    [self.view addSubview:self.shareWebView];
-    [self.view bringSubviewToFront:super.baseWebView];
-    
     _shareImage = [UIImage imageNamed:@"icon-xiaolu.png"];
     _content = @"小鹿美美";
+
 
 }
 
@@ -389,14 +383,20 @@
     }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
         [MobClick event:@"mamaShop_share"];
     }else { }
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = self.shareView.view;
+//    JMShareView *cover = [JMShareView show];
+//    cover.delegate = self;
+//    //弹出视图
+//    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
+//    menu.contentView = self.shareView.view;
+//    self.shareView.blcok = ^(UIButton *button) {
+//        [MobClick event:@"WebViewController_shareFail_cancel"];
+//    };
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+    }];
     self.shareView.blcok = ^(UIButton *button) {
         [MobClick event:@"WebViewController_shareFail_cancel"];
     };
+    
 }
 
 - (void)universeShare:(NSDictionary *)data {
@@ -412,21 +412,13 @@
     self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
     self.shareView.model.share_link = [data objectForKey:@"link"];
 //    self.shareView.model = self.share_model;
-    
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = self.shareView.view;
-}
-#pragma mark --- 点击隐藏弹出视图
-- (void)coverDidClickCover:(JMShareView *)cover {
-    [MobClick event:@"WebViewController_shareFail_masking"];
-    //隐藏pop菜单
-    [JMPopView hide];
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+    }];
+    self.shareView.blcok = ^(UIButton *button) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    };
     
 }
-
 
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

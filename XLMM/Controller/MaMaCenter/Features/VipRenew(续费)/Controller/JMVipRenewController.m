@@ -10,12 +10,13 @@
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
 #import "WXApi.h"
-#import "Pingpp.h"
+//#import "Pingpp.h"
 #import "PersonOrderViewController.h"
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
+#import "JMPayment.h"
 
-#define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
 
 @interface JMVipRenewController ()<JMOrderPayViewDelegate>
 
@@ -439,32 +440,40 @@
     
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/pmt/xlmm/mama_register_pay",Root_URL];
     
-    JMVipRenewController * __weak weakSelf = self;
+//    JMVipRenewController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [MBProgressHUD hideHUD];
         
-        NSError *parseError = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
-        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//        NSError *parseError = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
+//        NSString *charge = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
-                if (error == nil) {
-                    [MBProgressHUD showSuccess:@"支付成功"];
-                    [MobClick event:@"renewBuy_succ"];
-                } else {
-                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
-                        [MBProgressHUD showError:@"用户取消支付"];
-                        [MobClick event:@"renewBuy_cancel"];
-                    } else {
-                        [MBProgressHUD showError:@"支付失败"];
-                        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
-                        [MobClick event:@"renewBuy_fail" attributes:temp_dict];
-                    }
-                    
-                }
-                
+            [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:responseObject URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                NSLog(@"%ld",error.errorStatus);
+                if (error.errorStatus == payMentErrorStatusSuccess) {
+                    [self paySuccessful];
+                }else if (error.errorStatus == payMentErrorStatusFail) { // 取消
+                    [self popview];
+                }else { }
             }];
+//            [Pingpp createPayment:charge viewController:weakSelf appURLScheme:kUrlScheme withCompletion:^(NSString *result, PingppError *error) {
+//                if (error == nil) {
+//                    [MBProgressHUD showSuccess:@"支付成功"];
+//                    [MobClick event:@"renewBuy_succ"];
+//                } else {
+//                    if ([[error getMsg] isEqualToString:@"User cancelled the operation"] || error.code == 5) {
+//                        [MBProgressHUD showError:@"用户取消支付"];
+//                        [MobClick event:@"renewBuy_cancel"];
+//                    } else {
+//                        [MBProgressHUD showError:@"支付失败"];
+//                        NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)error.code]};
+//                        [MobClick event:@"renewBuy_fail" attributes:temp_dict];
+//                    }
+//                    
+//                }
+//                
+//            }];
         });
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {

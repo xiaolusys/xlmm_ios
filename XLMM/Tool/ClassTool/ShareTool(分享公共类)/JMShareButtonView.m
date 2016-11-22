@@ -13,7 +13,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        
         //添加所有的子控件
         [self setUpAllChildView];
     }

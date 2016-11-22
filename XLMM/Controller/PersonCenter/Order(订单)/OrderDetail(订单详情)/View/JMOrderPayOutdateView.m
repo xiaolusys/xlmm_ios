@@ -8,6 +8,8 @@
 
 #import "JMOrderPayOutdateView.h"
 #import "JMSelecterButton.h"
+#import "JMGoodsCountTime.h"
+
 
 @interface JMOrderPayOutdateView ()
 @property (nonatomic, strong) UILabel *outDateTitleLabel;
@@ -26,12 +28,10 @@
 @end
 
 @implementation JMOrderPayOutdateView {
-    NSTimer *_orderOutTimer;
     NSString *_dateStr;
     BOOL _isShow;
     BOOL _isShowShare;
 }
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self setUpTopUI];
@@ -57,47 +57,60 @@
     }else {
         _isShowShare = NO;
     }
-    
-    
-    
 }
 - (void)setCreateTimeStr:(NSString *)createTimeStr {
     if (_isShow) {
         _dateStr = @"";
-        //        self.sureOrderButton.hidden = NO;
-        //        self.canelOrderButton.hidden = NO;
         self.bottomView.hidden = NO;
         _createTimeStr = createTimeStr;
         _dateStr = [self formatterTimeString:createTimeStr];
-        _orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+        int endSecond = [[JMGlobal global] secondOfCurrentTimeInEndTime:_dateStr];
+        int end = endSecond + 1200;
+        [JMGoodsCountTime initCountDownWithCurrentTime:end];
+        kWeakSelf
+        [JMGoodsCountTime shareCountTime].countBlock = ^(int second) {
+            second == -1 ? [weakSelf xiaoyu] : [weakSelf dayu:second];
+        };
     }else {
         self.sureOrderButton.hidden = YES;
         self.canelOrderButton.hidden = YES;
         self.bottomView.hidden = YES;
-        
         if (_isTeamBuy) {     // 如果是团购的话,就吧下面的继续支付和分享红包的视图给隐藏掉,只显示开团进展
             self.teamBuyOrderButton.hidden = NO;
             self.bottomView.hidden = NO;
-        }else {
-            
         }
-        
-        if (_isShowShare == YES) {
+        if (_isShowShare) {
+            self.bottomView.hidden = NO;
             self.shareImage.hidden = NO;
             self.descLabel.hidden = NO;
             self.shareButton.hidden = NO;
             self.sharBottom.hidden = NO;
-        }else {
-            
         }
-        
-        
     }
-    
-    
-    
-    
-
+    if (self.bottomView.hidden) {
+        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@(0));
+        }];
+    }
+}
+- (void)xiaoyu {
+    self.orderOutdateTime.text = @"00:00";
+    self.bottomView.hidden = YES;
+    self.canelOrderButton.hidden = YES;
+    self.sureOrderButton.hidden = YES;
+    self.orderOutdateTime.hidden = YES;
+    self.outDateTitleLabel.hidden = YES;
+    [self mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@(0));
+    }];
+}
+- (void)dayu:(int)endTime {
+    self.bottomView.hidden = NO;
+    self.canelOrderButton.hidden = NO;
+    self.sureOrderButton.hidden = NO;
+    self.orderOutdateTime.hidden = NO;
+    self.outDateTitleLabel.hidden = NO;
+    self.orderOutdateTime.text = [NSString TimeformatMSFromSeconds:endTime];
 }
 
 
@@ -201,7 +214,7 @@
     [self.sharBottom mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(weakSelf);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@60);
+        make.height.mas_equalTo(@65);
     }];
     
     self.sharBottom.hidden = YES;
@@ -248,62 +261,15 @@
         [_delegate composeOutDateView:self Index:button.tag];
     }
 }
-- (void)timerFireMethod:(NSTimer*)theTimer {
-    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
-    //  2015-10-29T15:50:19
-//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    [formatter setDateFormat:[NSString stringWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
-    NSDate *date = [formatter dateFromString:_dateStr];
-    //  NSLog(@"date = %@", date);
-    
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    unsigned int unitFlags = NSCalendarUnitYear |
-    NSCalendarUnitMonth |
-    NSCalendarUnitDay |
-    NSCalendarUnitHour |
-    NSCalendarUnitMinute |
-    NSCalendarUnitSecond;
-    NSDate *todate = [NSDate dateWithTimeInterval:20 * 60 sinceDate:date];
-    
-    // NSLog(@"todate = %@", todate);
-    //把目标时间装载入date
-    //用来得到具体的时差
-    NSDateComponents *d = [calendar components:unitFlags fromDate:[NSDate date] toDate:todate options:0];
-    NSString *string = nil;
-    string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
-    // NSLog(@"string = %@", string);
-    
-    self.orderOutdateTime.text = string;
-    if ([d minute] < 0 || [d second] < 0) {
-        self.orderOutdateTime.text = @"00:00";
-//        self.shareImage.hidden = NO;
-//        self.descLabel.hidden = NO;
-//        self.shareButton.hidden = NO;
-//        self.sharBottom.hidden = NO;
-    }else {
-        self.bottomView.hidden = NO;
-        self.canelOrderButton.hidden = NO;
-        self.sureOrderButton.hidden = NO;
-        self.orderOutdateTime.hidden = NO;
-        self.outDateTitleLabel.hidden = NO;
-    }
-}
 - (NSString *)formatterTimeString:(NSString *)timeString{
-    if (timeString == nil) {
-        return nil;
-    }
     if ([NSString isStringEmpty:timeString]) {
         return nil;
     }
-    NSMutableString *newString = [NSMutableString stringWithString:timeString];
-    NSRange range = {10, 1};
-    [newString replaceCharactersInRange:range withString:@" "];
-    
-    //    [newString deleteCharactersInRange:NSMakeRange(newString.length - 3, 3)];
-    
-    return newString;
+    return [NSString jm_deleteTimeWithT:timeString];
 }
+
+
+
 @end
 
 
@@ -345,7 +311,63 @@
 
 
 
-
+//        self.orderOutTimer = [NSTimer scheduledTimerWithTimeInterval:0. target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+//        [[NSRunLoop currentRunLoop] addTimer:self.orderOutTimer forMode:NSRunLoopCommonModes];
+//- (void)timerFireMethod:(NSTimer*)theTimer {
+//    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+//    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+//    //  2015-10-29T15:50:19
+////    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+//    [formatter setDateFormat:[NSString stringWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
+//    NSDate *date = [formatter dateFromString:_dateStr];
+//    //  NSLog(@"date = %@", date);
+//
+//    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+//    unsigned int unitFlags = NSCalendarUnitYear |
+//    NSCalendarUnitMonth |
+//    NSCalendarUnitDay |
+//    NSCalendarUnitHour |
+//    NSCalendarUnitMinute |
+//    NSCalendarUnitSecond;
+//    NSDate *todate = [NSDate dateWithTimeInterval:20 * 60 sinceDate:date];
+//
+//    // NSLog(@"todate = %@", todate);
+//    //把目标时间装载入date
+//    //用来得到具体的时差
+//    NSDateComponents *d = [calendar components:unitFlags fromDate:[NSDate date] toDate:todate options:0];
+//    NSString *string = nil;
+//    string = [NSString stringWithFormat:@"%02ld:%02ld", (long)[d minute], (long)[d second]];
+//    // NSLog(@"string = %@", string);
+//
+//    self.orderOutdateTime.text = string;
+//    if ([d minute] < 0 || [d second] < 0) {
+//        self.orderOutdateTime.text = @"00:00";
+//        self.bottomView.hidden = YES;
+//        self.canelOrderButton.hidden = YES;
+//        self.sureOrderButton.hidden = YES;
+//        self.orderOutdateTime.hidden = YES;
+//        self.outDateTitleLabel.hidden = YES;
+//        [UIView animateWithDuration:0.3 animations:^{
+//            [self mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.mas_equalTo(@(0));
+//            }];
+//        }];
+//        if ([self.orderOutTimer isValid]) {
+//            [self.orderOutTimer invalidate];
+//            self.orderOutTimer = nil;
+//        }
+////        self.shareImage.hidden = NO;
+////        self.descLabel.hidden = NO;
+////        self.shareButton.hidden = NO;
+////        self.sharBottom.hidden = NO;
+//    }else {
+//        self.bottomView.hidden = NO;
+//        self.canelOrderButton.hidden = NO;
+//        self.sureOrderButton.hidden = NO;
+//        self.orderOutdateTime.hidden = NO;
+//        self.outDateTitleLabel.hidden = NO;
+//    }
+//}
 
 
 

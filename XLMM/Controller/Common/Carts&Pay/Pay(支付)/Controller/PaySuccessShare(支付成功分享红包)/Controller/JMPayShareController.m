@@ -10,13 +10,11 @@
 #import "JMPaySucTitleView.h"
 #import "JMSelecterButton.h"
 #import "JMSharePackView.h"
-#import "JMShareView.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
-#import "JMPopView.h"
 #import "PersonOrderViewController.h"
 
-@interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMShareViewDelegate,JMSharePackViewDelegate>
+@interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMSharePackViewDelegate>
 
 /**
  *  分享数据字典
@@ -38,6 +36,12 @@
 @implementation JMPayShareController {
     NSString *_orderNum;
     NSString *_limitStr;
+}
+- (JMShareViewController *)shareView {
+    if (!_shareView) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
 }
 - (JMShareModel*)share_model {
     if (!_share_model) {
@@ -110,7 +114,7 @@
     self.share_model.share_link = [dic objectForKey:@"share_link"];
     _limitStr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"share_times_limit"]];
     self.sharePackView.limitStr = _limitStr;
-    
+    self.shareView.model = self.share_model;
     
     
 }
@@ -132,22 +136,19 @@
 
 
 - (void)composeGetRedpackBtn:(JMSharePackView *)renPack didClick:(UIButton *)button {
-    
-    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-    self.shareView = shareView;
-    _shareDic = nil;
-    self.shareView.model = self.share_model;
-    JMShareView *cover = [JMShareView show];
-    cover.delegate = self;
-    //弹出视图
-    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-    menu.contentView = self.shareView.view;
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+    }];
+//    JMShareView *cover = [JMShareView show];
+//    cover.delegate = self;
+//    //弹出视图
+//    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
+//    menu.contentView = self.shareView.view;
 }
-- (void)coverDidClickCover:(JMShareView *)cover {
-    //隐藏pop菜单
-    [JMPopView hide];
-    [MBProgressHUD hideHUD];
-}
+//- (void)coverDidClickCover:(JMShareView *)cover {
+//    //隐藏pop菜单
+//    [JMPopView hide];
+//    [MBProgressHUD hideHUD];
+//}
 - (void)backClick:(UIButton *)sender {
     // 支付成功后,跳转到待收货页面
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];

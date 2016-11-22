@@ -290,7 +290,7 @@
  *
  *  @return 相差天数
  */
-+ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate toDate:(NSString *)toDate {
++ (NSString *)numberOfDaysWithFromDate:(NSString *)fromDate ToData:(NSString *)toDate {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *fromDate1 = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:fromDate]];
@@ -304,8 +304,52 @@
     NSString *dayString = [NSString stringWithFormat:@"%ld",comp.day];
     return dayString;
 }
++ (NSString *)numberOfSecondWithFromData:(NSString *)fromData ToData:(NSString *)toData {
+    return @"";
+}
 
++ (NSString *)TimeformatDHMSFromSeconds:(int)second {
+    NSString *timeString = [NSString stringWithFormat:@"%02d天%02d时%02d分%02d秒",second/(3600*24),(second/(3600))%24,(second%3600)/60,second%60];
+    return timeString;
+}
++ (NSString *)TimeformatMSFromSeconds:(int)second {
+    NSString *timeString = [NSString stringWithFormat:@"%02d:%02d", (second%3600)/60,second%60];
+    return timeString;
+}
 
++ (NSString*)miPushTetOperateType:(NSString*)selector
+{
+    NSString *ret = nil;
+    if ([selector hasPrefix:@"registerMiPush:"] ) {
+        ret = @"客户端注册设备";
+    }else if ([selector isEqualToString:@"unregisterMiPush"]) {
+        ret = @"客户端设备注销";
+    }else if ([selector isEqualToString:@"registerApp"]) {
+        ret = @"注册App";
+    }else if ([selector isEqualToString:@"bindDeviceToken:"]) {
+        ret = @"绑定 PushDeviceToken";
+    }else if ([selector isEqualToString:@"setAlias:"]) {
+        ret = @"客户端设置别名";
+    }else if ([selector isEqualToString:@"unsetAlias:"]) {
+        ret = @"客户端取消别名";
+    }else if ([selector isEqualToString:@"subscribe:"]) {
+        ret = @"客户端设置主题";
+    }else if ([selector isEqualToString:@"unsubscribe:"]) {
+        ret = @"客户端取消主题";
+    }else if ([selector isEqualToString:@"setAccount:"]) {
+        ret = @"客户端设置账号";
+    }else if ([selector isEqualToString:@"unsetAccount:"]) {
+        ret = @"客户端取消账号";
+    }else if ([selector isEqualToString:@"openAppNotify:"]) {
+        ret = @"统计客户端";
+    }else if ([selector isEqualToString:@"getAllAliasAsync"]) {
+        ret = @"获取Alias设置信息";
+    }else if ([selector isEqualToString:@"getAllTopicAsync"]) {
+        ret = @"获取Topic设置信息";
+    }
+    
+    return ret;
+}
 
 
 

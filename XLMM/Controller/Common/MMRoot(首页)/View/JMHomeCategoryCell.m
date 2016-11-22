@@ -33,9 +33,9 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
 
 
 - (void)createUI {
-    NSLog(@"%f",SCREENWIDTH / 320.0);
-    NSLog(@"%f",HomeCategorySpaceW);
-    NSLog(@"%f",HomeCategorySpaceH);
+//    NSLog(@"%f",SCREENWIDTH / 320.0);
+//    NSLog(@"%f",HomeCategorySpaceW);
+//    NSLog(@"%f",HomeCategorySpaceH);
 //    UIView *baseView = [UIView new];
 //    [self.contentView addSubview:baseView];
 //    
@@ -74,7 +74,7 @@ NSString *const JMHomeCategoryCellIdentifier = @"JMHomeCategoryCellIdentifier";
     for (int i = 0; i < imageArray.count; i++) {
         NSDictionary *dic = imageArray[i];
         UIImageView *image = (UIImageView *)[self.contentView viewWithTag:100 + i];
-        [image sd_setImageWithURL:[NSURL URLWithString:[dic[@"cat_img"] JMUrlEncodedString]] placeholderImage:nil]; //[UIImage imageNamed:@"placeHolderImage.png"]
+        [image sd_setImageWithURL:[NSURL URLWithString:[[dic[@"cat_img"] imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:nil]; //[UIImage imageNamed:@"placeHolderImage.png"]
         image.hidden = NO;
     }
 }

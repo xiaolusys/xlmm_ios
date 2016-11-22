@@ -8,20 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class JMRepopView;
-
-@protocol JMRepopViewDelegate <NSObject>
-
-@optional
-
-- (void)composePayButton:(JMRepopView *)payButton didClick:(NSInteger)index;
-@end
+typedef void(^clickBlcok)(UIButton *button);
 
 @interface JMRepopView : UIView
 
-@property (nonatomic, weak) id<JMRepopViewDelegate> delegate;
+@property (nonatomic, copy) clickBlcok activeBlock;
 
-+ (instancetype)defaultPopView;
-
++ (instancetype)showInRect:(CGRect)rect;
++ (void)hide;
 
 @end

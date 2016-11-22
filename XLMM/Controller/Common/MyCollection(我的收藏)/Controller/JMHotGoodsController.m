@@ -24,7 +24,7 @@
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
-
+@property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
 
 @end
 
@@ -56,7 +56,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.collection.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.collection.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
         [self.collection.mj_footer resetNoMoreData];
         [weakSelf loadDataSource];
@@ -64,10 +64,11 @@
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.collection.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
+    self.collection.mj_footer = self.footer;
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -125,6 +126,7 @@
         }
     }
     if (self.dataSource.count == 0) {
+        self.footer.stateLabel.hidden = YES;
         [self.view addSubview:self.empty];
     }else {
     }
@@ -187,17 +189,15 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.dataSource.count == 0) {
+        return ;
+    }
     JMStoreUpModel *model = self.dataSource[indexPath.row];
-    
     NSDictionary *modelProductDic = model.modelproduct;
-    
 //    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
-    
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     detailVC.goodsID = modelProductDic[@"id"];
     [self.navigationController pushViewController:detailVC animated:YES];
-    
-
     
 //    [dictionDic setValue:modelProductDic[@"web_url"] forKey:@"web_url"];
 //    WebViewController *webView = [[WebViewController alloc] init];

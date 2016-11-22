@@ -95,13 +95,13 @@
                           NSLog(@"%@, %i", title, (int)index);
                           switch (index) {
                               case 0:
-                                  serverip = @"http://m.xiaolumeimei.com";
+                                  serverip = @"https://m.xiaolumeimei.com";
                                   break;
                               case 1:
-                                  serverip = @"http://staging.xiaolumeimei.com";
+                                  serverip = @"http://staging.xiaolumm.com";
                                   break;
                               case 2:
-                                  serverip = @"http://192.168.1.8:8888";
+                                  serverip = @"http://warden.xiaolumm.com";
                                   break;
                               case 3:
                                   serverip = @"http://192.168.1.56:8000";
@@ -110,10 +110,10 @@
                                   serverip = @"http://192.168.1.31:9000";
                                   break;
                               case 5:
-                                  serverip = @"http://staging.xiaolumm.com";
+                                  serverip = @"http://192.168.1.8:8888";
                                   break;
                               case 6:
-                                  serverip = @"http://warden.xiaolumm.com";
+                                  serverip = @"http://192.168.1.8:8888";
                                   break;
                                   
                               default:
@@ -122,7 +122,7 @@
                       }];
     _radioButtons1.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.f];
     _radioButtons1.contentEdgeInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumeimei.com", @"192.168.1.8:8888",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"staging.xiaolumm.com", @"warden.xiaolumm.com"] forState:UIControlStateNormal];
+    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumm.com", @"warden.xiaolumm.com",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.8:8888", @"192.168.1.8:8888"] forState:UIControlStateNormal];
 //    [_radioButtons1 setButtonsContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [_radioButtons1 setButtonsTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageNormal forState:UIControlStateNormal];

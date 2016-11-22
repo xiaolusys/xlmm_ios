@@ -20,6 +20,9 @@
 #import "MBProgressHUD+JMHUD.h"
 #import "UMMobClick/MobClick.h"
 #import "NSString+CSCommon.h"
+#import "MJAnimationHeader.h"
+#import "JMGlobal.h"
+
 
 
 //#import "NSDictionary+Log.h"
@@ -43,6 +46,7 @@
 #endif
 
 
+#define JMKeyWindow [UIApplication sharedApplication].keyWindow
 /**
  *  循环引用
  */
@@ -61,6 +65,8 @@
 #define IS_IOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ? YES : NO)
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
+
+
 #define kVisitorDay @14      // 加载访客记录(天数)
 #define KTITLENAME @"小鹿美美"
 #define PERSONCENTER(a) [self.navigationController pushViewController:[[a alloc] init] animated:YES]
@@ -146,7 +152,7 @@ extern NSString *Root_URL;
 #define HISTORYCOMMONPROBLEM_URL [NSString stringWithFormat:@"%@/mall/complaint/history", Root_URL]
 #define LOGINFORAPP_URL [NSString stringWithFormat:@"%@/sale/promotion/activity/", Root_URL]
 
-#define UPDATE_URLSTRING [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1051166985"]
+#define UPDATE_URLSTRING [NSString stringWithFormat:@"https://itunes.apple.com/lookup?id=%@",@"1051166985"]
 
 #endif
 
