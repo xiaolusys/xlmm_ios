@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WebViewController.h"
+//#import "WebViewController.h"
 
 
-@interface JMFineClassController : WebViewController
+@interface JMFineClassController : UIViewController
 
 @property (nonatomic, copy) NSString *urlString;
 

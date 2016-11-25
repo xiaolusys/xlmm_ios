@@ -37,6 +37,7 @@
 #import "JMLaunchView.h"
 #import "JMCartViewController.h"
 #import "JMGoodsCountTime.h"
+#import "CSTabBarController.h"
 
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
@@ -200,6 +201,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
     _dayDifferString = @"2";
     _urlArray = @[@"yesterday",@"today",@"tomorrow"];
@@ -345,7 +347,7 @@
     oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
     twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
     
-    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 113) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -591,7 +593,12 @@
     }
 }
 - (void)rootVCPushOtherVC:(UIViewController *)vc{
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([vc isKindOfClass:[CSTabBarController class]]) {
+        JMKeyWindow.rootViewController = vc;
+    }else {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 - (void)rightNavigationClick:(UIButton *)button {
     [MBProgressHUD showLoading:@""];
@@ -601,8 +608,10 @@
     if (isLogin) {
         if (isXLMM) {
             [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
-            [self.navigationController pushViewController:mamaCenterVC animated:YES];
+//            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
+//            [self.navigationController pushViewController:mamaCenterVC animated:YES];
+            CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
+            JMKeyWindow.rootViewController = tabBarVC;
         }else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];

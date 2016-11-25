@@ -242,6 +242,7 @@
 
 - (void)callback_webViewDidFinishLoad
  {
+     [MBProgressHUD hideHUDForView:self.viewController.view];
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
     [self updateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
@@ -258,6 +259,7 @@
 }
 - (void)callback_webViewDidFailLoadWithError:(NSError *)error
 {
+    [MBProgressHUD showError:@"加载失败" ToView:self.viewController.view];
     if([self.delegate respondsToSelector:@selector(webView:didFailLoadWithError:)])
     {
         [self.delegate webView:self didFailLoadWithError:error];

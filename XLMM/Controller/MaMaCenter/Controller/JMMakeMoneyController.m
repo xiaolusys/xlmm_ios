@@ -27,10 +27,16 @@
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
 #import "JMPushingDaysController.h"
+#import "JMHomeRootController.h"
+#import "NewLeftViewController.h"
+#import "RESideMenu.h"
+#import "JMStoreManager.h"
 
 
 
-@interface JMMakeMoneyController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
+static NSString *currentTurnsNumberString;
+
+@interface JMMakeMoneyController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate,RESideMenuDelegate> {
     NSMutableDictionary *_webDict;
     CGFloat _carryValue;
     int quxiaodays;
@@ -97,6 +103,11 @@
 // 测试动画效果
 @property (nonatomic, strong) UIImageView *animationImage;
 @property (nonatomic, strong) UILabel *currentTurnsLabel;
+/**
+ *  下拉刷新的标志
+ */
+@property (nonatomic, assign) BOOL isPullDown;
+
 
 @end
 
@@ -108,8 +119,24 @@
     }
     return _titlesArray;
 }
+- (NSMutableArray *)activeArray {
+    if (_activeArray == nil) {
+        _activeArray = [NSMutableArray array];
+    }
+    return _activeArray;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMMakeMoneyController"];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMMakeMoneyController"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     self.visitorDate = [NSNumber numberWithInt:0];
     _webDict = [NSMutableDictionary dictionary];
     dataArray = [[NSMutableArray alloc] initWithCapacity:30];
@@ -124,24 +151,51 @@
     [self createButtons];
     [self createChart:dataArray];
     
+    [self createPullHeaderRefresh];
+    [self loadfoldLineData];
+    [self loadMaMaMessage];
+    [self loadDataSource];
+    [self.tableView.mj_header beginRefreshing];
+    
+    
 }
-- (void)setCurrentTurnsNum:(NSString *)currentTurnsNum {
-    _currentTurnsNum = currentTurnsNum;
-    if ([currentTurnsNum isEqual:@"0"]) {
-    }else {
-        self.currentTurnsLabel.hidden = NO;
-        self.currentTurnsLabel.text = currentTurnsNum;
+#pragma mark 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{  // MJAnimationHeader
+        _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
+        [weakSelf loadMaMaWeb];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
     }
 }
-- (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
-    _makeMoneyDic = makeMoneyDic;
-    _myInvitation = makeMoneyDic[@"invite"];
-    _boutiqueString = makeMoneyDic[@"boutique"];
+
+- (void)loadDataSource {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+        if (responseObject == nil) {
+            return ;
+        }else {
+            [self updateMaMaHome:responseObject];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
 }
-- (void)setCenterModel:(JMMaMaCenterModel *)centerModel {
-    _centerModel = centerModel;
-    NSDictionary *exDic = centerModel.extra_info;
-    NSDictionary *extraFiguresDic = centerModel.extra_figures;
+- (void)updateMaMaHome:(NSDictionary *)dic {
+    NSDictionary *fortuneDic = dic[@"mama_fortune"];
+    _currentTurnsNum = fortuneDic[@"current_dp_turns_num"];
+    [self currentTurnsNum:_currentTurnsNum];
+    self.centerModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
+    NSDictionary *exDic = self.centerModel.extra_info;
+    NSDictionary *extraFiguresDic = self.centerModel.extra_figures;
     self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
     self.addWeekEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
     NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
@@ -151,8 +205,8 @@
     NSString *finishProStr = [NSString stringWithFormat:@"%.f%%",finisF * 100];
     self.finishProgressLabel.text = CS_DSTRING(@"本周任务已完成 ",finishProStr);
     
-    _orderRecord = [NSString stringWithFormat:@"%@", centerModel.order_num];
-    _earningsRecord = [NSString stringWithFormat:@"%.2f", [centerModel.carry_value floatValue]];
+    _orderRecord = [NSString stringWithFormat:@"%@", self.centerModel.order_num];
+    _earningsRecord = [NSString stringWithFormat:@"%.2f", [self.centerModel.carry_value floatValue]];
     _historyEarningsRecord = [NSString stringWithFormat:@"%.2f", [exDic[@"his_confirmed_cash_out"] floatValue]];
     NSString *limtStr = CS_STRING(exDic[@"surplus_days"]);                                              // 会员剩余期限
     if ([NSString isStringEmpty:limtStr]) {
@@ -161,16 +215,122 @@
     NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
     self.memberLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:numStr SubStringArray:@[limtStr]];
     
-    NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[centerModel.cash_value floatValue]];
+    NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[self.centerModel.cash_value floatValue]];
     _carryValue = [carryValueStr floatValue];
-}
-- (void)setActiveArray:(NSMutableArray *)activeArray {
-    _activeArray = activeArray;
     
+    
+    NSString *currentTime = [NSString getCurrentYMD];
+    if ([JMStoreManager isFileExist:@"currentTurnsData.plist"]) { // 存在这个字典
+        NSDictionary *dict = [JMStoreManager getDataDictionary:@"currentTurnsData.plist"];
+        NSString *saveTime = dict[@"currentTime"];
+        NSString *saveNum = dict[@"currentNum"];
+        [JMStoreManager removeFileByFileName:@"currentTurnsData.plist"];
+        NSDictionary *currentDict = [NSDictionary dictionaryWithObjectsAndKeys:currentTime,@"currentTime",_currentTurnsNum,@"currentNum", nil];
+        [JMStoreManager saveDataFromDictionary:@"currentTurnsData.plist" WithData:currentDict];
+        if ([currentTime isEqualToString:saveTime]) { // 判断是否为当天
+            NSInteger turnsNum = labs([_currentTurnsNum integerValue] - [saveNum integerValue] + [currentTurnsNumberString integerValue]);
+            _currentTurnsNum = [NSString stringWithFormat:@"%ld",turnsNum];
+        }else {
+        }
+    }else {  // 不存在这个字典
+        NSDictionary *currentDict = [NSDictionary dictionaryWithObjectsAndKeys:currentTime,@"currentTime",_currentTurnsNum,@"currentNum", nil];
+        [JMStoreManager saveDataFromDictionary:@"currentTurnsData.plist" WithData:currentDict];
+    }
+    currentTurnsNumberString = _currentTurnsNum;
+    self.currentTurnsNum = [NSString stringWithFormat:@"%@",currentTurnsNumberString];
+    
+    
+}
+
+- (void)loadMaMaWeb {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject){
+            [self endRefresh];
+            return ;
+        }
+        [self.activeArray removeAllObjects];
+        [self mamaWebViewData:responseObject];
+        [self endRefresh];
+    } WithFail:^(NSError *error) {
+        [self endRefresh];
+    } Progress:^(float progress) {
+    }];
+    
+}
+
+- (void)mamaWebViewData:(NSDictionary *)mamaDic {
+    NSArray *resultsArr = mamaDic[@"results"];
+    NSDictionary *resultsDict = [NSDictionary dictionary];
+    resultsDict = resultsArr[0];
+    self.makeMoneyDic = resultsDict[@"extra"];
+    NSArray *activeArr = resultsDict[@"mama_activities"];
+    if (activeArr.count == 0) return ;
+    for (NSDictionary *dict in activeArr) {
+        JMHomeActiveModel *model = [JMHomeActiveModel mj_objectWithKeyValues:dict];
+        [self.activeArray addObject:model];
+    }
+    _myInvitation = self.makeMoneyDic[@"invite"];
+    _boutiqueString = self.makeMoneyDic[@"boutique"];
     
     [self.tableView reloadData];
+    
+
 }
-- (void)setMessageDic:(NSDictionary *)messageDic {
+
+
+
+
+
+
+
+- (void)loadMaMaMessage {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/message/self_list",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+//        self.makeMoneyVC.messageDic = responseObject;
+        [self mamaMessage:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+- (void)loadfoldLineData {
+    NSString *chartUrl = [NSString stringWithFormat:@"%@/rest/v2/mama/dailystats?from=0&days=14", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:chartUrl WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject)return ;
+        NSArray *arr = responseObject[@"results"];
+        if (arr.count == 0)return;
+//        self.makeMoneyVC.mamaResults = arr;
+        [self mamaResults:arr];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+
+
+- (void)currentTurnsNum:(NSString *)currentTurnsNum {
+    if ([currentTurnsNum isEqual:@"0"]) {
+    }else {
+        self.currentTurnsLabel.hidden = NO;
+        self.currentTurnsLabel.text = currentTurnsNum;
+    }
+}
+//- (void)setMakeMoneyDic:(NSDictionary *)makeMoneyDic {
+//    _makeMoneyDic = makeMoneyDic;
+//    _myInvitation = makeMoneyDic[@"invite"];
+//    _boutiqueString = makeMoneyDic[@"boutique"];
+//}
+//- (void)setCenterModel:(JMMaMaCenterModel *)centerModel {
+//    _centerModel = centerModel;
+//    
+//}
+//- (void)setActiveArray:(NSMutableArray *)activeArray {
+//    _activeArray = activeArray;
+//    
+//    
+//    [self.tableView reloadData];
+//}
+- (void)mamaMessage:(NSDictionary *)messageDic {
     NSArray *resultsArr = messageDic[@"results"];
     if (resultsArr.count == 0) {
         self.titlesArray = [NSMutableArray arrayWithObjects:@"暂时没有新消息通知~!", nil];
@@ -179,7 +339,7 @@
             self.messagePromptLabel.hidden = YES;
         }else {
             self.messagePromptLabel.hidden = NO;
-//            self.messagePromptLabel.text = CS_STRING(messageDic[@"unread_cnt"]);
+            //            self.messagePromptLabel.text = CS_STRING(messageDic[@"unread_cnt"]);
         }
         for (NSDictionary *dic in resultsArr) {
             [self.titlesArray addObject:dic[@"title"]];
@@ -187,8 +347,10 @@
     }
     [self.pageView reloadData];
 }
-- (void)setMamaResults:(NSArray *)mamaResults {
-    _mamaResults = mamaResults;
+//- (void)setMessageDic:(NSDictionary *)messageDic {
+//    
+//}
+- (void)mamaResults:(NSArray *)mamaResults {
     NSArray *data = [NSArray reverse:mamaResults];
     self.mamaOrderArray = data;
     NSDictionary *dic = data[0];
@@ -683,9 +845,11 @@
         [dict setValue:@"mamaShop" forKey:@"type_title"];
         [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
     }else if (index == 104) {
-        if (self.block) {
-            self.block(self.currentTurnsLabel);
-        }
+        currentTurnsNumberString = @"0";
+        self.currentTurnsLabel.hidden = YES;
+//        if (self.block) {
+//            self.block(self.currentTurnsLabel);
+//        }
         JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
         [self.navigationController pushViewController:pushingVC animated:YES];
     }else if (index == 105) {
@@ -748,7 +912,7 @@
 }
 
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
@@ -1170,6 +1334,46 @@
 - (void)viewDidDisappear:(BOOL)animated {
     self.lineChart = nil;
 }
+
+- (void)backClick:(UIButton *)button {
+    JMHomeRootController *root = [[JMHomeRootController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
+    leftMenu.pushVCDelegate = root;
+    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
+    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
+    menuVC.menuPreferredStatusBarStyle = 1;
+    menuVC.delegate = self;
+    menuVC.contentViewShadowColor = [UIColor blackColor];
+    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
+    menuVC.contentViewShadowOpacity = 0.6;
+    menuVC.contentViewShadowRadius = 12;
+    menuVC.contentViewShadowEnabled = YES;
+    JMKeyWindow.rootViewController = menuVC;
+}
+#pragma mark ======== RESideMenu Delegate ========
+- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
+{
+    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
+{
+    // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+    
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
+{
+    // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
+{
+    // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
 
 
 @end

@@ -14,6 +14,7 @@
 #import "JMDevice.h"
 #import "JMPayment.h"
 #import "JMMiPushManager.h"
+#import "JMRootTabBarController.h"
 
 
 #define login @"login"
@@ -76,11 +77,14 @@
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
-    JMHomeRootController *root = [[JMHomeRootController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    self.tabBarVC = tabBarVC;
+//    JMHomeRootController *root = [[JMHomeRootController alloc] init];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tabBarVC];
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    leftMenu.pushVCDelegate = root;
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
+    self.leftMenu = leftMenu;
+    leftMenu.pushVCDelegate = tabBarVC;
+    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:tabBarVC leftMenuViewController:leftMenu rightMenuViewController:nil];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;
@@ -89,6 +93,7 @@
     menuVC.contentViewShadowOpacity = 0.6;
     menuVC.contentViewShadowRadius = 12;
     menuVC.contentViewShadowEnabled = YES;
+    self.menuVC = menuVC;
     self.window.rootViewController = menuVC;
     [self.window makeKeyAndVisible];
 }

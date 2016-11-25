@@ -63,6 +63,8 @@
     NSString *_orderTidNum;           //订单编号
     NSInteger _flagCount;             //标志是否弹出延迟框
     BOOL _isTeamBuyGoods;             //是否为团购
+    BOOL _isBondedGoods;              //是否为保税商品
+    BOOL _isIndentifierNum;           // 身份证号是否为空
     NSInteger _couponNumber;          // 优惠券购买商品个数
 }
 
@@ -151,6 +153,8 @@ static BOOL isAgreeTerms = YES;
     self.isEnoughCoupon = NO;
     self.isUserCoupon = NO;
     self.isCouponEnoughPay = NO;
+    _isIndentifierNum = NO;
+    _isBondedGoods = NO;
     
     _totalPayment = 0;              //应付款金额
     _discountfee = 0;               //优惠券金额
@@ -231,11 +235,22 @@ static BOOL isAgreeTerms = YES;
 - (void)fetchedAddressData:(NSArray *)purchaseArr {
     if (purchaseArr.count == 0) {
         _addressID = @"";
+        _isIndentifierNum = YES;
     }else {
         NSDictionary *dic = purchaseArr[0];
         _addressID = [dic[@"id"] stringValue];
+        if ([NSString isStringEmpty:dic[@"identification_no"]]) {
+            _isIndentifierNum = YES;
+        }else {
+            _isIndentifierNum = NO;
+        }
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
+    
+    if (_isIndentifierNum && _isBondedGoods) {
+        [self userNotIdCardNumberMessage];
+    }
+    
 }
 #pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
@@ -248,6 +263,11 @@ static BOOL isAgreeTerms = YES;
         _couponNumber = 1;
     }
     for (NSDictionary *dic in goodsArr) {
+        if ([dic[@"is_bonded_goods"] boolValue]) {
+            _isBondedGoods = (_isBondedGoods || YES);
+        }else {
+            _isBondedGoods = (_isBondedGoods || NO);
+        }
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.purchaseGoodsArr addObject:model];
     }
@@ -319,6 +339,14 @@ static BOOL isAgreeTerms = YES;
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
     [self calculationLabelValue];
+    
+    if (_isIndentifierNum && _isBondedGoods) {
+        [self userNotIdCardNumberMessage];
+    }
+}
+- (void)userNotIdCardNumberMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
 }
 #pragma mark 计算最终选需要付款的金额
 - (void)calculationLabelValue {
@@ -418,6 +446,7 @@ static BOOL isAgreeTerms = YES;
         addVC.isButtonSelected = YES;
         addVC.addressID = _addressID;
         addVC.isSelected = YES;
+        addVC.isBondedGoods = _isBondedGoods;
         addVC.delegate = self;
         [self.navigationController pushViewController:addVC animated:YES];
     }else if (index == 101) {
@@ -484,6 +513,10 @@ static BOOL isAgreeTerms = YES;
     }else if (button.tag == 103) {
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
+        if (_isIndentifierNum && _isBondedGoods) {
+            [self userNotIdCardNumberMessage];
+            return ;
+        }
         if (!isAgreeTerms) {
 //            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
             [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];

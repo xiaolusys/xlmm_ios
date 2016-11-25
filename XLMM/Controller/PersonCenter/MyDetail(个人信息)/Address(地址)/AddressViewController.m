@@ -143,6 +143,7 @@
         model.countyName = [dic objectForKey:@"receiver_district"];
         model.streetName = [dic objectForKey:@"receiver_address"];
         model.phoneNumber = [dic objectForKey:@"receiver_mobile"];
+        model.identification_no = [dic objectForKey:@"identification_no"];
         model.isDefault = [[dic objectForKey:@"default"]boolValue];
         [dataArray addObject:model];
     }
@@ -277,6 +278,7 @@
     
         AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
         addVC.isAdd = NO;
+        addVC.isBondedGoods = self.isBondedGoods;
         addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:addVC animated:YES];
     }
@@ -342,10 +344,11 @@
         
     }];
 }
-
+// 修改地址
 - (void)modifyAddress:(AddressModel*)model{
     AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addAdVC.isAdd = NO;
+    addAdVC.isBondedGoods = self.isBondedGoods;
     addAdVC.addressModel = model;
     [self.navigationController pushViewController:addAdVC animated:YES];
     
@@ -357,6 +360,7 @@
     
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addVC.isAdd = YES;
+    addVC.isBondedGoods = self.isBondedGoods;
     [self.navigationController pushViewController:addVC animated:YES];
 }
 @end

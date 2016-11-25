@@ -151,7 +151,7 @@
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;
     CGFloat layoutHeight;
-    if (self.categoryCidString) {
+    if (self.isPushingDays) {
         layoutHeight = 0;
     }else {
         layoutHeight = 104;
@@ -191,8 +191,8 @@
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
     NSString *className = NSStringFromClass([self class]);
     if ([className isEqual:@"PublishNewPdtViewController"]) {
-        if (self.categoryCidString) {
-            urlString = [NSString stringWithFormat:@"%@?%@",urlString,self.categoryCidString];
+        if (self.isPushingDays) {
+            urlString = self.pushungDaysURL;
         }
     }else {
         urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic?ordering=-save_times",Root_URL];

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RESideMenu.h"
+#import "AppDelegate.h"
 
 @protocol RootVCPushOtherVCDelegate <NSObject>
 

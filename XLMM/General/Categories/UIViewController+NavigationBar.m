@@ -21,14 +21,22 @@
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
-    imageView.frame = CGRectMake(0, 14, 16, 16);
-    [button addSubview:imageView];
-    [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    if (aSelector != nil) {
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
+        imageView.frame = CGRectMake(0, 14, 16, 16);
+        [button addSubview:imageView];
+        [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }else {
+        UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+        temporaryBarButtonItem.title = @"";
+        self.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
+    }
     
-    self.navigationItem.leftBarButtonItem = leftItem;
+    
 }
 
 

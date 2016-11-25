@@ -39,6 +39,13 @@
   
     self.title = @"新增收货地址";
     
+    if (self.isBondedGoods && self.isAdd) {
+        self.idCardheight.constant = 140.;
+    }else {
+        self.idCardheight.constant = 91.;
+        self.idCardView.hidden = YES;
+    }
+    
     [self disableTijiaoButton];
     
     [self setInfo];
@@ -57,9 +64,6 @@
         county = _addressModel.countyName;
         
         self.provinceTextField.text = [NSString stringWithFormat:@"%@%@%@", _addressModel.provinceName, _addressModel.cityName, _addressModel.countyName];
-
-        
-        
         UIButton *itemButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -74,9 +78,11 @@
         self.navigationItem.rightBarButtonItem = rightItem;
         
     }
-    
+
     self.numberTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.numberTextField.borderStyle = UITextBorderStyleNone;
+    self.idCardTextField.borderStyle = UITextBorderStyleNone;
+    self.idCardTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     self.nameTextField.borderStyle = UITextBorderStyleNone;
     self.provinceTextField.borderStyle = UITextBorderStyleNone;
     self.detailsAddressTF.borderStyle = UITextBorderStyleNone;
@@ -252,6 +258,7 @@
         [self.nameTextField resignFirstResponder];
         [self.numberTextField resignFirstResponder];
         [self.streetTextView resignFirstResponder];
+        [self.idCardTextField resignFirstResponder];
         return NO;
     }
     else{
@@ -267,7 +274,8 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
-    if (self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""]) {
+    BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && ![self.idCardTextField.text isEqualToString:@""];
+    if (isEnableButton) {
         [self enableTijiaoButton];
         
     } else{
@@ -323,6 +331,7 @@
     [self.nameTextField resignFirstResponder];
     [self.numberTextField resignFirstResponder];
     [self.streetTextView resignFirstResponder];
+    [self.idCardTextField resignFirstResponder];
     [self cancelLocatePicker];
 }
 
@@ -334,7 +343,6 @@
         return;
         
     }
-  
     if ([self.streetTextView.text isEqualToString:@""]) {
         self.infoLabel.text = @"请填写收货详细地址";
         return;
@@ -343,25 +351,36 @@
         self.infoLabel.text = @"请填写收货人姓名";
         return;
     }
+    if ([self.idCardTextField.text isEqualToString:@""]) {
+        self.infoLabel.text = @"请填写收货人身份证号";
+        return;
+    }
     if (self.numberTextField.text.length != 11) {
         self.infoLabel.text = @"请填写正确的收货人手机号码";
         return;
     }
-
+    if (![[JMGlobal global] validateIdentityCard:self.idCardTextField.text]) {
+        self.infoLabel.text = @"请检查身份证号";
+        return ;
+    }
     NSLog(@"save succeed!");
     
-    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     if (_isAdd == YES) {
-        NSDictionary *parameters = @{
-                                     @"receiver_state": province,
-                                     @"receiver_city": city,
-                                     @"receiver_district": county,
-                                     @"receiver_address": _streetTextView.text,
-                                     @"receiver_name": _nameTextField.text,
-                                     @"receiver_mobile": _numberTextField.text,
-                                     };
+        parameters[@"receiver_state"] = province;
+        parameters[@"receiver_city"] = city;
+        parameters[@"receiver_district"] = county;
+        parameters[@"receiver_address"] = _streetTextView.text;
+        parameters[@"receiver_name"] = _nameTextField.text;
+        parameters[@"receiver_mobile"] = _numberTextField.text;
+//        if (self.isBondedGoods) {
+//            parameters[@"identification_no"] = _idCardTextField.text;
+//        }else {
+//            
+//        }
+        
         NSLog(@"parameters = %@", parameters);
-    
+        
         
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/create_address?format=json", Root_URL];
         NSLog(@"url = %@", string);
@@ -376,17 +395,18 @@
     }
     else{
         NSLog(@"修改地址");
-        NSDictionary *parameters = @{
-                                     @"id":_addressModel.addressID,
-                                     @"receiver_state": province,
-                                     @"receiver_city": city,
-                                     @"receiver_district": county,
-                                     @"receiver_address": _streetTextView.text,
-                                     @"receiver_name": _nameTextField.text,
-                                     @"receiver_mobile": _numberTextField.text,
-                                     };
+        parameters[@"id"] = _addressModel.addressID;
+        parameters[@"receiver_state"] = province;
+        parameters[@"receiver_city"] = city;
+        parameters[@"receiver_district"] = county;
+        parameters[@"receiver_address"] = _streetTextView.text;
+        parameters[@"receiver_name"] = _nameTextField.text;
+        parameters[@"receiver_mobile"] = _numberTextField.text;
+        if (self.isBondedGoods) {
+            parameters[@"identification_no"] = _idCardTextField.text;
+        }else {
+        }
         NSLog(@"parameters = %@", parameters);
-        
         NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,self.addressModel.addressID];
         
         NSLog(@"modifyUrlStr = %@", modifyUrlStr);
@@ -403,4 +423,35 @@
     
     //[self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

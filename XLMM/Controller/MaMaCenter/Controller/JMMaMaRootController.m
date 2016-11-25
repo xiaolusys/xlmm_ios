@@ -341,18 +341,18 @@ static NSString *currentTurnsNumberString;
     [self addChildViewController:self.makeMoneyVC];
     [self.scrollView addSubview:self.makeMoneyVC.view];
     
-    self.makeMoneyVC.block = ^(UILabel *currentLabel) {
-        currentTurnsNumberString = @"0";
-        currentLabel.hidden = YES;
-    };
+//    self.makeMoneyVC.block = ^(UILabel *currentLabel) {
+//        currentTurnsNumberString = @"0";
+//        currentLabel.hidden = YES;
+//    };
     
     self.fineClassVC = [[JMFineClassController alloc] init];
     self.fineClassVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
     [self addChildViewController:self.fineClassVC];
     [self.scrollView addSubview:self.fineClassVC.view];
-    self.fineClassVC.isShowNavBar = NO;
-    self.fineClassVC.isShowRightShareBtn = NO;
-    self.fineClassVC.statusBarView.hidden = YES;
+//    self.fineClassVC.isShowNavBar = NO;
+//    self.fineClassVC.isShowRightShareBtn = NO;
+//    self.fineClassVC.statusBarView.hidden = YES;
     
     
     self.activityVC = [[JMSocialActivityController alloc] init];
