@@ -24,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 - (IBAction)addButtonClicked:(id)sender;
-
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, assign) id <PurchaseAddressDelegate>delegate;
 

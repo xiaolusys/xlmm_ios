@@ -712,7 +712,7 @@
 #pragma mark 创建购物车,收藏按钮
 - (void)createCartsView {
     kWeakSelf
-    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
+    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 113, 44, 44)];
     [self.view addSubview:collectionView];
     collectionView.backgroundColor = [UIColor blackColor];
     collectionView.alpha = 0.8;

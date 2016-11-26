@@ -17,9 +17,18 @@
 
 @interface JMRootTabBarController ()
 
+@property (nonatomic, strong) NSMutableArray *vcArray;
+
 @end
 
 @implementation JMRootTabBarController
+
+- (NSMutableArray *)vcArray {
+    if (!_vcArray) {
+        _vcArray = [NSMutableArray array];
+    }
+    return _vcArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,6 +62,7 @@
     
     [childItemsArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
         UIViewController *vc = [NSClassFromString(dict[kClassKey]) new];
+        [self.vcArray addObject:vc];
         vc.title = dict[kTitleKey];
         RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:vc];
         UITabBarItem *item = nav.tabBarItem;
@@ -67,10 +77,11 @@
 }
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc {
+    UIViewController *childVC = self.vcArray[self.selectedIndex];
     if ([vc isKindOfClass:[CSTabBarController class]]) {
         JMKeyWindow.rootViewController = vc;
     }else {
-        [self.navigationController pushViewController:vc animated:YES];
+        [childVC.navigationController pushViewController:vc animated:YES];
     }
 }
 

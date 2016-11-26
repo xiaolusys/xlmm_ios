@@ -90,9 +90,10 @@
 }
 - (void)setEditDict:(NSMutableDictionary *)editDict {
     _editDict = editDict;
+    _isBondedGoods = NO;
     NSArray *goodsArr = editDict[@"orders"];
     for (NSDictionary *goodsDic in goodsArr) {
-        if (![goodsDic[@"is_bonded_goods"] boolValue]) {
+        if ([goodsDic[@"is_bonded_goods"] boolValue]) {
             _isBondedGoods = (_isBondedGoods || YES);
         }else {
             _isBondedGoods = (_isBondedGoods || NO);
@@ -182,7 +183,13 @@
     [dict setObject:_editDict[@"id"] forKey:@"referal_trade_id"]; // == > 订单ID
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:dict WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        [self.navigationController popViewControllerAnimated:YES];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
+        
     } WithFail:^(NSError *error) {
         
     } Progress:^(float progress) {

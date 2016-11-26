@@ -459,6 +459,11 @@ static BOOL isAgreeTerms = YES;
 - (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
     _addressID = model.addressID;
+    if ([NSString isStringEmpty:model.identification_no]) {
+        _isIndentifierNum = YES;
+    }else {
+        _isIndentifierNum = NO;
+    }
 }
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
     [MobClick event:@"logistics_choose"];

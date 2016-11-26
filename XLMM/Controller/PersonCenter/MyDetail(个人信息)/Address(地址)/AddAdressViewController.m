@@ -39,7 +39,7 @@
   
     self.title = @"新增收货地址";
     
-    if (self.isBondedGoods && self.isAdd) {
+    if (self.isBondedGoods && !self.isAdd) {
         self.idCardheight.constant = 140.;
     }else {
         self.idCardheight.constant = 91.;
@@ -57,6 +57,7 @@
         self.streetTextView.text = _addressModel.streetName;
         self.nameTextField.text = _addressModel.buyerName;
         self.numberTextField.text = _addressModel.phoneNumber;
+        self.idCardTextField.text = _addressModel.identification_no;
         self.detailsAddressTF.hidden = YES;
         
         province = _addressModel.provinceName;
@@ -274,7 +275,11 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
-    BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && ![self.idCardTextField.text isEqualToString:@""];
+    BOOL isCardB = YES;
+    if (self.isBondedGoods && !self.isAdd) {
+        isCardB = ![self.idCardTextField.text isEqualToString:@""];
+    }
+    BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && isCardB;
     if (isEnableButton) {
         [self enableTijiaoButton];
         
@@ -351,18 +356,22 @@
         self.infoLabel.text = @"请填写收货人姓名";
         return;
     }
-    if ([self.idCardTextField.text isEqualToString:@""]) {
-        self.infoLabel.text = @"请填写收货人身份证号";
-        return;
-    }
     if (self.numberTextField.text.length != 11) {
         self.infoLabel.text = @"请填写正确的收货人手机号码";
         return;
     }
-    if (![[JMGlobal global] validateIdentityCard:self.idCardTextField.text]) {
-        self.infoLabel.text = @"请检查身份证号";
-        return ;
+    if (self.isBondedGoods && !self.isAdd) {
+        if ([self.idCardTextField.text isEqualToString:@""]) {
+            self.infoLabel.text = @"请填写收货人身份证号";
+            return;
+        }
+        if (![[JMGlobal global] validateIdentityCard:self.idCardTextField.text]) {
+            self.infoLabel.text = @"请检查身份证号";
+            return ;
+        }
+        
     }
+    
     NSLog(@"save succeed!");
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -412,7 +421,13 @@
         NSLog(@"modifyUrlStr = %@", modifyUrlStr);
         
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:modifyUrlStr WithParaments:parameters WithSuccess:^(id responseObject) {
-            [self.navigationController popViewControllerAnimated:YES];
+            NSInteger code = [responseObject[@"code"] integerValue];
+            if (code == 0) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else {
+                [MBProgressHUD showWarning:responseObject[@"info"]];
+            }
+            
         } WithFail:^(NSError *error) {
             
         } Progress:^(float progress) {

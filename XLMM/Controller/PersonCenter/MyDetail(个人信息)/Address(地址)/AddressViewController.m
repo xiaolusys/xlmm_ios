@@ -28,7 +28,7 @@
 }
 
 @property (nonatomic, strong)UITableView *addressTableView;
-
+@property (nonatomic, strong) JMEmptyView *empty;
 
 @end
 
@@ -128,10 +128,11 @@
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
-        [self emptyView];
+        self.empty.hidden = NO;
         [self.addressTableView reloadData];
         return;
     }
+    self.empty.hidden = YES;
     for (NSDictionary *dic in addressArray) {
         AddressModel *model = [[AddressModel alloc] init];
         model.addressID = [dic objectForKey:@"id"];
@@ -148,6 +149,7 @@
         [dataArray addObject:model];
     }
     MMLOG(dataArray);
+    
     
     [self.addressTableView reloadData];
     
@@ -260,8 +262,6 @@
     NSLog(@"%ld", (long)indexPath.row);
     
     if((dataArray == nil) || (dataArray.count == 0)) return;
-    
-    
     AddressModel *model = [dataArray objectAtIndex:indexPath.row];
     
     if (self.isSelected == YES) {
@@ -327,6 +327,8 @@
             button.hidden = YES;
         }
     };
+    self.empty = empty;
+    self.empty.hidden = YES;
 }
 
 #pragma mark --AddressDelegate--
