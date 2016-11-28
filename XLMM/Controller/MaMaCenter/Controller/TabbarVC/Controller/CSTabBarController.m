@@ -87,7 +87,9 @@
     }
     
     self.selectedIndex = index;
-    
+    if (index != 0) {
+        [_homeVC endEarningMessage];
+    }
 }
 
 

@@ -93,6 +93,9 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    _indexCode = 0;
+    [self loadMaMaMessage];
+    [self loadEarningMessage];
     [MobClick beginLogPageView:@"JMMaMaHomeController"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -106,17 +109,27 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _qrCodeRequestDataIndex = 0;
+    _indexCode = 0;
     [self createTableView];
+    [self craeteNavRightButton];
+    [self customUserInfo];
     [self createPullHeaderRefresh];
     [self loadDataSource];
     [self loadfoldLineData];
-    [self loadMaMaMessage];
-    [self loadEarningMessage];
+    
     [self loaderweimaData];
     [self.tableView.mj_header beginRefreshing];
 }
-
-
+- (void)refresh {
+    [self.tableView.mj_header beginRefreshing];
+}
+- (void)endEarningMessage {
+    [self.earningArray removeAllObjects];
+    [self.earningImageArray removeAllObjects];
+    self.msgBottomView = nil;
+    self.msgImage = nil;
+    self.msgLabel = nil;
+}
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
@@ -466,6 +479,7 @@
 - (void)showNewStatusCount:(NSArray *)message Image:(NSArray *)imageArr Index:(NSInteger)index {
     if (message.count == 0) return ;
     [self.view addSubview:self.msgBottomView];
+//    [self.navigationController.view insertSubview:self.msgBottomView belowSubview:self.navigationController.navigationBar];
     [self.msgBottomView addSubview:self.msgImage];
     [self.msgBottomView addSubview:self.msgLabel];
     self.msgLabel.text = message[index];
@@ -480,7 +494,7 @@
         } completion:^(BOOL finished) {
             [self.msgBottomView removeFromSuperview];
             _indexCode ++;
-            int x = arc4random() % 5 + 5;
+            int x = arc4random() % 5 + 6;
             [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
         }];
     }];
