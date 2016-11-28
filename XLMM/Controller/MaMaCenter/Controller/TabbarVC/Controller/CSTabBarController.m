@@ -146,6 +146,8 @@
     
     [self addChildViewController:nav];
     
+    [self.tabBar setBackgroundImage:[UIImage new]];
+    [self.tabBar setShadowImage:[UIImage new]];
     
 }
 

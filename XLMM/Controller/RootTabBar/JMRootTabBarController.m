@@ -32,7 +32,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     
     NSArray *childItemsArray = @[
                                  @{kClassKey  : @"JMHomeRootController",
@@ -73,7 +72,11 @@
         [self addChildViewController:nav];
     }];
     self.selectedIndex = 0;
-
+    
+    [self.tabBar setBackgroundImage:[UIImage new]];
+    [self.tabBar setShadowImage:[UIImage new]];
+    
+    
 }
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc {

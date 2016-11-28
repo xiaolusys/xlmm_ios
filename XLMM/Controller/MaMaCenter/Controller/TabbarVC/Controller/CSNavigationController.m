@@ -36,7 +36,6 @@
     [item setTitleTextAttributes:titleAttr forState:UIControlStateNormal];
     
     
-    
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

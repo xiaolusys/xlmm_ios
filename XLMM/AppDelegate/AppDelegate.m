@@ -88,7 +88,7 @@
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;
-    menuVC.contentViewShadowColor = [UIColor blackColor];
+    menuVC.contentViewShadowColor = [UIColor whiteColor];
     menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
     menuVC.contentViewShadowOpacity = 0.6;
     menuVC.contentViewShadowRadius = 12;
