@@ -259,7 +259,8 @@
 }
 - (void)callback_webViewDidFailLoadWithError:(NSError *)error
 {
-    [MBProgressHUD showError:@"加载失败" ToView:self.viewController.view];
+//    [MBProgressHUD showError:@"加载失败" ToView:self.viewController.view];
+    [MBProgressHUD hideHUDForView:self.viewController.view];
     if([self.delegate respondsToSelector:@selector(webView:didFailLoadWithError:)])
     {
         [self.delegate webView:self didFailLoadWithError:error];

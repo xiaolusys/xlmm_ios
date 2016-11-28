@@ -155,9 +155,11 @@
 }
 #pragma mark ---- 确认修改信息按钮点击
 - (void)sureButtonClick:(UIButton *)sender {
-    if (![[JMGlobal global] validateIdentityCard:idCardStr]) {
-        [MBProgressHUD showWarning:@"请检查身份证号"];
-        return ;
+    if (_isBondedGoods) {
+        if (![[JMGlobal global] validateIdentityCard:idCardStr]) {
+            [MBProgressHUD showWarning:@"请检查身份证号"];
+            return ;
+        }
     }
     NSDictionary *dic = [[NSDictionary alloc] init];
     JMEditAddressModel *model = [JMEditAddressModel new];

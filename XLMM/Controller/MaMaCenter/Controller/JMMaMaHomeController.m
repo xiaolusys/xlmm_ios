@@ -25,7 +25,6 @@
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaClassifyCarryLogViewController.h"
-#import "JMRootTabBarController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,RESideMenuDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -545,12 +544,11 @@
 }
 
 - (void)backClick:(UIButton *)button{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     JMHomeRootController *root = [[JMHomeRootController alloc] init];
-    //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tabBarVC];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
     NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
     leftMenu.pushVCDelegate = root;
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:tabBarVC leftMenuViewController:leftMenu rightMenuViewController:nil];
+    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
     menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
     menuVC.menuPreferredStatusBarStyle = 1;
     menuVC.delegate = self;

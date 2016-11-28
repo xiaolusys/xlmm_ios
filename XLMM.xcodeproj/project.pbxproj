@@ -43,6 +43,8 @@
 		183076AE1C97E31A00B7665E /* NSArray+Reverse.m in Sources */ = {isa = PBXBuildFile; fileRef = 183076AD1C97E31A00B7665E /* NSArray+Reverse.m */; };
 		184FCFBD1CA6699C00F8FC94 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */; };
 		18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */; };
+		1F06CF281DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */; };
+		1F06CF291DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F06CF271DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png */; };
 		1F0EB6441DB47C01005070D4 /* pushingDays_saveImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0EB6421DB47C01005070D4 /* pushingDays_saveImage@2x.png */; };
 		1F0EB6451DB47C01005070D4 /* pushingDays_shareImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0EB6431DB47C01005070D4 /* pushingDays_shareImage@2x.png */; };
 		1F12EC7C1DAC97E600511B58 /* goodsDetailBackColorImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EB601DAC97E600511B58 /* goodsDetailBackColorImage@2x.png */; };
@@ -719,8 +721,6 @@
 		1FF72C941DE7F55B0035F436 /* tabBar_mianPageSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C8E1DE7F55B0035F436 /* tabBar_mianPageSelected@2x.png */; };
 		1FF72C951DE7F55B0035F436 /* tabBar_personalNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C8F1DE7F55B0035F436 /* tabBar_personalNomal@2x.png */; };
 		1FF72C961DE7F55B0035F436 /* tabBar_personalSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */; };
-		1FF72C9A1DE7F7650035F436 /* JMRootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C991DE7F7650035F436 /* JMRootTabBarController.m */; };
-		1FF72C9D1DE836F60035F436 /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C9C1DE836F60035F436 /* RootNavigationController.m */; };
 		321857BE1CA109550085FF21 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B71CA109550085FF21 /* WebViewJavascriptBridge.m */; };
 		321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B91CA109550085FF21 /* WebViewJavascriptBridge_JS.m */; };
 		321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857BB1CA109550085FF21 /* WebViewJavascriptBridgeBase.m */; };
@@ -876,6 +876,8 @@
 		184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		18FCFA211CAAC1BE006C75BC /* NSDictionary+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+UrlEncoding.h"; sourceTree = "<group>"; };
 		18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+UrlEncoding.m"; sourceTree = "<group>"; };
+		1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianBBSNomal@2x.png"; sourceTree = "<group>"; };
+		1F06CF271DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianBBSSelected@2x.png"; sourceTree = "<group>"; };
 		1F0EB6421DB47C01005070D4 /* pushingDays_saveImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushingDays_saveImage@2x.png"; sourceTree = "<group>"; };
 		1F0EB6431DB47C01005070D4 /* pushingDays_shareImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushingDays_shareImage@2x.png"; sourceTree = "<group>"; };
 		1F12EB601DAC97E600511B58 /* goodsDetailBackColorImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodsDetailBackColorImage@2x.png"; sourceTree = "<group>"; };
@@ -1990,10 +1992,6 @@
 		1FF72C8E1DE7F55B0035F436 /* tabBar_mianPageSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianPageSelected@2x.png"; sourceTree = "<group>"; };
 		1FF72C8F1DE7F55B0035F436 /* tabBar_personalNomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_personalNomal@2x.png"; sourceTree = "<group>"; };
 		1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_personalSelected@2x.png"; sourceTree = "<group>"; };
-		1FF72C981DE7F7650035F436 /* JMRootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootTabBarController.h; sourceTree = "<group>"; };
-		1FF72C991DE7F7650035F436 /* JMRootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootTabBarController.m; sourceTree = "<group>"; };
-		1FF72C9B1DE836F60035F436 /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
-		1FF72C9C1DE836F60035F436 /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321857B61CA109550085FF21 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
@@ -2234,7 +2232,6 @@
 		183070ED1C97BE3700B7665E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1FF72C971DE7F74B0035F436 /* RootTabBar */,
 				1F498AEF1D2761BE007E77FC /* WebView */,
 				183070FA1C97BE3700B7665E /* Common */,
 				183071191C97BE3700B7665E /* Login */,
@@ -5882,6 +5879,8 @@
 		1FF72C841DE7F2F40035F436 /* tabBar */ = {
 			isa = PBXGroup;
 			children = (
+				1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */,
+				1F06CF271DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png */,
 				1FF72C8B1DE7F55B0035F436 /* tabBar_featuredNomal@2x.png */,
 				1FF72C8C1DE7F55B0035F436 /* tabBar_featuredSelected@2x.png */,
 				1FF72C8D1DE7F55B0035F436 /* tabBar_mianPageNomal@2x.png */,
@@ -5890,17 +5889,6 @@
 				1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */,
 			);
 			path = tabBar;
-			sourceTree = "<group>";
-		};
-		1FF72C971DE7F74B0035F436 /* RootTabBar */ = {
-			isa = PBXGroup;
-			children = (
-				1FF72C981DE7F7650035F436 /* JMRootTabBarController.h */,
-				1FF72C991DE7F7650035F436 /* JMRootTabBarController.m */,
-				1FF72C9B1DE836F60035F436 /* RootNavigationController.h */,
-				1FF72C9C1DE836F60035F436 /* RootNavigationController.m */,
-			);
-			path = RootTabBar;
 			sourceTree = "<group>";
 		};
 		321857B51CA109550085FF21 /* WebViewJavascriptBridge */ = {
@@ -6510,6 +6498,7 @@
 				1F58779A1DB8A60D00949302 /* CarryLogHeaderView.xib in Resources */,
 				1F12ED1A1DAC97E600511B58 /* 圈圈加载0044@2x.png in Resources */,
 				1F12ED071DAC97E600511B58 /* 圈圈加载0025@2x.png in Resources */,
+				1F06CF291DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png in Resources */,
 				1F9169E21D5056D200327408 /* XLMM copy-Info.plist in Resources */,
 				1F12ED311DAC97E700511B58 /* coupon.png in Resources */,
 				1F12ECB61DAC97E600511B58 /* mamafan.png in Resources */,
@@ -6550,6 +6539,7 @@
 				1FF72C931DE7F55B0035F436 /* tabBar_mianPageNomal@2x.png in Resources */,
 				1F12ECA71DAC97E600511B58 /* mamaeryaoqingColor@2x.png in Resources */,
 				1F12ED741DAC97E700511B58 /* shareQQSpacing.png in Resources */,
+				1F06CF281DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png in Resources */,
 				1F12ED231DAC97E700511B58 /* leftArrowIcon.png in Resources */,
 				1F12ECE51DAC97E600511B58 /* qrcode_scan_btn_flash_off@2x.png in Resources */,
 				1F12ED681DAC97E700511B58 /* confirm2.png in Resources */,
@@ -6960,7 +6950,6 @@
 				1FF72C7C1DE7E7A30035F436 /* JMSocialActivityController.m in Sources */,
 				1F4C9E881D9912600089CE74 /* UdeskChatCell.m in Sources */,
 				1F4C9E7A1D9912600089CE74 /* UdeskContentController.m in Sources */,
-				1FF72C9A1DE7F7650035F436 /* JMRootTabBarController.m in Sources */,
 				1F4C9EA91D9912600089CE74 /* UdeskAudioPlayerHelper.m in Sources */,
 				1F6B7A001DD9C191009AB446 /* JMLaunchView.m in Sources */,
 				1F5877971DB8A60D00949302 /* MaMaCarryLogViewController.m in Sources */,
@@ -7112,7 +7101,6 @@
 				1F4C9E961D9912600089CE74 /* UdeskRobotViewController.m in Sources */,
 				1F27A61D1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				1F27A6601D275FB400A0F80B /* JMRootgoodsCell.m in Sources */,
-				1FF72C9D1DE836F60035F436 /* RootNavigationController.m in Sources */,
 				1F4C9E871D9912600089CE74 /* UdeskBaseCell.m in Sources */,
 				1F58779F1DB8A60D00949302 /* ShopPreviousViewController.m in Sources */,
 				1F5877B51DB8A60D00949302 /* PicCollectionViewCell.m in Sources */,

@@ -27,7 +27,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, strong) JMRootTabBarController *tabBarVC;
 @property (nonatomic, strong) NewLeftViewController *leftMenu;
 @property (nonatomic, strong) RESideMenu *menuVC;
 @property (copy) void (^backgroundSessionCompletionHandler)();

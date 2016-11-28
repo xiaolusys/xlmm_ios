@@ -27,8 +27,6 @@
 #import "JMMaMaRootController.h"
 #import "JMStoreManager.h"
 #import "CSTabBarController.h"
-#import "JMRootTabBarController.h"
-#import "RootNavigationController.h"
 
 
 @interface NewLeftViewController ()
@@ -495,7 +493,7 @@
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
 //            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
             CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
-//            JMKeyWindow.rootViewController = tabBarVC;
+            
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
                 [self.pushVCDelegate rootVCPushOtherVC:tabBarVC];
             }

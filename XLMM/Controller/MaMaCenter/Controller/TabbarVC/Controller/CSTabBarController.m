@@ -127,7 +127,7 @@
     _secondVC = secondVC;
     
     JMSocialActivityController *thirdVC = [[JMSocialActivityController alloc] init];
-    [self setupChildViewController:thirdVC title:@"论坛" imageName:@"tabBar_mianPageNomal" selectedImageName:@"tabBar_mianPageSelected"];
+    [self setupChildViewController:thirdVC title:@"论坛" imageName:@"tabBar_mianBBSNomal" selectedImageName:@"tabBar_mianBBSSelected"];
     _thirdVC = thirdVC;
 
     JMMineController *fouthVC = [[JMMineController alloc] init];
