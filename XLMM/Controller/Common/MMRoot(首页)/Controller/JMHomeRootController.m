@@ -347,7 +347,7 @@ static BOOL isFirstPOP = YES;
     oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
     twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
     
-    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 113) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -711,7 +711,7 @@ static BOOL isFirstPOP = YES;
 #pragma mark 创建购物车,收藏按钮
 - (void)createCartsView {
     kWeakSelf
-    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
+    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 113, 44, 44)];
     [self.view addSubview:collectionView];
     collectionView.backgroundColor = [UIColor blackColor];
     collectionView.alpha = 0.8;

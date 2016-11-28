@@ -45,6 +45,8 @@
 		18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */; };
 		1F06CF281DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */; };
 		1F06CF291DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F06CF271DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png */; };
+		1F06CF2F1DEC129B00142510 /* JMRootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06CF2C1DEC129B00142510 /* JMRootTabBarController.m */; };
+		1F06CF301DEC129B00142510 /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F06CF2E1DEC129B00142510 /* RootNavigationController.m */; };
 		1F0EB6441DB47C01005070D4 /* pushingDays_saveImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0EB6421DB47C01005070D4 /* pushingDays_saveImage@2x.png */; };
 		1F0EB6451DB47C01005070D4 /* pushingDays_shareImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0EB6431DB47C01005070D4 /* pushingDays_shareImage@2x.png */; };
 		1F12EC7C1DAC97E600511B58 /* goodsDetailBackColorImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EB601DAC97E600511B58 /* goodsDetailBackColorImage@2x.png */; };
@@ -878,6 +880,10 @@
 		18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+UrlEncoding.m"; sourceTree = "<group>"; };
 		1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianBBSNomal@2x.png"; sourceTree = "<group>"; };
 		1F06CF271DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianBBSSelected@2x.png"; sourceTree = "<group>"; };
+		1F06CF2B1DEC129B00142510 /* JMRootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootTabBarController.h; sourceTree = "<group>"; };
+		1F06CF2C1DEC129B00142510 /* JMRootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootTabBarController.m; sourceTree = "<group>"; };
+		1F06CF2D1DEC129B00142510 /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
+		1F06CF2E1DEC129B00142510 /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
 		1F0EB6421DB47C01005070D4 /* pushingDays_saveImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushingDays_saveImage@2x.png"; sourceTree = "<group>"; };
 		1F0EB6431DB47C01005070D4 /* pushingDays_shareImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushingDays_shareImage@2x.png"; sourceTree = "<group>"; };
 		1F12EB601DAC97E600511B58 /* goodsDetailBackColorImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodsDetailBackColorImage@2x.png"; sourceTree = "<group>"; };
@@ -2232,6 +2238,7 @@
 		183070ED1C97BE3700B7665E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F06CF2A1DEC129B00142510 /* RootTabBar */,
 				1F498AEF1D2761BE007E77FC /* WebView */,
 				183070FA1C97BE3700B7665E /* Common */,
 				183071191C97BE3700B7665E /* Login */,
@@ -2476,6 +2483,17 @@
 				184FCFBC1CA6699C00F8FC94 /* SSKeychain.m */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		1F06CF2A1DEC129B00142510 /* RootTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				1F06CF2B1DEC129B00142510 /* JMRootTabBarController.h */,
+				1F06CF2C1DEC129B00142510 /* JMRootTabBarController.m */,
+				1F06CF2D1DEC129B00142510 /* RootNavigationController.h */,
+				1F06CF2E1DEC129B00142510 /* RootNavigationController.m */,
+			);
+			path = RootTabBar;
 			sourceTree = "<group>";
 		};
 		1F12EB5D1DAC97E600511B58 /* Resources */ = {
@@ -6950,6 +6968,7 @@
 				1FF72C7C1DE7E7A30035F436 /* JMSocialActivityController.m in Sources */,
 				1F4C9E881D9912600089CE74 /* UdeskChatCell.m in Sources */,
 				1F4C9E7A1D9912600089CE74 /* UdeskContentController.m in Sources */,
+				1F06CF2F1DEC129B00142510 /* JMRootTabBarController.m in Sources */,
 				1F4C9EA91D9912600089CE74 /* UdeskAudioPlayerHelper.m in Sources */,
 				1F6B7A001DD9C191009AB446 /* JMLaunchView.m in Sources */,
 				1F5877971DB8A60D00949302 /* MaMaCarryLogViewController.m in Sources */,
@@ -7101,6 +7120,7 @@
 				1F4C9E961D9912600089CE74 /* UdeskRobotViewController.m in Sources */,
 				1F27A61D1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				1F27A6601D275FB400A0F80B /* JMRootgoodsCell.m in Sources */,
+				1F06CF301DEC129B00142510 /* RootNavigationController.m in Sources */,
 				1F4C9E871D9912600089CE74 /* UdeskBaseCell.m in Sources */,
 				1F58779F1DB8A60D00949302 /* ShopPreviousViewController.m in Sources */,
 				1F5877B51DB8A60D00949302 /* PicCollectionViewCell.m in Sources */,
