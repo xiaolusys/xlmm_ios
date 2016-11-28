@@ -84,6 +84,7 @@
     self.numberTextField.borderStyle = UITextBorderStyleNone;
     self.idCardTextField.borderStyle = UITextBorderStyleNone;
     self.idCardTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.idCardTextField.delegate = self;
     self.nameTextField.borderStyle = UITextBorderStyleNone;
     self.provinceTextField.borderStyle = UITextBorderStyleNone;
     self.detailsAddressTF.borderStyle = UITextBorderStyleNone;
@@ -306,6 +307,12 @@
     
     
 }
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    
+    
+    return YES;
+}
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
@@ -314,13 +321,25 @@
 //    } completion:^(BOOL finished) {
 //        
 //    }];
-    if (self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""]) {
+    BOOL isCardB = YES;
+    if (self.isBondedGoods && !self.isAdd) {
+        isCardB = ![self.idCardTextField.text isEqualToString:@""];
+    }
+    BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && isCardB;
+    if (isEnableButton) {
         [self enableTijiaoButton];
         
     } else{
         [self disableTijiaoButton];
         
     }
+//    if (self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""]) {
+//        [self enableTijiaoButton];
+//        
+//    } else{
+//        [self disableTijiaoButton];
+//        
+//    }
 
     
 }
