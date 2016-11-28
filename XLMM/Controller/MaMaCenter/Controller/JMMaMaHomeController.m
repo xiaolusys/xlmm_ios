@@ -268,13 +268,6 @@
 }
 
 
-
-
-
-
-
-
-
 #pragma ========== UI处理 ==========
 - (void)createTableView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
