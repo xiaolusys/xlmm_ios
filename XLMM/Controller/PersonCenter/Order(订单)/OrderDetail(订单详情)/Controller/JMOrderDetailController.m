@@ -48,7 +48,6 @@
     NSString *tid;
     NSString *_orderTid;
     NSString *_addressGoodsID;
-    
     BOOL _isTimeLineView;
     BOOL _isPopChoiseRefundWay;                // 是否弹出选择退款方式
     BOOL _isTeamBuy;                           // 是否为团购订单

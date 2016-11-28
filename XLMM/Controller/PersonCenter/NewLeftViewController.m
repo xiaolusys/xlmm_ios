@@ -26,6 +26,8 @@
 #import "JMSettingController.h"
 #import "JMMaMaRootController.h"
 #import "JMStoreManager.h"
+#import "CSTabBarController.h"
+
 
 @interface NewLeftViewController ()
 @property (nonatomic, strong)NSNumber *accountMoney;
@@ -62,9 +64,11 @@
             [users setBool:YES forKey:kIsLogin];
         }else {
             NSLog(@"没有登录---");
+            [self quitLogin];
             [users setBool:NO forKey:kIsLogin];
         }
     } WithFail:^(NSError *error) {
+        [self quitLogin];
         [users setBool:NO forKey:kIsLogin];
         NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
         if (response) {
@@ -190,9 +194,11 @@
 //    
 //}
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [super viewDidLoad];    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     CGRect mainSize = [UIScreen mainScreen].bounds;
+    
+    
     
     if (mainSize.size.height > 600) {
 
@@ -211,6 +217,10 @@
     
     //[self.touxiangImageView sd_setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]];
     self.nameLabel.text = @"未登录";
+    self.nameLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+    [self.nameLabel addGestureRecognizer:tap];
+    
 //    NSLog(@"headviewheight = %f, footerViewHeight = %f", _headerViewHeight.constant, _footerViewHeight.constant);
     self.touxiangImage.layer.cornerRadius = 30;
     self.touxiangImage.layer.borderColor = [UIColor touxiangBorderColor].CGColor;
@@ -245,7 +255,6 @@
     self.redCircle.hidden = NO;
 }
 - (IBAction)jifenClicked:(id)sender {
-    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
 //        JifenViewController *jifenVC = [[JifenViewController alloc] initWithNibName:@"JifenViewController" bundle:nil];
         JMMineIntegralController *jifenVC = [[JMMineIntegralController alloc] init];
@@ -253,6 +262,12 @@
             [self.pushVCDelegate rootVCPushOtherVC:jifenVC];
         }
         [self.sideMenuViewController hideMenuViewController];
+//        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        RootNavigationController *nc = [[RootNavigationController alloc] initWithRootViewController:jifenVC];
+//        RESideMenu *sideMenuViewController = delegate.menuVC;
+//        [sideMenuViewController setContentViewController:nc animated:YES];
+//        [sideMenuViewController hideMenuViewController];
+        
     }else{
         
         [self.sideMenuViewController hideMenuViewController];
@@ -401,13 +416,15 @@
     UIAlertView *Alert = [timer.userInfo objectForKey:@"alterView"];
     [Alert dismissWithClickedButtonIndex:0 animated:NO];
 }
-
-
-
 - (IBAction)loginButtonClicked:(id)sender {
-    
+    [self login];
+}
+- (void)tapClick:(UITapGestureRecognizer *)tap {
+    [self login];
+}
+- (void)login {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+        //        SettingViewController *addressVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         JMSettingController *addressVC = [[JMSettingController alloc] init];
         addressVC.userInfoDict = _persinCenterDict;
         if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
@@ -419,7 +436,6 @@
         [self.sideMenuViewController hideMenuViewController];
         [self displayLoginView];
     }
-    
 }
 
 - (IBAction)accountBtnAction:(id)sender {
@@ -475,9 +491,11 @@
 - (IBAction)mamaShopClick:(id)sender {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
-            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
+//            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
+            CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
+            
             if (self.pushVCDelegate && [self.pushVCDelegate respondsToSelector:@selector(rootVCPushOtherVC:)]) {
-                [self.pushVCDelegate rootVCPushOtherVC:mamaCenterVC];
+                [self.pushVCDelegate rootVCPushOtherVC:tabBarVC];
             }
             [self.sideMenuViewController hideMenuViewController];
         }else {

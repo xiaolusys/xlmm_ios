@@ -25,6 +25,7 @@
 @property (nonatomic,strong) UITextField *conSigneeTF;
 
 @property (nonatomic,strong) UITextField *phoneNumTF;
+@property (nonatomic, strong) UITextField *idCardNumTF;
 
 @property (nonatomic,strong) UITextField *detailAddressTF;
 
@@ -57,6 +58,7 @@
     NSArray *_selectedArray;
     NSString *nameStr;
     NSString *phoneStr;
+    NSString *idCardStr;
     NSString *addStr;
     NSString *proStr;
     NSString *cityStr;
@@ -64,7 +66,8 @@
     
     NSString *referal_trade_id;
     NSString *logistic_company_code;
-    
+    BOOL _isBondedGoods;                       // 是否为保价商品
+    CGFloat bondedTFHeight;
 }
 - (NSMutableDictionary *)addressDic {
     if (!_addressDic) {
@@ -75,12 +78,33 @@
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [[NSMutableArray alloc] init];
-        [_dataSource addObject:@[@"收货人",@"手机号"]];
+        if (_isBondedGoods) {
+            [_dataSource addObject:@[@"收货人",@"手机号",@"身份证号"]];
+        }else {
+            [_dataSource addObject:@[@"收货人",@"手机号"]];
+        }
+        
         [_dataSource addObject:@[@"所在地区",@"详细地址"]];
     }
     return _dataSource;
 }
-
+- (void)setEditDict:(NSMutableDictionary *)editDict {
+    _editDict = editDict;
+    _isBondedGoods = NO;
+    NSArray *goodsArr = editDict[@"orders"];
+    for (NSDictionary *goodsDic in goodsArr) {
+        if ([goodsDic[@"is_bonded_goods"] boolValue]) {
+            _isBondedGoods = (_isBondedGoods || YES);
+        }else {
+            _isBondedGoods = (_isBondedGoods || NO);
+        }
+    }
+    bondedTFHeight = 0.;
+    if (_isBondedGoods) {
+        bondedTFHeight = 50.;
+    }
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -98,7 +122,7 @@
 
 - (void)createTableView {
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 240) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 240 + bondedTFHeight) style:UITableViewStylePlain];
     self.tableView = tableView;
     [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
@@ -131,6 +155,12 @@
 }
 #pragma mark ---- 确认修改信息按钮点击
 - (void)sureButtonClick:(UIButton *)sender {
+    if (_isBondedGoods) {
+        if (![[JMGlobal global] validateIdentityCard:idCardStr]) {
+            [MBProgressHUD showWarning:@"请检查身份证号"];
+            return ;
+        }
+    }
     NSDictionary *dic = [[NSDictionary alloc] init];
     JMEditAddressModel *model = [JMEditAddressModel new];
         model.receiver_state = proStr ? proStr : _addressDic[@"receiver_state"];
@@ -139,6 +169,7 @@
         model.receiver_name = nameStr ? nameStr : _addressDic[@"receiver_name"];
         model.receiver_mobile = phoneStr ? phoneStr : _addressDic[@"receiver_mobile"];
         model.receiver_address = addStr ? addStr : _addressDic[@"receiver_address"];
+        model.identification_no = idCardStr ? idCardStr : _addressDic[@"identification_no"];
         dic = model.mj_keyValues;
 
     NSString *urlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update",Root_URL,referal_trade_id];
@@ -154,7 +185,13 @@
     [dict setObject:_editDict[@"id"] forKey:@"referal_trade_id"]; // == > 订单ID
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlStr WithParaments:dict WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        [self.navigationController popViewControllerAnimated:YES];
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
+        
     } WithFail:^(NSError *error) {
         
     } Progress:^(float progress) {
@@ -259,10 +296,29 @@
     self.phoneNumTF.text = editModel.receiver_mobile;
     [self.phoneNumTF addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
     
-    UITextField *detailAddressTF = [[UITextField alloc] initWithFrame:CGRectMake(90, 205, SCREENWIDTH - 100, 20)];
+    
+    if (_isBondedGoods) {
+        UITextField *idCardNumTF = [[UITextField alloc] initWithFrame:CGRectMake(90, 85 + bondedTFHeight, SCREENWIDTH - 100, 20)];
+        self.idCardNumTF = idCardNumTF;
+        [self.view addSubview:self.idCardNumTF];
+        self.idCardNumTF.tag = 102;
+        self.idCardNumTF.delegate = self;
+        self.idCardNumTF.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        self.idCardNumTF.leftViewMode = UITextFieldViewModeAlways;
+        self.idCardNumTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+        self.idCardNumTF.font = [UIFont systemFontOfSize:13.];
+        self.idCardNumTF.text = editModel.identification_no;
+        [self.idCardNumTF addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
+    }else {
+        
+    }
+    
+    
+    
+    UITextField *detailAddressTF = [[UITextField alloc] initWithFrame:CGRectMake(90, 205 + bondedTFHeight, SCREENWIDTH - 100, 20)];
     self.detailAddressTF = detailAddressTF;
     [self.view addSubview:self.detailAddressTF];
-    self.detailAddressTF.tag = 102;
+    self.detailAddressTF.tag = 103;
     self.detailAddressTF.delegate = self;
     self.detailAddressTF.keyboardType = UIKeyboardTypeDefault;
     self.detailAddressTF.leftViewMode = UITextFieldViewModeAlways;
@@ -272,7 +328,7 @@
     [self.detailAddressTF addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
     
     UIImageView *addressImageView = [[UIImageView alloc] init];
-    addressImageView.frame = CGRectMake(90, 155, SCREENWIDTH - 100, 20);
+    addressImageView.frame = CGRectMake(90, 155 + bondedTFHeight, SCREENWIDTH - 100, 20);
     [self.view addSubview:addressImageView];
     self.addressImageView = addressImageView;
     self.addressImageView.userInteractionEnabled = YES;
@@ -319,6 +375,8 @@
         nameStr = textField.text;
     }else if (textField.tag == 101) {
         phoneStr = textField.text;
+    }else if (textField.tag == 102){
+        idCardStr = textField.text;
     }else {
         addStr = textField.text;
     }
@@ -400,6 +458,9 @@
             phoneStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
             break;
         case 102:
+            idCardStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+            break;
+        case 103:
             addStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
             break;
         default:
@@ -440,6 +501,8 @@
 - (void)btnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 
 //#pragma mark --- 创建pickView
 //- (void)createPickView {

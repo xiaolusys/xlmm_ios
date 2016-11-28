@@ -36,6 +36,10 @@
 
 @property (nonatomic, copy) NSString *created;
 /**
+ *  每日推送未读标记
+ */
+@property (nonatomic, copy) NSString *current_dp_turns_num;
+/**
  *  粉丝数量
  */
 @property (nonatomic, copy) NSString *fans_num;

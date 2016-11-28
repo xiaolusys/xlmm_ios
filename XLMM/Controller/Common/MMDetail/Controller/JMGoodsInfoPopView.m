@@ -33,7 +33,7 @@
     NSInteger _goodsNum;
     NSInteger _goodsColorID;
     NSInteger _goodsSizeID;
-    BOOL _isGoodsEnough;             // 判断商品是否有库存
+//    BOOL _isGoodsEnough;             // 判断商品是否有库存
     NSInteger _defaultChoiseSize;
 }
 
@@ -58,7 +58,7 @@
     if (self == [super initWithFrame:frame]) {
         
         _goodsNum = 1;
-        _isGoodsEnough = NO;
+//        _isGoodsEnough = NO;
         
         [self topView];
         _stockDict = [NSMutableDictionary dictionary];
@@ -296,7 +296,7 @@
     self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeD[@"std_sale_price"] floatValue]];
     _stockValue =  [sizeD[@"free_num"] integerValue];
     _sizeSelectedIndex = 1;
-    [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
+//    [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
     
     NSString *newImageUrl = [_imageArray objectAtIndex:0]; // [NSMutableString stringWithString:[_imageArray objectAtIndex:0]];
 //    [newImageUrl appendString:@"?"];
@@ -307,6 +307,7 @@
     _goodsSizeID = [sizeD[@"sku_id"] integerValue];
     _skuColorString = colorD[@"name"];
     _skuSizeString = sizeD[@"name"];
+    [self reloadTypeButton:sizeDic SizeArr:self.goodsSizeArray TypeView:self.sizeView];
     self.nameTitle.text = [NSString stringWithFormat:@"%@(%@ %@)",_goodsTitleString,_skuColorString,_skuSizeString];
     NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
 }
@@ -403,12 +404,12 @@
             [countArr addObject:@(i)];
         }
     }
-    if (countArr.count == 0) {
-        _isGoodsEnough = YES;
-        return ;
-    }else {
-        _isGoodsEnough = NO;
-    }
+//    if (countArr.count == 0) {
+//        _isGoodsEnough = YES;
+//        return ;
+//    }else {
+//        _isGoodsEnough = NO;
+//    }
     BOOL isbool = [countArr containsObject:[NSNumber numberWithInteger:_sizeSelectedIndex]];
     NSInteger maxIndex = [[countArr firstObject] integerValue];
     //    NSInteger maxIndex = [[countArr valueForKeyPath:@"@max.intValue"] integerValue]; // -- > 取出数组中最大值
@@ -490,11 +491,11 @@
 
 - (void)sureButtonClick:(UIButton *)button {
     button.enabled = NO;
-    if (_isGoodsEnough) {
-        button.enabled = YES;
-        [MBProgressHUD showWarning:@"商品库存不足~"];
-        return ;
-    }
+//    if (_isGoodsEnough) {
+//        button.enabled = YES;
+//        [MBProgressHUD showWarning:@"商品库存不足~"];
+//        return ;
+//    }
     NSMutableDictionary *paramer = [NSMutableDictionary dictionary];
     paramer[@"item_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsColorID];
     paramer[@"sku_id"] = [NSString stringWithFormat:@"%ld",(long)_goodsSizeID];

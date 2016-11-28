@@ -24,11 +24,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 - (IBAction)addButtonClicked:(id)sender;
-
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, assign) id <PurchaseAddressDelegate>delegate;
 
-
+@property (nonatomic, assign) BOOL isBondedGoods;
 @property (nonatomic, assign) BOOL isButtonSelected;
 @property (nonatomic, copy) NSString *addressID;
 

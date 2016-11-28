@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CommonWebViewViewController.h"
 
-
-@interface JMSocialActivityController : CommonWebViewViewController
+@interface JMSocialActivityController : UIViewController
 
 @property (nonatomic, copy) NSString *urlString;
 

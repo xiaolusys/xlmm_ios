@@ -28,7 +28,7 @@
 }
 
 @property (nonatomic, strong)UITableView *addressTableView;
-
+@property (nonatomic, strong) JMEmptyView *empty;
 
 @end
 
@@ -128,10 +128,11 @@
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
-        [self emptyView];
+        self.empty.hidden = NO;
         [self.addressTableView reloadData];
         return;
     }
+    self.empty.hidden = YES;
     for (NSDictionary *dic in addressArray) {
         AddressModel *model = [[AddressModel alloc] init];
         model.addressID = [dic objectForKey:@"id"];
@@ -143,10 +144,12 @@
         model.countyName = [dic objectForKey:@"receiver_district"];
         model.streetName = [dic objectForKey:@"receiver_address"];
         model.phoneNumber = [dic objectForKey:@"receiver_mobile"];
+        model.identification_no = [dic objectForKey:@"identification_no"];
         model.isDefault = [[dic objectForKey:@"default"]boolValue];
         [dataArray addObject:model];
     }
     MMLOG(dataArray);
+    
     
     [self.addressTableView reloadData];
     
@@ -259,8 +262,6 @@
     NSLog(@"%ld", (long)indexPath.row);
     
     if((dataArray == nil) || (dataArray.count == 0)) return;
-    
-    
     AddressModel *model = [dataArray objectAtIndex:indexPath.row];
     
     if (self.isSelected == YES) {
@@ -277,6 +278,7 @@
     
         AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
         addVC.isAdd = NO;
+        addVC.isBondedGoods = self.isBondedGoods;
         addVC.addressModel = [dataArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:addVC animated:YES];
     }
@@ -325,6 +327,8 @@
             button.hidden = YES;
         }
     };
+    self.empty = empty;
+    self.empty.hidden = YES;
 }
 
 #pragma mark --AddressDelegate--
@@ -342,10 +346,11 @@
         
     }];
 }
-
+// 修改地址
 - (void)modifyAddress:(AddressModel*)model{
     AddAdressViewController *addAdVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addAdVC.isAdd = NO;
+    addAdVC.isBondedGoods = self.isBondedGoods;
     addAdVC.addressModel = model;
     [self.navigationController pushViewController:addAdVC animated:YES];
     
@@ -357,6 +362,7 @@
     
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addVC.isAdd = YES;
+    addVC.isBondedGoods = self.isBondedGoods;
     [self.navigationController pushViewController:addVC animated:YES];
 }
 @end

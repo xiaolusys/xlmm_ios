@@ -15,7 +15,6 @@
 #import "JMPayment.h"
 #import "JMMiPushManager.h"
 
-
 #define login @"login"
 
 #define appleID @"so.xiaolu.m.xiaolumeimei"

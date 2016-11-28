@@ -13,7 +13,9 @@
 
 - (void)createNavigationBarWithTitle:(NSString *)title selecotr:(SEL)aSelector{
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-
+    
+    
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = title;
     label.textColor = [UIColor blackColor];
@@ -21,14 +23,24 @@
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
-    imageView.frame = CGRectMake(0, 14, 16, 16);
-    [button addSubview:imageView];
-    [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    if (aSelector != nil) {
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2.png"]];
+        imageView.frame = CGRectMake(0, 14, 16, 16);
+        [button addSubview:imageView];
+        [button addTarget:self action:aSelector forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = leftItem;
+    }else {
+        UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] init];
+        temporaryBarButtonItem.title = @"";
+        self.navigationItem.leftBarButtonItem = temporaryBarButtonItem;
+    }
     
-    self.navigationItem.leftBarButtonItem = leftItem;
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+
 }
 
 
@@ -51,8 +63,7 @@
 
 
 /**  在自己定义的导航栏中或者设计稿中需要去除导航栏的1px横线，主要是颜色太不协调了
- *   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+ *
      同样,设置tabBar
      [self.tabBarController.tabBar setBackgroundImage:[UIImage new]];
      [self.tabBarController.tabBar setShadowImage:[UIImage new]];

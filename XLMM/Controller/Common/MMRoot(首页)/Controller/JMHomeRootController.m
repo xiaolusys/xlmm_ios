@@ -37,7 +37,9 @@
 #import "JMLaunchView.h"
 #import "JMCartViewController.h"
 #import "JMGoodsCountTime.h"
+#import "CSTabBarController.h"
 
+static BOOL isFirstPOP = YES;
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -221,19 +223,19 @@
     }];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window addSubview:self.launchView];
-
+    
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
     [self createCartsView];                            // 创建购物车
     [self createTopButton];                            // 创建返回顶部按钮
-//    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
+    //    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
     [self createPullHeaderRefresh];                    // 下拉刷新,重新获取商品展示数据
     [self.tableView.mj_header beginRefreshing];        // 刚进入主页刷新数据
     [self autoUpdateVersion];                          // 版本自动升级
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    if (_isFirstOpenApp) {
+    if (_isFirstOpenApp && isFirstPOP) {
         [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
     }else {
     }
@@ -309,8 +311,8 @@
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {
                 [self endRefresh];
-//                [self.tableView reloadData];
-//                [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+                //                [self.tableView reloadData];
+                //                [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
                 self.segmentView.timeArray = [NSArray arrayWithArray:_timeArray];
             }
         }else {
@@ -323,7 +325,7 @@
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     MJAnimationHeader *header = [MJAnimationHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshView)];
-//    header.lastUpdatedTimeLabel.hidden = YES;
+    //    header.lastUpdatedTimeLabel.hidden = YES;
     self.tableView.mj_header = header;
 }
 - (void)refreshView {
@@ -591,7 +593,11 @@
     }
 }
 - (void)rootVCPushOtherVC:(UIViewController *)vc{
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([vc isKindOfClass:[CSTabBarController class]]) {
+        JMKeyWindow.rootViewController = vc;
+    }else {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (void)rightNavigationClick:(UIButton *)button {
     [MBProgressHUD showLoading:@""];
@@ -601,8 +607,10 @@
     if (isLogin) {
         if (isXLMM) {
             [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
-            [self.navigationController pushViewController:mamaCenterVC animated:YES];
+            //            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
+            //            [self.navigationController pushViewController:mamaCenterVC animated:YES];
+            CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
+            JMKeyWindow.rootViewController = tabBarVC;
         }else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];
@@ -661,7 +669,7 @@
     NSInteger cartNum = [dic[@"result"] integerValue];
     if (cartNum == 0) {
         [JMGoodsCountTime initCountDownWithCurrentTime:0];
-//        [JMGoodsCountTime shareCountTime].timer = nil;
+        //        [JMGoodsCountTime shareCountTime].timer = nil;
         self.cartsLabel.hidden = YES;
         self.cartsCountLabel.hidden = YES;
         [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -743,7 +751,7 @@
     self.cartsLabel.layer.cornerRadius = 8.;
     self.cartsLabel.layer.masksToBounds = YES;
     self.cartsLabel.hidden = YES;
-
+    
     self.cartsCountLabel = [UILabel new];
     [self.cartView addSubview:self.cartsCountLabel];
     self.cartsCountLabel.font = [UIFont systemFontOfSize:18.];
@@ -837,7 +845,7 @@
                 if (isPicked == 0) {  // 服务端返回是否弹出首次使用APP字段
                     [self returnPopView];
                 }else {
-//                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+                    //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
                 }
             }else {
                 [MBProgressHUD showError:@"请登录"];
@@ -871,6 +879,7 @@
 }
 #pragma mark --- 第一次打开程序
 - (void)returnPopView {
+    isFirstPOP = NO;
     JMHomeRootController * __weak weakSelf = self;
     [[JMGlobal global] showpopForReceiveCouponFrame:CGRectMake(0, 0, SCREENWIDTH *0.7 , (SCREENWIDTH * 0.7) * 1.3 + 60) WithBlock:^(UIView *maskView) {
     } ActivePopBlock:^(UIButton *button) {

@@ -22,11 +22,13 @@
 
 
 
-
+@class JMRootTabBarController,NewLeftViewController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate,RESideMenuDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (nonatomic, strong) NewLeftViewController *leftMenu;
+@property (nonatomic, strong) RESideMenu *menuVC;
 @property (copy) void (^backgroundSessionCompletionHandler)();
 
 @end

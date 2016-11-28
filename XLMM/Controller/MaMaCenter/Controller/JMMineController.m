@@ -62,16 +62,27 @@
 @property (nonatomic, strong) UILabel *label8;                 // 我的团队
 @property (nonatomic, strong) UIButton *renewButton;           // 续费按钮
 
-
+@property (nonatomic, strong) NSMutableDictionary *mamaWebDict;
 /**
  *  字典中存储在webView中使用的值
  */
 @property (nonatomic,strong) NSMutableDictionary *diction;
+/**
+ *  下拉刷新的标志
+ */
+@property (nonatomic, assign) BOOL isPullDown;
+
 
 @end
 
 @implementation JMMineController {
     NSString *_mamaID;
+}
+- (NSMutableDictionary *)mamaWebDict {
+    if (_mamaWebDict == nil) {
+        _mamaWebDict = [NSMutableDictionary dictionary];
+    }
+    return _mamaWebDict;
 }
 - (NSMutableDictionary *)diction {
     if (!_diction) {
@@ -81,73 +92,107 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createNavigationBarWithTitle:@"个人中心" selecotr:nil];
     [self createTableView];
     [self createHeaderView];
     
-    
+    [self loadMaMaWeb];
+    [self createPullHeaderRefresh];
+    [self.tableView.mj_header beginRefreshing];
     
     
 }
-//- (void)setExtraModel:(JMMaMaExtraModel *)extraModel {
-//    _extraModel = extraModel;
-//    
-//    
-//}
+#pragma mark 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{  // MJAnimationHeader
+        _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
+        [weakSelf loadDataSource];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
+    }
+}
 
-- (void)setMamaCenterModel:(JMMaMaCenterModel *)mamaCenterModel {
-    _mamaCenterModel = mamaCenterModel;
-    self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:mamaCenterModel.extra_info];
+- (void)loadDataSource {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+        if (responseObject == nil) {
+            [self endRefresh];
+            return ;
+        }else {
+            [self updateMaMaHome:responseObject];
+            [self endRefresh];
+        }
+    } WithFail:^(NSError *error) {
+        [self endRefresh];
+    } Progress:^(float progress) {
+        
+    }];
+}
+- (void)updateMaMaHome:(NSDictionary *)dic {
+    NSDictionary *fortuneDic = dic[@"mama_fortune"];
+    self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
+    self.extraFiguresDic = fortuneDic[@"extra_figures"];
+    self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:self.mamaCenterModel.extra_info];
     
     _mamaID = self.mamaCenterModel.mama_id;
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];  // 妈妈头像
-    self.idLabel.text = [NSString stringWithFormat:@"ID: %@",mamaCenterModel.mama_id];                        // 妈妈ID
+    self.idLabel.text = [NSString stringWithFormat:@"ID: %@",self.mamaCenterModel.mama_id];                        // 妈妈ID
     self.isMaMaVipLabel.text = self.mamaCenterModel.mama_level_display;                                       // 妈妈的VIP状态
     self.mamaLeveLabel.text = self.extraModel.agencylevel_display;                                            // 妈妈的VIP等级
-//    NSString *limtStr = CS_STRING(self.extraModel.surplus_days);                                              // 会员剩余期限
-//    if ([NSString isStringEmpty:limtStr]) {
-//        limtStr = @"0";
-//    }
-//    NSString *numStr = [NSString stringWithFormat:@"会员剩余期限%@天",limtStr];
-//    self.memberLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:numStr SubStringArray:@[limtStr]];
-
+    
     NSString *carryValueStr = [NSString stringWithFormat:@"%.2f",[self.mamaCenterModel.cash_value floatValue]];
     _carryValue = [carryValueStr floatValue];                                                                           // 账户金额
     _historyEarningsRecord = [NSString stringWithFormat:@"%.2f", [self.extraModel.his_confirmed_cash_out floatValue]];  // 累计收益金额
-    _activeValueNum = [NSNumber numberWithInteger:[mamaCenterModel.active_value_num integerValue]];                     // 活跃值
-    _fansNum = [NSNumber numberWithInteger:[mamaCenterModel.fans_num integerValue]];                                    // 粉丝数量
-    _orderRecord = [NSString stringWithFormat:@"%@", mamaCenterModel.order_num];                                        // 订单记录数量
-    _earningsRecord = [NSString stringWithFormat:@"%.2f", [mamaCenterModel.carry_value floatValue]];                    // 累计收益
+    _activeValueNum = [NSNumber numberWithInteger:[self.mamaCenterModel.active_value_num integerValue]];                     // 活跃值
+    _fansNum = [NSNumber numberWithInteger:[self.mamaCenterModel.fans_num integerValue]];                                    // 粉丝数量
+    _orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];                                        // 订单记录数量
+    _earningsRecord = [NSString stringWithFormat:@"%.2f", [self.mamaCenterModel.carry_value floatValue]];                    // 累计收益
     _eventLink = self.mamaCenterModel.mama_event_link;                                                                  // 精选活动链接
-    self.label1.text = [NSString stringWithFormat:@"%.2f元",[mamaCenterModel.cash_value floatValue]];                   // 我的提现
-    self.label2.text = [NSString stringWithFormat:@"%.2f元",[mamaCenterModel.carry_value floatValue]];                  // 累计收益
+    self.label1.text = [NSString stringWithFormat:@"%.2f元",[self.mamaCenterModel.cash_value floatValue]];                   // 我的提现
+    self.label2.text = [NSString stringWithFormat:@"%.2f元",[self.mamaCenterModel.carry_value floatValue]];                  // 累计收益
     self.label3.text = @"查看访客记录";                                                                                   // 访客记录
-    self.label4.text = [NSString stringWithFormat:@"%@个",mamaCenterModel.order_num];                                   // 订单记录
-    self.label5.text = [NSString stringWithFormat:@"%@点",mamaCenterModel.active_value_num];                            // 活跃度
-    self.label6.text = [NSString stringWithFormat:@"%@人",mamaCenterModel.fans_num];                                    // 我的粉丝
-    self.label7.text = @"个人排名Top10";                                                                                 // 个人收益排名
-    self.label8.text = @"我的团队排名";                                                                                   // 团队收益排名
+    self.label4.text = [NSString stringWithFormat:@"%@个",self.mamaCenterModel.order_num];                                   // 订单记录
+    self.label5.text = [NSString stringWithFormat:@"%@点",self.mamaCenterModel.active_value_num];                            // 活跃度
+    self.label6.text = [NSString stringWithFormat:@"%@人",self.mamaCenterModel.fans_num];                                    // 我的粉丝
+//    self.label7.text = @"个人排名Top10";                                                                                 // 个人收益排名
+//    self.label8.text = @"我的团队排名";
+//    self.label7.text = CS_DSTRING(@"我的排名:",self.extraFiguresDic[@"personal_total_rank"]);
+//    self.label8.text = CS_DSTRING(@"团队排名:",self.extraFiguresDic[@"team_total_rank"]);
+    
+    [self.tableView reloadData];
+}
+- (void)loadMaMaWeb {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        [self mamaWebViewData:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+// MaMaWebView跳转链接
+- (void)mamaWebViewData:(NSDictionary *)mamaDic {
+    NSArray *resultsArr = mamaDic[@"results"];
+    NSDictionary *resultsDict = [NSDictionary dictionary];
+    resultsDict = resultsArr[0];
+    NSDictionary *extraDict = resultsDict[@"extra"];
+    _fansWebUrl = extraDict[@"fans_explain"];         // --> 粉丝二维码
+    _teamExplainUrl = extraDict[@"team_explain"];     // --> 团队说明
+    
     
 }
-
-- (void)setWebDict:(NSDictionary *)webDict {
-    _webDict = webDict;
-    _fansWebUrl = webDict[@"fans_explain"];         // --> 粉丝二维码
-    _teamExplainUrl = webDict[@"team_explain"];     // --> 团队说明
-}
-- (void)setExtraFiguresDic:(NSDictionary *)extraFiguresDic {
-    _extraFiguresDic = extraFiguresDic;
-    
-    self.label7.text = CS_DSTRING(@"我的排名:",extraFiguresDic[@"personal_total_rank"]);
-    self.label8.text = CS_DSTRING(@"团队排名:",extraFiguresDic[@"team_total_rank"]);
-    
-}
-
 
 - (void)createHeaderView {
     NSArray *imageArr = @[@"wodetixian",@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"huoyuedu",@"wodefensi"]; // ,@"gerenpaiming",@"tuanduipaiming"
     NSArray *titleArr = @[@"我的提现",@"累计收益",@"访客记录",@"订单记录",@"活跃度",@"我的粉丝"]; // ,@"个人排名",@"团队排名" --> 暂时注释掉
 //    NSArray *descTitleArr = @[@"888.88元",@"888.88元",@"88人访问",@"88个",@"888点",@"888人",@"第1名",@"第1名"];
-    
+    NSArray *titleDescArr = @[@"88.88元",@"88.88元",@"查看访客记录",@"88个",@"88点",@"88人"];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 420)];
     self.tableView.tableHeaderView = headerView;
     
@@ -159,6 +204,7 @@
     iconImage.layer.masksToBounds = YES;
     iconImage.layer.cornerRadius = 30.;
     self.iconImage = iconImage;
+    self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
     
     UILabel *idLabel = [UILabel new];
     [mineInfoView addSubview:idLabel];
@@ -222,46 +268,6 @@
         make.centerY.equalTo(isMaMaVipImage.mas_centerY);
     }];
     
-//    UIView *memberView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 45)];
-//    [headerView addSubview:memberView];
-//    memberView.backgroundColor = [UIColor whiteColor];
-////    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-////    [memberView addGestureRecognizer:tap];
-//    
-//    UILabel *memberL = [UILabel new];
-//    [memberView addSubview:memberL];
-//    memberL.font = [UIFont systemFontOfSize:14.];
-//    memberL.textColor = [UIColor buttonTitleColor];
-//    memberL.text = @"我的会员";
-//    
-//    UILabel *memberLabel = [UILabel new];
-//    [memberView addSubview:memberLabel];
-//    memberLabel.font = [UIFont systemFontOfSize:12.];
-//    memberLabel.textColor = [UIColor buttonTitleColor];
-//    self.memberLabel = memberLabel;
-//    
-//    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [memberView addSubview:self.renewButton];
-//    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
-//    self.renewButton.tag = 108;
-//    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    
-//    [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(memberView).offset(10);
-//        make.centerY.equalTo(memberView.mas_centerY);
-//    }];
-//    [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(memberView).offset(-60);
-//        make.centerY.equalTo(memberView.mas_centerY);
-//    }];
-//    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(memberView);
-//        make.centerY.equalTo(memberView.mas_centerY);
-//        make.width.mas_equalTo(@(60));
-//        make.height.mas_equalTo(@(45));
-//    }];
-    
     UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 210)];
 //    selectBoxView.backgroundColor = [UIColor countLabelColor];
     [headerView addSubview:selectBoxView];
@@ -307,7 +313,7 @@
         UILabel *detailLabel = [UILabel new];
         detailLabel.tag = 200 + i;
         [button addSubview:detailLabel];
-//        detailLabel.text = descTitleArr[i];
+        detailLabel.text = titleDescArr[i];
         detailLabel.font = [UIFont systemFontOfSize:12.];
         detailLabel.textColor = [UIColor dingfanxiangqingColor];
         [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -328,11 +334,6 @@
 
     
 }
-//- (void)tapClick:(UITapGestureRecognizer *)tap {
-//    JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
-//    renewVC.cashValue = _carryValue;
-//    [self.navigationController pushViewController:renewVC animated:YES];
-//}
 /**
  *  100 --> 我的提现
  *  101 --> 累计收益
@@ -350,18 +351,6 @@
         JMChoiseWithDrawController *choiseVC = [[JMChoiseWithDrawController alloc] init];
         choiseVC.myBlance = _carryValue;
         [self.navigationController pushViewController:choiseVC animated:YES];
-//        NSInteger code = [self.extraModel.could_cash_out integerValue]; // 1.提现 0.兑换优惠券
-//        if (code == 1) {
-//            TixianViewController *vc = [[TixianViewController alloc] init];
-//            vc.cantixianjine = _carryValue;
-//            vc.activeValue = [_activeValueNum integerValue];
-//            [self.navigationController pushViewController:vc animated:YES];
-//        }else {
-//            JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-//            shortVC.myBalance = _carryValue;
-//            shortVC.descStr = self.extraModel.cashout_reason;
-//            [self.navigationController pushViewController:shortVC animated:YES];
-//        }
     }else if (index == 101) {
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
         carry.earningsRecord = _earningsRecord;
@@ -407,20 +396,9 @@
     else { }
   
 }
-//#pragma mark - LPAutoScrollViewDatasource
-//- (NSUInteger)jm_numberOfNewViewInScrollView:(JMAutoLoopScrollView *)scrollView {
-//    return self.titlesArray.count;
-//}
-//- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView newViewIndex:(NSUInteger)index forRollView:(JMContentRollView *)rollView {
-//    rollView.title = self.titlesArray[index];
-//}
-//#pragma mark LPAutoScrollViewDelegate
-//- (void)jm_scrollView:(JMAutoLoopScrollView *)scrollView didSelectedIndex:(NSUInteger)index {
 
-//
-//}
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
     self.tableView.dataSource = self;

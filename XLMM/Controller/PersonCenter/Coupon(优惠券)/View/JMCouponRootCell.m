@@ -119,11 +119,11 @@
     [self.couponValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.couponBackImage).offset(spaceLeft);
         make.top.equalTo(weakSelf.couponBackImage).offset(20);
-        make.width.mas_equalTo(@75);
+        make.width.mas_equalTo(@(80));
     }];
     
     [self.couponProsdescLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.couponValueLabel.mas_right).offset(5);
+        make.left.equalTo(weakSelf.couponValueLabel.mas_right).offset(0);
         make.top.equalTo(weakSelf.couponBackImage).offset(8);
     }];
     [self.couponUsefeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -133,7 +133,8 @@
     [self.couponTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.couponUsefeeLabel.mas_bottom).offset(5);
         make.left.equalTo(weakSelf.couponUsefeeLabel);
-        make.width.mas_equalTo(@(SCREENWIDTH - 100 - spaceLeft));
+//        make.width.mas_equalTo(@(SCREENWIDTH - 100 - spaceLeft));
+        make.right.equalTo(weakSelf.couponBackImage).offset(0);
     }];
     
     
@@ -193,14 +194,19 @@
         self.couponValueLabel.textColor = [UIColor redColor];
     }
     self.couponBackImage.image = [UIImage imageNamed:imageStr];
-    
     self.couponValueLabel.text = [NSString stringWithFormat:@"¥%@",couponModel.coupon_value];
+    CGSize sizeToFit = [self.couponValueLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:32.]} context:nil].size;
+    CGFloat valueWidth = sizeToFit.width + 5;
+    [self.couponValueLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_offset(@(valueWidth));
+    }];
     
     self.couponUsefeeLabel.text = couponModel.use_fee_des;
     self.couponProsdescLabel.text = couponModel.pros_desc;
     self.couponTypeLabel.text = couponModel.title;
     self.couponCreatedTimeLabel.text = [self composeString:couponModel.created];
     self.couponDeadLineLabel.text = [self composeString:couponModel.deadline];
+    
     
 }
 - (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID {
@@ -218,6 +224,12 @@
     }
     self.couponBackImage.image = [UIImage imageNamed:imageStr];
     self.couponValueLabel.text = [NSString stringWithFormat:@"¥%@",couponModel.coupon_value];
+    CGSize sizeToFit = [self.couponValueLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:32.]} context:nil].size;
+    CGFloat valueWidth = sizeToFit.width + 5;
+    [self.couponValueLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_offset(@(valueWidth));
+    }];
+
     self.couponUsefeeLabel.text = couponModel.use_fee_des;
     self.couponProsdescLabel.text = couponModel.pros_desc;
     self.couponTypeLabel.text = couponModel.title;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^currentBlock)(UILabel *currentLabel);
+//typedef void(^currentBlock)(UILabel *currentLabel);
 
 @class JMMaMaCenterModel;
 @interface JMMakeMoneyController : UIViewController
@@ -25,6 +25,6 @@ typedef void(^currentBlock)(UILabel *currentLabel);
 
 @property (nonatomic, copy) NSString *currentTurnsNum;
 
-@property (nonatomic, copy) currentBlock block;
+//@property (nonatomic, copy) currentBlock block;
 
 @end

@@ -26,10 +26,16 @@
 @property (weak, nonatomic) IBOutlet UITextField *provinceTextField;
 
 @property (weak, nonatomic) IBOutlet UITextView *streetTextView;
+@property (weak, nonatomic) IBOutlet UIView *idCardView;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *numberTextField;
+@property (weak, nonatomic) IBOutlet UITextField *idCardTextField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *idCardheight;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+
+
+@property (nonatomic, assign) BOOL isBondedGoods;
 
 @property (strong, nonatomic) AddressPickerView *addressPicker;
 @property (assign, nonatomic)BOOL isAdd;

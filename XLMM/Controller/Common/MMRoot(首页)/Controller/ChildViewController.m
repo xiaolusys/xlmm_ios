@@ -79,13 +79,13 @@ static NSString * ksimpleCell = @"simpleCell";
 #pragma mark  -----init----
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [MBProgressHUD hideHUDForView:self.view];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)setCid:(NSString *)cid {
