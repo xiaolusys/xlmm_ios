@@ -410,26 +410,27 @@
 //    }else {
 //        _isGoodsEnough = NO;
 //    }
-    BOOL isbool = [countArr containsObject:[NSNumber numberWithInteger:_sizeSelectedIndex]];
-    NSInteger maxIndex = [[countArr firstObject] integerValue];
-    //    NSInteger maxIndex = [[countArr valueForKeyPath:@"@max.intValue"] integerValue]; // -- > 取出数组中最大值
-    if (maxIndex >= _sizeSelectedIndex) {
-        _sizeSelectedIndex = maxIndex;
-    }else {
-        _sizeSelectedIndex = isbool ? _sizeSelectedIndex : maxIndex;
+    if (countArr.count != 0) {
+        BOOL isbool = [countArr containsObject:[NSNumber numberWithInteger:_sizeSelectedIndex]];
+        NSInteger maxIndex = [[countArr firstObject] integerValue];
+        //    NSInteger maxIndex = [[countArr valueForKeyPath:@"@max.intValue"] integerValue]; // -- > 取出数组中最大值
+        if (maxIndex >= _sizeSelectedIndex) {
+            _sizeSelectedIndex = maxIndex;
+        }else {
+            _sizeSelectedIndex = isbool ? _sizeSelectedIndex : maxIndex;
+        }
+        UIButton *button1 = (UIButton *)[self.sizeView viewWithTag:_sizeSelectedIndex];
+        button1.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+        [button1 setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+        NSString *size = sizeArr[_sizeSelectedIndex - 1];
+        NSDictionary *sizeDict = [sizeDic objectForKey:size];
+        _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
+        _stockValue =  [sizeDict[@"free_num"] integerValue];
+        _skuSizeString = sizeDict[@"name"];
+        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
+        self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
+        NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
     }
-    UIButton *button1 = (UIButton *)[self.sizeView viewWithTag:_sizeSelectedIndex];
-    button1.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-    [button1 setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
-    NSString *size = sizeArr[_sizeSelectedIndex - 1];
-    NSDictionary *sizeDict = [sizeDic objectForKey:size];
-    _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
-    _stockValue =  [sizeDict[@"free_num"] integerValue];
-    _skuSizeString = sizeDict[@"name"];
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
-    NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
-    
     
     //    NSInteger code = 1;
     //    NSInteger flag = 0;
