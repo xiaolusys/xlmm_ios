@@ -19,15 +19,15 @@
     if (self == [super initWithFrame:frame]) {
         
         // 设置字体颜色
-        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+        [self setTitleColor:[UIColor tabBarTitleDarkGrayColor] forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
         
         // 图片居中
         self.imageView.contentMode = UIViewContentModeCenter;
         // 文字居中
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         // 设置文字字体
-        self.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.titleLabel.font = [UIFont systemFontOfSize:11.];
         
     }
     return self;

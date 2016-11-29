@@ -31,10 +31,9 @@
     titleAttr[NSForegroundColorAttributeName] = [UIColor buttonEnabledBackgroundColor];
     [item setTitleTextAttributes:titleAttr forState:UIControlStateNormal];
     
-    
-    
-    
-    
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor clearColor]];
+//    [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [[UINavigationBar appearance] setShadowImage:[UIImage new]];
     
 }
 

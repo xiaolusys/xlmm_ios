@@ -186,8 +186,7 @@ static BOOL isNetPrompt;
 #pragma mark ======== 跳转页面等待动画 ========
 - (void)showWaitLoadingInView:(UIView *)viewController {
     if (self.loadView) {
-        [self.loadView removeFromSuperview];
-        self.loadView = nil;
+        [self removeView];
     }
     if (!self.loadView) {
         UIView *maskView = [[UIView alloc] init];
@@ -207,12 +206,15 @@ static BOOL isNetPrompt;
     }
     [self.loadView endLoading];
     if (self.loadView) {
-        [self.loadView removeFromSuperview];
-        self.loadView = nil;
-        [self.maskView removeFromSuperview];
+        [self removeView];
     }
 }
-
+- (void)removeView {
+    [self.loadView removeFromSuperview];
+    [self.maskView removeFromSuperview];
+    self.loadView = nil;
+    self.maskView = nil;
+}
 
 /*
     befoData -- > 获取的当前时间几天 前/后 的时间 .

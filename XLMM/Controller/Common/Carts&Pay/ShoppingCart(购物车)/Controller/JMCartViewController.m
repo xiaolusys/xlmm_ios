@@ -16,7 +16,6 @@
 #import "JMCartCurrentCell.h"
 #import "JMCartHistoryCell.h"
 
-
 @interface JMCartViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, JMCartCurrentCellDelegate, JMCartHistoryCellDelegate> {
     BOOL currentCartDownLoad;
     BOOL historyCartDownLoad;
@@ -64,7 +63,13 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
+    
+    if (self.isHideNavigationLeftItem) {
+        [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
+    }else {
+        [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
+    }
+    
     isEmpty = YES;
     currentCartDownLoad = NO;
     historyCartDownLoad = NO;
@@ -74,6 +79,13 @@
     [self downloadCurrentCartData];
     [self downloadHistoryCartData];
     
+    
+}
+- (void)refreshCartData {
+    currentCartDownLoad = NO;
+    historyCartDownLoad = NO;
+    [self downloadCurrentCartData];
+    [self downloadHistoryCartData];
     
 }
 #pragma mark ======== 获取当前/历史购物车信息 ========
@@ -170,6 +182,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 110;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerClass:[JMCartCurrentCell class] forCellReuseIdentifier:JMCartCurrentCellIdentifier];
@@ -179,6 +192,12 @@
     self.bottomView = bottomView;
     [self.view addSubview:bottomView];
 
+    CGFloat hideNavigationLeftItemHeight;
+    if (self.isHideNavigationLeftItem) {
+        hideNavigationLeftItemHeight = 49.;
+    }else {
+        hideNavigationLeftItemHeight = 0.;
+    }
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.top.equalTo(weakSelf.view).offset(64);
@@ -186,7 +205,8 @@
         make.bottom.equalTo(bottomView.mas_top);
     }];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.equalTo(weakSelf.view);
+        make.left.equalTo(weakSelf.view);
+        make.bottom.equalTo(weakSelf.view).offset(-hideNavigationLeftItemHeight);
         make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@(0));
     }];
@@ -204,15 +224,18 @@
     [self.bottomView addSubview:self.payMentMoneyLabel];
     
     [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@(20));
         make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
         make.top.equalTo(weakSelf.bottomView).offset(10);
+//        make.height.mas_equalTo(@(20));
     }];
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(weakSelf.bottomView).offset(40);
+        make.width.mas_equalTo(@(SCREENWIDTH - 30));
         make.height.mas_equalTo(@(40));
         make.bottom.equalTo(weakSelf.bottomView).offset(-10);
         make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
-        make.width.mas_equalTo(@(SCREENWIDTH - 30));
+        
     }];
     
     
@@ -291,6 +314,9 @@
             [self.sureButton mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@(0));
             }];
+            [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(@(0));
+            }];
             return 260;
             
         } else {
@@ -299,6 +325,9 @@
             }];
             [self.sureButton mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@(40));
+            }];
+            [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(@(20));
             }];
             return 50;
         }

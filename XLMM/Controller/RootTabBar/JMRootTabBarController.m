@@ -9,15 +9,25 @@
 #import "JMRootTabBarController.h"
 #import "RootNavigationController.h"
 #import "CSTabBarController.h"
+#import "JMHomeRootController.h"
+#import "JMCartViewController.h"
+#import "JMStoreupController.h"
+
+
 
 #define kClassKey   @"rootVCClassString"
 #define kTitleKey   @"title"
 #define kImgKey     @"imageName"
 #define kSelImgKey  @"selectedImageName"
 
-@interface JMRootTabBarController ()
+@interface JMRootTabBarController () //<UITabBarControllerDelegate,UITabBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray *vcArray;
+@property (nonatomic, strong) JMHomeRootController *homeVC;
+@property (nonatomic, strong) JMCartViewController *cartVC;
+@property (nonatomic, strong) JMStoreupController *storeVC;
+
+
 
 @end
 
@@ -44,15 +54,15 @@
                                    kImgKey    : @"tabBar_featuredNomal",
                                    kSelImgKey : @"tabBar_featuredSelected"},
                                  
-                                 @{kClassKey  : @"JMHomeRootController",
+                                 @{kClassKey  : @"JMCartViewController",
                                    kTitleKey  : @"购物车",
-                                   kImgKey    : @"tabBar_featuredNomal",
-                                   kSelImgKey : @"tabBar_featuredSelected"},
+                                   kImgKey    : @"tabBar_shoppingCartNomal",
+                                   kSelImgKey : @"tabBar_shoppingCartSelected"},
                                  
-                                 @{kClassKey  : @"JMHomeRootController",
+                                 @{kClassKey  : @"JMStoreupController",
                                    kTitleKey  : @"收藏",
-                                   kImgKey    : @"tabBar_featuredNomal",
-                                   kSelImgKey : @"tabBar_featuredSelected"},
+                                   kImgKey    : @"tabBar_collectionNomal",
+                                   kSelImgKey : @"tabBar_collectionSelected"},
                                  
                                  @{kClassKey  : @"JMHomeRootController",
                                    kTitleKey  : @"我",
@@ -65,6 +75,7 @@
         vc.title = dict[kTitleKey];
         RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:vc];
         UITabBarItem *item = nav.tabBarItem;
+        item.tag = idx;
         item.title = dict[kTitleKey];
         item.image = [UIImage imageNamed:dict[kImgKey]];
         item.selectedImage = [[UIImage imageNamed:dict[kSelImgKey]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -72,12 +83,34 @@
         [self addChildViewController:nav];
     }];
     self.selectedIndex = 0;
-    
+    self.tabBar.barTintColor = [UIColor whiteColor];
     [self.tabBar setBackgroundImage:[UIImage new]];
     [self.tabBar setShadowImage:[UIImage new]];
+    self.tabBar.backgroundColor = [UIColor whiteColor];
+
+}
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    [super setSelectedIndex:selectedIndex];
     
     
 }
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    if (item.tag == 2) {
+        NSLog(@"JMCartViewController --- > 点击了");
+        self.cartVC = self.vcArray[item.tag];
+        self.cartVC.isHideNavigationLeftItem = YES;
+        [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
+        [self.cartVC refreshCartData];
+
+    }else if (item.tag == 3) {
+        self.storeVC = self.vcArray[item.tag];
+        self.storeVC.isHideNavitaionLeftBar = YES;
+        
+        
+    }
+    
+}
+
 
 - (void)rootVCPushOtherVC:(UIViewController *)vc {
     UIViewController *childVC = self.vcArray[self.selectedIndex];

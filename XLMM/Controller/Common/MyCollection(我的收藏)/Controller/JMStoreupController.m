@@ -19,7 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self createNavigationBarWithTitle:@"我的收藏" selecotr:@selector(btnClicked:)];
+    if (self.isHideNavitaionLeftBar) {
+        [self createNavigationBarWithTitle:@"我的收藏" selecotr:nil];
+    }else {
+        [self createNavigationBarWithTitle:@"我的收藏" selecotr:@selector(btnClicked:)];
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     
