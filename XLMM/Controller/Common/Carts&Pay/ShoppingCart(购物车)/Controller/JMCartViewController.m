@@ -90,6 +90,7 @@
 }
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;

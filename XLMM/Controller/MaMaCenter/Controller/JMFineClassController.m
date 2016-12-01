@@ -67,6 +67,7 @@
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
+    self.baseWebView.viewController = self;
 //    self.baseWebView.progressBlock = ^(double estimatedProgress) {
 //        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
 //    };

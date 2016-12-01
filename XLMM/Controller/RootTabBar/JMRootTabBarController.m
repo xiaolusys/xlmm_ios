@@ -12,7 +12,8 @@
 #import "JMHomeRootController.h"
 #import "JMCartViewController.h"
 #import "JMStoreupController.h"
-
+#import "JMPersonalPageController.h"
+#import "JMLogInViewController.h"
 
 
 #define kClassKey   @"rootVCClassString"
@@ -20,14 +21,17 @@
 #define kImgKey     @"imageName"
 #define kSelImgKey  @"selectedImageName"
 
-@interface JMRootTabBarController () //<UITabBarControllerDelegate,UITabBarDelegate>
+@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate>
+
+
 
 @property (nonatomic, strong) NSMutableArray *vcArray;
 @property (nonatomic, strong) JMHomeRootController *homeVC;
 @property (nonatomic, strong) JMCartViewController *cartVC;
 @property (nonatomic, strong) JMStoreupController *storeVC;
+@property (nonatomic, strong) JMPersonalPageController *personalVC;
 
-
+@property (nonatomic, strong) UIButton *bageButton;
 
 @end
 
@@ -40,9 +44,21 @@
     return _vcArray;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self requestCartNumber];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"shoppingCartNumChange" object:nil];
     
+    self.delegate = self;
     NSArray *childItemsArray = @[
                                  @{kClassKey  : @"JMHomeRootController",
                                    kTitleKey  : @"主页",
@@ -64,7 +80,7 @@
                                    kImgKey    : @"tabBar_collectionNomal",
                                    kSelImgKey : @"tabBar_collectionSelected"},
                                  
-                                 @{kClassKey  : @"JMHomeRootController",
+                                 @{kClassKey  : @"JMPersonalPageController",
                                    kTitleKey  : @"我",
                                    kImgKey    : @"tabBar_personalNomal",
                                    kSelImgKey : @"tabBar_personalSelected"} ];
@@ -74,21 +90,29 @@
         [self.vcArray addObject:vc];
         vc.title = dict[kTitleKey];
         RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:vc];
-        UITabBarItem *item = nav.tabBarItem;
+        UITabBarItem *item = vc.tabBarItem;
         item.tag = idx;
         item.title = dict[kTitleKey];
         item.image = [UIImage imageNamed:dict[kImgKey]];
         item.selectedImage = [[UIImage imageNamed:dict[kSelImgKey]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor buttonEnabledBackgroundColor]} forState:UIControlStateSelected];
         [self addChildViewController:nav];
+        
     }];
     self.selectedIndex = 0;
+    
+    self.cartVC = self.vcArray[2];
+    
+    
     self.tabBar.barTintColor = [UIColor whiteColor];
     [self.tabBar setBackgroundImage:[UIImage new]];
     [self.tabBar setShadowImage:[UIImage new]];
     self.tabBar.backgroundColor = [UIColor whiteColor];
 
+    
+    
 }
+
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
     [super setSelectedIndex:selectedIndex];
     
@@ -96,37 +120,101 @@
 }
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     if (item.tag == 2) {
-        NSLog(@"JMCartViewController --- > 点击了");
-        self.cartVC = self.vcArray[item.tag];
-        self.cartVC.isHideNavigationLeftItem = YES;
-        [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
-        [self.cartVC refreshCartData];
-
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//            self.cartVC = self.vcArray[item.tag];
+            self.cartVC.isHideNavigationLeftItem = YES;
+            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
+            [self.cartVC refreshCartData];
+        }else {
+        }
     }else if (item.tag == 3) {
-        self.storeVC = self.vcArray[item.tag];
-        self.storeVC.isHideNavitaionLeftBar = YES;
-        
-        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            self.storeVC = self.vcArray[item.tag];
+            self.storeVC.isHideNavitaionLeftBar = YES;
+        }else {
+        }
+    }else if (item.tag == 4) {
+        self.personalVC = self.vcArray[item.tag];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            self.personalVC.isHideNavigationBar = NO;
+            [self.personalVC refreshUserInfo];
+        }else {
+            self.personalVC.isHideNavigationBar = YES;
+        }
+    }else {
     }
+
+}
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController NS_AVAILABLE_IOS(3_0) {
+    if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            return YES;
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            loginVC.isTabBarLogin = YES;
+            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+            [viewController presentViewController:rootNav animated:YES completion:nil];
+            return NO;
+        }
+    }else if ([viewController.tabBarItem.title isEqualToString:@"收藏"]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            return YES;
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            loginVC.isTabBarLogin = YES;
+            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+            [viewController presentViewController:rootNav animated:YES completion:nil];
+            return NO;
+        }
+    }else if ([viewController.tabBarItem.title isEqualToString:@"我"]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            return YES;
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            loginVC.isTabBarLogin = YES;
+            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+            [viewController presentViewController:rootNav animated:YES completion:nil];
+            return NO;
+        }
+    }else {
+        return YES;
+    }
+  
+}
+
+
+#pragma mark --- 购物车数量 --- 
+- (void)setLabelNumber {
+    [self requestCartNumber];
+}
+
+- (void)requestCartNumber {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchData:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+        
+    }];
+    
     
 }
-
-
-- (void)rootVCPushOtherVC:(UIViewController *)vc {
-    UIViewController *childVC = self.vcArray[self.selectedIndex];
-    if ([vc isKindOfClass:[CSTabBarController class]]) {
-        JMKeyWindow.rootViewController = vc;
+- (void)fetchData:(NSDictionary *)dict {
+    NSString *cartNum = dict[@"result"];
+    if ([cartNum integerValue] == 0) {
+        NSLog(@"badgeValuebadgeValuebadgeValuebadgeValue");
+        self.cartVC.tabBarItem.badgeValue = nil;
     }else {
-        [childVC.navigationController pushViewController:vc animated:YES];
+        self.cartVC.tabBarItem.badgeColor = [UIColor buttonEnabledBackgroundColor];
+        self.cartVC.tabBarItem.badgeValue = CS_STRING(cartNum);
     }
 }
-
 
 
 
 
 @end
-
 
 
 

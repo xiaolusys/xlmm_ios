@@ -10,4 +10,9 @@
 
 @interface JMPersonalPageController : UIViewController
 
+- (void)refreshUserInfo;
+@property (nonatomic, assign) BOOL isHideNavigationBar;
+
+
+
 @end

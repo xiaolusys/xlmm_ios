@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewLeftViewController.h"
 
-
-@interface JMRootTabBarController : UITabBarController <RootVCPushOtherVCDelegate>
+@interface JMRootTabBarController : UITabBarController
 
 @end

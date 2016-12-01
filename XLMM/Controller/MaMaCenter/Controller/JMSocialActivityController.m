@@ -62,6 +62,7 @@
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
+    self.baseWebView.viewController = self;
     [self.view addSubview:self.baseWebView];
     [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
 

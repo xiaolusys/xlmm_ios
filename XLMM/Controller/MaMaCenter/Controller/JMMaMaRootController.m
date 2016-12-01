@@ -20,7 +20,6 @@
 #import "JMFineClassController.h"
 #import "WebViewController.h"
 #import <RESideMenu.h>
-#import "NewLeftViewController.h"
 #import "JMHomeRootController.h"
 
 

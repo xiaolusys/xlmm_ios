@@ -16,7 +16,6 @@
 #import "Udesk.h"
 #import "JMStoreManager.h"
 #import "JMHomeRootController.h"
-#import "NewLeftViewController.h"
 #import "RESideMenu.h"
 #import "JMRewardsController.h"
 #import "JMPushingDaysController.h"
@@ -560,18 +559,19 @@
 
 - (void)backClick:(UIButton *)button{
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    leftMenu.pushVCDelegate = tabBarVC;
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:tabBarVC leftMenuViewController:leftMenu rightMenuViewController:nil];
-    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
-    menuVC.menuPreferredStatusBarStyle = 1;
-    menuVC.delegate = self;
-    menuVC.contentViewShadowColor = [UIColor blackColor];
-    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
-    menuVC.contentViewShadowOpacity = 0.6;
-    menuVC.contentViewShadowRadius = 12;
-    menuVC.contentViewShadowEnabled = YES;
-    JMKeyWindow.rootViewController = menuVC;
+//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+//    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
+//    leftMenu.pushVCDelegate = tabBarVC;
+//    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:tabBarVC leftMenuViewController:leftMenu rightMenuViewController:nil];
+//    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
+//    menuVC.menuPreferredStatusBarStyle = 1;
+//    menuVC.delegate = self;
+//    menuVC.contentViewShadowColor = [UIColor blackColor];
+//    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
+//    menuVC.contentViewShadowOpacity = 0.6;
+//    menuVC.contentViewShadowRadius = 12;
+//    menuVC.contentViewShadowEnabled = YES;
+    JMKeyWindow.rootViewController = tabBarVC;
     
 }
 #pragma mark ======== RESideMenu Delegate ========

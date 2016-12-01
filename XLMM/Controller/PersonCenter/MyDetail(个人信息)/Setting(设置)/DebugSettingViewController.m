@@ -113,7 +113,7 @@
                                   serverip = @"http://192.168.1.8:8888";
                                   break;
                               case 6:
-                                  serverip = @"http://192.168.1.8:8888";
+                                  serverip = @"http://192.168.1.11:9000";
                                   break;
                                   
                               default:
@@ -122,7 +122,7 @@
                       }];
     _radioButtons1.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.f];
     _radioButtons1.contentEdgeInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumm.com", @"warden.xiaolumm.com",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.8:8888", @"192.168.1.8:8888"] forState:UIControlStateNormal];
+    [_radioButtons1 setButtonsTitles:@[@"m.xiaolumeimei.com", @"staging.xiaolumm.com", @"warden.xiaolumm.com",  @"192.168.1.56:8000", @"192.168.1.31:9000", @"192.168.1.8:8888", @"192.168.1.11:9000"] forState:UIControlStateNormal];
 //    [_radioButtons1 setButtonsContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [_radioButtons1 setButtonsTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_radioButtons1 setButtonsImage:circleImageNormal forState:UIControlStateNormal];
@@ -314,7 +314,7 @@
 - (void)logout {
     //退出
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:@"login"];
+    [userDefaults setBool:NO forKey:kIsLogin];
     [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
     
     [userDefaults setBool:NO forKey:@"isXLMM"];

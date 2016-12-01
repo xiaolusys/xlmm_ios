@@ -167,18 +167,28 @@ static BOOL isNetPrompt;
         if (!responseObject) return;
         NSDictionary *result = responseObject;
         if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
-            // 手机登录成功 ，保存用户信息以及登录途径
             [defaults setBool:YES forKey:kIsLogin];
-            NSLog(@"Still logined");
+            [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+            [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
         } else{
-            // 手机登录需要 ，保存用户信息以及登录途径
             [defaults setBool:NO forKey:kIsLogin];
-            NSLog(@"maybe cookie timeout,need login");
         }
     } WithFail:^(NSError *error) {
-        // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
-        NSLog(@"maybe cookie timeout,need login");
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                    [users removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }else {
+                    
+                }
+            }
+        }
     } Progress:^(float progress) {
     }];
 }

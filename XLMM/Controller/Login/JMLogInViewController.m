@@ -180,6 +180,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
     if (islogin) {
     }
@@ -192,7 +194,10 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMLogInViewController"];
 }
-
+- (void)phoneNumberLogin:(NSNotification *)notification{
+    //  NSLog(@"手机登录");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark --- 监听微信登录的通知
 - (void)update:(NSNotificationCenter *)notification {
     
@@ -317,8 +322,8 @@
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
     [MBProgressHUD hideHUD];
+    [self dismissViewControllerAnimated:YES completion:nil];
 //    [MobClick profileSignInWithPUID:@"playerID"];
-    
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
@@ -348,7 +353,12 @@
 - (void)btnClick1:(UIButton *)btn {
 }
 - (void)btnClick:(UIButton *)btn {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.isTabBarLogin) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (NSArray *)randomArray{

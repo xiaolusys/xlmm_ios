@@ -15,7 +15,7 @@
 #import "JMMineController.h"
 #import "UIImage+ColorImage.h"
 #import "CSNavigationController.h"
-
+#import "JMLogInViewController.h"
 
 
 @interface CSTabBarController () <CSTabBarDelegate>
@@ -84,12 +84,16 @@
     if (index == 0 && self.selectedIndex == index) {
         //点击首页  刷新
 //        [_homeVC refresh];
+        
     }
     
     self.selectedIndex = index;
     if (index != 0) {
         [_homeVC endEarningMessage];
+        
+        
     }
+    
 }
 
 

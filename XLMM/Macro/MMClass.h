@@ -47,6 +47,7 @@
 
 
 #define JMKeyWindow [UIApplication sharedApplication].keyWindow
+#define XLMM_APP ((AppDelegate*)[[UIApplication sharedApplication] delegate])
 /**
  *  循环引用
  */
