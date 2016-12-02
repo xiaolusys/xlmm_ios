@@ -57,8 +57,22 @@
     [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     
 }
+- (void)refreshWebView {
+    if (![NSString isStringEmpty:self.urlString] && self.baseWebView != nil) {
+        [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
+    }
+}
 
 - (void)createWebView {
+//    NSString *titleStr = @"返回刷新";
+//    CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
+//    [button addTarget:self action:@selector(refreshWebView) forControlEvents:UIControlEventTouchUpInside];
+//    [button setTitle:titleStr forState:UIControlStateNormal];
+//    [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+//    button.titleLabel.font = [UIFont systemFontOfSize:14.];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;

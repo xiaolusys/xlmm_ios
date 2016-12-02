@@ -36,6 +36,7 @@
  *  上拉加载的标志
  */
 @property (nonatomic, assign) BOOL isLoadMore;
+@property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
 
 @end
 
@@ -60,6 +61,7 @@ static NSString *identifier = @"AccountCell";
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
 }
@@ -90,6 +92,7 @@ static NSString *identifier = @"AccountCell";
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
+    self.footer = self.tableView.mj_footer;
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -138,6 +141,7 @@ static NSString *identifier = @"AccountCell";
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
+        self.footer.stateLabel.hidden = YES;
         [self emptyView];
         return;
     }
@@ -208,6 +212,7 @@ static NSString *identifier = @"AccountCell";
     empty.block = ^(NSInteger index) {
         if (index == 100) {
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }

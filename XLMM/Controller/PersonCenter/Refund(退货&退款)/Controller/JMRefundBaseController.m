@@ -165,6 +165,7 @@
     empty.block = ^(NSInteger index) {
         if (index == 100) {
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }
@@ -184,6 +185,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMRefundBaseController"];
 

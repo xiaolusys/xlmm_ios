@@ -130,7 +130,7 @@
     [oneView addSubview:dibMoneyL];
     dibMoneyL.font = [UIFont systemFontOfSize:14.];
     dibMoneyL.textColor = [UIColor buttonTitleColor];
-    dibMoneyL.text = @"零钱支付";
+    dibMoneyL.text = @"实付金额";
     
     UILabel *dibMoneyLabel = [UILabel new];
     [oneView addSubview:dibMoneyLabel];
@@ -147,7 +147,7 @@
     [twoView addSubview:clearingMoneyL];
     clearingMoneyL.font = [UIFont systemFontOfSize:14.];
     clearingMoneyL.textColor = [UIColor buttonTitleColor];
-    clearingMoneyL.text = @"实付金额";
+    clearingMoneyL.text = @"零钱支付";
     
     UILabel *clearingMoneyLabel = [UILabel new];
     [twoView addSubview:clearingMoneyLabel];

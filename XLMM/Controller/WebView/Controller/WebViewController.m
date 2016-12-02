@@ -252,6 +252,7 @@
         }
         loadStr = _webDiction[@"web_url"];
     }
+    NSLog(@"loadRequest | loadStr =  --- > %@",loadStr);
     if (![NSString isStringEmpty:loadStr]) {
         NSURL *url = [NSURL URLWithString:loadStr];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -274,7 +275,7 @@
 //    // 在此处获取返回的cookie
 //    NSMutableDictionary *cookieDic = [NSMutableDictionary dictionary];
 //    
-//    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];
+//    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];破
 //    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
 //    
 //    for (NSHTTPCookie *cookie in [cookieJar cookies]) {

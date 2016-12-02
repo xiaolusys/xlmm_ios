@@ -243,7 +243,10 @@
                              @"devtype":LOGINDEVTYPE};
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:newDic WithSuccess:^(id responseObject) {
         NSDictionary *result = responseObject;
-        if (result.count == 0) return;
+        if (result.count == 0) {
+            [MBProgressHUD hideHUD];
+            return;
+        }
         if ([[result objectForKey:@"rcode"]integerValue] != 0) {
             [MBProgressHUD hideHUD];
             [self alertMessage:[result objectForKey:@"msg"]];
@@ -252,7 +255,7 @@
         NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
         [userdefaults setBool:YES forKey:kIsLogin];
         [userdefaults synchronize];
-        
+        [MBProgressHUD hideHUD];
         [self loginSuccessful];
         
         
@@ -321,7 +324,6 @@
 
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
-    [MBProgressHUD hideHUD];
     [self dismissViewControllerAnimated:YES completion:nil];
 //    [MobClick profileSignInWithPUID:@"playerID"];
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];

@@ -63,12 +63,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-//    [self setUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
+    [self setUserInfo];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -125,6 +125,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
+            self.isHideNavigationBar = YES;
             [self quitLogin];
             [self endRefresh];
             return ;
@@ -132,17 +133,20 @@
         NSDictionary *result = responseObject;
         if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
             [defaults setBool:YES forKey:kIsLogin];
+            self.isHideNavigationBar = NO;
             [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
             [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
             [self updateUserInfo:responseObject];
             [self.collectionView reloadData];
         } else{
             [self quitLogin];
+            self.isHideNavigationBar = YES;
             [defaults setBool:NO forKey:kIsLogin];
         }
         [self endRefresh];
     } WithFail:^(NSError *error) {
         [self quitLogin];
+        self.isHideNavigationBar = YES;
         [defaults setBool:NO forKey:kIsLogin];
         NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
         if (response) {
@@ -203,15 +207,15 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *userInfo =  [userDefaults objectForKey:@"userInfo"];
     
-    [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"headimgurl"]]];
+    [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[userInfo objectForKey:@"thumbnail"]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.userNameLabel.text = [userInfo objectForKey:@"nickname"];
-    [self setUserInfo];
+//    [self setUserInfo];
 }
 - (void)phoneNumberLogin:(NSNotification *)notification{
     self.userNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     //    [self setJifenInfo];
     //    [self setYHQInfo];
-    [self setUserInfo];
+//    [self setUserInfo];
 }
 
 - (void) displayLoginView{

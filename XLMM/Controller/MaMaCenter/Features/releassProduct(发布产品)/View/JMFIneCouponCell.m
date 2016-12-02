@@ -63,7 +63,7 @@
 - (void)setModel:(JMFineCouponModel *)model {
     _model = model;
     
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.head_img_url imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.head_img imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage"]];
     self.titleLabel.text = model.name;
     
     

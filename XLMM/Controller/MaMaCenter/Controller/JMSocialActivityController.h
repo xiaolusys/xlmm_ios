@@ -10,6 +10,12 @@
 
 @interface JMSocialActivityController : UIViewController
 
+- (void)refreshWebView;
+
+
 @property (nonatomic, copy) NSString *urlString;
+
+
+
 
 @end

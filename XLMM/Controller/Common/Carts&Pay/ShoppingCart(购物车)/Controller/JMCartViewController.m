@@ -31,7 +31,8 @@
 @property (nonatomic, strong) CartListModel *deleteModel;
 @property (nonatomic, strong) NSMutableArray *currentCartDataSource;
 @property (nonatomic, strong) NSMutableArray *historyCartDataSource;
-
+@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, strong) JMEmptyView *emptyView;
 
 @end
 
@@ -51,6 +52,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"ShoppingCart"];
+    
+    
+    isEmpty = YES;
+    currentCartDownLoad = NO;
+    historyCartDownLoad = NO;
+    [self downloadCurrentCartData];
+    [self downloadHistoryCartData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -69,15 +77,10 @@
     }else {
         [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
     }
-    
-    isEmpty = YES;
-    currentCartDownLoad = NO;
-    historyCartDownLoad = NO;
-    
+
     [self createTableView];
     [[JMGlobal global] showWaitLoadingInView:self.view];
-    [self downloadCurrentCartData];
-    [self downloadHistoryCartData];
+    
     
     
 }
@@ -107,6 +110,7 @@
     currentCartDownLoad = YES;
     if (careArr.count > 0) {
         isEmpty = NO;
+        [self dismissDefaultView];
     }
     if (careArr.count <= 0 && historyCartDownLoad && isEmpty) {
         [self displayDefaultView];
@@ -145,10 +149,12 @@
     historyCartDownLoad = YES;
     if (array.count > 0) {
         isEmpty = NO;
+        [self dismissDefaultView];
     }
     if (array.count <= 0 && currentCartDownLoad && isEmpty) {
         [self displayDefaultView];
     }
+    
     [self.historyCartDataSource removeAllObjects];
     for (NSDictionary *dic in array) {
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
@@ -162,16 +168,32 @@
 }
 - (void)displayDefaultView {
     kWeakSelf
-    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    [self.view addSubview:maskView];
-    maskView.backgroundColor = [UIColor whiteColor];
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 240) / 2, SCREENWIDTH, 240) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
-    [maskView addSubview:empty];
-    empty.block = ^(NSInteger index) {
+    self.maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    [self.view addSubview:self.maskView];
+    self.maskView.backgroundColor = [UIColor whiteColor];
+    self.emptyView = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 240) / 2, SCREENWIDTH, 240) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
+    [self.maskView addSubview:self.emptyView];
+    self.emptyView.block = ^(NSInteger index) {
         if (index == 100) {
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            if (weakSelf.isHideNavigationLeftItem) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+            }else {
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            }
+
+            
         }
     };
+}
+- (void)dismissDefaultView {
+    if (self.maskView) {
+        [self.maskView removeFromSuperview];
+        self.maskView = nil;
+    }
+    if (self.emptyView) {
+        [self.emptyView removeFromSuperview];
+        self.emptyView = nil;
+    }
 }
 
 
@@ -348,7 +370,11 @@
             JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
             empty.block = ^(NSInteger index) {
                 if (index == 100) {
-                    [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                    if (self.isHideNavigationLeftItem) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+                    }else {
+                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                    }
                 }
             };
             return empty;

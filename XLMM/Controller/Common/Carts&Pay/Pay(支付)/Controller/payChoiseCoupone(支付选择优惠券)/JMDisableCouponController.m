@@ -66,7 +66,8 @@
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }

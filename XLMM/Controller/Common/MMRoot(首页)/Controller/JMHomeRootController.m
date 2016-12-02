@@ -370,6 +370,10 @@ static BOOL isFirstPOP = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
+    
+}
+- (void)endAutoScroll {
+    [self.pageView endAutoScroll];
 }
 #pragma mark 创建自定义 navigationView
 - (void)createNavigaView {

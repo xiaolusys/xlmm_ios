@@ -16,6 +16,7 @@
 #import "JMLogInViewController.h"
 
 
+
 #define kClassKey   @"rootVCClassString"
 #define kTitleKey   @"title"
 #define kImgKey     @"imageName"
@@ -30,6 +31,7 @@
 @property (nonatomic, strong) JMCartViewController *cartVC;
 @property (nonatomic, strong) JMStoreupController *storeVC;
 @property (nonatomic, strong) JMPersonalPageController *personalVC;
+
 
 @property (nonatomic, strong) UIButton *bageButton;
 
@@ -56,7 +58,8 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"shoppingCartNumChange" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber) name:@"shoppingCartNumChange" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
     
     self.delegate = self;
     NSArray *childItemsArray = @[
@@ -100,31 +103,30 @@
         
     }];
     self.selectedIndex = 0;
-    
+    self.homeVC = self.vcArray[0];
     self.cartVC = self.vcArray[2];
+    self.personalVC = self.vcArray[4];
     
-    
-    self.tabBar.barTintColor = [UIColor whiteColor];
-    [self.tabBar setBackgroundImage:[UIImage new]];
-    [self.tabBar setShadowImage:[UIImage new]];
-    self.tabBar.backgroundColor = [UIColor whiteColor];
-
-    
-    
+//    self.tabBar.barTintColor = [UIColor whiteColor];
+//    [self.tabBar setBackgroundImage:[UIImage new]];
+//    [self.tabBar setShadowImage:[UIImage new]];
+//    self.tabBar.backgroundColor = [UIColor whiteColor];
+  
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
     [super setSelectedIndex:selectedIndex];
-    
-    
 }
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    self.selectedIndex = item.tag;
+    if (item.tag != 0) {
+        [self.homeVC endAutoScroll];
+    }
     if (item.tag == 2) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//            self.cartVC = self.vcArray[item.tag];
             self.cartVC.isHideNavigationLeftItem = YES;
             [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
-            [self.cartVC refreshCartData];
+//            [self.cartVC refreshCartData];
         }else {
         }
     }else if (item.tag == 3) {
@@ -134,10 +136,9 @@
         }else {
         }
     }else if (item.tag == 4) {
-        self.personalVC = self.vcArray[item.tag];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.personalVC.isHideNavigationBar = NO;
-            [self.personalVC refreshUserInfo];
+//            [self.personalVC refreshUserInfo];
         }else {
             self.personalVC.isHideNavigationBar = YES;
         }
@@ -182,10 +183,14 @@
   
 }
 
-
+- (void)shoppingCartkuaiquguangguang {
+    self.selectedIndex = 0;
+    
+}
 #pragma mark --- 购物车数量 --- 
 - (void)setLabelNumber {
-    [self requestCartNumber];
+//    [self requestCartNumber];
+    self.cartVC.tabBarItem.badgeValue = nil;
 }
 
 - (void)requestCartNumber {
@@ -203,10 +208,9 @@
 - (void)fetchData:(NSDictionary *)dict {
     NSString *cartNum = dict[@"result"];
     if ([cartNum integerValue] == 0) {
-        NSLog(@"badgeValuebadgeValuebadgeValuebadgeValue");
         self.cartVC.tabBarItem.badgeValue = nil;
     }else {
-        self.cartVC.tabBarItem.badgeColor = [UIColor buttonEnabledBackgroundColor];
+//        self.cartVC.tabBarItem.badgeColor = [UIColor buttonEnabledBackgroundColor];
         self.cartVC.tabBarItem.badgeValue = CS_STRING(cartNum);
     }
 }

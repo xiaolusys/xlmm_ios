@@ -53,8 +53,8 @@
         PayReq *req = [[PayReq alloc] init];
         req.openID = wxDic[@"appId"];
         req.partnerId = wxDic[@"partnerId"];
-        req.prepayId  = CS_STRING(wxDic[@"prepayId"]);
-        req.nonceStr  = CS_STRING(wxDic[@"nonceStr"]);
+        req.prepayId  = wxDic[@"prepayId"];
+        req.nonceStr  = wxDic[@"nonceStr"];
         req.timeStamp = [wxDic[@"timeStamp"] intValue];
         req.package   = wxDic[@"packageValue"];
         req.sign      = wxDic[@"sign"];

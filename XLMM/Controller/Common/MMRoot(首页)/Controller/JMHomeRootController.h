@@ -12,8 +12,13 @@
 
 @interface JMHomeRootController : UIViewController<NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDownloadDelegate,UIDocumentInteractionControllerDelegate>
 
+- (void)endAutoScroll;
+
+
 @property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) AVPlayer *player;
+
+
 
 @end

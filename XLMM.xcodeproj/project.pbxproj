@@ -2271,6 +2271,7 @@
 		183070FA1C97BE3700B7665E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1FD800461DF10A2500382E44 /* homePageFineCounpGoods */,
 				1F3793711DED51AC0044E325 /* PersonalPage */,
 				1FE52E3D1D94E0BD0051D5A0 /* Category(分类) */,
 				1F2F9E0E1D5820BF00E3A68B /* MyCollection(我的收藏) */,
@@ -5781,6 +5782,37 @@
 			path = SDK;
 			sourceTree = "<group>";
 		};
+		1FD800461DF10A2500382E44 /* homePageFineCounpGoods */ = {
+			isa = PBXGroup;
+			children = (
+				1FD800471DF10A2500382E44 /* Controller */,
+				1FD800481DF10A2500382E44 /* Model */,
+				1FD800491DF10A2500382E44 /* View */,
+			);
+			path = homePageFineCounpGoods;
+			sourceTree = "<group>";
+		};
+		1FD800471DF10A2500382E44 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1FD800481DF10A2500382E44 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1FD800491DF10A2500382E44 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1FDD071A1D45A6240010231F /* payChoiseCoupone(支付选择优惠券) */ = {
 			isa = PBXGroup;
 			children = (
@@ -7502,7 +7534,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = so.xiaolu.m.xiaolumeimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "754e85db-d802-42a0-a817-eee073ff4bf4";
+				PROVISIONING_PROFILE = "383a410f-3dd8-4cbf-a317-65b741a2bb12";
 				PROVISIONING_PROFILE_SPECIFIER = iOS_dev0412;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s arm64";

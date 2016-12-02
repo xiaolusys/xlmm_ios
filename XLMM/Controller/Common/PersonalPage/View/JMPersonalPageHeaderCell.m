@@ -46,7 +46,7 @@
     }
     
     NSString *nickName = [dict objectForKey:@"nick"];
-    [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"thumbnail"]]];
+    [self.userIconImage sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"thumbnail"]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     if (nickName.length > 0 || [nickName class] != [NSNull null]) {
         self.userNameLabel.text = [dict objectForKey:@"nick"];
     }
@@ -159,6 +159,7 @@
         [button1 setTitle:titleArr[i] forState:UIControlStateNormal];
         [button1 setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
         button1.titleLabel.font = [UIFont systemFontOfSize:11.];
+        button1.userInteractionEnabled = NO;
         [button addSubview:button1];
         
 
