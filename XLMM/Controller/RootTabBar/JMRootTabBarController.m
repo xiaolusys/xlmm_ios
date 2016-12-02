@@ -68,7 +68,7 @@
                                    kImgKey    : @"tabBar_mianPageNomal",
                                    kSelImgKey : @"tabBar_mianPageSelected"},
                                  
-                                 @{kClassKey  : @"JMHomeRootController",
+                                 @{kClassKey  : @"JMFineCounpGoodsController",
                                    kTitleKey  : @"精品汇",
                                    kImgKey    : @"tabBar_featuredNomal",
                                    kSelImgKey : @"tabBar_featuredSelected"},
@@ -105,6 +105,7 @@
     self.selectedIndex = 0;
     self.homeVC = self.vcArray[0];
     self.cartVC = self.vcArray[2];
+    self.storeVC = self.vcArray[3];
     self.personalVC = self.vcArray[4];
     
 //    self.tabBar.barTintColor = [UIColor whiteColor];
@@ -117,36 +118,40 @@
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
     [super setSelectedIndex:selectedIndex];
 }
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    self.selectedIndex = item.tag;
-    if (item.tag != 0) {
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if ([viewController.tabBarItem.title isEqualToString:@"主页"]) {
+        
+    }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
         [self.homeVC endAutoScroll];
-    }
-    if (item.tag == 2) {
+    }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
+        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            
             self.cartVC.isHideNavigationLeftItem = YES;
             [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
-//            [self.cartVC refreshCartData];
+            //            [self.cartVC refreshCartData];
         }else {
         }
-    }else if (item.tag == 3) {
+        
+    }else if ([viewController.tabBarItem.title isEqualToString:@"收藏"]) {
+        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            self.storeVC = self.vcArray[item.tag];
             self.storeVC.isHideNavitaionLeftBar = YES;
         }else {
         }
-    }else if (item.tag == 4) {
+    }else if ([viewController.tabBarItem.title isEqualToString:@"我"]) {
+        [self.homeVC endAutoScroll];
+        
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.personalVC.isHideNavigationBar = NO;
-//            [self.personalVC refreshUserInfo];
+            //            [self.personalVC refreshUserInfo];
         }else {
             self.personalVC.isHideNavigationBar = YES;
         }
-    }else {
-    }
-
+    }else { }
 }
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController NS_AVAILABLE_IOS(3_0) {
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             return YES;
@@ -243,6 +248,37 @@
 
 
 
+//- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+//    self.selectedIndex = item.tag;
+//    if (item.tag != 0) {
+//        [self.homeVC endAutoScroll];
+//    }
+//    if (item.tag == 2) {
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//            self.cartVC = self.vcArray[2];
+//            self.cartVC.isHideNavigationLeftItem = YES;
+//            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
+////            [self.cartVC refreshCartData];
+//        }else {
+//        }
+//    }else if (item.tag == 3) {
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//            self.storeVC = self.vcArray[item.tag];
+//            self.storeVC.isHideNavitaionLeftBar = YES;
+//        }else {
+//        }
+//    }else if (item.tag == 4) {
+//        self.personalVC = self.vcArray[4];
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//            self.personalVC.isHideNavigationBar = NO;
+////            [self.personalVC refreshUserInfo];
+//        }else {
+//            self.personalVC.isHideNavigationBar = YES;
+//        }
+//    }else {
+//    }
+//
+//}
 
 
 

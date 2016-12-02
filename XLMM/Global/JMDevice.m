@@ -33,7 +33,10 @@
 - (void)cerateUserAgent {
     IMYWebView *webView = [[IMYWebView alloc] initWithFrame:CGRectZero];
     NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    
+//    __block NSString *oldAgent;
+//    [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id resalout, NSError *error) {
+//        oldAgent = resalout;
+//    }];
     //add my info to the new agent
     if(oldAgent == nil) return;
     
@@ -66,8 +69,12 @@
     
     //regist the new agent
     NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:userAgent];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults registerDefaults:userAgent];
+    [userDefaults synchronize];
     
+//    NSString *usa = [userDefaults stringForKey:@"UserAgent"];
+//    NSLog(@"%@",usa);
     
 }
 - (NSString *)getUserAgent {

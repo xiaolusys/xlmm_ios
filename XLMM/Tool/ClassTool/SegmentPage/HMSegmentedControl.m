@@ -283,7 +283,7 @@
             CGSize size = [self measureTitleAtIndex:idx];
             stringWidth = size.width + 5;   // iOS 10.0 字体宽度改变.
             stringHeight = size.height;
-            CGRect rectDiv, fullRect;
+            CGRect rectDiv, fullRect, bottomLineRect;
             
             // Text inside the CATextLayer will appear blurry unless the rect values are rounded
             BOOL locationUp = (self.selectionIndicatorLocation == HMSegmentedControlSelectionIndicatorLocationUp);
@@ -293,8 +293,9 @@
             CGRect rect;
             if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleFixed) {
                 rect = CGRectMake((self.segmentWidth * idx) + (self.segmentWidth - stringWidth) / 2, y, stringWidth, stringHeight);
-                rectDiv = CGRectMake((self.segmentWidth * idx) - (self.verticalDividerWidth / 2), self.selectionIndicatorHeight * 2, self.verticalDividerWidth, self.frame.size.height - (self.selectionIndicatorHeight * 4));
+                rectDiv = CGRectMake((self.segmentWidth * idx) - (self.verticalDividerWidth / 2), self.frame.size.height * 0.2 , self.verticalDividerWidth, self.frame.size.height * 0.6);//y == self.selectionIndicatorHeight * 2  h == self.frame.size.height - (self.selectionIndicatorHeight * 4)
                 fullRect = CGRectMake(self.segmentWidth * idx, 0, self.segmentWidth, oldRect.size.height);
+                bottomLineRect = CGRectMake(0, self.frame.size.height - 0.5, SCREENWIDTH, 0.5);
             } else if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {
                 // When we are drawing dynamic widths, we need to loop the widths array to calculate the xOffset
                 CGFloat xOffset = 0;
@@ -310,6 +311,7 @@
                 rect = CGRectMake(xOffset, y, widthForIndex, stringHeight);
                 fullRect = CGRectMake(self.segmentWidth * idx, 0, widthForIndex, oldRect.size.height);
                 rectDiv = CGRectMake(xOffset - (self.verticalDividerWidth / 2), self.selectionIndicatorHeight * 2, self.verticalDividerWidth, self.frame.size.height - (self.selectionIndicatorHeight * 4));
+                bottomLineRect = CGRectMake(0, self.frame.size.height - 0.5, SCREENWIDTH, 0.5);
             }
             
             // Fix rect position/size to avoid blurry labels
@@ -330,7 +332,12 @@
                 verticalDividerLayer.frame = rectDiv;
                 verticalDividerLayer.backgroundColor = self.verticalDividerColor.CGColor;
                 
+                CALayer *bottomLayer = [CALayer layer];
+                bottomLayer.frame = bottomLineRect;
+                bottomLayer.backgroundColor = self.verticalBottomLineColor.CGColor;
+                
                 [self.scrollView.layer addSublayer:verticalDividerLayer];
+                [self.scrollView.layer addSublayer:bottomLayer];
             }
         
             [self addBackgroundAndBorderLayerWithRect:fullRect];
