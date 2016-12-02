@@ -172,7 +172,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
     kWeakSelf
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(weakSelf.contentView);
+        make.top.left.equalTo(weakSelf.contentView);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@110);
     }];
     [nameTitle mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -223,10 +224,9 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }];
     
     [timerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(currentView.mas_bottom);
-        make.left.right.equalTo(weakSelf.contentView);
+        make.left.bottom.equalTo(weakSelf.contentView);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@39);
-        make.bottom.equalTo(weakSelf.contentView);
     }];
     
     [shengyuTimer mas_makeConstraints:^(MASConstraintMaker *make) {

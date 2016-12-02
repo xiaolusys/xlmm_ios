@@ -16,7 +16,6 @@
 #import "Udesk.h"
 #import "JMStoreManager.h"
 #import "JMHomeRootController.h"
-#import "RESideMenu.h"
 #import "JMRewardsController.h"
 #import "JMPushingDaysController.h"
 #import "ProductSelectionListViewController.h"
@@ -27,7 +26,7 @@
 #import "JMRootTabBarController.h"
 
 
-@interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,RESideMenuDelegate,JMMaMaHomeHeaderViewDelegte> {
+@interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
     NSInteger _indexCode;
     NSString *_orderRecord;             // 订单记录
     NSString *_earningsRecord;          // 收益记录
@@ -559,46 +558,8 @@
 
 - (void)backClick:(UIButton *)button{
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-//    leftMenu.pushVCDelegate = tabBarVC;
-//    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:tabBarVC leftMenuViewController:leftMenu rightMenuViewController:nil];
-//    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
-//    menuVC.menuPreferredStatusBarStyle = 1;
-//    menuVC.delegate = self;
-//    menuVC.contentViewShadowColor = [UIColor blackColor];
-//    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
-//    menuVC.contentViewShadowOpacity = 0.6;
-//    menuVC.contentViewShadowRadius = 12;
-//    menuVC.contentViewShadowEnabled = YES;
     JMKeyWindow.rootViewController = tabBarVC;
-    
 }
-#pragma mark ======== RESideMenu Delegate ========
-- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
-{
-    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
-}
-
-- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
-{
-    // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
-    
-}
-
-- (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
-{
-    // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
-}
-
-- (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
-{
-    // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
-}
-
-
-
 
 
 

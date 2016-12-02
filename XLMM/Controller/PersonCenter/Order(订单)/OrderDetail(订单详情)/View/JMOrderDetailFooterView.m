@@ -211,7 +211,7 @@
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(oneView.mas_bottom).offset(20);
         make.left.equalTo(weakSelf).offset(10);
-        make.right.equalTo(weakSelf);
+        make.width.mas_equalTo(@(SCREENWIDTH - 10));
         make.height.mas_equalTo(@1);
     }];
     

@@ -21,7 +21,7 @@
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
-
+@property (nonatomic,strong) UIButton *topButton;
 
 @end
 
@@ -40,7 +40,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.collectionView.mj_header beginRefreshing];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,8 +51,8 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [self createCollectionView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-    
-    
+    [self createTopButton];
+    [self.collectionView.mj_header beginRefreshing];
 
 }
 - (void)refresh {
@@ -216,6 +216,35 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }
     };
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;
+}
+#pragma mark -- 添加返回顶部按钮
+- (void)createTopButton {
+    UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:topButton];
+    self.topButton = topButton;
+    [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-20);
+        make.width.height.mas_equalTo(@50);
+    }];
+    //    self.topButton.frame = CGRectMake(SCREENWIDTH - 70, SCREENHEIGHT - 70, 50, 50);
+    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    self.topButton.hidden = YES;
+    [self.topButton bringSubviewToFront:self.view];
+    
+}
+- (void)topButtonClick:(UIButton *)btn {
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    self.topButton.hidden = YES;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [[JMGlobal global] clearAllSDCache];
 }
 
 //- (void)emptyView {

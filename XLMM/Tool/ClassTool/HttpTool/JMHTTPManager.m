@@ -15,6 +15,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[self alloc] initWithBaseURL:nil];
+        manager.requestSerializer.timeoutInterval = 10.;
     });
     return manager;
 }

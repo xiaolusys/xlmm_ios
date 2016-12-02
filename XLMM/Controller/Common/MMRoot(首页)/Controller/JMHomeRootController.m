@@ -675,7 +675,7 @@ static BOOL isFirstPOP = YES;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"contentOffset"]) {
         CGFloat offsetY = self.tableView.contentOffset.y;
-        self.topButton.hidden = offsetY > SCREENWIDTH * 3 ? NO : YES;
+        self.topButton.hidden = offsetY > SCREENHEIGHT * 2 ? NO : YES;
     }
 }
 - (void)dealloc {

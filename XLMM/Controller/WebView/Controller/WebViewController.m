@@ -29,7 +29,7 @@
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
 //static BOOL isLogin;
-@interface WebViewController ()<UIWebViewDelegate,UMSocialUIDelegate,WKScriptMessageHandler,IMYWebViewDelegate,WKUIDelegate> {
+@interface WebViewController ()<UMSocialUIDelegate,WKScriptMessageHandler,IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
     NSString *_fineCouponTid;
 }
 
@@ -508,9 +508,20 @@
 
     [self.bridge setWebViewDelegate:self];
     
+    // 商品详情
     [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
         [self jsLetiOSWithData:data callBack:responseCallback];
     }];
+    // 支付
+    [self.bridge registerHandler:@"callNativePurchase" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"%@",data);
+//        NSDictionary *para = [self dictionaryWithJsonString:data];
+//        NSDictionary *dataDic = para[@"charge"];
+//        NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
+//        [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:self];
+    }];
+    
     /**
      *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
      */
@@ -583,7 +594,27 @@
 //        
 //    }];
 //}
-
+/*!
+ * @brief 把格式化的JSON格式的字符串转换成字典
+ * @param jsonString JSON格式的字符串
+ * @return 返回字典
+ */
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
 
 /**
  *  跳转购物车
@@ -741,17 +772,17 @@
 }
 
 #pragma mark alert弹出框
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-    NSLog(@"%s",__FUNCTION__);
-    // 确定按钮
-    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler();
-    }];
-    // alert弹出框
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:alertAction];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
+//- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+//    NSLog(@"%s",__FUNCTION__);
+//    // 确定按钮
+//    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//        completionHandler();
+//    }];
+//    // alert弹出框
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addAction:alertAction];
+//    [self presentViewController:alertController animated:YES completion:nil];
+//}
 
 
 
