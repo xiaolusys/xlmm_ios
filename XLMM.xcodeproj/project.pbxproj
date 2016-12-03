@@ -683,6 +683,7 @@
 		1FD5D9121DC88EED007E8DDE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321857C21CA109990085FF21 /* WebKit.framework */; };
 		1FD8004C1DF1111B00382E44 /* JMFineCounpGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8004B1DF1111B00382E44 /* JMFineCounpGoodsController.m */; };
 		1FD8004F1DF12AE800382E44 /* JMFineCounpContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8004E1DF12AE800382E44 /* JMFineCounpContentController.m */; };
+		1FD800521DF265F700382E44 /* JMRegisterJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD800511DF265F700382E44 /* JMRegisterJS.m */; };
 		1FDC35071DDD6F7600263E83 /* JMGoodsCountTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC35061DDD6F7600263E83 /* JMGoodsCountTime.m */; };
 		1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07181D4303790010231F /* JMUpdataAppPopView.m */; };
 		1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD071C1D45AABF0010231F /* JMSegmentController.m */; };
@@ -1933,6 +1934,8 @@
 		1FD8004B1DF1111B00382E44 /* JMFineCounpGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFineCounpGoodsController.m; sourceTree = "<group>"; };
 		1FD8004D1DF12AE800382E44 /* JMFineCounpContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFineCounpContentController.h; sourceTree = "<group>"; };
 		1FD8004E1DF12AE800382E44 /* JMFineCounpContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFineCounpContentController.m; sourceTree = "<group>"; };
+		1FD800501DF265F700382E44 /* JMRegisterJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegisterJS.h; sourceTree = "<group>"; };
+		1FD800511DF265F700382E44 /* JMRegisterJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegisterJS.m; sourceTree = "<group>"; };
 		1FDC35051DDD6F7600263E83 /* JMGoodsCountTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsCountTime.h; sourceTree = "<group>"; };
 		1FDC35061DDD6F7600263E83 /* JMGoodsCountTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsCountTime.m; sourceTree = "<group>"; };
 		1FDD07171D4303790010231F /* JMUpdataAppPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUpdataAppPopView.h; sourceTree = "<group>"; };
@@ -3628,6 +3631,8 @@
 		1F498AFD1D2761BE007E77FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1FD800501DF265F700382E44 /* JMRegisterJS.h */,
+				1FD800511DF265F700382E44 /* JMRegisterJS.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6903,6 +6908,7 @@
 				183072821C97C00900B7665E /* NSArray+Log.m in Sources */,
 				1F7D99331D62CAC000E18FD1 /* JMCategoryListCell.m in Sources */,
 				1F2F9E741D5AB79000E3A68B /* JMGoodsAttributeTypeView.m in Sources */,
+				1FD800521DF265F700382E44 /* JMRegisterJS.m in Sources */,
 				1F4C9EB41D9912600089CE74 /* UDTTTAttributedLabel.m in Sources */,
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				1F498C461D2772D0007E77FC /* JMOrderGoodsModel.m in Sources */,

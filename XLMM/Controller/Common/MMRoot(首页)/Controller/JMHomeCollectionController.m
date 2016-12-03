@@ -151,7 +151,6 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
     [MobClick event:@"checkGoodsDetailClick"];
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
-    detailVC.readImageUrl = model.head_img;
     detailVC.goodsID = model.goodsID;
     [self.navigationController pushViewController:detailVC animated:YES];
 }

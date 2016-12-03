@@ -18,6 +18,7 @@
 #import "IosJsBridge.h"
 #import "JMPayShareController.h"
 #import "PersonOrderViewController.h"
+#import "JMRegisterJS.h"
 
 
 @interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
@@ -54,6 +55,8 @@
     if(self.baseWebView.usingUIWebView) {
         [self registerJsBridge];
     }
+    
+    
 }
 
 - (void)refreshWebView {
@@ -66,12 +69,12 @@
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject){
-            [[JMGlobal global] hideWaitLoading];
+//            [[JMGlobal global] hideWaitLoading];
             return ;
         }
         [self mamaWebViewData:responseObject];
     } WithFail:^(NSError *error) {
-        [[JMGlobal global] hideWaitLoading];
+//        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
     }];
 }
@@ -86,25 +89,6 @@
 }
 
 - (void)createWebView {
-//    kWeakSelf
-//    CGFloat progressBarHeight = 2.f;
-//    CGRect navigationBarBounds = self.navigationController.navigationBar.bounds;
-//    CGRect barFrame = CGRectMake(0, navigationBarBounds.size.height - progressBarHeight, navigationBarBounds.size.width, progressBarHeight);
-//    self.progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-//    self.progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-//    [self.navigationController.navigationBar addSubview:self.progressView];
-    
-//    NSString *titleStr = @"返回刷新";
-//    CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
-//    [button addTarget:self action:@selector(refreshWebView) forControlEvents:UIControlEventTouchUpInside];
-//    [button setTitle:titleStr forState:UIControlStateNormal];
-//    [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
-//    button.titleLabel.font = [UIFont systemFontOfSize:14.];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    
-//    
-    
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
@@ -123,137 +107,22 @@
     
 }
 - (void)webViewDidFinishLoad:(IMYWebView *)webView {
-    [[JMGlobal global] hideWaitLoading];
+    [[JMGlobal global] hideWaitLoading];    
 }
+
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
-    if (_bridge) {
-        NSLog(@"Already reg!");
-        return ;
-    }
-    NSLog(@"registerJsBridge!");
-    [WebViewJavascriptBridge enableLogging];
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView.realWebView];
-    
-    [self.bridge setWebViewDelegate:self];
-    
-    // 商品详情
-    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self jsLetiOSWithData:data callBack:responseCallback];
-    }];
-    // 支付
-    [self.bridge registerHandler:@"callNativePurchase" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"%@",data);
-        NSDictionary *dataDic = data[@"charge"];
-        NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
-        [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:self];
-        //        NSDictionary *para = [self dictionaryWithJsonString:data];
-        //        NSDictionary *dataDic = para[@"charge"];
-        //        NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
-        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
-        //        [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:self];
-    }];
-    
-    /**
-     *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
-     */
-    [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"callNativeUniShareFunc");
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-        if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:enterVC animated:YES];
-            return;
-        }else {
-            [self universeShare:data];
-        }
-    }];
-    /**
-     *   进入购物车  -- 判断是否登录
-     */
-    [self.bridge registerHandler:@"jumpToNativeLogin" handler:^(id data, WVJBResponseCallback responseCallback) {
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-        if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:enterVC animated:YES];
-            return;
-        }else {
-            [self jsLetiOSWithData:data callBack:responseCallback];
-        }
-    }];
-    
-    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSString *device = [IosJsBridge getMobileSNCode];
-        responseCallback(device);
-    }];
-    /**
-     *  返回按钮
-     */
-    [self.bridge registerHandler:@"callNativeBack" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-    /**
-     *  老的分享接口，带活动id
-     */
-    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"callNativeShareFunc");
-//        [self shareForPlatform:data];
-    }];
-    /**
-     *  详情界面加载
-     */
-    [self.bridge registerHandler:@"showLoading" handler:^(id data, WVJBResponseCallback responseCallback) {
-        
-        BOOL isLoading = [data[@"isLoading"] boolValue];
-        if (!isLoading) {
-            [MBProgressHUD hideHUDForView:self.view];
-        }
-    }];
-    /**
-     *  我的邀请加载
-     */
-    //    [self.bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
-    //        [self myInvite:data callBack:responseCallback];
-    //    }];
+    JMRegisterJS *regis = [[JMRegisterJS alloc] init];
+    [regis registerJSBridgeBeforeIOSSeven:self WebView:self.baseWebView];
 }
-/**
- *  跳转购物车
- */
-- (void)jsLetiOSWithData:(id )data callBack:(WVJBResponseCallback)block {
-    NSString *target_url = [data objectForKey:@"target_url"];
-    [JumpUtils jumpToLocation:target_url viewController:self];
-}
-- (void)universeShare:(NSDictionary *)data {
-    //    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-    //        [self resolveProductShareParam:data];
-    //    }
-    self.shareView.model = [[JMShareModel alloc] init];
-    self.shareView.model.share_type = [data objectForKey:@"share_type"];
-    
-    self.shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
-    self.shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-    
-    self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
-    self.shareView.model.share_link = [data objectForKey:@"link"];
-    //    self.shareView.model = self.share_model;
-    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
-    }];
-    self.shareView.blcok = ^(UIButton *button) {
-        [MobClick event:@"WebViewController_shareFail_cancel"];
-    };
-    
-}
-
-
 
 
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick endLogPageView:@"JMFineClassController"];
-    [[JMGlobal global] hideWaitLoading];
+//    [[JMGlobal global] hideWaitLoading];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];

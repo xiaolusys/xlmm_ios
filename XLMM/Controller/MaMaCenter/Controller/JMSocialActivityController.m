@@ -39,12 +39,12 @@
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject){
-            [[JMGlobal global] hideWaitLoading];
+//            [[JMGlobal global] hideWaitLoading];
             return ;
         }
         [self mamaWebViewData:responseObject];
     } WithFail:^(NSError *error) {
-        [[JMGlobal global] hideWaitLoading];
+//        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
     }];
 }

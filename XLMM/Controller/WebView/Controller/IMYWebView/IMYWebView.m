@@ -17,7 +17,7 @@
 
 
 
-@interface IMYWebView()<UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
+@interface IMYWebView() <UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
 
 @property (nonatomic, assign) double estimatedProgress;
 @property (nonatomic, strong) NSURLRequest *originRequest;
@@ -244,7 +244,7 @@
  {
      [MBProgressHUD hideHUDForView:self.viewController.view];
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
-    [self updateUserAgent];
+     [[JMDevice defaultDecice] cerateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
     {
         [self.delegate webViewDidFinishLoad:self];
@@ -716,40 +716,8 @@
         }];
     }
 }
-//从webview获得浏览器中的useragent，并进行更新
-- (void)updateUserAgent{
-    NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    if(oldAgent == nil) return;
-    
-    // app版本
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    
-    NSLog(@"oldAgent=%@",oldAgent);
-    if(oldAgent != nil) {
-        
-        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
-        if(range.length > 0)
-        {
-            return;
-        }
-        
-    }
-    
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
-    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
-    
-    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
-    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
-    if(newrange.length > 0)
-    {
-        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
-    }
 
-    NSLog(@"newAgent=%@",newAgent);
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
-    
-}
+
+
 
 @end

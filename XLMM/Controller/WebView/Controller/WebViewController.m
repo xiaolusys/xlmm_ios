@@ -25,6 +25,7 @@
 #import "PersonOrderViewController.h"
 #import "NJKWebViewProgressView.h"
 #import "JMPayShareController.h"
+#import "JMRegisterJS.h"
 
 
 #define USERAGENT @"Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238"
@@ -270,39 +271,18 @@
 
 }
 
-//- (void)loadRequestWithCookie:(NSString *)urlString {
-//    
-//    // 在此处获取返回的cookie
-//    NSMutableDictionary *cookieDic = [NSMutableDictionary dictionary];
-//    
-//    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];破
-//    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-//    
-//    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
-//        [cookieDic setObject:cookie.value forKey:cookie.name];
-//    }
-//    
-//    // cookie重复，先放到字典进行去重，再进行拼接
-//    for (NSString *key in cookieDic) {
-//        NSString *appendString = [NSString stringWithFormat:@"%@=%@;", key, [cookieDic valueForKey:key]];
-//        [cookieValue appendString:appendString];
-//    }
-//    NSLog(@"webview cookie=%@", cookieDic);
-//    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-//    [request addValue:cookieValue forHTTPHeaderField:@"Cookie"];
-//    
-//    [super.baseWebView loadRequest:request];
-//}
 
 - (void)loadData {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, self.activityId];
     NSLog(@"Shareview _urlStr=%@ self.activityId=%@", string, self.activityId);
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
+        if (!responseObject) {
+            [MBProgressHUD hideHUDForView:self.view];
+            return;
+        }
         [self resolveActivityShareParam:responseObject];
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD hideHUDForView:self.view];
     } Progress:^(float progress) {
         
     }];
@@ -310,10 +290,13 @@
 - (void)loadDataMaMaShop {
     NSString *shareString = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushop/customer_shop", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:shareString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
+        if (!responseObject) {
+            [MBProgressHUD hideHUDForView:self.view];
+            return;
+        }
         [self fetchMaMaShopShare:responseObject];
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD hideHUDForView:self.view];
     } Progress:^(float progress) {
         
     }];
@@ -400,353 +383,39 @@
     
 }
 
-- (void)universeShare:(NSDictionary *)data {
-//    if([_webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-//        [self resolveProductShareParam:data];
-//    }
-    self.shareView.model = [[JMShareModel alloc] init];
-    self.shareView.model.share_type = [data objectForKey:@"share_type"];
-    
-    self.shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
-    self.shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-    
-    self.shareView.model.title = [data objectForKey:@"share_title"]; //标题
-    self.shareView.model.share_link = [data objectForKey:@"link"];
-//    self.shareView.model = self.share_model;
-    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
-    }];
-    self.shareView.blcok = ^(UIButton *button) {
-        [MobClick event:@"WebViewController_shareFail_cancel"];
-    };
-    
-}
-
 #pragma mark -- UIWebView代理
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"完成加载 %ld",(long)webView.tag);
     [MBProgressHUD hideHUDForView:self.view];
 
     if (webView.tag != 102) {
-        [self updateUserAgent];
+        [[JMDevice defaultDecice] cerateUserAgent];
 //        [self registerJsBridge];
         return;
     }
     if (webView.isLoading) {
         return;
     }
-    
-    _webViewImage = [UIImage imagewithWebView:self.shareWebView];
-    
-    if (!self.isWXFriends) {
-        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:nil image:_webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        }];
-//        [self cancleShareBtnClick:nil];
-    } else {
-//        [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:self.kuaiZhaoImage socialUIDelegate:self];
-        [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-//        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatTimeline];
-//        snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:_webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-        }];
-//        [self cancleShareBtnClick:nil];
-    }
 
 }
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    NSLog(@"webview didFailLoadWithError error=%@", error);
-    self.navigationController.navigationBarHidden = YES;
-    [MBProgressHUD hideHUDForView:self.view];
-}
-
-- (void)updateUserAgent{
-    NSString *oldAgent = [super.baseWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    if(oldAgent == nil) return;
-    
-    // app版本
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    
-    NSLog(@"oldAgent=%@",oldAgent);
-    if(oldAgent != nil) {
-        
-        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
-        if(range.length > 0)
-        {
-            return;
-        }
-        
-    }
-    
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
-    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
-    
-    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
-    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
-    if(newrange.length > 0)
-    {
-        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
-    }
-    
-    NSLog(@"newAgent=%@",newAgent);
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
-    
-}
-
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
-    if (_bridge) {
-        NSLog(@"Already reg!");
-        return ;
-    }
-    NSLog(@"registerJsBridge!");
-    [WebViewJavascriptBridge enableLogging];
-    self.bridge = [WebViewJavascriptBridge bridgeForWebView:self.baseWebView.realWebView];
-
-    [self.bridge setWebViewDelegate:self];
-    
-    // 商品详情
-    [self.bridge registerHandler:@"jumpToNativeLocation" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self jsLetiOSWithData:data callBack:responseCallback];
-    }];
-    // 支付
-    [self.bridge registerHandler:@"callNativePurchase" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"%@",data);
-//        NSDictionary *para = [self dictionaryWithJsonString:data];
-//        NSDictionary *dataDic = para[@"charge"];
-//        NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
-//        [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:self];
-    }];
-    
-    /**
-     *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
-     */
-    [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"callNativeUniShareFunc");
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-        if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:enterVC animated:YES];
-            return;
-        }else {
-            [self universeShare:data];
-        }
-    }];
-    /**
-     *   进入购物车  -- 判断是否登录
-     */
-    [self.bridge registerHandler:@"jumpToNativeLogin" handler:^(id data, WVJBResponseCallback responseCallback) {
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-        if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:enterVC animated:YES];
-            return;
-        }else {
-            [self jsLetiOSWithData:data callBack:responseCallback];
-        }
-    }];
-    
-    [self.bridge registerHandler:@"getNativeMobileSNCode" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSString *device = [IosJsBridge getMobileSNCode];
-        responseCallback(device);
-    }];
-    /**
-     *  返回按钮
-     */
-    [self.bridge registerHandler:@"callNativeBack" handler:^(id data, WVJBResponseCallback responseCallback) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-    /**
-     *  老的分享接口，带活动id
-     */
-    [self.bridge registerHandler:@"callNativeShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"callNativeShareFunc");
-        [self shareForPlatform:data];
-    }];
-    /**
-     *  详情界面加载
-     */
-    [self.bridge registerHandler:@"showLoading" handler:^(id data, WVJBResponseCallback responseCallback) {
-
-        BOOL isLoading = [data[@"isLoading"] boolValue];
-        if (!isLoading) {
-            [MBProgressHUD hideHUDForView:self.view];
-        }
-    }];
-    /**
-     *  我的邀请加载
-     */
-//    [self.bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        [self myInvite:data callBack:responseCallback];
-//    }];
-}
-//- (void)myInvite:(id )data {
-//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, data[@"id"]];
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject) return;
-//        [self resolveActivityShareParam:responseObject];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
-//}
-/*!
- * @brief 把格式化的JSON格式的字符串转换成字典
- * @param jsonString JSON格式的字符串
- * @return 返回字典
- */
-+ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
-    if (jsonString == nil) {
-        return nil;
-    }
-    
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                        options:NSJSONReadingMutableContainers
-                                                          error:&err];
-    if(err) {
-        NSLog(@"json解析失败：%@",err);
-        return nil;
-    }
-    return dic;
+    JMRegisterJS *regis = [[JMRegisterJS alloc] init];
+    [regis registerJSBridgeBeforeIOSSeven:self WebView:self.baseWebView];
 }
 
-/**
- *  跳转购物车
- */
-- (void)jsLetiOSWithData:(id )data callBack:(WVJBResponseCallback)block {
-    NSString *target_url = [data objectForKey:@"target_url"];
-    [JumpUtils jumpToLocation:target_url viewController:self];
-}
-
-
-#pragma mark 解析targeturl 跳转到不同的界面
-- (void)jumpToJsLocation:(NSDictionary *)dic{
-    
-    NSString *target_url = [dic objectForKey:@"target_url"];
-    
-    if (target_url == nil) {
-        return;
-    }
-    [JumpUtils jumpToLocation:target_url viewController:self];
-    
-}
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
-    
-    if (error == nil) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"你的专属二维码已保存，可用微信群发200好友哦" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-        _webViewImage = nil;
-        
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-    
-}
-#pragma mark ---- 旧版本的分享
-- (void)shareForPlatform:(NSDictionary *)data{
-
-    NSNumber *activeid = data[@"active_id"];
-    NSString *platform = data[@"share_to"];
-    if ([activeid integerValue] == 0) {
-//        activeid = @([_itemID integerValue]);
-    }
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
-    shareType = data[@"share_to"];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        shareTitle = [responseObject objectForKey:@"share_desc"];
-        NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
-        newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
-        _content = [responseObject objectForKey:@"share_desc"];
-        _shareImage = [UIImage imagewithURLString:[[responseObject objectForKey:@"share_icon"] imageShareCompression]];
-        NSString *sharelink = [responseObject objectForKey:@"share_link"];
-        if ([platform isEqualToString:@""]) {
-            self.activityId = [responseObject objectForKey:@"id"];
-            [self resolveActivityShareParam:responseObject];
-            [self universeShare:data];
-        }else if ([platform isEqualToString:@"wx"]) {
-            [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
-            [UMSocialData defaultData].extConfig.wechatSessionData.title = sharelink;
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            }];
-        }else if ([platform isEqualToString:@"qq"]) {
-            [UMSocialData defaultData].extConfig.qqData.url = sharelink;
-            [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            }];
-        }else if ([platform isEqualToString:@"sinawb"]){
-            NSString *sina_content = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
-            [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_shareImage)];
-        } else if ([platform isEqualToString:@"web"]){
-            UIPasteboard *pab = [UIPasteboard generalPasteboard];
-            if ([NSString isStringEmpty:sharelink]) {
-                [MBProgressHUD showMessage:@"复制失败"];
-            }else {
-                [pab setString:sharelink];
-                if (pab == nil) {
-                    [MBProgressHUD showMessage:@"请重新复制"];
-                }else
-                {
-                    [MBProgressHUD showMessage:@"已复制"];
-                }
-            }
-            [MBProgressHUD showLoading:@"正在下载二维码..."];
-            //            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
-            //            [self createKuaiZhaoImage];
-        } else if ([platform isEqualToString:@"qqspa"]){
-            [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
-            [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_content image: _shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-            }];
-        } else if ([platform isEqualToString:@"wxapp"]){
-            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
-                NSLog(@"wx");
-                [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
-                [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
-                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                }];
-            } else {
-                [MBProgressHUD showLoading:@"正在生成快照..."];
-                //                [self createKuaiZhaoImage];
-            }
-        }  else if ([platform isEqualToString:@"pyq"]){
-            
-            NSLog(@"friends");
-            
-            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
-                [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
-                [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                }];
-            } else{
-                
-                [MBProgressHUD showLoading:@"正在生成快照..."];
-                //                  isWXFriends = NO;
-                //                [self createKuaiZhaoImage];
-            }
-            
-        } else{}
-    } WithFail:^(NSError *error) {
-        
-    } Progress:^(float progress) {
-        
-    }];
-}
 - (void)dealloc {
     self.shareWebView = nil;
     self.webViewImage = nil;
     self.baseWebView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    
 }
 - (void)backClicked:(UIButton *)button{
     if (isTeamBuy) {
@@ -767,100 +436,90 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [MBProgressHUD hideHUDForView:self.view];
 }
-- (void)hiddenNavigationView{
-    self.navigationController.navigationBarHidden = YES;
-}
 
-#pragma mark alert弹出框
-//- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-//    NSLog(@"%s",__FUNCTION__);
-//    // 确定按钮
-//    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//        completionHandler();
-//    }];
-//    // alert弹出框
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
-//    [alertController addAction:alertAction];
-//    [self presentViewController:alertController animated:YES completion:nil];
+
+
+
+
+
+//- (void)loadRequestWithCookie:(NSString *)urlString {
+//
+//    // 在此处获取返回的cookie
+//    NSMutableDictionary *cookieDic = [NSMutableDictionary dictionary];
+//
+//    NSMutableString *cookieValue = [NSMutableString stringWithFormat:@""];破
+//    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//
+//    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+//        [cookieDic setObject:cookie.value forKey:cookie.name];
+//    }
+//
+//    // cookie重复，先放到字典进行去重，再进行拼接
+//    for (NSString *key in cookieDic) {
+//        NSString *appendString = [NSString stringWithFormat:@"%@=%@;", key, [cookieDic valueForKey:key]];
+//        [cookieValue appendString:appendString];
+//    }
+//    NSLog(@"webview cookie=%@", cookieDic);
+//
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+//    [request addValue:cookieValue forHTTPHeaderField:@"Cookie"];
+//
+//    [super.baseWebView loadRequest:request];
 //}
 
-
-
-
-
-
-#pragma mark ----- 分享调用 -- 调用原生的分享这里就不需要了
+//#pragma mark ---- 旧版本的分享
 //- (void)shareForPlatform:(NSDictionary *)data{
-//    
+//
 //    NSNumber *activeid = data[@"active_id"];
 //    NSString *platform = data[@"share_to"];
-//    //    NSString *platform = @"web";
-//    
 //    if ([activeid integerValue] == 0) {
-//        //        self.activityId = activeid;
-//        activeid = @([_itemID integerValue]);
+////        activeid = @([_itemID integerValue]);
 //    }
-//    
 //    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeid];
-//    
 //    shareType = data[@"share_to"];
-//    
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    [manager GET:string parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
 //        shareTitle = [responseObject objectForKey:@"share_desc"];
 //        NSString *imageurl = [NSString stringWithFormat:@"%@%@",Root_URL, [responseObject objectForKey:@"picture"]];
-//        
-//        newshareImage = [UIImage imagewithURLString:imageurl];
+//        newshareImage = [UIImage imagewithURLString:[imageurl imageShareCompression]];
 //        _content = [responseObject objectForKey:@"share_desc"];
-//        _shareImage = [UIImage imagewithURLString:[responseObject objectForKey:@"share_icon"]];
+//        _shareImage = [UIImage imagewithURLString:[[responseObject objectForKey:@"share_icon"] imageShareCompression]];
 //        NSString *sharelink = [responseObject objectForKey:@"share_link"];
-//        
-//        if ([platform isEqualToString:@"wx"]) {
+//        if ([platform isEqualToString:@""]) {
+//            self.activityId = [responseObject objectForKey:@"id"];
+//            [self resolveActivityShareParam:responseObject];
+//            [self universeShare:data];
+//        }else if ([platform isEqualToString:@"wx"]) {
 //            [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
 //            [UMSocialData defaultData].extConfig.wechatSessionData.title = sharelink;
 //            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //            }];
-//            
 //        }else if ([platform isEqualToString:@"qq"]) {
-//            NSLog(@"qq");
-//            
 //            [UMSocialData defaultData].extConfig.qqData.url = sharelink;
 //            [UMSocialData defaultData].extConfig.qqData.title = shareTitle;
 //            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //            }];
-//            
-//            
 //        }else if ([platform isEqualToString:@"sinawb"]){
-//            NSLog(@"wb");
 //            NSString *sina_content = [NSString stringWithFormat:@"%@%@",shareTitle, sharelink];
 //            [SendMessageToWeibo sendMessageWithText:sina_content andPicture:UIImagePNGRepresentation(_shareImage)];
-//            
 //        } else if ([platform isEqualToString:@"web"]){
-//            NSLog(@"copy");
 //            UIPasteboard *pab = [UIPasteboard generalPasteboard];
-//            NSString *str = sharelink;
-//            if (str == nil) {
-//                [SVProgressHUD showSuccessWithStatus:@"复制失败"];
-//                return ;
+//            if ([NSString isStringEmpty:sharelink]) {
+//                [MBProgressHUD showMessage:@"复制失败"];
+//            }else {
+//                [pab setString:sharelink];
+//                if (pab == nil) {
+//                    [MBProgressHUD showMessage:@"请重新复制"];
+//                }else
+//                {
+//                    [MBProgressHUD showMessage:@"已复制"];
+//                }
 //            }
-//            [pab setString:str];
-//            if (pab == nil) {
-//                [SVProgressHUD showErrorWithStatus:@"请重新复制"];
-//            }else
-//            {
-//                [SVProgressHUD showSuccessWithStatus:@"已复制"];
-//            }
-//            
-//            [SVProgressHUD showWithStatus:@"正在下载二维码..."];
+//            [MBProgressHUD showLoading:@"正在下载二维码..."];
 //            //            [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"qrcode_link"]];
-//            [self createKuaiZhaoImage];
+//            //            [self createKuaiZhaoImage];
 //        } else if ([platform isEqualToString:@"qqspa"]){
-//            NSLog(@"zone");
-//            
 //            [UMSocialData defaultData].extConfig.qzoneData.url = sharelink;
 //            [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
-//            
 //            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_content image: _shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //            }];
 //        } else if ([platform isEqualToString:@"wxapp"]){
@@ -868,75 +527,37 @@
 //                NSLog(@"wx");
 //                [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
 //                [UMSocialData defaultData].extConfig.wechatSessionData.url = sharelink;
-//                
 //                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-//                    
 //                }];
-//                
 //            } else {
-//                [SVProgressHUD showWithStatus:@"正在生成快照..."];
-//                //                [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
-//                [self createKuaiZhaoImage];
+//                [MBProgressHUD showLoading:@"正在生成快照..."];
+//                //                [self createKuaiZhaoImage];
 //            }
-//            
 //        }  else if ([platform isEqualToString:@"pyq"]){
-//            
+//
 //            NSLog(@"friends");
-//            
+//
 //            if ([[responseObject objectForKey:@"share_type"] isEqualToString:@"link"]) {
 //                [UMSocialData defaultData].extConfig.wechatTimelineData.url = sharelink;
 //                [UMSocialData defaultData].extConfig.wechatTimelineData.title = shareTitle;
-//                
 //                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_content image:_shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-//                    
 //                }];
 //            } else{
-//                
-//                [SVProgressHUD showWithStatus:@"正在生成快照..."];
+//
+//                [MBProgressHUD showLoading:@"正在生成快照..."];
 //                //                  isWXFriends = NO;
-//                //                [self createKuaiZhaoImagewithlink:[responseObject objectForKey:@"share_link"]];
-//                [self createKuaiZhaoImage];
+//                //                [self createKuaiZhaoImage];
 //            }
-//            
-//        } else{
-//            
-//            NSLog(@"others");
-//        }
-//    }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             NSLog(@"Error: %@", error);
-//         }];
-//}
-//- (void)dealloc{
-//    self.shareWebView =nil;
-//    webViewImage = nil;
-////    self.webView = nil;
 //
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//        } else{}
+//    } WithFail:^(NSError *error) {
 //
+//    } Progress:^(float progress) {
+//
+//    }];
 //}
 
 
-//
-//        if ([shareType isEqualToString:@"pyq"] || (self.isPic && self.isWeixinFriends)) {
-//            [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-//            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:nil image:webViewImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-//            }];
-//            self.isWeixinFriends = NO;
-//        } else if ([shareType isEqualToString:@"wxapp"] || (self.isPic && self.isWeixin)) {
-//            [[UMSocialControllerService defaultControllerService] setShareText:nil shareImage:webViewImage socialUIDelegate:self];
-//            //        [UMSocialData defaultData].extConfig.wxMessageType = 0;
-//            [UMSocialControllerService defaultControllerService].socialData.extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-//            UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession];
-//            snsPlatform.snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-//
-//            self.isWeixin = NO;
-//        } else if ([shareType isEqualToString:@"web"] || self.isCopy){
-//            // 保存本地二维码
-//            UIImageWriteToSavedPhotosAlbum(webViewImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-//            self.isCopy = NO;
-//        }
-//
 @end
 
 

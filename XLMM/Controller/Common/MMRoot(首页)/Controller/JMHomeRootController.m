@@ -126,10 +126,12 @@ static BOOL isFirstPOP = YES;
     [super viewDidDisappear:animated];
     [JMGoodsCountTime initCountDownWithCurrentTime:0];
     [MBProgressHUD hideHUD];
+    [self endAutoScroll];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    self.cartsCountLabel.hidden = YES;
+    self.pageView.atuoLoopScroll = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -373,6 +375,7 @@ static BOOL isFirstPOP = YES;
     
 }
 - (void)endAutoScroll {
+    self.pageView.atuoLoopScroll = NO;
     [self.pageView endAutoScroll];
 }
 #pragma mark 创建自定义 navigationView

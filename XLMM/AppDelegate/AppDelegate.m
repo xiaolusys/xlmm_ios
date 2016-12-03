@@ -10,7 +10,6 @@
 #import "JMStoreManager.h"
 #import "Udesk.h"
 #import "JMHomeRootController.h"
-#import "JMDevice.h"
 #import "JMPayment.h"
 #import "JMMiPushManager.h"
 #import "JMRootTabBarController.h"

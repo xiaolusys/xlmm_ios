@@ -123,11 +123,10 @@
     if ([viewController.tabBarItem.title isEqualToString:@"主页"]) {
         
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
-        [self.homeVC endAutoScroll];
+//        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
-        [self.homeVC endAutoScroll];
+//        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            
             self.cartVC.isHideNavigationLeftItem = YES;
             [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
             //            [self.cartVC refreshCartData];
@@ -135,14 +134,13 @@
         }
         
     }else if ([viewController.tabBarItem.title isEqualToString:@"收藏"]) {
-        [self.homeVC endAutoScroll];
+//        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.storeVC.isHideNavitaionLeftBar = YES;
         }else {
         }
     }else if ([viewController.tabBarItem.title isEqualToString:@"我"]) {
-        [self.homeVC endAutoScroll];
-        
+//        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.personalVC.isHideNavigationBar = NO;
             //            [self.personalVC refreshUserInfo];
