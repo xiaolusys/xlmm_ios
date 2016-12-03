@@ -57,7 +57,7 @@ static NSString *currentTurnsNumberString;
 @property (nonatomic, strong) NSArray *mamaOrderArray;
 
 
-@property (nonatomic, strong) JMAutoLoopPageView *pageView;
+
 @property (nonatomic, strong) NSMutableArray *titlesArray;
 
 

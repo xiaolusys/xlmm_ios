@@ -554,7 +554,11 @@
     JMKeyWindow.rootViewController = tabBarVC;
 }
 
-
+- (void)dealloc {
+    NSLog(@"JMMaMaHomeController  --> dealloc被调用");
+    self.homeHeaderView.pageView = nil;
+    
+}
 
 @end
 

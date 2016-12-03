@@ -31,6 +31,7 @@ typedef void(^autoLoopPage)(JMAutoLoopPageView *loopPageView, NSMutableDictionar
 @property (nonatomic, strong) FSLineChart *lineChart;
 @property (nonatomic, strong) NSDictionary *messageDic;
 @property (nonatomic, strong) NSString *mamaNotReadNotice;
+@property (nonatomic, strong) JMAutoLoopPageView *pageView;
 
 @end
 
