@@ -29,7 +29,6 @@
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"
-#import "JMMaMaRootController.h"
 #import "JMAutoLoopPageView.h"
 #import "JMHomeHeaderCell.h"
 #import "JMHomeRootCategoryController.h"
@@ -681,11 +680,6 @@ static BOOL isFirstPOP = YES;
         self.topButton.hidden = offsetY > SCREENHEIGHT * 2 ? NO : YES;
     }
 }
-- (void)dealloc {
-    NSLog(@"dealloc 被调用");
-    [self.tableView removeObserver:self forKeyPath:@"contentOffset" context:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 #pragma mark -- 判断用户是否领取优惠券
 - (void)isGetCoupon {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
@@ -959,7 +953,13 @@ static BOOL isFirstPOP = YES;
     NSLog(@"所有任务已完成!");
 }
 
-
+#pragma mark ---------- dealloc ----------
+- (void)dealloc {
+    NSLog(@"dealloc 被调用");
+    [self.tableView removeObserver:self forKeyPath:@"contentOffset" context:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.pageView = nil;
+}
 
 @end
 

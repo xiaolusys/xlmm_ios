@@ -86,11 +86,6 @@
 //@property (nonatomic,assign) BOOL isLogin;
 @property (nonatomic, strong) UIImage *webViewImage;
 
-
-
-
-
-
 @end
 
 @implementation WebViewController{
@@ -100,20 +95,12 @@
     NSString *shareUrllink;
     BOOL isTeamBuy;
 }
-//- (WebViewJavascriptBridge *)bridge {
-//
-//    return _bridge;
-//}
 - (JMShareViewController *)shareView {
     if (!_shareView) {
         _shareView = [[JMShareViewController alloc] init];
     }
     return _shareView;
 }
-
-
-
-
 - (void)setWebDiction:(NSMutableDictionary *)webDiction {
     _webDiction = webDiction;
     if ([webDiction isKindOfClass:[NSMutableDictionary class]] && [webDiction objectForKey:@"titleName"]) {
@@ -156,12 +143,21 @@
     
     
 }
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.progressView removeFromSuperview];
+    [MBProgressHUD hideHUDForView:self.view];
+    
+}
+- (void)dealloc {
+    self.baseWebView = nil;
+    self.progressView = nil;
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
 }
+
 - (void)paySuccessful {
     NSLog(@"支付成功");
     [MobClick event:@"fineCoupon_buySuccess"];
@@ -201,17 +197,7 @@
         [weakSelf.progressView setProgress:estimatedProgress animated:YES];
     };
     [self.view addSubview:super.baseWebView];
-    
-//    super.baseWebView.backgroundColor = [UIColor whiteColor];
-//    super.baseWebView.tag = 111;
-//    self.baseWebView.delegate = self;
-//    super.baseWebView.scalesPageToFit = YES;
-//    super.baseWebView.userInteractionEnabled = YES;
     super.baseWebView.viewController = self;
-    
-//    JMShareViewController *shareView = [[JMShareViewController alloc] init];
-//    self.shareView = shareView;
-    
     if(super.baseWebView.usingUIWebView) {
         NSLog(@"7.0 UIWebView");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
@@ -301,15 +287,6 @@
         
     }];
 }
-//#pragma mark IMYWebView代理方法
-//- (void)webViewDidStartLoad:(IMYWebView *)webView {
-////    [WebViewJavascriptBridge enableLogging];
-//    
-//    [_bridge registerHandler:@"changeId" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        [self myInvite:data];
-//    }];
-//    
-//}
 - (void)fetchMaMaShopShare:(NSDictionary *)dic {
     NSDictionary *shopInfo = dic[@"shop_info"];
     [self createNavigationBarWithTitle:shopInfo[@"name"] selecotr:@selector(backClicked:)];
@@ -329,16 +306,6 @@
     self.share_model.share_link = [dic objectForKey:@"share_link"];
     self.shareView.model = self.share_model;
 }
-
-- (void)resolveProductShareParam:(NSDictionary *)dic {
-    self.share_model.share_type = [dic objectForKey:@"share_type"];
-    self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
-    self.share_model.desc = [dic objectForKey:@"share_desc"]; // 文字详情
-    self.share_model.title = [dic objectForKey:@"share_title"]; //标题
-    self.share_model.share_link = [dic objectForKey:@"link"];
-    self.shareView.model = self.share_model;
-}
-
 #pragma mark ----- 创建导航栏按钮
 - (void)createTabBarButton {
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
@@ -367,14 +334,6 @@
     }else if ([_webDiction[@"type_title"] isEqual:@"mamaShop"]) {
         [MobClick event:@"mamaShop_share"];
     }else { }
-//    JMShareView *cover = [JMShareView show];
-//    cover.delegate = self;
-//    //弹出视图
-//    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-//    menu.contentView = self.shareView.view;
-//    self.shareView.blcok = ^(UIButton *button) {
-//        [MobClick event:@"WebViewController_shareFail_cancel"];
-//    };
     [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
     }];
     self.shareView.blcok = ^(UIButton *button) {
@@ -405,13 +364,7 @@
     [regis registerJSBridgeBeforeIOSSeven:self WebView:self.baseWebView];
 }
 
-- (void)dealloc {
-    self.shareWebView = nil;
-    self.webViewImage = nil;
-    self.baseWebView = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -426,17 +379,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
-    self.shareWebView = nil;
-    self.webViewImage = nil;
-    self.baseWebView = nil;
-    [self.progressView removeFromSuperview];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [MBProgressHUD hideHUDForView:self.view];
-}
-
 
 
 
@@ -555,6 +497,14 @@
 //    } Progress:^(float progress) {
 //
 //    }];
+//}
+//- (void)resolveProductShareParam:(NSDictionary *)dic {
+//    self.share_model.share_type = [dic objectForKey:@"share_type"];
+//    self.share_model.share_img = [dic objectForKey:@"share_icon"]; //图片
+//    self.share_model.desc = [dic objectForKey:@"share_desc"]; // 文字详情
+//    self.share_model.title = [dic objectForKey:@"share_title"]; //标题
+//    self.share_model.share_link = [dic objectForKey:@"link"];
+//    self.shareView.model = self.share_model;
 //}
 
 

@@ -9,7 +9,6 @@
 #import "JMPersonalPageController.h"
 #import "JMPersonalPageCell.h"
 #import "JMLogInViewController.h"
-#import "JMMaMaRootController.h"
 #import "JMMineIntegralController.h"
 #import "JMCouponController.h"
 #import "JMComplaintSuggestController.h"
