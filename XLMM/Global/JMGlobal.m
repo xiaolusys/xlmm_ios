@@ -302,6 +302,28 @@ static BOOL isNetPrompt;
     return [checkBit isEqualToString:[[value substringWithRange:NSMakeRange(17,1)] uppercaseString]];
 }
 
+#pragma mark - sdwebImageCache 获取图片
+
+- (NSData *)getCacheImageWithKey:(NSString *)key {
+    
+    NSData *imageData = nil;
+    
+    BOOL isExit = [[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:key]];
+    if (isExit) {
+        NSString *cacheImageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:key]];
+        if (cacheImageKey.length) {
+            NSString *cacheImagePath = [[SDImageCache sharedImageCache] defaultCachePathForKey:cacheImageKey];
+            if (cacheImagePath.length) {
+                imageData = [NSData dataWithContentsOfFile:cacheImagePath];
+            }
+        }
+    }
+    if (!imageData) {
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:key]];
+    }
+    
+    return imageData;
+}
 
 
 @end

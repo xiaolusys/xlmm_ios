@@ -126,12 +126,12 @@ static BOOL isFirstPOP = YES;
     [super viewDidDisappear:animated];
     [JMGoodsCountTime initCountDownWithCurrentTime:0];
     [MBProgressHUD hideHUD];
-    [self endAutoScroll];
+//    [self endAutoScroll];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    self.cartsCountLabel.hidden = YES;
-    self.pageView.atuoLoopScroll = YES;
+//    self.pageView.atuoLoopScroll = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
