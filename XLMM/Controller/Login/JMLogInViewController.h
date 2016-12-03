@@ -12,5 +12,7 @@
 @property (nonatomic,strong) NSString *returnUrl;
 
 @property (nonatomic, assign) BOOL isFirstLogin;
+@property (nonatomic, assign) BOOL isTabBarLogin;
+
 
 @end

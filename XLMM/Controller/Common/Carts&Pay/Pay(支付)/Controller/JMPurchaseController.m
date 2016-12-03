@@ -50,7 +50,7 @@
     NSString *_uuid;                  //uuid
     NSString *_cartIDs;               //购物车id
     float _totalfee;                  //总金额
-    float _postfee;                   //运费金额
+    float _postfee;                   //运费金额`
     float _amontPayment;              //总需支付金额
     float _couponValue;               //优惠券金额
     float _discount;                  //计算金额
@@ -861,7 +861,6 @@ static BOOL isAgreeTerms = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作
-
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
     NSArray *firstArr = [str componentsSeparatedByString:@"&"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];

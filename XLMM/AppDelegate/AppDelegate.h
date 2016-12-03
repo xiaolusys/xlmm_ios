@@ -11,7 +11,6 @@
 //  1051166985
 
 #import <UIKit/UIKit.h>
-#import <RESideMenu.h>
 #import "WXApi.h"
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
@@ -22,13 +21,10 @@
 
 
 
-@class JMRootTabBarController,NewLeftViewController;
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RESideMenuDelegate,UIAlertViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, strong) NewLeftViewController *leftMenu;
-@property (nonatomic, strong) RESideMenu *menuVC;
 @property (copy) void (^backgroundSessionCompletionHandler)();
 
 @end

@@ -167,18 +167,28 @@ static BOOL isNetPrompt;
         if (!responseObject) return;
         NSDictionary *result = responseObject;
         if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
-            // 手机登录成功 ，保存用户信息以及登录途径
             [defaults setBool:YES forKey:kIsLogin];
-            NSLog(@"Still logined");
+            [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+            [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
         } else{
-            // 手机登录需要 ，保存用户信息以及登录途径
             [defaults setBool:NO forKey:kIsLogin];
-            NSLog(@"maybe cookie timeout,need login");
         }
     } WithFail:^(NSError *error) {
-        // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
-        NSLog(@"maybe cookie timeout,need login");
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                    [users removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }else {
+                    
+                }
+            }
+        }
     } Progress:^(float progress) {
     }];
 }
@@ -186,8 +196,7 @@ static BOOL isNetPrompt;
 #pragma mark ======== 跳转页面等待动画 ========
 - (void)showWaitLoadingInView:(UIView *)viewController {
     if (self.loadView) {
-        [self.loadView removeFromSuperview];
-        self.loadView = nil;
+        [self removeView];
     }
     if (!self.loadView) {
         UIView *maskView = [[UIView alloc] init];
@@ -207,12 +216,15 @@ static BOOL isNetPrompt;
     }
     [self.loadView endLoading];
     if (self.loadView) {
-        [self.loadView removeFromSuperview];
-        self.loadView = nil;
-        [self.maskView removeFromSuperview];
+        [self removeView];
     }
 }
-
+- (void)removeView {
+    [self.loadView removeFromSuperview];
+    [self.maskView removeFromSuperview];
+    self.loadView = nil;
+    self.maskView = nil;
+}
 
 /*
     befoData -- > 获取的当前时间几天 前/后 的时间 .
@@ -290,6 +302,28 @@ static BOOL isNetPrompt;
     return [checkBit isEqualToString:[[value substringWithRange:NSMakeRange(17,1)] uppercaseString]];
 }
 
+#pragma mark - sdwebImageCache 获取图片
+
+- (NSData *)getCacheImageWithKey:(NSString *)key {
+    
+    NSData *imageData = nil;
+    
+    BOOL isExit = [[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:key]];
+    if (isExit) {
+        NSString *cacheImageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:key]];
+        if (cacheImageKey.length) {
+            NSString *cacheImagePath = [[SDImageCache sharedImageCache] defaultCachePathForKey:cacheImageKey];
+            if (cacheImagePath.length) {
+                imageData = [NSData dataWithContentsOfFile:cacheImagePath];
+            }
+        }
+    }
+    if (!imageData) {
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:key]];
+    }
+    
+    return imageData;
+}
 
 
 @end

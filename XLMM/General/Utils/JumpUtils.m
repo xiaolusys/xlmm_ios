@@ -32,7 +32,7 @@
 #pragma mark ==== 支付跳转
 + (void)jumpToCallNativePurchase:(NSDictionary *)data Tid:(NSString *)tid viewController:(UIViewController *)vc {
     [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:data URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
-        NSLog(@"%ld",error.errorStatus);
+//        NSLog(@"%ld",error.errorStatus);
         if (error.errorStatus == payMentErrorStatusSuccess) {
             [MobClick event:@"fineCoupon_buySuccess"];
             [MBProgressHUD showError:@"支付成功~"];

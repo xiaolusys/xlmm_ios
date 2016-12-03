@@ -69,9 +69,6 @@ static BOOL isFirstPOP = YES;
  *  返回顶部按钮,购物车视图,导航视图,弹出视图
  */
 @property (nonatomic, strong) UIButton *topButton;
-@property (nonatomic, strong) UIButton *cartView;
-@property (nonatomic, strong) UILabel *cartsLabel;
-@property (nonatomic, strong) UILabel *cartsCountLabel;
 @property (nonatomic, strong) UIButton *navRightButton;
 @property (nonatomic,strong) UIView *maskView;
 @property (nonatomic,strong) JMRepopView *popView;
@@ -129,10 +126,12 @@ static BOOL isFirstPOP = YES;
     [super viewDidDisappear:animated];
     [JMGoodsCountTime initCountDownWithCurrentTime:0];
     [MBProgressHUD hideHUD];
+//    [self endAutoScroll];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.cartsCountLabel.hidden = YES;
+//    self.cartsCountLabel.hidden = YES;
+//    self.pageView.atuoLoopScroll = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -144,7 +143,6 @@ static BOOL isFirstPOP = YES;
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:app];
     
-    [self loadCatrsNumData];
     [MobClick beginLogPageView:@"main"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -202,7 +200,7 @@ static BOOL isFirstPOP = YES;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick:)];
+    [self createNavigationBarWithTitle:@"" selecotr:nil];
     _dayDifferString = @"2";
     _urlArray = @[@"yesterday",@"today",@"tomorrow"];
     flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
@@ -215,7 +213,8 @@ static BOOL isFirstPOP = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
+//    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     
     UIImage *launchImage = [JMStoreManager getDataImage:@"launchImageCache" Quality:0.];
     self.launchView = [JMLaunchView initImageWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Image:launchImage TimeSecond:3. HideSkip:YES LaunchAdClick:^{
@@ -226,7 +225,7 @@ static BOOL isFirstPOP = YES;
     
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
-    [self createCartsView];                            // 创建购物车
+//    [self createCartsView];                            // 创建购物车
     [self createTopButton];                            // 创建返回顶部按钮
     //    [self loadActiveData];                             // 获取活动,分类,滚动视图网络请求
     [self createPullHeaderRefresh];                    // 下拉刷新,重新获取商品展示数据
@@ -255,9 +254,12 @@ static BOOL isFirstPOP = YES;
     //  NSLog(@"手机登录");
     [self loginUpdateIsXiaoluMaMa];
 }
-- (void)setLabelNumber {
-    [self loadCatrsNumData];
+- (void)loginOut {
+    self.navigationItem.rightBarButtonItem = nil;
 }
+//- (void)setLabelNumber {
+//    [self loadCatrsNumData];
+//}
 // 登录后请求个人信息,这里可以保存下来个人信息
 - (void)loginUpdateIsXiaoluMaMa {
     NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
@@ -286,7 +288,7 @@ static BOOL isFirstPOP = YES;
         [users setBool:NO forKey:kIsLogin];
     } Progress:^(float progress) {
     }];
-    [self isGetCoupon];
+    [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:1.0];
 }
 
 #pragma mark 商品展示网络请求
@@ -347,7 +349,7 @@ static BOOL isFirstPOP = YES;
     oneRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 + 30;
     twoRowCellH = (SCREENWIDTH - 5 * HomeCategorySpaceW) / 4 * 1.25 * 2 + 30 + HomeCategorySpaceH;
     
-    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[JMMainTableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 113) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -370,6 +372,11 @@ static BOOL isFirstPOP = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
+    
+}
+- (void)endAutoScroll {
+    self.pageView.atuoLoopScroll = NO;
+    [self.pageView endAutoScroll];
 }
 #pragma mark 创建自定义 navigationView
 - (void)createNavigaView {
@@ -384,12 +391,12 @@ static BOOL isFirstPOP = YES;
         make.width.mas_equalTo(@83);
         make.height.mas_equalTo(@20);
     }];
-    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profiles"]];
-    leftImageview.frame = CGRectMake(0, 11, 26, 26);
-    [leftButton addSubview:leftImageview];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+//    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
+//    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profiles"]];
+//    leftImageview.frame = CGRectMake(0, 11, 26, 26);
+//    [leftButton addSubview:leftImageview];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 }
 - (void)createRightItem {
     if(self.navigationItem.rightBarButtonItem == nil) {
@@ -586,19 +593,6 @@ static BOOL isFirstPOP = YES;
         }
     }
 }
-#pragma mark 左滑进入个人中心界面
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    if ((scrollView.contentInset.left < 0) && velocity.x < 0) {
-        [self performSelector:@selector(presentLeftMenuViewController:) withObject:nil withObject:self];
-    }
-}
-- (void)rootVCPushOtherVC:(UIViewController *)vc{
-    if ([vc isKindOfClass:[CSTabBarController class]]) {
-        JMKeyWindow.rootViewController = vc;
-    }else {
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
 - (void)rightNavigationClick:(UIButton *)button {
     [MBProgressHUD showLoading:@""];
     button.enabled = NO;
@@ -643,147 +637,6 @@ static BOOL isFirstPOP = YES;
     [JumpUtils jumpToLocation:topDic[@"app_link"] viewController:self];
 }
 
-- (void)backClick:(UIButton *)button {
-}
-#pragma mark 购物车数量请求
-- (void)loadCatrsNumData {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
-        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-            if (!responseObject) return ;
-            [self cartViewUpData:responseObject];
-        } WithFail:^(NSError *error) {
-        } Progress:^(float progress) {
-        }];
-    }else {
-        self.cartsLabel.hidden = YES;
-        self.cartsCountLabel.hidden = YES;
-        self.navigationItem.rightBarButtonItem = nil;
-        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(@44);
-        }];
-    }
-}
-- (void)cartViewUpData:(NSDictionary *)dic {
-    kWeakSelf
-    NSInteger cartNum = [dic[@"result"] integerValue];
-    if (cartNum == 0) {
-        [JMGoodsCountTime initCountDownWithCurrentTime:0];
-        //        [JMGoodsCountTime shareCountTime].timer = nil;
-        self.cartsLabel.hidden = YES;
-        self.cartsCountLabel.hidden = YES;
-        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(@44);
-        }];
-    }else {
-        self.cartsLabel.hidden = NO;
-        self.cartsLabel.text = [NSString stringWithFormat:@"%@",dic[@"result"]];
-        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(@108);
-        }];
-        self.cartsCountLabel.hidden = NO;
-        [self.cartsCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(weakSelf.cartView).offset(-15);
-            make.centerY.equalTo(weakSelf.cartView.mas_centerY);
-        }];
-        _cartTimeString = dic[@"last_created"];
-        [self createTimeLabel:[_cartTimeString intValue]];
-    }
-}
-- (void)createTimeLabel:(int)endSecond {
-    int end = [[JMGlobal global] secondOFCurrentTimeInEndtimeInt:endSecond];
-    [JMGoodsCountTime initCountDownWithCurrentTime:end];
-    kWeakSelf
-    [JMGoodsCountTime shareCountTime].countBlock = ^(int second) {
-        second == -1 ? [weakSelf endTime] : [weakSelf timeFormat:second];
-    };}
-- (void)endTime {
-    self.cartsCountLabel.text = @"";
-    self.cartsCountLabel.hidden = YES;
-    self.cartsLabel.hidden = YES;
-    [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(@44);
-    }];
-}
-- (void)timeFormat:(int)end {
-    self.cartsCountLabel.text = [NSString TimeformatMSFromSeconds:end];
-}
-#pragma mark 创建购物车,收藏按钮
-- (void)createCartsView {
-    kWeakSelf
-    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 64, 44, 44)];
-    [self.view addSubview:collectionView];
-    collectionView.backgroundColor = [UIColor blackColor];
-    collectionView.alpha = 0.8;
-    collectionView.layer.cornerRadius = 22;
-    
-    UIButton *collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [collectionView addSubview:collectionButton];
-    [collectionButton setImage:[UIImage imageNamed:@"MyCollectionOrigin_Nomal"] forState:UIControlStateNormal];
-    collectionButton.frame = CGRectMake(0, 0, 44, 44);
-    collectionButton.layer.cornerRadius = 22;
-    [collectionButton addTarget:self action:@selector(gotoCollection:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.cartView = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.view addSubview:self.cartView];
-    [self.cartView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.view).offset(60);
-        make.centerY.equalTo(collectionView.mas_centerY);
-        make.width.mas_equalTo(@108);
-        make.height.mas_equalTo(@44);
-    }];
-    self.cartView.backgroundColor = [UIColor blackColor];
-    self.cartView.alpha = 0.8;
-    self.cartView.layer.cornerRadius = 22;
-    self.cartView.layer.borderWidth = 1;
-    self.cartView.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
-    [self.cartView addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
-    iconView.image = [UIImage imageNamed:@"homeGoodsDetailCarts"];
-    iconView.userInteractionEnabled = NO;
-    [self.cartView addSubview:iconView];
-    self.cartsLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, -6, 16, 16)];
-    [iconView addSubview:self.cartsLabel];
-    self.cartsLabel.font = [UIFont systemFontOfSize:10.];
-    self.cartsLabel.textColor = [UIColor whiteColor];
-    self.cartsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
-    self.cartsLabel.textAlignment = NSTextAlignmentCenter;
-    self.cartsLabel.layer.cornerRadius = 8.;
-    self.cartsLabel.layer.masksToBounds = YES;
-    self.cartsLabel.hidden = YES;
-    
-    self.cartsCountLabel = [UILabel new];
-    [self.cartView addSubview:self.cartsCountLabel];
-    self.cartsCountLabel.font = [UIFont systemFontOfSize:18.];
-    self.cartsCountLabel.textColor = [UIColor whiteColor];
-    self.cartsCountLabel.hidden = YES;
-    
-}
-#pragma mark 点击按钮进入购物车界面
-- (void)gotoCarts:(UIButton *)sender{
-    [MobClick event:@"cart_click"];
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (login) {
-        JMCartViewController *cartVC = [[JMCartViewController alloc] init];
-        [self.navigationController pushViewController:cartVC animated:YES];
-    }else {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-        [self.navigationController pushViewController:enterVC animated:YES];
-    }
-}
-#pragma mark 点击按钮进入我的收藏界面
-- (void)gotoCollection:(UIButton *)sender {
-    [MobClick event:@"storeUP_click"];
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (login == NO) {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-        [self.navigationController pushViewController:enterVC animated:YES];
-        return;
-    }
-    JMStoreupController *storeVC = [[JMStoreupController alloc] init];
-    storeVC.index = 100;
-    [self.navigationController pushViewController:storeVC animated:YES];
-}
 #pragma mark 返回顶部按钮
 - (void)createTopButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -792,7 +645,8 @@ static BOOL isFirstPOP = YES;
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-20);
-        make.centerY.equalTo(self.cartView.mas_centerY);
+//        make.centerY.equalTo(self.cartView.mas_centerY);
+        make.bottom.equalTo(self.view).offset(-64);
         make.width.height.mas_equalTo(@50);
     }];
     [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
@@ -824,7 +678,7 @@ static BOOL isFirstPOP = YES;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"contentOffset"]) {
         CGFloat offsetY = self.tableView.contentOffset.y;
-        self.topButton.hidden = offsetY > SCREENWIDTH * 3 ? NO : YES;
+        self.topButton.hidden = offsetY > SCREENHEIGHT * 2 ? NO : YES;
     }
 }
 - (void)dealloc {
@@ -1187,10 +1041,163 @@ static BOOL isFirstPOP = YES;
 
 
 
+//- (void)backClick:(UIButton *)button {
+//}
+#pragma mark 购物车数量请求
+//- (void)loadCatrsNumData {
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
+//        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//            if (!responseObject) return ;
+////            [self cartViewUpData:responseObject];
+//        } WithFail:^(NSError *error) {
+//        } Progress:^(float progress) {
+//        }];
+//    }else {
+//        self.cartsLabel.hidden = YES;
+//        self.cartsCountLabel.hidden = YES;
+//        self.navigationItem.rightBarButtonItem = nil;
+//        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.mas_equalTo(@44);
+//        }];
+//    }
+//}
+//- (void)cartViewUpData:(NSDictionary *)dic {
+////    kWeakSelf
+//    NSInteger cartNum = [dic[@"result"] integerValue];
+//    if (cartNum == 0) {
+////        [JMGoodsCountTime initCountDownWithCurrentTime:0];
+//        //        [JMGoodsCountTime shareCountTime].timer = nil;
+////        self.cartsLabel.hidden = YES;
+////        self.cartsCountLabel.hidden = YES;
+////        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
+////            make.width.mas_equalTo(@44);
+////        }];
+//    }else {
+////        self.cartsLabel.hidden = NO;
+////        self.cartsLabel.text = [NSString stringWithFormat:@"%@",dic[@"result"]];
+////        [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
+////            make.width.mas_equalTo(@108);
+////        }];
+////        self.cartsCountLabel.hidden = NO;
+////        [self.cartsCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+////            make.right.equalTo(weakSelf.cartView).offset(-15);
+////            make.centerY.equalTo(weakSelf.cartView.mas_centerY);
+////        }];
+////        _cartTimeString = dic[@"last_created"];
+////        [self createTimeLabel:[_cartTimeString intValue]];
+//    }
+//}
+//- (void)createTimeLabel:(int)endSecond {
+//    int end = [[JMGlobal global] secondOFCurrentTimeInEndtimeInt:endSecond];
+//    [JMGoodsCountTime initCountDownWithCurrentTime:end];
+//    kWeakSelf
+//    [JMGoodsCountTime shareCountTime].countBlock = ^(int second) {
+//        second == -1 ? [weakSelf endTime] : [weakSelf timeFormat:second];
+//    };}
+//- (void)endTime {
+//    self.cartsCountLabel.text = @"";
+//    self.cartsCountLabel.hidden = YES;
+//    self.cartsLabel.hidden = YES;
+//    [self.cartView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.width.mas_equalTo(@44);
+//    }];
+//}
+//- (void)timeFormat:(int)end {
+//    self.cartsCountLabel.text = [NSString TimeformatMSFromSeconds:end];
+//}
+#pragma mark 创建购物车,收藏按钮
+//- (void)createCartsView {
+//    kWeakSelf
+//    UIView *collectionView = [[UIView alloc] initWithFrame:CGRectMake(10, SCREENHEIGHT - 113, 44, 44)];
+//    [self.view addSubview:collectionView];
+//    collectionView.backgroundColor = [UIColor blackColor];
+//    collectionView.alpha = 0.8;
+//    collectionView.layer.cornerRadius = 22;
+//
+//    UIButton *collectionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [collectionView addSubview:collectionButton];
+//    [collectionButton setImage:[UIImage imageNamed:@"MyCollectionOrigin_Nomal"] forState:UIControlStateNormal];
+//    collectionButton.frame = CGRectMake(0, 0, 44, 44);
+//    collectionButton.layer.cornerRadius = 22;
+//    [collectionButton addTarget:self action:@selector(gotoCollection:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    self.cartView = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.view addSubview:self.cartView];
+//    [self.cartView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(weakSelf.view).offset(60);
+//        make.centerY.equalTo(collectionView.mas_centerY);
+//        make.width.mas_equalTo(@108);
+//        make.height.mas_equalTo(@44);
+//    }];
+//    self.cartView.backgroundColor = [UIColor blackColor];
+//    self.cartView.alpha = 0.8;
+//    self.cartView.layer.cornerRadius = 22;
+//    self.cartView.layer.borderWidth = 1;
+//    self.cartView.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
+//    [self.cartView addTarget:self action:@selector(gotoCarts:) forControlEvents:UIControlEventTouchUpInside];
+//    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
+//    iconView.image = [UIImage imageNamed:@"homeGoodsDetailCarts"];
+//    iconView.userInteractionEnabled = NO;
+//    [self.cartView addSubview:iconView];
+//    self.cartsLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, -6, 16, 16)];
+//    [iconView addSubview:self.cartsLabel];
+//    self.cartsLabel.font = [UIFont systemFontOfSize:10.];
+//    self.cartsLabel.textColor = [UIColor whiteColor];
+//    self.cartsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+//    self.cartsLabel.textAlignment = NSTextAlignmentCenter;
+//    self.cartsLabel.layer.cornerRadius = 8.;
+//    self.cartsLabel.layer.masksToBounds = YES;
+//    self.cartsLabel.hidden = YES;
+//
+//    self.cartsCountLabel = [UILabel new];
+//    [self.cartView addSubview:self.cartsCountLabel];
+//    self.cartsCountLabel.font = [UIFont systemFontOfSize:18.];
+//    self.cartsCountLabel.textColor = [UIColor whiteColor];
+//    self.cartsCountLabel.hidden = YES;
+//
+//}
+#pragma mark 点击按钮进入购物车界面
+//- (void)gotoCarts:(UIButton *)sender{
+//    [MobClick event:@"cart_click"];
+//    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+//    if (login) {
+//        JMCartViewController *cartVC = [[JMCartViewController alloc] init];
+//        [self.navigationController pushViewController:cartVC animated:YES];
+//    }else {
+//        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:enterVC animated:YES];
+//    }
+//}
+//#pragma mark 点击按钮进入我的收藏界面
+//- (void)gotoCollection:(UIButton *)sender {
+//    [MobClick event:@"storeUP_click"];
+//    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+//    if (login == NO) {
+//        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:enterVC animated:YES];
+//        return;
+//    }
+//    JMStoreupController *storeVC = [[JMStoreupController alloc] init];
+//    storeVC.index = 100;
+//    [self.navigationController pushViewController:storeVC animated:YES];
+//}
 
 
 
-
+#pragma mark 左滑进入个人中心界面
+//- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+//    if ((scrollView.contentInset.left < 0) && velocity.x < 0) {
+////        [self performSelector:@selector(presentLeftMenuViewController:) withObject:nil withObject:self];
+//    }
+//}
+//- (void)rootVCPushOtherVC:(UIViewController *)vc{
+//    if ([vc isKindOfClass:[CSTabBarController class]]) {
+//        JMKeyWindow.rootViewController = vc;
+//    }else {
+//        [self.navigationController pushViewController:vc animated:YES];
+//    }
+//}
 
 
 

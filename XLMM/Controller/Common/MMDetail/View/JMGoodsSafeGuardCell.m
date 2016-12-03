@@ -30,10 +30,11 @@ NSString *const JMGoodsSafeGuardCellIdentifier = @"JMGoodsSafeGuardCellIdentifie
     kWeakSelf
     
     [guaranteeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(weakSelf.contentView);
+        make.left.equalTo(weakSelf.contentView);
         make.top.equalTo(weakSelf.contentView).offset(10);
+        make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@90);
-        make.bottom.equalTo(weakSelf.contentView).offset(-10);
+//        make.bottom.equalTo(weakSelf.contentView).offset(-10);
     }];
     
     

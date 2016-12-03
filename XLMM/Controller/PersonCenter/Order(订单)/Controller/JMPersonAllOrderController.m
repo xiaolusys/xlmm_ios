@@ -40,6 +40,7 @@
 @property (nonatomic, strong) UILabel *orderPament;
 @property (nonatomic, strong) UIImageView *shareRenpageImage;
 
+@property (nonatomic, assign) BOOL isPopToRootView;
 
 @end
 
@@ -286,7 +287,9 @@
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {
+            self.isPopToRootView = YES;
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }
@@ -295,7 +298,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
+    self.isPopToRootView = NO;
 //    [self.tableView.mj_header beginRefreshing];
     [self loadDataSource];
     [MobClick beginLogPageView:@"PersonOrder"];
@@ -303,7 +306,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    //    self.navigationController.navigationBarHidden = YES;
+    if (self.isPopToRootView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+    }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PersonOrder"];
 }

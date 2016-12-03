@@ -67,7 +67,8 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
  */
 - (BOOL)validateIdentityCard:(NSString *)value;
 
-
+// 获取图片
+- (NSData *)getCacheImageWithKey:(NSString *)key;
 
 
 

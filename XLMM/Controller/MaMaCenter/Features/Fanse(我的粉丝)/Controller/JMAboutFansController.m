@@ -26,6 +26,7 @@
     
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
+    self.baseWebView.viewController = self;
     [self.view addSubview:self.baseWebView];
     
     [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:loadLink]]];

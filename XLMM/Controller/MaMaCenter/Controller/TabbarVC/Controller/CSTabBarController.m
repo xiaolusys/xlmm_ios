@@ -15,7 +15,7 @@
 #import "JMMineController.h"
 #import "UIImage+ColorImage.h"
 #import "CSNavigationController.h"
-
+#import "JMLogInViewController.h"
 
 
 @interface CSTabBarController () <CSTabBarDelegate>
@@ -80,35 +80,21 @@
 }
 
 - (void)tabBar:(CSTabBar *)tabBar didSelectedButton:(NSInteger)index {
-    
-    if (index == 0 && self.selectedIndex == index) {
-        //点击首页  刷新
-//        [_homeVC refresh];
-    }
-    
     self.selectedIndex = index;
     if (index != 0) {
         [_homeVC endEarningMessage];
+
     }
+//    if (index == 1) {
+//        [_secondVC refreshWebView];
+//    }else if (index == 2) {
+//        [_thirdVC refreshWebView];
+//    }else { }
+    
 }
 
-
-
-
-
-
-//- (void)tabBarDidClickPlusButton:(CSTabBar *)tabBar {
-//    NSLog(@"点击了加号按钮");
-//    
-//}
-
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //    NSLog(@"%@",self.tabBar.items);
     
     for (UIView *tabBarButton in self.tabBar.subviews) {
         if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
@@ -118,7 +104,6 @@
 }
 
 - (void)setupAllChildViewControllers {
-    
     //初始化所有的子控制器
     JMMaMaHomeController *homeVC = [[JMMaMaHomeController alloc] init];
     [self setupChildViewController:homeVC title:@"首页" imageName:@"tabBar_mianPageNomal" selectedImageName:@"tabBar_mianPageSelected"];

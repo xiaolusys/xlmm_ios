@@ -124,6 +124,9 @@
     
     [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:shareView WithBlock:^(UIView *maskView) {
     }];
+    shareView.blcok = ^(UIButton *button) {
+        [MobClick event:@"WebViewController_shareFail_cancel"];
+    };
 
     
 }
@@ -195,7 +198,7 @@
 /**
  *  老的分享接口，带活动id
  */
-+ (void)callNativeShareFunc:(UIViewController *)vc para:(NSDictionary *)data{
++ (void)callNativeShareFunc:(UIViewController *)vc para:(NSDictionary *)data {
 
     
     NSNumber *activeid = data[@"active_id"];
@@ -216,10 +219,8 @@
         if ([platform isEqualToString:@""]) {
             ((WebViewController *)vc).activityId = [responseObject objectForKey:@"id"];
             ((WebViewController *)vc).share_model.share_type = [responseObject objectForKey:@"share_type"];
-            
             ((WebViewController *)vc).share_model.share_img = [responseObject objectForKey:@"share_icon"]; //图片
             ((WebViewController *)vc).share_model.desc = [responseObject objectForKey:@"active_dec"]; // 文字详情
-            
             ((WebViewController *)vc).share_model.title = [responseObject objectForKey:@"title"]; //标题
             ((WebViewController *)vc).share_model.share_link = [responseObject objectForKey:@"share_link"];
             [self universeShare:vc para:responseObject];

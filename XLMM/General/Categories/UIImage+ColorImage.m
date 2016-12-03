@@ -10,13 +10,13 @@
 
 @implementation UIImage (ColorImage)
 
-+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size
++ (UIImage *)imageWithColor:(UIColor *)color Frame:(CGRect)frame
 
 {
     
     @autoreleasepool {
         
-        CGRect rect = CGRectMake(0, 0, size.width, size.height);
+        CGRect rect = CGRectMake(0, 0, frame.size.width, frame.size.height);
         
         UIGraphicsBeginImageContext(rect.size);
         

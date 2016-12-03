@@ -7,15 +7,18 @@
 //
 
 #import "UIViewController+NavigationBar.h"
+#import "UIImage+ColorImage.h"
+
 
 @implementation UIViewController (NavigationBar)
 
 
 - (void)createNavigationBarWithTitle:(NSString *)title selecotr:(SEL)aSelector{
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    
-    
-    
+
+//    UIImage *barImage = [UIImage imageWithColor:[UIColor whiteColor] Frame:CGRectMake(0, 0, SCREENWIDTH, 64)];
+//    [self.navigationController.navigationBar setBackgroundImage:barImage forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     label.text = title;
     label.textColor = [UIColor blackColor];

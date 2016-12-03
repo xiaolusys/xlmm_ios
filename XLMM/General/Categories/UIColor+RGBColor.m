@@ -53,7 +53,9 @@
 + (UIColor *)titleDarkGrayColor{
     return [UIColor colorWithR:190 G:190 B:190 alpha:1];
 }
-
++ (UIColor *)tabBarTitleDarkGrayColor{
+    return [UIColor colorWithR:140 G:140 B:140 alpha:1];
+}
 + (UIColor *)textDarkGrayColor{
    return [UIColor colorWithR:98 G:98 B:98 alpha:1];
 }

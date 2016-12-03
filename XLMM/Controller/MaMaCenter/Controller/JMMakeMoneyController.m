@@ -28,10 +28,9 @@
 #import "MaClassifyCarryLogViewController.h"
 #import "JMPushingDaysController.h"
 #import "JMHomeRootController.h"
-#import "NewLeftViewController.h"
 #import "RESideMenu.h"
 #import "JMStoreManager.h"
-
+#import "JMRootTabBarController.h"
 
 
 static NSString *currentTurnsNumberString;
@@ -1336,20 +1335,21 @@ static NSString *currentTurnsNumberString;
 }
 
 - (void)backClick:(UIButton *)button {
-    JMHomeRootController *root = [[JMHomeRootController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    leftMenu.pushVCDelegate = root;
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
-    menuVC.menuPreferredStatusBarStyle = 1;
-    menuVC.delegate = self;
-    menuVC.contentViewShadowColor = [UIColor blackColor];
-    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
-    menuVC.contentViewShadowOpacity = 0.6;
-    menuVC.contentViewShadowRadius = 12;
-    menuVC.contentViewShadowEnabled = YES;
-    JMKeyWindow.rootViewController = menuVC;
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+//    JMHomeRootController *root = [[JMHomeRootController alloc] init];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
+//    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
+//    leftMenu.pushVCDelegate = root;
+//    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
+//    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
+//    menuVC.menuPreferredStatusBarStyle = 1;
+//    menuVC.delegate = self;
+//    menuVC.contentViewShadowColor = [UIColor blackColor];
+//    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
+//    menuVC.contentViewShadowOpacity = 0.6;
+//    menuVC.contentViewShadowRadius = 12;
+//    menuVC.contentViewShadowEnabled = YES;
+    JMKeyWindow.rootViewController = tabBarVC;
 }
 #pragma mark ======== RESideMenu Delegate ========
 - (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
