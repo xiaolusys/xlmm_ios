@@ -190,6 +190,9 @@
 
 #pragma mark ------ 登录按钮点击
 - (void)loginBtnClick:(UIButton *)btn {
+    [self.phoneNumTextF resignFirstResponder];
+    [self.passwordTextF resignFirstResponder];
+    
     
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;

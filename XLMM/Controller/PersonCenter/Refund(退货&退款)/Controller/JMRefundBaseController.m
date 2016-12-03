@@ -27,6 +27,7 @@
  *  上拉加载的标志
  */
 @property (nonatomic, assign) BOOL isLoadMore;
+@property (nonatomic, assign) BOOL isPopToRootView;
 
 @end
 
@@ -164,7 +165,9 @@
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {
+            self.isPopToRootView = YES;
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }
@@ -177,6 +180,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.isPopToRootView = NO;
     self.navigationController.navigationBarHidden = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"JMRefundBaseController"];
@@ -184,6 +188,9 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    if (self.isPopToRootView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+    }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMRefundBaseController"];
 

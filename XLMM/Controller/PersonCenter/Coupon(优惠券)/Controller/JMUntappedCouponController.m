@@ -19,7 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 @property (nonatomic, strong) JMCouponModel *couponModel;
-
+@property (nonatomic, assign) BOOL isPopToRootView;
 //@property (nonatomic, strong) JMSelecterButton *sureButton;
 @end
 
@@ -96,7 +96,9 @@
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {
+            self.isPopToRootView = YES;
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }
@@ -122,11 +124,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.isPopToRootView = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"YouHuiQuan"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.isPopToRootView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+    }
     [MobClick endLogPageView:@"YouHuiQuan"];
 }
 @end

@@ -180,6 +180,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    
     BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
     if (islogin) {
     }
@@ -192,7 +194,10 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMLogInViewController"];
 }
-
+- (void)phoneNumberLogin:(NSNotification *)notification{
+    //  NSLog(@"手机登录");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark --- 监听微信登录的通知
 - (void)update:(NSNotificationCenter *)notification {
     
@@ -238,7 +243,10 @@
                              @"devtype":LOGINDEVTYPE};
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:newDic WithSuccess:^(id responseObject) {
         NSDictionary *result = responseObject;
-        if (result.count == 0) return;
+        if (result.count == 0) {
+            [MBProgressHUD hideHUD];
+            return;
+        }
         if ([[result objectForKey:@"rcode"]integerValue] != 0) {
             [MBProgressHUD hideHUD];
             [self alertMessage:[result objectForKey:@"msg"]];
@@ -247,7 +255,7 @@
         NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
         [userdefaults setBool:YES forKey:kIsLogin];
         [userdefaults synchronize];
-        
+        [MBProgressHUD hideHUD];
         [self loginSuccessful];
         
         
@@ -316,9 +324,8 @@
 
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
-    [MBProgressHUD hideHUD];
+    [self dismissViewControllerAnimated:YES completion:nil];
 //    [MobClick profileSignInWithPUID:@"playerID"];
-    
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
@@ -348,7 +355,12 @@
 - (void)btnClick1:(UIButton *)btn {
 }
 - (void)btnClick:(UIButton *)btn {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.isTabBarLogin) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 
 - (NSArray *)randomArray{

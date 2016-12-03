@@ -166,7 +166,7 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
 
 - (void)emptyView {
     kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"你的钱包空空如也" DescTitle:@"" BackImage:@"wallet" InfoStr:@"快去逛逛"];
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有数据" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"快去逛逛"];
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {

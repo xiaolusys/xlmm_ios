@@ -162,10 +162,7 @@ typedef NS_ENUM(NSInteger,JMAtuoLoopScrollViewDirectionStyle) {
  */
 - (void)scrollToIndex:(NSUInteger)index animated:(BOOL)animated;
 
-
-
-
-
+- (void)endAutoScroll;
 
 
 

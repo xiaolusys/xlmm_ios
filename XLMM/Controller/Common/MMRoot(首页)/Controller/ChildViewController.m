@@ -480,7 +480,8 @@ static NSString * ksimpleCell = @"simpleCell";
     }];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;
     if (scrollView.contentSize.height - scrollView.contentOffset.y < 2 * SCREENHEIGHT && _isupdate) {
             [self loadMore];
             _isupdate = NO;

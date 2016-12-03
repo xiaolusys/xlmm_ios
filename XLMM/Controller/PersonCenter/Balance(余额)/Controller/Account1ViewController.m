@@ -36,6 +36,9 @@
  *  上拉加载的标志
  */
 @property (nonatomic, assign) BOOL isLoadMore;
+@property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
+@property (nonatomic, assign) BOOL isPopToRootView;
+
 
 @end
 
@@ -55,11 +58,15 @@ static NSString *identifier = @"AccountCell";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.isPopToRootView = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"BlanceAccount"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.isPopToRootView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+    }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
 }
@@ -90,6 +97,7 @@ static NSString *identifier = @"AccountCell";
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
+    self.footer = self.tableView.mj_footer;
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -138,6 +146,7 @@ static NSString *identifier = @"AccountCell";
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
+        self.footer.stateLabel.hidden = YES;
         [self emptyView];
         return;
     }
@@ -207,7 +216,9 @@ static NSString *identifier = @"AccountCell";
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {
+            self.isPopToRootView = YES;
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }

@@ -53,9 +53,19 @@
     self.descLabel.font = [UIFont systemFontOfSize:13.];
     self.descLabel.textColor = [UIColor timeLabelColor];
     
-    UIImageView *goinImage = [UIImageView new];
-    [baseView addSubview:goinImage];
-    goinImage.image = [UIImage imageNamed:@"rightArrow"];
+//    UIImageView *goinImage = [UIImageView new];
+//    [baseView addSubview:goinImage];
+//    goinImage.image = [UIImage imageNamed:@"rightArrow"];
+    UILabel *chakanwuliu = [UILabel new];
+    [baseView addSubview:chakanwuliu];
+    chakanwuliu.font = CS_SYSTEMFONT(12.f);
+    chakanwuliu.text = @"查看物流";
+    chakanwuliu.textColor = [UIColor buttonEnabledBackgroundColor];
+    chakanwuliu.textAlignment = NSTextAlignmentCenter;
+    chakanwuliu.layer.masksToBounds = YES;
+    chakanwuliu.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    chakanwuliu.layer.borderWidth = 1.f;
+    chakanwuliu.layer.cornerRadius = 10.f;
     
     [self.packageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(baseView).offset(10);
@@ -63,16 +73,21 @@
     }];
 
     [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(goinImage.mas_left).offset(-10);
+        make.right.equalTo(chakanwuliu.mas_left).offset(-10);
         make.centerY.equalTo(baseView.mas_centerY);
     }];
-    
-    [goinImage mas_makeConstraints:^(MASConstraintMaker *make) {
+    [chakanwuliu mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(baseView).offset(-10);
         make.centerY.equalTo(baseView.mas_centerY);
-        make.width.mas_equalTo(@16);
-        make.height.mas_equalTo(@25);
+        make.width.mas_equalTo(@70);
+        make.height.mas_equalTo(@20);
     }];
+//    [goinImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(baseView).offset(-10);
+//        make.centerY.equalTo(baseView.mas_centerY);
+//        make.width.mas_equalTo(@16);
+//        make.height.mas_equalTo(@25);
+//    }];
     
     
 }

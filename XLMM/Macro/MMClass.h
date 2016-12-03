@@ -22,7 +22,7 @@
 #import "NSString+CSCommon.h"
 #import "MJAnimationHeader.h"
 #import "JMGlobal.h"
-
+#import "JMDevice.h"
 
 
 //#import "NSDictionary+Log.h"
@@ -47,6 +47,7 @@
 
 
 #define JMKeyWindow [UIApplication sharedApplication].keyWindow
+#define XLMM_APP ((AppDelegate*)[[UIApplication sharedApplication] delegate])
 /**
  *  循环引用
  */

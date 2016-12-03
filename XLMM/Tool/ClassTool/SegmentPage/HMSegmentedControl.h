@@ -101,7 +101,7 @@ typedef enum {
  Default is `[UIColor blackColor]`
  */
 @property (nonatomic, strong) UIColor *verticalDividerColor UI_APPEARANCE_SELECTOR;
-
+@property (nonatomic, strong) UIColor *verticalBottomLineColor UI_APPEARANCE_SELECTOR;
 /**
  Opacity for the seletion indicator box.
  

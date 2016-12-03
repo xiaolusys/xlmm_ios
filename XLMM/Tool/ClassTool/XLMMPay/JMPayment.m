@@ -48,6 +48,10 @@
     NSString *payType = parame[@"channel"];
     NSDictionary *credentialDic = parame[@"credential"];
     if ([payType isEqual:@"wx"]) {
+        if (![WXApi isWXAppInstalled]) {
+            [MBProgressHUD showError:@"亲，没有安装微信哦!"];
+            return ;
+        }
         NSDictionary *wxDic = credentialDic[@"wx"];
 //        NSLog(@"wxDic ====== > %@",wxDic);
         PayReq *req = [[PayReq alloc] init];

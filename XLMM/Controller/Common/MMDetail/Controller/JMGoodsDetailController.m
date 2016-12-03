@@ -217,6 +217,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = self.upViewLabel;
     self.detailWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT + 64, SCREENWIDTH, SCREENHEIGHT - 64 - BottomHeitht)];
+    self.detailWebView.viewController = self;
     self.detailWebView.backgroundColor = [UIColor countLabelColor];
     //self.detailWebView.delegate = self;
     
