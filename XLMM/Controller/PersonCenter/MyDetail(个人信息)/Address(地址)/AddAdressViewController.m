@@ -39,7 +39,7 @@
   
     self.title = @"新增收货地址";
     
-    if (self.isBondedGoods && !self.isAdd) {
+    if (self.isBondedGoods) {
         self.idCardheight.constant = 140.;
     }else {
         self.idCardheight.constant = 91.;
@@ -52,7 +52,7 @@
     
     self.nameTextField.tag = 100;
     self.numberTextField.tag = 101;
-    if (_isAdd == NO) {
+    if (self.isAdd == NO) {
         NSLog(@"修改地址");       
         self.streetTextView.text = _addressModel.streetName;
         self.nameTextField.text = _addressModel.buyerName;
@@ -197,7 +197,7 @@
 }
 
 - (void)setInfo{
-    if (_isAdd == YES) {
+    if (self.isAdd == YES) {
       //  label.text = @"新增收货地址";
         [self createNavigationBarWithTitle:@"新增收货地址" selecotr:@selector(backBtnClicked:)];
         
@@ -277,7 +277,7 @@
 - (void)textViewDidEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
     BOOL isCardB = YES;
-    if (self.isBondedGoods && !self.isAdd) {
+    if (self.isBondedGoods) {
         isCardB = ![self.idCardTextField.text isEqualToString:@""];
     }
     BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && isCardB;
@@ -322,7 +322,7 @@
 //        
 //    }];
     BOOL isCardB = YES;
-    if (self.isBondedGoods && !self.isAdd) {
+    if (self.isBondedGoods) {
         isCardB = ![self.idCardTextField.text isEqualToString:@""];
     }
     BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && isCardB;
@@ -379,7 +379,7 @@
         self.infoLabel.text = @"请填写正确的收货人手机号码";
         return;
     }
-    if (self.isBondedGoods && !self.isAdd) {
+    if (self.isBondedGoods) {
         if ([self.idCardTextField.text isEqualToString:@""]) {
             self.infoLabel.text = @"请填写收货人身份证号";
             return;
@@ -394,18 +394,18 @@
     NSLog(@"save succeed!");
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    if (_isAdd == YES) {
+    if (self.isAdd == YES) {
         parameters[@"receiver_state"] = province;
         parameters[@"receiver_city"] = city;
         parameters[@"receiver_district"] = county;
         parameters[@"receiver_address"] = _streetTextView.text;
         parameters[@"receiver_name"] = _nameTextField.text;
         parameters[@"receiver_mobile"] = _numberTextField.text;
-//        if (self.isBondedGoods) {
-//            parameters[@"identification_no"] = _idCardTextField.text;
-//        }else {
-//            
-//        }
+        if (self.isBondedGoods) {
+            parameters[@"identification_no"] = _idCardTextField.text;
+        }else {
+            
+        }
         
         NSLog(@"parameters = %@", parameters);
         
@@ -414,9 +414,14 @@
         NSLog(@"url = %@", string);
         
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parameters WithSuccess:^(id responseObject) {
-            [self.navigationController popViewControllerAnimated:YES];
+            NSInteger code = [responseObject[@"code"] integerValue];
+            if (code == 0) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else {
+                [MBProgressHUD showWarning:responseObject[@"info"]];
+            }
         } WithFail:^(NSError *error) {
-            
+            [MBProgressHUD showWarning:@"添加地址失败,请重新添加"];
         } Progress:^(float progress) {
             
         }];
@@ -448,7 +453,7 @@
             }
             
         } WithFail:^(NSError *error) {
-            
+            [MBProgressHUD showWarning:@"修改地址失败,请重新修改"];
         } Progress:^(float progress) {
             
         }];
