@@ -738,6 +738,7 @@ static BOOL isAgreeTerms = YES;
         [self calculationLabelValue];
     }else {
         self.isUserCoupon = YES;
+        self.isEnoughCoupon = YES;
         JMCouponModel *model = modelArray[0];
         if (modelArray.count > 1) {
             NSMutableString *couponID = [[NSMutableString alloc] init];
@@ -748,7 +749,6 @@ static BOOL isAgreeTerms = YES;
             if ([couponID hasSuffix:@"/"]) {
                 [couponID deleteCharactersInRange:NSMakeRange(couponID.length - 1, 1)];
             }
-            self.isEnoughCoupon = YES;
             self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
             self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
             _couponStringID = [couponID copy];
