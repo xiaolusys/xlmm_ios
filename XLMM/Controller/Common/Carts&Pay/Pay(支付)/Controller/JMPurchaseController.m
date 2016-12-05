@@ -669,7 +669,7 @@ static BOOL isAgreeTerms = YES;
         params[@"order_type"] = @"3";
     }
     NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
-    JMPurchaseController * __weak weakSelf = self;
+//    JMPurchaseController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [MBProgressHUD hideHUD];
@@ -728,25 +728,19 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark  选择优惠券回调过来的代理方法
 - (void)updateYouhuiquanWithmodel:(NSArray *)modelArray {
-    NSMutableString *couponID = [[NSMutableString alloc] init];
-    _couponValue = 0.;
-    _couponStringID = @"";
-    if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
-        self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"购买提示" message:@"精品汇优惠券不足，请购买优惠券或减少商品购买数量。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alertView show];
-        return ;
-    }
     if (modelArray.count == 0) {
         self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
         self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
-        _yhqModelID = @"";
         self.isUserCoupon = NO;
+        self.isEnoughCoupon = NO;
         _couponValue = 0;
+        _couponStringID = @"";
         [self calculationLabelValue];
     }else {
+        self.isUserCoupon = YES;
         JMCouponModel *model = modelArray[0];
         if (modelArray.count > 1) {
+            NSMutableString *couponID = [[NSMutableString alloc] init];
             for (JMCouponModel *model in modelArray) {
                 _couponValue += [model.coupon_value floatValue];
                 [couponID appendFormat:@"%@%@",model.couponID,@"/"];
@@ -754,40 +748,21 @@ static BOOL isAgreeTerms = YES;
             if ([couponID hasSuffix:@"/"]) {
                 [couponID deleteCharactersInRange:NSMakeRange(couponID.length - 1, 1)];
             }
+            self.isEnoughCoupon = YES;
+            self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
+            self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
             _couponStringID = [couponID copy];
+            _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
+            [self calculationLabelValue];
         }else {
+            self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
+            self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
             _couponValue = [model.coupon_value floatValue];
             _couponStringID = model.couponID;
+            _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
+            [self calculationLabelValue];
         }
-        self.isUserCoupon = YES;
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
-        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-            GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
-            NSString *couponMessage = goodsModel.coupon_message;
-            if (couponMessage.length == 0) {
-                self.isEnoughCoupon = YES;
-                if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
-                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
-                }else {
-                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
-                }
-                self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-                _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
-                [self calculationLabelValue];
-            }else {
-                [MBProgressHUD showWarning:goodsModel.coupon_message];
-                self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
-                self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
-                self.isEnoughCoupon = NO;
-                _couponValue = 0;
-                [self calculationLabelValue];
-            }
-        } WithFail:^(NSError *error) {
-            self.isEnoughCoupon = NO;
-            [MBProgressHUD showWarning:@"网络出错，优惠券暂不可选"];
-        } Progress:^(float progress) {
-            
-        }];
+        
     }
 }
 #pragma mark 团购支付
@@ -1059,9 +1034,42 @@ static BOOL isAgreeTerms = YES;
 
 
 
+//        if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+//            self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"购买提示" message:@"精品汇优惠券不足，请购买优惠券或减少商品购买数量。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alertView show];
+//            return ;
+//        }
 
-
-
+//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
+//        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//            if (!responseObject) {
+//                [MBProgressHUD showWarning:@"请重新选择优惠券~!"];
+//                [self reassignCoupn];
+//                return ;
+//            }
+//            GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
+//            NSString *couponMessage = goodsModel.coupon_message;
+//            if (couponMessage.length == 0) {
+//                self.isEnoughCoupon = YES;
+//                if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+//                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
+//                }else {
+//                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
+//                }
+//                self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+//                _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
+//                [self calculationLabelValue];
+//            }else {
+//                [MBProgressHUD showWarning:goodsModel.coupon_message];
+//                [self reassignCoupn];
+//            }
+//        } WithFail:^(NSError *error) {
+//            [MBProgressHUD showWarning:@"请重新选择优惠券~!"];
+//            [self reassignCoupn];
+//        } Progress:^(float progress) {
+//
+//        }];
 
 
 
