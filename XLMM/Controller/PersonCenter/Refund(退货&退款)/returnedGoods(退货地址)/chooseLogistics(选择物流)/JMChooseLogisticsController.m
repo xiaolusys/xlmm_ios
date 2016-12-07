@@ -57,10 +57,10 @@
     self.tableView.rowHeight = 60;
     [self.view addSubview:self.tableView];
 }
-//取消状态栏
-- (BOOL) prefersStatusBarHidden {
-    return YES;
-}
+////取消状态栏
+//- (BOOL) prefersStatusBarHidden {
+//    return YES;
+//}
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {

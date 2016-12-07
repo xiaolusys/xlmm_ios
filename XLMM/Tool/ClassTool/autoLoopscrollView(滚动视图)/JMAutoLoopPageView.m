@@ -201,6 +201,9 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
 - (void)scrollToIndex:(NSUInteger)index animated:(BOOL)animated
 {
     
+    if (self.dataSource == nil) {
+        return ;
+    }
     [self.mainCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:animated];
     //提示:此处可能存在越界崩溃,可以试试注释上面的方法打开下面的方法来急救
     //    CGPoint contentOffset = {0,0};
@@ -246,7 +249,8 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
 //开始自动滚
 - (void)beginAutoScroll {
     if (!_timer) {
-        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+//        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     }
 }
 

@@ -145,13 +145,13 @@
 //    _imageData = [[JMGlobal global] getCacheImageWithKey:_imageUrlString];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[_imageUrlString JMUrlEncodedString]]];
-        if (data != nil) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (data != nil) {
                 _imageData = [UIImage imageWithData:data];
-            });
-        }else {
-            _imageData = [UIImage imageNamed:@"icon-xiaolu.png"];
-        }
+            }else {
+                _imageData = [UIImage imageNamed:@"icon-xiaolu.png"];
+            }
+        });
     });
 //    _imageData = [UIImage imagewithURLString:_imageUrlString];
 //    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
@@ -176,7 +176,7 @@
             [UMSocialData defaultData].extConfig.wechatSessionData.title = _titleStr;
             [UMSocialData defaultData].extConfig.wechatSessionData.url = _url;
             [UMSocialData defaultData].extConfig.wxMessageType = 0;
-//            UMSocialUrlResource * urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:(UMSocialUrlResourceTypeImage) url:_url];
+//            UMSocialUrlResource * urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:(UMSocialUrlResourceTypeImage) url:_imageUrlString];
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_titleUrlString image:_imageData location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
 //                [self hiddenNavigationView];

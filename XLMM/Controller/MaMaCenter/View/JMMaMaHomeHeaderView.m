@@ -7,7 +7,6 @@
 //
 
 #import "JMMaMaHomeHeaderView.h"
-#import "JMAutoLoopPageView.h"
 #import "JMMaMaMessageCell.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
@@ -65,6 +64,21 @@ static NSString *currentTurnsNumberString;
 
 @implementation JMMaMaHomeHeaderView
 
+- (JMAutoLoopPageView *)pageView {
+    if (!_pageView) {
+        _pageView = [[JMAutoLoopPageView alloc] init];
+        _pageView.dataSource = self;
+        _pageView.delegate = self;
+        [_pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
+        _pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
+        _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+        _pageView.scrollForSingleCount = YES;
+        _pageView.atuoLoopScroll = YES;
+        _pageView.scrollFuture = YES;
+        _pageView.autoScrollInterVal = 3.0f;
+    }
+    return _pageView;
+}
 - (NSMutableArray *)titlesArray {
     if (_titlesArray == nil) {
         _titlesArray = [NSMutableArray array];
@@ -439,17 +453,7 @@ static NSString *currentTurnsNumberString;
     UIView *messageScrollView = [UIView new];
     [messageView addSubview:messageScrollView];
     
-    self.pageView = [[JMAutoLoopPageView alloc] init];
     [messageView addSubview:self.pageView];
-    self.pageView.dataSource = self;
-    self.pageView.delegate = self;
-    [self.pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
-    self.pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
-    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-    self.pageView.scrollForSingleCount = YES;
-    self.pageView.atuoLoopScroll = YES;
-    self.pageView.scrollFuture = YES;
-    self.pageView.autoScrollInterVal = 3.0f;
     
     [promptImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(messageView).offset(15);
@@ -545,7 +549,9 @@ static NSString *currentTurnsNumberString;
 - (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
     return @"JMMaMaMessageCell";
 }
-- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index { }
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+//    NSLog(@"JMMaMaHomeHeaderView ---> pageView滚动");
+}
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:self.mamaNotReadNotice forKey:@"web_url"];

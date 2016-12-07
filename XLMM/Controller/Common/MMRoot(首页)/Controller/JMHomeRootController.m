@@ -101,6 +101,21 @@ static BOOL isFirstPOP = YES;
     NSString *_downloadURLString;       // 地址下载链接
     NSString *urlCategory;              // 下载分类json文件
 }
+- (JMAutoLoopPageView *)pageView {
+    if (!_pageView) {
+        _pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
+        _pageView.dataSource = self;
+        _pageView.delegate = self;
+        [_pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
+        _pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+        _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+        _pageView.scrollForSingleCount = YES;
+        _pageView.atuoLoopScroll = YES;
+        _pageView.scrollFuture = YES;
+        _pageView.autoScrollInterVal = 4.0f;
+    }
+    return _pageView;
+}
 - (JMUpdataAppPopView *)updataPopView {
     if (_updataPopView == nil) {
         _updataPopView = [JMUpdataAppPopView defaultUpdataPopView];
@@ -131,6 +146,9 @@ static BOOL isFirstPOP = YES;
     [super viewWillAppear:animated];
 //    self.cartsCountLabel.hidden = YES;
 //    self.pageView.atuoLoopScroll = YES;
+//    if (self.pageView) {
+//        [self.pageView reloadData];
+//    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -146,7 +164,13 @@ static BOOL isFirstPOP = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    if (self.pageView) {
+        [self.pageView endAutoScroll];
+    }
     [MobClick endLogPageView:@"main"];
+}
+- (void)didReceiveMemoryWarning {
+    [[JMGlobal global] clearAllSDCache];
 }
 - (void)rootViewDidEnterBackground:(NSNotification *)notification {
     [self hideUpdataView];
@@ -359,17 +383,6 @@ static BOOL isFirstPOP = YES;
     [self.tableView registerClass:[JMHomeCategoryCell class] forCellReuseIdentifier:JMHomeCategoryCellIdentifier];
     [self.tableView registerClass:[JMHomeGoodsCell class] forCellReuseIdentifier:JMHomeGoodsCellIdentifier];
     [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-    
-    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
-    self.pageView.dataSource = self;
-    self.pageView.delegate = self;
-    [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
-    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
-    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-    self.pageView.scrollForSingleCount = YES;
-    self.pageView.atuoLoopScroll = YES;
-    self.pageView.scrollFuture = YES;
-    self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
     
 }
@@ -629,6 +642,7 @@ static BOOL isFirstPOP = YES;
     return @"JMHomeHeaderCell"; // 返回自定义cell的identifier
 }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+//    NSLog(@"JMHomeRootController ---> pageView滚动");
 }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     [MobClick event:@"banner_click"];
@@ -958,7 +972,11 @@ static BOOL isFirstPOP = YES;
     NSLog(@"dealloc 被调用");
     [self.tableView removeObserver:self forKeyPath:@"contentOffset" context:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.pageView = nil;
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+        self.pageView = nil;
+    }
+    
 }
 
 @end

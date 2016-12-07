@@ -144,25 +144,31 @@
 #pragma mark ======== 监听系统事件 application启动过程 ========
 // 添加你自己的挂起前准备代码
 - (void)applicationWillResignActive:(UIApplication *)application {
+    NSLog(@"applicationWillResignActive ---> 添加你自己的挂起前准备代码");
 }
 // 程序进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"applicationDidEnterBackground ---> 程序进入后台");
 }
 // 程序从后台回到前台
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"applicationWillEnterForeground ---> 程序进入前台");
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
 }
 // 添加你的恢复代码
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSLog(@"applicationDidBecomeActive ---> 添加你的恢复代码");
     application.applicationIconBadgeNumber = 0;
 //    [self updateLoginState];
     [[JMMiPushManager miPushManager] didBecomeActive];
 }
 // 接收到内存警告时候调用
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    NSLog(@"applicationDidReceiveMemoryWarning ---> 接收到内存警告时候调用");
     [[JMGlobal global] clearAllSDCache];
 }
 - (void)dealloc {
+    NSLog(@"dealloc ---> dealloc调用");
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
 }
 // 程序即将退出 -- > 在这里添加退出前的清理代码以及其他工作代码
@@ -171,16 +177,25 @@
 
 #pragma mark ======== 支付,分享 回调 ========
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    [self xiaoluPay:url];
-    return [UMSocialSnsService handleOpenURL:url];
+    BOOL isResult = [UMSocialSnsService handleOpenURL:url];
+    if (!isResult) {
+        [self xiaoluPay:url];
+    }
+    return isResult;
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    [self xiaoluPay:url];
-    return [UMSocialSnsService handleOpenURL:url];
+    BOOL isResult = [UMSocialSnsService handleOpenURL:url];
+    if (!isResult) {
+        [self xiaoluPay:url];
+    }
+    return isResult;
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
-    [self xiaoluPay:url];
-    return [UMSocialSnsService handleOpenURL:url];
+    BOOL isResult = [UMSocialSnsService handleOpenURL:url];
+    if (!isResult) {
+        [self xiaoluPay:url];
+    }
+    return isResult;
 }
 - (void)xiaoluPay:(NSURL *)url {
     [JMPayment handleOpenURL:url WithErrorCodeBlock:^(JMPayError *error) {

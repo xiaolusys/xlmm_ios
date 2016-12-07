@@ -12,6 +12,8 @@
 #import "JMLineView.h"
 #import "JMSelecterButton.h"
 #import "MiPushSDK.h"
+#import "JMSliderLockView.h"
+
 
 #define PHONE_NUM_LIMIT 11
 #define VERIFY_CODE_LIMIT 6
@@ -19,12 +21,14 @@
 
 
 
-@interface JMAuthcodeViewController ()<UITextFieldDelegate> {
+@interface JMAuthcodeViewController ()<UITextFieldDelegate,JMSliderLockViewDelegate,UIAlertViewDelegate> {
 //    NSTimer *countDownTimer;
 //    NSInteger secondsCountDown;
-    
+    BOOL isUnlock;
+    BOOL isClickGetCode;
 }
 
+@property (nonatomic, strong) JMSliderLockView *sliderView;
 @property (nonatomic,strong) JMLineView *lineView;
 
 @property (nonatomic,strong) JMSelecterButton *selButton;
@@ -39,6 +43,7 @@
 @property (nonatomic,strong) UIButton *getAuthcodeBtn;
 
 @property (nonatomic,strong) UIButton *loginBtn;
+@property (nonatomic, strong) UILabel *waringLabel;
 
 @end
 
@@ -48,7 +53,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    isUnlock = NO;
+    isClickGetCode = NO;
     JMLineView *lineView = [[JMLineView alloc] init];
     lineView.backgroundColor = [UIColor whiteColor];
     lineView.frame  = self.view.frame;
@@ -59,65 +65,14 @@
     [self createNavigationBarWithTitle:@"短信验证登录" selecotr:@selector(btnClickedLogin:)];
     [self prepareUI];
     [self prepareInitUI];
+    self.fd_interactivePopDisabled = YES;
+//    self.fd_prefersNavigationBarHidden = NO;
+    
 
     
 }
 
-#pragma mark ------ 初始化UI
-- (void)prepareUI {
-    
-    
-    UIView *bottomView = [UIView new];
-    [self.lineView addSubview:bottomView];
-    self.bottomView = bottomView;
-    
-    /**
-     文本框控件
-     */
-    UITextField *phoneNumTextF  = [[UITextField alloc] init];
-    [self.lineView addSubview:phoneNumTextF];
-    self.phoneNumTextF = phoneNumTextF;
-    self.phoneNumTextF.keyboardType = UIKeyboardTypeNumberPad;
-    self.phoneNumTextF.leftViewMode = UITextFieldViewModeAlways;
-    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.phoneNumTextF.font = [UIFont systemFontOfSize:14.];
-    self.phoneNumTextF.placeholder = @"请输入注册手机号";
-    self.phoneNumTextF.delegate = self;
-//    [self.phoneNumTextF addTarget:self action:@selector(textChange) forControlEvents:UIControlEventEditingChanged];
-    
-    
-    
-    UITextField *authcodeTextF = [UITextField new];
-    [self.lineView addSubview:authcodeTextF];
-    self.authcodeTextF = authcodeTextF;
-    self.authcodeTextF.keyboardType = UIKeyboardTypeNumberPad;
-    self.authcodeTextF.leftViewMode = UITextFieldViewModeAlways;
-    self.authcodeTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.authcodeTextF.font = [UIFont systemFontOfSize:14.];
-    self.authcodeTextF.placeholder = @"请输入短信验证码";
-    self.authcodeTextF.delegate = self;
-//    [self.authcodeTextF addTarget:self action:@selector(textChange) forControlEvents:UIControlEventEditingChanged];
-    /**
-     按钮控件
-     */
-    self.selButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-    [self.lineView addSubview:self.selButton];
-    [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
-    self.selButton.selected = NO;
-    self.selButton.enabled = NO;
-    [_selButton addTarget:self action:@selector(getAuthcodeClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
-    UIButton *loginBtn = [UIButton new];
-    [self.bottomView addSubview:loginBtn];
-    self.loginBtn = loginBtn;
-    [loginBtn setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
-    [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
-    loginBtn.enabled = NO;
-    [loginBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-}
+
 
 //-(void)textChange{
 //    
@@ -127,7 +82,6 @@
 #pragma mark ---- UITextFieldDelegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    
     return YES;
 }
 
@@ -143,9 +97,7 @@
     }
     
     NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
-    
-    
+
     if (self.authcodeTextF == textField) {
         
         if (increase && range.location >= VERIFY_CODE_LIMIT - 1 && self.loginBtn.enabled == NO) {
@@ -210,9 +162,13 @@
 
 
 
-
 #pragma mark ---- 点击获取验证码按钮
 - (void)getAuthcodeClick:(UIButton *)sender {
+    isClickGetCode = YES;
+    if (!isUnlock) {
+        self.waringLabel.text = @"请滑动验证";
+        return ;
+    }
     NSString *phoneNumber = self.phoneNumTextF.text;
 
     NSInteger num  = [[phoneNumber substringToIndex:1] integerValue];
@@ -220,37 +176,20 @@
         NSDictionary *parameters = nil;
         NSString *stringurl = TSendCode_URL;;
         
-//        parameters = self.config;
-        
-//        if ([self.config[@"isRegister"] boolValue] == YES && [self.config[@"isMessageLogin"] boolValue] == NO){
-//            //手机注册
-//            parameters = @{@"mobile": phoneNumber, @"action":@"register"};
-//        }else if ([self.config[@"isUpdateMobile"] boolValue] == YES){
-//            //修改密码
-//            parameters = @{@"mobile": phoneNumber, @"action":@"change_pwd"};
-//        }else if ([self.config[@"isMessageLogin"] boolValue] ==   YES){
-//            //短信登录
-//            parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
-//        }else if ([self.config[@"isVerifyPsd"] boolValue] == YES) {
-//            //忘记密码
-//            parameters = @{@"mobile": phoneNumber, @"action":@"find_pwd"};
-//        }
-//authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
-        
         if ([self.config[@"isMessageLogin"] boolValue] == YES) {
             parameters = @{@"mobile": phoneNumber, @"action":@"sms_login"};
         }
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringurl WithParaments:parameters WithSuccess:^(id responseObject) {
             NSInteger rcodeStr = [[responseObject objectForKey:@"rcode"] integerValue];
-            
             if (rcodeStr == 0) {
-                
+                isClickGetCode = NO;
                 [self startTime];
-                
             }else {
+                [self reductionSlider];
                 [MBProgressHUD showWarning:[responseObject objectForKey:@"msg"]];
             }
         } WithFail:^(NSError *error) {
+            [self reductionSlider];
             [MBProgressHUD showError:@"获取失败！"];
         } Progress:^(float progress) {
             
@@ -261,6 +200,13 @@
     }
     
     
+}
+- (void)reductionSlider {
+    isUnlock = NO;
+    isClickGetCode = NO;
+    self.sliderView.thumbBack = YES;
+    self.sliderView.text = @"向右滑动验证";
+    self.sliderView.userInteractionEnabled = YES;
 }
 #pragma mrak ----- 创建一个定时器
 - (void)startTime {
@@ -275,6 +221,7 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
+                [self reductionSlider];
                 [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
                 _selButton.enabled = YES;
                 _selButton.selected = YES;
@@ -310,14 +257,6 @@
     if ([self.config[@"isMessageLogin"] boolValue]) {
         parameters = @{@"mobile":phoneNumber,@"action":@"sms_login", @"verify_code":vcode, @"devtype":LOGINDEVTYPE};
     }
-    
-//    else if ([self.config[@"isRegister"] boolValue]){
-//        parameters = @{@"mobile":phoneNumber, @"action":@"register", @"verify_code":vcode,  @"devtype":LOGINDEVTYPE};
-//    }else if ([self.config[@"isVerifyPsd"] boolValue]){
-//        parameters = @{@"mobile":phoneNumber, @"action":@"find_pwd", @"verify_code":vcode};
-//    }else if ([self.config[@"isUpdateMobile"] boolValue]) {
-//        parameters = @{@"mobile":phoneNumber, @"action":@"change_pwd", @"verify_code":vcode};
-//    }
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TVerifyCode_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
@@ -372,6 +311,131 @@
         //        [self displaySetPasswordPage];
     }
 }
+
+
+
+#pragma mark ------ 初始化UI
+- (void)prepareUI {
+    UIView *bottomView = [UIView new];
+    [self.lineView addSubview:bottomView];
+    self.bottomView = bottomView;
+    self.bottomView.backgroundColor = [UIColor lineGrayColor];
+    
+    /**
+     文本框控件
+     */
+    UITextField *phoneNumTextF  = [[UITextField alloc] init];
+    [self.lineView addSubview:phoneNumTextF];
+    self.phoneNumTextF = phoneNumTextF;
+    self.phoneNumTextF.keyboardType = UIKeyboardTypeNumberPad;
+    self.phoneNumTextF.leftViewMode = UITextFieldViewModeAlways;
+    self.phoneNumTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.phoneNumTextF.font = [UIFont systemFontOfSize:14.];
+    self.phoneNumTextF.placeholder = @"请输入手机号";
+    self.phoneNumTextF.delegate = self;
+    //    [self.phoneNumTextF addTarget:self action:@selector(textChange) forControlEvents:UIControlEventEditingChanged];
+    
+    
+    
+    UITextField *authcodeTextF = [UITextField new];
+    [self.lineView addSubview:authcodeTextF];
+    self.authcodeTextF = authcodeTextF;
+    self.authcodeTextF.keyboardType = UIKeyboardTypeNumberPad;
+    self.authcodeTextF.leftViewMode = UITextFieldViewModeAlways;
+    self.authcodeTextF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.authcodeTextF.font = [UIFont systemFontOfSize:14.];
+    self.authcodeTextF.placeholder = @"请输入短信验证码";
+    self.authcodeTextF.delegate = self;
+    //    [self.authcodeTextF addTarget:self action:@selector(textChange) forControlEvents:UIControlEventEditingChanged];
+    /**
+     按钮控件
+     */
+    self.selButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+    [self.lineView addSubview:self.selButton];
+    [_selButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
+    self.selButton.selected = NO;
+    self.selButton.enabled = NO;
+    [_selButton addTarget:self action:@selector(getAuthcodeClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    UIButton *loginBtn = [UIButton new];
+    [self.bottomView addSubview:loginBtn];
+    self.loginBtn = loginBtn;
+    [loginBtn setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
+    [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    loginBtn.enabled = NO;
+    [loginBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.waringLabel = [UILabel new];
+    [self.bottomView addSubview:self.waringLabel];
+    self.waringLabel.textColor = [UIColor redColor];
+    self.waringLabel.font = CS_SYSTEMFONT(13.);
+    self.waringLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.sliderView = [[JMSliderLockView alloc] initWithFrame:CGRectMake(15, 15, SCREENWIDTH - 30, 60)];
+    self.sliderView.thumbHidden = NO;
+    self.sliderView.thumbBack = YES;
+    self.sliderView.text = @"向右滑动验证";
+    self.sliderView.delegate = self;
+    [self.sliderView setColorForBackgroud:[UIColor buttonDisabledBorderColor] foreground:[UIColor buttonEnabledBackgroundColor] thumb:[UIColor whiteColor] border:[UIColor lineGrayColor] textColor:[UIColor buttonTitleColor]];
+//    [self.sliderView setThumbBeginImage:[UIImage imageNamed:@"sliderLeft"] finishImage:[UIImage imageNamed:@"sliderRight"]];
+    [self.sliderView setThumbBeginString:@"😊" finishString:@"😀"];
+    [self.bottomView addSubview:self.sliderView];
+    
+    
+}
+- (void)sliderEndValueChanged:(JMSliderLockView *)slider{
+    if (slider.value >= 1) {
+        slider.thumbBack = NO;
+        if (self.selButton.selected) {
+            if (isClickGetCode) { // 已经点击获取验证码按钮
+                isUnlock = YES;
+                self.sliderView.text = @"验证成功";
+                self.waringLabel.text = @"";
+                self.sliderView.userInteractionEnabled = NO;
+                [self getAuthcodeClick:self.selButton];
+            }else { // 没有点击
+                [self changeSliderStatus:@"请点击获取验证码"];
+            }
+        }else {
+            [self changeSliderStatus:@"请填写手机号与短信验证码"];
+            
+        }
+        //        [slider setSliderValue:1.0];
+    }
+}
+- (void)changeSliderStatus:(NSString *)textStrint {
+    self.sliderView.text = @"验证成功";
+    self.waringLabel.text = textStrint;
+    isUnlock = NO;
+    __block JMAuthcodeViewController *weakSelf = self;
+    dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
+    dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+        [weakSelf delayMethod];
+    });
+}
+- (void)sliderValueChanging:(JMSliderLockView *)slider{
+    //        NSLog(@"%f",slider.value);
+}
+- (void)delayMethod {
+    [self.sliderView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@0);
+    }];
+    [self performSelector:@selector(showSliderView) withObject:self.sliderView afterDelay:3.f];
+}
+- (void)showSliderView {
+    self.sliderView.frame = CGRectMake(15, 15, SCREENWIDTH - 30, 60);
+    [self.sliderView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@60);
+    }];
+    self.waringLabel.text = @"";
+    self.sliderView.text = @"向右滑动验证";
+    self.sliderView.thumbBack = YES;
+}
+
+
+
 #pragma mark ---- 控件显示
 - (void)prepareInitUI {
     
@@ -403,12 +467,21 @@
         make.left.right.bottom.equalTo(weakSelf.lineView);
     }];
     
+    [self.sliderView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.equalTo(weakSelf.bottomView).offset(15);
+        make.width.mas_equalTo(@(SCREENWIDTH - 30));
+        make.height.mas_equalTo(@60);
+    }];
+    
+    [self.waringLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.sliderView.mas_bottom).offset(5);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
+    }];
     
     [self.loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.authcodeTextF.mas_bottom).offset(30);
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.left.equalTo(weakSelf.view).offset(15);
-        make.right.equalTo(weakSelf.view).offset(-15);
+        make.top.equalTo(weakSelf.waringLabel.mas_bottom).offset(10);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
+        make.width.mas_equalTo(@(SCREENWIDTH - 40));
         make.height.mas_equalTo(@40);
     }];
     
@@ -432,6 +505,8 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.phoneNumTextF resignFirstResponder];
+    [self.authcodeTextF resignFirstResponder];
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMAuthcodeViewController"];
 }

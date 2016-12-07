@@ -128,7 +128,7 @@
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.cartVC.isHideNavigationLeftItem = YES;
-            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
+//            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
             //            [self.cartVC refreshCartData];
         }else {
         }

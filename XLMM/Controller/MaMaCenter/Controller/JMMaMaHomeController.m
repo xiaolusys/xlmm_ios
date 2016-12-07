@@ -100,6 +100,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMMaMaHomeController"];
+    if (self.homeHeaderView.pageView) {
+        [self.homeHeaderView.pageView endAutoScroll];
+    }
 }
 - (void)viewDidDisappear:(BOOL)animated {
     self.homeHeaderView.lineChart = nil;
@@ -553,10 +556,12 @@
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     JMKeyWindow.rootViewController = tabBarVC;
 }
-
 - (void)dealloc {
     NSLog(@"JMMaMaHomeController  --> dealloc被调用");
-    self.homeHeaderView.pageView = nil;
+    if (self.homeHeaderView.pageView) {
+        [self.homeHeaderView.pageView removeFromSuperview];
+        self.homeHeaderView.pageView = nil;
+    }
     
 }
 
