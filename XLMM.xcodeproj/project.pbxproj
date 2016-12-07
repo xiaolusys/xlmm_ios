@@ -684,8 +684,6 @@
 		1FD8004C1DF1111B00382E44 /* JMFineCounpGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8004B1DF1111B00382E44 /* JMFineCounpGoodsController.m */; };
 		1FD8004F1DF12AE800382E44 /* JMFineCounpContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8004E1DF12AE800382E44 /* JMFineCounpContentController.m */; };
 		1FD800521DF265F700382E44 /* JMRegisterJS.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD800511DF265F700382E44 /* JMRegisterJS.m */; };
-		1FD801181DF67EEC00382E44 /* sliderLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD801161DF67EEC00382E44 /* sliderLeft.png */; };
-		1FD801191DF67EEC00382E44 /* sliderRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FD801171DF67EEC00382E44 /* sliderRight.png */; };
 		1FD8011C1DF6920800382E44 /* JMSliderLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8011B1DF6920800382E44 /* JMSliderLockView.m */; };
 		1FDC35071DDD6F7600263E83 /* JMGoodsCountTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC35061DDD6F7600263E83 /* JMGoodsCountTime.m */; };
 		1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07181D4303790010231F /* JMUpdataAppPopView.m */; };
@@ -1937,8 +1935,6 @@
 		1FD8004E1DF12AE800382E44 /* JMFineCounpContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFineCounpContentController.m; sourceTree = "<group>"; };
 		1FD800501DF265F700382E44 /* JMRegisterJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRegisterJS.h; sourceTree = "<group>"; };
 		1FD800511DF265F700382E44 /* JMRegisterJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRegisterJS.m; sourceTree = "<group>"; };
-		1FD801161DF67EEC00382E44 /* sliderLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderLeft.png; sourceTree = "<group>"; };
-		1FD801171DF67EEC00382E44 /* sliderRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderRight.png; sourceTree = "<group>"; };
 		1FD8011A1DF6920800382E44 /* JMSliderLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSliderLockView.h; sourceTree = "<group>"; };
 		1FD8011B1DF6920800382E44 /* JMSliderLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSliderLockView.m; sourceTree = "<group>"; };
 		1FDC35051DDD6F7600263E83 /* JMGoodsCountTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsCountTime.h; sourceTree = "<group>"; };
@@ -3033,8 +3029,6 @@
 		1F12EC661DAC97E600511B58 /* publicSelected */ = {
 			isa = PBXGroup;
 			children = (
-				1FD801161DF67EEC00382E44 /* sliderLeft.png */,
-				1FD801171DF67EEC00382E44 /* sliderRight.png */,
 				1F12EC671DAC97E600511B58 /* address_icon.png */,
 				1F12EC681DAC97E600511B58 /* circle_wallet_Normal@2x.png */,
 				1F12EC691DAC97E600511B58 /* circle_wallet_Selected@2x.png */,
@@ -6599,7 +6593,6 @@
 				1F12ECF51DAC97E600511B58 /* 圈圈加载0007@2x.png in Resources */,
 				1F12ED751DAC97E700511B58 /* shareweibo.png in Resources */,
 				1F3794151DEEF8F60044E325 /* refund@2x.png in Resources */,
-				1FD801191DF67EEC00382E44 /* sliderRight.png in Resources */,
 				3A2BC1D31D2CFF6E00F6F54B /* iOS-social-analytics-releasenote.html in Resources */,
 				3A2BC1C11D2CFF6D00F6F54B /* UMSCommentDetailController.xib in Resources */,
 				1F498C151D2772D0007E77FC /* GuanzhuViewController.xib in Resources */,
@@ -6785,7 +6778,6 @@
 				1F12ED541DAC97E700511B58 /* 5C@2x.png in Resources */,
 				3A2BC1DB1D2CFF6E00F6F54B /* ios-social-sdk-share-detail.html in Resources */,
 				1F498C5F1D2772D0007E77FC /* ShenQingTuikuanController.xib in Resources */,
-				1FD801181DF67EEC00382E44 /* sliderLeft.png in Resources */,
 				1F12ED6F1DAC97E700511B58 /* friendskuaizhao.png in Resources */,
 				1F12ED281DAC97E700511B58 /* refundSuccessful.png in Resources */,
 				1F4C9E981D9912600089CE74 /* UdeskBundle.bundle in Resources */,
