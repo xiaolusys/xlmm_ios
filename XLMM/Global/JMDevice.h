@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class IMYWebView;
 @interface JMDevice : NSObject
 
 + (instancetype)defaultDecice;
@@ -16,7 +17,7 @@
 
 - (NSString *)getDeviceName;
 
-- (void)cerateUserAgent;
+- (void)cerateUserAgent:(IMYWebView *)webView;
 
 - (void)getServerIP;
 

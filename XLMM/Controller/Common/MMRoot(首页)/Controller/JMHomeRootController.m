@@ -25,7 +25,6 @@
 #import "JMRepopView.h"
 #import "JMUpdataAppPopView.h"
 #import "AppDelegate.h"
-#import "ChildViewController.h"
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"
@@ -37,6 +36,8 @@
 #import "JMCartViewController.h"
 #import "JMGoodsCountTime.h"
 #import "CSTabBarController.h"
+#import "JMChildViewController.h"
+
 
 static BOOL isFirstPOP = YES;
 
@@ -46,6 +47,18 @@ static BOOL isFirstPOP = YES;
     NSInteger oneRowCellH;
     NSInteger twoRowCellH;
     NSString *_dayDifferString;     // 上架时间与结束时间相差天数
+    NSMutableArray *_topImageArray;     // 主页头部滚动视图数据
+    NSMutableArray *_categorysArray;    // 主页分类数据
+    NSMutableArray *flageArr;           // 判断商品请求是否加载完成的标志
+    NSArray *_urlArray;                 // 商品url -> (昨天,今天,明天)
+    BOOL isCreateSegment;               // 商品请求是否全部完成
+    NSMutableArray *_timeArray;         // 商品结束(开始)时间参数
+    NSMutableDictionary *_webDict;      // webView需要的一些参数
+    BOOL _isFirstOpenApp;               // 判断是否是第一次打开
+    NSString *_releaseNotes;            // 版本升级信息
+    NSString *_hash;                    // 判断是否需要重新下载的哈希值
+    NSString *_downloadURLString;       // 地址下载链接
+    NSString *urlCategory;              // 下载分类json文件
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
@@ -87,25 +100,14 @@ static BOOL isFirstPOP = YES;
 @property (nonatomic, strong) JMLaunchView *launchView;
 @end
 
-@implementation JMHomeRootController {
-    NSMutableArray *_topImageArray;     // 主页头部滚动视图数据
-    NSMutableArray *_categorysArray;    // 主页分类数据
-    NSMutableArray *flageArr;           // 判断商品请求是否加载完成的标志
-    NSArray *_urlArray;                 // 商品url -> (昨天,今天,明天)
-    BOOL isCreateSegment;               // 商品请求是否全部完成
-    NSMutableArray *_timeArray;         // 商品结束(开始)时间参数
-    NSMutableDictionary *_webDict;      // webView需要的一些参数
-    BOOL _isFirstOpenApp;               // 判断是否是第一次打开
-    NSString *_releaseNotes;            // 版本升级信息
-    NSString *_hash;                    // 判断是否需要重新下载的哈希值
-    NSString *_downloadURLString;       // 地址下载链接
-    NSString *urlCategory;              // 下载分类json文件
-}
+@implementation JMHomeRootController
+
 - (JMAutoLoopPageView *)pageView {
     if (!_pageView) {
         _pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
         _pageView.dataSource = self;
         _pageView.delegate = self;
+        _pageView.isCreatePageControl = YES;
         [_pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
         _pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
         _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
@@ -531,7 +533,7 @@ static BOOL isFirstPOP = YES;
 }
 #pragma mark 分类点击事件
 - (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
-    ChildViewController *categoryVC = [[ChildViewController alloc] init];
+    JMChildViewController *categoryVC = [[JMChildViewController alloc] init];
     NSString *parStr = paramerString[@"cat_link"];
     if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
         NSLog(@"jump cat_link=%@ wrong", parStr);
@@ -540,7 +542,7 @@ static BOOL isFirstPOP = YES;
     NSArray *array = [parStr componentsSeparatedByString:@"="];
     NSString *string = array[1];
     categoryVC.titleString = paramerString[@"name"];
-    categoryVC.cid = string;
+    categoryVC.categoryCid = string;
     categoryVC.categoryUrlString = urlCategory;
     [self.navigationController pushViewController:categoryVC animated:YES];
 }

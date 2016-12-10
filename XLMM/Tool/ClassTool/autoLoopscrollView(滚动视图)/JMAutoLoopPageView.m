@@ -7,6 +7,8 @@
 //
 
 #import "JMAutoLoopPageView.h"
+#import "JMPageControl.h"
+
 
 #define DataSourceItemCount [self.dataSource numberOfItemWithPageView:self]
 // 默认indentifier
@@ -19,10 +21,11 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     BOOL _isScrolling;                              // 是否在滚动
     BOOL _isWaitingToChangeScrollDirection;         // 是否等待改变滚动方向
     JMAtuoLoopScrollViewStyle _tempDirection;       // 滚动方向
+    BOOL _isRealyPageControl;                       // 是否已经给pageNumber赋值
 }
 
 @property (nonatomic, strong) UICollectionView *mainCollectionView;
-
+@property (nonatomic, strong) JMPageControl *systemPageCtrol;
 @property (nonatomic, strong) NSTimer *timer;
 
 @end
@@ -52,7 +55,6 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     [self.mainCollectionView.collectionViewLayout invalidateLayout];
     
     self.mainCollectionView.frame = self.bounds;
-    
     if (DataSourceItemCount > 0) {
         //调整位置
         [self scrollToIndex:self.currentIndex animated:NO];
@@ -85,9 +87,16 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     _scrollForSingleCount = YES;
     _scrollUserEnable = YES;
     _scrollFuture = YES;
+    _isRealyPageControl = NO;
     [self addSubview:self.mainCollectionView];
 }
-
+- (void)setIsCreatePageControl:(BOOL)isCreatePageControl {
+    _isRealyPageControl = isCreatePageControl;
+    if (_isRealyPageControl) {
+        [self addSubview:self.systemPageCtrol];
+        [self insertSubview:self.systemPageCtrol aboveSubview:self.mainCollectionView];
+    }
+}
 - (UICollectionView *)mainCollectionView {
     if (!_mainCollectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -104,6 +113,22 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
         _mainCollectionView.scrollsToTop = NO;
     }
     return _mainCollectionView;
+}
+- (JMPageControl *)systemPageCtrol {
+    if (!_systemPageCtrol) {
+        self.systemPageCtrol = [[JMPageControl alloc] init];
+        self.systemPageCtrol.frame = CGRectMake(0, self.mj_h  - 30, self.mj_w, 20);
+        self.systemPageCtrol.enabled = NO;
+        //    [self.systemPageCtrl addTarget:self action:@selector(pageControlAction:) forControlEvents:UIControlEventValueChanged];
+        UIView *nomalView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 12, 4)];
+        UIView *selectedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 12, 4)];
+        nomalView.backgroundColor = [UIColor buttonDisabledBorderColor];
+        selectedView.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+        self.systemPageCtrol.normalPageView = nomalView;
+        self.systemPageCtrol.currentPageView = selectedView;
+        self.systemPageCtrol.padding = 10;
+    }
+    return _systemPageCtrol;
 }
 - (void)setScrollStyle:(JMAtuoLoopScrollViewStyle)scrollStyle {
     // 处理滚动时换方向的问题
@@ -195,15 +220,23 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     }else {
         [self endAutoScroll];
     }
-    
-    
+
+    self.systemPageCtrol.numberOfPages = DataSourceItemCount;
+
 }
+- (void)setPageCtrlCurrentPage:(NSInteger)currentPage {
+    if (self.systemPageCtrol) {
+        self.systemPageCtrol.currentPage = currentPage;
+    }
+}
+
 - (void)scrollToIndex:(NSUInteger)index animated:(BOOL)animated
 {
     
-    if (self.dataSource == nil) {
-        return ;
-    }
+//    if (self.dataSource == nil) {
+//        return ;
+//    }
+    
     [self.mainCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:animated];
     //提示:此处可能存在越界崩溃,可以试试注释上面的方法打开下面的方法来急救
     //    CGPoint contentOffset = {0,0};
@@ -426,6 +459,7 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
     
     //设置outputpageindex
     NSUInteger pageIndex = [self outputIndexForRealIndex:_realPageIndex];
+    [self setPageCtrlCurrentPage:pageIndex];
     if (pageIndex != _currentIndex) {
         _currentIndex = pageIndex;
         if ([self.delegate respondsToSelector:@selector(JMAutoLoopPageView:DidScrollToIndex:)]) {

@@ -75,14 +75,14 @@
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
 }
 #pragma mark ======== 程序开始启动 ========
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
     //注意!!!umeng必须要在udesk初始化之后，否则umeng crasklog会不生效，可能udesk自己捕获了一些crash信号处理
     [self udeskInit];
     [self umengTrackInit];
@@ -90,7 +90,7 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     [[JMDevice defaultDecice] getServerIP];
-//    [self updateLoginState];
+    [self updateLoginState];
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -160,7 +160,9 @@
     NSLog(@"applicationDidBecomeActive ---> 添加你的恢复代码");
     application.applicationIconBadgeNumber = 0;
 //    [self updateLoginState];
-    [[JMMiPushManager miPushManager] didBecomeActive];
+    if ([JMMiPushManager miPushManager]) {
+        [[JMMiPushManager miPushManager] didBecomeActive];
+    }
 }
 // 接收到内存警告时候调用
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
@@ -212,7 +214,7 @@
 #pragma mark ======== User_Agent ========
 //从webview获得浏览器中的useragent，并进行更新
 - (void)createUserAgent {
-    [[JMDevice defaultDecice] cerateUserAgent];
+    [[JMDevice defaultDecice] cerateUserAgent:nil];
 }
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
     self.backgroundSessionCompletionHandler = completionHandler;

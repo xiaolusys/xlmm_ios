@@ -105,18 +105,6 @@
     BOOL _isDirectBuyGoods;     // 判断商品是否可以直接跳转支付页面
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
-    [MobClick event:@"checkGoodsDetail"];
-    [MobClick beginLogPageView:@"JMGoodsDetailController"];
-    [self loadCatrsNumData];
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-    [MobClick endLogPageView:@"JMGoodsDetailController"];
-}
 - (JMShareModel *)shareModel {
     if (!_shareModel) {
         _shareModel = [[JMShareModel alloc] init];
@@ -184,6 +172,31 @@
     }
     return _downViewLabel;
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+    [MobClick event:@"checkGoodsDetail"];
+    [MobClick beginLogPageView:@"JMGoodsDetailController"];
+    [self loadCatrsNumData];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+    [MobClick endLogPageView:@"JMGoodsDetailController"];
+    if (self.pageView) {
+        [self.pageView endAutoScroll];
+    }
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [MBProgressHUD hideHUD];
+}
+- (void)dealloc {
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+        self.pageView = nil;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MBProgressHUD showLoading:@""];
@@ -201,9 +214,7 @@
     [self createNavigationView];    // 自定义导航控制器视图
     
 }
-- (void)viewDidAppear:(BOOL)animated {
-    [MBProgressHUD hideHUD];
-}
+
 - (void)createContentView {
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
@@ -239,6 +250,7 @@
     self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, HeaderScrolHeight)];
     self.pageView.dataSource = self;
     self.pageView.delegate = self;
+    _pageView.isCreatePageControl = YES;
     [self.pageView registerCellWithClass:[JMGoodsLoopRollCell class] identifier:@"JMGoodsLoopRollCell"];
     self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
     self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;

@@ -9,12 +9,16 @@
 #import "JMSocialActivityController.h"
 #import "IMYWebView.h"
 #import <WebKit/WebKit.h>
+#import "JMEmptyView.h"
 
 
 @interface JMSocialActivityController () <IMYWebViewDelegate>
 
 
 @property (nonatomic ,strong) IMYWebView *baseWebView;
+@property (nonatomic, strong) JMEmptyView *empty;
+
+
 
 @end
 
@@ -31,20 +35,26 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self createNavigationBarWithTitle:@"论坛" selecotr:nil];
     [self createWebView];
+    [self emptyView];
     [self loadMaMaWeb];
 }
 - (void)loadMaMaWeb {
+    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject){
-//            [[JMGlobal global] hideWaitLoading];
+            [[JMGlobal global] hideWaitLoading];
+            self.empty.hidden = NO;
             return ;
         }
+        self.empty.hidden = YES;
         [self mamaWebViewData:responseObject];
     } WithFail:^(NSError *error) {
-//        [[JMGlobal global] hideWaitLoading];
+        self.empty.hidden = NO;
+        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
     }];
 }
@@ -78,7 +88,7 @@
     self.baseWebView.delegate = self;
     self.baseWebView.viewController = self;
     [self.view addSubview:self.baseWebView];
-    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
+    
 
 }
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -91,6 +101,18 @@
     [[JMGlobal global] hideWaitLoading];
 }
 
+- (void)emptyView {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];
+    [self.view addSubview:self.empty];
+    self.empty.hidden = YES;
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            weakSelf.empty.hidden = YES;
+            [weakSelf loadMaMaWeb];
+        }
+    };
+}
 
 
 

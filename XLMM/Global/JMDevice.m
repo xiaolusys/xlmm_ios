@@ -10,6 +10,7 @@
 #import "sys/utsname.h"
 #import "IMYWebView.h"
 #import "IosJsBridge.h"
+#import "IMYWebView.h"
 
 
 @implementation JMDevice
@@ -30,9 +31,15 @@
     }
     NSLog(@"serverip %@, Root_url %@",serverip, Root_URL);
 }
-- (void)cerateUserAgent {
-    IMYWebView *webView = [[IMYWebView alloc] initWithFrame:CGRectZero];
-    NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+- (void)cerateUserAgent:(IMYWebView *)webView {
+    NSString *oldAgent;
+    if (webView == nil) {
+        IMYWebView *webV = [[IMYWebView alloc] initWithFrame:CGRectZero];
+        oldAgent = [webV stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    }else {
+        oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    }
+    
 //    __block NSString *oldAgent;
 //    [webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id resalout, NSError *error) {
 //        oldAgent = resalout;

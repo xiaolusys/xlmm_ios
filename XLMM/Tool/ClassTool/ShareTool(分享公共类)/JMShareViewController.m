@@ -144,11 +144,10 @@
 //    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
 //    _imageData = [[JMGlobal global] getCacheImageWithKey:_imageUrlString];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[_imageUrlString JMUrlEncodedString]]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (data != nil) {
-                _imageData = [UIImage imageWithData:data];
-            }else {
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_imageUrlString]];
+        _imageData = [UIImage imagewithURLString:_imageUrlString];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if (!_imageData) {
                 _imageData = [UIImage imageNamed:@"icon-xiaolu.png"];
             }
         });

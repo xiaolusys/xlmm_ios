@@ -194,7 +194,7 @@
         self.couponValueLabel.textColor = [UIColor redColor];
     }
     self.couponBackImage.image = [UIImage imageNamed:imageStr];
-    self.couponValueLabel.text = [NSString stringWithFormat:@"¥%@",couponModel.coupon_value];
+    self.couponValueLabel.text = [NSString stringWithFormat:@"¥%.2f",[couponModel.coupon_value floatValue]];
     CGSize sizeToFit = [self.couponValueLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:32.]} context:nil].size;
     CGFloat valueWidth = sizeToFit.width + 5;
     [self.couponValueLabel mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -223,7 +223,7 @@
         }
     }
     self.couponBackImage.image = [UIImage imageNamed:imageStr];
-    self.couponValueLabel.text = [NSString stringWithFormat:@"¥%@",couponModel.coupon_value];
+    self.couponValueLabel.text = [NSString stringWithFormat:@"¥%.2f",[couponModel.coupon_value floatValue]];
     CGSize sizeToFit = [self.couponValueLabel.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:32.]} context:nil].size;
     CGFloat valueWidth = sizeToFit.width + 5;
     [self.couponValueLabel mas_updateConstraints:^(MASConstraintMaker *make) {

@@ -69,6 +69,7 @@ static NSString *currentTurnsNumberString;
         _pageView = [[JMAutoLoopPageView alloc] init];
         _pageView.dataSource = self;
         _pageView.delegate = self;
+        _pageView.isCreatePageControl = NO;
         [_pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
         _pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
         _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;

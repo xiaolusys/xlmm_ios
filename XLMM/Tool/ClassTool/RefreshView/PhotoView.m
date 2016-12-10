@@ -86,6 +86,7 @@
     UIImageView *imageIndex = [[UIImageView alloc] initWithFrame:CGRectMake(smallX, smallY, 80, 80)];
     NSString *url = self.picArr[self.index];
     NSInteger countNum = self.picArr.count;
+    
     NSString *joinUrl = [url imageNormalCompression]; // [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/289/format/jpg/quality/90", url];
     if (countNum < 9) {
         if (self.index == (countNum - 1)) {

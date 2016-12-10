@@ -7,18 +7,21 @@
 //
 
 #import "CSTabBarController.h"
-#import "CSTabBarButton.h"
-#import "CSTabBar.h"
 #import "JMMaMaHomeController.h"
 #import "JMFineClassController.h"
 #import "JMSocialActivityController.h"
 #import "JMMineController.h"
 #import "UIImage+ColorImage.h"
-#import "CSNavigationController.h"
+#import "RootNavigationController.h"
 #import "JMLogInViewController.h"
 
+#define kClassKey   @"rootVCClassString"
+#define kTitleKey   @"title"
+#define kImgKey     @"imageName"
+#define kSelImgKey  @"selectedImageName"
 
-@interface CSTabBarController () <CSTabBarDelegate>
+
+@interface CSTabBarController () <UITabBarControllerDelegate,UITabBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray *items;
 
@@ -48,103 +51,147 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.delegate = self;
+    NSArray *childItemsArray = @[
+                                 @{kClassKey  : @"JMMaMaHomeController",
+                                   kTitleKey  : @"首页",
+                                   kImgKey    : @"tabBar_mianPageNomal",
+                                   kSelImgKey : @"tabBar_mianPageSelected"},
+                                 
+                                 @{kClassKey  : @"JMFineClassController",
+                                   kTitleKey  : @"精品",
+                                   kImgKey    : @"tabBar_featuredNomal",
+                                   kSelImgKey : @"tabBar_featuredSelected"},
+                                 
+                                 @{kClassKey  : @"JMSocialActivityController",
+                                   kTitleKey  : @"论坛",
+                                   kImgKey    : @"tabBar_mianBBSNomal",
+                                   kSelImgKey : @"tabBar_mianBBSSelected"},
+                                 
+                                 @{kClassKey  : @"JMMineController",
+                                   kTitleKey  : @"我",
+                                   kImgKey    : @"tabBar_personalNomal",
+                                   kSelImgKey : @"tabBar_personalSelected"}
+                                 ];
     
-    [self setupAllChildViewControllers];
-    
-    //自定义 tabBar
-    [self setupTabbar];
-    
+    [childItemsArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+        UIViewController *vc = [NSClassFromString(dict[kClassKey]) new];
+        [self.items addObject:vc];
+        vc.title = dict[kTitleKey];
+        RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:vc];
+        UITabBarItem *item = vc.tabBarItem;
+        item.tag = idx;
+        item.title = dict[kTitleKey];
+        item.image = [UIImage imageNamed:dict[kImgKey]];
+        item.selectedImage = [[UIImage imageNamed:dict[kSelImgKey]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor buttonEnabledBackgroundColor]} forState:UIControlStateSelected];
+        [self addChildViewController:nav];
+        
+    }];
+    self.selectedIndex = 0;
+    self.homeVC = self.items[0];
+    self.secondVC = self.items[1];
+    self.thirdVC = self.items[2];
+    self.fouthVC = self.items[3];
     
 
-
-
-}
-
-/**
- *  初始化tabbar
- */
-- (void)setupTabbar {
     
-    CSTabBar *customTabBar = [[CSTabBar alloc] initWithFrame:self.tabBar.bounds];
-    customTabBar.backgroundColor = [UIColor whiteColor];
-    customTabBar.delegate = self;
-    
-    // 给tabBar传递tabBarItem模型
-    customTabBar.items = self.items;
-    
-    //添加自定义的tabbar
-    [self.tabBar addSubview:customTabBar];
-    // 移除系统的tabBar
-    //    [self.tabBar removeFromSuperview];
-    
-}
-
-- (void)tabBar:(CSTabBar *)tabBar didSelectedButton:(NSInteger)index {
-    self.selectedIndex = index;
-    if (index != 0) {
-        [_homeVC endEarningMessage];
-
-    }
-//    if (index == 1) {
-//        [_secondVC refreshWebView];
-//    }else if (index == 2) {
-//        [_thirdVC refreshWebView];
-//    }else { }
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    for (UIView *tabBarButton in self.tabBar.subviews) {
-        if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
-            [tabBarButton removeFromSuperview];
-        }
-    }
-}
-
-- (void)setupAllChildViewControllers {
-    //初始化所有的子控制器
-    JMMaMaHomeController *homeVC = [[JMMaMaHomeController alloc] init];
-    [self setupChildViewController:homeVC title:@"首页" imageName:@"tabBar_mianPageNomal" selectedImageName:@"tabBar_mianPageSelected"];
-    _homeVC = homeVC;
-    
-    JMFineClassController *secondVC = [[JMFineClassController alloc] init];
-    [self setupChildViewController:secondVC title:@"精品" imageName:@"tabBar_featuredNomal" selectedImageName:@"tabBar_featuredSelected"];
-    _secondVC = secondVC;
-    
-    JMSocialActivityController *thirdVC = [[JMSocialActivityController alloc] init];
-    [self setupChildViewController:thirdVC title:@"论坛" imageName:@"tabBar_mianBBSNomal" selectedImageName:@"tabBar_mianBBSSelected"];
-    _thirdVC = thirdVC;
-
-    JMMineController *fouthVC = [[JMMineController alloc] init];
-    [self setupChildViewController:fouthVC title:@"我" imageName:@"tabBar_personalNomal" selectedImageName:@"tabBar_personalSelected"];
-    _fouthVC = fouthVC;
-    
-}
-- (void)setupChildViewController:(UIViewController *)childVc title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName {
-    childVc.title = title;
-    childVc.tabBarItem.image = [UIImage imageNamed:imageName];
-    childVc.tabBarItem.selectedImage = [[UIImage imageWithOriginalName:selectedImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    [self.items addObject:childVc.tabBarItem];
-    
-    CSNavigationController *nav = [[CSNavigationController alloc] initWithRootViewController:childVc];
-    
-    [self addChildViewController:nav];
-    
-    [self.tabBar setBackgroundImage:[UIImage new]];
-    [self.tabBar setShadowImage:[UIImage new]];
     
 }
 
+- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+    [super setSelectedIndex:selectedIndex];
+}
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
 
-
-
+}
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    return YES;
+}
 
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
