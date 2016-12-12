@@ -64,7 +64,7 @@ static CGFloat const kDefaultautoScrollTimeInterval = 5.f;
 //视图消失时停止计时器，否则无法释放
 - (void)removeFromSuperview {
     [super removeFromSuperview];
-    if (self.superview != nil && self != nil) {
+    if (self != nil) {
         [self endAutoScroll];
     }
     

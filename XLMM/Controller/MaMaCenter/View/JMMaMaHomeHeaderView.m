@@ -64,22 +64,6 @@ static NSString *currentTurnsNumberString;
 
 @implementation JMMaMaHomeHeaderView
 
-- (JMAutoLoopPageView *)pageView {
-    if (!_pageView) {
-        _pageView = [[JMAutoLoopPageView alloc] init];
-        _pageView.dataSource = self;
-        _pageView.delegate = self;
-        _pageView.isCreatePageControl = NO;
-        [_pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
-        _pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
-        _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-        _pageView.scrollForSingleCount = YES;
-        _pageView.atuoLoopScroll = YES;
-        _pageView.scrollFuture = YES;
-        _pageView.autoScrollInterVal = 3.0f;
-    }
-    return _pageView;
-}
 - (NSMutableArray *)titlesArray {
     if (_titlesArray == nil) {
         _titlesArray = [NSMutableArray array];
@@ -454,6 +438,17 @@ static NSString *currentTurnsNumberString;
     UIView *messageScrollView = [UIView new];
     [messageView addSubview:messageScrollView];
     
+    self.pageView = [[JMAutoLoopPageView alloc] init];
+    self.pageView.dataSource = self;
+    self.pageView.delegate = self;
+    self.pageView.isCreatePageControl = NO;
+    [self.pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
+    self.pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
+    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+    self.pageView.scrollForSingleCount = YES;
+    self.pageView.atuoLoopScroll = YES;
+    self.pageView.scrollFuture = YES;
+    self.pageView.autoScrollInterVal = 3.0f;
     [messageView addSubview:self.pageView];
     
     [promptImage mas_makeConstraints:^(MASConstraintMaker *make) {

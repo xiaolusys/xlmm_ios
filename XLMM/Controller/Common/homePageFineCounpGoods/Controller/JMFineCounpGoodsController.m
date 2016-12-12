@@ -54,22 +54,6 @@
     }
     return _activeSource;
 }
-- (JMAutoLoopPageView *)pageView {
-    if (!_pageView) {
-        _pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
-        _pageView.dataSource = self;
-        _pageView.delegate = self;
-        _pageView.isCreatePageControl = YES;
-        [_pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
-        _pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
-        _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-        _pageView.scrollForSingleCount = YES;
-        _pageView.atuoLoopScroll = YES;
-        _pageView.scrollFuture = YES;
-        _pageView.autoScrollInterVal = 4.0f;
-    }
-    return _pageView;
-}
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
@@ -137,6 +121,17 @@
     self.tableView.rowHeight = SCREENWIDTH * 0.5 + 10;
     [self.view addSubview:self.tableView];
     [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
+    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
+    self.pageView.dataSource = self;
+    self.pageView.delegate = self;
+    self.pageView.isCreatePageControl = YES;
+    [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
+    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+    self.pageView.scrollForSingleCount = YES;
+    self.pageView.atuoLoopScroll = YES;
+    self.pageView.scrollFuture = YES;
+    self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -251,6 +246,17 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMFineCounpGoodsController"];
 }
+
+- (void)dealloc {
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+        self.pageView = nil;
+    }
+    
+}
+
+
+
 
 
 
