@@ -244,7 +244,7 @@
  {
      [MBProgressHUD hideHUDForView:self.viewController.view];
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
-     [[JMDevice defaultDecice] cerateUserAgent];
+     [[JMDevice defaultDecice] cerateUserAgent:self];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
     {
         [self.delegate webViewDidFinishLoad:self];

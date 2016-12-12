@@ -53,7 +53,7 @@
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"ShoppingCart"];
     
-    
+    [[JMGlobal global] showWaitLoadingInView:self.view];
     isEmpty = YES;
     currentCartDownLoad = NO;
     historyCartDownLoad = NO;
@@ -79,7 +79,7 @@
     }
 
     [self createTableView];
-    [[JMGlobal global] showWaitLoadingInView:self.view];
+    
     
     
     

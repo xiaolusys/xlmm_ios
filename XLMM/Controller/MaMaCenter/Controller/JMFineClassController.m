@@ -19,7 +19,7 @@
 #import "JMPayShareController.h"
 #import "PersonOrderViewController.h"
 #import "JMRegisterJS.h"
-
+#import "JMEmptyView.h"
 
 @interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
     NSString *_fineCouponTid;
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) WebViewJavascriptBridge* bridge;
 @property (nonatomic,strong) JMShareViewController *shareView;
 @property (nonatomic,strong) JMShareModel *share_model;
-
+@property (nonatomic, strong) JMEmptyView *empty;
 
 @end
 
@@ -50,6 +50,7 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
     [self createWebView];
+    [self emptyView];
     [self loadMaMaWeb];
     
     if(self.baseWebView.usingUIWebView) {
@@ -69,12 +70,15 @@
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject){
-//            [[JMGlobal global] hideWaitLoading];
+            [[JMGlobal global] hideWaitLoading];
+            self.empty.hidden = NO;
             return ;
         }
+        self.empty.hidden = YES;
         [self mamaWebViewData:responseObject];
     } WithFail:^(NSError *error) {
-//        [[JMGlobal global] hideWaitLoading];
+        [[JMGlobal global] hideWaitLoading];
+        self.empty.hidden = NO;
     } Progress:^(float progress) {
     }];
 }
@@ -109,7 +113,18 @@
 - (void)webViewDidFinishLoad:(IMYWebView *)webView {
     [[JMGlobal global] hideWaitLoading];    
 }
-
+- (void)emptyView {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];
+    [self.view addSubview:self.empty];
+    self.empty.hidden = YES;
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            weakSelf.empty.hidden = YES;
+            [weakSelf loadMaMaWeb];
+        }
+    };
+}
 
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {

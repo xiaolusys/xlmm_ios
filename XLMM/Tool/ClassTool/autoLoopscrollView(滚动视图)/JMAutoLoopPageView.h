@@ -116,6 +116,8 @@ typedef NS_ENUM(NSInteger,JMAtuoLoopScrollViewDirectionStyle) {
  *  是否无限滚动
  */
 @property (nonatomic, assign) BOOL scrollFuture;
+// 是否添加pageControl
+@property (nonatomic, assign) BOOL isCreatePageControl;
 
 
 

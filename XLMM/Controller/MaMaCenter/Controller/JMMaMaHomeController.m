@@ -60,7 +60,7 @@
  *  下拉刷新的标志
  */
 @property (nonatomic, assign) BOOL isPullDown;
-
+@property (nonatomic, strong) NSTimer *messageTimer;
 
 @end
 
@@ -100,12 +100,26 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMMaMaHomeController"];
+    if (_messageTimer) {
+        [self.messageTimer invalidate];
+        self.messageTimer = nil;
+    }
+    if (_msgBottomView) {
+        [self.msgBottomView removeFromSuperview];
+        self.msgBottomView = nil;
+    }
+    if (self.homeHeaderView.pageView) {
+        [self.homeHeaderView.pageView endAutoScroll];
+    }
 }
 - (void)viewDidDisappear:(BOOL)animated {
     self.homeHeaderView.lineChart = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _qrCodeRequestDataIndex = 0;
     _indexCode = 0;
@@ -269,10 +283,11 @@
 
 #pragma ========== UI处理 ==========
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 113) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
+    self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
@@ -456,8 +471,17 @@
 // ============================================================================= //
 //                      妈妈页面消息弹出展示
 // ============================================================================= //
+- (NSTimer *)messageTimer {
+    if (!_messageTimer) {
+        _messageTimer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(waitTimer) userInfo:nil repeats:NO];
+    }
+    return _messageTimer;
+}
 - (void)earningPrompt {
-    [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
+//    [self performSelector:@selector(waitTimer) withObject:nil afterDelay:3.0];
+    if (!_messageTimer) {
+        [[NSRunLoop currentRunLoop] addTimer:self.messageTimer forMode:NSRunLoopCommonModes];
+    }
 }
 - (void)waitTimer {
     UIViewController *controller = [self.navigationController.viewControllers lastObject];
@@ -486,8 +510,13 @@
         } completion:^(BOOL finished) {
             [self.msgBottomView removeFromSuperview];
             _indexCode ++;
-            int x = arc4random() % 5 + 6;
-            [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
+//            int x = arc4random() % 5 + 6;
+//            [self performSelector:@selector(waitTimer) withObject:nil afterDelay:x];
+            if (_messageTimer) {
+                [self.messageTimer invalidate];
+                self.messageTimer = nil;
+            }
+            [self earningPrompt];
         }];
     }];
 }
@@ -553,42 +582,16 @@
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     JMKeyWindow.rootViewController = tabBarVC;
 }
-
 - (void)dealloc {
     NSLog(@"JMMaMaHomeController  --> dealloc被调用");
-    self.homeHeaderView.pageView = nil;
+    if (self.homeHeaderView.pageView) {
+        [self.homeHeaderView.pageView removeFromSuperview];
+        self.homeHeaderView.pageView = nil;
+    }
     
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

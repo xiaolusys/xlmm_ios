@@ -168,7 +168,7 @@
     self.tableView.delegate = self;
     self.tableView.tableFooterView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.rowHeight = 90.;
+    self.tableView.rowHeight = 110.;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.dataSource.count;

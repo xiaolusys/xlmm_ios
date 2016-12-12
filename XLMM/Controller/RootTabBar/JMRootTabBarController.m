@@ -14,7 +14,7 @@
 #import "JMStoreupController.h"
 #import "JMPersonalPageController.h"
 #import "JMLogInViewController.h"
-
+#import "JMFineCounpGoodsController.h"
 
 
 #define kClassKey   @"rootVCClassString"
@@ -31,6 +31,7 @@
 @property (nonatomic, strong) JMCartViewController *cartVC;
 @property (nonatomic, strong) JMStoreupController *storeVC;
 @property (nonatomic, strong) JMPersonalPageController *personalVC;
+@property (nonatomic, strong) JMFineCounpGoodsController *fineCouponVC;
 
 
 @property (nonatomic, strong) UIButton *bageButton;
@@ -104,6 +105,7 @@
     }];
     self.selectedIndex = 0;
     self.homeVC = self.vcArray[0];
+    self.fineCouponVC = self.vcArray[1];
     self.cartVC = self.vcArray[2];
     self.storeVC = self.vcArray[3];
     self.personalVC = self.vcArray[4];
@@ -128,7 +130,7 @@
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.cartVC.isHideNavigationLeftItem = YES;
-            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
+//            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
             //            [self.cartVC refreshCartData];
         }else {
         }

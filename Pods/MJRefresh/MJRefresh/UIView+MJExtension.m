@@ -81,4 +81,31 @@
 {
     return self.frame.origin;
 }
+
+- (CGFloat)mj_centerX {
+    return self.center.x;
+}
+- (void)setMj_centerX:(CGFloat)mj_centerX {
+    CGPoint point = self.center;
+    point.x = mj_centerX;
+    self.center = point;
+}
+- (CGFloat)mj_centerY {
+    return self.center.y;
+}
+- (void)setMj_centerY:(CGFloat)mj_centerY {
+    CGPoint point = self.center;
+    point.y = mj_centerY;
+    self.center = point;
+}
+
+
+
+
+
+
+
+
+
+
 @end

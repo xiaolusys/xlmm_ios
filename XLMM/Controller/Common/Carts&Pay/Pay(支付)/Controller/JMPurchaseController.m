@@ -412,7 +412,7 @@ static BOOL isAgreeTerms = YES;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.rowHeight = 90;
+    self.tableView.rowHeight = 110.;
 }
 - (void)createTableHeaderView {
     self.purchaseHeaderView = [[JMPurchaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 150)];

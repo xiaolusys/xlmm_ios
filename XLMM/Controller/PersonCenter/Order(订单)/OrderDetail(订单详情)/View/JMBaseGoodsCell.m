@@ -62,6 +62,7 @@
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
     self.titleLabel.font = [UIFont systemFontOfSize:13.];
+    self.titleLabel.numberOfLines = 2;
     
     UILabel *PriceLabel = [UILabel new];
     [self.contentView addSubview:PriceLabel];
@@ -107,7 +108,7 @@
 
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.contentView).offset(10);
-        make.width.height.mas_equalTo(@70);
+        make.width.height.mas_equalTo(@90);
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -119,11 +120,12 @@
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.titleLabel.mas_bottom).offset(10);
         make.left.equalTo(weakSelf.titleLabel);
-        make.width.mas_equalTo(@(SCREENWIDTH - 180));
+        make.right.equalTo(weakSelf.contentView).offset(-10);
+//        make.width.mas_equalTo(@(SCREENWIDTH - 180));
     }];
     
     [self.PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.sizeLabel.mas_bottom).offset(10);
+        make.bottom.equalTo(weakSelf.iconImage.mas_bottom);
         make.left.equalTo(weakSelf.titleLabel);
     }];
     
@@ -134,15 +136,17 @@
     
     [self.optionButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.contentView).offset(-10);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+//        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.top.equalTo(weakSelf.sizeLabel.mas_bottom).offset(5);
         make.width.mas_equalTo(@70);
         make.height.mas_equalTo(@25);
     }];
     
     [self.refundLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.contentView).offset(-10);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
-        make.width.mas_equalTo(@80);
+//        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.top.equalTo(weakSelf.sizeLabel.mas_bottom).offset(5);
+//        make.width.mas_equalTo(@80);
     }];
     
 //    [self.tapView mas_makeConstraints:^(MASConstraintMaker *make) {

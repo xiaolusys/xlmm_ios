@@ -454,7 +454,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/refunds", Root_URL];
     NSString *descStr;
     descStr = self.inputTextView.text;
-    if ([self.inputTextView.text isEqualToString:@""]) {
+    if ([NSString isStringEmpty:self.inputTextView.text]) {
         descStr = @"七天无理由退货";
     }
     NSDictionary *parameters = @{@"id":self.oid,
