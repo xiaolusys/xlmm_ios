@@ -11,6 +11,13 @@
 @interface JMOrderGoodsModel : NSObject
 
 
+@property (nonatomic, assign) BOOL can_refund;
+
+/**
+ *  是否是保税商品
+ */
+@property (nonatomic, assign) BOOL is_bonded_goods;
+
 @property (nonatomic,copy) NSString *discount_fee;
 
 @property (nonatomic,copy) NSString *orderGoodsID;
@@ -77,29 +84,31 @@
 @end
 
 /**
- *  orders =     (
+ *   orders =     (
  {
- "discount_fee" = 2;
- id = 454042;
+ "can_refund" = 0;
+ "discount_fee" = 0;
+ id = 575211;
+ "is_bonded_goods" = 0;
  "is_seckill" = 0;
- "item_id" = 61047;
+ "item_id" = 79295;
  "kill_title" = 0;
- "model_id" = 17716;
+ "model_id" = 24808;
  num = 1;
- oid = xo16081757b408b771078;
- "outer_id" = 329294630091;
- "package_order_id" = "1-134679-3-1";
- payment = "36.02";
- "pic_path" = "http://image.xiaolu.so/MG_1469628689550.jpg";
- "refund_id" = 52255;
- "refund_status" = 7;
- "refund_status_display" = "\U9000\U6b3e\U6210\U529f";
- "sku_id" = 227959;
- "sku_name" = "\U6d1b\U795e\U82b1";
- status = 6;
- "status_display" = "\U9000\U6b3e\U5173\U95ed";
- title = "\U9b54\U5e7b\U4e4b\U7f8e\U73ab\U7470\U5473\U82b1\U679c\U8336";
- "total_fee" = "38.02";
+ oid = xo16112558379d05424f1;
+ "outer_id" = RMB129XJJ;
+ "package_order_id" = "";
+ payment = 129;
+ "pic_path" = "http://img.xiaolumeimei.com/nine_pic1479890636715";
+ "refund_id" = "<null>";
+ "refund_status" = 0;
+ "refund_status_display" = "\U6ca1\U6709\U9000\U6b3e";
+ "sku_id" = 293539;
+ "sku_name" = "Associate-\U7ecf\U7406\U5238";
+ status = 5;
+ "status_display" = "\U4ea4\U6613\U6210\U529f";
+ title = "\U52b5\U4e28\U8fdb\U53e35\U74f6\U88c5\U6297\U83cc\U6d17\U6d01\U7cbe/Associate-\U7ecf\U7406\U5238";
+ "total_fee" = 129;
  }
  );
 

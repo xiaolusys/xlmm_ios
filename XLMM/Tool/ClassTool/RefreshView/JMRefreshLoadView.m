@@ -136,7 +136,7 @@ const CGFloat SURefreshTranslatLen = 5.0;
         self.TopPointLayer.opacity = 1.0;
         //大阶段 0 ~ 3
         NSInteger stage = (progress - (SURefreshPullLen - spaceProgress)) / 10;
-        NSLog(@"stage --- > %ld",stage);
+//        NSLog(@"stage --- > %ld",stage);
         //大阶段的前半段
         CGFloat subProgress = (progress - (SURefreshPullLen - spaceProgress)) - (stage * 10);
         if (subProgress >= 0 && subProgress <= 5) {

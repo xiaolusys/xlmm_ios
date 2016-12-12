@@ -167,18 +167,28 @@ static BOOL isNetPrompt;
         if (!responseObject) return;
         NSDictionary *result = responseObject;
         if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
-            // 手机登录成功 ，保存用户信息以及登录途径
             [defaults setBool:YES forKey:kIsLogin];
-            NSLog(@"Still logined");
+            [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+            [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
         } else{
-            // 手机登录需要 ，保存用户信息以及登录途径
             [defaults setBool:NO forKey:kIsLogin];
-            NSLog(@"maybe cookie timeout,need login");
         }
     } WithFail:^(NSError *error) {
-        // 手机登录需要 ，保存用户信息以及登录途径
         [defaults setBool:NO forKey:kIsLogin];
-        NSLog(@"maybe cookie timeout,need login");
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+                    [users removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }else {
+                    
+                }
+            }
+        }
     } Progress:^(float progress) {
     }];
 }
@@ -186,8 +196,7 @@ static BOOL isNetPrompt;
 #pragma mark ======== 跳转页面等待动画 ========
 - (void)showWaitLoadingInView:(UIView *)viewController {
     if (self.loadView) {
-        [self.loadView removeFromSuperview];
-        self.loadView = nil;
+        [self removeView];
     }
     if (!self.loadView) {
         UIView *maskView = [[UIView alloc] init];
@@ -207,12 +216,15 @@ static BOOL isNetPrompt;
     }
     [self.loadView endLoading];
     if (self.loadView) {
-        [self.loadView removeFromSuperview];
-        self.loadView = nil;
-        [self.maskView removeFromSuperview];
+        [self removeView];
     }
 }
-
+- (void)removeView {
+    [self.loadView removeFromSuperview];
+    [self.maskView removeFromSuperview];
+    self.loadView = nil;
+    self.maskView = nil;
+}
 
 /*
     befoData -- > 获取的当前时间几天 前/后 的时间 .
@@ -257,7 +269,61 @@ static BOOL isNetPrompt;
 
 
 
+- (BOOL)validateIdentityCard:(NSString *)value {
+    // 简单判断 (前17位为数字,后一位可以是数字可以是x)
+    //    NSString *pattern = @"(^[0-9]{15})|([0−9]17([0−9]|X))";
+    //    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pattern];
+    //    BOOL isMatch = [pred evaluateWithObject:value];
+    //    return isMatch;
+    
+    value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([value length] != 18) {
+        return NO;
+    }
+    NSString *mmdd = @"(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8])))";
+    NSString *leapMmdd = @"0229";
+    NSString *year = @"(19|20)[0-9]{2}";
+    NSString *leapYear = @"(19|20)(0[48]|[2468][048]|[13579][26])";
+    NSString *yearMmdd = [NSString stringWithFormat:@"%@%@", year, mmdd];
+    NSString *leapyearMmdd = [NSString stringWithFormat:@"%@%@", leapYear, leapMmdd];
+    NSString *yyyyMmdd = [NSString stringWithFormat:@"((%@)|(%@)|(%@))", yearMmdd, leapyearMmdd, @"20000229"];
+    NSString *area = @"(1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|82|[7-9]1)[0-9]{4}";
+    NSString *regex = [NSString stringWithFormat:@"%@%@%@", area, yyyyMmdd  , @"[0-9]{3}[0-9Xx]"];
+    
+    NSPredicate *regexTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    if (![regexTest evaluateWithObject:value]) {
+        return NO;
+    }
+    int summary = ([value substringWithRange:NSMakeRange(0,1)].intValue + [value substringWithRange:NSMakeRange(10,1)].intValue) *7 + ([value substringWithRange:NSMakeRange(1,1)].intValue + [value substringWithRange:NSMakeRange(11,1)].intValue) *9 + ([value substringWithRange:NSMakeRange(2,1)].intValue + [value substringWithRange:NSMakeRange(12,1)].intValue) *10 + ([value substringWithRange:NSMakeRange(3,1)].intValue + [value substringWithRange:NSMakeRange(13,1)].intValue) *5 + ([value substringWithRange:NSMakeRange(4,1)].intValue + [value substringWithRange:NSMakeRange(14,1)].intValue) *8 + ([value substringWithRange:NSMakeRange(5,1)].intValue + [value substringWithRange:NSMakeRange(15,1)].intValue) *4 + ([value substringWithRange:NSMakeRange(6,1)].intValue + [value substringWithRange:NSMakeRange(16,1)].intValue) *2 + [value substringWithRange:NSMakeRange(7,1)].intValue *1 + [value substringWithRange:NSMakeRange(8,1)].intValue *6 + [value substringWithRange:NSMakeRange(9,1)].intValue *3;
+    NSInteger remainder = summary % 11;
+    NSString *checkBit = @"";
+    NSString *checkString = @"10X98765432";
+    checkBit = [checkString substringWithRange:NSMakeRange(remainder,1)];// 判断校验位
+    return [checkBit isEqualToString:[[value substringWithRange:NSMakeRange(17,1)] uppercaseString]];
+}
 
+#pragma mark - sdwebImageCache 获取图片
+
+- (NSData *)getCacheImageWithKey:(NSString *)key {
+    
+    NSData *imageData = nil;
+    
+    BOOL isExit = [[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:key]];
+    if (isExit) {
+        NSString *cacheImageKey = [[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:key]];
+        if (cacheImageKey.length) {
+            NSString *cacheImagePath = [[SDImageCache sharedImageCache] defaultCachePathForKey:cacheImageKey];
+            if (cacheImagePath.length) {
+                imageData = [NSData dataWithContentsOfFile:cacheImagePath];
+            }
+        }
+    }
+    if (!imageData) {
+        imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:key]];
+    }
+    
+    return imageData;
+}
 
 
 @end

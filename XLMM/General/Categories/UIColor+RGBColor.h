@@ -31,6 +31,7 @@
 + (UIColor *)lineGrayColor;
 + (UIColor *)cartViewBackGround;
 + (UIColor *)rootViewButtonColor;
++ (UIColor *)tabBarTitleDarkGrayColor;
 + (UIColor *)countLabelTextColor;
 + (UIColor *)touxiangBorderColor;
 + (UIColor *)youhuiquanValueColor;

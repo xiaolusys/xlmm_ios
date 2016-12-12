@@ -11,7 +11,11 @@
 @interface UIImage (ColorImage)
 
 
-+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
++ (UIImage *)imageWithColor:(UIColor *)color Frame:(CGRect)frame;
 
+
++ (instancetype)imageWithOriginalName:(NSString *)imageName;
++ (instancetype)imageWithStretchableName:(NSString *)imageName;
++ (UIImage *)resizeImageWithName:(NSString *)name;
 
 @end

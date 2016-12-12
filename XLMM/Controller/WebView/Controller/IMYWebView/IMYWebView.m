@@ -17,7 +17,7 @@
 
 
 
-@interface IMYWebView()<UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
+@interface IMYWebView() <UIWebViewDelegate,WKNavigationDelegate,WKUIDelegate,IMY_NJKWebViewProgressDelegate,WKScriptMessageHandler>
 
 @property (nonatomic, assign) double estimatedProgress;
 @property (nonatomic, strong) NSURLRequest *originRequest;
@@ -218,14 +218,14 @@
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
     NSLog(@"runJavaScriptAlertPanelWithMessage %@", message);
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         completionHandler();
     }]];
     [self.viewController presentViewController:alertController animated:YES completion:nil];
 }
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         completionHandler(YES);
     }]];
@@ -242,8 +242,9 @@
 
 - (void)callback_webViewDidFinishLoad
  {
+     [MBProgressHUD hideHUDForView:self.viewController.view];
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
-    [self updateUserAgent];
+     [[JMDevice defaultDecice] cerateUserAgent];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
     {
         [self.delegate webViewDidFinishLoad:self];
@@ -258,6 +259,8 @@
 }
 - (void)callback_webViewDidFailLoadWithError:(NSError *)error
 {
+//    [MBProgressHUD showError:@"加载失败" ToView:self.viewController.view];
+    [MBProgressHUD hideHUDForView:self.viewController.view];
     if([self.delegate respondsToSelector:@selector(webView:didFailLoadWithError:)])
     {
         [self.delegate webView:self didFailLoadWithError:error];
@@ -713,40 +716,8 @@
         }];
     }
 }
-//从webview获得浏览器中的useragent，并进行更新
-- (void)updateUserAgent{
-    NSString *oldAgent = [self stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    if(oldAgent == nil) return;
-    
-    // app版本
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    
-    NSLog(@"oldAgent=%@",oldAgent);
-    if(oldAgent != nil) {
-        
-        NSRange range = [oldAgent rangeOfString:[NSString stringWithFormat:@"%@%@", @"xlmm/", app_Version]];
-        if(range.length > 0)
-        {
-            return;
-        }
-        
-    }
-    
-    NSString *newAgent = [oldAgent stringByAppendingString:@"; xlmm/"];
-    newAgent = [NSString stringWithFormat:@"%@%@; uuid/%@",newAgent, app_Version, [IosJsBridge getMobileSNCode]];
-    
-    //判断老版本1.8.4及以前使用useragent是xlmm；需要去除掉
-    NSRange newrange = [newAgent rangeOfString:@"xlmm;"];
-    if(newrange.length > 0)
-    {
-        newAgent = [newAgent stringByReplacingOccurrencesOfString:@"; xlmm;" withString:@""];
-    }
 
-    NSLog(@"newAgent=%@",newAgent);
-    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
-    
-}
+
+
 
 @end

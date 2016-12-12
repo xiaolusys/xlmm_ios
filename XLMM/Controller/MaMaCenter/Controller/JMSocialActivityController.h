@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CommonWebViewViewController.h"
 
+@interface JMSocialActivityController : UIViewController
 
-@interface JMSocialActivityController : CommonWebViewViewController
+- (void)refreshWebView;
+
 
 @property (nonatomic, copy) NSString *urlString;
+
+
+
 
 @end

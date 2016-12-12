@@ -50,7 +50,7 @@
     NSString *_uuid;                  //uuid
     NSString *_cartIDs;               //购物车id
     float _totalfee;                  //总金额
-    float _postfee;                   //运费金额
+    float _postfee;                   //运费金额`
     float _amontPayment;              //总需支付金额
     float _couponValue;               //优惠券金额
     float _discount;                  //计算金额
@@ -63,6 +63,8 @@
     NSString *_orderTidNum;           //订单编号
     NSInteger _flagCount;             //标志是否弹出延迟框
     BOOL _isTeamBuyGoods;             //是否为团购
+    BOOL _isBondedGoods;              //是否为保税商品
+    BOOL _isIndentifierNum;           // 身份证号是否为空
     NSInteger _couponNumber;          // 优惠券购买商品个数
 }
 
@@ -151,6 +153,8 @@ static BOOL isAgreeTerms = YES;
     self.isEnoughCoupon = NO;
     self.isUserCoupon = NO;
     self.isCouponEnoughPay = NO;
+    _isIndentifierNum = NO;
+    _isBondedGoods = NO;
     
     _totalPayment = 0;              //应付款金额
     _discountfee = 0;               //优惠券金额
@@ -231,11 +235,22 @@ static BOOL isAgreeTerms = YES;
 - (void)fetchedAddressData:(NSArray *)purchaseArr {
     if (purchaseArr.count == 0) {
         _addressID = @"";
+        _isIndentifierNum = YES;
     }else {
         NSDictionary *dic = purchaseArr[0];
         _addressID = [dic[@"id"] stringValue];
+        if ([NSString isStringEmpty:dic[@"identification_no"]]) {
+            _isIndentifierNum = YES;
+        }else {
+            _isIndentifierNum = NO;
+        }
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
+    
+    if (_isIndentifierNum && _isBondedGoods) {
+        [self userNotIdCardNumberMessage];
+    }
+    
 }
 #pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
@@ -248,6 +263,11 @@ static BOOL isAgreeTerms = YES;
         _couponNumber = 1;
     }
     for (NSDictionary *dic in goodsArr) {
+        if ([dic[@"is_bonded_goods"] boolValue]) {
+            _isBondedGoods = (_isBondedGoods || YES);
+        }else {
+            _isBondedGoods = (_isBondedGoods || NO);
+        }
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.purchaseGoodsArr addObject:model];
     }
@@ -319,6 +339,14 @@ static BOOL isAgreeTerms = YES;
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
     [self calculationLabelValue];
+    
+    if (_isIndentifierNum && _isBondedGoods) {
+        [self userNotIdCardNumberMessage];
+    }
+}
+- (void)userNotIdCardNumberMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
 }
 #pragma mark 计算最终选需要付款的金额
 - (void)calculationLabelValue {
@@ -418,6 +446,7 @@ static BOOL isAgreeTerms = YES;
         addVC.isButtonSelected = YES;
         addVC.addressID = _addressID;
         addVC.isSelected = YES;
+        addVC.isBondedGoods = _isBondedGoods;
         addVC.delegate = self;
         [self.navigationController pushViewController:addVC animated:YES];
     }else if (index == 101) {
@@ -430,6 +459,11 @@ static BOOL isAgreeTerms = YES;
 - (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
     _addressID = model.addressID;
+    if ([NSString isStringEmpty:model.identification_no]) {
+        _isIndentifierNum = YES;
+    }else {
+        _isIndentifierNum = NO;
+    }
 }
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
     [MobClick event:@"logistics_choose"];
@@ -484,6 +518,10 @@ static BOOL isAgreeTerms = YES;
     }else if (button.tag == 103) {
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
+        if (_isIndentifierNum && _isBondedGoods) {
+            [self userNotIdCardNumberMessage];
+            return ;
+        }
         if (!isAgreeTerms) {
 //            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
             [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
@@ -631,7 +669,7 @@ static BOOL isAgreeTerms = YES;
         params[@"order_type"] = @"3";
     }
     NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
-    JMPurchaseController * __weak weakSelf = self;
+//    JMPurchaseController * __weak weakSelf = self;
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [MBProgressHUD hideHUD];
@@ -690,25 +728,20 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark  选择优惠券回调过来的代理方法
 - (void)updateYouhuiquanWithmodel:(NSArray *)modelArray {
-    NSMutableString *couponID = [[NSMutableString alloc] init];
-    _couponValue = 0.;
-    _couponStringID = @"";
-    if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
-        self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"购买提示" message:@"精品汇优惠券不足，请购买优惠券或减少商品购买数量。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alertView show];
-        return ;
-    }
     if (modelArray.count == 0) {
         self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
         self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
-        _yhqModelID = @"";
         self.isUserCoupon = NO;
+        self.isEnoughCoupon = NO;
         _couponValue = 0;
+        _couponStringID = @"";
         [self calculationLabelValue];
     }else {
+        self.isUserCoupon = YES;
+        self.isEnoughCoupon = YES;
         JMCouponModel *model = modelArray[0];
         if (modelArray.count > 1) {
+            NSMutableString *couponID = [[NSMutableString alloc] init];
             for (JMCouponModel *model in modelArray) {
                 _couponValue += [model.coupon_value floatValue];
                 [couponID appendFormat:@"%@%@",model.couponID,@"/"];
@@ -716,40 +749,20 @@ static BOOL isAgreeTerms = YES;
             if ([couponID hasSuffix:@"/"]) {
                 [couponID deleteCharactersInRange:NSMakeRange(couponID.length - 1, 1)];
             }
+            self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
+            self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
             _couponStringID = [couponID copy];
+            _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
+            [self calculationLabelValue];
         }else {
+            self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
+            self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
             _couponValue = [model.coupon_value floatValue];
             _couponStringID = model.couponID;
+            _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
+            [self calculationLabelValue];
         }
-        self.isUserCoupon = YES;
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
-        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-            GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
-            NSString *couponMessage = goodsModel.coupon_message;
-            if (couponMessage.length == 0) {
-                self.isEnoughCoupon = YES;
-                if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
-                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
-                }else {
-                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
-                }
-                self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-                _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
-                [self calculationLabelValue];
-            }else {
-                [MBProgressHUD showWarning:goodsModel.coupon_message];
-                self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
-                self.purchaseFooterView.couponLabel.textColor = [UIColor dingfanxiangqingColor];
-                self.isEnoughCoupon = NO;
-                _couponValue = 0;
-                [self calculationLabelValue];
-            }
-        } WithFail:^(NSError *error) {
-            self.isEnoughCoupon = NO;
-            [MBProgressHUD showWarning:@"网络出错，优惠券暂不可选"];
-        } Progress:^(float progress) {
-            
-        }];
+        
     }
 }
 #pragma mark 团购支付
@@ -823,7 +836,6 @@ static BOOL isAgreeTerms = YES;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 #pragma mark 视图生命周期操作
-
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
     NSArray *firstArr = [str componentsSeparatedByString:@"&"];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -1022,9 +1034,42 @@ static BOOL isAgreeTerms = YES;
 
 
 
+//        if ((modelArray.count < _couponNumber) && [self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+//            self.purchaseFooterView.couponLabel.text = @"精品优惠券不足支付哦~!";
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"购买提示" message:@"精品汇优惠券不足，请购买优惠券或减少商品购买数量。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alertView show];
+//            return ;
+//        }
 
-
-
+//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/carts/carts_payinfo?cart_ids=%@&coupon_id=%@", Root_URL,self.paramstring,model.couponID];
+//        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//            if (!responseObject) {
+//                [MBProgressHUD showWarning:@"请重新选择优惠券~!"];
+//                [self reassignCoupn];
+//                return ;
+//            }
+//            GoodsInfoModel *goodsModel = [GoodsInfoModel mj_objectWithKeyValues:responseObject];
+//            NSString *couponMessage = goodsModel.coupon_message;
+//            if (couponMessage.length == 0) {
+//                self.isEnoughCoupon = YES;
+//                if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
+//                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券 × %ld", [model.coupon_value floatValue],modelArray.count];
+//                }else {
+//                    self.purchaseFooterView.couponLabel.text = [NSString stringWithFormat:@"¥%.1f元优惠券", [model.coupon_value floatValue]];   // === > 返回可以减少的金额
+//                }
+//                self.purchaseFooterView.couponLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+//                _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
+//                [self calculationLabelValue];
+//            }else {
+//                [MBProgressHUD showWarning:goodsModel.coupon_message];
+//                [self reassignCoupn];
+//            }
+//        } WithFail:^(NSError *error) {
+//            [MBProgressHUD showWarning:@"请重新选择优惠券~!"];
+//            [self reassignCoupn];
+//        } Progress:^(float progress) {
+//
+//        }];
 
 
 

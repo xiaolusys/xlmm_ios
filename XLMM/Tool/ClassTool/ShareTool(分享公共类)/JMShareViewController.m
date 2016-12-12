@@ -142,7 +142,18 @@
     _url = _model.share_link;
 //    _kuaizhaoLink = _url;
 //    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
-    _imageData = [UIImage imagewithURLString:_imageUrlString];
+//    _imageData = [[JMGlobal global] getCacheImageWithKey:_imageUrlString];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[_imageUrlString JMUrlEncodedString]]];
+        if (data != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _imageData = [UIImage imageWithData:data];
+            });
+        }else {
+            _imageData = [UIImage imageNamed:@"icon-xiaolu.png"];
+        }
+    });
+//    _imageData = [UIImage imagewithURLString:_imageUrlString];
 //    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
     
     _titleUrlString = [NSString stringWithFormat:@"%@",_content];

@@ -10,13 +10,13 @@
 
 @implementation UIImage (ColorImage)
 
-+ (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size
++ (UIImage *)imageWithColor:(UIColor *)color Frame:(CGRect)frame
 
 {
     
     @autoreleasepool {
         
-        CGRect rect = CGRectMake(0, 0, size.width, size.height);
+        CGRect rect = CGRectMake(0, 0, frame.size.width, frame.size.height);
         
         UIGraphicsBeginImageContext(rect.size);
         
@@ -42,6 +42,26 @@
     
 }
 
+
++ (instancetype)imageWithOriginalName:(NSString *)imageName {
+    
+    UIImage *image = [UIImage imageNamed:imageName];
+    
+    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+
++ (instancetype)imageWithStretchableName:(NSString *)imageName
+{
+    UIImage *image = [UIImage imageNamed:imageName];
+    return [image stretchableImageWithLeftCapWidth:image.size.width * 0.5 topCapHeight:image.size.height * 0.5];
+}
+
++ (UIImage *)resizeImageWithName:(NSString *)name {
+    
+    UIImage *image = [self imageNamed:name];
+    
+    return [image stretchableImageWithLeftCapWidth:image.size.width * 0.5 topCapHeight:image.size.height * 0.5];
+}
 
 
 @end

@@ -49,8 +49,8 @@ NSString *const JMHomeActiveCellIdentifier = @"JMHomeActiveCellIdentifier";
 
 - (void)setModel:(JMHomeActiveModel *)model {
     _model = model;
-    
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.act_img JMUrlEncodedString] imageNormalCompression]] placeholderImage:nil];
+    NSString *urlString = [[model.act_img JMUrlEncodedString] imageNormalCompression];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:nil];
     
 }
 

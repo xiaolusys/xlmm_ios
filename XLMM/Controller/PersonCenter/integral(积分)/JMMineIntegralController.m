@@ -31,6 +31,7 @@
 @property (nonatomic) BOOL isLoadMore;
 
 @property (nonatomic, strong) UILabel *valueLabel;
+@property (nonatomic, assign) BOOL isPopToRootView;
 
 @end
 
@@ -159,7 +160,9 @@
     [self.view addSubview:self.empty];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
+            self.isPopToRootView = YES;
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }
@@ -257,12 +260,16 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.isPopToRootView = NO;
     [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"JMMineIntegralController"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.isPopToRootView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+    }
     [MobClick endLogPageView:@"JMMineIntegralController"];
 }
 

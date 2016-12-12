@@ -22,6 +22,10 @@
 @property (nonatomic,assign) NSInteger cartID;
 
 @property (nonatomic,copy) NSString *is_repayable;
+/**
+ *  是否为保税商品
+ */
+@property (nonatomic,copy) NSString *is_bonded_goods;
 
 @property (nonatomic,copy) NSString *item_id;
 
@@ -68,26 +72,29 @@
 
 
 /**
- *  {
- "buyer_id" = 1;
- "buyer_nick" = "meron@\U5c0f\U9e7f\U7f8e\U7f8e";
- created = "2016-08-18T22:51:55";
- id = 615936;
+ *   {
+ "buyer_id" = 864138;
+ "buyer_nick" = "\U4f0d\U78ca";
+ created = "2016-11-25T11:43:39";
+ id = 776653;
+ "is_bonded_goods" = 0;
  "is_repayable" = 0;
- "item_id" = 42260;
- "item_weburl" = "http://m.xiaolumeimei.com/mall/product/details/12212";
- "model_id" = 12212;
+ "item_id" = 75775;
+ "item_weburl" = "http://staging.xiaolumm.com/mall/product/details/23488";
+ "model_id" = 23488;
  num = 1;
- "pic_path" = "http://image.xiaolu.so/MG_14623511416531.jpg";
- price = "69.90000000000001";
- "sku_id" = 171067;
- "sku_name" = M;
- status = 1;
- "std_sale_price" = 259;
- title = "\U6ce2\U897f\U7c73\U4e9a\U788e\U82b1\U5ea6\U5047\U88d9/\U73ab\U7ea2\U8272";
- "total_fee" = "69.90000000000001";
- url = "http://m.xiaolumeimei.com/rest/v1/carts/615936.json";
+ "pic_path" = "http://img.xiaolumeimei.com/MG_1476884602962.jpg";
+ price = 128;
+ "sku_id" = 281290;
+ "sku_name" = "\U4e00\U76d2";
+ status = 0;
+ "std_sale_price" = 640;
+ title = "\U7ea4\U4e4b\U97f5\U724c\U51cf\U80a5\U80f6\U56ca\Uff08\U8f7b\U76c81\U53f7\Uff090.45g*60\U7c92/\U7ecf\U5178";
+ "total_fee" = 128;
+ type = 0;
+ url = "http://staging.xiaolumm.com/rest/v1/carts/776653";
  },
+
  */
 
 

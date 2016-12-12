@@ -240,8 +240,8 @@ static NSString * cellId = @"JMClassifyListController";
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    [MobClick endLogPageView:@"JMClassifyListController"];
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMClassifyListController"];
 }
 
 

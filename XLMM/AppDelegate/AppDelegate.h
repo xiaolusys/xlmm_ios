@@ -11,7 +11,6 @@
 //  1051166985
 
 #import <UIKit/UIKit.h>
-#import <RESideMenu.h>
 #import "WXApi.h"
 #import "UMSocial.h"
 #import "UMSocialQQHandler.h"
@@ -22,8 +21,7 @@
 
 
 
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RESideMenuDelegate,UIAlertViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

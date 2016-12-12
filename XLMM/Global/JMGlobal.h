@@ -62,10 +62,13 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 - (int)secondOfCurrentTimeInEndTime:(NSString *)endTime;
 
 
+/*
+    验证身份证
+ */
+- (BOOL)validateIdentityCard:(NSString *)value;
 
-
-
-
+// 获取图片
+- (NSData *)getCacheImageWithKey:(NSString *)key;
 
 
 

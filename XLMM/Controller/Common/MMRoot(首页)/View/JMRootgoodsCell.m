@@ -155,7 +155,7 @@
     NSString *picString = model.picPath;
 //    NSMutableString *newString = [NSMutableString stringWithString:string];
     if ([NSString isStringEmpty:model.watermark_op]) {
-        picString = [picString imageNormalCompression];
+        picString = [picString imageGoodsListCompression];
     } else{
         picString = [NSString stringWithFormat:@"%@|%@",[picString imageGoodsListCompression],model.watermark_op];
     }
@@ -198,7 +198,7 @@
     NSString *picString = model.head_img;
     
     if ([NSString isStringEmpty:model.watermark_op]) {
-        picString = [picString imageNormalCompression];
+        picString = [picString imageGoodsListCompression];
     } else{
         picString = [NSString stringWithFormat:@"%@|%@",[picString imageGoodsListCompression],model.watermark_op];
     }

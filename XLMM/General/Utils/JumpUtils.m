@@ -19,11 +19,11 @@
 #import "JMLogInViewController.h"
 #import "JMGoodsDetailController.h"
 #import "JMClassifyListController.h"
-#import "JMMaMaRootController.h"
 #import "JMPayShareController.h"
 #import "PersonOrderViewController.h"
 #import "JMPayment.h"
 #import "JMCartViewController.h"
+#import "CSTabBarController.h"
 
 
 
@@ -32,7 +32,7 @@
 #pragma mark ==== 支付跳转
 + (void)jumpToCallNativePurchase:(NSDictionary *)data Tid:(NSString *)tid viewController:(UIViewController *)vc {
     [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:data URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
-        NSLog(@"%ld",error.errorStatus);
+//        NSLog(@"%ld",error.errorStatus);
         if (error.errorStatus == payMentErrorStatusSuccess) {
             [MobClick event:@"fineCoupon_buySuccess"];
             [MBProgressHUD showError:@"支付成功~"];
@@ -112,9 +112,11 @@
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-        JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
+        CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
+//        JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
 //        JMMaMaPersonCenterController *ma = [[JMMaMaPersonCenterController alloc] init];
-        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
+//        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新

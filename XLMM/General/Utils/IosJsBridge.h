@@ -21,6 +21,9 @@ typedef void(^DeviceBlock)(NSString *uuid);
 
 + (void)jumpToNativeLocation:(UIViewController *)vc para:(NSDictionary *)data;
 
+// 分享model
++ (void) universeShare:(UIViewController *)vc para:(NSDictionary *)data;
+
 /**
  *   统一的分享接口，注意这个jsbridge实现逻辑错误，需要重新按照接口文档的参数来重写此函数。
  */
@@ -40,7 +43,7 @@ typedef void(^DeviceBlock)(NSString *uuid);
 /**
  *  老的分享接口，带活动id
  */
-+ (void)callNativeShareFunc;
++ (void)callNativeShareFunc:(UIViewController *)vc para:(NSDictionary *)data;
 
 /**
  *  详情界面加载

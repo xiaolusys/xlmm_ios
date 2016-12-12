@@ -7,100 +7,88 @@
 //
 
 #import "JMSocialActivityController.h"
-#import "WebViewController.h"
-#import "NJKWebViewProgressView.h"
+#import "IMYWebView.h"
+#import <WebKit/WebKit.h>
 
-@interface JMSocialActivityController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
 
-@property (nonatomic, strong)UIWebView *webView;
+@interface JMSocialActivityController () <IMYWebViewDelegate>
 
-@property (nonatomic, strong)UITableView *tableView;
 
-//@property (nonatomic ,strong) IMYWebView *baseWebView;
-
-@property (nonatomic, strong) NJKWebViewProgressView *progressView;
+@property (nonatomic ,strong) IMYWebView *baseWebView;
 
 @end
 
 @implementation JMSocialActivityController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMSocialActivityController"];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMSocialActivityController"];
+    [[JMGlobal global] hideWaitLoading];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self createTableView];
+    [self createNavigationBarWithTitle:@"论坛" selecotr:nil];
     [self createWebView];
+    [self loadMaMaWeb];
+}
+- (void)loadMaMaWeb {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject){
+//            [[JMGlobal global] hideWaitLoading];
+            return ;
+        }
+        [self mamaWebViewData:responseObject];
+    } WithFail:^(NSError *error) {
+//        [[JMGlobal global] hideWaitLoading];
+    } Progress:^(float progress) {
+    }];
+}
+- (void)mamaWebViewData:(NSDictionary *)mamaDic {
+    NSArray *resultsArr = mamaDic[@"results"];
+    NSDictionary *resultsDict = [NSDictionary dictionary];
+    resultsDict = resultsArr[0];
+    NSDictionary *extraDict = resultsDict[@"extra"];
+    self.urlString = extraDict[@"forum"];
+    [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     
 }
-
-- (void)setUrlString:(NSString *)urlString {
-    _urlString = urlString;
-    if ([NSString isStringEmpty:urlString]) {
-        [MBProgressHUD showError:@"加载失败~"];
-    }else {
-        [[JMGlobal global] showWaitLoadingInView:self.webView];
-        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
+- (void)refreshWebView {
+    if (![NSString isStringEmpty:self.urlString] && self.baseWebView != nil) {
+        [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     }
-    
-    
-
 }
+
 - (void)createWebView {
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114)];
-    self.webView.backgroundColor = [UIColor whiteColor];
-    self.webView.delegate = self;
-    self.webView.scalesPageToFit = YES;
+//    NSString *titleStr = @"返回刷新";
+//    CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
+//    [button addTarget:self action:@selector(refreshWebView) forControlEvents:UIControlEventTouchUpInside];
+//    [button setTitle:titleStr forState:UIControlStateNormal];
+//    [button setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+//    button.titleLabel.font = [UIFont systemFontOfSize:14.];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    [self.view addSubview:self.webView];
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
+    self.baseWebView.scalesPageToFit = YES;
+    self.baseWebView.delegate = self;
+    self.baseWebView.viewController = self;
+    [self.view addSubview:self.baseWebView];
+    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
 
 }
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-//    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
-}
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    [MBProgressHUD hideHUDForView:self.view];
+- (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
     [[JMGlobal global] hideWaitLoading];
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-//    [MBProgressHUD hideHUDForView:self.view];
-//    [MBProgressHUD showError:@"加载失败~"];
-//    [self backClickAction];
+- (void)webViewDidStartLoad:(IMYWebView *)webView {
+
+}
+- (void)webViewDidFinishLoad:(IMYWebView *)webView {
     [[JMGlobal global] hideWaitLoading];
-}
-- (void)backClickAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114) style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.backgroundColor = [UIColor orangeColor];
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.tableView];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 66;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 80;
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellID = @"tableViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
-    cell.textLabel.text = @"------------222222 ";
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-
-
-
-- (void)viewDidDisappear:(BOOL)animated {
-//    self.webView = nil;
 }
 
 

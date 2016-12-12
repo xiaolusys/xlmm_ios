@@ -8,12 +8,11 @@
 #import "MiPushSDK.h"
 #import "AppDelegate.h"
 #import "JMStoreManager.h"
-#import "NewLeftViewController.h"
 #import "Udesk.h"
 #import "JMHomeRootController.h"
-#import "JMDevice.h"
 #import "JMPayment.h"
 #import "JMMiPushManager.h"
+#import "JMRootTabBarController.h"
 
 
 #define login @"login"
@@ -76,20 +75,8 @@
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
-    JMHomeRootController *root = [[JMHomeRootController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    NewLeftViewController *leftMenu = [[NewLeftViewController alloc] initWithNibName:@"NewLeftViewController" bundle:nil];
-    leftMenu.pushVCDelegate = root;
-    RESideMenu *menuVC = [[RESideMenu alloc] initWithContentViewController:nav leftMenuViewController:leftMenu rightMenuViewController:nil];
-    menuVC.view.backgroundColor = [UIColor settingBackgroundColor];
-    menuVC.menuPreferredStatusBarStyle = 1;
-    menuVC.delegate = self;
-    menuVC.contentViewShadowColor = [UIColor blackColor];
-    menuVC.contentViewShadowOffset = CGSizeMake(0, 0);
-    menuVC.contentViewShadowOpacity = 0.6;
-    menuVC.contentViewShadowRadius = 12;
-    menuVC.contentViewShadowEnabled = YES;
-    self.window.rootViewController = menuVC;
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
 }
 #pragma mark ======== 程序开始启动 ========
@@ -227,30 +214,6 @@
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 }
 
-#pragma mark ======== RESideMenu Delegate ========
-- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
-{
-    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
-}
-
-- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
-{
-    // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
-    
-}
-
-- (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
-{
-    // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
-}
-
-- (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
-{
-    // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
-}
-
-
 
 @end
 
@@ -277,11 +240,35 @@
 
 
 
-
-
-
-
-
+//
+//
+//
+//
+//#pragma mark ======== RESideMenu Delegate ========
+//- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
+//{
+//    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
+//}
+//
+//- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController
+//{
+//    // NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+//    
+//}
+//
+//- (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController
+//{
+//    // NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+//}
+//
+//- (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController
+//{
+//    // NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+//}
+//
+//
+//
 
 
 

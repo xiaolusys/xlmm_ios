@@ -16,7 +16,6 @@
 #import "JMCartCurrentCell.h"
 #import "JMCartHistoryCell.h"
 
-
 @interface JMCartViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, JMCartCurrentCellDelegate, JMCartHistoryCellDelegate> {
     BOOL currentCartDownLoad;
     BOOL historyCartDownLoad;
@@ -32,7 +31,8 @@
 @property (nonatomic, strong) CartListModel *deleteModel;
 @property (nonatomic, strong) NSMutableArray *currentCartDataSource;
 @property (nonatomic, strong) NSMutableArray *historyCartDataSource;
-
+@property (nonatomic, strong) UIView *maskView;
+@property (nonatomic, strong) JMEmptyView *emptyView;
 
 @end
 
@@ -52,6 +52,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"ShoppingCart"];
+    
+    
+    isEmpty = YES;
+    currentCartDownLoad = NO;
+    historyCartDownLoad = NO;
+    [self downloadCurrentCartData];
+    [self downloadHistoryCartData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -64,20 +71,29 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
-    isEmpty = YES;
-    currentCartDownLoad = NO;
-    historyCartDownLoad = NO;
     
+    if (self.isHideNavigationLeftItem) {
+        [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
+    }else {
+        [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
+    }
+
     [self createTableView];
     [[JMGlobal global] showWaitLoadingInView:self.view];
+    
+    
+    
+}
+- (void)refreshCartData {
+    currentCartDownLoad = NO;
+    historyCartDownLoad = NO;
     [self downloadCurrentCartData];
     [self downloadHistoryCartData];
-    
     
 }
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
@@ -94,6 +110,7 @@
     currentCartDownLoad = YES;
     if (careArr.count > 0) {
         isEmpty = NO;
+        [self dismissDefaultView];
     }
     if (careArr.count <= 0 && historyCartDownLoad && isEmpty) {
         [self displayDefaultView];
@@ -132,10 +149,12 @@
     historyCartDownLoad = YES;
     if (array.count > 0) {
         isEmpty = NO;
+        [self dismissDefaultView];
     }
     if (array.count <= 0 && currentCartDownLoad && isEmpty) {
         [self displayDefaultView];
     }
+    
     [self.historyCartDataSource removeAllObjects];
     for (NSDictionary *dic in array) {
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
@@ -149,16 +168,32 @@
 }
 - (void)displayDefaultView {
     kWeakSelf
-    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    [self.view addSubview:maskView];
-    maskView.backgroundColor = [UIColor whiteColor];
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 240) / 2, SCREENWIDTH, 240) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
-    [maskView addSubview:empty];
-    empty.block = ^(NSInteger index) {
+    self.maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
+    [self.view addSubview:self.maskView];
+    self.maskView.backgroundColor = [UIColor whiteColor];
+    self.emptyView = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 240) / 2, SCREENWIDTH, 240) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
+    [self.maskView addSubview:self.emptyView];
+    self.emptyView.block = ^(NSInteger index) {
         if (index == 100) {
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            if (weakSelf.isHideNavigationLeftItem) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+            }else {
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            }
+
+            
         }
     };
+}
+- (void)dismissDefaultView {
+    if (self.maskView) {
+        [self.maskView removeFromSuperview];
+        self.maskView = nil;
+    }
+    if (self.emptyView) {
+        [self.emptyView removeFromSuperview];
+        self.emptyView = nil;
+    }
 }
 
 
@@ -170,6 +205,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 110;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerClass:[JMCartCurrentCell class] forCellReuseIdentifier:JMCartCurrentCellIdentifier];
@@ -179,6 +215,12 @@
     self.bottomView = bottomView;
     [self.view addSubview:bottomView];
 
+    CGFloat hideNavigationLeftItemHeight;
+    if (self.isHideNavigationLeftItem) {
+        hideNavigationLeftItemHeight = 49.;
+    }else {
+        hideNavigationLeftItemHeight = 0.;
+    }
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.top.equalTo(weakSelf.view).offset(64);
@@ -186,7 +228,8 @@
         make.bottom.equalTo(bottomView.mas_top);
     }];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.equalTo(weakSelf.view);
+        make.left.equalTo(weakSelf.view);
+        make.bottom.equalTo(weakSelf.view).offset(-hideNavigationLeftItemHeight);
         make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@(0));
     }];
@@ -204,15 +247,18 @@
     [self.bottomView addSubview:self.payMentMoneyLabel];
     
     [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@(20));
         make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
         make.top.equalTo(weakSelf.bottomView).offset(10);
+//        make.height.mas_equalTo(@(20));
     }];
     [self.sureButton mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(weakSelf.bottomView).offset(40);
+        make.width.mas_equalTo(@(SCREENWIDTH - 30));
         make.height.mas_equalTo(@(40));
         make.bottom.equalTo(weakSelf.bottomView).offset(-10);
         make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
-        make.width.mas_equalTo(@(SCREENWIDTH - 30));
+        
     }];
     
     
@@ -291,6 +337,9 @@
             [self.sureButton mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@(0));
             }];
+            [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(@(0));
+            }];
             return 260;
             
         } else {
@@ -299,6 +348,9 @@
             }];
             [self.sureButton mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@(40));
+            }];
+            [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(@(20));
             }];
             return 50;
         }
@@ -318,7 +370,11 @@
             JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
             empty.block = ^(NSInteger index) {
                 if (index == 100) {
-                    [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                    if (self.isHideNavigationLeftItem) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+                    }else {
+                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                    }
                 }
             };
             return empty;

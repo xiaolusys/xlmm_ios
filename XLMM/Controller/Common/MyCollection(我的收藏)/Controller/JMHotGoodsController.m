@@ -209,11 +209,11 @@
     
 }
 - (void)emptyView {
-    kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"还没有收藏商品哦~!" DescTitle:@"喜欢的东西要收藏哦,赶紧去收藏吧~!" BackImage:@"emptyStoreUp" InfoStr:@"快去逛逛"];
+//    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) Title:@"还没有收藏商品哦~!" DescTitle:@"喜欢的东西要收藏哦,赶紧去收藏吧~!" BackImage:@"emptyStoreUp" InfoStr:@"快去逛逛"];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }

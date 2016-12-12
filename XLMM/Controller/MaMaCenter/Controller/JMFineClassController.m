@@ -7,58 +7,156 @@
 //
 
 #import "JMFineClassController.h"
+#import "IMYWebView.h"
+#import <WebKit/WebKit.h>
+#import "NJKWebViewProgressView.h"
+#import "WebViewJavascriptBridge.h"
+#import "JMShareViewController.h"
+#import "JMShareModel.h"
+#import "JMLogInViewController.h"
+#import "JumpUtils.h"
+#import "IosJsBridge.h"
+#import "JMPayShareController.h"
+#import "PersonOrderViewController.h"
+#import "JMRegisterJS.h"
 
 
-//@interface JMFineClassController () <UIWebViewDelegate>
-//
-////@property (nonatomic, strong)UIWebView *webView;
-//
-////@property (nonatomic, strong) NJKWebViewProgressView *progressView;
-//
-//@end
+@interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
+    NSString *_fineCouponTid;
+}
+
+
+@property (nonatomic ,strong) IMYWebView *baseWebView;
+@property (nonatomic, strong) NJKWebViewProgressView *progressView;
+@property (nonatomic, strong) WebViewJavascriptBridge* bridge;
+@property (nonatomic,strong) JMShareViewController *shareView;
+@property (nonatomic,strong) JMShareModel *share_model;
+
+
+@end
+
 
 @implementation JMFineClassController
+- (JMShareViewController *)shareView {
+    if (!_shareView) {
+        _shareView = [[JMShareViewController alloc] init];
+    }
+    return _shareView;
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
+    [self createWebView];
+    [self loadMaMaWeb];
     
-    super.baseWebView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114);
-//    NSLog(@"%@",super.baseWebView);
-//    [self createWebView];
-
+    if(self.baseWebView.usingUIWebView) {
+        [self registerJsBridge];
+    }
+    
+    
 }
 
-- (void)setUrlString:(NSString *)urlString {
-    _urlString = urlString;
-    if ([NSString isStringEmpty:urlString]) {
-        [MBProgressHUD showError:@"加载失败~"];
-    }else {
-        [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
+- (void)refreshWebView {
+    if (![NSString isStringEmpty:self.urlString] && self.baseWebView != nil) {
+        [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     }
 }
-//- (void)createWebView {
-//    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114)];
-//    self.webView.backgroundColor = [UIColor whiteColor];
-//    self.webView.delegate = self;
-//    self.webView.scalesPageToFit = YES;
-//    
-//    [self.view addSubview:self.webView];
-//    
-//}
-//- (void)webViewDidStartLoad:(UIWebView *)webView {
-//    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
-//}
-//- (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    [MBProgressHUD hideHUDForView:self.view];
-//}
-//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-//    [MBProgressHUD hideHUDForView:self.view];
-//    [MBProgressHUD showError:@"加载失败~"];
-//    //    [self backClickAction];
-//}
-//- (void)viewDidDisappear:(BOOL)animated {
-//    //    self.webView = nil;
-//}
+
+- (void)loadMaMaWeb {
+    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject){
+//            [[JMGlobal global] hideWaitLoading];
+            return ;
+        }
+        [self mamaWebViewData:responseObject];
+    } WithFail:^(NSError *error) {
+//        [[JMGlobal global] hideWaitLoading];
+    } Progress:^(float progress) {
+    }];
+}
+- (void)mamaWebViewData:(NSDictionary *)mamaDic {
+    NSArray *resultsArr = mamaDic[@"results"];
+    NSDictionary *resultsDict = [NSDictionary dictionary];
+    resultsDict = resultsArr[0];
+    NSDictionary *extraDict = resultsDict[@"extra"];
+    self.urlString = extraDict[@"boutique"];
+    [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
+    
+}
+
+- (void)createWebView {
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
+    self.baseWebView.scalesPageToFit = YES;
+    self.baseWebView.delegate = self;
+    self.baseWebView.viewController = self;
+//    self.baseWebView.progressBlock = ^(double estimatedProgress) {
+//        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
+//    };
+    [self.view addSubview:self.baseWebView];
+    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
+    
+}
+- (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
+    [[JMGlobal global] hideWaitLoading];
+}
+- (void)webViewDidStartLoad:(IMYWebView *)webView {
+    
+}
+- (void)webViewDidFinishLoad:(IMYWebView *)webView {
+    [[JMGlobal global] hideWaitLoading];    
+}
+
+
+#pragma mark - 注册js bridge供h5页面调用
+- (void)registerJsBridge {
+    JMRegisterJS *regis = [[JMRegisterJS alloc] init];
+    [regis registerJSBridgeBeforeIOSSeven:self WebView:self.baseWebView];
+}
+
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick endLogPageView:@"JMFineClassController"];
+//    [[JMGlobal global] hideWaitLoading];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
+    
+    
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [MobClick beginLogPageView:@"JMFineClassController"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+}
+- (void)paySuccessful {
+    NSLog(@"支付成功");
+    [MobClick event:@"fineCoupon_buySuccess"];
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = _fineCouponTid;
+    [self.navigationController pushViewController:payShareVC animated:YES];
+}
+- (void)popview {
+    NSLog(@"支付取消/支付失败");
+    [MobClick event:@"fineCoupon_buyCancel_buyFail"];
+    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
+    orderVC.index = 101;
+    [self.navigationController pushViewController:orderVC animated:YES];
+}
+- (void)couponTid:(NSNotification *)sender {
+    _fineCouponTid = sender.object;
+}
+
+
+
+
 
 
 @end
@@ -79,3 +177,80 @@
 
 
 
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+//
+//    super.baseWebView.frame = CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 113);
+//
+//    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
+//    self.baseWebView.delegate = self;
+////    NSLog(@"%@",super.baseWebView);
+////    [self createWebView];
+//    [self loadMaMaWeb];
+//
+//}
+//- (void)loadMaMaWeb {
+//    NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (!responseObject){
+//            [[JMGlobal global] hideWaitLoading];
+//            return ;
+//        }
+//        [self mamaWebViewData:responseObject];
+//    } WithFail:^(NSError *error) {
+//        [[JMGlobal global] hideWaitLoading];
+//    } Progress:^(float progress) {
+//    }];
+//}
+//- (void)mamaWebViewData:(NSDictionary *)mamaDic {
+//    NSArray *resultsArr = mamaDic[@"results"];
+//    NSDictionary *resultsDict = [NSDictionary dictionary];
+//    resultsDict = resultsArr[0];
+//    NSDictionary *extraDict = resultsDict[@"extra"];
+//    self.urlString = extraDict[@"boutique"];
+//    [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
+//
+//}
+//
+////- (void)setUrlString:(NSString *)urlString {
+////    _urlString = urlString;
+////    if ([NSString isStringEmpty:urlString]) {
+////        [MBProgressHUD showError:@"加载失败~"];
+////    }else {
+////        [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]];
+////    }
+////}
+//- (void)backClick:(UIButton *)button {
+//
+//}
+//- (void)webViewDidStartLoad:(IMYWebView *)webView {
+//}
+//- (void)webViewDidFinishLoad:(IMYWebView *)webView {
+//    [[JMGlobal global] hideWaitLoading];
+//}
+//- (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
+//    [[JMGlobal global] hideWaitLoading];
+//}
+//- (void)createWebView {
+//    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 114)];
+//    self.webView.backgroundColor = [UIColor whiteColor];
+//    self.webView.delegate = self;
+//    self.webView.scalesPageToFit = YES;
+//
+//    [self.view addSubview:self.webView];
+//
+//}
+//- (void)webViewDidStartLoad:(UIWebView *)webView {
+//    [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
+//}
+//- (void)webViewDidFinishLoad:(UIWebView *)webView {
+//    [MBProgressHUD hideHUDForView:self.view];
+//}
+//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+//    [MBProgressHUD hideHUDForView:self.view];
+//    [MBProgressHUD showError:@"加载失败~"];
+//    //    [self backClickAction];
+//}
+//- (void)viewDidDisappear:(BOOL)animated {
+//    //    self.webView = nil;
+//}

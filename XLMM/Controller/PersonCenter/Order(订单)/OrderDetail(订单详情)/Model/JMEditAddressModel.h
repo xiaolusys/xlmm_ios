@@ -48,10 +48,25 @@
  */
 @property (nonatomic,copy) NSString *userAddressDefault;
 
+@property (nonatomic, copy) NSString *identification_no;
 
 @end
 
+/*
+ "user_adress" =     {
+ default = "";
+ id = "<null>";
+ "identification_no" = "";
+ "receiver_address" = "";
+ "receiver_city" = "";
+ "receiver_district" = "";
+ "receiver_mobile" = "";
+ "receiver_name" = "";
+ "receiver_phone" = "";
+ "receiver_state" = "";
+ };
 
+ */
 
 
 

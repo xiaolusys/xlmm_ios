@@ -10,4 +10,7 @@
 
 @interface JMStoreupController : JMMaMaCenterFansController
 
+
+@property (nonatomic, assign) BOOL isHideNavitaionLeftBar;
+
 @end
