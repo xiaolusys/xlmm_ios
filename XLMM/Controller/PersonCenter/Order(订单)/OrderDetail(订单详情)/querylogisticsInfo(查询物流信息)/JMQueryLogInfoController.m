@@ -13,7 +13,7 @@
 #import "JMCleanView.h"
 #import "JMPackAgeModel.h"
 
-#define cellHeitht 90
+#define cellHeitht 110
 
 @interface JMQueryLogInfoController ()<UIScrollViewDelegate>
 
@@ -199,13 +199,13 @@
 
     NSInteger count = self.infoArray.count;
     self.timeListVC.count = count;
-    JMCleanView *timeMenu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136 + _count * cellHeitht, SCREENWIDTH, count * cellHeitht)];
+    JMCleanView *timeMenu = [[JMCleanView alloc] initWithFrame:CGRectMake(0, 136 + _count * cellHeitht, SCREENWIDTH, count * 90)];
     [self.masBackScrollView addSubview:timeMenu];
     timeMenu.contentView = self.timeListVC.view;
     timeMenu.contentView.backgroundColor = [UIColor lineGrayColor];
     self.timeListVC.timeListArr = self.infoArray;
     
-    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, count * cellHeitht + _count * cellHeitht + 136);
+    self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, count * 90 + _count * cellHeitht + 136);
 }
 
 /**
