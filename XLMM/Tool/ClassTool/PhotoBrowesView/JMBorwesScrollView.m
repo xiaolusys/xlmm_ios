@@ -67,6 +67,7 @@
     self.showsHorizontalScrollIndicator = NO;
     self.delegate = self;
     self.backgroundColor= [UIColor clearColor];
+
     self.photoImageView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.photoImageView];
     

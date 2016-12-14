@@ -316,8 +316,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:kIsLogin];
     [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-    
-    [userDefaults setBool:NO forKey:@"isXLMM"];
+    [userDefaults setBool:NO forKey:kISXLMM];
     [userDefaults synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
     

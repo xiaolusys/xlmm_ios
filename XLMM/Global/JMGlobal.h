@@ -50,7 +50,8 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 /*
     请求个人信息,保存登录信息
  */
-- (void)upDataLoginStatus;
+- (void)upDataLoginStatusSuccess:(void (^)(id responseObject))success
+                         failure:(void (^)(NSError *error))failure;
 
 
 

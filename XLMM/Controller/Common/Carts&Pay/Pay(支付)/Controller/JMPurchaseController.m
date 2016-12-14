@@ -76,10 +76,7 @@
 @property (nonatomic,strong) UIView *maskView;
 @property (nonatomic, strong) JMDelayPopView *delayView;
 @property (nonatomic,strong) JMOrderPayView *payView;
-/**
- *  获取商品购买商品ID
- */
-@property (nonatomic ,strong) NSMutableString *paramstring;
+
 /**
  *  展示物流信息控制器
  */

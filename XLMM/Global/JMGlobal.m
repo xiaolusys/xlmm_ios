@@ -160,21 +160,37 @@ static BOOL isNetPrompt;
 }
 
 #pragma mark ======== 请求个人信息,保存登录信息 ========
-- (void)upDataLoginStatus {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+- (void)upDataLoginStatusSuccess:(void (^)(id responseObject))success
+                         failure:(void (^)(NSError *error))failure {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        NSDictionary *result = responseObject;
-        if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
-            [defaults setBool:YES forKey:kIsLogin];
-            [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
-            [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
-        } else{
-            [defaults setBool:NO forKey:kIsLogin];
+        if (!responseObject){
+            [userDefaults setBool:NO forKey:kIsLogin];
+            [userDefaults setBool:NO forKey:kISXLMM];
+            [userDefaults synchronize];
+            return;
+        }
+        if (([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0)) {
+            [userDefaults setBool:YES forKey:kIsLogin];
+        }else {
+            [userDefaults setBool:NO forKey:kIsLogin];
+        }
+        if([[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
+            [userDefaults setBool:YES forKey:kISXLMM];
+        }else {
+            [userDefaults setBool:NO forKey:kISXLMM];
+        }
+        [userDefaults synchronize];
+        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
+        if (success) {
+            success(responseObject);
         }
     } WithFail:^(NSError *error) {
-        [defaults setBool:NO forKey:kIsLogin];
+        [userDefaults setBool:NO forKey:kISXLMM];
+        [userDefaults setBool:NO forKey:kIsLogin];
+        [userDefaults synchronize];
         NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
         if (response) {
             if (response.statusCode) {
@@ -183,11 +199,15 @@ static BOOL isNetPrompt;
                     NSLog(@"%ld",statusCode);
                     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
                     [users removeObjectForKey:kIsLogin];
+                    [users removeObjectForKey:kISXLMM];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 }else {
                     
                 }
             }
+        }
+        if (failure) {
+            failure(error);
         }
     } Progress:^(float progress) {
     }];

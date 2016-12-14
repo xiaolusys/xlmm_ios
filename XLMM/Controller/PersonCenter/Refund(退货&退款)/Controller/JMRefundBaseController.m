@@ -50,6 +50,7 @@
     [self createTableView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)createTableView {
@@ -182,7 +183,6 @@
     [super viewWillAppear:animated];
     self.isPopToRootView = NO;
     self.navigationController.navigationBarHidden = NO;
-    [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"JMRefundBaseController"];
 
 }

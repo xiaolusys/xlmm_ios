@@ -95,23 +95,25 @@
     
 //    [self createTableView];
 //    [self createHeaderView];
-//    [self createPullHeaderRefresh];
-//    [self.tableView.mj_header beginRefreshing];
+
     [self createCollectionView];
+//    [self createPullHeaderRefresh];
+//    [self.collectionView.mj_header beginRefreshing];
+    
 }
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
-    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{  // MJAnimationHeader
+    self.collectionView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{  // MJAnimationHeader
         _isPullDown = YES;
-        [self.tableView.mj_footer resetNoMoreData];
+        [self.collectionView.mj_footer resetNoMoreData];
         [weakSelf setUserInfo];
     }];
 }
 - (void)endRefresh {
     if (_isPullDown) {
         _isPullDown = NO;
-        [self.tableView.mj_header endRefreshing];
+        [self.collectionView.mj_header endRefreshing];
     }
 }
 
@@ -119,51 +121,77 @@
     [self setUserInfo];
 //    [self.tableView.mj_header beginRefreshing];
 }
+- (BOOL)isXiaolumama{
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:kISXLMM];
+    return isXLMM;
+}
+- (BOOL)isLogin {
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isLog = [users boolForKey:kIsLogin];
+    return isLog;
+}
 - (void)setUserInfo{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) {
-            self.isHideNavigationBar = YES;
-            [self quitLogin];
-            [self endRefresh];
-            return ;
-        }
-        NSDictionary *result = responseObject;
-        if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
-            [defaults setBool:YES forKey:kIsLogin];
+    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        if ([self isLogin]) {
             self.isHideNavigationBar = NO;
-            [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
-            [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
             [self updateUserInfo:responseObject];
             [self.collectionView reloadData];
-        } else{
-            [self quitLogin];
+        }else {
             self.isHideNavigationBar = YES;
-            [defaults setBool:NO forKey:kIsLogin];
+            [self quitLogin];
         }
         [self endRefresh];
-    } WithFail:^(NSError *error) {
-        [self quitLogin];
+    } failure:^(NSError *error) {
         self.isHideNavigationBar = YES;
-        [defaults setBool:NO forKey:kIsLogin];
-        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-        if (response) {
-            if (response.statusCode) {
-                NSInteger statusCode = response.statusCode;
-                if (statusCode == 403) {
-                    NSLog(@"%ld",statusCode);
-                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-                    [users removeObjectForKey:kIsLogin];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }else {
-                    
-                }
-            }
-        }
+        [self quitLogin];
         [self endRefresh];
-    } Progress:^(float progress) {
+        
     }];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (!responseObject) {
+//            self.isHideNavigationBar = YES;
+//            [self quitLogin];
+//            [self endRefresh];
+//            return ;
+//        }
+//        NSDictionary *result = responseObject;
+//        if (([result objectForKey:@"id"] != nil)  && ([[result objectForKey:@"id"] integerValue] != 0)) {
+//            [defaults setBool:YES forKey:kIsLogin];
+//            self.isHideNavigationBar = NO;
+//            [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+//            [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
+//            [self updateUserInfo:responseObject];
+//            [self.collectionView reloadData];
+//        } else{
+//            [self quitLogin];
+//            self.isHideNavigationBar = YES;
+//            [defaults setBool:NO forKey:kIsLogin];
+//        }
+//        [self endRefresh];
+//    } WithFail:^(NSError *error) {
+//        [self quitLogin];
+//        self.isHideNavigationBar = YES;
+//        [defaults setBool:NO forKey:kIsLogin];
+//        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+//        if (response) {
+//            if (response.statusCode) {
+//                NSInteger statusCode = response.statusCode;
+//                if (statusCode == 403) {
+//                    NSLog(@"%ld",statusCode);
+//                    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+//                    [users removeObjectForKey:kIsLogin];
+//                    [[NSUserDefaults standardUserDefaults] synchronize];
+//                }else {
+//                    
+//                }
+//            }
+//        }
+//        [self endRefresh];
+//    } Progress:^(float progress) {
+//    }];
 }
 - (void)updateUserInfo:(NSDictionary *)dic {
     _persinCenterDict = dic;
