@@ -185,22 +185,6 @@ static BOOL isFirstPOP = YES;
         }
     }
 }
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//        [self autologin];
-//    } else {
-//        NSLog(@"no login");
-//    }
-//}
-//- (void)autologin{
-//    if ([self isXiaolumama]) {
-//        [self createRightItem];
-//    } else{
-//        self.navigationItem.rightBarButtonItem = nil;
-//    }
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
