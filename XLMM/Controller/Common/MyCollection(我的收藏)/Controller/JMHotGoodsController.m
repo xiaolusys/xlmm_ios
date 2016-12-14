@@ -144,7 +144,7 @@
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104) collectionViewLayout:layout];
+    self.collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 153) collectionViewLayout:layout];
     self.collection.backgroundColor = [UIColor whiteColor];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     self.collection.dataSource = self;
