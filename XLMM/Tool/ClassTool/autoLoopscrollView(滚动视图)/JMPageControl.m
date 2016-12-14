@@ -24,6 +24,9 @@
 #pragma mark - Custom Accessors
 
 - (void)setCurrentPage:(NSInteger)currentPage {
+    if (currentPage < 0) {
+        return ;
+    }
     _currentPage = currentPage;
     // 获取的试图
     UIView * currentPageView = self.subviews[currentPage];

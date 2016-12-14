@@ -18,7 +18,7 @@
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
 @property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
-
+@property (nonatomic, strong) JMEmptyView *empty;
 
 @end
 
@@ -48,7 +48,7 @@
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
-    self.footer = self.collection.mj_footer;
+    self.collection.mj_footer = self.footer;
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -63,11 +63,11 @@
 
 - (void)lodaDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-    [self.dataSource removeAllObjects];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             return ;
         }else {
+            [self.dataSource removeAllObjects];
             [self fetchData:responseObject];
         }
     } WithFail:^(NSError *error) {
@@ -109,16 +109,22 @@
     }
     if (self.dataSource.count == 0) {
         self.footer.stateLabel.hidden = YES;
-        [self emptyView];
+        if (self.empty == nil) {
+            [self emptyView];
+        }
     }else {
+        if (self.empty) {
+            [self.empty removeFromSuperview];
+            self.empty = nil;
+        }
     }
     [self.collection reloadData];
 }
 - (void)emptyView {
-//    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"还没有收藏商品哦~!" DescTitle:@"喜欢的东西要收藏哦,赶紧去收藏吧~!" BackImage:@"emptyStoreUp" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"还没有收藏商品哦~!" DescTitle:@"喜欢的东西要收藏哦,赶紧去收藏吧~!" BackImage:@"emptyStoreUp" InfoStr:@"快去逛逛"];
+    [self.view addSubview:self.empty];
+    weakSelf.empty.block = ^(NSInteger index) {
         if (index == 100) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }

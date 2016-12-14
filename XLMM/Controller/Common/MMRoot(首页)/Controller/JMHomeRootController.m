@@ -185,26 +185,6 @@ static BOOL isFirstPOP = YES;
         }
     }
 }
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self autologin];
-    } else {
-        NSLog(@"no login");
-    }
-}
-- (void)autologin{
-    if ([self isXiaolumama]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-}
-- (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
-    return isXLMM;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -232,6 +212,7 @@ static BOOL isFirstPOP = YES;
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window addSubview:self.launchView];
     
+    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
 //    [self createCartsView];                            // 创建购物车
@@ -270,34 +251,31 @@ static BOOL isFirstPOP = YES;
 //    [self loadCatrsNumData];
 //}
 // 登录后请求个人信息,这里可以保存下来个人信息
+- (BOOL)isXiaolumama{
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:kISXLMM];
+    return isXLMM;
+}
+- (BOOL)isLogin {
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isLog = [users boolForKey:kIsLogin];
+    return isLog;
+}
 - (void)loginUpdateIsXiaoluMaMa {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:self WithSuccess:^(id responseObject) {
-        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
-        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
-        if (!responseObject){
-            self.navigationItem.rightBarButtonItem = nil;
-            [users setBool:NO forKey:kIsLogin];
-            [users setBool:NO forKey:kISXLMM];
-            return;
-        }
-        [users setBool:YES forKey:kIsLogin];
-        if([[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
-            [users setBool:YES forKey:kISXLMM];
-            [self createRightItem];
+    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        if ([self isLogin]) {
+            if ([self isXiaolumama]) {
+                [self createRightItem];
+            }else {
+                self.navigationItem.rightBarButtonItem = nil;
+            }
+            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];
         }else {
             self.navigationItem.rightBarButtonItem = nil;
-            [users setBool:NO forKey:kISXLMM];
         }
-    } WithFail:^(NSError *error) {
-        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    } failure:^(NSError *error) {
         self.navigationItem.rightBarButtonItem = nil;
-        [users setBool:NO forKey:kISXLMM];
-        [users setBool:NO forKey:kIsLogin];
-    } Progress:^(float progress) {
     }];
-    [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:1.0];
 }
 
 #pragma mark 商品展示网络请求

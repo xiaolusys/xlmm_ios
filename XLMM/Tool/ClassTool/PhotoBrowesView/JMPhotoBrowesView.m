@@ -9,6 +9,7 @@
 #import "JMPhotoBrowesView.h"
 #import "JMBorwesScrollView.h"
 #import "JMPageControl.h"
+#import "UIImage+ColorImage.h"
 
 
 @interface JMPhotoBrowesView () <JMBorwesScrollViewDelegate, UIScrollViewDelegate>
@@ -49,7 +50,7 @@
 }
 
 - (void)initUI {
-    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.95];
+    self.backgroundColor = [UIColor colorWithRed:10 / 255. green:10 / 255. blue:10 / 255. alpha:0.95];
     self.visibleBorwesScrollViews = [[NSMutableSet alloc] init];
     self.reusableBorwesScrollViews = [[NSMutableSet alloc] init];
     [self placeholderImage];
@@ -92,6 +93,19 @@
 
 
 - (void)setUpScrollView {
+//    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+//    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+//    effectView.frame = self.bounds;
+//    [self addSubview:effectView];
+//    
+//    UIImageView *imageV = [UIImageView new];
+//    imageV.frame = self.bounds;
+//    imageV.userInteractionEnabled = YES;
+//    imageV.contentMode = UIViewContentModeScaleAspectFill;
+//    imageV.image = [UIImage boxblurImage:[UIImage imageNamed:@"Icon-76"] withBlurNumber:0.5];
+//    imageV.clipsToBounds = YES;
+//    [self addSubview:imageV];
+    
     CGRect rect = self.bounds;
     rect.size.width += 10;    // 图片之间的间隔
     self.scrollView = [[UIScrollView alloc] init];
@@ -108,6 +122,7 @@
     if (self.currentImageIndex == 0) { // 修复bug , 如果刚进入的时候是0,不会调用scrollViewDidScroll:方法,不会展示第一张图片
         [self showPhotos];
     }
+
 }
 - (void)showPhotos {
     // 只有一张图片

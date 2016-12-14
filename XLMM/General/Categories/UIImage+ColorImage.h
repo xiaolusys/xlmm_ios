@@ -17,5 +17,6 @@
 + (instancetype)imageWithOriginalName:(NSString *)imageName;
 + (instancetype)imageWithStretchableName:(NSString *)imageName;
 + (UIImage *)resizeImageWithName:(NSString *)name;
-
++ (UIImage *)boxblurImage:(UIImage *)image withBlurNumber:(CGFloat)blur;
++ (UIImage *)coreBlurImage:(UIImage *)image withBlurNumber:(CGFloat)blur;
 @end

@@ -90,7 +90,6 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     [[JMDevice defaultDecice] getServerIP];
-    [self updateLoginState];
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
@@ -118,9 +117,6 @@
 
 - (void)openPushMessage {
     [MiPushSDK registerMiPush:[JMMiPushManager miPushManager] type:0 connect:YES];
-}
-- (void)updateLoginState{
-    [[JMGlobal global] upDataLoginStatus];
 }
 #pragma mark UIApplicationDelegate
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{

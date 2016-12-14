@@ -26,8 +26,14 @@
 //        self.cellImageView.image = [UIImage imageNamed:@"zhanwei"];
 //        return ;
 //    }
-    NSString *url = index == rowIndex ? imageUrl : [imageUrl imageGoodsOrderCompression];
-    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    
+    if (index == rowIndex) {
+    }else {
+        imageUrl = [imageUrl imageGoodsOrderCompression];
+    }
+    NSLog(@"%@",imageUrl);
+//    NSString *url = index == rowIndex ? imageUrl : [imageUrl imageGoodsOrderCompression];
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     
     
     

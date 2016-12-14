@@ -330,7 +330,13 @@
     NSInteger countNum = picModel.pic_arry.count;
     NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
     
-    NSString *url = codeNum == indexPath.row ? picModel.pic_arry[indexPath.row] : [picModel.pic_arry[indexPath.row] imageGoodsOrderCompression];
+    NSString *url = picModel.pic_arry[indexPath.row];
+    if (codeNum == indexPath.row) {
+    }else {
+        url = [url imageGoodsOrderCompression];
+    }
+//    NSLog(@"%@",url);
+//    NSString *url = codeNum == indexPath.row ? picModel.pic_arry[indexPath.row] : [picModel.pic_arry[indexPath.row] imageGoodsOrderCompression];
 //    [cell.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     NSString *sectionRow = [NSString stringWithFormat:@"%ld%ld",indexPath.section,indexPath.row];
     [cell.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -360,6 +366,9 @@
     for (int i = 0; i < imageUrlArray.count; i++) {
         NSString *sectionRot = [NSString stringWithFormat:@"%ld%d",indexPath.section,i];
         UIImage *image = self.imageDict[sectionRot];
+        if (image == nil) {
+            image = [UIImage imageNamed:@"zhanwei"];
+        }
         [self.images addObject:image];
     }
 //    [JMPhotoBrowesView showPhotoBrowserWithImages:picModel.pic_arry currentImageIndex:indexPath.row];

@@ -37,7 +37,7 @@
     _dict = dict;
     if (dict == nil) {
         self.userIconImage.image = nil;
-        self.userNameLabel.text = @"未登录";
+        self.userNameLabel.text = @"点击登录";
         self.integralLabel.text = @"0";
         self.couponLabel.text = @"0";
         self.smallChangeLabel.text = @"0.00";
@@ -116,21 +116,25 @@
     self.userNameLabel = [UILabel new];
     self.userNameLabel.font = CS_SYSTEMFONT(12.);
     self.userNameLabel.textColor = [UIColor whiteColor];
-    self.userNameLabel.text = @"未登录";
-    [topImageView addSubview:self.userNameLabel];
+    self.userNameLabel.text = @"点击登录";
+    [headImageButton addSubview:self.userNameLabel];
     
     [headImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topImageView).offset(30);
         make.centerX.equalTo(topImageView.mas_centerX);
-        make.width.height.mas_equalTo(@60);
+        make.width.height.mas_equalTo(@90);
     }];
     [self.userIconImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(headImageButton);
+//        make.center.equalTo(headImageButton);
+        make.centerX.equalTo(headImageButton.mas_centerX);
+        make.top.equalTo(headImageButton);
         make.width.height.mas_equalTo(@60);
     }];
     [self.redCircle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(headImageButton.mas_centerX).offset(20);
-        make.centerY.equalTo(headImageButton.mas_centerY).offset(-20);
+//        make.centerX.equalTo(headImageButton.mas_centerX).offset(20);
+//        make.centerY.equalTo(headImageButton.mas_centerY).offset(-20);
+        make.top.equalTo(headImageButton).offset(5);
+        make.right.equalTo(headImageButton).offset(-20);
         make.width.height.mas_equalTo(@10);
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
