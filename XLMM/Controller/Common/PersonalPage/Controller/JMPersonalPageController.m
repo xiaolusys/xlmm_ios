@@ -218,7 +218,6 @@
 
 - (void)quitLogin {
     _persinCenterDict = nil;
-    
     self.dataSource = [NSMutableArray arrayWithObjects:
                        @[@{@"iconImage":@"waitpay",@"title":@"待支付",@"orderNum":@"0"},
                          @{@"iconImage":@"waitsend",@"title":@"待收货",@"orderNum":@"0"},
