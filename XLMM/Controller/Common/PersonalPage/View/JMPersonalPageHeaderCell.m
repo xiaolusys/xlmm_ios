@@ -131,8 +131,10 @@
         make.width.height.mas_equalTo(@60);
     }];
     [self.redCircle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(headImageButton.mas_centerX).offset(20);
-        make.centerY.equalTo(headImageButton.mas_centerY).offset(-20);
+//        make.centerX.equalTo(headImageButton.mas_centerX).offset(20);
+//        make.centerY.equalTo(headImageButton.mas_centerY).offset(-20);
+        make.top.equalTo(headImageButton).offset(5);
+        make.right.equalTo(headImageButton).offset(-20);
         make.width.height.mas_equalTo(@10);
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {

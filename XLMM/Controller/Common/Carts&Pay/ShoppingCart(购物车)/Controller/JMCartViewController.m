@@ -167,6 +167,9 @@
     }
 }
 - (void)displayDefaultView {
+    if (self.maskView) {
+        return ;
+    }
     kWeakSelf
     self.maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     [self.view addSubview:self.maskView];
