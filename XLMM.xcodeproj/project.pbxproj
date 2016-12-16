@@ -721,10 +721,7 @@
 		1FF72C551DE7E6E10035F436 /* JMFineCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C511DE7E6E10035F436 /* JMFineCouponController.m */; };
 		1FF72C581DE7E6EC0035F436 /* JMFineCouponModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C571DE7E6EC0035F436 /* JMFineCouponModel.m */; };
 		1FF72C5B1DE7E6F30035F436 /* JMFIneCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C5A1DE7E6F30035F436 /* JMFIneCouponCell.m */; };
-		1FF72C681DE7E7890035F436 /* CSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C5F1DE7E7890035F436 /* CSNavigationController.m */; };
 		1FF72C691DE7E7890035F436 /* CSTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C611DE7E7890035F436 /* CSTabBarController.m */; };
-		1FF72C6A1DE7E7890035F436 /* CSTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C651DE7E7890035F436 /* CSTabBar.m */; };
-		1FF72C6B1DE7E7890035F436 /* CSTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C671DE7E7890035F436 /* CSTabBarButton.m */; };
 		1FF72C7A1DE7E7A30035F436 /* JMMaMaHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C711DE7E7A30035F436 /* JMMaMaHomeController.m */; };
 		1FF72C7B1DE7E7A30035F436 /* JMFineClassController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C731DE7E7A30035F436 /* JMFineClassController.m */; };
 		1FF72C7C1DE7E7A30035F436 /* JMSocialActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72C751DE7E7A30035F436 /* JMSocialActivityController.m */; };
@@ -2009,14 +2006,8 @@
 		1FF72C571DE7E6EC0035F436 /* JMFineCouponModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFineCouponModel.m; sourceTree = "<group>"; };
 		1FF72C591DE7E6F30035F436 /* JMFIneCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFIneCouponCell.h; sourceTree = "<group>"; };
 		1FF72C5A1DE7E6F30035F436 /* JMFIneCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMFIneCouponCell.m; sourceTree = "<group>"; };
-		1FF72C5E1DE7E7890035F436 /* CSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSNavigationController.h; sourceTree = "<group>"; };
-		1FF72C5F1DE7E7890035F436 /* CSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSNavigationController.m; sourceTree = "<group>"; };
 		1FF72C601DE7E7890035F436 /* CSTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabBarController.h; sourceTree = "<group>"; };
 		1FF72C611DE7E7890035F436 /* CSTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabBarController.m; sourceTree = "<group>"; };
-		1FF72C641DE7E7890035F436 /* CSTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabBar.h; sourceTree = "<group>"; };
-		1FF72C651DE7E7890035F436 /* CSTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabBar.m; sourceTree = "<group>"; };
-		1FF72C661DE7E7890035F436 /* CSTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTabBarButton.h; sourceTree = "<group>"; };
-		1FF72C671DE7E7890035F436 /* CSTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTabBarButton.m; sourceTree = "<group>"; };
 		1FF72C701DE7E7A30035F436 /* JMMaMaHomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaHomeController.h; sourceTree = "<group>"; };
 		1FF72C711DE7E7A30035F436 /* JMMaMaHomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaHomeController.m; sourceTree = "<group>"; };
 		1FF72C721DE7E7A30035F436 /* JMFineClassController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMFineClassController.h; sourceTree = "<group>"; };
@@ -6004,8 +5995,6 @@
 		1FF72C5D1DE7E7890035F436 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1FF72C5E1DE7E7890035F436 /* CSNavigationController.h */,
-				1FF72C5F1DE7E7890035F436 /* CSNavigationController.m */,
 				1FF72C601DE7E7890035F436 /* CSTabBarController.h */,
 				1FF72C611DE7E7890035F436 /* CSTabBarController.m */,
 			);
@@ -6022,10 +6011,6 @@
 		1FF72C631DE7E7890035F436 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1FF72C641DE7E7890035F436 /* CSTabBar.h */,
-				1FF72C651DE7E7890035F436 /* CSTabBar.m */,
-				1FF72C661DE7E7890035F436 /* CSTabBarButton.h */,
-				1FF72C671DE7E7890035F436 /* CSTabBarButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7051,7 +7036,6 @@
 				1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */,
 				1FF5335C1D27789D003DEABF /* PersonOrderViewController.m in Sources */,
 				1F5877861DB8A60D00949302 /* MaMaHuoyueduViewController.m in Sources */,
-				1FF72C6A1DE7E7890035F436 /* CSTabBar.m in Sources */,
 				1F5877F01DB8A7AF00949302 /* JMProductSelectListCell.m in Sources */,
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
 				1F3793771DED53B90044E325 /* JMPersonalPageController.m in Sources */,
@@ -7212,8 +7196,6 @@
 				1F498C3A1D2772D0007E77FC /* ThirdAccountViewController.m in Sources */,
 				1F5419011DA3930800804547 /* JMSettingController.m in Sources */,
 				1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */,
-				1FF72C681DE7E7890035F436 /* CSNavigationController.m in Sources */,
-				1FF72C6B1DE7E7890035F436 /* CSTabBarButton.m in Sources */,
 				1F498C341D2772D0007E77FC /* TSettingViewController.m in Sources */,
 				1F5878021DB8A80C00949302 /* MaMaOrderListViewController.m in Sources */,
 				1F52E94C1DDC09CD00F9C286 /* JMCartHistoryCell.m in Sources */,
