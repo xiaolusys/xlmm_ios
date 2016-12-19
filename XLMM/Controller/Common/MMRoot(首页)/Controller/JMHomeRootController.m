@@ -25,7 +25,6 @@
 #import "JMRepopView.h"
 #import "JMUpdataAppPopView.h"
 #import "AppDelegate.h"
-#import "ChildViewController.h"
 #import "MJPullGifHeader.h"
 #import "JMClassifyListController.h"
 #import "JMHomeActiveModel.h"
@@ -37,6 +36,8 @@
 #import "JMCartViewController.h"
 #import "JMGoodsCountTime.h"
 #import "CSTabBarController.h"
+#import "JMChildViewController.h"
+
 
 static BOOL isFirstPOP = YES;
 
@@ -46,6 +47,18 @@ static BOOL isFirstPOP = YES;
     NSInteger oneRowCellH;
     NSInteger twoRowCellH;
     NSString *_dayDifferString;     // 上架时间与结束时间相差天数
+    NSMutableArray *_topImageArray;     // 主页头部滚动视图数据
+    NSMutableArray *_categorysArray;    // 主页分类数据
+    NSMutableArray *flageArr;           // 判断商品请求是否加载完成的标志
+    NSArray *_urlArray;                 // 商品url -> (昨天,今天,明天)
+    BOOL isCreateSegment;               // 商品请求是否全部完成
+    NSMutableArray *_timeArray;         // 商品结束(开始)时间参数
+    NSMutableDictionary *_webDict;      // webView需要的一些参数
+    BOOL _isFirstOpenApp;               // 判断是否是第一次打开
+    NSString *_releaseNotes;            // 版本升级信息
+    NSString *_hash;                    // 判断是否需要重新下载的哈希值
+    NSString *_downloadURLString;       // 地址下载链接
+    NSString *urlCategory;              // 下载分类json文件
 }
 /**
  *  主页tableView,活动数据源,顶部商品滚动视图,自定义cell上添加的segment
@@ -87,20 +100,8 @@ static BOOL isFirstPOP = YES;
 @property (nonatomic, strong) JMLaunchView *launchView;
 @end
 
-@implementation JMHomeRootController {
-    NSMutableArray *_topImageArray;     // 主页头部滚动视图数据
-    NSMutableArray *_categorysArray;    // 主页分类数据
-    NSMutableArray *flageArr;           // 判断商品请求是否加载完成的标志
-    NSArray *_urlArray;                 // 商品url -> (昨天,今天,明天)
-    BOOL isCreateSegment;               // 商品请求是否全部完成
-    NSMutableArray *_timeArray;         // 商品结束(开始)时间参数
-    NSMutableDictionary *_webDict;      // webView需要的一些参数
-    BOOL _isFirstOpenApp;               // 判断是否是第一次打开
-    NSString *_releaseNotes;            // 版本升级信息
-    NSString *_hash;                    // 判断是否需要重新下载的哈希值
-    NSString *_downloadURLString;       // 地址下载链接
-    NSString *urlCategory;              // 下载分类json文件
-}
+@implementation JMHomeRootController
+
 - (JMUpdataAppPopView *)updataPopView {
     if (_updataPopView == nil) {
         _updataPopView = [JMUpdataAppPopView defaultUpdataPopView];
@@ -131,6 +132,9 @@ static BOOL isFirstPOP = YES;
     [super viewWillAppear:animated];
 //    self.cartsCountLabel.hidden = YES;
 //    self.pageView.atuoLoopScroll = YES;
+//    if (self.pageView) {
+//        [self.pageView reloadData];
+//    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -146,7 +150,13 @@ static BOOL isFirstPOP = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    if (self.pageView) {
+        [self.pageView endAutoScroll];
+    }
     [MobClick endLogPageView:@"main"];
+}
+- (void)didReceiveMemoryWarning {
+    [[JMGlobal global] clearAllSDCache];
 }
 - (void)rootViewDidEnterBackground:(NSNotification *)notification {
     [self hideUpdataView];
@@ -175,26 +185,6 @@ static BOOL isFirstPOP = YES;
         }
     }
 }
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self autologin];
-    } else {
-        NSLog(@"no login");
-    }
-}
-- (void)autologin{
-    if ([self isXiaolumama]) {
-        [self createRightItem];
-    } else{
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-}
-- (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
-    return isXLMM;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -222,6 +212,7 @@ static BOOL isFirstPOP = YES;
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window addSubview:self.launchView];
     
+    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];                           // 创建自定义导航控制器
     [self createTabelView];                            // 创建tableView
 //    [self createCartsView];                            // 创建购物车
@@ -260,34 +251,31 @@ static BOOL isFirstPOP = YES;
 //    [self loadCatrsNumData];
 //}
 // 登录后请求个人信息,这里可以保存下来个人信息
+- (BOOL)isXiaolumama{
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:kISXLMM];
+    return isXLMM;
+}
+- (BOOL)isLogin {
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isLog = [users boolForKey:kIsLogin];
+    return isLog;
+}
 - (void)loginUpdateIsXiaoluMaMa {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:self WithSuccess:^(id responseObject) {
-        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
-        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
-        if (!responseObject){
-            self.navigationItem.rightBarButtonItem = nil;
-            [users setBool:NO forKey:kIsLogin];
-            [users setBool:NO forKey:kISXLMM];
-            return;
-        }
-        [users setBool:YES forKey:kIsLogin];
-        if([[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
-            [users setBool:YES forKey:kISXLMM];
-            [self createRightItem];
+    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        if ([self isLogin]) {
+            if ([self isXiaolumama]) {
+                [self createRightItem];
+            }else {
+                self.navigationItem.rightBarButtonItem = nil;
+            }
+            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];
         }else {
             self.navigationItem.rightBarButtonItem = nil;
-            [users setBool:NO forKey:kISXLMM];
         }
-    } WithFail:^(NSError *error) {
-        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    } failure:^(NSError *error) {
         self.navigationItem.rightBarButtonItem = nil;
-        [users setBool:NO forKey:kISXLMM];
-        [users setBool:NO forKey:kIsLogin];
-    } Progress:^(float progress) {
     }];
-    [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:1.0];
 }
 
 #pragma mark 商品展示网络请求
@@ -363,6 +351,7 @@ static BOOL isFirstPOP = YES;
     self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
     self.pageView.dataSource = self;
     self.pageView.delegate = self;
+    self.pageView.isCreatePageControl = YES;
     [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
     self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
     self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
@@ -370,6 +359,7 @@ static BOOL isFirstPOP = YES;
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 4.0f;
+    
     self.tableView.tableHeaderView = self.pageView;
     
 }
@@ -518,7 +508,7 @@ static BOOL isFirstPOP = YES;
 }
 #pragma mark 分类点击事件
 - (void)composeCategoryCellTapView:(JMHomeCategoryCell *)categoryCellView ParamerStr:(NSDictionary *)paramerString {
-    ChildViewController *categoryVC = [[ChildViewController alloc] init];
+    JMChildViewController *categoryVC = [[JMChildViewController alloc] init];
     NSString *parStr = paramerString[@"cat_link"];
     if (![parStr hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
         NSLog(@"jump cat_link=%@ wrong", parStr);
@@ -527,7 +517,7 @@ static BOOL isFirstPOP = YES;
     NSArray *array = [parStr componentsSeparatedByString:@"="];
     NSString *string = array[1];
     categoryVC.titleString = paramerString[@"name"];
-    categoryVC.cid = string;
+    categoryVC.categoryCid = string;
     categoryVC.categoryUrlString = urlCategory;
     [self.navigationController pushViewController:categoryVC animated:YES];
 }
@@ -629,6 +619,7 @@ static BOOL isFirstPOP = YES;
     return @"JMHomeHeaderCell"; // 返回自定义cell的identifier
 }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+//    NSLog(@"JMHomeRootController ---> pageView滚动");
 }
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     [MobClick event:@"banner_click"];
@@ -958,7 +949,11 @@ static BOOL isFirstPOP = YES;
     NSLog(@"dealloc 被调用");
     [self.tableView removeObserver:self forKeyPath:@"contentOffset" context:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.pageView = nil;
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+        self.pageView = nil;
+    }
+    
 }
 
 @end

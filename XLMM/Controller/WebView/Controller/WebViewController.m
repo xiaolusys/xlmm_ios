@@ -348,7 +348,7 @@
     [MBProgressHUD hideHUDForView:self.view];
 
     if (webView.tag != 102) {
-        [[JMDevice defaultDecice] cerateUserAgent];
+        [[JMDevice defaultDecice] cerateUserAgent:self.baseWebView];
 //        [self registerJsBridge];
         return;
     }

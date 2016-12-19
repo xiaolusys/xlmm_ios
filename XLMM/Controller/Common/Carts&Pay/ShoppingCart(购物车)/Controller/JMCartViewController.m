@@ -53,7 +53,7 @@
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"ShoppingCart"];
     
-    
+    [[JMGlobal global] showWaitLoadingInView:self.view];
     isEmpty = YES;
     currentCartDownLoad = NO;
     historyCartDownLoad = NO;
@@ -79,7 +79,7 @@
     }
 
     [self createTableView];
-    [[JMGlobal global] showWaitLoadingInView:self.view];
+    
     
     
     
@@ -167,6 +167,9 @@
     }
 }
 - (void)displayDefaultView {
+    if (self.maskView) {
+        return ;
+    }
     kWeakSelf
     self.maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
     [self.view addSubview:self.maskView];

@@ -45,7 +45,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"我的收藏" selecotr:@selector(backClick:)];
     
-    [self emptyView];
+//    [self emptyView];
     [self createCollection];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
@@ -83,9 +83,9 @@
 
 - (void)loadDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-    [self.dataSource removeAllObjects];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        [self.dataSource removeAllObjects];
         [self fetchData:responseObject];
         [self endRefresh];
     } WithFail:^(NSError *error) {
@@ -122,13 +122,19 @@
             JMStoreUpModel *model = [JMStoreUpModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:model];
         }else {
-        
+            
         }
     }
     if (self.dataSource.count == 0) {
         self.footer.stateLabel.hidden = YES;
-        [self.view addSubview:self.empty];
+        if (self.empty == nil) {
+            [self emptyView];
+        }
     }else {
+        if (self.empty) {
+            [self.empty removeFromSuperview];
+            self.empty = nil;
+        }
     }
     [self.collection reloadData];
 }
@@ -138,7 +144,7 @@
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104) collectionViewLayout:layout];
+    self.collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 153) collectionViewLayout:layout];
     self.collection.backgroundColor = [UIColor whiteColor];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     self.collection.dataSource = self;
@@ -209,9 +215,10 @@
     
 }
 - (void)emptyView {
-//    kWeakSelf
+    kWeakSelf
     self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) Title:@"还没有收藏商品哦~!" DescTitle:@"喜欢的东西要收藏哦,赶紧去收藏吧~!" BackImage:@"emptyStoreUp" InfoStr:@"快去逛逛"];
-    self.empty.block = ^(NSInteger index) {
+    [self.view addSubview:self.empty];
+    weakSelf.empty.block = ^(NSInteger index) {
         if (index == 100) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }

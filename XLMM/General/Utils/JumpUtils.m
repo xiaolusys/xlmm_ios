@@ -10,7 +10,6 @@
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
 #import "JMHomeRootController.h"
-#import "ChildViewController.h"
 #import "ProductSelectionListViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
@@ -24,7 +23,7 @@
 #import "JMPayment.h"
 #import "JMCartViewController.h"
 #import "CSTabBarController.h"
-
+#import "JMPurchaseController.h"
 
 
 @implementation JumpUtils
@@ -162,6 +161,9 @@
     else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/trades/details?"]){
         [self jumpToTrade:target_url viewController:vc];
     }
+    else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/trades/purchase?"]){
+        [self jumpToTradePurchase:target_url viewController:vc];
+    }
     else if([target_url hasPrefix:@"com.jimei.xlmm://app/v1/webview?"]){
         [self jumpToWebview:target_url viewController:vc];
     }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/products/category?"]){
@@ -265,6 +267,34 @@
 
 }
 
++(void) jumpToTradePurchase:(NSString *)target_url viewController:(UIViewController *)vc{
+    NSArray *components = [target_url componentsSeparatedByString:@"?"];
+    NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];
+    
+    NSArray *params = [parameter componentsSeparatedByString:@"&"];
+    NSArray *firstparams = [[params firstObject] componentsSeparatedByString:@"="];
+    NSString *firstparam = [firstparams firstObject];
+    NSString *firstvalue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    
+    NSArray *typeArr = [[params lastObject] componentsSeparatedByString:@"="];
+//    NSString *firstType = [typeArr firstObject];
+//    NSString *firstTypeValue = [[params firstObject] substringFromIndex:([[firstparams firstObject] length] + 1)];
+    
+    NSInteger typeC = [[typeArr lastObject] integerValue];
+    NSNumber *typeCodeNumer = [NSNumber numberWithInteger:typeC];
+    NSLog(@"firstparams %@  %@", firstparam, firstvalue);
+    if ([firstparam isEqualToString:@"cart_id"]){
+        JMPurchaseController *purchVC = [[JMPurchaseController alloc] init];
+        purchVC.paramstring = [firstvalue copy];
+        purchVC.directBuyGoodsTypeNumber = typeCodeNumer;
+        [vc.navigationController pushViewController:purchVC animated:YES];
+    }
+    
+    
+    
+    
+    
+}
 +(void) jumpToTrade:(NSString *)target_url viewController:(UIViewController *)vc{
     NSArray *components = [target_url componentsSeparatedByString:@"?"];
     NSString *parameter = [target_url substringFromIndex:([[components firstObject] length] + 1)];

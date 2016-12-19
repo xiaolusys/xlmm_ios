@@ -42,12 +42,13 @@
     [self.contentView addSubview:goodsTitleL];
     self.goodsTitleL = goodsTitleL;
     self.goodsTitleL.font = [UIFont systemFontOfSize:14.];
+    self.goodsTitleL.numberOfLines = 2;
     
     UILabel *goodsSizeL = [UILabel new];
     [self.contentView addSubview:goodsSizeL];
     self.goodsSizeL = goodsSizeL;
     self.goodsSizeL.textColor = [UIColor titleDarkGrayColor];
-    self.goodsSizeL.font = [UIFont systemFontOfSize:11.];
+    self.goodsSizeL.font = [UIFont systemFontOfSize:12.];
 
     UILabel *goodsMoneyL = [UILabel new];
     [self.contentView addSubview:goodsMoneyL];
@@ -58,32 +59,33 @@
     UILabel *goodsNumL = [UILabel new];
     [self.contentView addSubview:goodsNumL];
     self.goodsNumL = goodsNumL;
+    self.goodsNumL.font = [UIFont systemFontOfSize:14.];
     
     kWeakSelf
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.contentView).offset(10);
-        make.width.height.mas_equalTo(@70);
+        make.width.height.mas_equalTo(@90);
     }];
     
     [self.goodsTitleL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
         make.top.equalTo(weakSelf.contentView).offset(15);
-        make.width.mas_equalTo(SCREENWIDTH - 140);
+//        make.width.mas_equalTo(SCREENWIDTH - 140);
+        make.right.equalTo(weakSelf.contentView).offset(-10);
+    }];
+    [self.goodsSizeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.goodsTitleL);
+        make.top.equalTo(weakSelf.goodsTitleL.mas_bottom).offset(10);
     }];
     
     [self.goodsMoneyL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.goodsTitleL);
-        make.top.equalTo(weakSelf.goodsTitleL.mas_bottom).offset(7);
+        make.bottom.equalTo(weakSelf.iconImageView.mas_bottom);
     }];
-    
-    [self.goodsSizeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
-        make.bottom.equalTo(weakSelf.contentView).offset(-15);
-    }];
-    
     [self.goodsNumL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.contentView).offset(-15);
-        make.centerY.equalTo(weakSelf.goodsSizeL.mas_centerY);
+//        make.right.equalTo(weakSelf.contentView).offset(-15);
+        make.left.equalTo(weakSelf.goodsMoneyL.mas_right).offset(10);
+        make.centerY.equalTo(weakSelf.goodsMoneyL.mas_centerY);
     }];
     
 }
@@ -113,6 +115,36 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

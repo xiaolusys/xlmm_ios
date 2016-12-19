@@ -50,6 +50,7 @@
     [self createTableView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)createTableView {
@@ -150,7 +151,7 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 130;
+    return 160;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMRefundModel *refundModel = self.dataSource[indexPath.row];
@@ -182,7 +183,6 @@
     [super viewWillAppear:animated];
     self.isPopToRootView = NO;
     self.navigationController.navigationBarHidden = NO;
-    [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"JMRefundBaseController"];
 
 }

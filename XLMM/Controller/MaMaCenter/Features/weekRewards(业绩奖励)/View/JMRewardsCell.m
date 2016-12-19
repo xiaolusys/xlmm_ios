@@ -77,7 +77,7 @@
     NSDictionary *missionDic = personDic[@"mission"];
     self.onelabel.text = [NSString stringWithFormat:@"%@",missionDic[@"name"]];
     self.label1.text = [NSString stringWithFormat:@"%@",personDic[@"target_value"]];
-    self.label2.text = [NSString stringWithFormat:@"%@",personDic[@"finish_value"]];
+    self.label2.text = [NSString stringWithFormat:@"%ld",[personDic[@"finish_value"] integerValue]];
     CGFloat awardAmount = [personDic[@"award_amount"] floatValue];
     self.label3.text = [NSString stringWithFormat:@"%.2f",awardAmount];
     self.label4.text = [NSString stringWithFormat:@"%@",personDic[@"status_name"]];
@@ -90,7 +90,7 @@
     NSDictionary *missionDic = teamDic[@"mission"];
     self.onelabel.text = [NSString stringWithFormat:@"%@",missionDic[@"name"]];
     self.label1.text = [NSString stringWithFormat:@"%@",teamDic[@"target_value"]];
-    self.label2.text = [NSString stringWithFormat:@"%@",teamDic[@"finish_value"]];
+    self.label2.text = [NSString stringWithFormat:@"%ld",[teamDic[@"finish_value"] integerValue]];
     CGFloat awardAmount = [teamDic[@"award_amount"] floatValue];
     self.label3.text = [NSString stringWithFormat:@"%.2f",awardAmount];
     self.label4.text = [NSString stringWithFormat:@"%@",teamDic[@"status_name"]];

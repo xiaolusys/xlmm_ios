@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FSLineChart.h"
+#import "JMAutoLoopPageView.h"
 
-@class JMAutoLoopPageView,JMMaMaCenterModel,JMMaMaExtraModel,JMMaMaHomeHeaderView;
+@class JMMaMaCenterModel,JMMaMaExtraModel,JMMaMaHomeHeaderView;
 //typedef void(^mamaButtonAction)(UIButton *button);
 typedef void(^autoLoopPage)(JMAutoLoopPageView *loopPageView, NSMutableDictionary *dic);
 
@@ -32,6 +33,7 @@ typedef void(^autoLoopPage)(JMAutoLoopPageView *loopPageView, NSMutableDictionar
 @property (nonatomic, strong) NSDictionary *messageDic;
 @property (nonatomic, strong) NSString *mamaNotReadNotice;
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
+
 
 @end
 

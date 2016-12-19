@@ -11,7 +11,6 @@
 
 @interface PicCollectionViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
 
 @end
 
@@ -23,8 +22,18 @@
 
 - (void)createImageForCellImageView:(NSString *)imageUrl Index:(NSInteger)index RowIndex:(NSInteger)rowIndex {
     //图片处理小图
-    NSString *url = index == rowIndex ? imageUrl : [imageUrl imageGoodsOrderCompression];
-    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+//    if ([NSString isStringEmpty:imageUrl]) {
+//        self.cellImageView.image = [UIImage imageNamed:@"zhanwei"];
+//        return ;
+//    }
+    
+    if (index == rowIndex) {
+    }else {
+        imageUrl = [imageUrl imageGoodsOrderCompression];
+    }
+    NSLog(@"%@",imageUrl);
+//    NSString *url = index == rowIndex ? imageUrl : [imageUrl imageGoodsOrderCompression];
+    [self.cellImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     
     
     

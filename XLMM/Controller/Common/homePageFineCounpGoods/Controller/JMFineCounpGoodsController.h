@@ -10,4 +10,6 @@
 
 @interface JMFineCounpGoodsController : UIViewController
 
+
+
 @end

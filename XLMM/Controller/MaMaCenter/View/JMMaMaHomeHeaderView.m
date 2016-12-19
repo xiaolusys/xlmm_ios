@@ -7,7 +7,6 @@
 //
 
 #import "JMMaMaHomeHeaderView.h"
-#import "JMAutoLoopPageView.h"
 #import "JMMaMaMessageCell.h"
 #import "JMMaMaCenterModel.h"
 #import "JMMaMaExtraModel.h"
@@ -440,9 +439,9 @@ static NSString *currentTurnsNumberString;
     [messageView addSubview:messageScrollView];
     
     self.pageView = [[JMAutoLoopPageView alloc] init];
-    [messageView addSubview:self.pageView];
     self.pageView.dataSource = self;
     self.pageView.delegate = self;
+    self.pageView.isCreatePageControl = NO;
     [self.pageView registerCellWithClass:[JMMaMaMessageCell class] identifier:@"JMMaMaMessageCell"];
     self.pageView.scrollStyle = JMAutoLoopScrollStyleVertical;
     self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
@@ -450,6 +449,7 @@ static NSString *currentTurnsNumberString;
     self.pageView.atuoLoopScroll = YES;
     self.pageView.scrollFuture = YES;
     self.pageView.autoScrollInterVal = 3.0f;
+    [messageView addSubview:self.pageView];
     
     [promptImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(messageView).offset(15);
@@ -545,7 +545,9 @@ static NSString *currentTurnsNumberString;
 - (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
     return @"JMMaMaMessageCell";
 }
-- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index { }
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+//    NSLog(@"JMMaMaHomeHeaderView ---> pageView滚动");
+}
 - (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:self.mamaNotReadNotice forKey:@"web_url"];

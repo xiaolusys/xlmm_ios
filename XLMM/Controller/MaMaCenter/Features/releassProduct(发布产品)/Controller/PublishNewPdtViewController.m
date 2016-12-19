@@ -20,11 +20,14 @@
 #import "JMRichTextTool.h"
 #import <Photos/Photos.h>
 #import "NSArray+Reverse.h"
+#import "JMPhotoBrowesView.h"
+
+
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 24)/3)
 
 
-@interface PublishNewPdtViewController () {
+@interface PublishNewPdtViewController () <JMPhotoBrowesViewDatasource, JMPhotoBrowesViewDelegate> {
     NSString *_qrCodeUrlString;
     NSInteger indexCode;
     NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
@@ -34,6 +37,7 @@
     BOOL _isNeedAleartMessage;
     NSMutableDictionary *_currentSaveDataSource;
     NSString *_getBeforeDayFive;
+    NSArray *imageUrlArray;
 }
 @property (nonatomic, strong)PhotoView *photoView;
 @property (nonatomic, strong)UIView *watchesView;
@@ -43,6 +47,8 @@
 @property (nonatomic, assign)NSInteger cellNum;
 @property (nonatomic, strong) JMPushSaveModel *pushSaveModel;
 @property (nonatomic, strong) SharePicModel *picModel;
+@property (nonatomic, strong) NSMutableDictionary *imageDict;
+@property (nonatomic, strong) NSMutableArray *images;
 
 @end
 
@@ -50,6 +56,13 @@
     NSTimer *theTimer;
     UIView *bottomView;
     CountdownView *countdowmView;
+}
+
+- (NSMutableDictionary *)imageDict {
+    if (!_imageDict) {
+        _imageDict = [NSMutableDictionary dictionary];
+    }
+    return _imageDict;
 }
 - (SharePicModel *)picModel {
     if (!_picModel) {
@@ -69,7 +82,12 @@
     }
     return _dataArr;
 }
-
+- (NSMutableArray *)images {
+    if (!_images) {
+        _images = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _images;
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"PublishNewPdtViewController"];
@@ -198,10 +216,15 @@
         urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic?ordering=-save_times",Root_URL];
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) {
+            [MBProgressHUD hideHUDForView:self.view];
+            return ;
+        }
+        [MBProgressHUD hideHUDForView:self.view];
         NSArray *arrPic = responseObject;
         [self requestData:arrPic];
     } WithFail:^(NSError *error) {
-        [MBProgressHUD hideHUD];
+        [MBProgressHUD hideHUDForView:self.view];
         [MBProgressHUD showError:@"获取信息失败"];
     } Progress:^(float progress) {
     }];
@@ -246,7 +269,7 @@
 }
 - (void)requestData:(NSArray *)data {
     if (data.count == 0) {
-        [MBProgressHUD hideHUDForView:self.view];
+        
         UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 90, SCREENHEIGHT * 0.5 - 90, 180, 180)];
         [self.view addSubview:timeView];
         UIImageView *timeImageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 180, 180)];
@@ -285,7 +308,7 @@
         [self.dataArr addObject:sharePic];
     }
     [self.picCollectionView reloadData];
-    [MBProgressHUD hideHUDForView:self.view];
+    
 
 }
 
@@ -306,7 +329,24 @@
     SharePicModel *picModel = self.dataArr[indexPath.section];
     NSInteger countNum = picModel.pic_arry.count;
     NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
-    [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:codeNum RowIndex:indexPath.row];
+    
+    NSString *url = picModel.pic_arry[indexPath.row];
+    if (codeNum == indexPath.row) {
+    }else {
+        url = [url imageGoodsOrderCompression];
+    }
+//    NSLog(@"%@",url);
+//    NSString *url = codeNum == indexPath.row ? picModel.pic_arry[indexPath.row] : [picModel.pic_arry[indexPath.row] imageGoodsOrderCompression];
+//    [cell.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
+    NSString *sectionRow = [NSString stringWithFormat:@"%ld%ld",indexPath.section,indexPath.row];
+    [cell.cellImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"zhanwei"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        NSLog(@"%ld组 %ld行 ---- %@",indexPath.section,indexPath.row, image);
+        if (image) {
+            [self.imageDict setObject:image forKey:sectionRow];
+        }
+    }];
+    [self.imageDict setObject:cell.cellImageView.image forKey:sectionRow];
+//    [cell createImageForCellImageView:picModel.pic_arry[indexPath.row] Index:codeNum RowIndex:indexPath.row];
     return cell;
 }
 
@@ -320,18 +360,30 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    //图片查看
-    PicCollectionViewCell *cell = (PicCollectionViewCell *)[self.picCollectionView cellForItemAtIndexPath:indexPath];
-    //取到当前数组
+    [self.images removeAllObjects];
     SharePicModel *picModel = self.dataArr[indexPath.section];
-    self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.photoView.picArr = [picModel.pic_arry mutableCopy];
-    self.photoView.index = indexPath.row;
-    [self.photoView createScrollView];
-    [self.photoView fillData:indexPath.row cellFrame:cell.frame];
-    [[[UIApplication sharedApplication].delegate window]addSubview:self.photoView];
-
+    imageUrlArray = [picModel.pic_arry copy];
+    for (int i = 0; i < imageUrlArray.count; i++) {
+        NSString *sectionRot = [NSString stringWithFormat:@"%ld%d",indexPath.section,i];
+        UIImage *image = self.imageDict[sectionRot];
+        if (image == nil) {
+            image = [UIImage imageNamed:@"zhanwei"];
+        }
+        [self.images addObject:image];
+    }
+//    [JMPhotoBrowesView showPhotoBrowserWithImages:picModel.pic_arry currentImageIndex:indexPath.row];
+    [JMPhotoBrowesView showPhotoBrowesWihtCurrentImageIndex:indexPath.row ImageCount:imageUrlArray.count DataSource:self];
 }
+- (UIImage *)photoBrowser:(JMPhotoBrowesView *)browser placeholderImageForIndex:(NSInteger)index {
+    return self.images[index];
+}
+- (NSURL *)photoBrowser:(JMPhotoBrowesView *)browser highQualityImageURLForIndex:(NSInteger)index {
+    return [NSURL URLWithString:[imageUrlArray[index] imageNormalCompression]];
+}
+
+
+
+
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
@@ -363,7 +415,6 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     SharePicModel *picModel = self.dataArr[section];
     self.cellNum = picModel.pic_arry.count;
-    
     if (self.cellNum == 4) {
         return UIEdgeInsetsMake(5, 10, 5, CELLWIDTH + 10);
     }

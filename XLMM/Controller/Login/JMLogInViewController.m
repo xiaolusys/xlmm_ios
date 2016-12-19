@@ -200,15 +200,10 @@
 }
 #pragma mark --- 监听微信登录的通知
 - (void)update:(NSNotificationCenter *)notification {
-    
-    [MBProgressHUD showLoading:@"正在登录......"];
-    
     dic = [[NSUserDefaults standardUserDefaults] objectForKey:@"userInfo"];
-    
     NSArray *randomArray = [self randomArray];
     unsigned long count = (unsigned long)randomArray.count;
     int index = 0;
-    
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
     NSLog(@"timeSp:%@",timeSp);
     
@@ -233,9 +228,8 @@
     
     NSLog(@"sign = %@", sign);
     
-    
+    [MBProgressHUD showLoading:@"正在登录......"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
-    
     NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
                              @"nickname":[dic objectForKey:@"nickname"],
                              @"openid":[dic objectForKey:@"openid"],

@@ -86,6 +86,7 @@
     self.goodsTitleLabel = goodsTitleLabel;
     self.goodsTitleLabel.font = [UIFont systemFontOfSize:12.];
     self.goodsTitleLabel.textColor = [UIColor buttonTitleColor];
+    self.goodsTitleLabel.numberOfLines = 2;
     
     UILabel *goodsSizeLabel = [UILabel new];
     [rowView addSubview:goodsSizeLabel];
@@ -144,7 +145,7 @@
     [rowView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(weakSelf.contentView);
         make.top.equalTo(sectionView.mas_bottom);
-        make.height.mas_equalTo(@80);
+        make.height.mas_equalTo(@110);
     }];
     [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(rowView);
@@ -153,25 +154,26 @@
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(rowView).offset(15);
         make.centerY.equalTo(rowView.mas_centerY);
-        make.width.height.mas_equalTo(@60);
+        make.width.height.mas_equalTo(@90);
     }];
     [self.goodsTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
-        make.right.equalTo(rowView).offset(-20);
+        make.right.equalTo(rowView).offset(-10);
         make.top.equalTo(weakSelf.iconImage);
     }];
 
     [self.goodsSizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.goodsTitleLabel);
-        make.centerY.equalTo(weakSelf.iconImage.mas_centerY);
+        make.top.equalTo(weakSelf.goodsTitleLabel.mas_bottom).offset(5);
     }];
     [self.goodsPaymentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.goodsTitleLabel);
-        make.bottom.equalTo(weakSelf.iconImage);
+        make.bottom.equalTo(weakSelf.goodsRefundMoneyLabel.mas_top).offset(-2);
     }];
     [self.goodsRefundMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.goodsPaymentLabel.mas_right).offset(10);
-        make.centerY.equalTo(weakSelf.goodsPaymentLabel.mas_centerY);
+        make.left.equalTo(weakSelf.goodsTitleLabel);
+//        make.centerY.equalTo(weakSelf.goodsPaymentLabel.mas_centerY);
+        make.bottom.equalTo(weakSelf.iconImage.mas_bottom);
     }];
     
     

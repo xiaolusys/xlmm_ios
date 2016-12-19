@@ -113,12 +113,14 @@ NSString *const JMCartCurrentCellIdentifier = @"JMCartCurrentCellIdentifier";
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImage.mas_right).offset(10);
         make.top.equalTo(weakSelf.contentView).offset(12);
-        make.width.mas_equalTo(@(SCREENWIDTH - 120));
+//        make.width.mas_equalTo(@(SCREENWIDTH - 120));
+        make.right.equalTo(weakSelf.contentView).offset(-10);
     }];
     
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.titleLabel);
-        make.bottom.equalTo(weakSelf.PriceLabel.mas_top).offset(-10);
+        make.top.equalTo(weakSelf.titleLabel.mas_bottom).offset(10);
+        make.right.equalTo(weakSelf.contentView).offset(-10);
     }];
     
     [self.PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
