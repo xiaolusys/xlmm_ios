@@ -23,5 +23,6 @@
 @property (nonatomic, copy) NSString *tuihuodizhi;
 @property (weak, nonatomic) IBOutlet UIScrollView *timeLineView;
 @property (weak, nonatomic) IBOutlet UIView *showRefundView;
+@property (weak, nonatomic) IBOutlet UIView *showGoodsView;
 
 @end

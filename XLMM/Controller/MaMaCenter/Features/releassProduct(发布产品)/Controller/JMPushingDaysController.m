@@ -11,6 +11,7 @@
 #import "JMPushingCategoryController.h"
 #import "PublishNewPdtViewController.h"
 #import "JMFineCouponController.h"
+#import "JMPayment.h"
 
 
 @interface JMPushingDaysController ()
@@ -31,6 +32,7 @@
     [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(btnClicked:)];
     [self createSegmentView];
     [self createSegement];
+ 
     
 }
 

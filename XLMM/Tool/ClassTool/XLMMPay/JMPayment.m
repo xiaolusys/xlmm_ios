@@ -110,6 +110,7 @@
     /*
         微信跳转判断方法 .. kUrlScheme 根据scheme跳转.支付宝使用的scheme和微信相同.所以这里判断url.host .. : 如果不想使用这种方法,就单独为支付宝跳转设置一个scheme
         [[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",kUrlScheme]].location != NSNotFound
+        || [url.host isEqual:@"platformId=wechat"]
      */
     if ([url.host isEqual:@"pay"] || [url.host isEqual:@"oauth"]) {
         return  [WXApi handleOpenURL:url delegate:[JMPayment payMentManager]];
@@ -142,6 +143,31 @@
 //        
 //    }
 }
+
++ (void)sendVideoURL:(NSString *)videoUrl Title:(NSString *)title DescTitle:(NSString *)descTitle ThumbImage:(UIImage *)thumbImage InScene:(enum WXScene)scene {
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = title;
+    message.description = descTitle;
+    [message setThumbImage:thumbImage];
+    WXVideoObject *ext = [WXVideoObject object];
+    ext.videoUrl = videoUrl;
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq *req = [JMPayment requestWithText:nil OrMediaMessage:message bText:NO InScene:scene];
+    [WXApi sendReq:req];
+}
++ (SendMessageToWXReq *)requestWithText:(NSString *)text OrMediaMessage:(WXMediaMessage *)message bText:(BOOL)bText InScene:(enum WXScene)scene {
+    SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+    req.bText = bText;
+    req.scene = scene;
+    if (bText) {
+        req.text = text;
+    }else {
+        req.message = message;
+    }
+    return req;
+}
+
 
 
 - (void)onResp:(BaseResp *)resp {
@@ -411,7 +437,21 @@
 
 
 
-
+/*
+ else if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
+ SendMessageToWXResp *messageResp = (SendMessageToWXResp *)resp;
+ NSString *strTitle = [NSString stringWithFormat:@"发送媒体消息结果"];
+ NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", messageResp.errCode];
+ 
+ UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle
+ message:strMsg
+ delegate:self
+ cancelButtonTitle:@"OK"
+ otherButtonTitles:nil, nil];
+ [alert show];
+ 
+ }
+ */
 
 
 

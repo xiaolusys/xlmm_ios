@@ -85,10 +85,9 @@
     [self.view addSubview:backView];
     
     //没有订单号显示填写退货地址
-//    if (self.model.sid.length == 0 || [self.model.sid isEqualToString:@""]) {
+    if (self.refundModelr.sid.length == 0 || [self.refundModelr.sid isEqualToString:@""]) {
 //        self.topToRefundHeight.constant = 0;
-//    }
-    
+    }
     _isChoiseLogistics = ((self.refundModelr.sid.length != 0) && (self.refundModelr.company_name.length != 0));
     
     NSLog(@"return status=%ld good_status=%ld address=%@", (long)self.refundModelr.status, [self.refundModelr.good_status integerValue], self.refundModelr.return_address);

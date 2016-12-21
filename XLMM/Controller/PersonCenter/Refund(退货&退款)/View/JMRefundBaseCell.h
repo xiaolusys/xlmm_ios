@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const JMRefundBaseCellIdentifier;
+
 @class JMRefundModel;
 
 @interface JMRefundBaseCell : UITableViewCell
 
 - (void)configRefund:(JMRefundModel *)refundModel;
+- (void)configRefundDetail:(JMRefundModel *)refundModel;
 
 @end

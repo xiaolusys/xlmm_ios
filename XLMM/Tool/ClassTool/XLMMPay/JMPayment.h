@@ -83,6 +83,46 @@ typedef void(^payMentErrorBlock)(JMPayError *error);
 
 
 
+
++ (void)sendVideoURL:(NSString *)videoUrl Title:(NSString *)title DescTitle:(NSString *)descTitle ThumbImage:(UIImage *)thumbImage InScene:(enum WXScene)scene;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
 
 

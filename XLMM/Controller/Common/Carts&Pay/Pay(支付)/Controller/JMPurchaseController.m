@@ -61,6 +61,7 @@
     
     NSString *_limitStr;              //分享红包数量
     NSString *_orderTidNum;           //订单编号
+    NSString *_orderGoodsIDNum;       //订单商品编号
     NSInteger _flagCount;             //标志是否弹出延迟框
     BOOL _isTeamBuyGoods;             //是否为团购
     BOOL _isBondedGoods;              //是否为保税商品
@@ -672,6 +673,7 @@ static BOOL isAgreeTerms = YES;
         [MBProgressHUD hideHUD];
         NSDictionary *dict = responseObject[@"trade"];
         _orderTidNum = dict[@"tid"];
+        _orderGoodsIDNum = dict[@"id"];
         if ([responseObject[@"code"] integerValue] != 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)[responseObject[@"code"] integerValue]]};
@@ -688,7 +690,9 @@ static BOOL isAgreeTerms = YES;
         if ([responseObject[@"channel"] isEqualToString:@"budget"] && [responseObject[@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUD];
-                [_timer invalidate];
+                if (_timer) {
+                    [_timer invalidate];
+                }
                 [MobClick event:@"buy_succ"];
 //                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [MBProgressHUD showSuccess:@"支付成功"];
@@ -704,6 +708,7 @@ static BOOL isAgreeTerms = YES;
         if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                    _flagCount --;
                     NSLog(@"%ld",error.errorStatus);
                     if (error.errorStatus == payMentErrorStatusSuccess) {
                         [self paySuccessful];
@@ -716,7 +721,9 @@ static BOOL isAgreeTerms = YES;
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
-        [_timer invalidate];
+        if (_timer) {
+            [_timer invalidate];
+        }
 //        [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
         [MBProgressHUD showError:@"支付请求失败,请稍后重试!"];
     } Progress:^(float progress) {
@@ -807,23 +814,21 @@ static BOOL isAgreeTerms = YES;
     }else {}
 }
 #pragma mark 支付成功或取消后续操作
-- (void)pushShareVC {
-    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
-    payShareVC.ordNum = _orderTidNum;
-    [self.navigationController pushViewController:payShareVC animated:YES];
-}
 - (void)popview{
     [MBProgressHUD hideHUD];
-    [_timer invalidate];
+    if (_timer) {
+        [_timer invalidate];
+    }
     [MobClick event:@"buy_cancel"];
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 101;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
-#pragma mark 支付成功的弹出框
 - (void)paySuccessful{
     [MBProgressHUD hideHUD];
-    [_timer invalidate];
+    if (_timer) {
+        [_timer invalidate];
+    }
     [MobClick event:@"buy_succ"];
     if (_isTeamBuyGoods) {
         [self getTeam:_orderTidNum]; // == > 团购信息
@@ -831,6 +836,11 @@ static BOOL isAgreeTerms = YES;
         [self pushShareVC];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+}
+- (void)pushShareVC {
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = _orderTidNum;
+    [self.navigationController pushViewController:payShareVC animated:YES];
 }
 #pragma mark 视图生命周期操作
 - (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
@@ -853,8 +863,8 @@ static BOOL isAgreeTerms = YES;
     
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(purchaseViewWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
+                                             selector:@selector(purchaseViewDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
                                                object:app];
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
     if ([WXApi isWXAppInstalled]) {
@@ -868,31 +878,53 @@ static BOOL isAgreeTerms = YES;
     [super viewWillDisappear:animated];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
+                                                    name:UIApplicationDidBecomeActiveNotification
                                                   object:app];
     [MobClick endLogPageView:@"purchase"];
 }
-- (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
+- (void)purchaseViewDidBecomeActive:(NSNotification *)notification {
+    if (_timer) {
+        [_timer invalidate];
+    }
     //进入前台时调用此函数
     NSLog(@"purchaseViewWillEnterForeground ");
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
     if (_flagCount > 0) {
+        _flagCount --;
         [MBProgressHUD showLoading:@""];
         _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(doSomeWork) userInfo:nil repeats:NO];
+//        [self performSelector:@selector(doSomeWork) withObject:self afterDelay:10.f];
+    }else {
+        [self inquiryOrder:_orderTidNum];
+        
     }
-    _flagCount --;
+    
 }
 
 - (void)doSomeWork {
     [MBProgressHUD hideHUD];
-    // Simulate by just waiting.
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付被您取消或支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     alterView.tag = 102;
     [alterView show];
+}
+- (void)inquiryOrder:(NSString *)orderTid {
+    [MBProgressHUD hideHUD];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, orderTid];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+    
     
 }
 
+    
 @end
+
 
 
 

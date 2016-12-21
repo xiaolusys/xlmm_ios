@@ -619,7 +619,7 @@
     
     UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
         [sharImageArray removeAllObjects];
-        [self dismissViewControllerAnimated:YES completion:nil];
+//        [self dismissViewControllerAnimated:YES completion:nil];
     };
     activityVC.completionHandler = myBlock;
     [self presentViewController:activityVC animated:TRUE completion:nil];
