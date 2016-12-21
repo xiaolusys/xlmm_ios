@@ -613,6 +613,8 @@
 		1F58A7601DFBB54B00F738D2 /* browseLoadingImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F58A75F1DFBB54B00F738D2 /* browseLoadingImage@2x.png */; };
 		1F58A7631DFBB65100F738D2 /* JMBorwesScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58A7621DFBB65100F738D2 /* JMBorwesScrollView.m */; };
 		1F5917DB1D5DCD7A003BB786 /* JMDescLabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */; };
+		1F689CB01E0A132F0070109B /* JMRefundDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F689CAF1E0A132F0070109B /* JMRefundDetailController.m */; };
+		1F689CB31E0A19D60070109B /* JMGeneralCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F689CB21E0A19D60070109B /* JMGeneralCell.m */; };
 		1F6B78A71DD4055A009AB446 /* JMPhotoBrowesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */; };
 		1F6B78DB1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */; };
 		1F6B79C21DD6F51B009AB446 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6B79C11DD6F51B009AB446 /* CoreText.framework */; };
@@ -1815,6 +1817,10 @@
 		1F58A7621DFBB65100F738D2 /* JMBorwesScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBorwesScrollView.m; sourceTree = "<group>"; };
 		1F5917D91D5DCD7A003BB786 /* JMDescLabelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDescLabelModel.h; sourceTree = "<group>"; };
 		1F5917DA1D5DCD7A003BB786 /* JMDescLabelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDescLabelModel.m; sourceTree = "<group>"; };
+		1F689CAE1E0A132F0070109B /* JMRefundDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRefundDetailController.h; sourceTree = "<group>"; };
+		1F689CAF1E0A132F0070109B /* JMRefundDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRefundDetailController.m; sourceTree = "<group>"; };
+		1F689CB11E0A19D60070109B /* JMGeneralCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGeneralCell.h; sourceTree = "<group>"; };
+		1F689CB21E0A19D60070109B /* JMGeneralCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGeneralCell.m; sourceTree = "<group>"; };
 		1F6B78A51DD4055A009AB446 /* JMPhotoBrowesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPhotoBrowesView.h; sourceTree = "<group>"; };
 		1F6B78A61DD4055A009AB446 /* JMPhotoBrowesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPhotoBrowesView.m; sourceTree = "<group>"; };
 		1F6B78DA1DD5BB73009AB446 /* selectionShopNormal_Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectionShopNormal_Small@2x.png"; sourceTree = "<group>"; };
@@ -2158,6 +2164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
 				326676281BB51FE000307EC4 /* libc++.tbd in Frameworks */,
 				1F99F7B61D6565D100C6B79C /* libz.tbd in Frameworks */,
 				1FE52DF91D94CCA50051D5A0 /* CoreMotion.framework in Frameworks */,
@@ -2168,7 +2175,6 @@
 				1F6B79C21DD6F51B009AB446 /* CoreText.framework in Frameworks */,
 				1FE52DF41D94CC650051D5A0 /* QuartzCore.framework in Frameworks */,
 				1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */,
-				32F3D9741B6CCBEE008530BA /* SystemConfiguration.framework in Frameworks */,
 				1F3793F81DEE827E0044E325 /* libssl.a in Frameworks */,
 				1FD5D9121DC88EED007E8DDE /* WebKit.framework in Frameworks */,
 				1F7C10911DB0CA2F00609BC4 /* Photos.framework in Frameworks */,
@@ -4244,6 +4250,8 @@
 			children = (
 				1FD158DE1D2F8444006C4B14 /* JMRefundBaseController.h */,
 				1FD158DF1D2F8444006C4B14 /* JMRefundBaseController.m */,
+				1F689CAE1E0A132F0070109B /* JMRefundDetailController.h */,
+				1F689CAF1E0A132F0070109B /* JMRefundDetailController.m */,
 				1F498BFA1D2772D0007E77FC /* RefundDetailsViewController.h */,
 				1F498BFB1D2772D0007E77FC /* RefundDetailsViewController.m */,
 				1F498BFC1D2772D0007E77FC /* RefundDetailsViewController.xib */,
@@ -4322,6 +4330,8 @@
 				1FD158E21D2F86C4006C4B14 /* JMRefundBaseCell.m */,
 				1F498C101D2772D0007E77FC /* JMTimeLineView.h */,
 				1F498C111D2772D0007E77FC /* JMTimeLineView.m */,
+				1F689CB11E0A19D60070109B /* JMGeneralCell.h */,
+				1F689CB21E0A19D60070109B /* JMGeneralCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7044,6 +7054,7 @@
 				1F2F9E461D5978EB00E3A68B /* JMGoodsDetailController.m in Sources */,
 				1F498C1D1D2772D0007E77FC /* JMCompSugView.m in Sources */,
 				1F52E94F1DDC09EA00F9C286 /* JMCartCurrentCell.m in Sources */,
+				1F689CB31E0A19D60070109B /* JMGeneralCell.m in Sources */,
 				1F498C361D2772D0007E77FC /* VersionController.m in Sources */,
 				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
 				1F37938A1DEE82490044E325 /* FMDatabaseQueue.m in Sources */,
@@ -7082,6 +7093,7 @@
 				1F4C9E9C1D9912600089CE74 /* NSArray+UdeskSDK.m in Sources */,
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
 				1F58A7581DFAA72300F738D2 /* JMPageControl.m in Sources */,
+				1F689CB01E0A132F0070109B /* JMRefundDetailController.m in Sources */,
 				1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */,
 				1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */,
 				1F4C9EB01D9912600089CE74 /* UdeskStringSizeUtil.m in Sources */,

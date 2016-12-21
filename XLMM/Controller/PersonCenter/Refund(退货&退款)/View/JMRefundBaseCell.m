@@ -9,6 +9,8 @@
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 
+NSString *const JMRefundBaseCellIdentifier = @"JMRefundBaseCellIdentifier";
+
 @interface JMRefundBaseCell ()
 
 @property (nonatomic, strong) UIImageView *refundImage;
@@ -31,6 +33,9 @@
 
 @property (nonatomic, strong) UIImageView *refunStatusImage;
 
+@property (nonatomic, strong) UIView *sectionView;
+@property (nonatomic, strong) UIView *lineView;
+
 @end
 
 @implementation JMRefundBaseCell
@@ -47,6 +52,7 @@
     // == 组头视图 == //
     UIView *sectionView = [UIView new];
     [self.contentView addSubview:sectionView];
+    self.sectionView = sectionView;
     
     UIImageView *refundImage = [UIImageView new];
     [sectionView addSubview:refundImage];
@@ -116,6 +122,7 @@
     UIView *lineView = [UIView new];
     [self.contentView addSubview:lineView];
     lineView.backgroundColor = [UIColor lineGrayColor];
+    self.lineView = lineView;
     
     kWeakSelf
     
@@ -188,6 +195,9 @@
     
 }
 
+
+
+
 - (void)configRefund:(JMRefundModel *)refundModel {
     //has_good_return == 1 退货
     BOOL isGoodsReturn = ([refundModel.has_good_return integerValue] == 0);
@@ -250,6 +260,29 @@
     self.goodsRefundMoneyLabel.text = [NSString stringWithFormat:@"退款金额:¥%.2f×%ld",payment,goodsCount];
     
     
+}
+
+- (void)configRefundDetail:(JMRefundModel *)refundModel {
+    [self.sectionView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@0);
+    }];
+    [self.lineView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@0);
+    }];
+    
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[refundModel.pic_path imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
+    self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImage.layer.masksToBounds = YES;
+    self.iconImage.layer.borderWidth = 0.5;
+    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.cornerRadius = 5;
+    
+    self.goodsTitleLabel.text = refundModel.title;
+    self.goodsSizeLabel.text = [NSString stringWithFormat:@"尺寸:%@",refundModel.sku_name];
+    CGFloat payment = [refundModel.payment floatValue];
+    NSInteger goodsCount = [refundModel.refund_num integerValue];
+    self.goodsPaymentLabel.text = [NSString stringWithFormat:@"交易金额:¥%.2f×%ld",payment,goodsCount];
+    self.goodsRefundMoneyLabel.text = [NSString stringWithFormat:@"退款金额:¥%.2f×%ld",payment,goodsCount];
 }
 
 

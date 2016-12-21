@@ -300,7 +300,7 @@
     [super viewWillAppear:animated];
     self.isPopToRootView = NO;
 //    [self.tableView.mj_header beginRefreshing];
-    [self loadDataSource];
+//    [self loadDataSource];
     [MobClick beginLogPageView:@"PersonOrder"];
 }
 

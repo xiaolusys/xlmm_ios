@@ -22,6 +22,7 @@
                 <outlet property="priceLabel" destination="ekQ-Rz-umc" id="1w5-po-wwp"/>
                 <outlet property="reasonLabel" destination="CFl-SB-ulz" id="U7g-fF-orX"/>
                 <outlet property="refundPriceLabel" destination="c1N-xZ-wW4" id="DDo-kT-Sg3"/>
+                <outlet property="showGoodsView" destination="fui-oA-H3d" id="zpZ-dY-D8L"/>
                 <outlet property="showRefundView" destination="1fZ-DD-kEr" id="aan-3O-l8M"/>
                 <outlet property="sizeLabel" destination="MHr-9R-scq" id="nWa-Fn-wNU"/>
                 <outlet property="statusLabel" destination="Yy3-Tc-8H3" id="Ila-6Z-D0m"/>
@@ -156,7 +157,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1fZ-DD-kEr">
                                                     <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="92" id="ZGo-2f-IJU"/>
+                                                        <constraint firstAttribute="height" constant="110" id="ZGo-2f-IJU"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -343,7 +344,7 @@
                 <constraint firstItem="U6F-pk-f90" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Miw-Qp-5qO"/>
                 <constraint firstAttribute="trailing" secondItem="U6F-pk-f90" secondAttribute="trailing" id="eGu-5Q-pWd"/>
             </constraints>
-            <point key="canvasLocation" x="274" y="180"/>
+            <point key="canvasLocation" x="273.5" y="179.5"/>
         </view>
     </objects>
     <resources>
