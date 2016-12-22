@@ -34,7 +34,6 @@
 
 @interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
     NSDictionary *_couponData;
-    NSTimer *_timer;
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
     NSDictionary *_rightReduce;       // app立减
@@ -66,6 +65,7 @@
     BOOL _isTeamBuyGoods;             //是否为团购
     BOOL _isBondedGoods;              //是否为保税商品
     BOOL _isIndentifierNum;           // 身份证号是否为空
+    BOOL _isVirtualCoupone;           // 是否为虚拟优惠券
     NSInteger _couponNumber;          // 优惠券购买商品个数
 }
 
@@ -153,6 +153,7 @@ static BOOL isAgreeTerms = YES;
     self.isCouponEnoughPay = NO;
     _isIndentifierNum = NO;
     _isBondedGoods = NO;
+    _isVirtualCoupone = NO;
     
     _totalPayment = 0;              //应付款金额
     _discountfee = 0;               //优惠券金额
@@ -261,6 +262,9 @@ static BOOL isAgreeTerms = YES;
         _couponNumber = 1;
     }
     for (NSDictionary *dic in goodsArr) {
+        if ([dic[@"product_type"] integerValue] != 1) {
+            _isVirtualCoupone = YES;
+        }
         if ([dic[@"is_bonded_goods"] boolValue]) {
             _isBondedGoods = (_isBondedGoods || YES);
         }else {
@@ -341,6 +345,13 @@ static BOOL isAgreeTerms = YES;
     if (_isIndentifierNum && _isBondedGoods) {
         [self userNotIdCardNumberMessage];
     }
+    if (_isVirtualCoupone == NO) {
+        CGRect frame = self.purchaseHeaderView.frame;
+        frame.size.height = 60;
+        self.purchaseHeaderView.frame = frame;
+        self.tableView.tableHeaderView = self.purchaseHeaderView;
+    }
+    self.purchaseHeaderView.isVirtualCoupone = _isVirtualCoupone;
 }
 - (void)userNotIdCardNumberMessage {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -690,9 +701,6 @@ static BOOL isAgreeTerms = YES;
         if ([responseObject[@"channel"] isEqualToString:@"budget"] && [responseObject[@"code"] integerValue] == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUD];
-                if (_timer) {
-                    [_timer invalidate];
-                }
                 [MobClick event:@"buy_succ"];
 //                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
                 [MBProgressHUD showSuccess:@"支付成功"];
@@ -709,7 +717,6 @@ static BOOL isAgreeTerms = YES;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
                     _flagCount --;
-                    NSLog(@"%ld",error.errorStatus);
                     if (error.errorStatus == payMentErrorStatusSuccess) {
                         [self paySuccessful];
                     }else if (error.errorStatus == payMentErrorStatusFail) { // 取消
@@ -721,9 +728,6 @@ static BOOL isAgreeTerms = YES;
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
-        if (_timer) {
-            [_timer invalidate];
-        }
 //        [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
         [MBProgressHUD showError:@"支付请求失败,请稍后重试!"];
     } Progress:^(float progress) {
@@ -816,9 +820,6 @@ static BOOL isAgreeTerms = YES;
 #pragma mark 支付成功或取消后续操作
 - (void)popview{
     [MBProgressHUD hideHUD];
-    if (_timer) {
-        [_timer invalidate];
-    }
     [MobClick event:@"buy_cancel"];
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 101;
@@ -826,9 +827,6 @@ static BOOL isAgreeTerms = YES;
 }
 - (void)paySuccessful{
     [MBProgressHUD hideHUD];
-    if (_timer) {
-        [_timer invalidate];
-    }
     [MobClick event:@"buy_succ"];
     if (_isTeamBuyGoods) {
         [self getTeam:_orderTidNum]; // == > 团购信息
@@ -861,11 +859,14 @@ static BOOL isAgreeTerms = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     
-    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(purchaseViewWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(purchaseViewDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
-                                               object:app];
+                                               object:nil];
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
     if ([WXApi isWXAppInstalled]) {
         self.isInstallWX = YES;
@@ -876,51 +877,51 @@ static BOOL isAgreeTerms = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidBecomeActiveNotification
-                                                  object:app];
+                                                  object:nil];
     [MobClick endLogPageView:@"purchase"];
 }
+- (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
+    [MBProgressHUD showLoading:@""];
+}
 - (void)purchaseViewDidBecomeActive:(NSNotification *)notification {
-    if (_timer) {
-        [_timer invalidate];
-    }
-    //进入前台时调用此函数
-    NSLog(@"purchaseViewWillEnterForeground ");
-    self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
     if (_flagCount > 0) {
+        [self inquiryOrder:_orderGoodsIDNum];
         _flagCount --;
-        [MBProgressHUD showLoading:@""];
-        _timer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(doSomeWork) userInfo:nil repeats:NO];
-//        [self performSelector:@selector(doSomeWork) withObject:self afterDelay:10.f];
     }else {
-        [self inquiryOrder:_orderTidNum];
-        
+        [MBProgressHUD hideHUD];
     }
     
 }
 
 - (void)doSomeWork {
-    [MBProgressHUD hideHUD];
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付被您取消或支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     alterView.tag = 102;
     [alterView show];
 }
 - (void)inquiryOrder:(NSString *)orderTid {
-    [MBProgressHUD hideHUD];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, orderTid];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        
+        [MBProgressHUD hideHUD];
+        if ([responseObject[@"is_paid"] boolValue]) {
+            [self paySuccessful];
+        }else {
+            [self doSomeWork];
+        }
     } WithFail:^(NSError *error) {
-        
+        [self doSomeWork];
+        [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
         
     }];
     
-    
 }
+
 
     
 @end

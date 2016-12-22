@@ -33,8 +33,6 @@
 		1830728D1C97C00900B7665E /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072771C97C00900B7665E /* UIViewController+NavigationBar.m */; };
 		1830728E1C97C00900B7665E /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830727B1C97C00900B7665E /* AddressPickerView.m */; };
 		1830728F1C97C00900B7665E /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830727D1C97C00900B7665E /* ArrowView.m */; };
-		183072901C97C00900B7665E /* MMLoginStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830727F1C97C00900B7665E /* MMLoginStatus.m */; };
-		183072911C97C00900B7665E /* MMUserCoupons.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072811C97C00900B7665E /* MMUserCoupons.m */; };
 		183073D51C97D17800B7665E /* FSLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072B01C97D17800B7665E /* FSLineChart.m */; };
 		183073D61C97D17800B7665E /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072B21C97D17800B7665E /* UIColor+FSPalette.m */; };
 		1830744C1C97D17900B7665E /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 183073BD1C97D17800B7665E /* libWeiboSDK.a */; };
@@ -861,10 +859,6 @@
 		1830727B1C97C00900B7665E /* AddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressPickerView.m; sourceTree = "<group>"; };
 		1830727C1C97C00900B7665E /* ArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowView.h; sourceTree = "<group>"; };
 		1830727D1C97C00900B7665E /* ArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrowView.m; sourceTree = "<group>"; };
-		1830727E1C97C00900B7665E /* MMLoginStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLoginStatus.h; sourceTree = "<group>"; };
-		1830727F1C97C00900B7665E /* MMLoginStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLoginStatus.m; sourceTree = "<group>"; };
-		183072801C97C00900B7665E /* MMUserCoupons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMUserCoupons.h; sourceTree = "<group>"; };
-		183072811C97C00900B7665E /* MMUserCoupons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMUserCoupons.m; sourceTree = "<group>"; };
 		183072931C97D0C000B7665E /* MMClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMClass.h; sourceTree = "<group>"; };
 		183072AD1C97D17800B7665E /* AGAsyncTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGAsyncTestHelper.h; sourceTree = "<group>"; };
 		183072AF1C97D17800B7665E /* FSLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSLineChart.h; sourceTree = "<group>"; };
@@ -2357,7 +2351,6 @@
 			children = (
 				3A5DF7B51CCE135D00FFE818 /* Utils */,
 				1830725F1C97C00900B7665E /* Categories */,
-				183072781C97C00900B7665E /* Classes */,
 				183072791C97C00900B7665E /* Views */,
 			);
 			path = General;
@@ -2400,13 +2393,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		183072781C97C00900B7665E /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		183072791C97C00900B7665E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2414,10 +2400,6 @@
 				1830727B1C97C00900B7665E /* AddressPickerView.m */,
 				1830727C1C97C00900B7665E /* ArrowView.h */,
 				1830727D1C97C00900B7665E /* ArrowView.m */,
-				1830727E1C97C00900B7665E /* MMLoginStatus.h */,
-				1830727F1C97C00900B7665E /* MMLoginStatus.m */,
-				183072801C97C00900B7665E /* MMUserCoupons.h */,
-				183072811C97C00900B7665E /* MMUserCoupons.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6950,7 +6932,6 @@
 				1FE52DE91D93C64D0051D5A0 /* JMMaMaMessageCell.m in Sources */,
 				1F4C9EB51D9912600089CE74 /* UdeskAlertController.m in Sources */,
 				1830728E1C97C00900B7665E /* AddressPickerView.m in Sources */,
-				183072911C97C00900B7665E /* MMUserCoupons.m in Sources */,
 				1F498B301D276450007E77FC /* JMPayShareController.m in Sources */,
 				1F498B031D2761BE007E77FC /* WebViewController.m in Sources */,
 				1F498B3C1D276450007E77FC /* JMOrderPayView.m in Sources */,
@@ -7049,7 +7030,6 @@
 				1F5877F01DB8A7AF00949302 /* JMProductSelectListCell.m in Sources */,
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
 				1F3793771DED53B90044E325 /* JMPersonalPageController.m in Sources */,
-				183072901C97C00900B7665E /* MMLoginStatus.m in Sources */,
 				1FF72C7D1DE7E7A30035F436 /* JMMineController.m in Sources */,
 				1F2F9E461D5978EB00E3A68B /* JMGoodsDetailController.m in Sources */,
 				1F498C1D1D2772D0007E77FC /* JMCompSugView.m in Sources */,

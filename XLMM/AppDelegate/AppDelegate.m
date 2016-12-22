@@ -5,7 +5,7 @@
 //  Created by younishijie on 15/7/29.
 //  Copyright (c) 2015年 上海己美. All rights reserved.
 //
-#import "MiPushSDK.h"
+
 #import "AppDelegate.h"
 #import "JMStoreManager.h"
 #import "Udesk.h"
@@ -175,28 +175,28 @@
 
 #pragma mark ======== 支付,分享 回调 ========
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    BOOL isResult = [UMSocialSnsService handleOpenURL:url];
-    if (!isResult) {
-        [self xiaoluPay:url];
+    if ([url.host isEqual:@"pay"] || [url.host isEqual:@"oauth"] || [url.host isEqual:@"safepay"]) {
+        return [self xiaoluPay:url];
+    }else {
+        return [UMSocialSnsService handleOpenURL:url];
     }
-    return isResult;
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    BOOL isResult = [UMSocialSnsService handleOpenURL:url];
-    if (!isResult) {
-        [self xiaoluPay:url];
+    if ([url.host isEqual:@"pay"] || [url.host isEqual:@"oauth"] || [url.host isEqual:@"safepay"]) {
+        return [self xiaoluPay:url];
+    }else {
+        return [UMSocialSnsService handleOpenURL:url];
     }
-    return isResult;
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
-    BOOL isResult = [UMSocialSnsService handleOpenURL:url];
-    if (!isResult) {
-        [self xiaoluPay:url];
+    if ([url.host isEqual:@"pay"] || [url.host isEqual:@"oauth"] || [url.host isEqual:@"safepay"]) {
+        return [self xiaoluPay:url];
+    }else {
+        return [UMSocialSnsService handleOpenURL:url];
     }
-    return isResult;
 }
-- (void)xiaoluPay:(NSURL *)url {
-    [JMPayment handleOpenURL:url WithErrorCodeBlock:^(JMPayError *error) {
+- (BOOL)xiaoluPay:(NSURL *)url {
+    return [JMPayment handleOpenURL:url WithErrorCodeBlock:^(JMPayError *error) {
         if (error.errorStatus == payMentErrorStatusSuccess) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
         }else if (error.errorStatus == payMentErrorStatusFail) {
@@ -205,7 +205,6 @@
     }];
     
 }
-
 
 #pragma mark ======== User_Agent ========
 //从webview获得浏览器中的useragent，并进行更新

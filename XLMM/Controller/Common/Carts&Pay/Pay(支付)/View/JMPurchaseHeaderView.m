@@ -55,6 +55,18 @@
     self.addressPhoneLabel.text = addressModel.phoneNumber;
     self.addressDetailLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.provinceName,addressModel.cityName,addressModel.countyName,addressModel.streetName];
 }
+- (void)setIsVirtualCoupone:(BOOL)isVirtualCoupone {
+    _isVirtualCoupone = isVirtualCoupone;
+    if (isVirtualCoupone == NO) {
+        if (self.addressView) {
+            [self.addressView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(@0);
+            }];
+            [self.addressView removeFromSuperview];
+            self.addressView = nil;
+        }
+    }
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -155,7 +167,7 @@
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.addressView.mas_bottom);
+        make.bottom.equalTo(weakSelf).offset(-45);
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(@15);
     }];
