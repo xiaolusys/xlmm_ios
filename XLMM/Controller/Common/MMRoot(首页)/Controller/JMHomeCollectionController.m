@@ -34,8 +34,7 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
     [super viewDidLoad];
     [self createCollectionView];
     [self createPullFooterRefresh];
-    
-    
+
 }
 #pragma mrak 刷新界面
 - (void)createPullFooterRefresh {

@@ -24,6 +24,7 @@
 @property (nonatomic, strong) UIView *logisticsView;
 
 @property (nonatomic, strong) NSArray *addressArr;
+@property (nonatomic, assign) BOOL isVirtualCoupone;
 /**
  *  地址信息数据源
  */

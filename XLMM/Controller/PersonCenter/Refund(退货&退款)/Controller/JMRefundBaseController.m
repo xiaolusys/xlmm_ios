@@ -11,6 +11,7 @@
 #import "JMRefundModel.h"
 #import "RefundDetailsViewController.h"
 #import "JMEmptyView.h"
+#import "JMRefundDetailController.h"
 
 @interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -60,7 +61,7 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.showsVerticalScrollIndicator = NO;
-    
+    [self.tableView registerClass:[JMRefundBaseCell class] forCellReuseIdentifier:JMRefundBaseCellIdentifier];
     
 }
 #pragma mark 刷新界面
@@ -138,10 +139,9 @@
     return self.dataSource.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
-    JMRefundBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    JMRefundBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:JMRefundBaseCellIdentifier];
     if (!cell) {
-        cell = [[JMRefundBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[JMRefundBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMRefundBaseCellIdentifier];
     }
     JMRefundModel *refundModel = self.dataSource[indexPath.row];
     
@@ -155,7 +155,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     JMRefundModel *refundModel = self.dataSource[indexPath.row];
-    RefundDetailsViewController *refundDetailVC = [[RefundDetailsViewController alloc] init];
+    JMRefundDetailController *refundDetailVC = [[JMRefundDetailController alloc] init];
     refundDetailVC.refundModelr = refundModel;
     [self.navigationController pushViewController:refundDetailVC animated:YES];
     
