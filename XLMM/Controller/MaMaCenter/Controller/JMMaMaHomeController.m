@@ -83,13 +83,12 @@
     }
     return _activeArray;
 }
-- (JMMaMaHomeHeaderView *)homeHeaderView {
-    if (!_homeHeaderView) {
-        _homeHeaderView = [[JMMaMaHomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 590)];
-        _homeHeaderView.delegate = self;
-    }
-    return _homeHeaderView;
-}
+//- (JMMaMaHomeHeaderView *)homeHeaderView {
+//    if (!_homeHeaderView) {
+//
+//    }
+//    return _homeHeaderView;
+//}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _indexCode = 0;
@@ -120,7 +119,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
+    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:nil];
     _qrCodeRequestDataIndex = 0;
     _indexCode = 0;
     [self createTableView];
@@ -266,6 +265,9 @@
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSInteger code = [responseObject[@"code"] integerValue];
+        if (![responseObject[@"qrcode_link"] isKindOfClass:[NSString class]]) {
+            return ;
+        }
         if (code == 0) {
             [JMStoreManager removeFileByFileName:@"qrCodeUrlString.txt"];
             [JMStoreManager saveDataFromString:@"qrCodeUrlString.txt" WithString:responseObject[@"qrcode_link"]];
@@ -292,6 +294,8 @@
     [self.view addSubview:self.tableView];
     
     // 在这里创建headerView
+    self.homeHeaderView = [[JMMaMaHomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 590)];
+    self.homeHeaderView.delegate = self;
     self.tableView.tableHeaderView = self.homeHeaderView;
     [self headerClick];
     
@@ -562,7 +566,7 @@
         return ;
     }
     NSString *nick_name = userInfo[@"nick"];
-    NSString *sdk_token = userInfo[@"user_id"];
+    NSString *sdk_token = [NSString stringWithFormat:@"%@",userInfo[@"id"]];
     //    NSString *cellphone = self.userInfoDic[@"mobile"];
     NSDictionary *parameters = @{
                                  @"user": @{
@@ -578,16 +582,15 @@
     }
 }
 
-- (void)backClick:(UIButton *)button{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    JMKeyWindow.rootViewController = tabBarVC;
-}
 - (void)dealloc {
     NSLog(@"JMMaMaHomeController  --> dealloc被调用");
-    if (self.homeHeaderView.pageView) {
-        [self.homeHeaderView.pageView removeFromSuperview];
-        self.homeHeaderView.pageView = nil;
+    if (self.homeHeaderView) {
+        if (self.homeHeaderView.pageView) {
+            [self.homeHeaderView.pageView removeFromSuperview];
+            self.homeHeaderView.pageView = nil;
+        }
     }
+    
     
 }
 

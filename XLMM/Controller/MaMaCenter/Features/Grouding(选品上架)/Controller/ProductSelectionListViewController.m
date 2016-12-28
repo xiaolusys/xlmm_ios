@@ -83,9 +83,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hidePopMenuView:) name:@"hideSelectedPopView" object:nil];
-    [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"ProductSelectionListViewController"];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -121,6 +119,8 @@
     
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    
+    [self.tableView.mj_header beginRefreshing];
 }
 #pragma mark --- 加载数据
 

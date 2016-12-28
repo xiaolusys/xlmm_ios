@@ -10,9 +10,13 @@
 #import "TixianSucceedViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"
+#import "UIView+RGSize.h"
 
 
-@interface TixianViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface TixianViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
+    NSDictionary *keyBoardDic;
+}
+
 
 
 @property (nonatomic,strong) UIView *firstLine;
@@ -35,6 +39,12 @@
 @property (nonatomic,strong) UIButton *wexinButton;
 @property (nonatomic,strong) UILabel *xiaoluLabel;
 @property (nonatomic,strong) UILabel *weixinLabel;
+
+
+@property (nonatomic, strong) UIView *anyAmountView;
+@property (nonatomic, strong) UITextField *anyAmountTextField;
+@property (nonatomic, strong) UILabel *anyAmountLabel;
+
 
 /*
  提现金额选择
@@ -192,6 +202,27 @@
     self.weixinLabel = weixinLabel;
     self.weixinLabel.text = @"提现至微信红包";
     self.weixinLabel.font = [UIFont systemFontOfSize:14.];
+    
+    
+    self.anyAmountView = [UIView new];
+    [self.view addSubview:self.anyAmountView];
+    self.anyAmountView.backgroundColor = [UIColor whiteColor];
+    
+    self.anyAmountTextField = [UITextField new];
+    [self.anyAmountView addSubview:self.anyAmountTextField];
+    self.anyAmountTextField.keyboardType = UIKeyboardTypeDecimalPad;
+    self.anyAmountTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.anyAmountTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.anyAmountTextField.font = [UIFont systemFontOfSize:14.];
+    self.anyAmountTextField.placeholder = @"请输入提现金额";
+    self.anyAmountTextField.delegate = self;
+    
+    self.anyAmountLabel = [UILabel new];
+    [self.anyAmountView addSubview:self.anyAmountLabel];
+    self.anyAmountLabel.textColor = [UIColor buttonTitleColor];
+    self.anyAmountLabel.font = [UIFont systemFontOfSize:13.];
+    self.anyAmountLabel.text = @"金额(元):";
+
     //
     /*
      提现金额
@@ -199,6 +230,7 @@
     UIView *withdrawMonryView = [[UIView alloc] init];
     [self.view addSubview:withdrawMonryView];
     self.withdrawMonryView = withdrawMonryView;
+    self.withdrawMonryView.backgroundColor = [UIColor whiteColor];
     
     UILabel *moneyLabel = [[UILabel alloc] init];
     [self.withdrawMonryView addSubview:moneyLabel];
@@ -253,6 +285,10 @@
     [sureButton setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
     [sureButton setTitle:@"确认提现" forState:UIControlStateNormal];
     sureButton.enabled = NO;
+    
+
+    
+    
 }
 - (void)setActiveValue:(NSInteger)activeValue {
     _activeValue = activeValue;
@@ -303,57 +339,94 @@
     UIImage *nomalImage = [UIImage imageNamed:@"circle_wallet_Normal"];
     UIImage *selecterImage = [UIImage imageNamed:@"circle_wallet_Selected"];
     if (button.tag == 200) {
-        isXiaolupened = !isXiaolupened;
-        if (isXiaolupened) {
-            _xiaoluButton.selected = YES;
-            _wexinButton.selected = NO;
-            _xiaoluBackImage.image = selecterImage;
-            _weixinBackImage.image = nomalImage;
-            
-            if (isWeixinpend) {
-                isWeixinpend = !isWeixinpend;
-                _wexinButton.selected = NO;
-                _xiaoluButton.selected = YES;
-                _weixinBackImage.image = nomalImage;
-                _xiaoluBackImage.image = selecterImage;
-            }else {
-            }
+//        isXiaolupened = !isXiaolupened;
+        [self.view insertSubview:self.anyAmountView aboveSubview:self.withdrawMonryView];
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.secondLine.mas_bottom).offset(60);
+        }];
+        _xiaoluButton.selected = YES;
+        _wexinButton.selected = NO;
+        _xiaoluBackImage.image = selecterImage;
+        _weixinBackImage.image = nomalImage;
+        
+        if (self.anyAmountTextField.text.length == 0) {
+            self.sureButton.enabled = NO;
         }else {
-            type = nil;
-            _xiaoluButton.selected = YES;
-            _xiaoluBackImage.image = selecterImage;
+            self.sureButton.enabled = YES;
         }
+        
+//        if (isXiaolupened) {
+//            _xiaoluButton.selected = YES;
+//            _wexinButton.selected = NO;
+//            _xiaoluBackImage.image = selecterImage;
+//            _weixinBackImage.image = nomalImage;
+//            
+//            if (isWeixinpend) {
+//                isWeixinpend = !isWeixinpend;
+//                _wexinButton.selected = NO;
+//                _xiaoluButton.selected = YES;
+//                _weixinBackImage.image = nomalImage;
+//                _xiaoluBackImage.image = selecterImage;
+//            }else {
+//            }
+//        }else {
+//            type = nil;
+//            _xiaoluButton.selected = YES;
+//            _xiaoluBackImage.image = selecterImage;
+//        }
     }else if (button.tag == 201) {
-        isWeixinpend = !isWeixinpend;
-        if (isWeixinpend) {
-            _wexinButton.selected = YES;
-            _xiaoluButton.selected = NO;
-            _weixinBackImage.image = selecterImage;
-            _xiaoluBackImage.image = nomalImage;
-            if (isXiaolupened) {
-                isXiaolupened = !isXiaolupened;
-                _xiaoluButton.selected = NO;
-                _wexinButton.selected = YES;
-                _xiaoluBackImage.image = nomalImage;
-                _weixinBackImage.image = selecterImage;
-            }
+        [self.anyAmountTextField resignFirstResponder];
+        [self.view insertSubview:self.withdrawMonryView aboveSubview:self.anyAmountView];
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.secondLine.mas_bottom).offset(100);
+        }];
+        _wexinButton.selected = YES;
+        _xiaoluButton.selected = NO;
+        _weixinBackImage.image = selecterImage;
+        _xiaoluBackImage.image = nomalImage;
+        
+        _isSelecterPay = YES;
+        if (_isSelecterMoney) {
+            self.sureButton.enabled = YES;
         }else {
-            type = nil;
-            _wexinButton.selected = YES;
-            _weixinBackImage.image = selecterImage;
+            self.sureButton.enabled = NO;
         }
+        
+        
+//        isWeixinpend = !isWeixinpend;
+//        if (isWeixinpend) {
+//            _wexinButton.selected = YES;
+//            _xiaoluButton.selected = NO;
+//            _weixinBackImage.image = selecterImage;
+//            _xiaoluBackImage.image = nomalImage;
+//            if (isXiaolupened) {
+//                isXiaolupened = !isXiaolupened;
+//                _xiaoluButton.selected = NO;
+//                _wexinButton.selected = YES;
+//                _xiaoluBackImage.image = nomalImage;
+//                _weixinBackImage.image = selecterImage;
+//            }
+//        }else {
+//            type = nil;
+//            _wexinButton.selected = YES;
+//            _weixinBackImage.image = selecterImage;
+//        }
     }
-    _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
-    _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
+//    _isSelecterPay = (_xiaoluButton.selected == YES | _wexinButton.selected == YES);
+//    _sureButton.enabled = (_isSelecterMoney  && _isSelecterPay );
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
     self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"TixianViewController"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"TixianViewController"];
 }
@@ -391,11 +464,9 @@
 }
 #pragma mark --- 确认提现按钮点击
 - (void)sureBtnClick:(UIButton *)btn {
+    [MBProgressHUD showLoading:@""];
     btn.enabled = NO;
-    [self performSelector:@selector(changeButtonStatus:) withObject:btn afterDelay:0.5f];
-    
     NSString *stringurl;
-    
     NSDictionary *paramters = [[NSDictionary alloc] init];
     
     if (_wexinButton.selected) {
@@ -406,41 +477,49 @@
             return ;
         }
     }else {
-        NSInteger numMoney = 0;
-        if (_oneHunderBtn.selected == YES) {
-            numMoney = 100;
-        }else {
-            numMoney = 200;
-        }
-        stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
+        paramters = @{@"value":self.anyAmountTextField.text};
+//        NSInteger numMoney = 0;
+//        if (_oneHunderBtn.selected == YES) {
+//            numMoney = 100;
+//        }else {
+//            numMoney = 200;
+//        }
+//        stringurl = [NSString stringWithFormat:@"%@/rest/v1/pmt/cashout/cashout_to_budget?cashout_amount=%ld", Root_URL,(long)numMoney];
+        stringurl = [NSString stringWithFormat:@"%@/rest/v2/mmcashout/cash_out_2_budget",Root_URL];
+        self.cantixianjine -= [self.anyAmountTextField.text floatValue];
     }
+    
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:stringurl WithParaments:paramters WithSuccess:^(id responseObject) {
         if (responseObject == nil) {
+            [MBProgressHUD hideHUD];
+            btn.enabled = YES;
             return ;
         }
+        [MBProgressHUD hideHUD];
+        btn.enabled = YES;
         NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
         TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
         if (code == 0) {
+            if (self.block) {
+                self.block(_cantixianjine);
+            }
             vc.tixianjine = tixianjine;
             vc.activeValueNum = _activeValue;
             vc.surplusMoney = self.cantixianjine;
             vc.isActiveValue = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else {
-            [MBProgressHUD showError:responseObject[@"msg"]];
+            [MBProgressHUD showError:responseObject[@"info"]];
         }
     } WithFail:^(NSError *error) {
-        
+        [MBProgressHUD hideHUD];
+        btn.enabled = YES;
     } Progress:^(float progress) {
         
     }];
 
 }
 
-- (void)changeButtonStatus:(UIButton *)button {
-    NSLog(@"button.enabled = YES; ========== ");
-    button.enabled = YES;
-}
 
 - (void)alterMessage:(NSString *)message{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -461,18 +540,19 @@
         make.top.equalTo(self.view).offset(64);
         make.left.equalTo(self.view);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@60);
+        make.height.mas_equalTo(@50);
     }];
     
     [self.blanceBottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.myBlanceView.mas_bottom).offset(0);
+        make.left.equalTo(self.view);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@20);
+        make.height.mas_equalTo(@15);
     }];
     
     [self.blanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.myBlanceView).offset(20);
         make.left.equalTo(self.myBlanceView.mas_left).offset(11);
+        make.centerY.equalTo(self.myBlanceView.mas_centerY);
         make.height.mas_equalTo(@20);
     }];
     
@@ -543,8 +623,24 @@
         make.height.mas_equalTo(0.5);
     }];
     
+    // 任意金额提现
+    [self.anyAmountView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.secondLine.mas_bottom).offset(0);
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(@60);
+    }];
     
+    [self.anyAmountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.anyAmountView).offset(10);
+        make.centerY.equalTo(self.anyAmountView.mas_centerY);
+    }];
     
+    [self.anyAmountTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.anyAmountLabel.mas_right).offset(10);
+        make.centerY.equalTo(self.anyAmountView.mas_centerY);
+        make.width.mas_equalTo(SCREENWIDTH - 80);
+    }];
     
     /**************/
     [self.withdrawMonryView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -581,7 +677,7 @@
     
     /***************/
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.withdrawMonryView.mas_bottom).offset(0);
+        make.top.equalTo(self.secondLine.mas_bottom).offset(0);
         make.left.equalTo(self.view.mas_left).offset(0);
         make.width.mas_equalTo(SCREENWIDTH);
 //        make.height.mas_equalTo(@(590/2));
@@ -622,7 +718,78 @@
     
 }
 
+#pragma mark -----UITextFieldDelegate
+//是否允许本字段结束编辑，允许-->文本字段会失去firse responder
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    return YES;
+}
+//输入框获得焦点，执行这个方法
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [textField becomeFirstResponder];
+}
+//点击键盘的返回键  执行这个方法  -- 用来隐藏键盘
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.anyAmountTextField resignFirstResponder];
+}
+- (BOOL)textFieldShouldClear:(UITextField *)textField {
+    self.sureButton.enabled = NO;
+    return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
+    [muString appendString:string];
+    [muString deleteCharactersInRange:range];
+    CGFloat stringF = [muString floatValue];
+    BOOL isTFtoWitrDrawmoney = (self.cantixianjine - stringF) >0.00001 || fabs(self.cantixianjine - stringF) <= 0.00001;               // 判断输入金额与我的余额比较
+    if (isTFtoWitrDrawmoney) {
+        self.sureButton.enabled = YES;
+    }else {
+        self.sureButton.enabled = NO;
+        
+    }
+    if (muString.length == 0) {
+        self.sureButton.enabled = NO;
+    }else {
+    }
+    return YES;
+}
 
+//- (void)keyNotification:(NSNotification *)notifition {
+//    if (SCREENHEIGHT > 480) {
+//        return ;
+//    }
+//    keyBoardDic = notifition.userInfo;
+//    CGRect rect = [keyBoardDic[@"UIKeyboardFrameEndUserInfoKey"] CGRectValue];
+//    //    CGRect rect1 = [self convertRect:rect toView:self.superview];
+//    //    kWeakSelf
+//    [UIView animateWithDuration:[keyBoardDic[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
+//        [UIView setAnimationCurve:[keyBoardDic[UIKeyboardAnimationCurveUserInfoKey] doubleValue]];
+//        CGRect frame = self.view.frame;
+//        frame.origin.y = rect.origin.y - frame.size.height;
+//        self.view.frame = frame;
+//    }];
+//    
+//}
+- (void)keyboardDidShow:(NSNotification *)notification {
+    if (SCREENHEIGHT > 480) {
+        return ;
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.bottom = SCREENHEIGHT - 120;
+    }];
+}
+- (void)keyboardDidHidden {
+    if (SCREENHEIGHT > 480) {
+        return ;
+    }
+    [UIView animateWithDuration:0.3 animations:^{
+        self.view.bottom = SCREENHEIGHT;
+    }];
+}
 
 
 @end
