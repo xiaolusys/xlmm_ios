@@ -20,6 +20,8 @@
 #import "PersonOrderViewController.h"
 #import "JMRegisterJS.h"
 #import "JMEmptyView.h"
+#import "JMRootTabBarController.h"
+
 
 @interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
     NSString *_fineCouponTid;
@@ -48,7 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
+    [self createNavigationBarWithTitle:@"精品汇" selecotr:@selector(backClick:)];
     [self createWebView];
     [self emptyView];
     [self loadMaMaWeb];
@@ -171,6 +173,10 @@
 
 
 
+- (void)backClick:(UIButton *)button{
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    JMKeyWindow.rootViewController = tabBarVC;
+}
 
 
 

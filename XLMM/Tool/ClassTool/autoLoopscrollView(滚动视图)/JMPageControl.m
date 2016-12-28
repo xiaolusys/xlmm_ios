@@ -27,6 +27,9 @@
     if (currentPage < 0) {
         return ;
     }
+    if (self.subviews.count == 0) {
+        return ;
+    }
     _currentPage = currentPage;
     // 获取的试图
     UIView * currentPageView = self.subviews[currentPage];

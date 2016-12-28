@@ -76,7 +76,10 @@
     }else {
         self.navigationController.navigationBar.hidden = NO;
     }
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -200,7 +203,7 @@
 //    [self setUserInfo];
 }
 
-- (void) displayLoginView{
+- (void)displayLoginView{
     JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
     [self.navigationController pushViewController:loginVC animated:YES];
 }
@@ -221,10 +224,7 @@
     [self.collectionView registerClass:[JMPersonalPageLayoutCell class] forCellWithReuseIdentifier:@"JMPersonalPageLayoutCellIdentifier"];
     [self.collectionView registerClass:[JMPersonalPageHeaderCell class] forCellWithReuseIdentifier:@"JMPersonalPageHeaderCellIdentifier"];
     [self.collectionView registerClass:[JMPersonalHeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JMPersonalHeaderReusableViewIdentifier"];
-    
-    
-    
-    
+  
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

@@ -179,6 +179,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [MBProgressHUD showLoading:@"小鹿努力加载中~" ToView:self.view];
     [MobClick event:@"activity"];
     [self createNavigationBarWithTitle:self.titleName selecotr:@selector(backClicked:)];
