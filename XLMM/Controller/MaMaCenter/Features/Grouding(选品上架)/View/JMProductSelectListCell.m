@@ -7,7 +7,6 @@
 //
 
 #import "JMProductSelectListCell.h"
-#import "JMLevelinfoModel.h"
 
 @interface JMProductSelectListCell ()
 
@@ -30,9 +29,6 @@
 @property (nonatomic, strong) UIButton *addOrCancelButton;
 
 
-
-
-@property (nonatomic, strong) JMLevelinfoModel *leveModel;
 
 @end
 
@@ -185,8 +181,8 @@
 
 - (void)configListCell:(JMProductSelectionListModel *)model {
     
-    NSDictionary *dic = model.level_info;
-    self.leveModel = [JMLevelinfoModel mj_objectWithKeyValues:dic];
+//    NSDictionary *dic = model.level_info;
+//    self.leveModel = [JMLevelinfoModel mj_objectWithKeyValues:dic];
     
     [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.pic_path imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei.png"]];
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -200,11 +196,18 @@
     self.salePriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[model.lowest_std_sale_price floatValue]];
     self.saleNumLabel.text = [NSString stringWithFormat:@"%@人在卖",model.sale_num];
     
+    if (model.is_boutique == 1) {
+//        NSDictionary *dict = model.elite_level_prices;
+        self.rebetLabel.text = CS_STRING(model.elite_level_prices.elite_level_price);
+        self.nextRebetLabtl.text = [NSString stringWithFormat:@"  %@",model.elite_level_prices.next_elite_level_price];
+        self.vipLabel.text = @"";
+    }else {
+        self.rebetLabel.text = CS_STRING(model.rebet_amount_desc);//[NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
+        self.nextRebetLabtl.text = [NSString stringWithFormat:@"  %@",model.next_rebet_amount_desc];
+        self.vipLabel.text = model.level_info.next_agencylevel_desc;
+    }
 //    CGFloat rebetAmount = [model.rebet_amount floatValue];
 //    CGFloat nextRebetAmount = [model.next_rebet_amount floatValue];
-    self.rebetLabel.text = CS_STRING(model.rebet_amount_desc);//[NSString stringWithFormat:@"返利佣金  ¥%.2f",rebetAmount];
-    self.nextRebetLabtl.text = [NSString stringWithFormat:@"  %@",model.next_rebet_amount_desc];
-    self.vipLabel.text = self.leveModel.next_agencylevel_desc;
     
     self.pdtID = [NSString stringWithFormat:@"%@", model.goodsID];
 //    if ([model.in_customer_shop intValue]) {
@@ -216,7 +219,6 @@
 //        [self.addOrCancelButton setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiajia"] forState:UIControlStateNormal];
 //        self.statusLabel.text = @"加入精选";
 //    }
-
 }
 //- (void)addButtonClick:(UIButton *)button {
 //    if (_delegate && [_delegate respondsToSelector:@selector(composeProductSelectionList:addButton:)]) {
@@ -227,8 +229,8 @@
 //我的精选
 - (void)fillMyChoice:(JMProductSelectionListModel *)product {
     
-    NSDictionary *dic = product.level_info;
-    self.leveModel = [JMLevelinfoModel mj_objectWithKeyValues:dic];
+//    NSDictionary *dic = product.level_info;
+//    self.leveModel = [JMLevelinfoModel mj_objectWithKeyValues:dic];
     
     self.listModel = product;
     self.nameLabtl.text = product.name;

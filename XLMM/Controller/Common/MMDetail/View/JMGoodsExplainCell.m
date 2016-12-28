@@ -98,13 +98,14 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
     UILabel *nameTitle = [UILabel new];
     [contentView addSubview:nameTitle];
-    nameTitle.font = [UIFont systemFontOfSize:18.];
+    nameTitle.font = [UIFont systemFontOfSize:16.];
+    nameTitle.numberOfLines = 2;
     nameTitle.textColor = [UIColor buttonTitleColor];
     self.nameTitle = nameTitle;
     
     UILabel *PriceLabel = [UILabel new];
     [contentView addSubview:PriceLabel];
-    PriceLabel.font = [UIFont systemFontOfSize:33.];
+    PriceLabel.font = [UIFont systemFontOfSize:28.];
     PriceLabel.textColor = [UIColor buttonTitleColor];
     self.PriceLabel = PriceLabel;
     
@@ -177,9 +178,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         make.height.mas_equalTo(@110);
     }];
     [nameTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(contentView).offset(15);
-        make.top.equalTo(contentView).offset(20);
-        make.width.mas_equalTo(@(SCREENWIDTH - 120));
+        make.left.top.equalTo(contentView).offset(15);
+        make.width.mas_equalTo(@(SCREENWIDTH - 130));
     }];
     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(nameTitle);

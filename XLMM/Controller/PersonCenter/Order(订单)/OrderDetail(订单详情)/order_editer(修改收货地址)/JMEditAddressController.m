@@ -310,10 +310,7 @@
         self.idCardNumTF.text = editModel.identification_no;
         [self.idCardNumTF addTarget:self action:@selector(textFieldEditChanged:) forControlEvents:UIControlEventEditingChanged];
     }else {
-        
     }
-    
-    
     
     UITextField *detailAddressTF = [[UITextField alloc] initWithFrame:CGRectMake(90, 205 + bondedTFHeight, SCREENWIDTH - 100, 20)];
     self.detailAddressTF = detailAddressTF;

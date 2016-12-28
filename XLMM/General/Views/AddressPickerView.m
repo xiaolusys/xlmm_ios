@@ -255,7 +255,7 @@
     NSLog(@"quxiao");
     [UIView animateWithDuration:0.3
                      animations:^{
-                         self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
+                         self.frame = CGRectMake(0, self.frame.origin.y+self. frame.size.height, self.frame.size.width, self.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          [self removeFromSuperview];

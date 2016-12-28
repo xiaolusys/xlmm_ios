@@ -27,6 +27,16 @@
 
 @implementation JMChoiseWithDrawController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMChoiseWithDrawController"];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMChoiseWithDrawController"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -165,6 +175,9 @@
     }else if (index == 1) { // 整额提现
         TixianViewController *vc = [[TixianViewController alloc] init];
         vc.cantixianjine = self.myBlance;
+        vc.block = ^(CGFloat blanceMoney) {
+            self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",blanceMoney];
+        };
 //        vc.activeValue = [_activeValueNum integerValue];
         [self.navigationController pushViewController:vc animated:YES];
     }else if (index == 2) { // 兑换优惠券
@@ -197,6 +210,9 @@
 
 
 - (void)backClick:(UIButton *)button {
+    if (self.block) {
+        self.block(self.moneyLabel.text);
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^balanceBlock)(CGFloat blanceMoney);
+
 @interface TixianViewController : UIViewController
 //
 //@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -25,6 +27,8 @@
 //@property (weak, nonatomic) IBOutlet UIButton *fabuButton;
 
 //- (IBAction)fabuClicked:(id)sender;
+
+@property (nonatomic, copy) balanceBlock block;
 
 @property (nonatomic, assign) CGFloat cantixianjine;
 @property (nonatomic, copy) NSString *name;

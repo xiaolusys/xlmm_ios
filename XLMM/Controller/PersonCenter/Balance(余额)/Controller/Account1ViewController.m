@@ -7,12 +7,12 @@
 //
 
 #import "Account1ViewController.h"
-#import "AccountTableViewCell.h"
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"
 #import "JMEmptyView.h"
 #import "JMBillDetailController.h"
 #import "JMWithDrawDetailController.h"
+#import "JMAccountCell.h"
 
 @interface Account1ViewController ()
 @property (nonatomic, strong)UITableView *tableView;
@@ -42,7 +42,7 @@
 
 @end
 
-static NSString *identifier = @"AccountCell";
+static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 @implementation Account1ViewController {
     NSMutableArray *_imageArray;
     UIView *emptyView;
@@ -207,7 +207,8 @@ static NSString *identifier = @"AccountCell";
     
     self.tableView.tableHeaderView = headerV;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
+    [self.tableView registerClass:[JMAccountCell class] forCellReuseIdentifier:JMAccountCellIdentifier];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
 }
 - (void)emptyView {
@@ -301,13 +302,14 @@ static NSString *identifier = @"AccountCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AccountModel *accountM = self.dataArr[indexPath.row];
-    AccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    JMAccountCell *cell = [tableView dequeueReusableCellWithIdentifier:JMAccountCellIdentifier];
     if (!cell) {
-        cell = [[AccountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[JMAccountCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMAccountCellIdentifier];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    AccountModel *accountM = self.dataArr[indexPath.row];
     [cell fillDataOfCell:accountM];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -16,3 +16,17 @@
 }
 
 @end
+
+
+
+@implementation JMLevelInfoModel
+
+@end
+@implementation JMEliteModel
+
+@end
+
+
+
+
+

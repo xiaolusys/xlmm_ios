@@ -796,6 +796,7 @@ static BOOL isFirstPOP = YES;
     [JMPopViewAnimationSpring showView:self.updataPopView overlayView:self.maskView];
 }
 - (void)composeUpdataAppButton:(JMUpdataAppPopView *)updataButton didClick:(NSInteger)index {
+    self.isPopUpdataView = NO;
     if (index == 100) {
         [self hideUpdataView];
     }else if (index == 101) {

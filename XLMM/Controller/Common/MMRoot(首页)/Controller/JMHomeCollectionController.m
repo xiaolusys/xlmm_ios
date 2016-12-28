@@ -148,6 +148,9 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [MobClick event:@"checkGoodsDetailClick"];
+    if (self.dataSource.count == 0) {
+        return ;
+    }
     JMRootGoodsModel *model = self.dataSource[indexPath.row];
     JMGoodsDetailController *detailVC = [[JMGoodsDetailController alloc] init];
     detailVC.goodsID = model.goodsID;

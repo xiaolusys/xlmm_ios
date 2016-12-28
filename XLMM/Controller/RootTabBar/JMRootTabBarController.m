@@ -85,7 +85,7 @@
                                    kSelImgKey : @"tabBar_collectionSelected"},
                                  
                                  @{kClassKey  : @"JMPersonalPageController",
-                                   kTitleKey  : @"我",
+                                   kTitleKey  : @"我的",
                                    kImgKey    : @"tabBar_personalNomal",
                                    kSelImgKey : @"tabBar_personalSelected"} ];
     
