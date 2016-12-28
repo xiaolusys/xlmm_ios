@@ -70,7 +70,7 @@
                                    kSelImgKey : @"tabBar_mianBBSSelected"},
                                  
                                  @{kClassKey  : @"JMMineController",
-                                   kTitleKey  : @"我的",
+                                   kTitleKey  : @"妈妈中心",
                                    kImgKey    : @"tabBar_personalNomal",
                                    kSelImgKey : @"tabBar_personalSelected"}
                                  ];
@@ -95,7 +95,7 @@
     self.thirdVC = self.items[2];
     self.fouthVC = self.items[3];
     
-
+ 
     
     
 }
@@ -113,10 +113,6 @@
 
 
 @end
-
-
-
-
 
 
 

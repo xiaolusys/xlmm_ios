@@ -24,6 +24,8 @@
 #import "SystemFunctions.h"
 #import "JMRichTextTool.h"
 #import "JMChoiseWithDrawController.h"
+#import "JMRootTabBarController.h"
+
 
 @interface JMMineController ()<UITableViewDataSource,UITableViewDelegate> {
     CGFloat _carryValue;              // 账户金额
@@ -92,7 +94,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createNavigationBarWithTitle:@"个人中心" selecotr:nil];
+    [self createNavigationBarWithTitle:@"个人中心" selecotr:@selector(backClick:)];
     [self createTableView];
     [self createHeaderView];
     
@@ -398,6 +400,10 @@
 //    }
     else { }
   
+}
+- (void)backClick:(UIButton *)button{
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    JMKeyWindow.rootViewController = tabBarVC;
 }
 
 - (void)createTableView {

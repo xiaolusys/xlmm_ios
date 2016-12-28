@@ -119,7 +119,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:nil];
+    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
     _qrCodeRequestDataIndex = 0;
     _indexCode = 0;
     [self createTableView];
@@ -580,6 +580,10 @@
     }else {
         self.serViceButton.hidden = NO;
     }
+}
+- (void)backClick:(UIButton *)button{
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    JMKeyWindow.rootViewController = tabBarVC;
 }
 
 - (void)dealloc {

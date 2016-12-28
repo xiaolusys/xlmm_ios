@@ -10,6 +10,7 @@
 #import "IMYWebView.h"
 #import <WebKit/WebKit.h>
 #import "JMEmptyView.h"
+#import "JMRootTabBarController.h"
 
 
 @interface JMSocialActivityController () <IMYWebViewDelegate>
@@ -36,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self createNavigationBarWithTitle:@"论坛" selecotr:nil];
+    [self createNavigationBarWithTitle:@"论坛" selecotr:@selector(backClick:)];
     [self createWebView];
     [self emptyView];
     [self loadMaMaWeb];
@@ -115,6 +116,10 @@
 }
 
 
+- (void)backClick:(UIButton *)button{
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    JMKeyWindow.rootViewController = tabBarVC;
+}
 
 
 
