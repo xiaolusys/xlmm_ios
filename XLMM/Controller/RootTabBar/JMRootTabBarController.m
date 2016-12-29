@@ -65,7 +65,7 @@
     self.delegate = self;
     NSArray *childItemsArray = @[
                                  @{kClassKey  : @"JMHomeRootController",
-                                   kTitleKey  : @"主页",
+                                   kTitleKey  : @"首页",
                                    kImgKey    : @"tabBar_mianPageNomal",
                                    kSelImgKey : @"tabBar_mianPageSelected"},
                                  
@@ -122,7 +122,7 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    if ([viewController.tabBarItem.title isEqualToString:@"主页"]) {
+    if ([viewController.tabBarItem.title isEqualToString:@"首页"]) {
         
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
 //        [self.homeVC endAutoScroll];
@@ -141,7 +141,7 @@
             self.storeVC.isHideNavitaionLeftBar = YES;
         }else {
         }
-    }else if ([viewController.tabBarItem.title isEqualToString:@"我"]) {
+    }else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.personalVC.isHideNavigationBar = NO;
@@ -172,7 +172,7 @@
             [viewController presentViewController:rootNav animated:YES completion:nil];
             return NO;
         }
-    }else if ([viewController.tabBarItem.title isEqualToString:@"我"]) {
+    }else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             return YES;
         }else {
