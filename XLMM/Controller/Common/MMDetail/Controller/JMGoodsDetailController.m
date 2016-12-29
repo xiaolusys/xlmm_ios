@@ -102,7 +102,7 @@
     NSInteger _cartsGoodsNum;   // 购物车数量
     BOOL _isAddcart;            // 判断商品是否即将开售
     BOOL _isTeamBuyGoods;       // 判断商品是否可以团购
-    BOOL _isDirectBuyGoods;     // 判断商品是否可以直接跳转支付页面
+    BOOL _isDirectBuyGoods;     // 判断商品是否可以直接跳转支付页面 (精品商品)
 }
 
 - (JMShareModel *)shareModel {
@@ -352,7 +352,7 @@
         self.addCartButton.hidden = NO;
     }
     // === 显示商品出售状态 === //
-    _isDirectBuyGoods = [detailContentDic[@"is_onsale"] boolValue];
+    _isDirectBuyGoods = ([detailContentDic[@"is_boutique"] boolValue] || [detailContentDic[@"is_onsale"] boolValue]);
     NSString *saleStatus = detailContentDic[@"sale_state"];
     
     if (_isTeamBuyGoods) { // 团购
@@ -403,6 +403,11 @@
         _paramer[@"num"] = @"1";
         [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
     }
+    if (_isDirectBuyGoods) {
+        [self.addCartButton setTitle:@"立即购买" forState:UIControlStateNormal];
+    }
+    
+    
     [self.tableView reloadData];
 }
 - (void)getStatusButton:(BOOL)isShow {
@@ -656,11 +661,13 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
     if (_isDirectBuyGoods) {
         attrubuteDic[@"type"] = @"5";
+        [MBProgressHUD showLoading:@""];
+    }else {
+        [MBProgressHUD showLoading:@"正在加入购物车~"];
     }
     [self addCartUrlString:urlString Paramer:attrubuteDic];
 }
 - (void)addCartUrlString:(NSString *)urlString Paramer:(NSMutableDictionary *)paramer {
-    [MBProgressHUD showLoading:@"正在加入购物车~"];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:paramer WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
@@ -691,14 +698,16 @@
         if (!_isTeamBuyGoods) [self hideMaskView];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"请求失败,请检查网络后重试"];
         self.popView.sureButton.enabled = YES;
         if (!_isTeamBuyGoods) {
             [self hideMaskView];
-            [MobClick event:@"addShoppingCartFail"];
-            [MBProgressHUD showError:@"加入购物车失败"];
+            if (_isDirectBuyGoods) {
+            }else {
+                [MobClick event:@"addShoppingCartFail"];
+            }
         }else {
             [MobClick event:@"TeamAddShoppingCartFail"];
-            [MBProgressHUD showError:@"拼团失败"];
         }
     } Progress:^(float progress) {
     }];
@@ -946,17 +955,17 @@
     button.enabled = YES;
 }
 - (void)getCartsFirstGoodsInfoGoodsTypeNumber:(NSNumber *)directBuyGoodsTypeNumber Parmer:(NSMutableDictionary *)parmer {
-    [MBProgressHUD showLoading:@"购物车加载中~"];
+    [MBProgressHUD showLoading:@""];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:parmer WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
-        [MBProgressHUD showSuccess:@"加入购物车成功"];
+//        [MBProgressHUD showSuccess:@"加入购物车成功"];
         self.popView.sureButton.enabled = YES;
         [self fetchedCartData:responseObject DirectBuyGoodsTypeNumber:directBuyGoodsTypeNumber];
     } WithFail:^(NSError *error) {
         self.popView.sureButton.enabled = YES;
         [MBProgressHUD hideHUD];
-        [MBProgressHUD showError:@"加入购物车失败"];
+//        [MBProgressHUD showError:@"加入购物车失败"];
     } Progress:^(float progress) {
     }];
 }
