@@ -17,6 +17,7 @@
 #import "WXApi.h"
 #import "UUID.h"
 #import "SSKeychain.h"
+#import "JMRootTabBarController.h"
 
 
 #define kService [NSBundle mainBundle].bundleIdentifier
@@ -44,6 +45,9 @@
     }
     else if ([name isEqualToString:@"callNativeBack"]){
         [self callNativeBack:vc];
+    }
+    else if ([name isEqualToString:@"callNativeBackToHome"]){
+        [self callNativeBackToHome:vc];
     }
     else if ([name isEqualToString:@"callNativeShareFunc"]){
         [self callNativeShareFunc:vc para:data];
@@ -192,6 +196,15 @@
 + (void)callNativeBack:(UIViewController *)vc{
     if(vc != nil){
         [vc.navigationController popViewControllerAnimated:YES];
+    }
+}
+/**
+ *  返回主页
+ */
++ (void)callNativeBackToHome:(UIViewController *)vc{
+    if(vc != nil){
+        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
     }
 }
 
