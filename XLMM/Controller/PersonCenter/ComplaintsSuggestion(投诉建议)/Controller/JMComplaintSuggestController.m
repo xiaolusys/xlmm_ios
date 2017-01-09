@@ -70,9 +70,19 @@
 }
 
 - (void)rightClicked:(UIButton *)button{
-
-    CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:HISTORYCOMMONPROBLEM_URL title:@"投诉历史"];
-    [self.navigationController pushViewController:common animated:YES];
+    
+    NSMutableDictionary *dictionDic = [NSMutableDictionary dictionary];
+    dictionDic[@"titleName"] = @"投诉历史";
+    dictionDic[@"web_url"] = HISTORYCOMMONPROBLEM_URL;
+    WebViewController *webView = [[WebViewController alloc] init];
+    webView.webDiction = dictionDic;
+    webView.isShowNavBar = false;
+    webView.isShowRightShareBtn = false;
+    [self.navigationController pushViewController:webView animated:YES];
+    
+    
+//    CommonWebViewViewController *common = [[CommonWebViewViewController alloc] initWithUrl:HISTORYCOMMONPROBLEM_URL title:@"投诉历史"];
+//    [self.navigationController pushViewController:common animated:YES];
 
 }
 

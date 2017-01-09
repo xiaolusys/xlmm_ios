@@ -202,6 +202,9 @@
  *  @return 需要的时间字符串
  */
 + (NSString *)jm_deleteTimeWithT:(NSString *)timeString {
+    if ([NSString isStringEmpty:timeString]) {
+        return nil;
+    }
     NSMutableString *string = [NSMutableString stringWithString:timeString];
     NSRange range = [string rangeOfString:@"T"];
     [string replaceCharactersInRange:range withString:@" "];

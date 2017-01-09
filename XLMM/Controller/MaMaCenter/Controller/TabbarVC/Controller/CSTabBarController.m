@@ -64,10 +64,10 @@
                                    kImgKey    : @"tabBar_mianPageNomal",
                                    kSelImgKey : @"tabBar_mianPageSelected"},
                                  
-                                 @{kClassKey  : @"JMSocialActivityController",
-                                   kTitleKey  : @"论坛",
-                                   kImgKey    : @"tabBar_mianBBSNomal",
-                                   kSelImgKey : @"tabBar_mianBBSSelected"},
+//                                 @{kClassKey  : @"JMSocialActivityController",
+//                                   kTitleKey  : @"论坛",
+//                                   kImgKey    : @"tabBar_mianBBSNomal",
+//                                   kSelImgKey : @"tabBar_mianBBSSelected"},
                                  
                                  @{kClassKey  : @"JMMineController",
                                    kTitleKey  : @"妈妈中心",
@@ -92,8 +92,8 @@
     self.selectedIndex = 0;
     self.secondVC = self.items[0];
     self.homeVC = self.items[1];
-    self.thirdVC = self.items[2];
-    self.fouthVC = self.items[3];
+//    self.thirdVC = self.items[2];
+    self.fouthVC = self.items[2];
     
  
     

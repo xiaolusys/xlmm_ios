@@ -339,7 +339,7 @@
                     dictionDic[@"web_url"] = COMMONPROBLEM_URL;
                     WebViewController *webView = [[WebViewController alloc] init];
                     webView.webDiction = dictionDic;
-                    webView.isShowNavBar = true;
+                    webView.isShowNavBar = false;
                     webView.isShowRightShareBtn = false;
                     [self.navigationController pushViewController:webView animated:YES];
                 }else{

@@ -679,6 +679,12 @@
     [configuration.userContentController addScriptMessageHandler:self name:@"callNativeBack"];
     
     /**
+     *  返回主页
+     */
+    [configuration.userContentController addScriptMessageHandler:self name:@"callNativeBackToHome"];
+    
+    
+    /**
      *  老的分享接口，带活动id
      */
     [configuration.userContentController addScriptMessageHandler:self name:@"callNativeShareFunc"];

@@ -92,6 +92,9 @@
 }
 
 - (NSString *)replaceString:(NSString *)string{
+    if ([NSString isStringEmpty:string]) {
+        return @"";
+    }
     NSMutableString *mutableStr = [[NSMutableString alloc] initWithString:string];
     NSRange range = {10, 1};
     [mutableStr replaceCharactersInRange:range withString:@" "];
