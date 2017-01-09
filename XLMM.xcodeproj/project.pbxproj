@@ -650,6 +650,15 @@
 		1F760E631DB62C0900307093 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F760E611DB62C0900307093 /* AddressTableCell.xib */; };
 		1F760EB21DB704E300307093 /* JMAutoLoopPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760EB11DB704E300307093 /* JMAutoLoopPageView.m */; };
 		1F7A1DCF1E1399160013A309 /* JMAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DCE1E1399160013A309 /* JMAccountCell.m */; };
+		1F7A1DD11E237EB50013A309 /* searchBarImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7A1DD01E237EB50013A309 /* searchBarImage.png */; };
+		1F7A1DD81E237FD70013A309 /* JMSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DD71E237FD70013A309 /* JMSearchController.m */; };
+		1F7A1DE81E2388010013A309 /* NSBundle+PYSearchExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DDB1E2388010013A309 /* NSBundle+PYSearchExtension.m */; };
+		1F7A1DE91E2388010013A309 /* PYSearch.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F7A1DDC1E2388010013A309 /* PYSearch.bundle */; };
+		1F7A1DEA1E2388010013A309 /* PYSearchConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DDF1E2388010013A309 /* PYSearchConst.m */; };
+		1F7A1DEB1E2388010013A309 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DE11E2388010013A309 /* PYSearchSuggestionViewController.m */; };
+		1F7A1DEC1E2388010013A309 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DE31E2388010013A309 /* PYSearchViewController.m */; };
+		1F7A1DED1E2388010013A309 /* UIColor+PYSearchExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DE51E2388010013A309 /* UIColor+PYSearchExtension.m */; };
+		1F7A1DEE1E2388010013A309 /* UIView+PYSearchExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DE71E2388010013A309 /* UIView+PYSearchExtension.m */; };
 		1F7C10911DB0CA2F00609BC4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7C10901DB0CA2F00609BC4 /* Photos.framework */; };
 		1F7D99301D62C7FC00E18FD1 /* JMCategoryListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D992F1D62C7FC00E18FD1 /* JMCategoryListController.m */; };
 		1F7D99331D62CAC000E18FD1 /* JMCategoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D99321D62CAC000E18FD1 /* JMCategoryListCell.m */; };
@@ -1884,6 +1893,23 @@
 		1F760EB11DB704E300307093 /* JMAutoLoopPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAutoLoopPageView.m; sourceTree = "<group>"; };
 		1F7A1DCD1E1399160013A309 /* JMAccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAccountCell.h; sourceTree = "<group>"; };
 		1F7A1DCE1E1399160013A309 /* JMAccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAccountCell.m; sourceTree = "<group>"; };
+		1F7A1DD01E237EB50013A309 /* searchBarImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchBarImage.png; sourceTree = "<group>"; };
+		1F7A1DD61E237FD70013A309 /* JMSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSearchController.h; sourceTree = "<group>"; };
+		1F7A1DD71E237FD70013A309 /* JMSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSearchController.m; sourceTree = "<group>"; };
+		1F7A1DDA1E2388010013A309 /* NSBundle+PYSearchExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+PYSearchExtension.h"; sourceTree = "<group>"; };
+		1F7A1DDB1E2388010013A309 /* NSBundle+PYSearchExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+PYSearchExtension.m"; sourceTree = "<group>"; };
+		1F7A1DDC1E2388010013A309 /* PYSearch.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PYSearch.bundle; sourceTree = "<group>"; };
+		1F7A1DDD1E2388010013A309 /* PYSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearch.h; sourceTree = "<group>"; };
+		1F7A1DDE1E2388010013A309 /* PYSearchConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchConst.h; sourceTree = "<group>"; };
+		1F7A1DDF1E2388010013A309 /* PYSearchConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchConst.m; sourceTree = "<group>"; };
+		1F7A1DE01E2388010013A309 /* PYSearchSuggestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchSuggestionViewController.h; sourceTree = "<group>"; };
+		1F7A1DE11E2388010013A309 /* PYSearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchSuggestionViewController.m; sourceTree = "<group>"; };
+		1F7A1DE21E2388010013A309 /* PYSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYSearchViewController.h; sourceTree = "<group>"; };
+		1F7A1DE31E2388010013A309 /* PYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchViewController.m; sourceTree = "<group>"; };
+		1F7A1DE41E2388010013A309 /* UIColor+PYSearchExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PYSearchExtension.h"; sourceTree = "<group>"; };
+		1F7A1DE51E2388010013A309 /* UIColor+PYSearchExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PYSearchExtension.m"; sourceTree = "<group>"; };
+		1F7A1DE61E2388010013A309 /* UIView+PYSearchExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYSearchExtension.h"; sourceTree = "<group>"; };
+		1F7A1DE71E2388010013A309 /* UIView+PYSearchExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYSearchExtension.m"; sourceTree = "<group>"; };
 		1F7C10901DB0CA2F00609BC4 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		1F7D992E1D62C7FC00E18FD1 /* JMCategoryListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryListController.h; sourceTree = "<group>"; };
 		1F7D992F1D62C7FC00E18FD1 /* JMCategoryListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryListController.m; sourceTree = "<group>"; };
@@ -2416,6 +2442,7 @@
 		183072941C97D17800B7665E /* Venders */ = {
 			isa = PBXGroup;
 			children = (
+				1F7A1DD91E2388010013A309 /* PYSearch */,
 				1F37938C1DEE827E0044E325 /* AliPaySDK */,
 				1F3793EF1DEE827E0044E325 /* WechatSDK */,
 				1F37937B1DEE82490044E325 /* fmdb */,
@@ -2524,6 +2551,7 @@
 		1F12EB5E1DAC97E600511B58 /* homeRootImage */ = {
 			isa = PBXGroup;
 			children = (
+				1F7A1DD01E237EB50013A309 /* searchBarImage.png */,
 				1F12ED781DAC986600511B58 /* category.png */,
 				1F12EB6C1DAC97E600511B58 /* name.png */,
 				1F12EB761DAC97E600511B58 /* profiles.png */,
@@ -3159,6 +3187,7 @@
 		1F27A6331D275FB400A0F80B /* MMRoot(首页) */ = {
 			isa = PBXGroup;
 			children = (
+				1F7A1DD21E237FA50013A309 /* Search */,
 				1F27A6341D275FB400A0F80B /* Controller */,
 				1F27A6411D275FB400A0F80B /* Model */,
 				1F27A6421D275FB400A0F80B /* View */,
@@ -5731,6 +5760,60 @@
 			path = EmptyView;
 			sourceTree = "<group>";
 		};
+		1F7A1DD21E237FA50013A309 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1F7A1DD31E237FA50013A309 /* Controller */,
+				1F7A1DD41E237FA50013A309 /* Model */,
+				1F7A1DD51E237FA50013A309 /* View */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		1F7A1DD31E237FA50013A309 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F7A1DD61E237FD70013A309 /* JMSearchController.h */,
+				1F7A1DD71E237FD70013A309 /* JMSearchController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F7A1DD41E237FA50013A309 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1F7A1DD51E237FA50013A309 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1F7A1DD91E2388010013A309 /* PYSearch */ = {
+			isa = PBXGroup;
+			children = (
+				1F7A1DDA1E2388010013A309 /* NSBundle+PYSearchExtension.h */,
+				1F7A1DDB1E2388010013A309 /* NSBundle+PYSearchExtension.m */,
+				1F7A1DDC1E2388010013A309 /* PYSearch.bundle */,
+				1F7A1DDD1E2388010013A309 /* PYSearch.h */,
+				1F7A1DDE1E2388010013A309 /* PYSearchConst.h */,
+				1F7A1DDF1E2388010013A309 /* PYSearchConst.m */,
+				1F7A1DE01E2388010013A309 /* PYSearchSuggestionViewController.h */,
+				1F7A1DE11E2388010013A309 /* PYSearchSuggestionViewController.m */,
+				1F7A1DE21E2388010013A309 /* PYSearchViewController.h */,
+				1F7A1DE31E2388010013A309 /* PYSearchViewController.m */,
+				1F7A1DE41E2388010013A309 /* UIColor+PYSearchExtension.h */,
+				1F7A1DE51E2388010013A309 /* UIColor+PYSearchExtension.m */,
+				1F7A1DE61E2388010013A309 /* UIView+PYSearchExtension.h */,
+				1F7A1DE71E2388010013A309 /* UIView+PYSearchExtension.m */,
+			);
+			path = PYSearch;
+			sourceTree = "<group>";
+		};
 		1F7D992A1D62C79F00E18FD1 /* childItems(分类) */ = {
 			isa = PBXGroup;
 			children = (
@@ -6515,6 +6598,7 @@
 				1F12ED2F1DAC97E700511B58 /* circle_wallet_Normal1.png in Resources */,
 				1F12ED221DAC97E700511B58 /* downArrow1.png in Resources */,
 				1F12ED2C1DAC97E700511B58 /* weiboiconthird.png in Resources */,
+				1F7A1DD11E237EB50013A309 /* searchBarImage.png in Resources */,
 				1F12ECE81DAC97E600511B58 /* qrcode_scan_btn_myqrcode_on@2x.png in Resources */,
 				1FF72C911DE7F55B0035F436 /* tabBar_featuredNomal@2x.png in Resources */,
 				1F12ECAE1DAC97E600511B58 /* MaMaRenewAllyear_Nomal@2x.png in Resources */,
@@ -6523,6 +6607,7 @@
 				1F498C321D2772D0007E77FC /* ChangeNicknameViewController.xib in Resources */,
 				1F12ECDE1DAC97E600511B58 /* countdowmBackImage.png in Resources */,
 				1F12ED051DAC97E600511B58 /* 圈圈加载0023@2x.png in Resources */,
+				1F7A1DE91E2388010013A309 /* PYSearch.bundle in Resources */,
 				1F12ECDA1DAC97E600511B58 /* success_Image@2x.png in Resources */,
 				3A2BC1D81D2CFF6E00F6F54B /* ios-social-sdk-login-detail.html in Resources */,
 				1F12ED001DAC97E600511B58 /* 圈圈加载0018@2x.png in Resources */,
@@ -6861,6 +6946,7 @@
 				1F498C441D2772D0007E77FC /* JMEditAddressModel.m in Sources */,
 				1F4C9EAB1D9912600089CE74 /* UdeskConfigurationHelper.m in Sources */,
 				1FDF7C931D66E6D000C7456E /* JMHomeCategoryCell.m in Sources */,
+				1F7A1DEC1E2388010013A309 /* PYSearchViewController.m in Sources */,
 				183072861C97C00900B7665E /* UIColor+RGBColor.m in Sources */,
 				3ABCA54D1CD8F42E007D5145 /* ImageUtils.m in Sources */,
 				1F498C601D2772D0007E77FC /* JMAppForRefundModel.m in Sources */,
@@ -6913,6 +6999,7 @@
 				1F7D99331D62CAC000E18FD1 /* JMCategoryListCell.m in Sources */,
 				1F2F9E741D5AB79000E3A68B /* JMGoodsAttributeTypeView.m in Sources */,
 				1FD800521DF265F700382E44 /* JMRegisterJS.m in Sources */,
+				1F7A1DED1E2388010013A309 /* UIColor+PYSearchExtension.m in Sources */,
 				1F4C9EB41D9912600089CE74 /* UDTTTAttributedLabel.m in Sources */,
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				1F498C461D2772D0007E77FC /* JMOrderGoodsModel.m in Sources */,
@@ -6993,6 +7080,7 @@
 				1FF72C831DE7E81B0035F436 /* JMMaMaCenterModel.m in Sources */,
 				1F1FB89B1D87E79D004C60CE /* SystemFunctions.m in Sources */,
 				1F498C701D2772D0007E77FC /* JMTimeLineView.m in Sources */,
+				1F7A1DEB1E2388010013A309 /* PYSearchSuggestionViewController.m in Sources */,
 				1F7D99301D62C7FC00E18FD1 /* JMCategoryListController.m in Sources */,
 				1F56E2AB1D3643F80092EC91 /* JMPersonWaitGoodsController.m in Sources */,
 				1F58780D1DB8A85900949302 /* JMVisitorModel.m in Sources */,
@@ -7022,6 +7110,7 @@
 				1FE52DF21D93FFF30051D5A0 /* JMGoodsLoopRollCell.m in Sources */,
 				1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */,
 				1FF5335C1D27789D003DEABF /* PersonOrderViewController.m in Sources */,
+				1F7A1DEA1E2388010013A309 /* PYSearchConst.m in Sources */,
 				1F5877861DB8A60D00949302 /* MaMaHuoyueduViewController.m in Sources */,
 				1F5877F01DB8A7AF00949302 /* JMProductSelectListCell.m in Sources */,
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
@@ -7072,6 +7161,7 @@
 				1F689CB01E0A132F0070109B /* JMRefundDetailController.m in Sources */,
 				1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */,
 				1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */,
+				1F7A1DD81E237FD70013A309 /* JMSearchController.m in Sources */,
 				1F4C9EB01D9912600089CE74 /* UdeskStringSizeUtil.m in Sources */,
 				1F5878931DB8ABFE00949302 /* TixianModel.m in Sources */,
 				1F498C2A1D2772D0007E77FC /* AddressViewController.m in Sources */,
@@ -7118,6 +7208,7 @@
 				1F58779B1DB8A60D00949302 /* CarryLogTableViewCell.m in Sources */,
 				1F5877D21DB8A71E00949302 /* JMMaMaCenterFansController.m in Sources */,
 				1F498C1B1D2772D0007E77FC /* JMComplaintSuggestController.m in Sources */,
+				1F7A1DE81E2388010013A309 /* NSBundle+PYSearchExtension.m in Sources */,
 				1F3F75551D76BD3D0079D19B /* JMHomeActiveModel.m in Sources */,
 				1F498C141D2772D0007E77FC /* GuanzhuViewController.m in Sources */,
 				1F5878771DB8ABB200949302 /* JMWithDrawDetailController.m in Sources */,
@@ -7239,6 +7330,7 @@
 				1F498C401D2772D0007E77FC /* JMPopLogistcsCell.m in Sources */,
 				1F4C9E961D9912600089CE74 /* UdeskRobotViewController.m in Sources */,
 				1F27A61D1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				1F7A1DEE1E2388010013A309 /* UIView+PYSearchExtension.m in Sources */,
 				1F27A6601D275FB400A0F80B /* JMRootgoodsCell.m in Sources */,
 				1F06CF301DEC129B00142510 /* RootNavigationController.m in Sources */,
 				1F4C9E871D9912600089CE74 /* UdeskBaseCell.m in Sources */,
