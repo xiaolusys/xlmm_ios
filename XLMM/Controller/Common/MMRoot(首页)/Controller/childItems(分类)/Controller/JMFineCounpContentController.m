@@ -69,7 +69,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];

@@ -39,7 +39,7 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
 #pragma mrak 刷新界面
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];

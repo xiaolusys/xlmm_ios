@@ -37,7 +37,8 @@
 #import "JMGoodsCountTime.h"
 #import "CSTabBarController.h"
 #import "JMChildViewController.h"
-#import "JMSearchController.h"
+#import "JMSearchViewController.h"
+
 
 
 static BOOL isFirstPOP = YES;
@@ -402,10 +403,18 @@ static BOOL isFirstPOP = YES;
 }
 #pragma mark 跳转到搜索页面 
 - (void)searchBarClick:(UIButton *)button {
-    JMSearchController *searchVC = [[JMSearchController alloc] init];
-    [self.navigationController pushViewController:searchVC animated:YES];
+    JMSearchViewController *searchViewController = [JMSearchViewController searchViewControllerWithHistorySearchs:nil searchBarPlaceHolder:nil didSearchBlock:^(JMSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/search_by_name?name=%@",Root_URL,searchText];
+        JMClassifyListController *searchVC = [[JMClassifyListController alloc] init];
+        searchVC.titleString = searchText;
+        searchVC.emptyTitle = @"搜索其他";
+        searchVC.urlString = [urlString JMUrlEncodedString];
+        [searchViewController.navigationController pushViewController:searchVC animated:YES];
+    }];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    [self presentViewController:nav  animated:NO completion:nil];
+    
 }
-
 #pragma mark 获取活动,分类,滚动视图网络请求
 - (void)loadActiveData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL];

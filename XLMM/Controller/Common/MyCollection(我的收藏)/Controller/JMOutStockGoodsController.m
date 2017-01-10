@@ -17,7 +17,6 @@
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
-@property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
 @property (nonatomic, strong) JMEmptyView *empty;
 
 @end
@@ -44,11 +43,10 @@
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.collection.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.collection.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
-    self.collection.mj_footer = self.footer;
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -108,7 +106,6 @@
         }
     }
     if (self.dataSource.count == 0) {
-        self.footer.stateLabel.hidden = YES;
         if (self.empty == nil) {
             [self emptyView];
         }

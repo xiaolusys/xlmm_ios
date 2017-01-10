@@ -85,10 +85,10 @@ static NSString * categoryCellId = @"JMCategoryListController";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *dic = self.dataSource[indexPath.row];
     NSString *cid = dic[@"cid"];
-    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
     JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
     itemVC.titleString = dic[@"name"];
-    itemVC.cid = cid;
+    itemVC.urlString = urlString;
     [self.navigationController pushViewController:itemVC animated:YES];
     
 }

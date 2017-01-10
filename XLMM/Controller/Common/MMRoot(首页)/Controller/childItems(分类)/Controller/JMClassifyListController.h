@@ -12,6 +12,8 @@
 
 @property (nonatomic, copy) NSString *titleString;
 
-@property (nonatomic, copy) NSString *cid;
+@property (nonatomic, copy) NSString *urlString;
+
+@property (nonatomic, copy) NSString *emptyTitle;
 
 @end
