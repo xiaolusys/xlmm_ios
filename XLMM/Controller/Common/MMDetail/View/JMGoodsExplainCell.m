@@ -24,7 +24,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 @property (nonatomic, strong) UIButton *storeUpButton;
 
 @property (nonatomic, strong) JMCountDownView *countDownView;
-
+@property (nonatomic, strong) UIButton *fineGoodsView;
 
 @end
 
@@ -75,6 +75,16 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
             weakSelf.timerLabel.text = second == -1 ? @"商品已下架" : [NSString TimeformatDHMSFromSeconds:second];
         };
     }
+    
+    if (![detailContentDic[@"is_boutique"] boolValue]) {
+        [self.fineGoodsView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@(1));
+        }];
+        for (UILabel *label in self.fineGoodsView.subviews) {
+            [label removeFromSuperview];
+        }
+    }
+    
 }
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
     if ([NSString isStringEmpty:timeString]) {
@@ -138,6 +148,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 //    shoucangButton.tag = 100;
 //    shoucangButton.selected = NO;
     [shoucangButton addTarget:self action:@selector(storeUpClick:) forControlEvents:UIControlEventTouchUpInside];
+    shoucangButton.tag = 100;
     
     UILabel *baoyou = [UILabel new];
     [contentView addSubview:baoyou];
@@ -153,6 +164,26 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     UIView *currentView = [UIView new];
     [self.contentView addSubview:currentView];
     currentView.backgroundColor = [UIColor lineGrayColor];
+    
+    UIButton *fineGoodsView = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:fineGoodsView];
+    fineGoodsView.layer.borderWidth = 1.f;
+    fineGoodsView.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    self.fineGoodsView = fineGoodsView;
+    [fineGoodsView addTarget:self action:@selector(storeUpClick:) forControlEvents:UIControlEventTouchUpInside];
+    fineGoodsView.tag = 101;
+    
+    UILabel *fineGoodsLeftL = [UILabel new];
+    [fineGoodsView addSubview:fineGoodsLeftL];
+    fineGoodsLeftL.textColor = [UIColor buttonTitleColor];
+    fineGoodsLeftL.font = [UIFont systemFontOfSize:14.];
+    fineGoodsLeftL.text = @"精品商品";
+    
+    UILabel *fineGoodsLeftR = [UILabel new];
+    [fineGoodsView addSubview:fineGoodsLeftR];
+    fineGoodsLeftR.textColor = [UIColor buttonEnabledBackgroundColor];
+    fineGoodsLeftR.font = [UIFont systemFontOfSize:14.];
+    fineGoodsLeftR.text = @"点击去购券>>";
     
     
     UIView *timerView = [UIView new];
@@ -217,10 +248,24 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         make.height.mas_equalTo(@20);
     }];
     
-    [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [fineGoodsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(contentView.mas_bottom);
-        make.left.right.equalTo(weakSelf.contentView);
-        make.height.mas_equalTo(@1);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(40));
+    }];
+//    [currentView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(contentView.mas_bottom);
+//        make.left.right.equalTo(weakSelf.contentView);
+//        make.height.mas_equalTo(@1);
+//    }];
+    
+    [fineGoodsLeftL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(fineGoodsView).offset(10);
+        make.centerY.equalTo(fineGoodsView.mas_centerY);
+    }];
+    [fineGoodsLeftR mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(fineGoodsView).offset(-10);
+        make.centerY.equalTo(fineGoodsView.mas_centerY);
     }];
     
     [timerView mas_makeConstraints:^(MASConstraintMaker *make) {

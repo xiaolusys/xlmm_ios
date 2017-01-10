@@ -235,7 +235,7 @@ static NSString *cellIdentifier = @"carryLogCell";
         [self.tableViewArr addObject:table];
         
         //添加上拉加载
-        table.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        table.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             NSNumber *number = [NSNumber numberWithInteger:self.currentIndex];
             NSString *nextStr = [self.nextdic objectForKey:number];
             if ([NSString isStringEmpty:nextStr]) {
