@@ -75,17 +75,27 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
             weakSelf.timerLabel.text = second == -1 ? @"商品已下架" : [NSString TimeformatDHMSFromSeconds:second];
         };
     }
+    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL isShow = isXLMM && isLogin;
     
-    if (![detailContentDic[@"is_boutique"] boolValue]) {
-        [self.fineGoodsView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(@(1));
-        }];
-        for (UILabel *label in self.fineGoodsView.subviews) {
-            [label removeFromSuperview];
+    if (isShow) {
+        if (![detailContentDic[@"is_boutique"] boolValue]) {
+            [self changeFineGoodsViewStatus];
         }
+    }else {
+        [self changeFineGoodsViewStatus];
     }
-    
 }
+- (void)changeFineGoodsViewStatus {
+    [self.fineGoodsView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(@(1));
+    }];
+    for (UILabel *label in self.fineGoodsView.subviews) {
+        [label removeFromSuperview];
+    }
+}
+
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
     if ([NSString isStringEmpty:timeString]) {
         return nil;

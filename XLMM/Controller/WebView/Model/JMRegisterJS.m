@@ -13,6 +13,7 @@
 #import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "IosJsBridge.h"
+#import "JMRootTabBarController.h"
 
 
 
@@ -93,6 +94,15 @@
     [self.bridge registerHandler:@"callNativeBack" handler:^(id data, WVJBResponseCallback responseCallback) {
         [webVC.navigationController popViewControllerAnimated:YES];
     }];
+    /**
+     *  返回主页
+     */
+    [self.bridge registerHandler:@"callNativeBackToHome" handler:^(id data, WVJBResponseCallback responseCallback) {
+        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
+    }];
+    
+    
     /**
      *  老的分享接口，带活动id
      */

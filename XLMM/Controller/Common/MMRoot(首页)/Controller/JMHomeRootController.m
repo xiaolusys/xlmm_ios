@@ -385,7 +385,7 @@ static BOOL isFirstPOP = YES;
     UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [leftButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
-    leftImageview.frame = CGRectMake(0, 11, 20, 20);
+    leftImageview.frame = CGRectMake(0, 13, 18, 18);
     [leftButton addSubview:leftImageview];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 }
