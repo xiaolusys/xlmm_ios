@@ -671,6 +671,7 @@
 		1F7D99391D63186400E18FD1 /* JMDelayPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D99381D63186400E18FD1 /* JMDelayPopView.m */; };
 		1F7D993B1D632E4A00E18FD1 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7D993A1D632E4A00E18FD1 /* libMBProgressHUD.a */; };
 		1F7D99401D63FD7000E18FD1 /* JMRootGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D993F1D63FD7000E18FD1 /* JMRootGoodsModel.m */; };
+		1F8CC4011E25BDFF00515FAC /* JMTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CC4001E25BDFF00515FAC /* JMTagView.m */; };
 		1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DB1D5055BC00327408 /* libHappyDNS.a */; };
 		1F9169DE1D5055BF00327408 /* libQiniu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DD1D5055BF00327408 /* libQiniu.a */; };
 		1F9169E01D5055C300327408 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DF1D5055C300327408 /* libAFNetworking.a */; };
@@ -1936,6 +1937,8 @@
 		1F7D993E1D63FD7000E18FD1 /* JMRootGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRootGoodsModel.h; sourceTree = "<group>"; };
 		1F7D993F1D63FD7000E18FD1 /* JMRootGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRootGoodsModel.m; sourceTree = "<group>"; };
 		1F8411931DC216B1009BF329 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		1F8CC3FF1E25BDFF00515FAC /* JMTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTagView.h; sourceTree = "<group>"; };
+		1F8CC4001E25BDFF00515FAC /* JMTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTagView.m; sourceTree = "<group>"; };
 		1F9169DB1D5055BC00327408 /* libHappyDNS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHappyDNS.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/HappyDNS/libHappyDNS.a"; sourceTree = "<group>"; };
 		1F9169DD1D5055BF00327408 /* libQiniu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQiniu.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/Qiniu/libQiniu.a"; sourceTree = "<group>"; };
 		1F9169DF1D5055C300327408 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
@@ -3169,6 +3172,7 @@
 		1F27A61F1D275A6300A0F80B /* ClassTool */ = {
 			isa = PBXGroup;
 			children = (
+				1F8CC3FE1E25BDE900515FAC /* JMTagView */,
 				1FD801121DF667C100382E44 /* SliderView */,
 				1F6B7A251DD9C377009AB446 /* EmptyView */,
 				1F6B7A121DD9C224009AB446 /* FMDB */,
@@ -5887,6 +5891,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		1F8CC3FE1E25BDE900515FAC /* JMTagView */ = {
+			isa = PBXGroup;
+			children = (
+				1F8CC3FF1E25BDFF00515FAC /* JMTagView.h */,
+				1F8CC4001E25BDFF00515FAC /* JMTagView.m */,
+			);
+			path = JMTagView;
+			sourceTree = "<group>";
+		};
 		1F916A4E1D508BEC00327408 /* HttpTool */ = {
 			isa = PBXGroup;
 			children = (
@@ -7112,6 +7125,7 @@
 				1F1FB89B1D87E79D004C60CE /* SystemFunctions.m in Sources */,
 				1F498C701D2772D0007E77FC /* JMTimeLineView.m in Sources */,
 				1F7A1DEB1E2388010013A309 /* PYSearchSuggestionViewController.m in Sources */,
+				1F8CC4011E25BDFF00515FAC /* JMTagView.m in Sources */,
 				1F7D99301D62C7FC00E18FD1 /* JMCategoryListController.m in Sources */,
 				1F56E2AB1D3643F80092EC91 /* JMPersonWaitGoodsController.m in Sources */,
 				1F58780D1DB8A85900949302 /* JMVisitorModel.m in Sources */,

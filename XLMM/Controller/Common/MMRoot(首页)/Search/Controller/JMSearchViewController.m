@@ -10,23 +10,22 @@
 #import "JMSearchHistoryCell.h"
 #import "JMSearchHistoryModel.h"
 #import "JMSearchHeaderView.h"
+#import "JMTagView.h"
 
 
-@interface JMSearchViewController () <UISearchBarDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,UIAlertViewDelegate>
+@interface JMSearchViewController () <UISearchBarDelegate,UIAlertViewDelegate,UIScrollViewDelegate>
 
-/** 键盘正在移动 */
 @property (nonatomic, assign) BOOL keyboardshowing;
-/** 记录键盘高度 */
 @property (nonatomic, assign) CGFloat keyboardHeight;
-
-@property (nonatomic, strong) UICollectionView *collectionView;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
-@end
+@property (nonatomic, strong) UIScrollView *baseScrollView;
+@property (nonatomic, strong) UIView *sectionView;
+@property (nonatomic, strong) JMTagView *tagView;
 
-static NSString * JMSearchHistoryCellIdentifier = @"JMSearchHistoryCellIdentifier";
-static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdentifier";
+
+@end
 
 @implementation JMSearchViewController
 
@@ -34,16 +33,14 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
     [super viewWillAppear:animated];
     [self loadHistoryData];
     
-//    self.navigationController.navigationBar.barTintColor = [UIColor buttonEnabledBackgroundColor];
     [MobClick beginLogPageView:@"JMSearchController"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     [self.searchBar resignFirstResponder];
     [MobClick endLogPageView:@"JMSearchController"];
 }
-/** 视图完全显示 */
+// 视图完全显示
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // 弹出键盘
@@ -57,23 +54,22 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
     return _dataSource;
 }
 
-//- (instancetype)init {
-//    if (self = [super init]) {
-//        [self setup];
-//    }
-//    return self;
-//}
-//
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-//    if (self = [super initWithCoder:aDecoder]) {
-//        [self setup];
-//    }
-//    return self;
-//}
+- (instancetype)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setup];
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setup];
+    //    [self setup];
     
 }
 + (JMSearchViewController *)searchViewControllerWithHistorySearchs:(NSArray<NSString *> *)historySearchs searchBarPlaceHolder:(NSString *)placeHolder didSearchBlock:(JMDidSearchBlock)block {
@@ -85,7 +81,7 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
 + (JMSearchViewController *)searchViewControllerWithHistorySearchs:(NSArray<NSString *> *)historySearchs searchBarPlaceholder:(NSString *)placeHolder {
     JMSearchViewController *searchVC = [[JMSearchViewController alloc] init];
     searchVC.historySearchs = historySearchs;
-//    searchVC.searchBar.placeholder = placeHolder;
+    //    searchVC.searchBar.placeholder = placeHolder;
     return searchVC;
 }
 - (void)loadHistoryData {
@@ -100,37 +96,63 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
-
+    
     
 }
 - (void)fetchData:(NSDictionary *)dict {
     NSArray *results = dict[@"results"];
     if (results.count == 0) {
-        
+        [self.sectionView removeFromSuperview];
     }else {
-//        NSDictionary *firstDic = results[0];
-//        self.searchBar.placeholder = firstDic[@"content"];
+        [self.baseScrollView addSubview:self.sectionView];
+        //        NSDictionary *firstDic = results[0];
+        //        self.searchBar.placeholder = firstDic[@"content"];
         for (NSDictionary *dic in results) {
             JMSearchHistoryModel *model = [JMSearchHistoryModel mj_objectWithKeyValues:dic];
-            [self.dataSource addObject:model];
+            [self.dataSource addObject:model.content];
         }
+        [self.tagView removeAllTags];
+        [self.dataSource enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            JMTagModel *tagModel = [[JMTagModel alloc] initWithText:self.dataSource[idx]];
+            tagModel.padding = UIEdgeInsetsMake(10, 15, 10, 15);
+            tagModel.cornerRadius = 3.0f;
+            tagModel.font = [UIFont boldSystemFontOfSize:13];
+            tagModel.borderWidth = 0;
+            tagModel.bgColor = [UIColor countLabelColor];
+            tagModel.borderColor = [UIColor titleDarkGrayColor];
+            tagModel.textColor = [UIColor textDarkGrayColor];
+            tagModel.enable = YES;
+            [self.tagView addTag:tagModel];
+
+        }];
+        kWeakSelf
+        self.tagView.didTapTagAtIndex = ^(NSUInteger index) {
+            NSLog(@"点击了第 %ld 个标签",index);
+            weakSelf.searchBar.text = weakSelf.dataSource[index];
+            [weakSelf searchBarSearchButtonClicked:weakSelf.searchBar];
+
+        };
+        CGFloat tagHeight = self.tagView.intrinsicContentSize.height;
+        self.tagView.frame = CGRectMake(0, 50, SCREENWIDTH, tagHeight);
+        [self.tagView layoutSubviews];
+        if (SCREENWIDTH > tagHeight + 50) {
+            self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT);
+        }else {
+            self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, tagHeight + 50);
+        }
+//        self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, tagHeight + 50);
+        
+        
+        
         
     }
     self.searchBar.text = nil;
-    [self.collectionView reloadData];
     
     
 }
 
 /** 初始化 */
 - (void)setup {
-//    for (NSString *title in self.historySearchs) {
-//        JMSearchHistoryModel *model = [[JMSearchHistoryModel alloc] init];
-//        model.title = title;
-//        [self.dataSource addObject:model];
-//    }
-//    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
     UIButton *navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -165,75 +187,63 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
     self.searchBar = searchBar;
     self.searchBar.placeholder = @"请输入搜索关键字";
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(5, 15, 0, 15);
-    layout.minimumInteritemSpacing = 10;
-    layout.minimumLineSpacing = 10;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT ) collectionViewLayout:layout];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    self.collectionView.dataSource = self;
-    self.collectionView.delegate = self;
-    [self.view addSubview:self.collectionView];
+    self.baseScrollView = [[UIScrollView alloc] init];
+    self.baseScrollView.frame = self.view.bounds;
+    [self.view addSubview:self.baseScrollView];
+    self.baseScrollView.delegate = self;
+    self.baseScrollView.showsHorizontalScrollIndicator = NO;
+    self.baseScrollView.showsVerticalScrollIndicator = NO;
     
-    [self.collectionView registerClass:[JMSearchHistoryCell class] forCellWithReuseIdentifier:JMSearchHistoryCellIdentifier];
-    [self.collectionView registerClass:[JMSearchHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:JMSearchHistoryHeaderIdentifier];
-//    [self.collectionView reloadData];
+    UIView *sectionView = [UIView new];
+    [self.baseScrollView addSubview:sectionView];
+    sectionView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
+    self.sectionView = sectionView;
+    
+    
+    UILabel *titleL = [UILabel new];
+    [sectionView addSubview:titleL];
+    titleL.textColor = [UIColor textDarkGrayColor];
+    titleL.font = [UIFont systemFontOfSize:14.];
+    titleL.text = @"历史搜索";
+    
+    UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deleteButton addTarget:self action:@selector(deleteButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [sectionView addSubview:deleteButton];
+    
+    UIImageView *imageV = [UIImageView new];
+    [deleteButton addSubview:imageV];
+    imageV.image = [UIImage imageNamed:@"deleteSearchHistory"];
+    
+    [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(sectionView).offset(15);
+        make.centerY.equalTo(sectionView.mas_centerY);
+    }];
+    
+    [deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(sectionView).offset(-5);
+        make.centerY.equalTo(sectionView.mas_centerY);
+        make.width.height.mas_equalTo(@(40));
+    }];
+    
+    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(deleteButton);
+    }];
+    
+    
+    // 先清空tabView
+    [self.tagView removeAllTags];
+    self.tagView = [[JMTagView alloc] init];
+    self.tagView.padding = UIEdgeInsetsMake(10, 10, 10, 10);
+    self.tagView.lineSpacing = 10;
+    self.tagView.interitemSpacing = 10;
+    self.tagView.preferredMaxLayoutWidth = SCREENWIDTH;
+    [self.baseScrollView addSubview:self.tagView];
+    
+  
     
 }
 
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-//    return 1;
-//}
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataSource.count;
-}
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMSearchHistoryCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JMSearchHistoryCellIdentifier forIndexPath:indexPath];
-    JMSearchHistoryModel *model  = self.dataSource[indexPath.row];
-    cell.model = model;
-    return cell;
-}
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMSearchHistoryModel *model = self.dataSource[indexPath.row];
-//    if (model.cellWidth > SCREENWIDTH / 2) {
-//        return CGSizeMake(SCREENWIDTH, 35);
-//    }
-    return CGSizeMake(model.cellWidth + 10, 35);
-}
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMSearchHistoryModel *model = self.dataSource[indexPath.row];
-    self.searchBar.text = model.content;
-    [self searchBarSearchButtonClicked:self.searchBar];
-    
-}
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if (self.dataSource.count == 0) {
-        return nil;
-    }else {
-        if (kind == UICollectionElementKindSectionHeader) {
-            JMSearchHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:JMSearchHistoryHeaderIdentifier forIndexPath:indexPath];
-            headerView.block = ^(UIButton *button) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认删除全部历史记录?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-                alert.delegate = self;
-                [alert show];
-            };
-            return headerView;
-        }else {
-            return nil;
-        }
-    }
-}
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (self.dataSource.count == 0) {
-        return CGSizeMake(0, 0);
-    }
-    return CGSizeMake(SCREENWIDTH, 50);
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [self loadClearHistoryData];
-    }
-}
+
 - (void)loadClearHistoryData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/searchhistory/clear_search_history",Root_URL];
     NSDictionary *params = @{@"target":@"ModelProduct"};
@@ -245,19 +255,38 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
             if (code == 0) {
                 [MBProgressHUD showSuccess:responseObject[@"info"]];
                 [self.dataSource removeAllObjects];
-                [self.collectionView reloadData];
+                [self.tagView removeAllTags];
+                [self.sectionView removeFromSuperview];
             }else {
                 [MBProgressHUD showWarning:responseObject[@"info"]];
             }
         }
+        [self.searchBar becomeFirstResponder];
     } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"网络出错,请稍后重试..."];
+        [self.searchBar becomeFirstResponder];
     } Progress:^(float progress) {
     }];
-
+    
 }
 
 
 
+
+
+- (void)deleteButtonClick:(UIButton *)button {
+    [self.searchBar resignFirstResponder];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确认删除全部历史记录?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    alert.delegate = self;
+    [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self loadClearHistoryData];
+    }else {
+        [self.searchBar becomeFirstResponder];
+    }
+}
 
 
 /** 点击取消 */
@@ -277,21 +306,22 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSLog(@"searchBarSearchButtonClicked ");
-//    if ([NSString isStringEmpty:searchBar.text]) {
-//        searchBar.text = self.searchBar.placeholder;
-//    }
+    //    if ([NSString isStringEmpty:searchBar.text]) {
+    //        searchBar.text = self.searchBar.placeholder;
+    //    }
     if (self.didSearchBlock) self.didSearchBlock(self, searchBar, searchBar.text);
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.searchBar resignFirstResponder];
 }
 
 
-
-/** 键盘显示完成（弹出） */
+// 键盘显示完成（弹出）
 - (void)keyboardDidShow:(NSNotification *)noti {
     // 取出键盘高度
     NSDictionary *info = noti.userInfo;
     self.keyboardHeight = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     self.keyboardshowing = YES;
-    // 调整搜索建议的内边距
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // 滚动时，回收键盘
@@ -299,7 +329,7 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
         [self.searchBar resignFirstResponder];
     }
 }
-/** 控制器销毁 */
+// 控制器销毁
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -312,6 +342,79 @@ static NSString * JMSearchHistoryHeaderIdentifier = @"JMSearchHistoryHeaderIdent
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
