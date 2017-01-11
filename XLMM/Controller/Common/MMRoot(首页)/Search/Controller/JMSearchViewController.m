@@ -94,6 +94,8 @@
             [self fetchData:responseObject];
         }
     } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"网络出错,请稍后重试..."];
+        [self.sectionView removeFromSuperview];
     } Progress:^(float progress) {
     }];
     

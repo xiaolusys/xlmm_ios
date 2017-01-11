@@ -58,6 +58,7 @@
     BOOL _isTeamBuyGoods;       // 判断商品是否可以团购
     BOOL _isDirectBuyGoods;     // 判断商品是否可以直接跳转支付页面 (精品商品)
     BOOL _isFineGoods;          // 判断商品是否是精品商品
+    BOOL _isFineGoodsHeightShow;// 是否显示精品商品
     NSString *_buyCouponUrl;    // 购买精品券的链接
 
     
@@ -209,6 +210,9 @@
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     _paramer = [NSMutableDictionary dictionary];
+    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    _isFineGoodsHeightShow = isXLMM && isLogin;
     
     [self lodaDataSource];          // 商品详情数据源
     [self loadShareData];           // 分享数据
@@ -454,7 +458,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        if (_isFineGoods) {
+        if (_isFineGoods && _isFineGoodsHeightShow) {
             return 190;
         }
         return 150;
