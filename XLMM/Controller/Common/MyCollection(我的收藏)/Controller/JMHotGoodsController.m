@@ -24,7 +24,7 @@
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
-@property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
+@property (nonatomic, strong) MJRefreshBackNormalFooter *footer;
 
 @end
 
@@ -64,7 +64,7 @@
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];

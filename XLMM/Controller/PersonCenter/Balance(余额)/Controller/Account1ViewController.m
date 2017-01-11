@@ -36,7 +36,7 @@
  *  上拉加载的标志
  */
 @property (nonatomic, assign) BOOL isLoadMore;
-@property (nonatomic, strong) MJRefreshAutoNormalFooter *footer;
+
 @property (nonatomic, assign) BOOL isPopToRootView;
 
 
@@ -93,11 +93,10 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
-    self.footer = self.tableView.mj_footer;
 }
 - (void)endRefresh {
     if (_isPullDown) {
@@ -146,7 +145,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
-        self.footer.stateLabel.hidden = YES;
         [self emptyView];
         return;
     }

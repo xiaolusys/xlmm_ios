@@ -69,7 +69,7 @@ static NSString * cellId = @"JMClassifyListController";
 }
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{  //  MJRefreshBackNormalFooter -- > 空视图隐藏点击加载更多   MJRefreshAutoNormalFooter -- > 空视图不会隐藏点击加载更多 
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
@@ -85,9 +85,8 @@ static NSString * cellId = @"JMClassifyListController";
     }
 }
 - (void)loadDataSource {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,self.cid];
 //    [self.dataSource removeAllObjects];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
         NSLog(@"%@",responseObject);
         [self.dataSource removeAllObjects];
@@ -209,8 +208,11 @@ static NSString * cellId = @"JMClassifyListController";
     
 }
 - (void)emptyView {
+    if ([NSString isStringEmpty:self.emptyTitle]) {
+        self.emptyTitle = @"查看其它分类";
+    }
     kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:self.emptyTitle];
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {

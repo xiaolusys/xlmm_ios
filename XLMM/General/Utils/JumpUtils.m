@@ -24,6 +24,7 @@
 #import "JMCartViewController.h"
 #import "CSTabBarController.h"
 #import "JMPurchaseController.h"
+#import "JMPushingDaysController.h"
 
 
 @implementation JumpUtils
@@ -94,14 +95,17 @@
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         //跳到潮童专区
         JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,@"1"];
         categoryVC.titleString = @"童装专区";
-        categoryVC.cid = @"1";
+        categoryVC.urlString = urlString;
         [vc.navigationController pushViewController:categoryVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/ladylist"]){
         //跳到时尚女装
         JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,@"2"];
         categoryVC.titleString = @"女装专区";
-        categoryVC.cid = @"2";
+        categoryVC.urlString = urlString;
         [vc.navigationController pushViewController:categoryVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         //跳转到用户未过期优惠券列表
@@ -119,7 +123,7 @@
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+        JMPushingDaysController *publish = [[JMPushingDaysController alloc] init];
         [vc.navigationController pushViewController:publish animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {
@@ -399,8 +403,9 @@
         NSLog(@"firstparams %@  %@", firstparam, firstvalue);
         if ([firstparam isEqualToString:@"cid"]) {
             JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
+            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,firstvalue];
             categoryVC.titleString = @"分类商品";
-            categoryVC.cid = firstvalue;
+            categoryVC.urlString = urlString;
             [vc.navigationController pushViewController:categoryVC animated:YES];
             
         }
