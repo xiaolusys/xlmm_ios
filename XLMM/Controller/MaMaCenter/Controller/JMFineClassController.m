@@ -51,11 +51,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
+    
     [self createWebView];
     [self emptyView];
     [self loadMaMaWeb];
     
     if(self.baseWebView.usingUIWebView) {
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
         [self registerJsBridge];
     }
     

@@ -13,7 +13,9 @@
 #import "JMTagView.h"
 
 
-@interface JMSearchViewController () <UISearchBarDelegate,UIAlertViewDelegate,UIScrollViewDelegate>
+@interface JMSearchViewController () <UISearchBarDelegate,UIAlertViewDelegate,UIScrollViewDelegate> {
+    NSString *_defaultSearText;
+}
 
 @property (nonatomic, assign) BOOL keyboardshowing;
 @property (nonatomic, assign) CGFloat keyboardHeight;
@@ -94,6 +96,8 @@
             [self fetchData:responseObject];
         }
     } WithFail:^(NSError *error) {
+        _defaultSearText = @"";
+        self.searchBar.placeholder = @"请输入搜索关键字";
         [MBProgressHUD showError:@"网络出错,请稍后重试..."];
         [self.sectionView removeFromSuperview];
     } Progress:^(float progress) {
@@ -104,6 +108,8 @@
 - (void)fetchData:(NSDictionary *)dict {
     NSArray *results = dict[@"results"];
     if (results.count == 0) {
+        _defaultSearText = @"";
+        self.searchBar.placeholder = @"请输入搜索关键字";
         [self.sectionView removeFromSuperview];
     }else {
         [self.baseScrollView addSubview:self.sectionView];
@@ -113,6 +119,10 @@
             JMSearchHistoryModel *model = [JMSearchHistoryModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:model.content];
         }
+        NSInteger randomCode = arc4random() % self.dataSource.count;
+        self.searchBar.placeholder = self.dataSource[randomCode];
+        _defaultSearText = self.dataSource[randomCode];
+    
         [self.tagView removeAllTags];
         [self.dataSource enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             JMTagModel *tagModel = [[JMTagModel alloc] initWithText:self.dataSource[idx]];
@@ -130,14 +140,14 @@
         kWeakSelf
         self.tagView.didTapTagAtIndex = ^(NSUInteger index) {
             NSLog(@"点击了第 %ld 个标签",index);
-            weakSelf.searchBar.text = weakSelf.dataSource[index];
+            _defaultSearText = weakSelf.dataSource[index];
             [weakSelf searchBarSearchButtonClicked:weakSelf.searchBar];
 
         };
         CGFloat tagHeight = self.tagView.intrinsicContentSize.height;
         self.tagView.frame = CGRectMake(0, 50, SCREENWIDTH, tagHeight);
         [self.tagView layoutSubviews];
-        if (SCREENWIDTH > tagHeight + 50) {
+        if (SCREENHEIGHT > tagHeight + 50) {
             self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, SCREENHEIGHT);
         }else {
             self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH, tagHeight + 50);
@@ -185,9 +195,10 @@
     [titleView addConstraint:xCons];
     [titleView addConstraint:yCons];
     searchBar.backgroundImage = [UIImage imageNamed:@"clearImage"];
-    searchBar.delegate = self;
     self.searchBar = searchBar;
-    self.searchBar.placeholder = @"请输入搜索关键字";
+    searchBar.delegate = self;
+    
+    
     
     self.baseScrollView = [[UIScrollView alloc] init];
     self.baseScrollView.frame = self.view.bounds;
@@ -199,6 +210,7 @@
     UIView *sectionView = [UIView new];
     [self.baseScrollView addSubview:sectionView];
     sectionView.frame = CGRectMake(0, 0, SCREENWIDTH, 50);
+    sectionView.backgroundColor = [UIColor sectionViewColor];
     self.sectionView = sectionView;
     
     
@@ -259,6 +271,8 @@
                 [self.dataSource removeAllObjects];
                 [self.tagView removeAllTags];
                 [self.sectionView removeFromSuperview];
+                _defaultSearText = @"";
+                self.searchBar.placeholder = @"请输入搜索关键字";
             }else {
                 [MBProgressHUD showWarning:responseObject[@"info"]];
             }
@@ -301,18 +315,24 @@
 
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    searchBar.returnKeyType = UIReturnKeySearch;
+    searchBar.enablesReturnKeyAutomatically = NO;
     return YES;
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    NSLog(@"searchText -- %@",searchText);
+    _defaultSearText = searchText;
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"searchBarSearchButtonClicked ");
-    //    if ([NSString isStringEmpty:searchBar.text]) {
-    //        searchBar.text = self.searchBar.placeholder;
-    //    }
+    searchBar.text = _defaultSearText;
     if (self.didSearchBlock) self.didSearchBlock(self, searchBar, searchBar.text);
 }
+
+
+
+
+
+
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.searchBar resignFirstResponder];
 }
