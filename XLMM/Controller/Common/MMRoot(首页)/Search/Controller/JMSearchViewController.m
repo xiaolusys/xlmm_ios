@@ -7,9 +7,7 @@
 //
 
 #import "JMSearchViewController.h"
-#import "JMSearchHistoryCell.h"
 #import "JMSearchHistoryModel.h"
-#import "JMSearchHeaderView.h"
 #import "JMTagView.h"
 
 
