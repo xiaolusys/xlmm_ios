@@ -37,6 +37,8 @@
 #import "JMGoodsCountTime.h"
 #import "CSTabBarController.h"
 #import "JMChildViewController.h"
+#import "JMSearchViewController.h"
+
 
 
 static BOOL isFirstPOP = YES;
@@ -380,12 +382,12 @@ static BOOL isFirstPOP = YES;
         make.width.mas_equalTo(@83);
         make.height.mas_equalTo(@20);
     }];
-//    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [leftButton addTarget:self action:@selector(presentLeftMenuViewController:) forControlEvents:UIControlEventTouchUpInside];
-//    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profiles"]];
-//    leftImageview.frame = CGRectMake(0, 11, 26, 26);
-//    [leftButton addSubview:leftImageview];
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [leftButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
+    leftImageview.frame = CGRectMake(0, 13, 18, 18);
+    [leftButton addSubview:leftImageview];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 }
 - (void)createRightItem {
     if(self.navigationItem.rightBarButtonItem == nil) {
@@ -398,6 +400,20 @@ static BOOL isFirstPOP = YES;
         self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:14.];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
     }else {}
+}
+#pragma mark 跳转到搜索页面 
+- (void)searchBarClick:(UIButton *)button {
+    JMSearchViewController *searchViewController = [JMSearchViewController searchViewControllerWithHistorySearchs:nil searchBarPlaceHolder:nil didSearchBlock:^(JMSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/search_by_name?name=%@",Root_URL,searchText];
+        JMClassifyListController *searchVC = [[JMClassifyListController alloc] init];
+        searchVC.titleString = searchText;
+        searchVC.emptyTitle = @"搜索其他";
+        searchVC.urlString = [urlString JMUrlEncodedString];
+        [searchViewController.navigationController pushViewController:searchVC animated:YES];
+    }];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    [self presentViewController:nav  animated:NO completion:nil];
+    
 }
 #pragma mark 获取活动,分类,滚动视图网络请求
 - (void)loadActiveData {

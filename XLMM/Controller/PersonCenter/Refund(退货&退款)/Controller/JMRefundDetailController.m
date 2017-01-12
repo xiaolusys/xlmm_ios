@@ -502,6 +502,9 @@
 }
          
 - (NSString *)stringReplaced:(NSString *)string{
+    if ([NSString isStringEmpty:string]) {
+        return nil;
+    }
     NSMutableString *mutable = [string mutableCopy];
     NSRange range = {10, 1};
     if (mutable.length >= 11) {

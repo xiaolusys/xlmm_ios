@@ -109,6 +109,7 @@
     self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
     self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
     self.segmentedControl.sectionTitles = _titleArr;
+    
     self.segmentedControl.selectedSegmentIndex = 0;
     self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
     self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};

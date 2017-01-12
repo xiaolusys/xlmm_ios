@@ -50,12 +50,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createNavigationBarWithTitle:@"精品汇" selecotr:@selector(backClick:)];
+    [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
+    
     [self createWebView];
     [self emptyView];
     [self loadMaMaWeb];
     
     if(self.baseWebView.usingUIWebView) {
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
         [self registerJsBridge];
     }
     
@@ -95,7 +97,11 @@
 }
 
 - (void)createWebView {
-    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) usingUIWebView:NO];
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
+    statusBarView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:statusBarView];
+    
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 64) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
     self.baseWebView.viewController = self;
@@ -139,6 +145,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick endLogPageView:@"JMFineClassController"];
+    self.navigationController.navigationBarHidden = YES;
 //    [[JMGlobal global] hideWaitLoading];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
@@ -177,6 +184,8 @@
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     JMKeyWindow.rootViewController = tabBarVC;
 }
+
+
 
 
 

@@ -331,8 +331,7 @@
     NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
     
     NSString *url = picModel.pic_arry[indexPath.row];
-    if (codeNum == indexPath.row) {
-    }else {
+    if ((codeNum != indexPath.row) && ![NSString isStringEmpty:url]) {
         url = [url imageGoodsOrderCompression];
     }
 //    NSLog(@"%@",url);

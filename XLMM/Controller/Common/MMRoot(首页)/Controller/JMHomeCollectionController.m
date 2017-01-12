@@ -39,7 +39,7 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
 #pragma mrak 刷新界面
 - (void)createPullFooterRefresh {
     kWeakSelf
-    self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
@@ -122,7 +122,7 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
 //    layout.scrollDirection = UICollectionViewScrollDirectionVertical; // 垂直滚动
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64 - 80) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64 - 80 - 49) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;

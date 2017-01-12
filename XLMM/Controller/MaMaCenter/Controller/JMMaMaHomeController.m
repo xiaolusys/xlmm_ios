@@ -424,12 +424,12 @@
             [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
         }
             break;
-        case 107: {
-            JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
-            renewVC.cashValue = _carryValue;
-            [self.navigationController pushViewController:renewVC animated:YES];
-        }
-            break;
+//        case 107: {
+//            JMVipRenewController *renewVC = [[JMVipRenewController alloc] init];
+//            renewVC.cashValue = _carryValue;
+//            [self.navigationController pushViewController:renewVC animated:YES];
+//        }
+//            break;
         case 108: {
             TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
             today.visitorDate = kVisitorDay;

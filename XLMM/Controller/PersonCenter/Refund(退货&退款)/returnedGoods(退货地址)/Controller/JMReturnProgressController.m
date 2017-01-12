@@ -222,6 +222,9 @@
 
 
 -(NSString*)spaceFormatTimeString:(NSString*)timeString{
+    if ([NSString isStringEmpty:timeString]) {
+        return nil;
+    }
     NSMutableString *ms = [NSMutableString stringWithString:timeString];
     NSRange range = {10,1};
     [ms replaceCharactersInRange:range withString:@" "];

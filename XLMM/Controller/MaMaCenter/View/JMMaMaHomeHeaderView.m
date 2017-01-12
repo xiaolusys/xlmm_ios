@@ -391,11 +391,11 @@ static NSString *currentTurnsNumberString;
     memberLabel.textColor = [UIColor buttonTitleColor];
     self.memberLabel = memberLabel;
     
-    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [memberView addSubview:self.renewButton];
-    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
-    self.renewButton.tag = 107;
-    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [memberView addSubview:self.renewButton];
+//    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
+//    self.renewButton.tag = 107;
+//    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
     [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -403,15 +403,15 @@ static NSString *currentTurnsNumberString;
         make.centerY.equalTo(memberView.mas_centerY);
     }];
     [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(memberView).offset(-60);
+        make.right.equalTo(memberView).offset(-10);
         make.centerY.equalTo(memberView.mas_centerY);
     }];
-    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(memberView);
-        make.centerY.equalTo(memberView.mas_centerY);
-        make.width.mas_equalTo(@(60));
-        make.height.mas_equalTo(@(45));
-    }];
+//    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(memberView);
+//        make.centerY.equalTo(memberView.mas_centerY);
+//        make.width.mas_equalTo(@(60));
+//        make.height.mas_equalTo(@(45));
+//    }];
 
     // 消息滚动列表
     UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, 500, SCREENWIDTH, 45)];
