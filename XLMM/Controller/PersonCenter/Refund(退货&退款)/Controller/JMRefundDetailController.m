@@ -17,9 +17,10 @@
 
 @interface JMRefundDetailController () <UITableViewDataSource,UITableViewDelegate> {
     NSArray *generalArr;
-    BOOL _isChoiseLogistics;
+//    BOOL _isChoiseLogistics;
     UIView *backView;
     BOOL _isjihuishangpin;
+    BOOL _tianxiekuandidan;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -32,11 +33,21 @@
 
 - (void)setRefundModelr:(JMRefundModel *)refundModelr {
     _refundModelr = refundModelr;
-    _isChoiseLogistics = ((self.refundModelr.sid.length != 0) && (self.refundModelr.company_name.length != 0));
+//     = ((self.refundModelr.sid.length != 0) && (self.refundModelr.company_name.length != 0));
+//    if (![NSString isStringEmpty:self.refundModelr.sid] && ![NSString isStringEmpty:self.refundModelr.company_name]) {
+//        _isChoiseLogistics = YES;
+//    }else {
+//        _isChoiseLogistics = NO;
+//    }
     
     NSInteger status = [refundModelr.status integerValue];
     NSInteger goodsSatus = [refundModelr.good_status integerValue];
-    if (status == REFUND_STATUS_SELLER_AGREED && goodsSatus == 1) {
+    if (status == REFUND_STATUS_SELLER_AGREED && goodsSatus == 1 && [self.refundModelr.has_good_return boolValue]) {
+        _tianxiekuandidan = YES;
+    }else {
+        _tianxiekuandidan = NO;
+    }
+    if (status >= REFUND_STATUS_SELLER_AGREED && (goodsSatus == 1 || goodsSatus == 2) && [self.refundModelr.has_good_return boolValue]) {
         _isjihuishangpin = YES;
     }else {
         _isjihuishangpin = NO;
@@ -75,11 +86,6 @@
     [self.view addSubview:backView];
  
 }
-
-
-
-
-
 
 - (void)createTabelView {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
@@ -169,8 +175,8 @@
         make.top.equalTo(twoTime.mas_bottom).offset(3);
     }];
     
-    oneTime.text = [self stringReplaced:self.refundModelr.modified];
-    twoTime.text = [self stringReplaced:self.refundModelr.created];
+    oneTime.text = [NSString jm_deleteTimeWithT:self.refundModelr.modified];
+    twoTime.text = [NSString jm_deleteTimeWithT:self.refundModelr.created];
     onetitle.text = self.refundModelr.status_display;
     if ([self.refundModelr.has_good_return integerValue] == 0) {
         twoTitle.text = @"申请退款";
@@ -389,16 +395,20 @@
 }
 
 - (void)refundOperateClick:(UIButton *)button {
-    if (_isChoiseLogistics) {
+    if (_tianxiekuandidan) {
+        JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
+        reGoodsVC.refundModelr = self.refundModelr;
+        [self.navigationController pushViewController:reGoodsVC animated:YES];
+    }else {
         JMReturnProgressController *progressVC = [[JMReturnProgressController alloc] init];
         progressVC.refundModelr = self.refundModelr;
         [self.navigationController pushViewController:progressVC animated:YES];
-    }else {
-        JMReturnedGoodsController *reGoodsVC = [[JMReturnedGoodsController alloc] init];
-        reGoodsVC.refundModelr = self.refundModelr;
-        
-        [self.navigationController pushViewController:reGoodsVC animated:YES];
+
     }
+    
+    
+    
+
     
 }
 - (void)addressInfoTap:(UITapGestureRecognizer *)tap {
@@ -501,18 +511,6 @@
     
 }
          
-- (NSString *)stringReplaced:(NSString *)string{
-    if ([NSString isStringEmpty:string]) {
-        return nil;
-    }
-    NSMutableString *mutable = [string mutableCopy];
-    NSRange range = {10, 1};
-    if (mutable.length >= 11) {
-        [mutable replaceCharactersInRange:range withString:@" "];
-        
-    }
-    return mutable;
-}
 - (void)backClicked:(UIButton *)button {
     [self.navigationController popViewControllerAnimated:YES];
 }

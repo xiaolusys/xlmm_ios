@@ -205,6 +205,9 @@
     if ([NSString isStringEmpty:timeString]) {
         return nil;
     }
+    if ([timeString rangeOfString:@"T"].location == NSNotFound) {
+        return timeString;
+    }
     NSMutableString *string = [NSMutableString stringWithString:timeString];
     NSRange range = [string rangeOfString:@"T"];
     [string replaceCharactersInRange:range withString:@" "];
