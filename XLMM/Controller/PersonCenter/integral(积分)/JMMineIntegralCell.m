@@ -85,20 +85,10 @@
 }
 
 - (void)configIntegral:(JMMineIntegralModel *)model {
-    self.timeLabel.text = [self replaceString:model.created];
+    self.timeLabel.text = [NSString jm_deleteTimeWithT:model.created];
     self.orderLabel.text = [NSString stringWithFormat:@"订单号  %@",[model.order_info objectForKey:@"order_id"]];
     self.valueLabel.text = [NSString stringWithFormat:@"+%@分",model.log_value];
     
-}
-
-- (NSString *)replaceString:(NSString *)string{
-    if ([NSString isStringEmpty:string]) {
-        return @"";
-    }
-    NSMutableString *mutableStr = [[NSMutableString alloc] initWithString:string];
-    NSRange range = {10, 1};
-    [mutableStr replaceCharactersInRange:range withString:@" "];
-    return mutableStr;
 }
 
 

@@ -67,7 +67,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     if ([NSString isStringEmpty:timeString]) {
         self.timerLabel.text = @"即将上架";
     }else {
-        endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
+        endTime = [NSString jm_deleteTimeWithT:detailContentDic[@"offshelf_time"]];
         int endSecond = [[JMGlobal global] secondOfCurrentTimeInEndTime:endTime];
         [JMCountDownView countDownWithCurrentTime:endSecond];
         kWeakSelf
@@ -93,17 +93,6 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }];
     for (UILabel *label in self.fineGoodsView.subviews) {
         [label removeFromSuperview];
-    }
-}
-
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([NSString isStringEmpty:timeString]) {
-        return nil;
-    }else {
-        NSMutableString *ms = [NSMutableString stringWithString:timeString];
-        NSRange range = {10,1};
-        [ms replaceCharactersInRange:range withString:@" "];
-        return ms;
     }
 }
 - (void)setCustomInfoDic:(NSDictionary *)customInfoDic {

@@ -222,8 +222,8 @@
     }
     
     self.statusLabel.text = self.refundModelr.status_display;
-    self.createTimeLabel.text = [self stringReplaced:self.refundModelr.created];
-    self.modifyTimeLabel.text = [self stringReplaced:self.refundModelr.modified];
+    self.createTimeLabel.text = [NSString jm_deleteTimeWithT:self.refundModelr.created];
+    self.modifyTimeLabel.text = [NSString jm_deleteTimeWithT:self.refundModelr.modified];
     
 //    NSString *douhaoStr = @"，";
     NSString *addressStr = self.refundModelr.return_address;
@@ -250,20 +250,6 @@
     
     
 }
-
-- (NSString *)stringReplaced:(NSString *)string{
-    if ([NSString isStringEmpty:string]) {
-        return nil;
-    }
-    NSMutableString *mutable = [string mutableCopy];
-    NSRange range = {10, 1};
-    if (mutable.length >= 11) {
-        [mutable replaceCharactersInRange:range withString:@" "];
-        
-    }
-    return mutable;
-}
-
 - (void)setFootInfo{
     //设置详情信息。。。。
 }

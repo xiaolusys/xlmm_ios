@@ -63,12 +63,25 @@
     
 }
 - (void)fetchData:(NSDictionary *)dataDic {
-    _logisticsDic = dataDic;
     NSArray *dataArr = dataDic[@"data"];
-    
     if (dataArr.count == 0) {
-        _logisticsDic = @{@"name":@"请核对承运来源",@"order":@"请核对运单号",@"status":@"暂无"};
+        NSString *logStr;
+        NSString *companyName;
+        NSString *sid;
+        NSInteger statusCode = [self.refundModelr.status integerValue];
+        if (statusCode < REFUND_STATUS_BUYER_RETURNED_GOODS){
+            logStr = @"暂无";
+        }else if (statusCode < REFUND_STATUS_REFUND_SUCCESS && statusCode >= REFUND_STATUS_BUYER_RETURNED_GOODS) {
+            logStr = @"运输中";
+        }else {
+            logStr = @"已验收";
+        }
+        companyName = [NSString isStringEmpty:self.refundModelr.company_name] ? @"请核对承运来源" : self.refundModelr.company_name;
+        sid = [NSString isStringEmpty:self.refundModelr.sid] ? @"请核对运单编号" : self.refundModelr.sid;
+        _logisticsDic = @{@"name":companyName,@"order":sid,@"status":logStr};
     }else {
+        _logisticsDic = dataDic;
+        
         for (NSDictionary *dic in dataArr) {
             JMTimeInfoModel *timeModel = [JMTimeInfoModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:timeModel];
@@ -147,22 +160,22 @@
     NSString *nameStr = @"";
     NSString *logStr = @"";
     NSString *numStr = @"";
-    if (_logisticsDic.count == 0) {
-        NSInteger statusCode = [self.refundModelr.status integerValue];
-        if (statusCode < REFUND_STATUS_BUYER_RETURNED_GOODS){
-            logStr = @"暂无";
-        }else if (statusCode < REFUND_STATUS_REFUND_SUCCESS && statusCode >= REFUND_STATUS_BUYER_RETURNED_GOODS) {
-            logStr = @"运输中";
-        }else {
-            logStr = @"已验收";
-        }
-        nameStr = self.refundModelr.company_name;
-        numStr = self.refundModelr.sid;
-    }else {
-        nameStr = _logisticsDic[@"name"];
-        logStr = _logisticsDic[@"status"];
-        numStr = _logisticsDic[@"order"];
-    }
+//    if (_logisticsDic.count == 0) {
+//        NSInteger statusCode = [self.refundModelr.status integerValue];
+//        if (statusCode < REFUND_STATUS_BUYER_RETURNED_GOODS){
+//            logStr = @"暂无";
+//        }else if (statusCode < REFUND_STATUS_REFUND_SUCCESS && statusCode >= REFUND_STATUS_BUYER_RETURNED_GOODS) {
+//            logStr = @"运输中";
+//        }else {
+//            logStr = @"已验收";
+//        }
+//        nameStr = self.refundModelr.company_name;
+//        numStr = self.refundModelr.sid;
+//    }else {
+    nameStr = _logisticsDic[@"name"];
+    logStr = _logisticsDic[@"status"];
+    numStr = _logisticsDic[@"order"];
+//    }
     nameStr = IF_NULL_TO_STRING(nameStr);
     nameLabel.text = [NSString stringWithFormat:@"承运来源: %@",nameStr];
     
@@ -207,7 +220,7 @@
     }
     JMTimeInfoModel *timeModel = self.dataSource[indexPath.row];
     NSString *timeText = timeModel.time;
-    timeText = [self spaceFormatTimeString:timeText];
+    timeText = [NSString jm_deleteTimeWithT:timeText];
     NSString *infoText = timeModel.content;
     if(0 == indexPath.row){
         [self displayLastWuliuInfoWithTime:cell time:timeText andInfo:infoText];
@@ -219,17 +232,6 @@
     return cell;
 }
 
-
-
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([NSString isStringEmpty:timeString]) {
-        return nil;
-    }
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
-}
 
 -(void)displayLastWuliuInfoWithTime:(UITableViewCell *)cell time:(NSString*)timeText andInfo:(NSString*)infoText{
     cell.backgroundColor = [UIColor whiteColor];

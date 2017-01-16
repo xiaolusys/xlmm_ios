@@ -84,6 +84,7 @@
 #define kLoginMethod @"loginMethod"
 #define kWeiXinLogin @"weixinlogin"
 #define kAppLoadNum @"kAppLoadNum"
+#define kWxLoginUserInfo @"userInfo"
 
 #define kWeiXinauthorize @"kWeiXinauthorize"
 #define kPhoneNumberUserInfo @"phoneUserInfo"

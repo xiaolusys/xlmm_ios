@@ -55,6 +55,13 @@
 - (NSString*)sha512;
 
 /**
+ *  是否含有汉字
+ *
+ *  @return YES 是 NO 不是
+ */
+- (BOOL)containsChineseCharacter;
+
+/**
  *  计算字符串高度 （多行）
  *
  *  @param width 字符串的宽度

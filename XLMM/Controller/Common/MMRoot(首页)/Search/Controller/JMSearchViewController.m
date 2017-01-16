@@ -313,7 +313,7 @@
 
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    searchBar.returnKeyType = UIReturnKeySearch;
+//    searchBar.returnKeyType = UIReturnKeySearch;
     searchBar.enablesReturnKeyAutomatically = NO;
     return YES;
 }

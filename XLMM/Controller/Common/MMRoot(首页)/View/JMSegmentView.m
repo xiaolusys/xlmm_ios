@@ -41,16 +41,6 @@
     [self countTime:1];
 }
 
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([NSString isStringEmpty:timeString]) {
-        return nil;
-    }else {
-        NSMutableString *ms = [NSMutableString stringWithString:timeString];
-        NSRange range = {10,1};
-        [ms replaceCharactersInRange:range withString:@" "];
-        return ms;
-    }
-}
 - (instancetype)initWithFrame:(CGRect)frame Controllers:(NSArray *)controller TitleArray:(NSArray *)titleArray PageController:(UIViewController *)pageVC {
     if (self == [super initWithFrame:frame]) {
         _controllersArray = controller;
@@ -160,7 +150,7 @@
         self.timeLabel.text = @"--:--:--:--";
     }else {
         kWeakSelf
-        NSString *endTime = [self spaceFormatTimeString:todayTimeString];
+        NSString *endTime = [NSString jm_deleteTimeWithT:todayTimeString];
         //        self.countDownView = [JMCountDownView shareCountDown];
         //            [JMCountDownView countDownWithCurrentTime:endTime];
         //        [self.countDownView initWithCountDownTime:endTime];

@@ -83,7 +83,7 @@
 //        NSString *timeText = [wuliuInfo objectForKey:@"time"];
     NSString *timeText = timeModel.time;
     if (![NSString isStringEmpty:timeText]) {
-        timeText = [self spaceFormatTimeString:timeText];
+        timeText = [NSString jm_deleteTimeWithT:timeText];
     }
 //        NSString *infoText = [wuliuInfo objectForKey:@"content"];
     NSString *infoText = timeModel.content;
@@ -97,12 +97,6 @@
 
 //    }
     return cell;
-}
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
 }
 
 -(void)displayLastWuliuInfoWithTime:(UITableViewCell *)cell time:(NSString*)timeText andInfo:(NSString*)infoText{

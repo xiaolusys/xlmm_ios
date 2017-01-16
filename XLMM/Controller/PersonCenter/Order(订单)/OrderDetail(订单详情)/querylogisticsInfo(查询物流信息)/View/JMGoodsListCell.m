@@ -104,7 +104,7 @@
 //     NSString *url = [model.pic_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"profiles"]];
     
-    self.goodsMoneyL.text = [NSString stringWithFormat:@"¥%.2f", [model.payment floatValue]];
+    self.goodsMoneyL.text = [NSString stringWithFormat:@"¥%.2f", [model.total_fee floatValue]];
     self.goodsTitleL.text = model.title;
     self.goodsSizeL.text = [NSString stringWithFormat:@"尺寸: %@",model.sku_name];
     self.goodsNumL.text = [NSString stringWithFormat:@"x %@",model.num];
