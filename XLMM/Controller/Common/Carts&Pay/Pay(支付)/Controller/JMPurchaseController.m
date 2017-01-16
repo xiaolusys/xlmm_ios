@@ -125,12 +125,6 @@ static BOOL isAgreeTerms = YES;
     }
     return _logisticsArr;
 }
-- (NSMutableArray *)purchaseGoodsArr {
-    if (!_purchaseGoodsArr) {
-        _purchaseGoodsArr = [NSMutableArray array];
-    }
-    return _purchaseGoodsArr;
-}
 - (JMChoiseLogisController *)showViewVC {
     if (!_showViewVC) {
         _showViewVC = [[JMChoiseLogisController alloc] init];
@@ -337,7 +331,9 @@ static BOOL isAgreeTerms = YES;
         }
     }
     _uuid = [purchaseDic objectForKey:@"uuid"];
-    _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
+    if (![NSString isStringEmpty:[purchaseDic objectForKey:@"cart_ids"]]) {
+        _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
+    }
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
     [self calculationLabelValue];

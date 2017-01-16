@@ -292,7 +292,7 @@
                 //                NSLog(@"userInfo = %@", self.userInfo);
                 
                 NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
-                [userdefault setObject:self.userInfo forKey:@"userInfo"];
+                [userdefault setObject:dic forKey:kWxLoginUserInfo];
                 [userdefault setBool:YES forKey:kIsLogin];
                 [userdefault setObject:kWeiXinLogin forKey:kLoginMethod];
                 NSDictionary *wxUserInfo = @{@"nickname":[dic objectForKey:@"nickname"],
