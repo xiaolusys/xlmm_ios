@@ -50,7 +50,7 @@
     if (nickName.length > 0 || [nickName class] != [NSNull null]) {
         self.userNameLabel.text = [dict objectForKey:@"nick"];
     }
-    self.integralLabel.text = [[dict objectForKey:@"score"] stringValue];
+    self.integralLabel.text = [NSString stringWithFormat:@"%.2f",[dict[@"xiaolu_coin"] floatValue]];//[[dict objectForKey:@"xiaolu_coin"] stringValue];
     //判断是否为0
     if ([[dict objectForKey:@"user_budget"] isKindOfClass:[NSNull class]]) {
         self.smallChangeLabel.text  = [NSString stringWithFormat:@"0.00"];
@@ -145,7 +145,7 @@
     CGFloat headButtonSpace = 20 * HomeCategoryRatio;
     CGFloat buttonW = (SCREENWIDTH - headButtonSpace * 2) / 3;
     NSArray *imageArr = @[@"accounticon",@"pointicon",@"coupon"];
-    NSArray *titleArr = @[@"零钱",@"积分",@"优惠券"];
+    NSArray *titleArr = @[@"零钱",@"小鹿币",@"优惠券"];
     for (int i = 0; i < 3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [topImageView addSubview:button];

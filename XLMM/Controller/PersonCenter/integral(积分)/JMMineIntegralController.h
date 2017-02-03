@@ -10,4 +10,6 @@
 
 @interface JMMineIntegralController : UIViewController
 
+@property (nonatomic, copy) NSString *xiaoluCoin;
+
 @end
