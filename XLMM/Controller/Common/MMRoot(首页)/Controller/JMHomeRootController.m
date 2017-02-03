@@ -226,10 +226,10 @@ static BOOL isFirstPOP = YES;
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    if (_isFirstOpenApp && isFirstPOP) {
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
-    }else {
-    }
+//    if (_isFirstOpenApp && isFirstPOP) {
+//        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
+//    }else {
+//    }
     
     
 }
@@ -271,7 +271,7 @@ static BOOL isFirstPOP = YES;
             }else {
                 self.navigationItem.rightBarButtonItem = nil;
             }
-            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];
+//            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];
         }else {
             self.navigationItem.rightBarButtonItem = nil;
         }
@@ -297,7 +297,7 @@ static BOOL isFirstPOP = YES;
             }else {
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
-                _timeArray[2] = responseObject[@"offshelf_deadline"];
+                _timeArray[2] = responseObject[@"onshelf_starttime"];
             }
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {

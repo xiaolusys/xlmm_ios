@@ -79,8 +79,8 @@
     self.systemPageCtrol.normalPageView = nomalView;
     self.systemPageCtrol.currentPageView = selectedView;
     self.systemPageCtrol.padding = 10;
-    UIWindow *window = [self findTheMainWindow];
-    [window addSubview:self.systemPageCtrol];
+//    UIWindow *window = [self findTheMainWindow];
+    [JMKeyWindow addSubview:self.systemPageCtrol];
 //    [self insertSubview:self.systemPageCtrol aboveSubview:self.scrollView];
     
     self.systemPageCtrol.numberOfPages = self.imageCount;
@@ -475,11 +475,11 @@
     if (self.currentImageIndex < 0) {
         self.currentImageIndex = 0;
     }
-    UIWindow *window = [self findTheMainWindow];
+//    UIWindow *window = [self findTheMainWindow];
     
-    self.frame = window.bounds;
+    self.frame = JMKeyWindow.bounds;
     self.alpha = 0.0;
-    [window addSubview:self];
+    [JMKeyWindow addSubview:self];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self setUpUI];
 }

@@ -43,17 +43,19 @@
     }
     return _dataArray;
 }
-
+- (void)setXiaoluCoin:(NSString *)xiaoluCoin {
+    _xiaoluCoin = xiaoluCoin;
+    _valueString = xiaoluCoin;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"我的积分" selecotr:@selector(backBtnClicked:)];
+    [self createNavigationBarWithTitle:@"小鹿币" selecotr:@selector(backBtnClicked:)];
     
     [self createTableView];
     [self createButton];
-    [self loadValueData];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
 
@@ -93,29 +95,11 @@
         [self.tableView.mj_footer endRefreshing];
     }
 }
-- (void)loadValueData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/integral",Root_URL];
+- (void)loadDataSource {
+//    /rest/v1/integral
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/xiaolucoin/history",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        if ([responseObject[@"count"] integerValue] == 0) {
-            _valueString = @"0";
-            return;
-        }
-        NSArray *arr = responseObject[@"results"];
-        NSDictionary *result = arr[0];
-        _valueString = [result[@"integral_value"] stringValue];
-    } WithFail:^(NSError *error) {
-        
-    } Progress:^(float progress) {
-        
-    }];
-}
-- (void)loadDataSource {
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kIntegrallogURL WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        if (self.dataArray.count > 0) {
-            [self.dataArray removeAllObjects];
-        }
         [self refetch:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
@@ -125,6 +109,21 @@
         
     }];
 }
+//- (void)loadDataSource {
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kIntegrallogURL WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (!responseObject) return;
+//        if (self.dataArray.count > 0) {
+//            [self.dataArray removeAllObjects];
+//        }
+//        [self refetch:responseObject];
+//        [self endRefresh];
+//        [self.tableView reloadData];
+//    } WithFail:^(NSError *error) {
+//        [self endRefresh];
+//    } Progress:^(float progress) {
+//        
+//    }];
+//}
 - (void)loadMore {
     if ([NSString isStringEmpty:_urlStr]) {
         [self endRefresh];
@@ -156,11 +155,11 @@
 }
 - (void)emptyView {
     kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 240, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时没有积分记录哦~" DescTitle:@"快去下单赚取积分吧～" BackImage:@"emptyJifenIcon" InfoStr:@"快去抢购"];
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 240, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时没有小鹿币记录哦~" DescTitle:@"快去赚取吧～" BackImage:@"emptyJifenIcon" InfoStr:@"快去抢购"];
     [self.view addSubview:self.empty];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
-            self.isPopToRootView = YES;
+            weakSelf.isPopToRootView = YES;
             [weakSelf.navigationController popToRootViewControllerAnimated:YES];
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
@@ -173,7 +172,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    return 60;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellID = @"JMMineIntegralController";
@@ -197,13 +196,13 @@
     valueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     valueLabel.font = [UIFont systemFontOfSize:40.];
     self.valueLabel = valueLabel;
-    self.valueLabel.text = _valueString;
+    self.valueLabel.text = [NSString stringWithFormat:@"%.2f",[_valueString floatValue]];;
     
     UILabel *titleLabel = [UILabel new];
     [sectionView addSubview:titleLabel];
     titleLabel.textColor = [UIColor buttonTitleColor];
     titleLabel.font = [UIFont systemFontOfSize:14.];
-    titleLabel.text = @"我的积分";
+    titleLabel.text = @"我的小鹿币";
     
     [valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(sectionView.mas_centerX);

@@ -405,6 +405,7 @@
         case 102:
             if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
                 JMMineIntegralController *jifenVC = [[JMMineIntegralController alloc] init];
+                jifenVC.xiaoluCoin = _persinCenterDict[@"xiaolu_coin"];
                 [self.navigationController pushViewController:jifenVC animated:YES];
             }else{
                 [self displayLoginView];

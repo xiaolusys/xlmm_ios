@@ -614,14 +614,14 @@
 - (void)UIActivityMessage {
     [MBProgressHUD showLoading:@"火速加载~"];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:sharImageArray applicationActivities:nil];
-//    activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
+//    activityVC.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop];
     
     UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
         [sharImageArray removeAllObjects];
 //        [self dismissViewControllerAnimated:YES completion:nil];
     };
     activityVC.completionHandler = myBlock;
-    [self presentViewController:activityVC animated:TRUE completion:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
     [MBProgressHUD hideHUD];
 }
 #pragma mark -- scrollView代理
