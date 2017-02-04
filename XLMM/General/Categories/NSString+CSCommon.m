@@ -191,7 +191,7 @@
  */
 + (NSString *)jm_stringDate {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss.SSSSSS"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss.SSSSSS"];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     return dateString;
 }
@@ -203,15 +203,21 @@
  */
 + (NSString *)jm_deleteTimeWithT:(NSString *)timeString {
     if ([NSString isStringEmpty:timeString]) {
-        return nil;
+        return @"";
     }
     if ([timeString rangeOfString:@"T"].location == NSNotFound) {
         return timeString;
     }
+    NSRange range = NSMakeRange(0, 0);
     NSMutableString *string = [NSMutableString stringWithString:timeString];
-    NSRange range = [string rangeOfString:@"T"];
-    [string replaceCharactersInRange:range withString:@" "];
-    return string;
+    range = [string rangeOfString:@"T"];
+    if (range.location > 0 && range.location < timeString.length) {
+        [string replaceCharactersInRange:range withString:@" "];
+        return string;
+    }else {
+        return timeString;
+    }
+    
 }
 
 /**
@@ -263,7 +269,7 @@
         
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSString *getDayString = [dateFormatter stringFromDate:theDate];
 //    NSString *date = [getDayString stringByReplacingOccurrencesOfString:@"-" withString:@""];
     return getDayString;
@@ -277,7 +283,7 @@
  */
 + (NSString *)getCurrentTime {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     
     return currentTime;
@@ -286,7 +292,7 @@
 }
 + (NSString *)getCurrentYMD {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYYMMdd"];
+    [dateFormatter setDateFormat:@"yyyyMMdd"];
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     return currentTime;
 }

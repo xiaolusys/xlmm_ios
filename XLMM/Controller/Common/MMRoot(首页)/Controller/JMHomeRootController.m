@@ -284,29 +284,29 @@ static BOOL isFirstPOP = YES;
 - (void)loadData:(NSString *)string {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/%@?page=1&page_size=10",Root_URL,string];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (responseObject) {
-            if ([string isEqualToString:@"yesterday"]) {
-                flageArr[0] = @1;
-                self.yesterdayVC.dataDict = responseObject;
-                _timeArray[0] = responseObject[@"offshelf_deadline"];
-            }else if ([string isEqualToString:@"today"]) {
-                flageArr[1] = @1;
-                self.todayVC.dataDict = responseObject;
-                _timeArray[1] = responseObject[@"offshelf_deadline"];
-                _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] ToData:responseObject[@"offshelf_deadline"]];
-            }else {     // tomorrow
-                flageArr[2] = @1;
-                self.tomorrowVC.dataDict = responseObject;
-                _timeArray[2] = responseObject[@"onshelf_starttime"];
-            }
-            isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
-            if (isCreateSegment) {
-                [self endRefresh];
-                //                [self.tableView reloadData];
-                //                [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
-                self.segmentView.timeArray = [NSArray arrayWithArray:_timeArray];
-            }
-        }else {
+        if (!responseObject) {
+            return ;
+        }
+        if ([string isEqualToString:@"yesterday"]) {
+            flageArr[0] = @1;
+            self.yesterdayVC.dataDict = responseObject;
+            _timeArray[0] = CS_STRING(responseObject[@"offshelf_deadline"]);
+        }else if ([string isEqualToString:@"today"]) {
+            flageArr[1] = @1;
+            self.todayVC.dataDict = responseObject;
+            _timeArray[1] = CS_STRING(responseObject[@"offshelf_deadline"]);
+            _dayDifferString = [NSString numberOfDaysWithFromDate:CS_STRING(responseObject[@"onshelf_starttime"]) ToData:CS_STRING(responseObject[@"offshelf_deadline"])];
+        }else {     // tomorrow
+            flageArr[2] = @1;
+            self.tomorrowVC.dataDict = responseObject;
+            _timeArray[2] = CS_STRING(responseObject[@"onshelf_starttime"]);
+        }
+        isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
+        if (isCreateSegment) {
+            [self endRefresh];
+            //                [self.tableView reloadData];
+            //                [self.tableView reloadSections:[[NSIndexSet alloc]initWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+            self.segmentView.timeArray = [NSArray arrayWithArray:_timeArray];
         }
     } WithFail:^(NSError *error) {
         [self endRefresh];
