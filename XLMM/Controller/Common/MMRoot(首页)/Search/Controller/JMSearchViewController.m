@@ -194,12 +194,14 @@
     [titleView addConstraint:yCons];
     searchBar.backgroundImage = [UIImage imageNamed:@"clearImage"];
     self.searchBar = searchBar;
+    searchBar.enablesReturnKeyAutomatically = NO;
     searchBar.delegate = self;
     
     
     
     self.baseScrollView = [[UIScrollView alloc] init];
     self.baseScrollView.frame = self.view.bounds;
+    self.baseScrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.baseScrollView];
     self.baseScrollView.delegate = self;
     self.baseScrollView.showsHorizontalScrollIndicator = NO;
@@ -314,7 +316,6 @@
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
 //    searchBar.returnKeyType = UIReturnKeySearch;
-    searchBar.enablesReturnKeyAutomatically = NO;
     return YES;
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
