@@ -74,8 +74,6 @@
     [self getWuliuInfoFromServer];
     [self createGoodsListView];
     
-    
-    
 }
 - (void)setOrderDataSource:(NSArray *)orderDataSource {
     _orderDataSource = orderDataSource;
@@ -143,7 +141,6 @@
     if (responseData == nil) {
         return;
     }
-    
     
     NSDictionary *dicJson = responseData;
     NSLog(@"json = %@", dicJson);
@@ -220,7 +217,7 @@
     
     UILabel *timeLabel = [UILabel new];
     [timeView addSubview:timeLabel];
-    NSString *timeStr = [self dealVisitorTime:self.packageModel.pay_time];
+    NSString *timeStr = [NSString jm_deleteTimeWithT:self.packageModel.pay_time];
     timeLabel.text = [NSString stringWithFormat:@"%@",timeStr];
     timeLabel.textColor = [UIColor titleDarkGrayColor];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -316,17 +313,6 @@
     
     self.masBackScrollView.contentSize = CGSizeMake(SCREENWIDTH, _count * cellHeitht + 136 + cellHeitht * 2);
     
-}
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    NSMutableString *ms = [NSMutableString stringWithString:timeString];
-    NSRange range = {10,1};
-    [ms replaceCharactersInRange:range withString:@" "];
-    return ms;
-}
-- (NSString *)dealVisitorTime:(NSString *)str {
-    NSArray *arr = [str componentsSeparatedByString:@"T"];
-    NSString *time = [arr componentsJoinedByString:@" "];
-    return time;
 }
 /**
  *  显示顶部视图 -- > 物流公司与快递单号

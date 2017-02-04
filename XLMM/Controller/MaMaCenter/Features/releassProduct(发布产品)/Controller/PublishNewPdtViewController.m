@@ -330,7 +330,7 @@
     NSInteger countNum = picModel.pic_arry.count;
     NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
     
-    NSString *url = picModel.pic_arry[indexPath.row];
+    NSString *url = CS_STRING(picModel.pic_arry[indexPath.row]);
     if ((codeNum != indexPath.row) && ![NSString isStringEmpty:url]) {
         url = [url imageGoodsOrderCompression];
     }
@@ -614,14 +614,14 @@
 - (void)UIActivityMessage {
     [MBProgressHUD showLoading:@"火速加载~"];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:sharImageArray applicationActivities:nil];
-//    activityVC.excludedActivityTypes = @[UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop,UIActivityTypeSaveToCameraRoll,UIActivityTypeAddToReadingList,UIActivityTypeOpenInIBooks];
+//    activityVC.excludedActivityTypes = @[UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint,UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypePostToFlickr,UIActivityTypePostToVimeo,UIActivityTypeAirDrop];
     
     UIActivityViewControllerCompletionHandler myBlock = ^(NSString *activityType,BOOL completed) {
         [sharImageArray removeAllObjects];
 //        [self dismissViewControllerAnimated:YES completion:nil];
     };
     activityVC.completionHandler = myBlock;
-    [self presentViewController:activityVC animated:TRUE completion:nil];
+    [self presentViewController:activityVC animated:YES completion:nil];
     [MBProgressHUD hideHUD];
 }
 #pragma mark -- scrollView代理

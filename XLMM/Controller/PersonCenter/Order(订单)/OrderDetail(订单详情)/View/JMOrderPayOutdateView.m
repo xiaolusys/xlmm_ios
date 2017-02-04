@@ -16,12 +16,12 @@
 @property (nonatomic, strong) UILabel *orderOutdateTime;
 @property (nonatomic, strong) JMSelecterButton *canelOrderButton;
 @property (nonatomic, strong) JMSelecterButton *sureOrderButton;
-@property (nonatomic, strong) JMSelecterButton *shareButton;
+//@property (nonatomic, strong) JMSelecterButton *shareButton;
 @property (nonatomic, strong) UIView *bottomView;
 
-@property (nonatomic, strong) UIView *sharBottom;
-@property (nonatomic, strong) UIImageView *shareImage;
-@property (nonatomic, strong) UILabel *descLabel;
+//@property (nonatomic, strong) UIView *sharBottom;
+//@property (nonatomic, strong) UIImageView *shareImage;
+//@property (nonatomic, strong) UILabel *descLabel;
 
 @property (nonatomic, strong) JMSelecterButton *teamBuyOrderButton;
 
@@ -52,7 +52,7 @@
         if (_isTeamBuy) {
             _isShowShare = NO;
         }else {
-            _isShowShare = YES;
+            _isShowShare = NO;
         }
     }else {
         _isShowShare = NO;
@@ -81,10 +81,10 @@
         }
         if (_isShowShare) {
             self.bottomView.hidden = NO;
-            self.shareImage.hidden = NO;
-            self.descLabel.hidden = NO;
-            self.shareButton.hidden = NO;
-            self.sharBottom.hidden = NO;
+//            self.shareImage.hidden = NO;
+//            self.descLabel.hidden = NO;
+//            self.shareButton.hidden = NO;
+//            self.sharBottom.hidden = NO;
         }
     }
     if (self.bottomView.hidden) {
@@ -184,62 +184,62 @@
         make.height.mas_equalTo(@40);
     }];
     // === 显示红包 === //
-    UIView *sharBottom = [UIView new];
-    [self addSubview:sharBottom];
-    self.sharBottom = sharBottom;
-    self.sharBottom.backgroundColor = [UIColor blackColor];
-    self.sharBottom.alpha = 0.8;
-    
-    UIImageView *shareImage = [UIImageView new];
-    [self.sharBottom addSubview:shareImage];
-    shareImage.image = [UIImage imageNamed:@"show_RedpageImage"];
-    self.shareImage = shareImage;
-    
-    UILabel *descLabel = [UILabel new];
-    [self.sharBottom addSubview:descLabel];
-    self.descLabel = descLabel;
-    self.descLabel.font = [UIFont systemFontOfSize:13.];
-    self.descLabel.textColor = [UIColor whiteColor];
-    self.descLabel.text = @"您获得一个红包可以分享给好友";
-    
-    JMSelecterButton *shareButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
-    [self.sharBottom addSubview:shareButton];
-    self.shareButton = shareButton;
-    [self.shareButton setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:10.];
-    [self.shareButton setTitle:@"立即分享" forState:UIControlStateNormal];
-    self.shareButton.titleLabel.font = [UIFont systemFontOfSize:13.];
-    self.shareButton.tag = 102;
-    [self.shareButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.sharBottom mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(weakSelf);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@65);
-    }];
-    
-    self.sharBottom.hidden = YES;
-    self.shareImage.hidden = YES;
-    self.descLabel.hidden = YES;
-    self.shareButton.hidden = YES;
-    
-    [shareImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.sharBottom).offset(10);
-        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
-        make.width.height.mas_equalTo(@28);
-    }];
-    
-    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(shareImage.mas_right).offset(10);
-        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
-    }];
-    
-    [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.sharBottom).offset(-10);
-        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
-        make.width.mas_equalTo(@70);
-        make.height.mas_equalTo(@25);
-    }];
-    
+//    UIView *sharBottom = [UIView new];
+//    [self addSubview:sharBottom];
+//    self.sharBottom = sharBottom;
+//    self.sharBottom.backgroundColor = [UIColor blackColor];
+//    self.sharBottom.alpha = 0.8;
+//    
+//    UIImageView *shareImage = [UIImageView new];
+//    [self.sharBottom addSubview:shareImage];
+//    shareImage.image = [UIImage imageNamed:@"show_RedpageImage"];
+//    self.shareImage = shareImage;
+//    
+//    UILabel *descLabel = [UILabel new];
+//    [self.sharBottom addSubview:descLabel];
+//    self.descLabel = descLabel;
+//    self.descLabel.font = [UIFont systemFontOfSize:13.];
+//    self.descLabel.textColor = [UIColor whiteColor];
+//    self.descLabel.text = @"您获得一个红包可以分享给好友";
+//    
+//    JMSelecterButton *shareButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
+//    [self.sharBottom addSubview:shareButton];
+//    self.shareButton = shareButton;
+//    [self.shareButton setSureBackgroundColor:[UIColor buttonEnabledBackgroundColor] CornerRadius:10.];
+//    [self.shareButton setTitle:@"立即分享" forState:UIControlStateNormal];
+//    self.shareButton.titleLabel.font = [UIFont systemFontOfSize:13.];
+//    self.shareButton.tag = 102;
+//    [self.shareButton addTarget:self action:@selector(outDateClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.sharBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.top.equalTo(weakSelf);
+//        make.width.mas_equalTo(SCREENWIDTH);
+//        make.height.mas_equalTo(@65);
+//    }];
+//    
+//    self.sharBottom.hidden = YES;
+//    self.shareImage.hidden = YES;
+//    self.descLabel.hidden = YES;
+//    self.shareButton.hidden = YES;
+//    
+//    [shareImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(weakSelf.sharBottom).offset(10);
+//        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+//        make.width.height.mas_equalTo(@28);
+//    }];
+//    
+//    [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(shareImage.mas_right).offset(10);
+//        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+//    }];
+//    
+//    [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakSelf.sharBottom).offset(-10);
+//        make.centerY.equalTo(weakSelf.sharBottom.mas_centerY);
+//        make.width.mas_equalTo(@70);
+//        make.height.mas_equalTo(@25);
+//    }];
+//    
     // 如果是团购 - 订单详情的话,底部视图是一个查看拼团进展的按钮
     self.teamBuyOrderButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:self.teamBuyOrderButton];

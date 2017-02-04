@@ -77,7 +77,7 @@
     _orderDetailModel = orderDetailModel;
     self.orderStatusLabel.text = self.orderDetailModel.status_display;
     self.orderNumLabel.text = orderDetailModel.tid;
-    self.orderCreateTime.text = [self formatterTimeString:orderDetailModel.created];
+    self.orderCreateTime.text = [NSString jm_deleteTimeWithT:orderDetailModel.created];
     NSDictionary *addressDict = orderDetailModel.user_adress;
     self.addressNameLabel.text = addressDict[@"receiver_name"];
     self.addressPhoneLabel.text = addressDict[@"receiver_mobile"];
@@ -340,18 +340,8 @@
         [_delegate composeHeaderTapView:self TapClick:tag];
     }
 }
-- (NSString *)formatterTimeString:(NSString *)timeString{
-    if (timeString == nil) {
-        return nil;
-    }
-    if ([NSString isStringEmpty:timeString]) {
-        return nil;
-    }
-    NSMutableString *newString = [NSMutableString stringWithString:timeString];
-    NSRange range = {10, 1};
-    [newString replaceCharactersInRange:range withString:@" "];
-    return newString;
-}
+
+
 @end
 
 

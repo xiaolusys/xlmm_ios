@@ -208,7 +208,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
 }
 - (void)emptyView {
     kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
+    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 120) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
     [self.view addSubview:empty];
     empty.block = ^(NSInteger index) {
         if (index == 100) {

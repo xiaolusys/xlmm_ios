@@ -364,6 +364,10 @@
     _isFineGoods = [detailContentDic[@"is_boutique"] boolValue];
     NSString *saleStatus = detailContentDic[@"sale_state"];
     
+    if (_isDirectBuyGoods) {
+        [self.addCartButton setTitle:@"立即购买" forState:UIControlStateNormal];
+    }
+    
     if (_isTeamBuyGoods) { // 团购
         if ([saleStatus isEqual:@"on"]) {
             if ([detailContentDic[@"is_sale_out"] boolValue]) {
@@ -412,9 +416,7 @@
         _paramer[@"num"] = @"1";
         [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
     }
-    if (_isDirectBuyGoods) {
-        [self.addCartButton setTitle:@"立即购买" forState:UIControlStateNormal];
-    }
+
     _buyCouponUrl = goodsDetailDic[@"buy_coupon_url"];
     
     [self.tableView reloadData];

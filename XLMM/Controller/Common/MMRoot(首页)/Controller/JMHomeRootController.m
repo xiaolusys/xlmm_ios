@@ -226,10 +226,10 @@ static BOOL isFirstPOP = YES;
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    if (_isFirstOpenApp && isFirstPOP) {
-        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
-    }else {
-    }
+//    if (_isFirstOpenApp && isFirstPOP) {             // 新手礼包
+//        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(returnPopView) userInfo:nil repeats:NO];
+//    }else {
+//    }
     
     
 }
@@ -271,7 +271,7 @@ static BOOL isFirstPOP = YES;
             }else {
                 self.navigationItem.rightBarButtonItem = nil;
             }
-            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];
+//            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
         }else {
             self.navigationItem.rightBarButtonItem = nil;
         }
@@ -294,10 +294,10 @@ static BOOL isFirstPOP = YES;
                 self.todayVC.dataDict = responseObject;
                 _timeArray[1] = responseObject[@"offshelf_deadline"];
                 _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] ToData:responseObject[@"offshelf_deadline"]];
-            }else {
+            }else {     // tomorrow
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
-                _timeArray[2] = responseObject[@"offshelf_deadline"];
+                _timeArray[2] = responseObject[@"onshelf_starttime"];
             }
             isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
             if (isCreateSegment) {
@@ -606,8 +606,6 @@ static BOOL isFirstPOP = YES;
     if (isLogin) {
         if (isXLMM) {
             [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-            //            JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
-            //            [self.navigationController pushViewController:mamaCenterVC animated:YES];
             CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
             JMKeyWindow.rootViewController = tabBarVC;
         }else {
@@ -687,93 +685,7 @@ static BOOL isFirstPOP = YES;
         self.topButton.hidden = offsetY > SCREENHEIGHT * 2 ? NO : YES;
     }
 }
-#pragma mark -- 判断用户是否领取优惠券
-- (void)isGetCoupon {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        if (responseObject == nil) {
-            return ;
-        }else {
-            NSInteger code = [responseObject[@"code"] integerValue];
-            NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
-            if (code == 0) {
-                if (isPicked == 0) {  // 服务端返回是否弹出首次使用APP字段
-                    [self returnPopView];
-                }else {
-                    //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
-                }
-            }else {
-                [MBProgressHUD showError:@"请登录"];
-            }
-        }
-    } WithFail:^(NSError *error) {
-    } Progress:^(float progress) {
-    }];
-}
-- (void)pickCoupon {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        if (responseObject == nil) {
-            return ;
-        }else {
-            NSInteger code = [responseObject[@"code"] integerValue];
-            if (code == 0) {
-                [MBProgressHUD showSuccess:responseObject[@"info"]];
-            }else {
-                [MBProgressHUD showError:@"领取失败"];
-            }
-        }
-    } WithFail:^(NSError *error) {
-        
-    } Progress:^(float progress) {
-        
-    }];
-}
-- (void)hidepopView {
-    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
-}
-#pragma mark --- 第一次打开程序
-- (void)returnPopView {
-    isFirstPOP = NO;
-    JMHomeRootController * __weak weakSelf = self;
-    [[JMGlobal global] showpopForReceiveCouponFrame:CGRectMake(0, 0, SCREENWIDTH *0.7 , (SCREENWIDTH * 0.7) * 1.3 + 60) WithBlock:^(UIView *maskView) {
-    } ActivePopBlock:^(UIButton *button) {
-        [JMShareView hide];
-        [JMRepopView hide];
-        if (button.tag == 100) {
-            [weakSelf pockedCoupon];
-        }else {
-        }
-    }];
-}
-- (void)pockedCoupon {
-    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (islogin) {
-        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
-        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-            if (responseObject == nil) {
-                return ;
-            }else {
-                NSInteger code = [responseObject[@"code"] integerValue];
-                NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
-                if (code == 0) {
-                    if (isPicked == 1) {
-                        [MBProgressHUD showSuccess:responseObject[@"info"]];
-                    }else {
-                        [self pickCoupon];
-                    }
-                }else {
-                    [MBProgressHUD showError:@"请登录"];
-                }
-            }
-        } WithFail:^(NSError *error) {
-        } Progress:^(float progress) {
-        }];
-    }else {
-        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
-        [self.navigationController pushViewController:logVC animated:YES];
-    }
-}
+
 #pragma mark 版本 自动升级
 - (void)autoUpdateVersion{
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:UPDATE_URLSTRING WithParaments:nil WithSuccess:^(id responseObject) {
@@ -973,6 +885,7 @@ static BOOL isFirstPOP = YES;
     
 }
 
+
 @end
 
 
@@ -1004,18 +917,6 @@ static BOOL isFirstPOP = YES;
  *                 神兽保佑
  *                 代码无BUG!
  */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1210,6 +1111,102 @@ static BOOL isFirstPOP = YES;
 //        [self.navigationController pushViewController:vc animated:YES];
 //    }
 //}
+
+
+
+
+
+
+
+
+#pragma mark --- 第一次打开程序判断是否领取新手礼包
+//- (void)returnPopView {
+//    isFirstPOP = NO;
+//    JMHomeRootController * __weak weakSelf = self;
+//    [[JMGlobal global] showpopForReceiveCouponFrame:CGRectMake(0, 0, SCREENWIDTH *0.7 , (SCREENWIDTH * 0.7) * 1.3 + 60) WithBlock:^(UIView *maskView) {
+//    } ActivePopBlock:^(UIButton *button) {
+//        [JMShareView hide];
+//        [JMRepopView hide];
+//        if (button.tag == 100) {
+//            [weakSelf pockedCoupon];
+//        }else {
+//        }
+//    }];
+//}
+//- (void)pockedCoupon {
+//    BOOL islogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+//    if (islogin) {
+//        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
+//        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+//            if (responseObject == nil) {
+//                return ;
+//            }else {
+//                NSInteger code = [responseObject[@"code"] integerValue];
+//                NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
+//                if (code == 0) {
+//                    if (isPicked == 1) {
+//                        [MBProgressHUD showSuccess:responseObject[@"info"]];
+//                    }else {
+//                        [self pickCoupon];
+//                    }
+//                }else {
+//                    [MBProgressHUD showError:@"请登录"];
+//                }
+//            }
+//        } WithFail:^(NSError *error) {
+//        } Progress:^(float progress) {
+//        }];
+//    }else {
+//        JMLogInViewController *logVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:logVC animated:YES];
+//    }
+//}
+//- (void)pickCoupon {
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_register_gift_coupon", Root_URL];
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (responseObject == nil) {
+//            return ;
+//        }else {
+//            NSInteger code = [responseObject[@"code"] integerValue];
+//            if (code == 0) {
+//                [MBProgressHUD showSuccess:responseObject[@"info"]];
+//            }else {
+//                [MBProgressHUD showError:@"领取失败"];
+//            }
+//        }
+//    } WithFail:^(NSError *error) {
+//
+//    } Progress:^(float progress) {
+//
+//    }];
+//}
+//- (void)hidepopView {
+//    [JMPopViewAnimationSpring dismissView:self.popView overlayView:self.maskView];
+//}
+#pragma mark -- 判断用户是否领取优惠券
+//- (void)isGetCoupon {
+//    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/is_picked_register_gift_coupon", Root_URL];
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (responseObject == nil) {
+//            return ;
+//        }else {
+//            NSInteger code = [responseObject[@"code"] integerValue];
+//            NSInteger isPicked = [responseObject[@"is_picked"] integerValue];
+//            if (code == 0) {
+//                if (isPicked == 0) {  // 服务端返回是否弹出首次使用APP字段
+//                    [self returnPopView];
+//                }else {
+//                    //                    [SVProgressHUD showSuccessWithStatus:responseObject[@"info"]];
+//                }
+//            }else {
+//                [MBProgressHUD showError:@"请登录"];
+//            }
+//        }
+//    } WithFail:^(NSError *error) {
+//    } Progress:^(float progress) {
+//    }];
+//}
+
 
 
 

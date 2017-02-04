@@ -48,11 +48,11 @@
                     @{
                         @"title":@"整额提现",
                         @"descTitle":@"提现金额为100元200元整"
-                        },
-                    @{
-                        @"title":@"兑换现金券",
-                        @"descTitle":@"提现现金券为20元50元整"
                         }
+//                    @{
+//                        @"title":@"兑换现金券",
+//                        @"descTitle":@"提现现金券为20元50元整"
+//                        }
                     ];
     [self createRightButonItem];
     [self createTableView];
@@ -73,11 +73,11 @@
                         @{
                             @"title":@"整额提现",
                             @"descTitle":@"提现金额为100元200元整"
-                            },
-                        @{
-                            @"title":@"兑换现金券",
-                            @"descTitle":@"提现现金券为20元50元整"
                             }
+//                        @{
+//                            @"title":@"兑换现金券",
+//                            @"descTitle":@"提现现金券为20元50元整"
+//                            }
                         ];
         
         self.moneyLabel.text = CS_FLOAT(self.myBlance);
@@ -180,11 +180,11 @@
         };
 //        vc.activeValue = [_activeValueNum integerValue];
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (index == 2) { // 兑换优惠券
-        JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
-        shortVC.myBalance = self.myBlance;
-//        shortVC.descStr = self.extraModel.cashout_reason;
-        [self.navigationController pushViewController:shortVC animated:YES];
+//    }else if (index == 2) { // 兑换优惠券
+//        JMWithdrawShortController *shortVC = [[JMWithdrawShortController alloc] init];
+//        shortVC.myBalance = self.myBlance;
+////        shortVC.descStr = self.extraModel.cashout_reason;
+//        [self.navigationController pushViewController:shortVC animated:YES];
     }else { }
     
     

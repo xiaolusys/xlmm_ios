@@ -11,12 +11,24 @@
 
 @interface JMPurchaseFooterView ()
 
-
+@property (nonatomic, strong) UIButton *xiaoluCoinButton;
 
 @end
 
 @implementation JMPurchaseFooterView
 
+- (void)setIsShowXiaoluCoinView:(BOOL)isShowXiaoluCoinView {
+    _isShowXiaoluCoinView = isShowXiaoluCoinView;
+    if (!_isShowXiaoluCoinView) {
+        self.mj_h = 385;
+        [self.xiaoluCoinButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@0);
+        }];
+        self.xiaoluCoinButton.hidden = YES;
+        self.xiaoluCoinLabel.hidden = YES;
+    }
+    
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -54,7 +66,9 @@
     UIImageView *rightImage = [UIImageView new];
     rightImage.image = [UIImage imageNamed:@"rightArrow"];
     [couponeButton addSubview:rightImage];
-
+    
+//    NSArray *arr = @[@"零钱",@"小鹿币"];
+    
     UIButton *walletButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:walletButton];
     walletButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
@@ -74,6 +88,29 @@
     walletLabel.font = [UIFont systemFontOfSize:14.];
     walletLabel.textColor = [UIColor buttonTitleColor];
     self.walletLabel = walletLabel;
+    
+    UIButton *xiaoluCoinButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self addSubview:xiaoluCoinButton];
+    xiaoluCoinButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    xiaoluCoinButton.layer.borderWidth = 1.;
+    [xiaoluCoinButton setTitle:@"小鹿币" forState:UIControlStateNormal];
+    xiaoluCoinButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [xiaoluCoinButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+    [xiaoluCoinButton setImage:[UIImage imageNamed:@"circle_wallet_Normal"] forState:UIControlStateNormal];
+    [xiaoluCoinButton setImage:[UIImage imageNamed:@"circle_wallet_Selected"] forState:UIControlStateSelected];
+    xiaoluCoinButton.titleEdgeInsets = UIEdgeInsetsMake(0, -SCREENWIDTH + 58, 0, 0);
+    xiaoluCoinButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH - 6);
+    xiaoluCoinButton.tag = 102;
+    [xiaoluCoinButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.xiaoluCoinButton = xiaoluCoinButton;
+    
+    UILabel *xiaoluCoinLabel = [UILabel new];
+    [xiaoluCoinButton addSubview:xiaoluCoinLabel];
+    xiaoluCoinLabel.font = [UIFont systemFontOfSize:14.];
+    xiaoluCoinLabel.textColor = [UIColor buttonTitleColor];
+    self.xiaoluCoinLabel = xiaoluCoinLabel;
+    
+    
 
     UIView *appPayView = [UIView new];
     [self addSubview:appPayView];
@@ -104,7 +141,7 @@
     [termsButton setImage:[UIImage imageNamed:@"right_button"] forState:UIControlStateNormal];
     [termsButton setImage:[UIImage imageNamed:@"termsImage"] forState:UIControlStateSelected];
 //    termsButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH + 40);
-    termsButton.tag = 102;
+    termsButton.tag = 103;
     [termsButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.termsButton = termsButton;
     
@@ -158,7 +195,7 @@
     goPayButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [goPayButton setTitle:@"去结算" forState:UIControlStateNormal];
     goPayButton.layer.cornerRadius = 20;
-    goPayButton.tag = 103;
+    goPayButton.tag = 104;
 
     [goPayButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.goPayButton = goPayButton;
@@ -201,9 +238,22 @@
         make.right.equalTo(walletButton).offset(-35);
         make.centerY.equalTo(walletButton.mas_centerY);
     }];
-
-    [appPayView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [xiaoluCoinButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(walletButton.mas_bottom);
+        make.left.right.equalTo(weakSelf);
+        make.height.mas_equalTo(@45);
+    }];
+    
+    [xiaoluCoinLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(xiaoluCoinButton).offset(-35);
+        make.centerY.equalTo(xiaoluCoinButton.mas_centerY);
+    }];
+    
+    
+    
+    [appPayView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(xiaoluCoinButton.mas_bottom);
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(@45);
     }];

@@ -47,12 +47,12 @@
     self.paysuccessLabel.font = [UIFont boldSystemFontOfSize:32.];
     self.paysuccessLabel.text = @"支付成功!";
     
-    UILabel *descLabel = [UILabel new];
-    [self addSubview:descLabel];
-    self.descLabel = descLabel;
-    self.descLabel.textColor = [UIColor buttonTitleColor];
-    self.descLabel.font = [UIFont systemFontOfSize:14.];
-    self.descLabel.text = @"您的订单已发至仓库，请等待发货";
+//    UILabel *descLabel = [UILabel new];
+//    [self addSubview:descLabel];
+//    self.descLabel = descLabel;
+//    self.descLabel.textColor = [UIColor buttonTitleColor];
+//    self.descLabel.font = [UIFont systemFontOfSize:14.];
+//    self.descLabel.text = @"您的订单已发至仓库，请等待发货";
     
     kWeakSelf
     [self.topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -66,10 +66,10 @@
         make.centerX.equalTo(weakSelf.mas_centerX);
     }];
     
-    [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.mas_centerX);
-        make.top.equalTo(weakSelf.paysuccessLabel.mas_bottom).offset(15);
-    }];
+//    [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(weakSelf.mas_centerX);
+//        make.top.equalTo(weakSelf.paysuccessLabel.mas_bottom).offset(15);
+//    }];
     
     
 }

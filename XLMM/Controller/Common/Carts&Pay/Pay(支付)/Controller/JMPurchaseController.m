@@ -38,13 +38,18 @@
     NSDictionary *_couponInfo;        // 优惠券
     NSDictionary *_rightReduce;       // app立减
     NSDictionary *_xlWallet;          // 钱包
+    NSDictionary *_xiaoluCoin;        // 小鹿币
+    NSDictionary *_xiaolulingqian;    // 小鹿零钱
+    
     
     NSString *_payMethod;             //支付方式
     float _totalPayment;              //应付款金额
     float _discountfee;               //优惠券金额
     NSString *_couponStringID;        // 优惠券ID
     float _rightAmount;               //app优惠
-    float _availableFloat;            //小鹿钱包余额
+    float _availableFloat;            //小鹿支付金额
+    float _xiaoluCoinValue;           //小鹿币余额
+    float _xiaolulingqianValue;       //小鹿零钱余额
     
     NSString *_uuid;                  //uuid
     NSString *_cartIDs;               //购物车id
@@ -95,6 +100,8 @@
 @property (nonatomic, assign) BOOL isEnoughBudget;
 @property (nonatomic, assign) BOOL isUseXLW;
 @property (nonatomic, assign) BOOL isInstallWX;
+@property (nonatomic, assign) BOOL isxiaoluCoin;
+
 /**
  *  优惠券是否满足条件
  */
@@ -112,6 +119,8 @@
  */
 @property (nonatomic,assign) BOOL isXLWforAlipay;
 
+@property (nonatomic, strong) UIButton *tmpBtn;
+
 @end
 
 static BOOL isAgreeTerms = YES;
@@ -124,12 +133,6 @@ static BOOL isAgreeTerms = YES;
         _logisticsArr = [NSMutableArray array];
     }
     return _logisticsArr;
-}
-- (NSMutableArray *)purchaseGoodsArr {
-    if (!_purchaseGoodsArr) {
-        _purchaseGoodsArr = [NSMutableArray array];
-    }
-    return _purchaseGoodsArr;
 }
 - (JMChoiseLogisController *)showViewVC {
     if (!_showViewVC) {
@@ -151,6 +154,7 @@ static BOOL isAgreeTerms = YES;
     self.isEnoughCoupon = NO;
     self.isUserCoupon = NO;
     self.isCouponEnoughPay = NO;
+    self.isxiaoluCoin = NO;
     _isIndentifierNum = NO;
     _isBondedGoods = NO;
     _isVirtualCoupone = NO;
@@ -159,6 +163,8 @@ static BOOL isAgreeTerms = YES;
     _discountfee = 0;               //优惠券金额
     _rightAmount = 0;               //app优惠
     _availableFloat = 0;            //小鹿钱包余额
+    _xiaoluCoinValue = 0;           //小鹿币余额
+    _xiaolulingqianValue = 0;
     
     _totalfee = 0;                  //总金额
     _postfee = 0;                   //运费金额
@@ -325,8 +331,8 @@ static BOOL isAgreeTerms = YES;
         }
         // 余额
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 3) {
-            _xlWallet = dicExtras;
-            _availableFloat = [[dicExtras objectForKey:@"value"] floatValue];
+            _xiaolulingqian = dicExtras;
+            _xiaolulingqianValue = [[dicExtras objectForKey:@"value"] floatValue];
 //            if ([[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedDescending ||[[dicExtras objectForKey:@"value"] compare:[NSNumber numberWithFloat:_totalPayment]] == NSOrderedSame) {
 //                //足够支付
 //                self.isEnoughBudget = YES;
@@ -335,9 +341,16 @@ static BOOL isAgreeTerms = YES;
 //                self.isEnoughBudget = NO;
 //            }
         }
+        if ([[dicExtras objectForKey:@"pid"] integerValue] == 4) {
+            _xiaoluCoin = dicExtras;
+            _xiaoluCoinValue = [[dicExtras objectForKey:@"value"] floatValue];
+        }
+        
     }
     _uuid = [purchaseDic objectForKey:@"uuid"];
-    _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
+    if (![NSString isStringEmpty:[purchaseDic objectForKey:@"cart_ids"]]) {
+        _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
+    }
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
     [self calculationLabelValue];
@@ -352,6 +365,7 @@ static BOOL isAgreeTerms = YES;
         self.tableView.tableHeaderView = self.purchaseHeaderView;
     }
     self.purchaseHeaderView.isVirtualCoupone = _isVirtualCoupone;
+    self.purchaseFooterView.isShowXiaoluCoinView = _xiaoluCoinValue > 0 ? YES : NO;
 }
 - (void)userNotIdCardNumberMessage {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
@@ -376,6 +390,7 @@ static BOOL isAgreeTerms = YES;
         NSString *amontPatStr = [NSString stringWithFormat:@"%.2f",_amontPayment];
         self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,amontPatStr]];//[self stringText:mutableStr WithStr:paymentStr];
         self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
+        self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", 0.00];
     }else {
         self.isCouponEnoughPay = NO;
         if (self.isUseXLW) {
@@ -388,7 +403,14 @@ static BOOL isAgreeTerms = YES;
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
                 NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
                 self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
-                self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+                if (self.isxiaoluCoin) {
+                    self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+                    self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _xiaolulingqianValue];
+                }else {
+                    self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+                    self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", _xiaoluCoinValue];
+                }
+                
             }else {
                 self.isEnoughBudget = NO;
                 self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _couponValue - _rightAmount - _availableFloat];
@@ -396,14 +418,22 @@ static BOOL isAgreeTerms = YES;
                 NSString *mutableStr = [NSString stringWithFormat:@"应付金额%@已节省%.2f", paymentStr,_discount];
                 NSString *discountStr = [NSString stringWithFormat:@"%.2f",_discount];
                 self.purchaseFooterView.paymenLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:mutableStr SubStringArray:@[paymentStr,discountStr]];//[self stringText:mutableStr WithStr:paymentStr];
-                self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
+                if (self.isxiaoluCoin) {
+                    self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _xiaolulingqianValue];
+                    self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
+                }else {
+                    self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
+                    self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", _xiaoluCoinValue];
+                }
             }
         }else {
             float surplus = _amontPayment - _couponValue - _rightAmount;
             if (_availableFloat - surplus > 0.00001 || fabsf(_availableFloat - surplus) <= 0.00001) {
-                self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", surplus];
+                self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _xiaolulingqianValue];
+                self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", _xiaoluCoinValue];
             }else {
-                self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _availableFloat];
+                self.purchaseFooterView.walletLabel.text = [NSString stringWithFormat:@"%.2f", _xiaolulingqianValue];
+                self.purchaseFooterView.xiaoluCoinLabel.text = [NSString stringWithFormat:@"%.2f", _xiaoluCoinValue];
             }
             self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", _amontPayment - _discount];
             NSString *paymentStr = [NSString stringWithFormat:@"%.2f",_amontPayment - _discount];
@@ -429,7 +459,7 @@ static BOOL isAgreeTerms = YES;
     self.purchaseHeaderView.delegate = self;
 }
 - (void)createTableFooterView {
-    self.purchaseFooterView = [[JMPurchaseFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 390)];
+    self.purchaseFooterView = [[JMPurchaseFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 430)];
     self.tableView.tableFooterView = self.purchaseFooterView;
     self.purchaseFooterView.delegate = self;
 }
@@ -481,6 +511,18 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark 底部视图按钮选择_处理事件
 - (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
+    if (button.tag != 100) {
+        for (int i = 1; i < 3; i++) {
+            UIButton *btn = (UIButton *)[[button superview]viewWithTag:100 + i];
+            //选中当前按钮时
+            if (button.tag == btn.tag) {
+                button.selected = !button.selected;
+            }else{
+                [btn setSelected:NO];
+            }
+        }
+    }
+    
     // 100->优惠券  101->钱包  102->条款  103->结算
     if (button.tag == 100) {
         button.enabled = NO;
@@ -505,26 +547,37 @@ static BOOL isAgreeTerms = YES;
 //        vc.selectedModelID = _yhqModelID;
 //        [self.navigationController pushViewController:vc animated:YES];
     }else if (button.tag == 101) {
+        _xlWallet = _xiaolulingqian;
+        _availableFloat = _xiaolulingqianValue;
         if (_availableFloat > 0) {
-            button.selected = !button.selected;
-            if (button.selected) {
-                self.isUseXLW = YES;
-                [self calculationLabelValue];
-            }else {
-                self.isUseXLW = NO;
-                [self calculationLabelValue];
-            }
+//            button.selected = !button.selected;
+            self.isUseXLW = button.selected;
+            self.isxiaoluCoin = NO;
+            [self calculationLabelValue];
         }else {
-            [MBProgressHUD showWarning:@"钱包不可用"];
+            [MBProgressHUD showWarning:@"钱包不足"];
         }
     }else if (button.tag == 102) {
+        _xlWallet = _xiaoluCoin;
+        _availableFloat = _xiaoluCoinValue;
+        if (_availableFloat > 0) {
+//            button.selected = !button.selected;
+            self.isUseXLW = button.selected;
+            self.isxiaoluCoin = YES;
+            [self calculationLabelValue];
+            
+        }else {
+            [MBProgressHUD showWarning:@"小鹿币不足"];
+        }
+        
+    }else if (button.tag == 103) {
         button.selected = !button.selected;
         if (button.selected) {
             isAgreeTerms = YES;
         }else {
             isAgreeTerms = NO;
         }
-    }else if (button.tag == 103) {
+    }else if (button.tag == 104) {
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (_isIndentifierNum && _isBondedGoods) {
@@ -745,6 +798,7 @@ static BOOL isAgreeTerms = YES;
         _couponStringID = @"";
         [self calculationLabelValue];
     }else {
+        _couponValue = 0;
         self.isUserCoupon = YES;
         self.isEnoughCoupon = YES;
         JMCouponModel *model = modelArray[0];

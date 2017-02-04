@@ -67,7 +67,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     if ([NSString isStringEmpty:timeString]) {
         self.timerLabel.text = @"即将上架";
     }else {
-        endTime = [self spaceFormatTimeString:detailContentDic[@"offshelf_time"]];
+        endTime = [NSString jm_deleteTimeWithT:detailContentDic[@"offshelf_time"]];
         int endSecond = [[JMGlobal global] secondOfCurrentTimeInEndTime:endTime];
         [JMCountDownView countDownWithCurrentTime:endSecond];
         kWeakSelf
@@ -93,17 +93,6 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }];
     for (UILabel *label in self.fineGoodsView.subviews) {
         [label removeFromSuperview];
-    }
-}
-
--(NSString*)spaceFormatTimeString:(NSString*)timeString{
-    if ([NSString isStringEmpty:timeString]) {
-        return nil;
-    }else {
-        NSMutableString *ms = [NSMutableString stringWithString:timeString];
-        NSRange range = {10,1};
-        [ms replaceCharactersInRange:range withString:@" "];
-        return ms;
     }
 }
 - (void)setCustomInfoDic:(NSDictionary *)customInfoDic {
@@ -148,12 +137,12 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     [contentView addSubview:shoucangButton];
     [shoucangButton setImage:[UIImage imageNamed:@"MyCollection_Nomal"] forState:UIControlStateNormal];
     [shoucangButton setImage:[UIImage imageNamed:@"MyCollection_Selected"] forState:UIControlStateSelected];
-    [shoucangButton setTitle:@"加入收藏" forState:UIControlStateNormal];
-    [shoucangButton setTitle:@"取消收藏" forState:UIControlStateSelected];
-    [shoucangButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-    [shoucangButton setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
-    shoucangButton.titleLabel.font = [UIFont systemFontOfSize:16.];
-    [shoucangButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
+//    [shoucangButton setTitle:@"加入收藏" forState:UIControlStateNormal];
+//    [shoucangButton setTitle:@"取消收藏" forState:UIControlStateSelected];
+//    [shoucangButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//    [shoucangButton setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
+//    shoucangButton.titleLabel.font = [UIFont systemFontOfSize:16.];
+//    [shoucangButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     self.storeUpButton = shoucangButton;
 //    shoucangButton.tag = 100;
 //    shoucangButton.selected = NO;
@@ -220,7 +209,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }];
     [nameTitle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(contentView).offset(15);
-        make.width.mas_equalTo(@(SCREENWIDTH - 130));
+        make.width.mas_equalTo(@(SCREENWIDTH - 30));
     }];
     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(nameTitle);
@@ -237,23 +226,22 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         //        make.bottom.equalTo(headerView.mas_bottom).offset(-15);
         make.centerY.equalTo(curreLabel.mas_centerY);
     }];
-    
-    
-    [shoucangButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(contentView);
-        make.centerY.equalTo(nameTitle.mas_centerY);
-        make.width.mas_equalTo(@120);
-        make.height.mas_equalTo(@40);
-    }];
-    
+
     [deletLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(oldPriceLabel.mas_centerY);
         make.left.right.equalTo(oldPriceLabel);
         make.height.mas_equalTo(@1);
     }];
     
+    [shoucangButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(baoyou.mas_centerY);
+        make.width.mas_equalTo(@80);
+        make.height.mas_equalTo(@40);
+        make.right.equalTo(baoyou.mas_left);
+    }];
+    
     [baoyou mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(shoucangButton).offset(-20);
+        make.right.equalTo(weakSelf.contentView).offset(-15);
         make.bottom.equalTo(contentView).offset(-20);
         make.height.mas_equalTo(@20);
     }];
