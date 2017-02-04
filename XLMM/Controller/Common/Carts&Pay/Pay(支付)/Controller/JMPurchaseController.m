@@ -344,7 +344,6 @@ static BOOL isAgreeTerms = YES;
         if ([[dicExtras objectForKey:@"pid"] integerValue] == 4) {
             _xiaoluCoin = dicExtras;
             _xiaoluCoinValue = [[dicExtras objectForKey:@"value"] floatValue];
-            
         }
         
     }
@@ -366,6 +365,7 @@ static BOOL isAgreeTerms = YES;
         self.tableView.tableHeaderView = self.purchaseHeaderView;
     }
     self.purchaseHeaderView.isVirtualCoupone = _isVirtualCoupone;
+    self.purchaseFooterView.isShowXiaoluCoinView = _xiaoluCoinValue > 0 ? YES : NO;
 }
 - (void)userNotIdCardNumberMessage {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];

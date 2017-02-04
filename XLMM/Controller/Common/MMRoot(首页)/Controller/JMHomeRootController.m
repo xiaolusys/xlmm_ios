@@ -294,7 +294,7 @@ static BOOL isFirstPOP = YES;
                 self.todayVC.dataDict = responseObject;
                 _timeArray[1] = responseObject[@"offshelf_deadline"];
                 _dayDifferString = [NSString numberOfDaysWithFromDate:responseObject[@"onshelf_starttime"] ToData:responseObject[@"offshelf_deadline"]];
-            }else {
+            }else {     // tomorrow
                 flageArr[2] = @1;
                 self.tomorrowVC.dataDict = responseObject;
                 _timeArray[2] = responseObject[@"onshelf_starttime"];
