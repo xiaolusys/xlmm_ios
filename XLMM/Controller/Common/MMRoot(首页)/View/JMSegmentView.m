@@ -145,7 +145,7 @@
         self.Label1.text = @"距本场结束";
     }
     NSString *todayTimeString = self.timeArray[num];
-    if ([NSString isStringEmpty:todayTimeString]) {
+    if ([NSString isStringEmpty:todayTimeString] || [todayTimeString isEqual:@"00:00:00"]) {
         //        self.timerLabel.text = @"即将上架";
         self.timeLabel.text = @"--:--:--:--";
     }else {
