@@ -11,12 +11,24 @@
 
 @interface JMPurchaseFooterView ()
 
-
+@property (nonatomic, strong) UIButton *xiaoluCoinButton;
 
 @end
 
 @implementation JMPurchaseFooterView
 
+- (void)setIsShowXiaoluCoinView:(BOOL)isShowXiaoluCoinView {
+    _isShowXiaoluCoinView = isShowXiaoluCoinView;
+    if (!_isShowXiaoluCoinView) {
+        self.mj_h = 385;
+        [self.xiaoluCoinButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@0);
+        }];
+        self.xiaoluCoinButton.hidden = YES;
+        self.xiaoluCoinLabel.hidden = YES;
+    }
+    
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -90,6 +102,7 @@
     xiaoluCoinButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -SCREENWIDTH - 6);
     xiaoluCoinButton.tag = 102;
     [xiaoluCoinButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.xiaoluCoinButton = xiaoluCoinButton;
     
     UILabel *xiaoluCoinLabel = [UILabel new];
     [xiaoluCoinButton addSubview:xiaoluCoinLabel];

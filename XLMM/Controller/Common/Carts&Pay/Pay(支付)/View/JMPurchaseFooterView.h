@@ -20,6 +20,8 @@
 
 @interface JMPurchaseFooterView : UIView
 
+@property (nonatomic, assign) BOOL isShowXiaoluCoinView;
+
 @property (nonatomic, strong) UILabel *appPayLabel;
 
 @property (nonatomic, strong) UILabel *couponLabel;
