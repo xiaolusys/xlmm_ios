@@ -27,13 +27,13 @@
 
 + (instancetype)enterFooterView {
     JMSharePackView *headView = [[JMSharePackView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 230)];
-    headView.backgroundColor = [UIColor orangeColor];
     return headView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        [self createUI];
+//        [self createUI];
+        
     }
     return self;
 }
@@ -106,11 +106,6 @@
 //    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0] range:NSMakeRange(5 + limtStrLength, 3)];
 //    self.getRedpake.attributedText = str;
     
-}
-- (void)shareRedPackClick:(UIButton *)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(composeGetRedpackBtn:didClick:)]) {
-        [_delegate composeGetRedpackBtn:self didClick:sender];
-    }
 }
 
 
