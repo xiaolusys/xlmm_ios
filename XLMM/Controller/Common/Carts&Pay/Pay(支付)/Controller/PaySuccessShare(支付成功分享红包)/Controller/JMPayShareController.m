@@ -14,7 +14,7 @@
 #import "JMShareModel.h"
 #import "PersonOrderViewController.h"
 
-@interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMSharePackViewDelegate>
+@interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMPaySucTitleViewDelegate>
 
 /**
  *  分享数据字典
@@ -52,7 +52,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self loadData];
+//    [self loadData];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isShareApinPayGo) name:@"isShareApinPayGo" object:nil];
 
 }
@@ -76,10 +76,11 @@
     
     JMPaySucTitleView *paySuccessView = [JMPaySucTitleView enterHeaderView];
     self.paySuccessView = paySuccessView;
+    self.paySuccessView.delegate = self;
     
     JMSharePackView *sharePackView = [JMSharePackView enterFooterView];
     self.sharePackView = sharePackView;
-    self.sharePackView.delegate = self;
+    
     
     self.tableView.tableHeaderView = self.paySuccessView;
     self.tableView.tableFooterView = self.sharePackView;
@@ -136,44 +137,21 @@
 
 
 - (void)composeGetRedpackBtn:(JMSharePackView *)renPack didClick:(UIButton *)button {
-    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
-    }];
-//    JMShareView *cover = [JMShareView show];
-//    cover.delegate = self;
-//    //弹出视图
-//    JMPopView *menu = [JMPopView showInRect:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240)];
-//    menu.contentView = self.shareView.view;
+//    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.shareView WithBlock:^(UIView *maskView) {
+//    }];
+    [self jumpToWaitReceipt];
 }
-//- (void)coverDidClickCover:(JMShareView *)cover {
-//    //隐藏pop菜单
-//    [JMPopView hide];
-//    [MBProgressHUD hideHUD];
-//}
 - (void)backClick:(UIButton *)sender {
+    [self jumpToWaitReceipt];
+    
+}
+- (void)jumpToWaitReceipt {
     // 支付成功后,跳转到待收货页面
     PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
     orderVC.index = 102;
     [self.navigationController pushViewController:orderVC animated:YES];
-    
-//    NSInteger count = 0;
-//    count = [[self.navigationController viewControllers] indexOfObject:self];
-//    if (count >= 2) {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-//    }else {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-    
 }
-//- (void)isShareApinPayGo {
-//    NSInteger count = 0;
-//    
-//    count = [[self.navigationController viewControllers] indexOfObject:self];
-//    if (count >= 2) {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(count - 2)] animated:YES];
-//    }else {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-//}
+
 @end
 
 /**
