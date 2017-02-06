@@ -22,6 +22,7 @@
 #import "JMPersonalPageLayoutCell.h"
 #import "JMPersonalHeaderReusableView.h"
 #import "JMPersonalPageHeaderCell.h"
+#import "JMApplyForRefundController.h"
 
 
 @interface JMPersonalPageController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,JMPersonalPageHeaderCellDelegate> {
@@ -325,8 +326,10 @@
                 break;
             case 1:
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-                    JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
-                    [self.navigationController pushViewController:yijianVC animated:YES];
+                    JMApplyForRefundController *tuikuanVC = [[JMApplyForRefundController alloc] init];
+                    [self.navigationController pushViewController:tuikuanVC animated:YES];
+//                    JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
+//                    [self.navigationController pushViewController:yijianVC animated:YES];
                 }else{
                     [self displayLoginView];
                     return;
