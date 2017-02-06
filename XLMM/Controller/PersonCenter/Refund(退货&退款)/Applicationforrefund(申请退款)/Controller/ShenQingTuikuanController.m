@@ -139,7 +139,6 @@
     number = [self.dingdanModel.num intValue];
     maxNumber = [self.dingdanModel.num intValue];
     
-    
     self.nameLabel.text = self.dingdanModel.title;
     if(number != 0){
         self.priceLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.dingdanModel.total_fee floatValue]/number];
@@ -203,15 +202,16 @@
     descLabel.textColor = [UIColor dingfanxiangqingColor];
     descLabel.text = self.refundDic[@"desc"];
     
+    kWeakSelf
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.choiseRefundWay).offset(10);
-        make.left.equalTo(self.choiseRefundWay).offset(20);
+        make.top.equalTo(weakSelf.choiseRefundWay).offset(10);
+        make.left.equalTo(weakSelf.choiseRefundWay).offset(20);
     }];
     
     [descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(nameLabel.mas_bottom).offset(5);
         make.left.equalTo(nameLabel);
-        make.right.equalTo(self.choiseRefundWay).offset(-20);
+        make.width.mas_equalTo(@(SCREENWIDTH - 40));
     }];
     
 }
@@ -229,6 +229,7 @@
 }
 
 - (void)hiddenReasonView{
+    reasonView.hidden = YES;
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
         effectView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
@@ -240,6 +241,7 @@
     
 }
 - (void)showReasonView{
+    reasonView.hidden = NO;
     [UIView animateWithDuration:0.3 animations:^{
         reasonView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
         effectView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -275,6 +277,7 @@
    // scrollView.showsVerticalScrollIndicator = NO;
     reasonView.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT);
     reasonView.alpha = 0.9;
+    reasonView.hidden = YES;
     [self.view addSubview:reasonView];
     
     
@@ -331,7 +334,6 @@
         return;
     }
     //   http://192.168.1.31:9000/rest/v1/refunds
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
@@ -398,8 +400,6 @@
     
     //   http://192.168.1.31:9000/rest/v1/refunds
     
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSDictionary *parameters = @{@"id": self.oid,
                                  @"modify":@3,
@@ -486,7 +486,6 @@
 
 #pragma mark -- 弹出视图
 - (void)returnPopView {
-    
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.maskView.backgroundColor = [UIColor blackColor];
     self.maskView.alpha = 0.3;
