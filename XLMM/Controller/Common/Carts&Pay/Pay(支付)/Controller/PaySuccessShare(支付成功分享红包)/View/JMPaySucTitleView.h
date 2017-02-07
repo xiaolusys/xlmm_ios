@@ -8,8 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class JMPaySucTitleView;
+@protocol JMPaySucTitleViewDelegate <NSObject>
+
+- (void)composeGetRedpackBtn:(JMPaySucTitleView *)renPack didClick:(UIButton *)button;
+
+@end
+
+
 @interface JMPaySucTitleView : UIView
 
 + (instancetype)enterHeaderView;
+
+@property (nonatomic, weak) id<JMPaySucTitleViewDelegate> delegate;
+
 
 @end

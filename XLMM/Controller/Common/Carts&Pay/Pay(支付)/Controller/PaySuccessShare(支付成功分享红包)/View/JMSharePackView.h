@@ -7,14 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JMSharePackView.h"
-
-@class JMSharePackView;
-@protocol JMSharePackViewDelegate <NSObject>
-
-- (void)composeGetRedpackBtn:(JMSharePackView *)renPack didClick:(UIButton *)button;
-
-@end
 
 @interface JMSharePackView : UIView
 
@@ -22,6 +14,5 @@
 
 + (instancetype)enterFooterView;
 
-@property (nonatomic, weak) id<JMSharePackViewDelegate> delegate;
 
 @end
