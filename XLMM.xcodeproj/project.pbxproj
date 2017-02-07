@@ -215,7 +215,6 @@
 		1F12ED1F1DAC97E600511B58 /* payWay_xiaoluPay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC171DAC97E600511B58 /* payWay_xiaoluPay@2x.png */; };
 		1F12ED201DAC97E700511B58 /* show_RedpageImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC181DAC97E600511B58 /* show_RedpageImage@2x.png */; };
 		1F12ED211DAC97E700511B58 /*  lianxikkefu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC1A1DAC97E600511B58 /*  lianxikkefu_icon.png */; };
-		1F12ED221DAC97E700511B58 /* downArrow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC1B1DAC97E600511B58 /* downArrow1.png */; };
 		1F12ED231DAC97E700511B58 /* leftArrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC1C1DAC97E600511B58 /* leftArrowIcon.png */; };
 		1F12ED241DAC97E700511B58 /* refund_othertuikuan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC1D1DAC97E600511B58 /* refund_othertuikuan@2x.png */; };
 		1F12ED251DAC97E700511B58 /* refund_tuihuoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F12EC1E1DAC97E600511B58 /* refund_tuihuoImage@2x.png */; };
@@ -663,6 +662,8 @@
 		1F7EA81D1E471BBC00E44616 /* JMApplyForRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7EA81C1E471BBC00E44616 /* JMApplyForRefundController.m */; };
 		1F7EA8201E472AF500E44616 /* shopping_cart_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7EA81E1E472AF500E44616 /* shopping_cart_add@2x.png */; };
 		1F7EA8211E472AF500E44616 /* shopping_cart_jian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7EA81F1E472AF500E44616 /* shopping_cart_jian@2x.png */; };
+		1F7EA8231E48145B00E44616 /* downArrow1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7EA8221E48145B00E44616 /* downArrow1@2x.png */; };
+		1F7EA8261E48411D00E44616 /* UIScrollView+UITouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7EA8251E48411D00E44616 /* UIScrollView+UITouch.m */; };
 		1F8CC4011E25BDFF00515FAC /* JMTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CC4001E25BDFF00515FAC /* JMTagView.m */; };
 		1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DB1D5055BC00327408 /* libHappyDNS.a */; };
 		1F9169DE1D5055BF00327408 /* libQiniu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DD1D5055BF00327408 /* libQiniu.a */; };
@@ -1067,7 +1068,6 @@
 		1F12EC171DAC97E600511B58 /* payWay_xiaoluPay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "payWay_xiaoluPay@2x.png"; sourceTree = "<group>"; };
 		1F12EC181DAC97E600511B58 /* show_RedpageImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "show_RedpageImage@2x.png"; sourceTree = "<group>"; };
 		1F12EC1A1DAC97E600511B58 /*  lianxikkefu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " lianxikkefu_icon.png"; sourceTree = "<group>"; };
-		1F12EC1B1DAC97E600511B58 /* downArrow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrow1.png; sourceTree = "<group>"; };
 		1F12EC1C1DAC97E600511B58 /* leftArrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftArrowIcon.png; sourceTree = "<group>"; };
 		1F12EC1D1DAC97E600511B58 /* refund_othertuikuan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refund_othertuikuan@2x.png"; sourceTree = "<group>"; };
 		1F12EC1E1DAC97E600511B58 /* refund_tuihuoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refund_tuihuoImage@2x.png"; sourceTree = "<group>"; };
@@ -1912,6 +1912,9 @@
 		1F7EA81C1E471BBC00E44616 /* JMApplyForRefundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMApplyForRefundController.m; sourceTree = "<group>"; };
 		1F7EA81E1E472AF500E44616 /* shopping_cart_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shopping_cart_add@2x.png"; sourceTree = "<group>"; };
 		1F7EA81F1E472AF500E44616 /* shopping_cart_jian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shopping_cart_jian@2x.png"; sourceTree = "<group>"; };
+		1F7EA8221E48145B00E44616 /* downArrow1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downArrow1@2x.png"; sourceTree = "<group>"; };
+		1F7EA8241E48411D00E44616 /* UIScrollView+UITouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+UITouch.h"; sourceTree = "<group>"; };
+		1F7EA8251E48411D00E44616 /* UIScrollView+UITouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+UITouch.m"; sourceTree = "<group>"; };
 		1F8411931DC216B1009BF329 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		1F8CC3FF1E25BDFF00515FAC /* JMTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTagView.h; sourceTree = "<group>"; };
 		1F8CC4001E25BDFF00515FAC /* JMTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTagView.m; sourceTree = "<group>"; };
@@ -2404,6 +2407,8 @@
 				183072771C97C00900B7665E /* UIViewController+NavigationBar.m */,
 				18FCFA211CAAC1BE006C75BC /* NSDictionary+UrlEncoding.h */,
 				18FCFA221CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m */,
+				1F7EA8241E48411D00E44616 /* UIScrollView+UITouch.h */,
+				1F7EA8251E48411D00E44616 /* UIScrollView+UITouch.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2888,9 +2893,9 @@
 		1F12EC191DAC97E600511B58 /* refundImage */ = {
 			isa = PBXGroup;
 			children = (
+				1F7EA8221E48145B00E44616 /* downArrow1@2x.png */,
 				1F13A4C51E10C8B800239A6E /* CameraImage.png */,
 				1F12EC1A1DAC97E600511B58 /*  lianxikkefu_icon.png */,
-				1F12EC1B1DAC97E600511B58 /* downArrow1.png */,
 				1F12EC1C1DAC97E600511B58 /* leftArrowIcon.png */,
 				1F12EC1D1DAC97E600511B58 /* refund_othertuikuan@2x.png */,
 				1F12EC1E1DAC97E600511B58 /* refund_tuihuoImage@2x.png */,
@@ -6555,6 +6560,7 @@
 				1F12ED5C1DAC97E700511B58 /* weichat_login@2x.png in Resources */,
 				1F12ED0F1DAC97E600511B58 /* 圈圈加载0033@2x.png in Resources */,
 				1F12ED161DAC97E600511B58 /* 圈圈加载0040@2x.png in Resources */,
+				1F7EA8231E48145B00E44616 /* downArrow1@2x.png in Resources */,
 				1F12ECCF1DAC97E600511B58 /* 4lun@2x.png in Resources */,
 				1F12ED271DAC97E700511B58 /* refundStatusImage@2x.png in Resources */,
 				1F498C2B1D2772D0007E77FC /* AddressViewController.xib in Resources */,
@@ -6590,7 +6596,6 @@
 				1F12EC7E1DAC97E600511B58 /* goodsDetailCarts@2x.png in Resources */,
 				1F12ED421DAC97E700511B58 /* empty_address_icon.png in Resources */,
 				1F12ED2F1DAC97E700511B58 /* circle_wallet_Normal1.png in Resources */,
-				1F12ED221DAC97E700511B58 /* downArrow1.png in Resources */,
 				1F12ED2C1DAC97E700511B58 /* weiboiconthird.png in Resources */,
 				1F7A1DD11E237EB50013A309 /* searchBarImage.png in Resources */,
 				1F12ECE81DAC97E600511B58 /* qrcode_scan_btn_myqrcode_on@2x.png in Resources */,
@@ -7205,6 +7210,7 @@
 				1F498C141D2772D0007E77FC /* GuanzhuViewController.m in Sources */,
 				1F5878771DB8ABB200949302 /* JMWithDrawDetailController.m in Sources */,
 				1F498C671D2772D0007E77FC /* JMRefundView.m in Sources */,
+				1F7EA8261E48411D00E44616 /* UIScrollView+UITouch.m in Sources */,
 				1F4C9E921D9912600089CE74 /* UdeskMessageTableView.m in Sources */,
 				1F4C9EA61D9912600089CE74 /* UdeskSDKShow.m in Sources */,
 				183071F61C97BE3700B7665E /* VerifyPhoneViewController.m in Sources */,

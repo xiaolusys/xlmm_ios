@@ -326,10 +326,8 @@
                 break;
             case 1:
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-                    JMApplyForRefundController *tuikuanVC = [[JMApplyForRefundController alloc] init];
-                    [self.navigationController pushViewController:tuikuanVC animated:YES];
-//                    JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
-//                    [self.navigationController pushViewController:yijianVC animated:YES];
+                    JMComplaintSuggestController *yijianVC = [[JMComplaintSuggestController alloc] init];
+                    [self.navigationController pushViewController:yijianVC animated:YES];
                 }else{
                     [self displayLoginView];
                     return;
