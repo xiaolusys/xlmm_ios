@@ -22,6 +22,7 @@
 #import "JMPersonalPageLayoutCell.h"
 #import "JMPersonalHeaderReusableView.h"
 #import "JMPersonalPageHeaderCell.h"
+#import "JMApplyForRefundController.h"
 
 
 @interface JMPersonalPageController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,JMPersonalPageHeaderCellDelegate> {

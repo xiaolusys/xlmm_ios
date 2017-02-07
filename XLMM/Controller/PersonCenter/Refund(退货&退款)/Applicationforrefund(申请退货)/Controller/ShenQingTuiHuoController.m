@@ -386,7 +386,7 @@
         backView.hidden = YES;
     }completion:^(BOOL finished) {
         
-        
+        JMKeyWindow
     }];
     
 }
