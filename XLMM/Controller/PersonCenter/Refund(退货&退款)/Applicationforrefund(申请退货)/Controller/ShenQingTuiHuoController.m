@@ -385,8 +385,6 @@
         self.navigationController.navigationBarHidden = NO;
         backView.hidden = YES;
     }completion:^(BOOL finished) {
-        
-        JMKeyWindow
     }];
     
 }
