@@ -98,7 +98,15 @@
     point.y = mj_centerY;
     self.center = point;
 }
+- (CGFloat)mj_max_X{
+    return CGRectGetMaxX(self.frame);
+}
+- (void)setMax_X:(CGFloat)max_X{}
 
+- (CGFloat)mj_max_Y{
+    return CGRectGetMaxY(self.frame);
+}
+- (void)setMax_Y:(CGFloat)max_Y{}
 
 
 

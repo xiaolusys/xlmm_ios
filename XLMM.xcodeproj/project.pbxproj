@@ -652,7 +652,6 @@
 		1F7A1DF31E24BD730013A309 /* clearImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7A1DF21E24BD730013A309 /* clearImage@2x.png */; };
 		1F7A1DF91E24C2CB0013A309 /* JMSearchHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DF81E24C2CB0013A309 /* JMSearchHistoryModel.m */; };
 		1F7A1DFF1E24D0120013A309 /* deleteSearchHistory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7A1DFE1E24D0120013A309 /* deleteSearchHistory@2x.png */; };
-		1F7C10911DB0CA2F00609BC4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7C10901DB0CA2F00609BC4 /* Photos.framework */; };
 		1F7D99301D62C7FC00E18FD1 /* JMCategoryListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D992F1D62C7FC00E18FD1 /* JMCategoryListController.m */; };
 		1F7D99331D62CAC000E18FD1 /* JMCategoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D99321D62CAC000E18FD1 /* JMCategoryListCell.m */; };
 		1F7D99361D62E3B600E18FD1 /* JMClassifyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7D99351D62E3B600E18FD1 /* JMClassifyListController.m */; };
@@ -2189,7 +2188,6 @@
 				1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */,
 				1F3793F81DEE827E0044E325 /* libssl.a in Frameworks */,
 				1FD5D9121DC88EED007E8DDE /* WebKit.framework in Frameworks */,
-				1F7C10911DB0CA2F00609BC4 /* Photos.framework in Frameworks */,
 				1F12EDBC1DADF77B00511B58 /* CoreData.framework in Frameworks */,
 				1FE52DF71D94CC9D0051D5A0 /* libstdc++.tbd in Frameworks */,
 				1FE52DF51D94CC8F0051D5A0 /* libsqlite3.0.tbd in Frameworks */,

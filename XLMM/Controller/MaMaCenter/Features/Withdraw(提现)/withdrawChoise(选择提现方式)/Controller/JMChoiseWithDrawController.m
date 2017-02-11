@@ -29,6 +29,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     [MobClick beginLogPageView:@"JMChoiseWithDrawController"];
     
 }
@@ -36,7 +37,6 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMChoiseWithDrawController"];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -168,16 +168,10 @@
         JMWithdrawCashController *drawCash = [[JMWithdrawCashController alloc] init];
         drawCash.myBlabce = self.myBlance;
         drawCash.isMaMaWithDraw = YES;
-        drawCash.block=^(CGFloat money){
-            self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
-        };
         [self.navigationController pushViewController:drawCash animated:YES];
     }else if (index == 1) { // 整额提现
         TixianViewController *vc = [[TixianViewController alloc] init];
         vc.cantixianjine = self.myBlance;
-        vc.block = ^(CGFloat blanceMoney) {
-            self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",blanceMoney];
-        };
 //        vc.activeValue = [_activeValueNum integerValue];
         [self.navigationController pushViewController:vc animated:YES];
 //    }else if (index == 2) { // 兑换优惠券
@@ -190,6 +184,10 @@
     
     
 }
+- (void)updateMoneyLabel:(NSNotification *)center {
+    self.moneyLabel.text = center.object;
+}
+
 
 #pragma mark ---- 导航栏右侧体现历史
 - (void) createRightButonItem{
@@ -210,13 +208,15 @@
 
 
 - (void)backClick:(UIButton *)button {
-    if (self.block) {
-        self.block(self.moneyLabel.text);
-    }
+//    if (self.block) {
+//        self.block(self.moneyLabel.text);
+//    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end
 

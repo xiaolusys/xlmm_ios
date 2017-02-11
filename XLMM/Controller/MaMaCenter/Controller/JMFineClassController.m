@@ -71,6 +71,7 @@
 }
 
 - (void)loadMaMaWeb {
+    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject){
@@ -109,7 +110,7 @@
 //        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
 //    };
     [self.view addSubview:self.baseWebView];
-    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
+    
     
 }
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {

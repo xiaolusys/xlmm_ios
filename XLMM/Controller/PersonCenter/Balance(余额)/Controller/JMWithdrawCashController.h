@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^MoneyBlock)(CGFloat money);
+//typedef void(^MoneyBlock)(CGFloat money);
 
 @interface JMWithdrawCashController : UIViewController
 
@@ -16,7 +16,7 @@ typedef void(^MoneyBlock)(CGFloat money);
 
 @property (nonatomic, assign) CGFloat myBlabce;
 
-@property (nonatomic,copy) MoneyBlock block;
+//@property (nonatomic,copy) MoneyBlock block;
 
 @property (nonatomic, assign) BOOL isMaMaWithDraw;
 

@@ -77,7 +77,6 @@
     }else {
         self.navigationController.navigationBar.hidden = NO;
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

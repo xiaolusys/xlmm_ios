@@ -60,6 +60,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     [super viewWillAppear:animated];
     self.isPopToRootView = NO;
     [self.tableView.mj_header beginRefreshing];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     [MobClick beginLogPageView:@"BlanceAccount"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -153,7 +154,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         [accountM setValuesForKeysWithDictionary:account];
         [self.dataArr addObject:accountM];
     }
-    self.moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
     
 }
 
@@ -183,7 +183,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     self.moneyLabel.textColor = [UIColor orangeThemeColor];
     self.moneyLabel.font = [UIFont systemFontOfSize:35];
     self.moneyLabel.textAlignment = NSTextAlignmentCenter;
-    
     self.moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
     
     
@@ -244,10 +243,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     }else {
         
     }
-    
-    drawCash.block=^(CGFloat money){
-        self.moneyLabel.text = [NSString stringWithFormat:@"%.2f",money];
-    };
 //    WithdrawCashViewController *drawCash = [[WithdrawCashViewController alloc] initWithNibName:@"WithdrawCashViewController" bundle:nil];
 //    CGFloat money = [self.moneyLabel.text floatValue];
 //    NSNumber *number = [NSNumber numberWithFloat:money];
@@ -255,6 +250,11 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     
     [self.navigationController pushViewController:drawCash animated:YES];
 }
+- (void)updateMoneyLabel:(NSNotification *)center {
+    self.moneyLabel.text = center.object;
+}
+
+
 #pragma mark 返回顶部  image == >backTop
 - (void)createButton {
     UIButton *topButton = [UIButton buttonWithType:UIButtonTypeCustom];

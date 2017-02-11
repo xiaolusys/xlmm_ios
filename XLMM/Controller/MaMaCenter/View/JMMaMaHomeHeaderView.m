@@ -24,11 +24,19 @@ static NSString *currentTurnsNumberString;
     NSMutableArray *allDingdan;
     CGPoint scrollViewContentOffset;
     NSMutableArray *dataArray;
+    
+    UILabel *_label1;
+    UILabel *_label2;
+    UILabel *_label3;
+    UILabel *_label4;
+    UILabel *_label5;
+    UILabel *_label6;
 }
 
-@property (nonatomic, strong) UILabel *addWeekEarningLabel;
-@property (nonatomic, strong) UILabel *addEarningLabel;
-@property (nonatomic, strong) UILabel *weekRankLabel;
+@property (nonatomic, strong) UILabel *idLabel;                // 妈妈ID
+@property (nonatomic, strong) UILabel *isMaMaVipLabel;         // 妈妈的VIP状态
+@property (nonatomic, strong) UILabel *mamaLeveLabel;          // 妈妈的VIP等级
+@property (nonatomic, strong) UIImageView *iconImage;          // 妈妈头像
 
 @property (nonatomic, strong) UILabel *todayEarningsLabel;
 @property (nonatomic, strong) UILabel *futureEarningsLabe;
@@ -96,11 +104,17 @@ static NSString *currentTurnsNumberString;
     self.extraModel = [JMMaMaExtraModel mj_objectWithKeyValues:extraDic];
     NSDictionary *exDic = self.centerModel.extra_info;
     NSDictionary *extraFiguresDic = self.centerModel.extra_figures;
-    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
-    self.addWeekEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
-    NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
-    NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
-    self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
+//    self.addEarningLabel.text = CS_FLOAT([extraFiguresDic[@"today_carry_record"] floatValue]);
+//    self.addWeekEarningLabel.text = CS_FLOAT([extraFiguresDic[@"week_duration_total"] floatValue]);
+//    NSString *weekRankStr = CS_STRING(extraFiguresDic[@"week_duration_rank"]);
+//    NSString *weekRankString = [NSString stringWithFormat:@"本周我的排名 %@",weekRankStr];
+//    self.weekRankLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont boldSystemFontOfSize:24.] SubColor:[UIColor whiteColor] AllString:weekRankString SubStringArray:@[weekRankStr]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[self.extraModel.thumbnail JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];  // 妈妈头像
+    self.idLabel.text = [NSString stringWithFormat:@"ID: %@",centerModel.mama_id];                        // 妈妈ID
+    self.isMaMaVipLabel.text = centerModel.mama_level_display;                                       // 妈妈的VIP状态
+    self.mamaLeveLabel.text = self.extraModel.agencylevel_display;                                            // 妈妈的VIP等级
+    
+    
     CGFloat finisF = [extraFiguresDic[@"task_percentage"] floatValue];
     NSString *finishProStr = [NSString stringWithFormat:@"%.f%%",finisF * 100];
     self.finishProgressLabel.text = CS_DSTRING(@"本周任务已完成 ",finishProStr);
@@ -132,6 +146,17 @@ static NSString *currentTurnsNumberString;
     self.currentTurnsNum = [NSString stringWithFormat:@"%@",currentTurnsNumberString];
     [self currentTurnsNum:currentTurnsNumberString];
     
+    _label1.text = [NSString stringWithFormat:@"%.2f元",[self.centerModel.cash_value floatValue]];                   // 我的提现
+    _label2.text = [NSString stringWithFormat:@"%.2f元",[self.centerModel.carry_value floatValue]];                  // 累计收益
+    _label3.text = @"查看访客记录";                                                                                   // 访客记录
+    _label4.text = [NSString stringWithFormat:@"%@个",self.centerModel.order_num];                                   // 订单记录
+    _label5.text = [NSString stringWithFormat:@"%@点",self.centerModel.active_value_num];                            // 活跃度
+    _label6.text = [NSString stringWithFormat:@"%@人",self.centerModel.fans_num];                                    // 我的粉丝
+    //    self.label7.text = @"个人排名Top10";                                                                                 // 个人收益排名
+    
+    
+    
+    
 }
 - (void)currentTurnsNum:(NSString *)currentTurnsNum {
     if ([currentTurnsNum isEqual:@"0"]) {
@@ -147,6 +172,10 @@ static NSString *currentTurnsNumberString;
 - (void)setMamaNotReadNotice:(NSString *)mamaNotReadNotice {
     _mamaNotReadNotice = mamaNotReadNotice;
 }
+- (void)setWithDrawMoney:(NSString *)withDrawMoney {
+    _withDrawMoney = withDrawMoney;
+    _label1.text = withDrawMoney;
+}
 
 
 
@@ -155,266 +184,123 @@ static NSString *currentTurnsNumberString;
     NSArray *imageArr = @[@"mamaeryaoqingColor",@"EverydayPushNormalColor",@"selectionShopNormalColor",@"inviteShopNormalColor"];
     NSArray *titleArr = @[@"分享店铺",@"每日推送",@"选品佣金",@"邀请开店"];
     // === 顶部图片 === //
-    UIImageView *topImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 140)];
-    [self addSubview:topImageView];
-    topImageView.image = [UIImage imageNamed:@"wodejingxuanback"];
-    topImageView.userInteractionEnabled = YES;
+    UIView *mineInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 90)];
+    mineInfoView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:mineInfoView];
+    UIImageView *iconImage = [UIImageView new];
+    [mineInfoView addSubview:iconImage];
+    iconImage.layer.masksToBounds = YES;
+    iconImage.layer.cornerRadius = 30.;
+    self.iconImage = iconImage;
+    self.iconImage.image = [UIImage imageNamed:@"zhanwei"];
+    
+    UILabel *idLabel = [UILabel new];
+    [mineInfoView addSubview:idLabel];
+    idLabel.textColor = [UIColor blackColor];
+    idLabel.font = [UIFont systemFontOfSize:18.];
+    idLabel.text = @"ID:666";
+    self.idLabel = idLabel;
+    
+    UIImageView *isMaMaVipImage = [UIImageView new];
+    [mineInfoView addSubview:isMaMaVipImage];
+    isMaMaVipImage.backgroundColor = [UIColor clearColor];
+    isMaMaVipImage.image = [UIImage imageNamed:@"mamaUser_DiamondsIcon"];
+    
+    UILabel *isMaMaVipLabel = [UILabel new];
+    [mineInfoView addSubview:isMaMaVipLabel];
+    self.isMaMaVipLabel = isMaMaVipLabel;
+    isMaMaVipLabel.font = [UIFont systemFontOfSize:14.];
+    isMaMaVipLabel.text = @"普通妈妈";
     
     
-    UILabel *addWeekEarningL = [UILabel new];
-    [topImageView addSubview:addWeekEarningL];
-    addWeekEarningL.textColor = [UIColor buttonTitleColor];
-    addWeekEarningL.textAlignment = NSTextAlignmentCenter;
-    addWeekEarningL.font = [UIFont systemFontOfSize:14.];
-    addWeekEarningL.text = @"本周累计收益";
+    UIImageView *levelImage = [UIImageView new];
+    [mineInfoView addSubview:levelImage];
+    levelImage.image = [UIImage imageNamed:@"mamaCrown_orangeColor"];
+    
+    UILabel *mamaLeveLabel = [UILabel new];
+    [mineInfoView addSubview:mamaLeveLabel];
+    self.mamaLeveLabel = mamaLeveLabel;
+    mamaLeveLabel.font = [UIFont boldSystemFontOfSize:12.];
+    mamaLeveLabel.text = @"VIP1";
+    
+    [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(mineInfoView).offset(15);
+        make.centerY.equalTo(mineInfoView.mas_centerY);
+        make.width.height.mas_equalTo(@60);
+    }];
+    [idLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(iconImage.mas_right).offset(15);
+        make.top.equalTo(iconImage).offset(5);
+        //        make.centerY.equalTo(iconImage.mas_centerY);
+    }];
+    
+    [isMaMaVipImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(idLabel);
+        //        make.centerY.equalTo(idLabel.mas_centerY);
+        make.top.equalTo(idLabel.mas_bottom).offset(10);
+        make.width.mas_equalTo(@15);
+        make.height.mas_equalTo(@12);
+    }];
+    [isMaMaVipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(isMaMaVipImage.mas_right).offset(2);
+        make.centerY.equalTo(isMaMaVipImage.mas_centerY);
+    }];
+    [levelImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(isMaMaVipLabel.mas_right).offset(15);
+        make.centerY.equalTo(isMaMaVipImage.mas_centerY);
+        make.width.mas_equalTo(@15);
+        make.height.mas_equalTo(@12);
+    }];
+    [mamaLeveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(levelImage.mas_right).offset(2);
+        make.centerY.equalTo(isMaMaVipImage.mas_centerY);
+    }];
 
-    UILabel *addWeekEarningLabel = [UILabel new];
-    [topImageView addSubview:addWeekEarningLabel];
-    addWeekEarningLabel.textColor = [UIColor whiteColor];
-    addWeekEarningLabel.font = [UIFont systemFontOfSize:36.];
-    //    addEarningLabel.text = @"666.66";
-    self.addWeekEarningLabel = addWeekEarningLabel;
     
-    UILabel *addEarningL = [UILabel new];
-    [topImageView addSubview:addEarningL];
-    addEarningL.textColor = [UIColor buttonTitleColor];
-    addEarningL.textAlignment = NSTextAlignmentCenter;
-    addEarningL.font = [UIFont systemFontOfSize:14.];
-    addEarningL.text = @"今日累计收益";
-    
-    UILabel *addEarningLabel = [UILabel new];
-    [topImageView addSubview:addEarningLabel];
-    addEarningLabel.textColor = [UIColor whiteColor];
-    addEarningLabel.font = [UIFont systemFontOfSize:36.];
-    //    addEarningLabel.text = @"666.66";
-    self.addEarningLabel = addEarningLabel;
-    
-    UILabel *lineView = [UILabel new];
-    [topImageView addSubview:lineView];
-    lineView.backgroundColor = [UIColor mamaCenterBorderColor];
-    
-    UIButton *weekRankbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [topImageView addSubview:weekRankbutton];
-    weekRankbutton.tag = 100;
-    [weekRankbutton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *worldRankButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [topImageView addSubview:worldRankButton];
-    worldRankButton.tag = 101;
-    [worldRankButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *weekRankLabel = [UILabel new];
-    [weekRankbutton addSubview:weekRankLabel];
-    weekRankLabel.font = [UIFont systemFontOfSize:12.];
-    weekRankLabel.textColor = [UIColor buttonTitleColor];
-    weekRankLabel.text = @"本周我的排名";
-    self.weekRankLabel = weekRankLabel;
-    
-    UILabel *worldRankLabel = [UILabel new];
-    [worldRankButton addSubview:worldRankLabel];
-    worldRankLabel.font = [UIFont systemFontOfSize:12.];
-    worldRankLabel.textColor = [UIColor buttonTitleColor];
-    worldRankLabel.text = @"世界排名TOP10";
-    
-    [addWeekEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topImageView).offset(25);
-        make.left.equalTo(topImageView);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2));
-    }];
-    [addWeekEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(addWeekEarningL.mas_bottom).offset(10);
-        make.centerX.equalTo(addWeekEarningL.mas_centerX);
-    }];
-    [addEarningL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topImageView).offset(25);
-        make.right.equalTo(topImageView);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2));
-    }];
-    [addEarningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(addEarningL.mas_bottom).offset(10);
-        make.centerX.equalTo(addEarningL.mas_centerX);
-    }];
-    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(topImageView);
-        make.height.mas_equalTo(@1);
-        make.bottom.equalTo(topImageView).offset(-40);
-    }];
-    [weekRankbutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.equalTo(topImageView);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2));
-        make.height.mas_equalTo(@40);
-    }];
-    [worldRankButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.bottom.equalTo(topImageView);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2));
-        make.height.mas_equalTo(@40);
-    }];
-    [weekRankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weekRankbutton.mas_centerY);
-        make.left.equalTo(weekRankbutton).offset(10);
-    }];
-    [worldRankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(worldRankButton.mas_centerY);
-        make.right.equalTo(worldRankButton).offset(-10);
-    }];
-    
-    
-    // == 折线图视图 == //
-    UIScrollView *foldLineScrollView = [UIScrollView new];
-    foldLineScrollView.backgroundColor = [UIColor whiteColor];
-    foldLineScrollView.frame = CGRectMake(0, 140, SCREENWIDTH, 150);
-    [self addSubview:foldLineScrollView];
-    self.foldLineScrollView = foldLineScrollView;
-    
-    UIImageView *mamaImage = [UIImageView new];
-    [self.foldLineScrollView addSubview:mamaImage];
-    self.mamaImage = mamaImage;
-    self.mamaImage.image = [UIImage imageNamed:@"mamanodata"];
-    
-    // 个人收益视图 //
-    UIView *toolView = [UIView new];
-    toolView.backgroundColor = [UIColor whiteColor];
-    toolView.frame = CGRectMake(0, 290, SCREENWIDTH, 60);
-    [self addSubview:toolView];
-    
-    CGFloat toolW = SCREENWIDTH / 3;
-    NSArray *earningsArr = @[@"访客",@"订单",@"收益"];
-    NSInteger earningCount = 3;
-    for (int i = 0 ; i < earningCount; i++) {
-        UIButton *earningsV = [UIButton buttonWithType:UIButtonTypeCustom];
-        [toolView addSubview:earningsV];
-        [earningsV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(@(toolW));
-            make.height.mas_equalTo(@60);
-            make.centerY.equalTo(toolView.mas_centerY);
-            make.centerX.equalTo(toolView.mas_right).multipliedBy(((CGFloat)i + 0.5) / ((CGFloat)earningCount + 0));
-        }];
-        earningsV.tag = 108 + i;
-        [earningsV addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        UILabel *earningsLabel = [UILabel new];
-        [earningsV addSubview:earningsLabel];
-        earningsLabel.font = [UIFont systemFontOfSize:14.];
-        earningsLabel.textColor = [UIColor buttonTitleColor];
-        earningsLabel.text = earningsArr[i];
-        [earningsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(earningsV).offset(10);
-            make.centerX.equalTo(earningsV.mas_centerX);
-        }];
-        UILabel *earningsValueLabel = [UILabel new];
-        [earningsV addSubview:earningsValueLabel];
-        earningsValueLabel.font = [UIFont boldSystemFontOfSize:18.];
-        earningsValueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-        [earningsValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(earningsLabel.mas_bottom).offset(5);
-            make.centerX.equalTo(earningsV.mas_centerX);
-        }];
-        earningsValueLabel.tag = 210 + i;
-    }
-    self.todayEarningsLabel = (UILabel *)[self viewWithTag:210];
-    self.futureEarningsLabe = (UILabel *)[self viewWithTag:211];
-    self.rankingLabel = (UILabel *)[self viewWithTag:212];
-    
-    
-    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 350, SCREENWIDTH, 90)];
-    selectBoxView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:selectBoxView];
-    for (int i = 0; i < titleArr.count; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.layer.borderColor = [UIColor countLabelColor].CGColor;
-        button.layer.borderWidth = 0.5;
-        [selectBoxView addSubview:button];
-        button.tag = 103 + i;
-        [button addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        button.frame = CGRectMake(SCREENWIDTH / 4 * (i % 4), 0, SCREENWIDTH / 4, 90);
-        
-        
-        UIImageView *iconImage = [UIImageView new];
-        iconImage.tag = 10 + i;
-        [button addSubview:iconImage];
-        iconImage.image = [UIImage imageNamed:imageArr[i]];
-        
-        [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
-            //            make.top.equalTo(button).offset(25);
-            //            make.width.height.mas_equalTo(@25);
-            make.centerX.equalTo(button.mas_centerX);
-            make.centerY.equalTo(button.mas_centerY).offset(-10);
-        }];
-        
-        UILabel *titleLabel = [UILabel new];
-        [button addSubview:titleLabel];
-        titleLabel.text = titleArr[i];
-        titleLabel.font = [UIFont systemFontOfSize:12.];
-        titleLabel.textColor = [UIColor buttonTitleColor];
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(button).offset(-15);
-            make.centerX.equalTo(iconImage.mas_centerX);
-        }];
-        
-        
-    }
-    self.animationImage = (UIImageView *)[self viewWithTag:11];
-    self.currentTurnsLabel = [UILabel new];
-    [self.animationImage addSubview:self.currentTurnsLabel];
-    self.currentTurnsLabel.textColor = [UIColor whiteColor];
-    self.currentTurnsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
-    self.currentTurnsLabel.textAlignment = NSTextAlignmentCenter;
-    self.currentTurnsLabel.font = CS_SYSTEMFONT(9.);
-    self.currentTurnsLabel.layer.masksToBounds = YES;
-    self.currentTurnsLabel.layer.cornerRadius = 7.;
-    self.currentTurnsLabel.hidden = YES;
-    [self.currentTurnsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.animationImage).offset(15);
-        make.centerY.equalTo(weakSelf.animationImage).offset(-15);
-        make.width.height.mas_equalTo(@(14));
-    }];
-    
-    
-    UIView *currentView = [[UIView alloc] initWithFrame:CGRectMake(0, 440, SCREENWIDTH, 15)];
-    [self addSubview:currentView];
-    
-    
+    // 会员剩余期限   通知 //
     // 续费视图
-    UIView *memberView = [[UIView alloc] initWithFrame:CGRectMake(0, 455, SCREENWIDTH, 45)];
-    [self addSubview:memberView];
-    memberView.backgroundColor = [UIColor whiteColor];
-    //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
-    //    [memberView addGestureRecognizer:tap];
+//    UIView *memberView = [[UIView alloc] initWithFrame:CGRectMake(0, 105, SCREENWIDTH, 45)];
+//    [self addSubview:memberView];
+//    memberView.backgroundColor = [UIColor whiteColor];
+//    //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
+//    //    [memberView addGestureRecognizer:tap];
+//    
+//    UILabel *memberL = [UILabel new];
+//    [memberView addSubview:memberL];
+//    memberL.font = [UIFont systemFontOfSize:14.];
+//    memberL.textColor = [UIColor buttonTitleColor];
+//    memberL.text = @"我的会员";
+//    
+//    UILabel *memberLabel = [UILabel new];
+//    [memberView addSubview:memberLabel];
+//    memberLabel.font = [UIFont systemFontOfSize:12.];
+//    memberLabel.textColor = [UIColor buttonTitleColor];
+//    self.memberLabel = memberLabel;
     
-    UILabel *memberL = [UILabel new];
-    [memberView addSubview:memberL];
-    memberL.font = [UIFont systemFontOfSize:14.];
-    memberL.textColor = [UIColor buttonTitleColor];
-    memberL.text = @"我的会员";
-    
-    UILabel *memberLabel = [UILabel new];
-    [memberView addSubview:memberLabel];
-    memberLabel.font = [UIFont systemFontOfSize:12.];
-    memberLabel.textColor = [UIColor buttonTitleColor];
-    self.memberLabel = memberLabel;
-    
-//    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [memberView addSubview:self.renewButton];
-//    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
-//    self.renewButton.tag = 107;
-//    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    //    self.renewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [memberView addSubview:self.renewButton];
+    //    [self.renewButton setImage:[UIImage imageNamed:@"MaMa_renew"] forState:UIControlStateNormal];
+    //    self.renewButton.tag = 107;
+    //    [self.renewButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(memberView).offset(10);
-        make.centerY.equalTo(memberView.mas_centerY);
-    }];
-    [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(memberView).offset(-10);
-        make.centerY.equalTo(memberView.mas_centerY);
-    }];
-//    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(memberView);
+//    [memberL mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(memberView).offset(10);
 //        make.centerY.equalTo(memberView.mas_centerY);
-//        make.width.mas_equalTo(@(60));
-//        make.height.mas_equalTo(@(45));
 //    }];
-
+//    [memberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(memberView).offset(-10);
+//        make.centerY.equalTo(memberView.mas_centerY);
+//    }];
+    //    [self.renewButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    //        make.right.equalTo(memberView);
+    //        make.centerY.equalTo(memberView.mas_centerY);
+    //        make.width.mas_equalTo(@(60));
+    //        make.height.mas_equalTo(@(45));
+    //    }];
+    
     // 消息滚动列表
-    UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, 500, SCREENWIDTH, 45)];
+    UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, mineInfoView.mj_max_Y + 15, SCREENWIDTH, 45)];
     [self addSubview:messageView];
     messageView.layer.masksToBounds = YES;
     messageView.layer.borderWidth = 0.5;
@@ -471,46 +357,197 @@ static NSString *currentTurnsNumberString;
         make.height.mas_equalTo(@40);
     }];
     
-    UILabel *memberLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 499, SCREENWIDTH, 1)];
-    memberLine.backgroundColor = [UIColor countLabelColor];
-    [messageView addSubview:memberLine];
+//    UILabel *memberLine = [[UILabel alloc] initWithFrame:CGRectMake(0, 149, SCREENWIDTH, 1)];
+//    memberLine.backgroundColor = [UIColor countLabelColor];
+//    [messageView addSubview:memberLine];
     
     
     
-    UIView *weekTaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 545, SCREENWIDTH, 45)];
-    [self addSubview:weekTaskView];
-    weekTaskView.backgroundColor = [UIColor whiteColor];
-    UILabel *finishProgressLabel = [UILabel new];
-    [weekTaskView addSubview:finishProgressLabel];
-    finishProgressLabel.textColor = [UIColor buttonTitleColor];
-    finishProgressLabel.font = [UIFont systemFontOfSize:14.];
-    finishProgressLabel.text = @"本周任务已完成 --%";
-    self.finishProgressLabel = finishProgressLabel;
+    // == 折线图视图 == //
+    UIScrollView *foldLineScrollView = [UIScrollView new];
+    foldLineScrollView.backgroundColor = [UIColor whiteColor];
+    foldLineScrollView.frame = CGRectMake(0, messageView.mj_max_Y + 15, SCREENWIDTH, 150);
+    [self addSubview:foldLineScrollView];
+    self.foldLineScrollView = foldLineScrollView;
     
-    UIButton *gotoExecutionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [weekTaskView addSubview:gotoExecutionButton];
+    UIImageView *mamaImage = [UIImageView new];
+    [self.foldLineScrollView addSubview:mamaImage];
+    self.mamaImage = mamaImage;
+    self.mamaImage.image = [UIImage imageNamed:@"mamanodata"];
     
-    gotoExecutionButton.layer.cornerRadius = 12.5;
-    gotoExecutionButton.backgroundColor = [UIColor wechatBackColor];
-    [gotoExecutionButton setTitle:@"马上执行" forState:UIControlStateNormal];
-    [gotoExecutionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    gotoExecutionButton.titleLabel.font = [UIFont systemFontOfSize:12.];
-    gotoExecutionButton.tag = 102;
-    [gotoExecutionButton addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [finishProgressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weekTaskView.mas_centerY);
-        make.left.equalTo(weekTaskView).offset(10);
+    // 个人收益视图 //
+    UIView *toolView = [UIView new];
+    toolView.backgroundColor = [UIColor whiteColor];
+    toolView.frame = CGRectMake(0, foldLineScrollView.mj_max_Y, SCREENWIDTH, 60);
+    [self addSubview:toolView];
+    
+    CGFloat toolW = SCREENWIDTH / 3;
+    NSArray *earningsArr = @[@"访客",@"订单",@"收益"];
+    NSInteger earningCount = 3;
+    for (int i = 0 ; i < earningCount; i++) {
+        UIButton *earningsV = [UIButton buttonWithType:UIButtonTypeCustom];
+        [toolView addSubview:earningsV];
+        [earningsV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(@(toolW));
+            make.height.mas_equalTo(@60);
+            make.centerY.equalTo(toolView.mas_centerY);
+            make.centerX.equalTo(toolView.mas_right).multipliedBy(((CGFloat)i + 0.5) / ((CGFloat)earningCount + 0));
+        }];
+        earningsV.tag = 100 + i;
+        [earningsV addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        UILabel *earningsLabel = [UILabel new];
+        [earningsV addSubview:earningsLabel];
+        earningsLabel.font = [UIFont systemFontOfSize:14.];
+        earningsLabel.textColor = [UIColor buttonTitleColor];
+        earningsLabel.text = earningsArr[i];
+        [earningsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(earningsV).offset(10);
+            make.centerX.equalTo(earningsV.mas_centerX);
+        }];
+        UILabel *earningsValueLabel = [UILabel new];
+        [earningsV addSubview:earningsValueLabel];
+        earningsValueLabel.font = [UIFont boldSystemFontOfSize:18.];
+        earningsValueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+        [earningsValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(earningsLabel.mas_bottom).offset(5);
+            make.centerX.equalTo(earningsV.mas_centerX);
+        }];
+        earningsValueLabel.tag = 210 + i;
+    }
+    self.todayEarningsLabel = (UILabel *)[self viewWithTag:210];
+    self.futureEarningsLabe = (UILabel *)[self viewWithTag:211];
+    self.rankingLabel = (UILabel *)[self viewWithTag:212];
+    
+    
+    UIView *selectBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, toolView.mj_max_Y, SCREENWIDTH, 90)];
+    selectBoxView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:selectBoxView];
+    for (int i = 0; i < titleArr.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.layer.borderColor = [UIColor countLabelColor].CGColor;
+        button.layer.borderWidth = 0.5;
+        [selectBoxView addSubview:button];
+        button.tag = 103 + i;
+        [button addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(SCREENWIDTH / 4 * (i % 4), 0, SCREENWIDTH / 4, 90);
+        
+        
+        UIImageView *iconImage = [UIImageView new];
+        iconImage.tag = 10 + i;
+        [button addSubview:iconImage];
+        iconImage.image = [UIImage imageNamed:imageArr[i]];
+        
+        [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            //            make.top.equalTo(button).offset(25);
+            //            make.width.height.mas_equalTo(@25);
+            make.centerX.equalTo(button.mas_centerX);
+            make.centerY.equalTo(button.mas_centerY).offset(-10);
+        }];
+        
+        UILabel *titleLabel = [UILabel new];
+        [button addSubview:titleLabel];
+        titleLabel.text = titleArr[i];
+        titleLabel.font = [UIFont systemFontOfSize:12.];
+        titleLabel.textColor = [UIColor buttonTitleColor];
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(button).offset(-15);
+            make.centerX.equalTo(iconImage.mas_centerX);
+        }];
+        
+        
+    }
+    self.animationImage = (UIImageView *)[self viewWithTag:11];
+    self.currentTurnsLabel = [UILabel new];
+    [self.animationImage addSubview:self.currentTurnsLabel];
+    self.currentTurnsLabel.textColor = [UIColor whiteColor];
+    self.currentTurnsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+    self.currentTurnsLabel.textAlignment = NSTextAlignmentCenter;
+    self.currentTurnsLabel.font = CS_SYSTEMFONT(9.);
+    self.currentTurnsLabel.layer.masksToBounds = YES;
+    self.currentTurnsLabel.layer.cornerRadius = 7.;
+    self.currentTurnsLabel.hidden = YES;
+    [self.currentTurnsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.animationImage).offset(15);
+        make.centerY.equalTo(weakSelf.animationImage).offset(-15);
+        make.width.height.mas_equalTo(@(14));
     }];
-    [gotoExecutionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weekTaskView.mas_centerY);
-        make.right.equalTo(weekTaskView).offset(-10);
-        make.width.mas_equalTo(@90);
-        make.height.mas_equalTo(@(25));
-    }];
+    
+    
+//    UIView *currentView = [[UIView alloc] initWithFrame:CGRectMake(0, selectBoxView.mj_max_Y, SCREENWIDTH, 15)];
+//    [self addSubview:currentView];
+    
+    
+    NSArray *imageArr2 = @[@"wodetixian",@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"huoyuedu",@"wodefensi"]; // ,@"gerenpaiming",@"tuanduipaiming"
+    NSArray *titleArr2 = @[@"我的提现",@"累计收益",@"访客记录",@"订单记录",@"活跃度",@"我的粉丝"];
+    NSArray *titleDescArr = @[@"88.88元",@"88.88元",@"查看访客记录",@"88个",@"88点",@"88人"];
+    
+    UIView *selectBoxView2 = [[UIView alloc] initWithFrame:CGRectMake(0, selectBoxView.mj_max_Y + 15, SCREENWIDTH, 210)];
+    //    selectBoxView.backgroundColor = [UIColor countLabelColor];
+    [self addSubview:selectBoxView2];
+    
+    CGFloat buttonW = SCREENWIDTH / 2;
+    for (int i = 0; i < titleArr2.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.layer.borderColor = [UIColor countLabelColor].CGColor;
+        button.layer.borderWidth = 0.5;
+        button.backgroundColor = [UIColor whiteColor];
+        [selectBoxView2 addSubview:button];
+        
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(selectBoxView2).offset(65 * (i / 2) + (i / 4) * 15);
+            make.left.equalTo(selectBoxView2).offset((i % 2) * buttonW);
+            make.width.mas_equalTo(@(buttonW));
+            make.height.mas_equalTo(@65);
+        }];
+        
+        button.tag = 107 + i;
+        [button addTarget:self action:@selector(mamaButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIImageView *iconImage = [UIImageView new];
+        [button addSubview:iconImage];
+        iconImage.image = [UIImage imageNamed:imageArr2[i]];
+        
+        [iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(button).offset(15);
+            //            make.width.height.mas_equalTo(@25);
+            make.centerY.equalTo(button.mas_centerY);
+        }];
+        
+        UILabel *titleLabel = [UILabel new];
+        [button addSubview:titleLabel];
+        titleLabel.text = titleArr2[i];
+        titleLabel.font = [UIFont systemFontOfSize:16.];
+        titleLabel.textColor = [UIColor buttonTitleColor];
+        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(button).offset(10);
+            make.left.equalTo(iconImage.mas_right).offset(15);
+        }];
+        
+        UILabel *detailLabel = [UILabel new];
+        detailLabel.tag = 200 + i;
+        [button addSubview:detailLabel];
+        detailLabel.text = titleDescArr[i];
+        detailLabel.font = [UIFont systemFontOfSize:12.];
+        detailLabel.textColor = [UIColor dingfanxiangqingColor];
+        [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(button).offset(-10);
+            make.left.equalTo(titleLabel);
+        }];
+        
+    }
+    
+    _label1 = (UILabel *)[self viewWithTag:200];
+    _label2 = (UILabel *)[self viewWithTag:201];
+    _label3 = (UILabel *)[self viewWithTag:202];
+    _label4 = (UILabel *)[self viewWithTag:203];
+    _label5 = (UILabel *)[self viewWithTag:204];
+    _label6 = (UILabel *)[self viewWithTag:205];
+    
+    
+    
+    
+    
 
-    
-    
-    
     
     
 }
@@ -560,17 +597,19 @@ static NSString *currentTurnsNumberString;
 
 #pragma mark 点击事件处理
 /**
- *  100 --> 本周我的排名
- *  101 --> 世界排名TOP10
- *  102 --> 马上执行
+ *  100 --> 折线图 -- > 访客
+ *  101 --> 折线图 -- > 订单
+ *  102 --> 折线图 -- > 收益
  *  103 --> 分享店铺
  *  104 --> 每日推送
- *  105 --> 精品汇
+ *  105 --> 选品佣金
  *  106 --> 邀请开店
- *  107 --> 续费按钮
- *  108 --> 折线图 -- > 访客
- *  109 --> 折线图 -- > 订单
- *  110 --> 折线图 -- > 收益
+ *  107 --> 我的提现
+ *  108 --> 累计收益
+ *  109 --> 访客记录
+ *  110 --> 订单记录
+ *  111 --> 活跃度
+ *  112 --> 我的粉丝
  */
 - (void)mamaButtonClick:(UIButton *)button {
     if (button.tag == 104) {

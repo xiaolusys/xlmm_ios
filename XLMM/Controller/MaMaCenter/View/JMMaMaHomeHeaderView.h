@@ -34,6 +34,7 @@ typedef void(^autoLoopPage)(JMAutoLoopPageView *loopPageView, NSMutableDictionar
 @property (nonatomic, strong) NSString *mamaNotReadNotice;
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
 
+@property (nonatomic, copy) NSString *withDrawMoney;
 
 @end
 

@@ -409,12 +409,22 @@
     if (goodsArray.count == 0) {
         return ;
     }else {
-        NSDictionary *itemDic = goodsArray[0];
-        NSDictionary *skuDic = itemDic[@"sku_items"][0];
-        _paramer[@"item_id"] = itemDic[@"product_id"];
-        _paramer[@"sku_id"] = skuDic[@"sku_id"];
-        _paramer[@"num"] = @"1";
-        [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+        for (NSDictionary *itemDic in goodsArray) {
+            NSArray *arr = itemDic[@"sku_items"];
+            if (arr.count == 0) {
+                continue;
+            }else {
+                NSDictionary *skuDic = arr[0];
+                _paramer[@"item_id"] = itemDic[@"product_id"];
+                _paramer[@"sku_id"] = skuDic[@"sku_id"];
+                _paramer[@"num"] = @"1";
+                [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+                break;
+            }
+        }
+//        NSDictionary *itemDic = goodsArray[0];
+//        NSDictionary *skuDic = itemDic[@"sku_items"][0];
+        
     }
 
     _buyCouponUrl = goodsDetailDic[@"buy_coupon_url"];
