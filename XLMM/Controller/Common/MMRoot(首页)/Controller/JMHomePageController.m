@@ -178,7 +178,7 @@
     UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [rightButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
-    rightImageview.frame = CGRectMake(0, 13, 18, 18);
+    rightImageview.frame = CGRectMake(20, 13, 18, 18);
     [rightButton addSubview:rightImageview];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
 }
