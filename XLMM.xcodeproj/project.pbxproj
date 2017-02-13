@@ -664,6 +664,7 @@
 		1F7EA8231E48145B00E44616 /* downArrow1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7EA8221E48145B00E44616 /* downArrow1@2x.png */; };
 		1F7EA8261E48411D00E44616 /* UIScrollView+UITouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7EA8251E48411D00E44616 /* UIScrollView+UITouch.m */; };
 		1F8CC4011E25BDFF00515FAC /* JMTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CC4001E25BDFF00515FAC /* JMTagView.m */; };
+		1F90EE251E519AB30031F0DE /* JMHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F90EE241E519AB30031F0DE /* JMHomePageController.m */; };
 		1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DB1D5055BC00327408 /* libHappyDNS.a */; };
 		1F9169DE1D5055BF00327408 /* libQiniu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DD1D5055BF00327408 /* libQiniu.a */; };
 		1F9169E01D5055C300327408 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DF1D5055C300327408 /* libAFNetworking.a */; };
@@ -1917,6 +1918,8 @@
 		1F8411931DC216B1009BF329 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		1F8CC3FF1E25BDFF00515FAC /* JMTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTagView.h; sourceTree = "<group>"; };
 		1F8CC4001E25BDFF00515FAC /* JMTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTagView.m; sourceTree = "<group>"; };
+		1F90EE231E519AB30031F0DE /* JMHomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomePageController.h; sourceTree = "<group>"; };
+		1F90EE241E519AB30031F0DE /* JMHomePageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomePageController.m; sourceTree = "<group>"; };
 		1F9169DB1D5055BC00327408 /* libHappyDNS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHappyDNS.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/HappyDNS/libHappyDNS.a"; sourceTree = "<group>"; };
 		1F9169DD1D5055BF00327408 /* libQiniu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQiniu.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/Qiniu/libQiniu.a"; sourceTree = "<group>"; };
 		1F9169DF1D5055C300327408 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
@@ -3211,6 +3214,8 @@
 				1F27A63B1D275FB400A0F80B /* MMCollectionController.h */,
 				1F27A63C1D275FB400A0F80B /* MMCollectionController.m */,
 				1F27A63D1D275FB400A0F80B /* MMCollectionController.xib */,
+				1F90EE231E519AB30031F0DE /* JMHomePageController.h */,
+				1F90EE241E519AB30031F0DE /* JMHomePageController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -6960,6 +6965,7 @@
 				1F4C9E941D9912600089CE74 /* UdeskAgentMenuViewController.m in Sources */,
 				1F498C6E1D2772D0007E77FC /* JMUserAddressModel.m in Sources */,
 				1F4C9EB61D9912600089CE74 /* UdeskHpple.m in Sources */,
+				1F90EE251E519AB30031F0DE /* JMHomePageController.m in Sources */,
 				1830728A1C97C00900B7665E /* UIImage+ImageWithUrl.m in Sources */,
 				1F4C9E991D9912600089CE74 /* UdeskAnimatorPush.m in Sources */,
 				1F498C6A1D2772D0007E77FC /* JMChooseLogisticsController.m in Sources */,
