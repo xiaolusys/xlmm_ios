@@ -339,10 +339,10 @@
         </view>
     </objects>
     <resources>
-        <image name="downArrow1.png" width="32" height="32"/>
-        <image name="shopping_cart_add.png" width="44" height="44"/>
-        <image name="shopping_cart_jian.png" width="44" height="44"/>
-        <image name="zhan'wei.png" width="137" height="124"/>
+        <image name="downArrow1.png" width="16" height="16"/>
+        <image name="shopping_cart_add.png" width="22" height="22"/>
+        <image name="shopping_cart_jian.png" width="22" height="22"/>
+        <image name="zhan'wei.png" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

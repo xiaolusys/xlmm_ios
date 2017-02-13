@@ -29,6 +29,7 @@
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *sectionDataSource;
+@property (nonatomic, strong) JMEmptyView *empty;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
@@ -68,6 +69,7 @@
     [self createTabelView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    [self emptyView];
     [self.tableView.mj_header beginRefreshing];
  
 }
@@ -101,7 +103,7 @@
         [self.tableView.mj_footer endRefreshing];
     }
 }
-- (void)loadDataSource{
+- (void)loadDataSource {
     NSString *string = [self urlStr];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
@@ -116,8 +118,7 @@
         
     }];
 }
-- (void)loadMore
-{
+- (void)loadMore {
     if ([NSString isStringEmpty:_urlStr]) {
         [self endRefresh];
         [self.tableView.mj_footer endRefreshingWithNoMoreData];
@@ -141,9 +142,10 @@
     NSArray *allArr = data[@"results"];
     if (allArr.count == 0) {
         //没有订单
-        [self emptyView];
+        self.empty.hidden = NO;
         return ;
     }
+    self.empty.hidden = YES;
     
     for (NSDictionary *allDic in allArr) {
         JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
@@ -285,6 +287,8 @@
     kWeakSelf
     JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
     [self.view addSubview:empty];
+    self.empty = empty;
+    self.empty.hidden = YES;
     empty.block = ^(NSInteger index) {
         if (index == 100) {
             self.isPopToRootView = YES;

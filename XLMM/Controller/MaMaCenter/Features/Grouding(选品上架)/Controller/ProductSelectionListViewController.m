@@ -17,10 +17,10 @@
 
 #define HeadViewHeight 35
 
-@interface ProductSelectionListViewController ()<UIAlertViewDelegate,JMProductSelectListCellDelegate>
+@interface ProductSelectionListViewController ()<UIAlertViewDelegate> //JMProductSelectListCellDelegate
 {
     int count;
-   
+    
     int category;
     NSInteger reverseCode;
     NSMutableArray *itemNameArray;
@@ -82,15 +82,21 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hidePopMenuView:) name:@"hideSelectedPopView" object:nil];
+    if (itemNameArray.count == 0) {
+        [self itemData];
+    }else {
+        [self createPopMenuView:itemNameArray];
+    }
+    
     [MobClick beginLogPageView:@"ProductSelectionListViewController"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [MBProgressHUD hideHUDForView:self.view];
+    [JMPopMenuView clearMenu];
     [MobClick endLogPageView:@"ProductSelectionListViewController"];
-
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -99,8 +105,8 @@
     reverseCode = 0;
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-//    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-//    self.numberLabel.text = self.numbersOfSelected;
+    //    [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
+    //    self.numberLabel.text = self.numbersOfSelected;
     [self numbersOfSelected];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, HeadViewHeight, SCREENWIDTH, SCREENHEIGHT - HeadViewHeight) style:UITableViewStylePlain];
@@ -113,9 +119,9 @@
     [self.view addSubview:self.tableView];
     [self createHeadView];
     [self emptyView];
-    [self itemData];
+//    [self itemData];
     // --> 不需要删除,先注释掉
-//    [self createrightItem];
+    //    [self createrightItem];
     
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
@@ -140,7 +146,7 @@
     orongeView.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [view addSubview:orongeView];
     orongeView.layer.cornerRadius = 11;
-
+    
     self.numberLabel = [[UILabel alloc] initWithFrame:orongeView.bounds];
     self.numberLabel.text = @"0";
     self.numberLabel.textColor = [UIColor whiteColor];
@@ -180,21 +186,21 @@
             self.numberLabel.text = string;
         }
     } WithFail:^(NSError *error) {
-    
+        
     } Progress:^(float progress) {
         
     }];
-//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-//    if(data != nil){
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//        NSString *string = [NSString stringWithFormat:@"%@", [[[dic objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
-//        NSLog(@"count = %@", string);
-//        
-//        return string;
-//    }
-//    else{
-//        return nil;
-//    }
+    //    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    //    if(data != nil){
+    //        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    //        NSString *string = [NSString stringWithFormat:@"%@", [[[dic objectForKey:@"results"][0] objectForKey:@"shop_product_num"] stringValue]];
+    //        NSLog(@"count = %@", string);
+    //
+    //        return string;
+    //    }
+    //    else{
+    //        return nil;
+    //    }
     
 }
 
@@ -209,11 +215,11 @@
     [self.allButton setTitle:@"全部" forState:UIControlStateNormal];
     self.allButton.frame = CGRectMake(0, 0, width, height);
     [self.headView addSubview:self.allButton];
-//    [self.allButton setImage:[UIImage imageNamed:@"downarrowicon"] forState:UIControlStateNormal];
-//    [self.allButton setImage:[UIImage imageNamed:@"uparrowicon"] forState:UIControlStateSelected];
-//    self.allButton.selected = NO;
+    //    [self.allButton setImage:[UIImage imageNamed:@"downarrowicon"] forState:UIControlStateNormal];
+    //    [self.allButton setImage:[UIImage imageNamed:@"uparrowicon"] forState:UIControlStateSelected];
+    //    self.allButton.selected = NO;
     
-    self.selectImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2 +15, 12, 12, 12)];
+    self.selectImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2 +27, 12, 12, 12)];
     self.selectImageView.backgroundColor = [UIColor clearColor];
     
     self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
@@ -243,12 +249,12 @@
     [self.orderByPriceButton addTarget:self action:@selector(yongjinorder:) forControlEvents:UIControlEventTouchUpInside];
     [self.orderBySaleButon addTarget:self action:@selector(xiangliangorder:) forControlEvents:UIControlEventTouchUpInside];
     
-//    [self createSeletedView];
+    //    [self createSeletedView];
     
 }
 
 - (void)yongjinorder:(UIButton *)button{
-//    [MBProgressHUD showLoading:@"加载中..."];
+    //    [MBProgressHUD showLoading:@"加载中..."];
     if (reverseCode == 0) {
         reverseCode = 1;
     }else {
@@ -260,7 +266,7 @@
 }
 
 - (void)xiangliangorder:(UIButton *)button{
-//    [MBProgressHUD showLoading:@"加载中..."];
+    //    [MBProgressHUD showLoading:@"加载中..."];
     if (reverseCode == 0) {
         reverseCode = 1;
     }else {
@@ -272,31 +278,8 @@
 - (void)itemData {
     itemNameArray = [NSMutableArray array];
     itemCidArray = [NSMutableArray array];
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path=[paths objectAtIndex:0];
-    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
-    //==Json数据
-    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
-    //==JsonObject
-    if (data == nil) {
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
-        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-            if (!responseObject) {
-                return ;
-            }else {
-                [self fetchItemize:responseObject];
-            }
-        } WithFail:^(NSError *error) {
-        } Progress:^(float progress) {
-        }];
-    }else {
-        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        [self fetchItemData:arr];
-    }
-
-}
-- (void)fetchItemize:(NSDictionary *)dic {
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:dic[@"download_url"] WithParaments:nil WithSuccess:^(id responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             return ;
         }else {
@@ -306,104 +289,80 @@
     } Progress:^(float progress) {
     }];
     
+    //    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *path=[paths objectAtIndex:0];
+    //    NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
+    //    //==Json数据
+    //    NSData *data=[NSData dataWithContentsOfFile:jsonPath];
+    //    //==JsonObject
+    //    if (data == nil) {
+    //        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/categorys/latest_version",Root_URL];
+    //        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+    //            if (!responseObject) {
+    //                return ;
+    //            }else {
+    //                [self fetchItemize:responseObject];
+    //            }
+    //        } WithFail:^(NSError *error) {
+    //        } Progress:^(float progress) {
+    //        }];
+    //    }else {
+    //        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    //        [self fetchItemData:arr];
+    //    }
+    
 }
+//- (void)fetchItemize:(NSDictionary *)dic {
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:dic[@"download_url"] WithParaments:nil WithSuccess:^(id responseObject) {
+//        if (!responseObject) {
+//            return ;
+//        }else {
+//            [self fetchItemData:responseObject];
+//        }
+//    } WithFail:^(NSError *error) {
+//    } Progress:^(float progress) {
+//    }];
+
+//}
 - (void)fetchItemData:(NSArray *)arr {
     [itemNameArray addObject:@"全部"];
     for (NSDictionary *dic in arr) {
         [itemNameArray addObject:dic[@"name"]];
         [itemCidArray addObject:dic[@"cid"]];
     }
+    [self createPopMenuView:itemNameArray];
 }
-- (void)selectedClicked:(UIButton *)button{
-    self.selectImageView.image = [UIImage imageNamed:@"uparrowicon"];
-    CGFloat width = 100;
-    CGFloat height = 360;
-    CGFloat originX = 10;
-    CGFloat originY = 110;
-    CGPoint point = CGPointMake(0.5, 0);
-    [JMPopMenuView configCustomPopMenuWithFrame:CGRectMake(originX, originY, width, height) ImageArr:nil TitleArr:itemNameArray AnchorPoint:point selectedRowIndex:^(NSInteger index) {
-        self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
-        [self.allButton setTitle:itemNameArray[index] forState:UIControlStateNormal];
-        if (index == 0) {
-            [self downloadAlllist:nil];
+- (void)createPopMenuView:(NSArray *)itemArr {
+    kWeakSelf
+    [JMPopMenuView createMenuWithFrame:CGRectZero target:self dataArray:itemArr itemsClickBlock:^(NSString *str, NSInteger tag) {
+        weakSelf.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+        [weakSelf.allButton setTitle:str forState:UIControlStateNormal];
+        if (tag == 1) {
+            [weakSelf downloadAlllist:nil];
         }else {
-            [self downloadAlllist:itemCidArray[index - 1]];
+            [weakSelf downloadAlllist:itemCidArray[tag - 2]];
         }
-    } Animation:YES ShowTime:0.3 hideTime:0.3];
-    
-    
-}
-- (void)hidePopMenuView:(NSNotification *)sender {
-    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
-    [JMPopMenuView hideView];
+    } backViewTap:^{
+        weakSelf.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
+        [JMPopMenuView hidden];
+    }];
 }
 
-//- (void)createSeletedView{
-//    CGFloat width = 75;
-//    CGFloat height = 100;
-//    CGFloat originX = SCREENWIDTH/6 - 30;
-//    CGFloat originY = 90;
-//    
-//    self.selectedView = [[UIView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
-//    self.backImageView = [[UIImageView alloc ] initWithFrame:self.selectedView.bounds];
-//    self.backImageView.image = [UIImage imageNamed:@"selectedImageView.png"];
-//    [self.selectedView addSubview:self.backImageView];
-//    [self.view addSubview:self.selectedView];
-//    self.selectedView.hidden = YES;
-//    
-//    self.secondButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 60, width, 44)];
-//    [self.secondButton setTitle:@"童装" forState:UIControlStateNormal];
-//    [self.secondButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-//    [self.selectedView addSubview:self.secondButton];
-//   
-//    self.firstButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, width, 44)];
-//    [self.firstButton setTitle:@"女装" forState:UIControlStateNormal];
-//    [self.firstButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-//    [self.selectedView addSubview:self.firstButton];
-//    
-//    [self.firstButton addTarget:self action:@selector(firstbuttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.secondButton addTarget:self action:@selector(secondButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//}
-
-//- (void)hiddeSeletedView{
-//    self.selectedView.hidden = YES;
-//    self.selectImageView.image = [UIImage imageNamed:@"downarrowicon"];
-//    
-//    
-//}
-//- (void)performSelector:(SEL)aSelector title1:(NSString *)title1 title2:(NSString *)title2 title3:(NSString*)title3{
-//    if ([self respondsToSelector:aSelector]) {
-//        [self performSelector:aSelector withObject:nil];
-//    }
-//    [self hiddeSeletedView];
-//    [self.allButton setTitle:title1 forState:UIControlStateNormal];
-//    [self.firstButton setTitle:title2 forState:UIControlStateNormal];
-//    [self.secondButton setTitle:title3 forState:UIControlStateNormal];
-//    
-//    
-//}
-//- (void)firstbuttonClicked:(UIButton *)button{
-//   
-//    if ([self.firstButton.currentTitle isEqualToString:@"女装"]) {
-//        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
-//      
-//    } else if ([self.firstButton.currentTitle isEqualToString:@"全部"]){
-//        [self performSelector:@selector(downloadAlllist) title1:@"全部" title2:@"女装" title3:@"童装"];
-//    }
-//   
-//}
-//- (void)secondButtonClicked:(UIButton *)button{
-//    if ([self.secondButton.currentTitle isEqualToString:@"女装"]) {
-//        [self performSelector:@selector(downloadLadylist) title1:@"女装" title2:@"全部" title3:@"童装"];
-//      
-//        
-//    } else if ([self.secondButton.currentTitle isEqualToString:@"童装"]){
-//        [self performSelector:@selector(downloadChildliat) title1:@"童装" title2:@"全部" title3:@"女装"];
-//    
-//    }
-//}
-
+- (void)selectedClicked:(UIButton *)button{
+    if (itemNameArray.count == 0) {
+        return ;
+    }
+    self.selectImageView.image = [UIImage imageNamed:@"uparrowicon"];
+    CGFloat originX = SCREENWIDTH / 6;
+    CGFloat originY = 80;
+    CGPoint point = CGPointMake(originX, originY);
+    
+    [JMPopMenuView showMenuPoint:point];
+    
+}
+- (void)dealloc{
+    [JMPopMenuView clearMenu];   // 移除菜单
+}
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
     self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
@@ -508,16 +467,17 @@
  *  全部
  */
 - (void)downloadAlllist:(NSString *)cid {
+    [JMPopMenuView hidden];
     cidString = cid;
-//    [MBProgressHUD showLoading:@"加载中..."];
+    //    [MBProgressHUD showLoading:@"加载中..."];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/product_choice?page=1", Root_URL];
     if (cid == nil) {
-//        self.param[@"page"] = @"1";
+        //        self.param[@"page"] = @"1";
         [self loadDataSource:nil];
     }else {
-//        self.param[@"page"] = @"1";
+        //        self.param[@"page"] = @"1";
         self.param[@"cid"] = cid;
         [self loadDataSource:self.param];
     }
@@ -546,7 +506,7 @@
 //    category = 2;
 //    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d", Root_URL, category];
 //    [self loadDataSource];
-//    
+//
 //}
 /**
  *  佣金排序
@@ -554,9 +514,9 @@
 - (void)downloadOrderlist1:(NSInteger)code {
     [self.orderByPriceButton setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderBySaleButon setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-//    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d&sort_field=%@&reverse=%ld", Root_URL, category, @"rebet_amount",code];
+    //    _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d&sort_field=%@&reverse=%ld", Root_URL, category, @"rebet_amount",code];
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/product_choice?page=1",Root_URL];
-//    self.param[@"page"] = @"1";
+    //    self.param[@"page"] = @"1";
     self.param[@"sort_field"] = @"rebet_amount";
     self.param[@"cid"] = cidString;
     self.param[@"reverse"] = [NSString stringWithFormat:@"%ld",code];
@@ -569,9 +529,9 @@
 - (void)downloadOrderlist2:(NSInteger)code {
     [self.orderBySaleButon setTitleColor:[UIColor orangeThemeColor] forState:UIControlStateNormal];
     [self.orderByPriceButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-//     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d&sort_field=%@&reverse=%ld", Root_URL, category, @"sale_num",code];
+    //     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/products/my_choice_pro?page_size=20&category=%d&sort_field=%@&reverse=%ld", Root_URL, category, @"sale_num",code];
     _urlStr = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/product_choice?page=1",Root_URL];
-//    self.param[@"page"] = @"1";
+    //    self.param[@"page"] = @"1";
     self.param[@"sort_field"] = @"sale_num";
     self.param[@"cid"] = cidString;
     self.param[@"reverse"] = [NSString stringWithFormat:@"%ld",code];
@@ -600,7 +560,7 @@
     JMProductSelectionListModel *listModel = self.dataArr[indexPath.row];
     [cell configListCell:listModel];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.delegate = self;
+    //    cell.delegate = self;
     
     return cell;
     
@@ -627,15 +587,15 @@
 //            //            [btn setImage:[UIImage imageNamed:@"shopping_cart_add.png"]forState:UIControlStateNormal];
 //            //修改数据源中的数据
 //            selectList.listModel.in_customer_shop = @0;
-//            
+//
 ////            self.numberLabel.text = self.numbersOfSelected;
 //            [self numbersOfSelected];
 //        } WithFail:^(NSError *error) {
 //            NSLog(@"上下架－－Error: %@", error);
 //        } Progress:^(float progress) {
-//            
+//
 //        }];
-//    
+//
 //    }else {
 //        //网络请求
 //        NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/add_pro_to_shop", Root_URL];
@@ -646,12 +606,12 @@
 //            //[btn setTitle:@"下架" forState:UIControlStateNormal];
 //            [button setBackgroundImage:[UIImage imageNamed:@"xuanpinshangjiaright.png"] forState:UIControlStateNormal];;
 //            selectList.statusLabel.text = @"已加入";
-//            
+//
 //            button.selected = YES;
 //            //            [btn setImage:[UIImage imageNamed:@"shopping_cart_jian.png"]forState:UIControlStateSelected];
 //            //修改数据源中的数据
 //            selectList.listModel.in_customer_shop = @1;
-//            
+//
 ////            self.numberLabel.text = self.numbersOfSelected;
 //            [self numbersOfSelected];
 //        } WithFail:^(NSError *error) {

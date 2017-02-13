@@ -22,6 +22,7 @@
 #import "JMPersonalPageLayoutCell.h"
 #import "JMPersonalHeaderReusableView.h"
 #import "JMPersonalPageHeaderCell.h"
+#import "JMApplyForRefundController.h"
 
 
 @interface JMPersonalPageController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,JMPersonalPageHeaderCellDelegate> {
@@ -76,7 +77,6 @@
     }else {
         self.navigationController.navigationBar.hidden = NO;
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^balanceBlock)(CGFloat blanceMoney);
+//typedef void(^balanceBlock)(CGFloat blanceMoney);
 
 @interface TixianViewController : UIViewController
 //
@@ -28,7 +28,7 @@ typedef void(^balanceBlock)(CGFloat blanceMoney);
 
 //- (IBAction)fabuClicked:(id)sender;
 
-@property (nonatomic, copy) balanceBlock block;
+//@property (nonatomic, copy) balanceBlock block;
 
 @property (nonatomic, assign) CGFloat cantixianjine;
 @property (nonatomic, copy) NSString *name;

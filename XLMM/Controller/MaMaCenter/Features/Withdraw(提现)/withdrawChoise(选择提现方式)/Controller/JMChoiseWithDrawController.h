@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^myBalanceBlock)(NSString *blanceMoney);
+//typedef void(^myBalanceBlock)(NSString *blanceMoney);
 
 @interface JMChoiseWithDrawController : UIViewController
 
-@property (nonatomic, copy) myBalanceBlock block;
+//@property (nonatomic, copy) myBalanceBlock block;
 @property (nonatomic, assign) CGFloat myBlance;
 
 @end

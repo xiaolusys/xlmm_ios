@@ -79,10 +79,10 @@
                                    kImgKey    : @"tabBar_shoppingCartNomal",
                                    kSelImgKey : @"tabBar_shoppingCartSelected"},
                                  
-                                 @{kClassKey  : @"JMStoreupController",
-                                   kTitleKey  : @"收藏",
-                                   kImgKey    : @"tabBar_collectionNomal",
-                                   kSelImgKey : @"tabBar_collectionSelected"},
+//                                 @{kClassKey  : @"JMStoreupController",
+//                                   kTitleKey  : @"收藏",
+//                                   kImgKey    : @"tabBar_collectionNomal",
+//                                   kSelImgKey : @"tabBar_collectionSelected"},
                                  
                                  @{kClassKey  : @"JMPersonalPageController",
                                    kTitleKey  : @"我的",
@@ -107,8 +107,8 @@
     self.homeVC = self.vcArray[0];
     self.fineCouponVC = self.vcArray[1];
     self.cartVC = self.vcArray[2];
-    self.storeVC = self.vcArray[3];
-    self.personalVC = self.vcArray[4];
+//    self.storeVC = self.vcArray[3];
+    self.personalVC = self.vcArray[3];
     
 //    self.tabBar.barTintColor = [UIColor whiteColor];
 //    [self.tabBar setBackgroundImage:[UIImage new]];
@@ -135,13 +135,15 @@
         }else {
         }
         
-    }else if ([viewController.tabBarItem.title isEqualToString:@"收藏"]) {
-//        [self.homeVC endAutoScroll];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            self.storeVC.isHideNavitaionLeftBar = YES;
-        }else {
-        }
-    }else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
+    }
+//    else if ([viewController.tabBarItem.title isEqualToString:@"收藏"]) {
+////        [self.homeVC endAutoScroll];
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//            self.storeVC.isHideNavitaionLeftBar = YES;
+//        }else {
+//        }
+//    }
+    else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.personalVC.isHideNavigationBar = NO;
@@ -162,17 +164,19 @@
             [viewController presentViewController:rootNav animated:YES completion:nil];
             return NO;
         }
-    }else if ([viewController.tabBarItem.title isEqualToString:@"收藏"]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            return YES;
-        }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            loginVC.isTabBarLogin = YES;
-            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
-            [viewController presentViewController:rootNav animated:YES completion:nil];
-            return NO;
-        }
-    }else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
+    }
+//    else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//            return YES;
+//        }else {
+//            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+//            loginVC.isTabBarLogin = YES;
+//            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+//            [viewController presentViewController:rootNav animated:YES completion:nil];
+//            return NO;
+//        }
+//    }
+    else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             return YES;
         }else {

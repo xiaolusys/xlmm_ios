@@ -186,7 +186,7 @@ static NSUInteger selectedIndex = 0;
 
 - (void)emptyView {
     //    kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth / 2, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth, 220, SCREENWIDTH - TabWidth, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
     [self.view addSubview:self.empty];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
@@ -196,7 +196,7 @@ static NSUInteger selectedIndex = 0;
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiomn {
     if (tableView == self.mainTableView) {
         return self.tabDataSource.count;
     }else {
@@ -212,6 +212,7 @@ static NSUInteger selectedIndex = 0;
             cell = [[JMHomeRootCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homeCategoryCellId];
         }
         NSString *nameString = self.tabDataSource[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
         return cell;
     }else {
@@ -221,6 +222,7 @@ static NSUInteger selectedIndex = 0;
         if (!cell) {
             cell = [[JMCategoryContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CategoryCellId];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         //        cell.backgroundColor = [UIColor orangeColor];
         //        NSString *nameString = self.tabDataSource[indexPath.row];
         //        [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
