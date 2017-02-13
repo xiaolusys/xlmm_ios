@@ -53,15 +53,15 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
+//    [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
     [self createSegmentControl];
-    [self craeteRight];
+//    [self craeteRight];
 }
 /*
  创建分页控制器
  */
 - (void)createSegmentControl {
-    self.segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
+    self.segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
     [self.view addSubview:self.segmentControl];
     self.segmentControl.backgroundColor = [UIColor whiteColor];
     self.segmentControl.sectionTitles = [self setSegmentArr];
@@ -85,7 +85,7 @@
     }];
 }
 - (void)createScrollView {
-    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - self.segmentControl.frame.size.height - 64)];
+    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - self.segmentControl.frame.size.height - 45 - 64)];
     self.baseScrollView.showsHorizontalScrollIndicator = NO;
     self.baseScrollView.showsVerticalScrollIndicator = NO;
     self.baseScrollView.pagingEnabled = YES;

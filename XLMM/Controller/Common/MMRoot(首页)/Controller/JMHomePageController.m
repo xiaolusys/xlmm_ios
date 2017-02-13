@@ -8,17 +8,24 @@
 
 #import "JMHomePageController.h"
 #import "HMSegmentedControl.h"
+#import "JMChildViewController.h"
+#import "JMHomeFirstController.h"
+#import "JMHomeRootCategoryController.h"
 
 
 @interface JMHomePageController () <UIScrollViewDelegate> {
     NSMutableArray *_categoryNameArray;
     NSMutableArray *_categoryCidArray;
+    NSString *_currentCidString;
+    NSString *_currentNameString;
 }
 
 @property (nonatomic, strong) HMSegmentedControl *segmentControl;
 @property (nonatomic, strong) UIScrollView *baseScrollView;
 @property (nonatomic, strong) NSMutableArray *urlArray;
 
+
+@property (nonatomic, strong) UIButton *navRightButton;
 
 @end
 
@@ -48,7 +55,7 @@
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick)];
     [self createSegmentControl];
-    
+    [self createRightItem];
     [self loadCategoryData];
 
 }
@@ -62,12 +69,14 @@
     }];
 }
 - (void)fetchCategoryData:(NSArray *)categoryArr {
+    [_categoryNameArray addObject:@"今日特卖"];
     for (NSDictionary *dic in categoryArr) {
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"cid"]];
     }
     self.segmentControl.sectionTitles = [_categoryNameArray copy];
-    
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
+    [self addChildController];
 }
 
 /*
@@ -95,31 +104,40 @@
     }];
 }
 - (void)createScrollView {
-    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - self.segmentControl.frame.size.height - 64 - 49)];
+    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - CGRectGetMaxY(self.segmentControl.frame))];
     self.baseScrollView.showsHorizontalScrollIndicator = NO;
     self.baseScrollView.showsVerticalScrollIndicator = NO;
     self.baseScrollView.pagingEnabled = YES;
     self.baseScrollView.delegate = self;
-    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * 10, self.baseScrollView.frame.size.height);
     [self.view addSubview:self.baseScrollView];
-    
-    [self addChildController];
-    
-    UIViewController *firstVC = [self.childViewControllers firstObject];
-    firstVC.view.frame = self.baseScrollView.bounds;
-    [self.baseScrollView addSubview:firstVC.view];
-    
+
 }
 /*
  添加子视图
  */
 - (void)addChildController {
-    for (int i = 0 ; i < self.urlArray.count; i++) {
+    for (int i = 0 ; i < _categoryNameArray.count; i++) {
+//        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,_categoryCidArray[i]];
 //        CSGoodsViewController *goodsVC = [[CSGoodsViewController alloc] init];
 //        goodsVC.urlString = self.urlArray[i];
 //        [self addChildViewController:goodsVC];
+        if (i == 0) {
+            JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
+            [self addChildViewController:homeFirst];
+        }else {
+            JMChildViewController *childCategoryVC = [[JMChildViewController alloc] init];
+            childCategoryVC.categoryCid = _categoryCidArray[i - 1];
+            [self addChildViewController:childCategoryVC];
+        }
     }
     self.baseScrollView.contentOffset = CGPointMake(0, 0);
+    
+    UIViewController *firstVC = [self.childViewControllers firstObject];
+    firstVC.view.frame = self.baseScrollView.bounds;
+    [self.baseScrollView addSubview:firstVC.view];
+    _currentCidString = _categoryCidArray[0];
+    _currentNameString = _categoryNameArray[1];
+    
 }
 /*
  scrollView代理方法
@@ -134,11 +152,42 @@
  移动到某个子视图
  */
 - (void)removeToPage:(NSInteger)index {
+    if (index == 0) {
+        _currentCidString = _categoryCidArray[index];
+        _currentNameString = _categoryNameArray[index];
+    }else {
+        _currentCidString = _categoryCidArray[index - 1];
+        _currentNameString = _categoryNameArray[index - 1];
+    }
     self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
 //    CSGoodsViewController *goodsVC = self.childViewControllers[index];
 //    goodsVC.view.frame = self.baseScrollView.bounds;
 //    [self.baseScrollView addSubview:goodsVC.view];
-    
+    if (index == 0) {
+        JMHomeFirstController *homeFirst = self.childViewControllers[index];
+        homeFirst.view.frame = self.baseScrollView.bounds;
+        [self.baseScrollView addSubview:homeFirst.view];
+    }else {
+        JMChildViewController *childCategoryVC = self.childViewControllers[index];
+        childCategoryVC.view.frame = self.baseScrollView.bounds;
+        [self.baseScrollView addSubview:childCategoryVC.view];
+    }
+}
+
+- (void)createRightItem {
+    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [rightButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
+    rightImageview.frame = CGRectMake(0, 13, 18, 18);
+    [rightButton addSubview:rightImageview];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+}
+- (void)searchBarClick:(UIButton *)button {
+    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+    rootCategoryVC.cidString = _currentCidString;
+    rootCategoryVC.titleString = _currentNameString;
+//    rootCategoryVC.categoryUrl = self.categoryUrlString;
+    [self.navigationController pushViewController:rootCategoryVC animated:YES];
 }
 
 
@@ -149,7 +198,52 @@
 
 
 
-
-
-
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

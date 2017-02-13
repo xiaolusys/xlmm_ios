@@ -12,6 +12,8 @@
 #import "JMEmptyView.h"
 #import "JMClassifyListController.h"
 #import "JMCategoryContentCell.h"
+#import "JMSearchViewController.h"
+
 
 #define TabWidth SCREENWIDTH * 0.25
 #define ColWidth SCREENWIDTH * 0.75
@@ -61,10 +63,12 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor countLabelColor];
     [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
     
+    [self createSearchBarView];
     [self itemDataSource];
+    
     
     //    [self createCollectionView];
     
@@ -135,15 +139,40 @@ static NSUInteger selectedIndex = 0;
     //    [self.mainTableView reloadData];
     //    [self.mainCollectionView reloadData];
 }
+- (void)createSearchBarView {
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:searchButton];
+    searchButton.backgroundColor = [UIColor whiteColor];
+    [searchButton setImage:[UIImage imageNamed:@"searchBarImage"] forState:UIControlStateNormal];
+    [searchButton setImage:[UIImage imageNamed:@"searchBarImage"] forState:UIControlStateSelected];
+    [searchButton setTitle:@"查找所有精品" forState:UIControlStateNormal];
+    [searchButton setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
+    searchButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [searchButton addTarget:self action:@selector(searchButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    searchButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+//    searchButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    searchButton.layer.masksToBounds = YES;
+    searchButton.layer.cornerRadius = 2.;
+    
+    kWeakSelf
+    [searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.top.equalTo(weakSelf.view).offset(74);
+        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH - 30, 30));
+    }];
+    
+    
+}
 - (void)createTableView {
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50 + 64, TabWidth, SCREENHEIGHT - 50 - 64) style:UITableViewStylePlain];
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
-    self.mainTableView.backgroundColor = [UIColor countLabelColor];
+    self.mainTableView.backgroundColor = [UIColor clearColor];
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mainTableView.showsVerticalScrollIndicator = NO;
     self.mainTableView.showsHorizontalScrollIndicator = NO;
     self.mainTableView.rowHeight = 60.;
+//    self.mainTableView.contentInset = UIEdgeInsetsMake(50 + 64, 0, 0, 0);
     
     [self.view addSubview:self.mainTableView];
     
@@ -152,14 +181,15 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)crateContentTableView {
     // 添加测试数据
-    self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64 + 50, ColWidth, SCREENHEIGHT - 64 - 50) style:UITableViewStylePlain];
     self.contentTableView.dataSource = self;
     self.contentTableView.delegate = self;
-    //    self.contentTableView.backgroundColor = [UIColor countLabelColor];
+    self.contentTableView.backgroundColor = [UIColor clearColor];
     self.contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.contentTableView.showsVerticalScrollIndicator = NO;
     self.contentTableView.showsHorizontalScrollIndicator = NO;
     self.contentTableView.rowHeight = SCREENHEIGHT - 64;
+//    self.contentTableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
     
     [self.view addSubview:self.contentTableView];
     
@@ -174,7 +204,7 @@ static NSUInteger selectedIndex = 0;
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
     self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64) collectionViewLayout:layout];
-    self.mainCollectionView.backgroundColor = [UIColor whiteColor];
+    self.mainCollectionView.backgroundColor = [UIColor clearColor];
     self.mainCollectionView.dataSource = self;
     self.mainCollectionView.delegate = self;
     [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
@@ -290,7 +320,19 @@ static NSUInteger selectedIndex = 0;
     [self.navigationController pushViewController:itemVC animated:YES];
     
 }
-
+- (void)searchButtonClick {
+    JMSearchViewController *searchViewController = [JMSearchViewController searchViewControllerWithHistorySearchs:nil searchBarPlaceHolder:nil didSearchBlock:^(JMSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/search_by_name?name=%@",Root_URL,searchText];
+        JMClassifyListController *searchVC = [[JMClassifyListController alloc] init];
+        searchVC.titleString = searchText;
+        searchVC.emptyTitle = @"搜索其他";
+        searchVC.urlString = [urlString JMUrlEncodedString];
+        [searchViewController.navigationController pushViewController:searchVC animated:YES];
+    }];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    [self presentViewController:nav animated:NO completion:nil];
+    
+}
 
 
 

@@ -647,7 +647,6 @@
 		1F760E631DB62C0900307093 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F760E611DB62C0900307093 /* AddressTableCell.xib */; };
 		1F760EB21DB704E300307093 /* JMAutoLoopPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760EB11DB704E300307093 /* JMAutoLoopPageView.m */; };
 		1F7A1DCF1E1399160013A309 /* JMAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DCE1E1399160013A309 /* JMAccountCell.m */; };
-		1F7A1DD11E237EB50013A309 /* searchBarImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7A1DD01E237EB50013A309 /* searchBarImage.png */; };
 		1F7A1DF11E23B2360013A309 /* JMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DF01E23B2360013A309 /* JMSearchViewController.m */; };
 		1F7A1DF31E24BD730013A309 /* clearImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7A1DF21E24BD730013A309 /* clearImage@2x.png */; };
 		1F7A1DF91E24C2CB0013A309 /* JMSearchHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DF81E24C2CB0013A309 /* JMSearchHistoryModel.m */; };
@@ -665,6 +664,8 @@
 		1F7EA8261E48411D00E44616 /* UIScrollView+UITouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7EA8251E48411D00E44616 /* UIScrollView+UITouch.m */; };
 		1F8CC4011E25BDFF00515FAC /* JMTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8CC4001E25BDFF00515FAC /* JMTagView.m */; };
 		1F90EE251E519AB30031F0DE /* JMHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F90EE241E519AB30031F0DE /* JMHomePageController.m */; };
+		1F90EE281E51A8CD0031F0DE /* JMHomeFirstController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F90EE271E51A8CD0031F0DE /* JMHomeFirstController.m */; };
+		1F90EE2A1E51B1820031F0DE /* searchBarImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F90EE291E51B1820031F0DE /* searchBarImage@2x.png */; };
 		1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DB1D5055BC00327408 /* libHappyDNS.a */; };
 		1F9169DE1D5055BF00327408 /* libQiniu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DD1D5055BF00327408 /* libQiniu.a */; };
 		1F9169E01D5055C300327408 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DF1D5055C300327408 /* libAFNetworking.a */; };
@@ -1889,7 +1890,6 @@
 		1F760EB11DB704E300307093 /* JMAutoLoopPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAutoLoopPageView.m; sourceTree = "<group>"; };
 		1F7A1DCD1E1399160013A309 /* JMAccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAccountCell.h; sourceTree = "<group>"; };
 		1F7A1DCE1E1399160013A309 /* JMAccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAccountCell.m; sourceTree = "<group>"; };
-		1F7A1DD01E237EB50013A309 /* searchBarImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchBarImage.png; sourceTree = "<group>"; };
 		1F7A1DEF1E23B2360013A309 /* JMSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSearchViewController.h; sourceTree = "<group>"; };
 		1F7A1DF01E23B2360013A309 /* JMSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSearchViewController.m; sourceTree = "<group>"; };
 		1F7A1DF21E24BD730013A309 /* clearImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearImage@2x.png"; sourceTree = "<group>"; };
@@ -1920,6 +1920,9 @@
 		1F8CC4001E25BDFF00515FAC /* JMTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTagView.m; sourceTree = "<group>"; };
 		1F90EE231E519AB30031F0DE /* JMHomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomePageController.h; sourceTree = "<group>"; };
 		1F90EE241E519AB30031F0DE /* JMHomePageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomePageController.m; sourceTree = "<group>"; };
+		1F90EE261E51A8CD0031F0DE /* JMHomeFirstController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeFirstController.h; sourceTree = "<group>"; };
+		1F90EE271E51A8CD0031F0DE /* JMHomeFirstController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeFirstController.m; sourceTree = "<group>"; };
+		1F90EE291E51B1820031F0DE /* searchBarImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchBarImage@2x.png"; sourceTree = "<group>"; };
 		1F9169DB1D5055BC00327408 /* libHappyDNS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHappyDNS.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/HappyDNS/libHappyDNS.a"; sourceTree = "<group>"; };
 		1F9169DD1D5055BF00327408 /* libQiniu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQiniu.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/Qiniu/libQiniu.a"; sourceTree = "<group>"; };
 		1F9169DF1D5055C300327408 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
@@ -2549,7 +2552,6 @@
 			isa = PBXGroup;
 			children = (
 				1F7A1DFD1E24D0120013A309 /* SearchBar */,
-				1F7A1DD01E237EB50013A309 /* searchBarImage.png */,
 				1F12ED781DAC986600511B58 /* category.png */,
 				1F12EB6C1DAC97E600511B58 /* name.png */,
 				1F12EB761DAC97E600511B58 /* profiles.png */,
@@ -3216,6 +3218,8 @@
 				1F27A63D1D275FB400A0F80B /* MMCollectionController.xib */,
 				1F90EE231E519AB30031F0DE /* JMHomePageController.h */,
 				1F90EE241E519AB30031F0DE /* JMHomePageController.m */,
+				1F90EE261E51A8CD0031F0DE /* JMHomeFirstController.h */,
+				1F90EE271E51A8CD0031F0DE /* JMHomeFirstController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5802,6 +5806,7 @@
 		1F7A1DFD1E24D0120013A309 /* SearchBar */ = {
 			isa = PBXGroup;
 			children = (
+				1F90EE291E51B1820031F0DE /* searchBarImage@2x.png */,
 				1F7A1DFE1E24D0120013A309 /* deleteSearchHistory@2x.png */,
 			);
 			path = SearchBar;
@@ -6600,7 +6605,6 @@
 				1F12ED421DAC97E700511B58 /* empty_address_icon.png in Resources */,
 				1F12ED2F1DAC97E700511B58 /* circle_wallet_Normal1.png in Resources */,
 				1F12ED2C1DAC97E700511B58 /* weiboiconthird.png in Resources */,
-				1F7A1DD11E237EB50013A309 /* searchBarImage.png in Resources */,
 				1F12ECE81DAC97E600511B58 /* qrcode_scan_btn_myqrcode_on@2x.png in Resources */,
 				1FF72C911DE7F55B0035F436 /* tabBar_featuredNomal@2x.png in Resources */,
 				1F12ECAE1DAC97E600511B58 /* MaMaRenewAllyear_Nomal@2x.png in Resources */,
@@ -6728,6 +6732,7 @@
 				1F12ED031DAC97E600511B58 /* 圈圈加载0021@2x.png in Resources */,
 				1F12ED121DAC97E600511B58 /* 圈圈加载0036@2x.png in Resources */,
 				1F12ECCC1DAC97E600511B58 /* 1lun@2x.png in Resources */,
+				1F90EE2A1E51B1820031F0DE /* searchBarImage@2x.png in Resources */,
 				1F12ECFF1DAC97E600511B58 /* 圈圈加载0017@2x.png in Resources */,
 				1F12ED4E1DAC97E700511B58 /* Icon-40@2x.png in Resources */,
 				1F12ED6A1DAC97E700511B58 /* remember_password@2x.png in Resources */,
@@ -7074,6 +7079,7 @@
 				1F2F9E231D58534A00E3A68B /* JMStoreupController.m in Sources */,
 				1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */,
 				1F498B3B1D276450007E77FC /* PayExtrasModel.m in Sources */,
+				1F90EE281E51A8CD0031F0DE /* JMHomeFirstController.m in Sources */,
 				1F27A65B1D275FB400A0F80B /* MMCollectionController.m in Sources */,
 				1F6B79DC1DD9BF95009AB446 /* JMPopViewAnimationDrop.m in Sources */,
 				183071F01C97BE3700B7665E /* SetPasswordController.m in Sources */,
