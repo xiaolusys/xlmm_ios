@@ -318,6 +318,7 @@
 
 #pragma mark ---- 微信登录成功调用函数
 - (void) loginSuccessful {
+    [MBProgressHUD hideHUD];
     [self dismissViewControllerAnimated:YES completion:nil];
 //    [MobClick profileSignInWithPUID:@"playerID"];
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];

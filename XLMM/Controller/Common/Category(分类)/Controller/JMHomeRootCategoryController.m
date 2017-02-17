@@ -33,6 +33,7 @@ static NSUInteger selectedIndex = 0;
 @property (nonatomic, strong) NSArray *tabDataArray;
 @property (nonatomic, strong) NSMutableArray *tabDataSource;
 @property (nonatomic, strong) NSMutableArray *colDataSource;
+@property (nonatomic, strong) NSMutableArray *colSectionDataSource;
 
 @property (nonatomic, strong) JMEmptyView *empty;
 
@@ -51,6 +52,12 @@ static NSUInteger selectedIndex = 0;
         _colDataSource = [NSMutableArray array];
     }
     return _colDataSource;
+}
+- (NSMutableArray *)colSectionDataSource {
+    if (_colSectionDataSource == nil) {
+        _colSectionDataSource = [NSMutableArray array];
+    }
+    return _colSectionDataSource;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -122,18 +129,26 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)fetchCategoryData:(NSArray *)tabDataArray {
     int i = 0;
-    for (NSDictionary *dict in tabDataArray) {
-        [self.tabDataSource addObject:dict[@"name"]];
-        if ([dict[@"cid"] isEqual:self.cidString]) {
+    for (NSDictionary *dict1 in tabDataArray) {
+        [self.tabDataSource addObject:dict1[@"name"]];
+        NSString *cidStr = CS_STRING(dict1[@"cid"]);
+        if ([cidStr isEqual:self.cidString]) {
             selectedIndex = i;
         }else {
             i ++;
         }
-        NSMutableArray *dictArr = [NSMutableArray array];
-        for (NSDictionary *dic in dict[@"childs"]) {
-            [dictArr addObject:dic];
+        NSMutableArray *dictArr1 = [NSMutableArray array];
+        NSMutableArray *dictArr2 = [NSMutableArray array];
+        for (NSDictionary *dict2 in dict1[@"childs"]) {
+            [dictArr1 addObject:dict2];
+            NSMutableArray *dictArr3 = [NSMutableArray array];
+            for (NSDictionary *dict3 in dict2[@"childs"]) {
+                [dictArr3 addObject:dict3];
+            }
+            [dictArr2 addObject:dictArr3];
         }
-        [self.colDataSource addObject:dictArr];
+        [self.colDataSource addObject:dictArr2];
+        [self.colSectionDataSource addObject:dictArr1];
     }
     //    [self createTableView];
     //    [self.mainTableView reloadData];
@@ -203,11 +218,12 @@ static NSUInteger selectedIndex = 0;
     layout.itemSize = CGSizeMake((ColWidth - 20) / 3, (ColWidth - 20) * 5 / 9);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64) collectionViewLayout:layout];
+    self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64 - 50) collectionViewLayout:layout];
     self.mainCollectionView.backgroundColor = [UIColor clearColor];
     self.mainCollectionView.dataSource = self;
     self.mainCollectionView.delegate = self;
     [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
+//    [self.mainCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:mainCollectionViewHeaderIdentifier];
     [self.view addSubview:self.mainCollectionView];
     
     
@@ -284,16 +300,23 @@ static NSUInteger selectedIndex = 0;
 }
 
 
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     self.empty.hidden = YES;
-    //    selectedIndex = [(JMContentCollectionView *)collectionView ContentCollectionIndexPath].row;
-    NSArray *dicArr = self.colDataSource[selectedIndex];
+    NSArray *dicArr = self.colSectionDataSource[selectedIndex];
     if (dicArr.count == 0) {
         self.empty.hidden = NO;
     }
     return dicArr.count;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    self.empty.hidden = YES;
+    //    selectedIndex = [(JMContentCollectionView *)collectionView ContentCollectionIndexPath].row;
+    NSArray *dicArr = self.colDataSource[selectedIndex];
+    NSArray *dicRowArr = dicArr[section];
+    if (dicRowArr.count == 0) {
+        self.empty.hidden = NO;
+    }
+    return dicRowArr.count;
     
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -305,13 +328,37 @@ static NSUInteger selectedIndex = 0;
     }else {
         self.contentTableView.scrollEnabled = NO;
     }
-    NSDictionary *dic = self.colDataSource[selectedIndex][indexPath.row];
+    NSArray *indexPathArr = self.colDataSource[selectedIndex];
+    NSDictionary *dic = indexPathArr[indexPath.section][indexPath.row];
     cell.itemsDic = dic;
     return cell;
 }
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    NSArray *arr = self.colSectionDataSource[selectedIndex];
+    NSString *titleStr = arr[indexPath.section][@"name"];
+    if (kind == UICollectionElementKindSectionHeader) {
+        UICollectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:mainCollectionViewHeaderIdentifier forIndexPath:indexPath];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0, 0, ColWidth, 60);
+        button.backgroundColor = [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1];
+        [button setTitle:titleStr forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+//        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+//        button.tag = 100 + indexPath.section;
+        [reusableview addSubview:button];
+        return reusableview;
+    }else {
+        return nil;
+    }
+
+}
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(ColWidth, 60);
+}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *dic = self.colDataSource[selectedIndex][indexPath.row];
+    NSArray *indexPathArr = self.colDataSource[selectedIndex];
+    NSDictionary *dic = indexPathArr[indexPath.section][indexPath.row];
     NSString *cid = dic[@"cid"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
     JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
@@ -320,6 +367,18 @@ static NSUInteger selectedIndex = 0;
     [self.navigationController pushViewController:itemVC animated:YES];
     
 }
+//- (void)buttonClick:(UIButton *)button {
+//    NSInteger index = button.tag - 100;
+//    NSArray *arr = self.colSectionDataSource[selectedIndex];
+//    NSDictionary *dic = arr[index];
+//    NSString *cid = dic[@"cid"];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
+//    JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
+//    itemVC.titleString = dic[@"name"];
+//    itemVC.urlString = urlString;
+//    [self.navigationController pushViewController:itemVC animated:YES];
+//    
+//}
 - (void)searchButtonClick {
     JMSearchViewController *searchViewController = [JMSearchViewController searchViewControllerWithHistorySearchs:nil searchBarPlaceHolder:nil didSearchBlock:^(JMSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/search_by_name?name=%@",Root_URL,searchText];

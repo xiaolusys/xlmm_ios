@@ -137,7 +137,7 @@
 //    if (self.pageView) {
 //        [self.pageView reloadData];
 //    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(rootViewWillEnterForeground:)

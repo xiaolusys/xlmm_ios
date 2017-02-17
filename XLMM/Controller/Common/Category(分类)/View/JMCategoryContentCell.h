@@ -16,6 +16,7 @@
 @end
 
 static NSString *ContentCollectionViewIndentifier = @"ContentCollectionViewIndentifier";
+static NSString *mainCollectionViewHeaderIdentifier = @"mainCollectionViewHeaderIdentifier";
 
 @interface JMCategoryContentCell : UITableViewCell
 

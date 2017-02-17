@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface JMHomePageController : UIViewController
+
+@interface JMHomePageController : UIViewController <NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDownloadDelegate,UIDocumentInteractionControllerDelegate>
+
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) AVPlayer *player;
+
 
 @end

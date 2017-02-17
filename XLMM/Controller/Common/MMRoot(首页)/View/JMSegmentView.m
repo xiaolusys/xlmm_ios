@@ -93,10 +93,10 @@
         
         [MobClick event:_urlArray[1]];
         
-        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, frame.size.height - 64 - 49)];
+        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, frame.size.height - 80)];
         self.segmentScrollView.pagingEnabled = YES;
         self.segmentScrollView.showsHorizontalScrollIndicator = NO;
-        self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * controller.count, frame.size.height - 64 - 49);
+        self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * controller.count, frame.size.height - 80);
         self.segmentScrollView.delegate = self;
 //        [self.segmentScrollView scrollRectToVisible:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT) animated:NO];
         [self addSubview:self.segmentScrollView];

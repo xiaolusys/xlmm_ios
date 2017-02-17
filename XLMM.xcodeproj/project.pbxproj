@@ -666,6 +666,7 @@
 		1F90EE251E519AB30031F0DE /* JMHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F90EE241E519AB30031F0DE /* JMHomePageController.m */; };
 		1F90EE281E51A8CD0031F0DE /* JMHomeFirstController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F90EE271E51A8CD0031F0DE /* JMHomeFirstController.m */; };
 		1F90EE2A1E51B1820031F0DE /* searchBarImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F90EE291E51B1820031F0DE /* searchBarImage@2x.png */; };
+		1F90EE2D1E553C7A0031F0DE /* JMHomeSegmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F90EE2C1E553C7A0031F0DE /* JMHomeSegmentCell.m */; };
 		1F9169DC1D5055BC00327408 /* libHappyDNS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DB1D5055BC00327408 /* libHappyDNS.a */; };
 		1F9169DE1D5055BF00327408 /* libQiniu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DD1D5055BF00327408 /* libQiniu.a */; };
 		1F9169E01D5055C300327408 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9169DF1D5055C300327408 /* libAFNetworking.a */; };
@@ -682,6 +683,10 @@
 		1F99F87B1D65678800C6B79C /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 326C4E0C1C2CE9ED00A79359 /* libxml2.tbd */; };
 		1F99F8881D65CA9000C6B79C /* MBProgressHUD+JMHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8871D65CA9000C6B79C /* MBProgressHUD+JMHUD.m */; };
 		1F99F8CA1D66B9AB00C6B79C /* JMHomeRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */; };
+		1FAC28CB1E554FFD0032A005 /* JMHomeHourController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC28CA1E554FFD0032A005 /* JMHomeHourController.m */; };
+		1FAC28CE1E55507A0032A005 /* JMHomeSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC28CD1E55507A0032A005 /* JMHomeSegmentView.m */; };
+		1FAC28D11E5558500032A005 /* JMHomeHourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC28D01E5558500032A005 /* JMHomeHourCell.m */; };
+		1FAC28D41E5558600032A005 /* JMHomeHourModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC28D31E5558600032A005 /* JMHomeHourModel.m */; };
 		1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */; };
 		1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBDA3661CE94BB00047BEF2 /* JMAuthcodeViewController.m */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
@@ -1923,6 +1928,8 @@
 		1F90EE261E51A8CD0031F0DE /* JMHomeFirstController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeFirstController.h; sourceTree = "<group>"; };
 		1F90EE271E51A8CD0031F0DE /* JMHomeFirstController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeFirstController.m; sourceTree = "<group>"; };
 		1F90EE291E51B1820031F0DE /* searchBarImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchBarImage@2x.png"; sourceTree = "<group>"; };
+		1F90EE2B1E553C7A0031F0DE /* JMHomeSegmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeSegmentCell.h; sourceTree = "<group>"; };
+		1F90EE2C1E553C7A0031F0DE /* JMHomeSegmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeSegmentCell.m; sourceTree = "<group>"; };
 		1F9169DB1D5055BC00327408 /* libHappyDNS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHappyDNS.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/HappyDNS/libHappyDNS.a"; sourceTree = "<group>"; };
 		1F9169DD1D5055BF00327408 /* libQiniu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQiniu.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/Qiniu/libQiniu.a"; sourceTree = "<group>"; };
 		1F9169DF1D5055C300327408 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
@@ -1941,6 +1948,14 @@
 		1F99F8C81D66B9AB00C6B79C /* JMHomeRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootController.h; sourceTree = "<group>"; };
 		1F99F8C91D66B9AB00C6B79C /* JMHomeRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootController.m; sourceTree = "<group>"; };
 		1FAA736B1DDE9BF200CEE342 /* JMPromptMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPromptMessage.h; sourceTree = "<group>"; };
+		1FAC28C91E554FFD0032A005 /* JMHomeHourController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeHourController.h; sourceTree = "<group>"; };
+		1FAC28CA1E554FFD0032A005 /* JMHomeHourController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeHourController.m; sourceTree = "<group>"; };
+		1FAC28CC1E55507A0032A005 /* JMHomeSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeSegmentView.h; sourceTree = "<group>"; };
+		1FAC28CD1E55507A0032A005 /* JMHomeSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeSegmentView.m; sourceTree = "<group>"; };
+		1FAC28CF1E5558500032A005 /* JMHomeHourCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeHourCell.h; sourceTree = "<group>"; };
+		1FAC28D01E5558500032A005 /* JMHomeHourCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeHourCell.m; sourceTree = "<group>"; };
+		1FAC28D21E5558600032A005 /* JMHomeHourModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeHourModel.h; sourceTree = "<group>"; };
+		1FAC28D31E5558600032A005 /* JMHomeHourModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeHourModel.m; sourceTree = "<group>"; };
 		1FB4287A1DAF4ACD002F98B4 /* XLMM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XLMM.entitlements; sourceTree = "<group>"; };
 		1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		1FB4287D1DAF4FF9002F98B4 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
@@ -3220,6 +3235,8 @@
 				1F90EE241E519AB30031F0DE /* JMHomePageController.m */,
 				1F90EE261E51A8CD0031F0DE /* JMHomeFirstController.h */,
 				1F90EE271E51A8CD0031F0DE /* JMHomeFirstController.m */,
+				1FAC28C91E554FFD0032A005 /* JMHomeHourController.h */,
+				1FAC28CA1E554FFD0032A005 /* JMHomeHourController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -3235,6 +3252,8 @@
 				1F7D993F1D63FD7000E18FD1 /* JMRootGoodsModel.m */,
 				1F3F75531D76BD3D0079D19B /* JMHomeActiveModel.h */,
 				1F3F75541D76BD3D0079D19B /* JMHomeActiveModel.m */,
+				1FAC28D21E5558600032A005 /* JMHomeHourModel.h */,
+				1FAC28D31E5558600032A005 /* JMHomeHourModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3258,6 +3277,12 @@
 				1F23F9A91D6712C700C78EAE /* JMHomeGoodsCell.m */,
 				1FE52DEA1D93CEA30051D5A0 /* JMHomeHeaderCell.h */,
 				1FE52DEB1D93CEA30051D5A0 /* JMHomeHeaderCell.m */,
+				1F90EE2B1E553C7A0031F0DE /* JMHomeSegmentCell.h */,
+				1F90EE2C1E553C7A0031F0DE /* JMHomeSegmentCell.m */,
+				1FAC28CC1E55507A0032A005 /* JMHomeSegmentView.h */,
+				1FAC28CD1E55507A0032A005 /* JMHomeSegmentView.m */,
+				1FAC28CF1E5558500032A005 /* JMHomeHourCell.h */,
+				1FAC28D01E5558500032A005 /* JMHomeHourCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7047,6 +7072,7 @@
 				1F498C3E1D2772D0007E77FC /* JMPopLogistcsController.m in Sources */,
 				1F5877EB1DB8A7AF00949302 /* ProductSelectionListViewController.m in Sources */,
 				1F498C521D2772D0007E77FC /* JMGoodsShowView.m in Sources */,
+				1F90EE2D1E553C7A0031F0DE /* JMHomeSegmentCell.m in Sources */,
 				1F58781B1DB8A87900949302 /* JMRewardsController.m in Sources */,
 				1F23F9D51D6C225600C78EAE /* JMHomeYesterdayController.m in Sources */,
 				1F58778D1DB8A60D00949302 /* JMEarningsRankModel.m in Sources */,
@@ -7107,6 +7133,7 @@
 				1FF72C7B1DE7E7A30035F436 /* JMFineClassController.m in Sources */,
 				1F7D99391D63186400E18FD1 /* JMDelayPopView.m in Sources */,
 				1F4C9E9A1D9912600089CE74 /* UdeskShareTransitioningDelegateImpl.m in Sources */,
+				1FAC28D41E5558600032A005 /* JMHomeHourModel.m in Sources */,
 				1F5877931DB8A60D00949302 /* FanceModel.m in Sources */,
 				1F5877AB1DB8A60D00949302 /* JMMaMateamCell.m in Sources */,
 				1F5878851DB8ABD900949302 /* TixianTableViewCell.m in Sources */,
@@ -7163,6 +7190,7 @@
 				1F1FB8AD1D88EA50004C60CE /* JMMineIntegralCell.m in Sources */,
 				1F23F9DB1D6C230500C78EAE /* JMHomeTomorrowController.m in Sources */,
 				1F4C9E9C1D9912600089CE74 /* NSArray+UdeskSDK.m in Sources */,
+				1FAC28D11E5558500032A005 /* JMHomeHourCell.m in Sources */,
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
 				1F58A7581DFAA72300F738D2 /* JMPageControl.m in Sources */,
 				1F689CB01E0A132F0070109B /* JMRefundDetailController.m in Sources */,
@@ -7206,6 +7234,7 @@
 				1F4C9E8D1D9912600089CE74 /* UdeskMessageTextView.m in Sources */,
 				1F58783F1DB8A9ED00949302 /* JMChoiseWithDrawCell.m in Sources */,
 				1F4C9E971D9912600089CE74 /* UdeskTicketViewController.m in Sources */,
+				1FAC28CE1E55507A0032A005 /* JMHomeSegmentView.m in Sources */,
 				1F6B7A281DD9C377009AB446 /* JMEmptyView.m in Sources */,
 				1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */,
 				1F4C9E8F1D9912600089CE74 /* UdeskTimerLabel.m in Sources */,
@@ -7287,6 +7316,7 @@
 				1F52E94C1DDC09CD00F9C286 /* JMCartHistoryCell.m in Sources */,
 				1F4C9EA51D9912600089CE74 /* UdeskSDKManager.m in Sources */,
 				1F6B79DA1DD9BF95009AB446 /* JMPopView.m in Sources */,
+				1FAC28CB1E554FFD0032A005 /* JMHomeHourController.m in Sources */,
 				3A1E05931CE1C3FB001018AC /* LGRadioButton.m in Sources */,
 				1F58785E1DB8AB3600949302 /* MaMaViewController.m in Sources */,
 				1F4C9EA71D9912600089CE74 /* UdeskSDKStyle.m in Sources */,

@@ -10,4 +10,6 @@
 
 @interface JMHomeFirstController : UIViewController
 
+@property (nonatomic, strong) NSArray *topImageArray;
+
 @end

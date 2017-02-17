@@ -117,8 +117,8 @@
 
 
 - (void)backClick:(UIButton *)button{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    JMKeyWindow.rootViewController = tabBarVC;
+//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+//    JMKeyWindow.rootViewController = tabBarVC;
 }
 
 
