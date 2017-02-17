@@ -203,8 +203,9 @@
  */
 + (void)callNativeBackToHome:(UIViewController *)vc{
     if(vc != nil){
-        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
+//        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+//        JMKeyWindow.rootViewController = tabBarVC;
+        [vc.navigationController popViewControllerAnimated:YES];
     }
 }
 

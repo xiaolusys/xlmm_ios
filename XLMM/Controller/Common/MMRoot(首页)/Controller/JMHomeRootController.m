@@ -38,10 +38,10 @@
 #import "CSTabBarController.h"
 #import "JMChildViewController.h"
 #import "JMSearchViewController.h"
+#import "JMHomePageController.h"
 
 
-
-static BOOL isFirstPOP = YES;
+//static BOOL isFirstPOP = YES;
 
 @interface JMHomeRootController ()<JMHomeCategoryCellDelegate,JMUpdataAppPopViewDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     NSTimer *_cartTimer;            // 购物定时器
@@ -137,7 +137,7 @@ static BOOL isFirstPOP = YES;
 //    if (self.pageView) {
 //        [self.pageView reloadData];
 //    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollMessage:) name:@"leaveTop" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(rootViewWillEnterForeground:)
@@ -600,22 +600,24 @@ static BOOL isFirstPOP = YES;
 }
 - (void)rightNavigationClick:(UIButton *)button {
     [MBProgressHUD showLoading:@""];
-    button.enabled = NO;
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
-    if (isLogin) {
-        if (isXLMM) {
-            [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-            CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
-            JMKeyWindow.rootViewController = tabBarVC;
-        }else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alertView show];
-        }
-    }else {
-        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-        [self.navigationController pushViewController:loginVC animated:YES];
-    }
+//    button.enabled = NO;
+    JMHomePageController *homePageVC = [[JMHomePageController alloc] init];
+    [self.navigationController pushViewController:homePageVC animated:YES];
+//    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+//    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+//    if (isLogin) {
+//        if (isXLMM) {
+//            [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
+//            CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
+//            JMKeyWindow.rootViewController = tabBarVC;
+//        }else {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"不是小鹿妈妈" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alertView show];
+//        }
+//    }else {
+//        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+//        [self.navigationController pushViewController:loginVC animated:YES];
+//    }
 }
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;

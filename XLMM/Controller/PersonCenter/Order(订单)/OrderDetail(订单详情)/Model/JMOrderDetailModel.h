@@ -179,6 +179,7 @@
  "pay_time" = "2016-09-23T17:13:36";
  "process_time" = "2016-09-23T17:13:36";
  "ware_by_display" = "\U4e0a\U6d77\U4ed3";
+ "weight_time" = "2017-02-14 17:27:59";
  }
  );
  "pay_cash" = 0;

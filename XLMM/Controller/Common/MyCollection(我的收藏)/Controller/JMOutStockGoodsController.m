@@ -123,7 +123,7 @@
     [self.view addSubview:self.empty];
     weakSelf.empty.block = ^(NSInteger index) {
         if (index == 100) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }
     };
 }

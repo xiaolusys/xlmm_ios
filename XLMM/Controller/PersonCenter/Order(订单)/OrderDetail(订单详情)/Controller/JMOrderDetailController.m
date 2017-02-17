@@ -521,7 +521,7 @@
         self.packageModel = self.logisticsArr.count > 0 ? self.logisticsArr[section] : nil;
 //        NSDictionary *dcit = [self.packageModel mj_keyValues];
         NSInteger statusCode = [self.orderDetailModel.status integerValue];
-        BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.finish_time == nil && statusCode == 2);
+        BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.weight_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
             [self createClassPopView:@"提示" Message:orderDetailAlreadyOrder Index:3];
         }else { // 如果只有一种退款方式不弹出选择框

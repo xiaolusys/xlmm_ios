@@ -129,7 +129,7 @@
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            self.cartVC.isHideNavigationLeftItem = YES;
+//            self.cartVC.isHideNavigationLeftItem = YES;
 //            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
             //            [self.cartVC refreshCartData];
         }else {
