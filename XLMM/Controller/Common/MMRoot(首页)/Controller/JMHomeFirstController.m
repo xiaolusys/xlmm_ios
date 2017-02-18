@@ -19,7 +19,7 @@
 #import "JMHomePageController.h"
 
 
-@interface JMHomeFirstController () <UIScrollViewDelegate, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate> {
+@interface JMHomeFirstController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate> {
     /**
      *  主页视图滚动位置判断
      */
@@ -99,16 +99,57 @@
     self.tableViews = [NSMutableArray array];
     
     
-    
-//    [self createPullHeaderRefresh];
-    [self loadDataSource];
-//    [self.tableView.mj_header beginRefreshing];
+    [self.view addSubview:self.tableView];
     
     
+    [self createPullHeaderRefresh];
+//    [self loadDataSource];
+    [self.tableView.mj_header beginRefreshing];
     
     
     
 }
+
+//- (void)createUI {
+//    [self.view addSubview:self.bottomScrollView];
+//    [self.view addSubview:self.pageView];
+//    [self.view addSubview:self.segmentedControl];
+//
+//}
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return _tableView;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return SCREENHEIGHT;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"cellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    [cell.contentView addSubview:self.bottomScrollView];
+    [cell.contentView addSubview:self.segmentedControl];
+    [cell.contentView addSubview:self.pageView];
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+    
+}
+
+
 
 - (UIScrollView *)bottomScrollView {
     
@@ -117,23 +158,10 @@
         _bottomScrollView.delegate = self;
         _bottomScrollView.pagingEnabled = YES;
         _bottomScrollView.scrollEnabled = NO;
-        for (int i = 0; i < self.itemNameArr.count; i++) {
-            JMHomeHourController *jsdTableViewController = [[JMHomeHourController alloc] init];
-            jsdTableViewController.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT - 64);
-            
-            [self.bottomScrollView addSubview:jsdTableViewController.view];
-            
-            [self.controllArr addObject:jsdTableViewController];
-            [self.tableViews addObject:jsdTableViewController.tableView];
-            
-            
-            NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
-            [jsdTableViewController.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-            
-            
-        }
-        self.currentTableView = self.tableViews[0];
-        self.bottomScrollView.contentSize = CGSizeMake(self.controllArr.count * SCREENWIDTH, 0);
+        
+        
+        
+        
         
     }
     
@@ -176,9 +204,9 @@
         //        self.segmentedControl.shouldAnimateUserSelection = NO;
         [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
         //        __weak typeof(self) weakSelf = self;
-        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+//        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
             //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
-        }];
+//        }];
         
     }
     return _segmentedControl;
@@ -240,6 +268,7 @@
 //}
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     NSLog(@"%@",change);
+    
     UITableView *tableView = (UITableView *)object;
     if (!(self.currentTableView == tableView)) {
         return;
@@ -251,28 +280,25 @@
     }
     
     CGFloat tableViewoffsetY = tableView.contentOffset.y;
-    NSLog(@"%f",tableViewoffsetY);
-    
+//    NSLog(@"%f",tableViewoffsetY);
+//    tableView.bounces = NO; // 禁止回弹效果
     self.lastTableViewOffsetY = tableViewoffsetY;
     
     if ( tableViewoffsetY>=0 && tableViewoffsetY<=  SCREENWIDTH * 0.4) {
         self.pageController.baseScrollView.scrollEnabled = YES;
         self.segmentedControl.frame = CGRectMake(0, SCREENWIDTH * 0.4-tableViewoffsetY - 0, SCREENWIDTH, 45);
         self.pageView.frame = CGRectMake(0, 0-tableViewoffsetY - 0, SCREENWIDTH, SCREENWIDTH * 0.4);
-        
-        
         [UIView animateWithDuration:0.3 animations:^{
             self.pageController.segmentControl.mj_y = 64;
             self.pageController.baseScrollView.mj_y = 64 + 45;
         }];
-        
     }else if( tableViewoffsetY < 0){
-        
         self.segmentedControl.frame = CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 45);
         self.pageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4);
-        
+        if (tableViewoffsetY < -60) {
+            [self.tableView.mj_header beginRefreshing];
+        }
     }else if (tableViewoffsetY > SCREENWIDTH * 0.4){
-        
         self.segmentedControl.frame = CGRectMake(0, 64 - 64, SCREENWIDTH, 45);
         self.pageView.frame = CGRectMake(0, -SCREENWIDTH * 0.4 - 64, SCREENWIDTH, SCREENWIDTH * 0.4);
         self.pageController.baseScrollView.scrollEnabled = NO;
@@ -282,12 +308,6 @@
         }];
         
     }
-
-    
-    
-    
-    
-    
 }
 
 #pragma mark 数据请求
@@ -296,9 +316,13 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/today",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        [self.itemNameArr removeAllObjects];
+        [self.dataSource removeAllObjects];
+        [self.controllArr removeAllObjects];
+        [self.tableViews removeAllObjects];
         [self fetchData:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -319,11 +343,39 @@
         
         [self.itemNameArr addObject:hourStr];
     }
-    [self.view addSubview:self.bottomScrollView];
-    [self.view addSubview:self.pageView];
-    [self.view addSubview:self.segmentedControl];
-    JMHomeHourController *control = self.controllArr[0];
-    control.dataSource = self.dataSource[0];
+    if (self.itemNameArr.count != 0) {
+        self.segmentedControl.sectionTitles = self.itemNameArr;
+        for (int i = 0; i < self.itemNameArr.count; i++) {
+            JMHomeHourController *tableViewController = [[JMHomeHourController alloc] init];
+            tableViewController.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT - 64);
+            
+            [self.bottomScrollView addSubview:tableViewController.view];
+            
+            [self.controllArr addObject:tableViewController];
+            [self.tableViews addObject:tableViewController.tableView];
+            
+            [self addChildViewController:tableViewController];
+            [tableViewController didMoveToParentViewController:self];
+            
+            
+            
+            
+            NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+            [tableViewController.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+            
+            
+        }
+        self.bottomScrollView.contentSize = CGSizeMake(self.controllArr.count * SCREENWIDTH, 0);
+        
+        JMHomeHourController *control = self.controllArr[_currentIndex];
+        control.dataSource = self.dataSource[_currentIndex];
+        self.currentTableView = self.tableViews[_currentIndex];
+        self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
+        
+        
+    }
+//    [self.tableView reloadData];
+
     
 //    [self initUI];
 //    self.segmentedControl.sectionTitles = self.itemNameArr;
@@ -413,11 +465,28 @@
 //    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 //    [self.tableView reloadData];
-    self.segmentView.segmentScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
+    self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
     JMHomeHourController *control = self.controllArr[_currentIndex];
+    self.currentTableView = self.tableViews[_currentIndex];
+    for (UITableView *tableView in self.tableViews) {
+        if ( self.lastTableViewOffsetY>=0 &&  self.lastTableViewOffsetY<=SCREENWIDTH * 0.4) {
+            
+            tableView.contentOffset = CGPointMake(0,  self.lastTableViewOffsetY);
+            
+        }else if(self.lastTableViewOffsetY < 0){
+            
+            tableView.contentOffset = CGPointMake(0, 0);
+            
+        }else if ( self.lastTableViewOffsetY > SCREENWIDTH * 0.4){
+            tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
+//            tableView.contentOffset = CGPointMake(0, SCREENWIDTH * 0.4);
+        }
+    }
+    
+    
+    control.tableView = self.tableViews[_currentIndex];
     control.dataSource = self.dataSource[_currentIndex];
     
-    self.currentTableView = self.tableViews[_currentIndex];
     
     
     
