@@ -91,7 +91,6 @@
     [self createTabelView];
     self.tableViews = [NSMutableArray array];
     
-    
     [self createPullHeaderRefresh];
 //    [self loadDataSource];
     [self.tableView.mj_header beginRefreshing];
@@ -113,6 +112,23 @@
         [self.tableView.mj_header endRefreshing];
     }
 
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"%@",self.parentViewController);
+    
+    NSLog(@"%@",scrollView);
+    if (self.tableView == scrollView) {
+        CGFloat offsetY = self.tableView.contentOffset.y;
+        
+        
+        if (offsetY > 150) {
+//            scrollView.contentOffset = CGPointMake(0, 150);
+        }else {
+            
+        }
+        
+    }
+    
 }
 
 #pragma mark 数据请求
@@ -137,9 +153,29 @@
         for (NSDictionary *itemD in items) {
             JMHomeHourModel *model = [JMHomeHourModel mj_objectWithKeyValues:itemD];
             [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
+            [itemsArr addObject:model];
         }
         [self.dataSource addObject:itemsArr];
-        NSString *hourStr = [NSString stringWithFormat:@"%@点热销",itemDic[@"hour"]];
+        NSString *hourStr = [NSString stringWithFormat:@"热销商品\n%@点",itemDic[@"hour"]];
         [self.itemNameArr addObject:hourStr];
     }
 //    [self initUI];

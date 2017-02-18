@@ -52,8 +52,6 @@
 @property (nonatomic, copy) NSString *trackViewUrl1;
 @property (nonatomic, copy) NSString *trackName;
 
-@property (nonatomic, strong) HMSegmentedControl *segmentControl;
-@property (nonatomic, strong) UIScrollView *baseScrollView;
 @property (nonatomic, strong) NSMutableArray *urlArray;
 
 
@@ -191,6 +189,7 @@
     [window addSubview:self.launchView];
     
     [self createNavigationBarWithTitle:@"" selecotr:nil];
+    [self createNavigaView];
     [self createSegmentControl];
     [self createRightItem];
     [self loadCategoryData];
@@ -200,6 +199,50 @@
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
     
+}
+#pragma mark 创建自定义 navigationView
+- (void)createNavigaView {
+    UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 83, 44)];
+    UIImageView *titleImage = [UIImageView new];
+    titleImage.image = [UIImage imageNamed:@"name"];
+    [naviView addSubview:titleImage];
+    self.navigationItem.titleView = naviView;
+    [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(naviView.mas_centerX);
+        make.centerY.equalTo(naviView.mas_centerY);
+        make.width.mas_equalTo(@83);
+        make.height.mas_equalTo(@20);
+    }];
+    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [leftButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
+    leftImageview.frame = CGRectMake(0, 13, 18, 18);
+    [leftButton addSubview:leftImageview];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+}
+- (void)createRightItem {
+    if(self.navigationItem.rightBarButtonItem == nil) {
+        NSString *titleStr = @"精品汇";
+        CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
+        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
+        [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navRightButton setTitle:titleStr forState:UIControlStateNormal];
+        [self.navRightButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
+    }else {}
+}
+- (void)rightNavigationClick:(UIButton *)button {
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+    if (login && xlmm) {
+        JMFineClassController *fineVC = [[JMFineClassController alloc] init];
+        [self.navigationController pushViewController:fineVC animated:YES];
+    }else {
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
+
 }
 // 请求购物车数量
 - (void)loadCatrsNumData {
@@ -252,7 +295,16 @@
     self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
     [self addChildController];
 }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"%@",scrollView);
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if (offsetY < 150) {
+        self.baseScrollView.scrollEnabled = NO;
+    }else {
+        self.baseScrollView.scrollEnabled = YES;
 
+    }
+}
 /*
  创建分页控制器
  */
@@ -340,14 +392,6 @@
     }
 }
 
-- (void)createRightItem {
-    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [rightButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *rightImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
-    rightImageview.frame = CGRectMake(20, 13, 18, 18);
-    [rightButton addSubview:rightImageview];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-}
 - (void)searchBarClick:(UIButton *)button {
     JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
     rootCategoryVC.cidString = CS_STRING(_currentCidString);
