@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JMCategoryListCell.h"
+#import "JMCategoryColSectionReusableView.h"
 
 @interface JMContentCollectionView : UICollectionView
 
@@ -16,6 +17,7 @@
 @end
 
 static NSString *ContentCollectionViewIndentifier = @"ContentCollectionViewIndentifier";
+static NSString *mainCollectionViewHeaderIdentifier = @"mainCollectionViewHeaderIdentifier";
 
 @interface JMCategoryContentCell : UITableViewCell
 

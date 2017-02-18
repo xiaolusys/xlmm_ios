@@ -22,6 +22,7 @@
 #import "JMPersonalPageLayoutCell.h"
 #import "JMPersonalHeaderReusableView.h"
 #import "JMPersonalPageHeaderCell.h"
+#import "JMApplyForRefundController.h"
 
 
 @interface JMPersonalPageController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,JMPersonalPageHeaderCellDelegate> {
@@ -61,7 +62,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
+//    self.navigationController.navigationBar.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
@@ -71,12 +72,11 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if (self.isHideNavigationBar) {
-        self.navigationController.navigationBar.hidden = YES;
-    }else {
-        self.navigationController.navigationBar.hidden = NO;
-    }
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    if (self.isHideNavigationBar) {
+//        self.navigationController.navigationBar.hidden = YES;
+//    }else {
+//        self.navigationController.navigationBar.hidden = NO;
+//    }
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -85,7 +85,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"" selecotr:nil];
+    [self createNavigationBarWithTitle:@"" selecotr:@selector(backClick)];
     self.dataSource = [NSMutableArray arrayWithObjects:
                        @[@{@"iconImage":@"waitpay",@"title":@"待支付",@"orderNum":@"0"},
                          @{@"iconImage":@"waitsend",@"title":@"待收货",@"orderNum":@"0"},
@@ -104,6 +104,7 @@
 //    [self.collectionView.mj_header beginRefreshing];
     
 }
+
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
@@ -216,7 +217,7 @@
 
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout  = [[UICollectionViewFlowLayout alloc] init];
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 49) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -429,7 +430,9 @@
     
     
 }
-
+- (void)backClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 

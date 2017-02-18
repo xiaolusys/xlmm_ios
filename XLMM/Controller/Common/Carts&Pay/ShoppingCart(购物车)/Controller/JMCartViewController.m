@@ -72,25 +72,26 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    if (self.isHideNavigationLeftItem) {
-        [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
-    }else {
-        [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
-    }
-
+//    if (self.isHideNavigationLeftItem) {
+//        [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
+//    }else {
+//        
+//    }
+    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
+    
     [self createTableView];
     
     
     
     
 }
-- (void)refreshCartData {
-    currentCartDownLoad = NO;
-    historyCartDownLoad = NO;
-    [self downloadCurrentCartData];
-    [self downloadHistoryCartData];
-    
-}
+//- (void)refreshCartData {
+//    currentCartDownLoad = NO;
+//    historyCartDownLoad = NO;
+//    [self downloadCurrentCartData];
+//    [self downloadHistoryCartData];
+//    
+//}
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
@@ -178,13 +179,7 @@
     [self.maskView addSubview:self.emptyView];
     self.emptyView.block = ^(NSInteger index) {
         if (index == 100) {
-            if (weakSelf.isHideNavigationLeftItem) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-            }else {
-                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-            }
-
-            
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
         }
     };
 }
@@ -218,12 +213,11 @@
     self.bottomView = bottomView;
     [self.view addSubview:bottomView];
 
-    CGFloat hideNavigationLeftItemHeight;
-    if (self.isHideNavigationLeftItem) {
-        hideNavigationLeftItemHeight = 49.;
-    }else {
-        hideNavigationLeftItemHeight = 0.;
-    }
+//    CGFloat hideNavigationLeftItemHeight = 0;
+//    if (self.isHideNavigationLeftItem) {
+//        hideNavigationLeftItemHeight = 49.;
+//    }else {
+//    }
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.top.equalTo(weakSelf.view).offset(64);
@@ -231,8 +225,8 @@
         make.bottom.equalTo(bottomView.mas_top);
     }];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.view);
-        make.bottom.equalTo(weakSelf.view).offset(-hideNavigationLeftItemHeight);
+        make.left.bottom.equalTo(weakSelf.view);
+//        make.bottom.equalTo(weakSelf.view);
         make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@(0));
     }];
@@ -373,11 +367,11 @@
             JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
             empty.block = ^(NSInteger index) {
                 if (index == 100) {
-                    if (self.isHideNavigationLeftItem) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-                    }else {
+//                    if (self.isHideNavigationLeftItem) {
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//                    }else {
                         [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                    }
+//                    }
                 }
             };
             return empty;

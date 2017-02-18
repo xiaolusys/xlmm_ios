@@ -38,7 +38,7 @@
 
 @implementation CSTabBarController
 
-- (NSMutableArray *)items
+- (NSMutableArray *)items 
 {
     if (_items == nil) {
         
@@ -69,10 +69,10 @@
 //                                   kImgKey    : @"tabBar_mianBBSNomal",
 //                                   kSelImgKey : @"tabBar_mianBBSSelected"},
                                  
-                                 @{kClassKey  : @"JMMineController",
-                                   kTitleKey  : @"妈妈中心",
-                                   kImgKey    : @"tabBar_personalNomal",
-                                   kSelImgKey : @"tabBar_personalSelected"}
+//                                 @{kClassKey  : @"JMMineController",
+//                                   kTitleKey  : @"妈妈中心",
+//                                   kImgKey    : @"tabBar_personalNomal",
+//                                   kSelImgKey : @"tabBar_personalSelected"}
                                  ];
     
     [childItemsArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
@@ -93,7 +93,7 @@
     self.secondVC = self.items[0];
     self.homeVC = self.items[1];
 //    self.thirdVC = self.items[2];
-    self.fouthVC = self.items[2];
+//    self.fouthVC = self.items[2];
     
  
     

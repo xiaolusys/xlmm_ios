@@ -16,6 +16,7 @@
 #import "JMBaseGoodsCell.h"
 #import "JMQueryLogInfoController.h"
 #import "ShenQingTuikuanController.h"
+#import "JMApplyForRefundController.h"
 #import "ShenQingTuiHuoController.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
@@ -520,7 +521,7 @@
         self.packageModel = self.logisticsArr.count > 0 ? self.logisticsArr[section] : nil;
 //        NSDictionary *dcit = [self.packageModel mj_keyValues];
         NSInteger statusCode = [self.orderDetailModel.status integerValue];
-        BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.finish_time == nil && statusCode == 2);
+        BOOL isWarehouseOrder = (self.packageModel.book_time != nil && self.packageModel.assign_time == nil && self.packageModel.weight_time == nil && statusCode == 2);
         if (isWarehouseOrder) {
             [self createClassPopView:@"提示" Message:orderDetailAlreadyOrder Index:3];
         }else { // 如果只有一种退款方式不弹出选择框
@@ -761,23 +762,38 @@
     NSArray *arr = self.dataSource[_sectionCount];
     JMOrderGoodsModel *model = arr[_rowCount];
     if (_isPopChoiseRefundWay == YES) {
-        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
-        tuikuanVC.dingdanModel = model;
-        tuikuanVC.refundDic = _choiseRefundDict;
-        tuikuanVC.tid = tid;
-        tuikuanVC.oid = model.orderGoodsID;
-        tuikuanVC.status = model.status_display;
-        [self.navigationController pushViewController:tuikuanVC animated:YES];
+        JMApplyForRefundController *refundVC = [[JMApplyForRefundController alloc] init];
+        refundVC.dingdanModel = model;
+        refundVC.refundDic = _choiseRefundDict;
+        refundVC.tid = tid;
+        [self.navigationController pushViewController:refundVC animated:YES];
+        
+//        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+//        tuikuanVC.dingdanModel = model;
+//        tuikuanVC.refundDic = _choiseRefundDict;
+//        tuikuanVC.tid = tid;
+//        tuikuanVC.oid = model.orderGoodsID;
+//        tuikuanVC.status = model.status_display;
+//        [self.navigationController pushViewController:tuikuanVC animated:YES];
     }else {
-        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
-        tuikuanVC.dingdanModel = model;
+        JMApplyForRefundController *refundVC = [[JMApplyForRefundController alloc] init];
+        refundVC.dingdanModel = model;
         if (_choiseRefundArr.count > 0) {
-            tuikuanVC.refundDic = _choiseRefundArr[0];
+            refundVC.refundDic = _choiseRefundArr[0];
         }
-        tuikuanVC.tid = tid;
-        tuikuanVC.oid = model.orderGoodsID;
-        tuikuanVC.status = model.status_display;
-        [self.navigationController pushViewController:tuikuanVC animated:YES];
+        refundVC.tid = tid;
+        [self.navigationController pushViewController:refundVC animated:YES];
+        
+        
+//        ShenQingTuikuanController *tuikuanVC = [[ShenQingTuikuanController alloc] initWithNibName:@"ShenQingTuikuanController" bundle:nil];
+//        tuikuanVC.dingdanModel = model;
+//        if (_choiseRefundArr.count > 0) {
+//            tuikuanVC.refundDic = _choiseRefundArr[0];
+//        }
+//        tuikuanVC.tid = tid;
+//        tuikuanVC.oid = model.orderGoodsID;
+//        tuikuanVC.status = model.status_display;
+//        [self.navigationController pushViewController:tuikuanVC animated:YES];
     }
 }
 #pragma mark 取消待支付订单

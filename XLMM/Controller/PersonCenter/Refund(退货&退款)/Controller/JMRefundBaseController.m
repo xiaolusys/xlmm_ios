@@ -189,7 +189,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMRefundBaseController"];

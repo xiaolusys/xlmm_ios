@@ -352,9 +352,6 @@
     if (index == 100) {
         JMChoiseWithDrawController *choiseVC = [[JMChoiseWithDrawController alloc] init];
         choiseVC.myBlance = _carryValue;
-        choiseVC.block = ^(NSString *blanceMoney) {
-            self.label1.text = [NSString stringWithFormat:@"%.2f元",[blanceMoney floatValue]];
-        };
         [self.navigationController pushViewController:choiseVC animated:YES];
     }else if (index == 101) {
         MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
@@ -402,8 +399,8 @@
   
 }
 - (void)backClick:(UIButton *)button{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    JMKeyWindow.rootViewController = tabBarVC;
+//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+//    JMKeyWindow.rootViewController = tabBarVC;
 }
 
 - (void)createTableView {

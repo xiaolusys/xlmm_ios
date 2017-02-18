@@ -12,7 +12,6 @@
 
 
 - (void)refresh;
-- (void)endEarningMessage;
 
 
 @end

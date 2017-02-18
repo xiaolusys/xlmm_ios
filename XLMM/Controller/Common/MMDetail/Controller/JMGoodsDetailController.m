@@ -270,7 +270,7 @@
 }
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         self.shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
         self.shareModel.share_type = @"link";
@@ -281,7 +281,7 @@
 }
 - (void)loadCatrsNumData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
         _cartsGoodsNum = [responseObject[@"result"] integerValue];
@@ -297,7 +297,7 @@
 }
 - (void)lodaDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/%@",Root_URL,self.goodsID];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchData:responseObject];
     } WithFail:^(NSError *error) {
@@ -409,12 +409,22 @@
     if (goodsArray.count == 0) {
         return ;
     }else {
-        NSDictionary *itemDic = goodsArray[0];
-        NSDictionary *skuDic = itemDic[@"sku_items"][0];
-        _paramer[@"item_id"] = itemDic[@"product_id"];
-        _paramer[@"sku_id"] = skuDic[@"sku_id"];
-        _paramer[@"num"] = @"1";
-        [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+        for (NSDictionary *itemDic in goodsArray) {
+            NSArray *arr = itemDic[@"sku_items"];
+            if (arr.count == 0) {
+                continue;
+            }else {
+                NSDictionary *skuDic = arr[0];
+                _paramer[@"item_id"] = itemDic[@"product_id"];
+                _paramer[@"sku_id"] = skuDic[@"sku_id"];
+                _paramer[@"num"] = @"1";
+                [self.popView initTypeSizeView:goodsArray TitleString:detailContentDic[@"name"]];
+                break;
+            }
+        }
+//        NSDictionary *itemDic = goodsArray[0];
+//        NSDictionary *skuDic = itemDic[@"sku_items"][0];
+        
     }
 
     _buyCouponUrl = goodsDetailDic[@"buy_coupon_url"];

@@ -542,9 +542,9 @@
 }
 
 - (void)backClick:(UIButton *)btn {
-    if (self.block) {
-        self.block(_withDrawMoney);
-    }
+//    if (self.block) {
+//        self.block(_withDrawMoney);
+//    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated{

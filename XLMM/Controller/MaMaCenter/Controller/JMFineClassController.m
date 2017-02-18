@@ -71,6 +71,7 @@
 }
 
 - (void)loadMaMaWeb {
+    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject){
@@ -101,7 +102,7 @@
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
     
-    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 64) usingUIWebView:NO];
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
     self.baseWebView.viewController = self;
@@ -109,7 +110,7 @@
 //        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
 //    };
     [self.view addSubview:self.baseWebView];
-    [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
+    
     
 }
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -181,8 +182,9 @@
 
 
 - (void)backClick:(UIButton *)button{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    JMKeyWindow.rootViewController = tabBarVC;
+//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+//    JMKeyWindow.rootViewController = tabBarVC;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

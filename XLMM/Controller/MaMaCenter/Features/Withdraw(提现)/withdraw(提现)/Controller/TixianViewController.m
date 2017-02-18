@@ -13,7 +13,7 @@
 #import "UIView+RGSize.h"
 
 
-@interface TixianViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate> {
+@interface TixianViewController ()<UITextFieldDelegate> {
     NSDictionary *keyBoardDic;
 }
 
@@ -500,9 +500,8 @@
         NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
         TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
         if (code == 0) {
-            if (self.block) {
-                self.block(_cantixianjine);
-            }
+            NSString *str = [NSString stringWithFormat:@"%.2f",_cantixianjine];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"drawCashMoeny" object:str];
             vc.tixianjine = tixianjine;
             vc.activeValueNum = _activeValue;
             vc.surplusMoney = self.cantixianjine;

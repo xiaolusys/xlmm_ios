@@ -18,6 +18,8 @@
  */
 @property (nonatomic,copy) NSString *finish_time;
 
+@property (nonatomic,copy) NSString *weight_time;
+
 @property (nonatomic,copy) NSString *cancel_time;
 /**
  *  订货时间
@@ -69,6 +71,7 @@
  "pay_time" = "2016-06-28T20:33:22";
  "process_time" = "2016-06-28T20:33:22";
  "ware_by_display" = "\U5e7f\U5dde\U4ed3";
+ "weight_time" = "2017-02-14 17:27:59";
  }
  );
 
@@ -103,6 +106,7 @@
  "process_time" = "2016-06-22 13:08:55";
  title = "\U65b0\U6b3e\U9632\U6652\U8d85\U5927\U96ea\U7eba\U62ab\U80a9/\U5929\U84dd\U8272";
  "ware_by_display" = "1\U53f7\U4ed3";
+ "weight_time" = "2017-02-14 17:27:59";
  }
  )
 

@@ -12,6 +12,8 @@
 #import "JMEmptyView.h"
 #import "JMClassifyListController.h"
 #import "JMCategoryContentCell.h"
+#import "JMSearchViewController.h"
+
 
 #define TabWidth SCREENWIDTH * 0.25
 #define ColWidth SCREENWIDTH * 0.75
@@ -31,6 +33,7 @@ static NSUInteger selectedIndex = 0;
 @property (nonatomic, strong) NSArray *tabDataArray;
 @property (nonatomic, strong) NSMutableArray *tabDataSource;
 @property (nonatomic, strong) NSMutableArray *colDataSource;
+@property (nonatomic, strong) NSMutableArray *colSectionDataSource;
 
 @property (nonatomic, strong) JMEmptyView *empty;
 
@@ -50,6 +53,12 @@ static NSUInteger selectedIndex = 0;
     }
     return _colDataSource;
 }
+- (NSMutableArray *)colSectionDataSource {
+    if (_colSectionDataSource == nil) {
+        _colSectionDataSource = [NSMutableArray array];
+    }
+    return _colSectionDataSource;
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"JMHomeRootCategoryController"];
@@ -61,10 +70,12 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor countLabelColor];
     [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
     
+    [self createSearchBarView];
     [self itemDataSource];
+    
     
     //    [self createCollectionView];
     
@@ -118,32 +129,65 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)fetchCategoryData:(NSArray *)tabDataArray {
     int i = 0;
-    for (NSDictionary *dict in tabDataArray) {
-        [self.tabDataSource addObject:dict[@"name"]];
-        if ([dict[@"cid"] isEqual:self.cidString]) {
+    for (NSDictionary *dict1 in tabDataArray) {
+        [self.tabDataSource addObject:dict1[@"name"]];
+        NSString *cidStr = CS_STRING(dict1[@"cid"]);
+        if ([cidStr isEqual:self.cidString]) {
             selectedIndex = i;
         }else {
             i ++;
         }
-        NSMutableArray *dictArr = [NSMutableArray array];
-        for (NSDictionary *dic in dict[@"childs"]) {
-            [dictArr addObject:dic];
+        NSMutableArray *dictArr1 = [NSMutableArray array];
+        NSMutableArray *dictArr2 = [NSMutableArray array];
+        for (NSDictionary *dict2 in dict1[@"childs"]) {
+            [dictArr1 addObject:dict2];
+            NSMutableArray *dictArr3 = [NSMutableArray array];
+            for (NSDictionary *dict3 in dict2[@"childs"]) {
+                [dictArr3 addObject:dict3];
+            }
+            [dictArr2 addObject:dictArr3];
         }
-        [self.colDataSource addObject:dictArr];
+        [self.colDataSource addObject:dictArr2];
+        [self.colSectionDataSource addObject:dictArr1];
     }
     //    [self createTableView];
     //    [self.mainTableView reloadData];
     //    [self.mainCollectionView reloadData];
 }
+- (void)createSearchBarView {
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:searchButton];
+    searchButton.backgroundColor = [UIColor whiteColor];
+    [searchButton setImage:[UIImage imageNamed:@"searchBarImage"] forState:UIControlStateNormal];
+    [searchButton setImage:[UIImage imageNamed:@"searchBarImage"] forState:UIControlStateSelected];
+    [searchButton setTitle:@"查找所有精品" forState:UIControlStateNormal];
+    [searchButton setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
+    searchButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [searchButton addTarget:self action:@selector(searchButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    searchButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+//    searchButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    searchButton.layer.masksToBounds = YES;
+    searchButton.layer.cornerRadius = 2.;
+    
+    kWeakSelf
+    [searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.top.equalTo(weakSelf.view).offset(74);
+        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH - 30, 30));
+    }];
+    
+    
+}
 - (void)createTableView {
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50 + 64, TabWidth, SCREENHEIGHT - 50 - 64) style:UITableViewStylePlain];
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
-    self.mainTableView.backgroundColor = [UIColor countLabelColor];
+    self.mainTableView.backgroundColor = [UIColor clearColor];
     self.mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mainTableView.showsVerticalScrollIndicator = NO;
     self.mainTableView.showsHorizontalScrollIndicator = NO;
     self.mainTableView.rowHeight = 60.;
+//    self.mainTableView.contentInset = UIEdgeInsetsMake(50 + 64, 0, 0, 0);
     
     [self.view addSubview:self.mainTableView];
     
@@ -152,14 +196,15 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)crateContentTableView {
     // 添加测试数据
-    self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64 + 50, ColWidth, SCREENHEIGHT - 64 - 50) style:UITableViewStylePlain];
     self.contentTableView.dataSource = self;
     self.contentTableView.delegate = self;
-    //    self.contentTableView.backgroundColor = [UIColor countLabelColor];
+    self.contentTableView.backgroundColor = [UIColor clearColor];
     self.contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.contentTableView.showsVerticalScrollIndicator = NO;
     self.contentTableView.showsHorizontalScrollIndicator = NO;
     self.contentTableView.rowHeight = SCREENHEIGHT - 64;
+//    self.contentTableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
     
     [self.view addSubview:self.contentTableView];
     
@@ -173,11 +218,12 @@ static NSUInteger selectedIndex = 0;
     layout.itemSize = CGSizeMake((ColWidth - 20) / 3, (ColWidth - 20) * 5 / 9);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64) collectionViewLayout:layout];
-    self.mainCollectionView.backgroundColor = [UIColor whiteColor];
+    self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64 - 50) collectionViewLayout:layout];
+    self.mainCollectionView.backgroundColor = [UIColor clearColor];
     self.mainCollectionView.dataSource = self;
     self.mainCollectionView.delegate = self;
-    [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
+//    [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
+//    [self.mainCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:mainCollectionViewHeaderIdentifier];
     [self.view addSubview:self.mainCollectionView];
     
     
@@ -186,7 +232,7 @@ static NSUInteger selectedIndex = 0;
 
 - (void)emptyView {
     //    kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth / 2, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth, 220, SCREENWIDTH - TabWidth, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
     [self.view addSubview:self.empty];
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
@@ -196,7 +242,7 @@ static NSUInteger selectedIndex = 0;
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiomn {
     if (tableView == self.mainTableView) {
         return self.tabDataSource.count;
     }else {
@@ -212,6 +258,7 @@ static NSUInteger selectedIndex = 0;
             cell = [[JMHomeRootCategoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homeCategoryCellId];
         }
         NSString *nameString = self.tabDataSource[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
         return cell;
     }else {
@@ -221,6 +268,7 @@ static NSUInteger selectedIndex = 0;
         if (!cell) {
             cell = [[JMCategoryContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CategoryCellId];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         //        cell.backgroundColor = [UIColor orangeColor];
         //        NSString *nameString = self.tabDataSource[indexPath.row];
         //        [cell configName:nameString Index:indexPath.row SelectedIndex:selectedIndex];
@@ -252,16 +300,23 @@ static NSUInteger selectedIndex = 0;
 }
 
 
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     self.empty.hidden = YES;
-    //    selectedIndex = [(JMContentCollectionView *)collectionView ContentCollectionIndexPath].row;
-    NSArray *dicArr = self.colDataSource[selectedIndex];
+    NSArray *dicArr = self.colSectionDataSource[selectedIndex];
     if (dicArr.count == 0) {
         self.empty.hidden = NO;
     }
     return dicArr.count;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    self.empty.hidden = YES;
+    //    selectedIndex = [(JMContentCollectionView *)collectionView ContentCollectionIndexPath].row;
+    NSArray *dicArr = self.colDataSource[selectedIndex];
+    NSArray *dicRowArr = dicArr[section];
+    if (dicRowArr.count == 0) {
+        self.empty.hidden = NO;
+    }
+    return dicRowArr.count;
     
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -273,13 +328,31 @@ static NSUInteger selectedIndex = 0;
     }else {
         self.contentTableView.scrollEnabled = NO;
     }
-    NSDictionary *dic = self.colDataSource[selectedIndex][indexPath.row];
+    NSArray *indexPathArr = self.colDataSource[selectedIndex];
+    NSDictionary *dic = indexPathArr[indexPath.section][indexPath.row];
     cell.itemsDic = dic;
     return cell;
 }
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == UICollectionElementKindSectionHeader) {
+        JMCategoryColSectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:mainCollectionViewHeaderIdentifier forIndexPath:indexPath];
+        NSArray *arr = self.colSectionDataSource[selectedIndex];
+        NSString *titleStr = arr[indexPath.section][@"name"];
+        reusableview.titleString = titleStr;
+        return reusableview;
+    }else {
+        return nil;
+    }
+
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(ColWidth, 60);
+}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *dic = self.colDataSource[selectedIndex][indexPath.row];
+    NSArray *indexPathArr = self.colDataSource[selectedIndex];
+    NSDictionary *dic = indexPathArr[indexPath.section][indexPath.row];
     NSString *cid = dic[@"cid"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
     JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
@@ -288,7 +361,31 @@ static NSUInteger selectedIndex = 0;
     [self.navigationController pushViewController:itemVC animated:YES];
     
 }
-
+//- (void)buttonClick:(UIButton *)button {
+//    NSInteger index = button.tag - 100;
+//    NSArray *arr = self.colSectionDataSource[selectedIndex];
+//    NSDictionary *dic = arr[index];
+//    NSString *cid = dic[@"cid"];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
+//    JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
+//    itemVC.titleString = dic[@"name"];
+//    itemVC.urlString = urlString;
+//    [self.navigationController pushViewController:itemVC animated:YES];
+//    
+//}
+- (void)searchButtonClick {
+    JMSearchViewController *searchViewController = [JMSearchViewController searchViewControllerWithHistorySearchs:nil searchBarPlaceHolder:nil didSearchBlock:^(JMSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts/search_by_name?name=%@",Root_URL,searchText];
+        JMClassifyListController *searchVC = [[JMClassifyListController alloc] init];
+        searchVC.titleString = searchText;
+        searchVC.emptyTitle = @"搜索其他";
+        searchVC.urlString = [urlString JMUrlEncodedString];
+        [searchViewController.navigationController pushViewController:searchVC animated:YES];
+    }];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    [self presentViewController:nav animated:NO completion:nil];
+    
+}
 
 
 

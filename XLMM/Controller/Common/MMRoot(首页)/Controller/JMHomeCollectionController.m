@@ -122,8 +122,8 @@ static NSString * homeCollectionIndefir = @"JMHomeCollectionControllerIdentifier
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
 //    layout.scrollDirection = UICollectionViewScrollDirectionVertical; // 垂直滚动
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64 - 80 - 49) collectionViewLayout:layout];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 80 - 45) collectionViewLayout:layout];
+    self.collectionView.backgroundColor = [UIColor orangeColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
 //    [self.collectionView.collectionViewLayout invalidateLayout];

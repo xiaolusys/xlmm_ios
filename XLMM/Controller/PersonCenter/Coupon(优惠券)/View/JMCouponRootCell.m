@@ -62,25 +62,26 @@
     UILabel *couponValueLabel = [UILabel new];
     [self.couponBackImage addSubview:couponValueLabel];
     self.couponValueLabel = couponValueLabel;
-    self.couponValueLabel.font = [UIFont systemFontOfSize:32.];
+    self.couponValueLabel.font = [UIFont systemFontOfSize:30.];
     
     UILabel *couponUsefeeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponUsefeeLabel];
     self.couponUsefeeLabel = couponUsefeeLabel;
-    self.couponUsefeeLabel.font = [UIFont systemFontOfSize:13.];
+    self.couponUsefeeLabel.font = [UIFont systemFontOfSize:12.];
     self.couponUsefeeLabel.textColor = [UIColor buttonTitleColor];
     
     UILabel *couponProsdescLabel = [UILabel new];
     [self.couponBackImage addSubview:couponProsdescLabel];
     self.couponProsdescLabel = couponProsdescLabel;
-    self.couponProsdescLabel.font = [UIFont systemFontOfSize:13.];
+    self.couponProsdescLabel.font = [UIFont systemFontOfSize:12.];
     self.couponProsdescLabel.textColor = [UIColor buttonTitleColor];
     
     UILabel *couponTypeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponTypeLabel];
     self.couponTypeLabel = couponTypeLabel;
-    self.couponTypeLabel.font = [UIFont systemFontOfSize:13.];
+    self.couponTypeLabel.font = [UIFont systemFontOfSize:12.];
     self.couponTypeLabel.textColor = [UIColor buttonTitleColor];
+    self.couponTypeLabel.numberOfLines = 2;
     
     UILabel *couponCreatedTimeLabel = [UILabel new];
     [self.couponBackImage addSubview:couponCreatedTimeLabel];
@@ -118,21 +119,21 @@
     
     [self.couponValueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.couponBackImage).offset(spaceLeft);
-        make.top.equalTo(weakSelf.couponBackImage).offset(20);
+        make.top.equalTo(weakSelf.couponBackImage).offset(5);
         make.width.mas_equalTo(@(80));
     }];
     
     [self.couponProsdescLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.couponValueLabel.mas_right).offset(0);
-        make.top.equalTo(weakSelf.couponBackImage).offset(8);
+        make.top.equalTo(weakSelf.couponBackImage).offset(5);
     }];
     [self.couponUsefeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.couponProsdescLabel.mas_bottom).offset(5);
+        make.top.equalTo(weakSelf.couponProsdescLabel.mas_bottom).offset(3);
         make.left.equalTo(weakSelf.couponProsdescLabel);
     }];
     [self.couponTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.couponUsefeeLabel.mas_bottom).offset(5);
-        make.left.equalTo(weakSelf.couponUsefeeLabel);
+        make.top.equalTo(weakSelf.couponUsefeeLabel.mas_bottom).offset(3);
+        make.left.equalTo(weakSelf.couponValueLabel);
 //        make.width.mas_equalTo(@(SCREENWIDTH - 100 - spaceLeft));
         make.right.equalTo(weakSelf.couponBackImage).offset(0);
     }];

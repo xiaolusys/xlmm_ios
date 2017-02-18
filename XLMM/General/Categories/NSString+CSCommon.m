@@ -296,6 +296,13 @@
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
     return currentTime;
 }
++ (NSString *)getCurrentHourMinute:(NSString *)timeStr {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh:mm"];
+    NSDate *currentData = [dateFormatter dateFromString:[NSString jm_deleteTimeWithT:timeStr]];
+    NSString *currentTime = [dateFormatter stringFromDate:currentData];
+    return currentTime;
+}
 
 /**
  *  获取两个日期之间的天数

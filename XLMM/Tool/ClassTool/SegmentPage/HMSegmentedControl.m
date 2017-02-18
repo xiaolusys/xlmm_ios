@@ -291,6 +291,7 @@
 
             CGFloat y = roundf((CGRectGetHeight(self.frame) - selectionStyleNotBox * self.selectionIndicatorHeight) / 2 - stringHeight / 2 + self.selectionIndicatorHeight * locationUp);
             CGRect rect;
+//            CGRect rect1; // 新添加
             if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleFixed) {
                 rect = CGRectMake((self.segmentWidth * idx) + (self.segmentWidth - stringWidth) / 2, y, stringWidth, stringHeight);
                 rectDiv = CGRectMake((self.segmentWidth * idx) - (self.verticalDividerWidth / 2), self.frame.size.height * 0.2 , self.verticalDividerWidth, self.frame.size.height * 0.6);//y == self.selectionIndicatorHeight * 2  h == self.frame.size.height - (self.selectionIndicatorHeight * 4)
@@ -316,6 +317,7 @@
             
             // Fix rect position/size to avoid blurry labels
             rect = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y), ceilf(rect.size.width), ceilf(rect.size.height));
+//            rect1 = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y) + 3, ceilf(rect.size.width), ceilf(rect.size.height));
             
             CATextLayer *titleLayer = [CATextLayer layer];
             titleLayer.frame = rect;
