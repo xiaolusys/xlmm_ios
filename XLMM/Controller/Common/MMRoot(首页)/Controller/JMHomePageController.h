@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-
+@class HMSegmentedControl;
 @interface JMHomePageController : UIViewController <NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDownloadDelegate,UIDocumentInteractionControllerDelegate>
 
 @property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) AVPlayer *player;
+
+@property (nonatomic, strong) HMSegmentedControl *segmentControl;
+@property (nonatomic, strong) UIScrollView *baseScrollView;
+
 
 
 @end

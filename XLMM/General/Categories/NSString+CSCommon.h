@@ -164,7 +164,7 @@
 
 
 + (NSString *)getCurrentYMD;
-
++ (NSString *)getCurrentHourMinute:(NSString *)timeStr;
 
 
 

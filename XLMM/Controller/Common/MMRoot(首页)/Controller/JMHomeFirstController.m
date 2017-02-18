@@ -16,9 +16,10 @@
 #import "JMAutoLoopPageView.h"
 #import "JMHomeHeaderCell.h"
 #import "JumpUtils.h"
+#import "JMHomePageController.h"
 
 
-@interface JMHomeFirstController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate> {
+@interface JMHomeFirstController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate> {
     /**
      *  主页视图滚动位置判断
      */
@@ -41,9 +42,12 @@
 @property (nonatomic, strong) UIScrollView *segmentScrollView;
 
 @property(nonatomic,strong)NSMutableArray *tableViews;
-@property (nonatomic, strong) UICollectionView *currentTableView;
+@property (nonatomic, strong) UITableView *currentTableView;
+@property (nonatomic, strong) UIScrollView *bottomScrollView;
 
-
+@property (nonatomic, strong) JMHomePageController *pageVC;
+//记录上一个偏移量
+@property (nonatomic, assign) CGFloat lastTableViewOffsetY;
 @end
 
 @implementation JMHomeFirstController
@@ -67,6 +71,8 @@
     return _controllArr;
 }
 
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"main"];
@@ -85,18 +91,133 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     _currentIndex = 0;
-    [self createTabelView];
+//    [self createTabelView];
     self.tableViews = [NSMutableArray array];
+    
+    
+    [self.view addSubview:self.tableView];
     
     
     [self createPullHeaderRefresh];
 //    [self loadDataSource];
     [self.tableView.mj_header beginRefreshing];
     
+    
+    
 }
+
+//- (void)createUI {
+//    [self.view addSubview:self.bottomScrollView];
+//    [self.view addSubview:self.pageView];
+//    [self.view addSubview:self.segmentedControl];
+//
+//}
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return _tableView;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return SCREENHEIGHT;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"cellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    [cell.contentView addSubview:self.bottomScrollView];
+    [cell.contentView addSubview:self.segmentedControl];
+    [cell.contentView addSubview:self.pageView];
+    
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+    
+}
+
+
+
+- (UIScrollView *)bottomScrollView {
+    
+    if (!_bottomScrollView) {
+        _bottomScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT-64)];
+        _bottomScrollView.delegate = self;
+        _bottomScrollView.pagingEnabled = YES;
+        _bottomScrollView.scrollEnabled = NO;
+        
+        
+        
+        
+        
+    }
+    
+    return _bottomScrollView;
+}
+- (JMAutoLoopPageView *)pageView {
+    if (!_pageView) {
+        _pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
+        _pageView.dataSource = self;
+        _pageView.delegate = self;
+        _pageView.isCreatePageControl = YES;
+        [_pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
+        _pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+        _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+        _pageView.scrollForSingleCount = YES;
+        _pageView.atuoLoopScroll = YES;
+        _pageView.scrollFuture = YES;
+        _pageView.autoScrollInterVal = 4.0f;
+    }
+    return _pageView;
+}
+- (HMSegmentedControl *)segmentedControl {
+    if (!_segmentedControl) {
+        
+        self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60)];
+        if (self.itemNameArr.count != 0) {
+            self.segmentedControl.sectionTitles = self.itemNameArr;
+        }
+        self.segmentedControl.selectedSegmentIndex = _currentIndex;
+        self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 30, 0, 30);
+        self.segmentedControl.backgroundColor = [UIColor whiteColor];
+        self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:15.]};
+        self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
+        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
+        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+        self.segmentedControl.selectionIndicatorHeight = 1.0f;
+        self.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
+        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        //        self.segmentedControl.shouldAnimateUserSelection = NO;
+        [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+        //        __weak typeof(self) weakSelf = self;
+//        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+            //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
+//        }];
+        
+    }
+    return _segmentedControl;
+}
+
+
+
+
+
+
+
 
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -114,6 +235,80 @@
     }
 
 }
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+////    NSLog(@"%@",self.parentViewController);
+//    NSLog(@"%@",scrollView);
+//    if (scrollView != self.bottomScrollView) {
+//        return ;
+//    }
+//    if (self.tableView == scrollView) {
+//        CGFloat offsetY = self.tableView.contentOffset.y;
+//        
+//        
+//        if (offsetY > 150) {
+//            self.pageController.baseScrollView.scrollEnabled = NO;
+//            
+//            [UIView animateWithDuration:0.3 animations:^{
+//                self.pageController.segmentControl.mj_y = 0;
+//                self.pageController.baseScrollView.mj_y = 64;
+//            }];
+////            scrollView.contentOffset = CGPointMake(0, 150);
+//        }else {
+//            self.pageController.baseScrollView.scrollEnabled = YES;
+//            [UIView animateWithDuration:0.3 animations:^{
+//                self.pageController.segmentControl.mj_y = 64;
+//                self.pageController.baseScrollView.mj_y = 64 + 60;
+//            }];
+//            
+//            
+//        }
+//        
+//    }
+//    
+//}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    NSLog(@"%@",change);
+    
+    UITableView *tableView = (UITableView *)object;
+    if (!(self.currentTableView == tableView)) {
+        return;
+    }
+    
+    if (![keyPath isEqualToString:@"contentOffset"]) {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
+    }
+    
+    CGFloat tableViewoffsetY = tableView.contentOffset.y;
+//    NSLog(@"%f",tableViewoffsetY);
+//    tableView.bounces = NO; // 禁止回弹效果
+    self.lastTableViewOffsetY = tableViewoffsetY;
+    
+    if ( tableViewoffsetY>=0 && tableViewoffsetY<=  SCREENWIDTH * 0.4) {
+        self.pageController.baseScrollView.scrollEnabled = YES;
+        self.segmentedControl.frame = CGRectMake(0, SCREENWIDTH * 0.4-tableViewoffsetY - 0, SCREENWIDTH, 60);
+        self.pageView.frame = CGRectMake(0, 0-tableViewoffsetY - 0, SCREENWIDTH, SCREENWIDTH * 0.4);
+        [UIView animateWithDuration:0.3 animations:^{
+            self.pageController.segmentControl.mj_y = 64;
+            self.pageController.baseScrollView.mj_y = 64 + 60;
+        }];
+    }else if( tableViewoffsetY < 0){
+        self.segmentedControl.frame = CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60);
+        self.pageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4);
+        if (tableViewoffsetY < -60) {
+            [self.tableView.mj_header beginRefreshing];
+        }
+    }else if (tableViewoffsetY > SCREENWIDTH * 0.4){
+        self.segmentedControl.frame = CGRectMake(0, 64 - 64, SCREENWIDTH, 60);
+        self.pageView.frame = CGRectMake(0, -SCREENWIDTH * 0.4 - 64, SCREENWIDTH, SCREENWIDTH * 0.4);
+        self.pageController.baseScrollView.scrollEnabled = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.pageController.segmentControl.mj_y = 0;
+            self.pageController.baseScrollView.mj_y = 64;
+        }];
+        
+    }
+}
 
 #pragma mark 数据请求
 // 请求整点上新数据
@@ -121,9 +316,13 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/today",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        [self.itemNameArr removeAllObjects];
+        [self.dataSource removeAllObjects];
+        [self.controllArr removeAllObjects];
+        [self.tableViews removeAllObjects];
         [self fetchData:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -131,6 +330,12 @@
     
 }
 - (void)fetchData:(NSArray *)dataArray {
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH"];
+    NSString *strHour = [dateFormatter stringFromDate:date];
+    int currentHourInt = [strHour intValue];
+    
     for (NSDictionary *itemDic in dataArray) {
         NSMutableArray *itemsArr = [NSMutableArray array];
         NSArray *items = itemDic[@"items"];
@@ -139,94 +344,132 @@
             [itemsArr addObject:model];
         }
         [self.dataSource addObject:itemsArr];
-        NSString *hourStr = [NSString stringWithFormat:@"%@点热销",itemDic[@"hour"]];
+        int hourInt = [itemDic[@"hour"] intValue];
+        
+        NSString *hourStr;
+        if (currentHourInt >= hourInt) {
+            hourStr = [NSString stringWithFormat:@"%02d:00\n抢购中",hourInt];
+        }else {
+            hourStr = [NSString stringWithFormat:@"%02d:00\n预热中",hourInt];
+        }
+        
         [self.itemNameArr addObject:hourStr];
     }
+    if (self.itemNameArr.count != 0) {
+        self.segmentedControl.sectionTitles = self.itemNameArr;
+        for (int i = 0; i < self.itemNameArr.count; i++) {
+            JMHomeHourController *tableViewController = [[JMHomeHourController alloc] init];
+            tableViewController.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT - 64);
+            
+            [self.bottomScrollView addSubview:tableViewController.view];
+            
+            [self.controllArr addObject:tableViewController];
+            [self.tableViews addObject:tableViewController.tableView];
+            
+            [self addChildViewController:tableViewController];
+            [tableViewController didMoveToParentViewController:self];
+            
+            
+            
+            
+            NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+            [tableViewController.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+            
+            
+        }
+        self.bottomScrollView.contentSize = CGSizeMake(self.controllArr.count * SCREENWIDTH, 0);
+        
+        JMHomeHourController *control = self.controllArr[_currentIndex];
+        control.dataSource = self.dataSource[_currentIndex];
+        self.currentTableView = self.tableViews[_currentIndex];
+        self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
+        
+        
+    }
+//    [self.tableView reloadData];
+
+    
 //    [self initUI];
 //    self.segmentedControl.sectionTitles = self.itemNameArr;
 }
 
-
-#pragma mark 创建tableView
-- (void)createTabelView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) style:UITableViewStylePlain];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.tableView];
-    [self.tableView registerClass:[JMHomeSegmentCell class] forCellReuseIdentifier:JMHomeSegmentCellIdentifier];
-    
-    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
-    self.pageView.dataSource = self;
-    self.pageView.delegate = self;
-    self.pageView.isCreatePageControl = YES;
-    [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
-    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
-    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-    self.pageView.scrollForSingleCount = YES;
-    self.pageView.atuoLoopScroll = YES;
-    self.pageView.scrollFuture = YES;
-    self.pageView.autoScrollInterVal = 4.0f;
-    
-    self.tableView.tableHeaderView = self.pageView;
-    
-    
-    
-    
-    
-}
-
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (SCREENHEIGHT - 64);
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JMHomeSegmentCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeSegmentCellIdentifier];
-    if (!cell) {
-        cell = [[JMHomeSegmentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeSegmentCellIdentifier];
-    }
-    if (self.itemNameArr.count != 0) {
-        [cell addSubview:self.segmentView];
-    }
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 45.f;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 45)];
-    if (self.itemNameArr.count != 0) {
-        self.segmentedControl.sectionTitles = self.itemNameArr;
-    }
-    self.segmentedControl.selectedSegmentIndex = _currentIndex;
-    self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    self.segmentedControl.backgroundColor = [UIColor whiteColor];
-    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:13.]};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
-    self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
-    self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
-    self.segmentedControl.selectionIndicatorHeight = 1.0f;
-    self.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-    self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
-    self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    //        self.segmentedControl.shouldAnimateUserSelection = NO;
-    [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
-    //        __weak typeof(self) weakSelf = self;
-    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
-    }];
-    return self.segmentedControl;
-}
+//
+//#pragma mark 创建tableView
+//- (void)createTabelView {
+//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 60) style:UITableViewStylePlain];
+//    self.tableView.dataSource = self;
+//    self.tableView.delegate = self;
+//    self.tableView.showsVerticalScrollIndicator = NO;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.view addSubview:self.tableView];
+//    [self.tableView registerClass:[JMHomeSegmentCell class] forCellReuseIdentifier:JMHomeSegmentCellIdentifier];
+//    
+//    _pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
+//    _pageView.dataSource = self;
+//    _pageView.delegate = self;
+//    _pageView.isCreatePageControl = YES;
+//    [_pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
+//    _pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+//    _pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+//    _pageView.scrollForSingleCount = YES;
+//    _pageView.atuoLoopScroll = YES;
+//    _pageView.scrollFuture = YES;
+//    _pageView.autoScrollInterVal = 4.0f;
+//    
+//    self.tableView.tableHeaderView = _pageView;
+//
+//}
+//
+//
+//
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    return 1;
+//}
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return 1;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return (SCREENHEIGHT - 64);
+//}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    JMHomeSegmentCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeSegmentCellIdentifier];
+//    if (!cell) {
+//        cell = [[JMHomeSegmentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMHomeSegmentCellIdentifier];
+//    }
+//    if (self.itemNameArr.count != 0) {
+//        [cell addSubview:self.segmentView];
+//    }
+//
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    return cell;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 60.f;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
+//    if (self.itemNameArr.count != 0) {
+//        self.segmentedControl.sectionTitles = self.itemNameArr;
+//    }
+//    self.segmentedControl.selectedSegmentIndex = _currentIndex;
+//    self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 20, 0, 20);
+//    self.segmentedControl.backgroundColor = [UIColor whiteColor];
+//    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:13.]};
+//    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
+//    self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
+//    self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+//    self.segmentedControl.selectionIndicatorHeight = 1.0f;
+//    self.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+//    self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
+//    self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+//    //        self.segmentedControl.shouldAnimateUserSelection = NO;
+//    [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+//    //        __weak typeof(self) weakSelf = self;
+//    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+//        //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
+//    }];
+//    return self.segmentedControl;
+//}
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
     _currentIndex = segmentedControl.selectedSegmentIndex;
@@ -234,26 +477,48 @@
 //    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 //    [self.tableView reloadData];
-    self.segmentView.segmentScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
+    self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
     JMHomeHourController *control = self.controllArr[_currentIndex];
+    self.currentTableView = self.tableViews[_currentIndex];
+    for (UITableView *tableView in self.tableViews) {
+        if ( self.lastTableViewOffsetY>=0 &&  self.lastTableViewOffsetY<=SCREENWIDTH * 0.4) {
+            
+            tableView.contentOffset = CGPointMake(0,  self.lastTableViewOffsetY);
+            
+        }else if(self.lastTableViewOffsetY < 0){
+            
+            tableView.contentOffset = CGPointMake(0, 0);
+            
+        }else if ( self.lastTableViewOffsetY > SCREENWIDTH * 0.4){
+            tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
+//            tableView.contentOffset = CGPointMake(0, SCREENWIDTH * 0.4);
+//            tableView.contentOffset = CGPointMake(0, 0);
+        }
+    }
+    
+    
+    control.tableView = self.tableViews[_currentIndex];
     control.dataSource = self.dataSource[_currentIndex];
+    
+    
+    
     
 }
 
 
 #pragma mark 添加segmentViewController
-- (JMHomeSegmentView *)segmentView {
-    if (!_segmentView) {
-        self.controllArr = [NSMutableArray array];
-        for (int i = 0; i < self.itemNameArr.count; i ++) {
-            JMHomeHourController *hourVC = [[JMHomeHourController alloc] init];
-            [self.controllArr addObject:hourVC];
-        }
-        self.segmentView = [[JMHomeSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) DataSource:self.dataSource Controllers:self.controllArr TitleArray:self.itemNameArr PageController:self];
-    }
-    return _segmentView;
-    
-}
+//- (JMHomeSegmentView *)segmentView {
+//    if (!_segmentView) {
+//        self.controllArr = [NSMutableArray array];
+//        for (int i = 0; i < self.itemNameArr.count; i ++) {
+//            JMHomeHourController *hourVC = [[JMHomeHourController alloc] init];
+//            [self.controllArr addObject:hourVC];
+//        }
+//        self.segmentView = [[JMHomeSegmentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) DataSource:self.dataSource Controllers:self.controllArr TitleArray:self.itemNameArr PageController:self];
+//    }
+//    return _segmentView;
+//    
+//}
 #pragma mark 顶部视图滚动协议方法
 - (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
     return self.topImageArray.count;

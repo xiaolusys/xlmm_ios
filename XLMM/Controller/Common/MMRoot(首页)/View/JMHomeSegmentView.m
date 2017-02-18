@@ -34,19 +34,19 @@
         self.segmentScrollView.scrollEnabled = NO;
         [self addSubview:self.segmentScrollView];
         // 添加子视图两种方法
-        for (int i = 0; i < controller.count; i ++) {
-//            JMHomeHourController *hourVC = [[JMHomeHourController alloc] init];
-            UIViewController *control = controller[i];
-            control.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, frame.size.height);
-            [self.segmentScrollView addSubview:control.view];
-        }
-//        for (int i = 0 ; i < controller.count; i++) {
+//        for (int i = 0; i < controller.count; i ++) {
+////            JMHomeHourController *hourVC = [[JMHomeHourController alloc] init];
 //            UIViewController *control = controller[i];
+//            control.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, frame.size.height);
 //            [self.segmentScrollView addSubview:control.view];
-//            control.view.frame = CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, frame.size.height); // 整理高度 - 64 --> 是否需要添加???
-//            [pageVC addChildViewController:control];
-//            [control didMoveToParentViewController:pageVC];
 //        }
+        for (int i = 0 ; i < controller.count; i++) {
+            UIViewController *control = controller[i];
+            [self.segmentScrollView addSubview:control.view];
+            control.view.frame = CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, frame.size.height); // 整理高度 - 64 --> 是否需要添加???
+            [pageVC addChildViewController:control];
+            [control didMoveToParentViewController:pageVC];
+        }
         self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * controller.count, frame.size.height);
         JMHomeHourController *control = controller[0];
         control.dataSource = dataSource[0];
