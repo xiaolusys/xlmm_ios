@@ -125,9 +125,9 @@
         [self.homeHeaderView.pageView endAutoScroll];
     }
 }
-- (void)viewDidDisappear:(BOOL)animated {
-    self.homeHeaderView.lineChart = nil;
-}
+//- (void)viewDidDisappear:(BOOL)animated {
+//    self.homeHeaderView.lineChart = nil;
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];

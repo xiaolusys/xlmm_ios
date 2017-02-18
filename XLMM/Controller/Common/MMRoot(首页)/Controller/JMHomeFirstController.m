@@ -214,7 +214,7 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (SCREENHEIGHT - 64);
+    return SCREENHEIGHT - 64;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JMHomeSegmentCell *cell = [tableView dequeueReusableCellWithIdentifier:JMHomeSegmentCellIdentifier];

@@ -78,7 +78,7 @@
 //    layout.minimumInteritemSpacing = 5;
 //    layout.minimumLineSpacing = 5;
     //    layout.scrollDirection = UICollectionViewScrollDirectionVertical; // 垂直滚动
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
 //    self.tableView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:layout];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.dataSource = self;
