@@ -39,7 +39,7 @@
 //    self.contentCollecionView.dataSource = self;
 //    self.contentCollecionView.delegate = self;
     [self.contentCollecionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:ContentCollectionViewIndentifier];
-    [self.contentCollecionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:mainCollectionViewHeaderIdentifier];
+    [self.contentCollecionView registerClass:[JMCategoryColSectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:mainCollectionViewHeaderIdentifier];
     [self.contentView addSubview:self.contentCollecionView];
     
     

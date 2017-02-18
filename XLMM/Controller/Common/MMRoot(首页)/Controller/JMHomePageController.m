@@ -296,14 +296,8 @@
     [self addChildController];
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"%@",scrollView);
-    CGFloat offsetY = scrollView.contentOffset.y;
-    if (offsetY < 150) {
-        self.baseScrollView.scrollEnabled = NO;
-    }else {
-        self.baseScrollView.scrollEnabled = YES;
+//    NSLog(@"%@",scrollView);
 
-    }
 }
 /*
  创建分页控制器
@@ -343,6 +337,7 @@
     for (int i = 0 ; i < _categoryNameArray.count; i++) {
         if (i == 0) {
             JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
+            homeFirst.pageController = self;
             homeFirst.topImageArray = _topImageArray;
             [self addChildViewController:homeFirst];
         }else {
@@ -402,7 +397,7 @@
 
 - (void)createSuspensionView {
     kWeakSelf
-    NSArray *imageArr = @[@"tabBar_personalSelected",@"tabBar_featuredSelected",@"tabBar_shoppingCartSelected"];
+    NSArray *imageArr = @[@"tabBar_personalSelected",@"homePagejingpinhui",@"tabBar_shoppingCartSelected"];
     for (int i = 0 ; i < imageArr.count; i ++) {
         UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
         customButton.backgroundColor = [UIColor blackColor];

@@ -16,6 +16,7 @@
 #import "JMAutoLoopPageView.h"
 #import "JMHomeHeaderCell.h"
 #import "JumpUtils.h"
+#import "JMHomePageController.h"
 
 
 @interface JMHomeFirstController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate> {
@@ -43,6 +44,7 @@
 @property(nonatomic,strong)NSMutableArray *tableViews;
 @property (nonatomic, strong) UICollectionView *currentTableView;
 
+@property (nonatomic, strong) JMHomePageController *pageVC;
 
 @end
 
@@ -114,16 +116,28 @@
 
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"%@",self.parentViewController);
-    
-    NSLog(@"%@",scrollView);
+//    NSLog(@"%@",self.parentViewController);
+//    
+//    NSLog(@"%@",scrollView);
     if (self.tableView == scrollView) {
         CGFloat offsetY = self.tableView.contentOffset.y;
         
         
         if (offsetY > 150) {
+            self.pageController.baseScrollView.scrollEnabled = NO;
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.pageController.segmentControl.mj_y = 0;
+                self.pageController.baseScrollView.mj_y = 64;
+            }];
 //            scrollView.contentOffset = CGPointMake(0, 150);
         }else {
+            self.pageController.baseScrollView.scrollEnabled = YES;
+            [UIView animateWithDuration:0.3 animations:^{
+                self.pageController.segmentControl.mj_y = 64;
+                self.pageController.baseScrollView.mj_y = 64 + 45;
+            }];
+            
             
         }
         
@@ -153,29 +167,11 @@
         for (NSDictionary *itemD in items) {
             JMHomeHourModel *model = [JMHomeHourModel mj_objectWithKeyValues:itemD];
             [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
-            [itemsArr addObject:model];
         }
         [self.dataSource addObject:itemsArr];
-        NSString *hourStr = [NSString stringWithFormat:@"热销商品\n%@点",itemDic[@"hour"]];
+        int hourInt = [itemDic[@"hour"] intValue];
+        NSString *hourStr = [NSString stringWithFormat:@"%02d:00\n抢购中",hourInt];
+        
         [self.itemNameArr addObject:hourStr];
     }
 //    [self initUI];
@@ -206,11 +202,7 @@
     self.pageView.autoScrollInterVal = 4.0f;
     
     self.tableView.tableHeaderView = self.pageView;
-    
-    
-    
-    
-    
+
 }
 
 
@@ -245,7 +237,7 @@
         self.segmentedControl.sectionTitles = self.itemNameArr;
     }
     self.segmentedControl.selectedSegmentIndex = _currentIndex;
-    self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 20, 0, 20);
     self.segmentedControl.backgroundColor = [UIColor whiteColor];
     self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:13.]};
     self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};

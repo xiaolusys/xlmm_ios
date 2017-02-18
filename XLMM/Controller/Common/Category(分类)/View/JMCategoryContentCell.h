@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JMCategoryListCell.h"
+#import "JMCategoryColSectionReusableView.h"
 
 @interface JMContentCollectionView : UICollectionView
 

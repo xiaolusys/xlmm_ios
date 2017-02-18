@@ -222,7 +222,7 @@ static NSUInteger selectedIndex = 0;
     self.mainCollectionView.backgroundColor = [UIColor clearColor];
     self.mainCollectionView.dataSource = self;
     self.mainCollectionView.delegate = self;
-    [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
+//    [self.mainCollectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:homeCategoryCellId];
 //    [self.mainCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:mainCollectionViewHeaderIdentifier];
     [self.view addSubview:self.mainCollectionView];
     
@@ -334,24 +334,18 @@ static NSUInteger selectedIndex = 0;
     return cell;
 }
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    NSArray *arr = self.colSectionDataSource[selectedIndex];
-    NSString *titleStr = arr[indexPath.section][@"name"];
     if (kind == UICollectionElementKindSectionHeader) {
-        UICollectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:mainCollectionViewHeaderIdentifier forIndexPath:indexPath];
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0, 0, ColWidth, 60);
-        button.backgroundColor = [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1];
-        [button setTitle:titleStr forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-//        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-//        button.tag = 100 + indexPath.section;
-        [reusableview addSubview:button];
+        JMCategoryColSectionReusableView *reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:mainCollectionViewHeaderIdentifier forIndexPath:indexPath];
+        NSArray *arr = self.colSectionDataSource[selectedIndex];
+        NSString *titleStr = arr[indexPath.section][@"name"];
+        reusableview.titleString = titleStr;
         return reusableview;
     }else {
         return nil;
     }
 
 }
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(ColWidth, 60);
 }

@@ -104,6 +104,7 @@
     }
     JMHomeHourModel *model = self.dataSource[indexPath.row];
     cell.model = model;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
