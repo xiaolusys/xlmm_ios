@@ -37,7 +37,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createCollectionView];
+//    [self createCollectionView];
+    [self.view addSubview:self.tableView];
 //    [self createPullFooterRefresh];
     
     
@@ -69,7 +70,30 @@
 //    }
 //    return _collectionView;
 //}
-
+- (UITableView *)tableView {
+    if (!_tableView) {
+        
+        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 60)];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [_tableView registerClass:[JMHomeHourCell class] forCellReuseIdentifier:NSStringFromClass([JMHomeHourCell class])];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4 + 60)];
+//        tableHeaderView.backgroundColor = [UIColor redColor];
+        
+        
+//        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(SCREENWIDTH * 0.4, 0, 0, 0);
+        _tableView.tableHeaderView = tableHeaderView;
+        
+        
+        
+    }
+    return _tableView;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
 
 - (void)createCollectionView {
 //    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -79,13 +103,22 @@
 //    layout.minimumLineSpacing = 5;
     //    layout.scrollDirection = UICollectionViewScrollDirectionVertical; // 垂直滚动
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+
 //    self.tableView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:layout];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.scrollEnabled = NO;
+//    self.tableView.scrollEnabled = NO;
     self.tableView.rowHeight = 100.f;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 242)];
+    tableHeaderView.backgroundColor = [UIColor redColor];
+    
+    
+    _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
+    _tableView.tableHeaderView = tableHeaderView;
+    
+//    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
 //    self.tableView.translatesAutoresizingMaskIntoConstraints = YES;
 //    [self.collectionView.collectionViewLayout invalidateLayout];
     [self.view addSubview:self.tableView];
@@ -98,9 +131,12 @@
     return self.dataSource.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JMHomeHourCell *cell = [tableView dequeueReusableCellWithIdentifier:CS_STRING([self class])];
+    JMHomeHourCell *cell = [tableView dequeueReusableCellWithIdentifier:CS_STRING([JMHomeHourCell class])];
+    if (!cell) {
+        cell = [[JMHomeHourCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CS_STRING([JMHomeHourCell class])];
+    }
     if (self.dataSource.count == 0) {
-        return cell;
+        return nil;
     }
     JMHomeHourModel *model = self.dataSource[indexPath.row];
     cell.model = model;
@@ -130,7 +166,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+//    }
+//}
 
 
 @end
