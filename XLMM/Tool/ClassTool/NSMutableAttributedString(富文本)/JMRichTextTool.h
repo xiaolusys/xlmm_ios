@@ -65,6 +65,7 @@
  *  @return 富文本
  */
 + (NSMutableAttributedString *)cs_changeFontAndColorWithSubFont:(UIFont *)subFont SubColor:(UIColor *)subColor AllString:(NSString *)allStr SubStringArray:(NSArray *)subStrArr;
++ (NSMutableAttributedString *)cs_changeFontAndColorWithSubFont:(UIFont *)subFont AllString:(NSString *)allStr SubStringArray:(NSArray *)subStrArr;
 
 /**
  *  为某些文字添加下划线

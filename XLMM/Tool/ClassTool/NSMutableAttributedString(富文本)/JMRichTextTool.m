@@ -113,6 +113,16 @@
     
     return attributedStr;
 }
++ (NSMutableAttributedString *)cs_changeFontAndColorWithSubFont:(UIFont *)subFont AllString:(NSString *)allStr SubStringArray:(NSArray *)subStrArr {
+    NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:allStr];
+    
+    for (NSString *rangeStr in subStrArr) {
+        NSRange range = [allStr rangeOfString:rangeStr options:NSBackwardsSearch];
+        [attributedStr addAttribute:NSFontAttributeName value:subFont range:range];
+    }
+    
+    return attributedStr;
+}
 
 /**
  *  为某些文字添加下划线

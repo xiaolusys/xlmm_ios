@@ -219,14 +219,22 @@
 
 
 
-- (void)pickerDidChangeStatus:(AddressPickerView *)picker{
-
-    province = picker.address.provinceName;
-    city = picker.address.cityName;
-    county = picker.address.countyName;
-
-    NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
-    self.provinceTextField.text = string;
+- (void)pickerDidChangeStatus:(AddressPickerView *)picker Button:(UIButton *)btn {
+    if (btn.tag == 100) {
+        [self cancelLocatePicker];
+    }else {
+        province = picker.address.provinceName;
+        city = picker.address.cityName;
+        county = picker.address.countyName;
+        
+        NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
+        self.provinceTextField.text = string;
+        [self cancelLocatePicker];
+        if (!self.isAdd) {
+            [self enableTijiaoButton];
+        }
+    }
+    
 }
 
 -(void)cancelLocatePicker
@@ -356,7 +364,7 @@
     [self.numberTextField resignFirstResponder];
     [self.streetTextView resignFirstResponder];
     [self.idCardTextField resignFirstResponder];
-    [self cancelLocatePicker];
+//    [self cancelLocatePicker];
 }
 
 
