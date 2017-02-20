@@ -182,7 +182,7 @@
             NSLog(@"string = %@", string);
             
             [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-                
+                NSLog(@"%@",responseObject);
             } WithFail:^(NSError *error) {
                 
             } Progress:^(float progress) {
