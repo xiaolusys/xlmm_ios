@@ -248,6 +248,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
     [fineGoodsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(contentView.mas_bottom);
+        make.left.equalTo(weakSelf.contentView);
         make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@(40));
     }];

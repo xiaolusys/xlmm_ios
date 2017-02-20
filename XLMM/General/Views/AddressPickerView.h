@@ -14,7 +14,7 @@
 
 @protocol AddressPickerDelegate <NSObject>
 
-- (void)pickerDidChangeStatus:(AddressPickerView *)picker;
+- (void)pickerDidChangeStatus:(AddressPickerView *)picker Button:(UIButton *)btn;
 
 @end
 

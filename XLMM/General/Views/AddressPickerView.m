@@ -23,9 +23,31 @@
 @implementation AddressPickerView
 
 - (id)initWithdelegate:(id <AddressPickerDelegate>)delegate{
-    self = [super initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 216)];
+    self = [super initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 256)];
     if (self) {
-        self.addressPicker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 216)];
+        UIView *headerView = [UIView new];
+        headerView.frame = CGRectMake(0, 0, SCREENWIDTH, 40);
+        headerView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:headerView];
+        
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [headerView addSubview:cancelButton];
+        [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [cancelButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
+        cancelButton.frame = CGRectMake(0, 0, 60, 40);
+        cancelButton.tag = 100;
+        [cancelButton addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [headerView addSubview:sureButton];
+        [sureButton setTitle:@"确定" forState:UIControlStateNormal];
+        [sureButton setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
+        sureButton.frame = CGRectMake(SCREENWIDTH - 60, 0, 60, 40);
+        sureButton.tag = 101;
+        [sureButton addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        self.addressPicker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, [UIScreen mainScreen].bounds.size.width, 256)];
         self.addressPicker.backgroundColor = [UIColor whiteColor];
        // self.addressPicker.frame = CGRectMake(0, 0, 320, 216);
         [self addSubview:self.addressPicker];
@@ -54,6 +76,11 @@
     return self;
 
     
+}
+- (void)click:(UIButton *)button {
+    if([self.delegate respondsToSelector:@selector(pickerDidChangeStatus:Button:)]) {
+        [self.delegate pickerDidChangeStatus:self Button:button];
+    }    
 }
 - (void)createAddress2 {
 //    NSString *addressPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -224,12 +251,10 @@
         default:
             break;
     }
-    
-    if([self.delegate respondsToSelector:@selector(pickerDidChangeStatus:)]) {
-        [self.delegate pickerDidChangeStatus:self];
-    }
+
 
 }
+
 
 
 
