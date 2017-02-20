@@ -394,106 +394,96 @@
         [self.itemNameArr addObject:hourStr];
     }
     if (self.itemNameArr.count != 0) {
+        if (self.controllArr.count == 0) {
+            for (int i = 0; i < self.itemNameArr.count; i++) {
+                JMHomeHourController *tableViewController = [[JMHomeHourController alloc] init];
+                tableViewController.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT - 64);
+                [self.bottomScrollView addSubview:tableViewController.view];
+                [self.controllArr addObject:tableViewController];
+                [self.tableViews addObject:tableViewController.tableView];
+                [self addChildViewController:tableViewController];
+                [tableViewController didMoveToParentViewController:self];
+                NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
+                [tableViewController.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
+                
+                
+            }
+            self.bottomScrollView.contentSize = CGSizeMake(self.controllArr.count * SCREENWIDTH, 0);
+            
+            JMHomeHourController *control = self.controllArr[_currentIndex];
+            control.dataSource = self.dataSource[_currentIndex];
+            self.currentTableView = self.tableViews[_currentIndex];
+            self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
+        }
 //        self.segmentedControl.sectionTitles = self.itemNameArr;
-        for (int i = 0; i < self.itemNameArr.count; i++) {
-            JMHomeHourController *tableViewController = [[JMHomeHourController alloc] init];
-            tableViewController.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT - 64);
-            
-            [self.bottomScrollView addSubview:tableViewController.view];
-            
-            [self.controllArr addObject:tableViewController];
-            [self.tableViews addObject:tableViewController.tableView];
-            
-            [self addChildViewController:tableViewController];
-            [tableViewController didMoveToParentViewController:self];
-            
-            
-            
-            
-            NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
-            [tableViewController.tableView addObserver:self forKeyPath:@"contentOffset" options:options context:nil];
-            
-            
-        }
-        self.bottomScrollView.contentSize = CGSizeMake(self.controllArr.count * SCREENWIDTH, 0);
         
-        JMHomeHourController *control = self.controllArr[_currentIndex];
-        control.dataSource = self.dataSource[_currentIndex];
-        self.currentTableView = self.tableViews[_currentIndex];
-        self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
-        
-        
-        
-        
-        
-        
-    }
-    NSInteger btnoffset = 0;
-    [self.titleButtons removeAllObjects];
-    [self.titleLabels removeAllObjects];
-    for (int i = 0; i < self.itemNameArr.count; i++) {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        //            [btn setTitle:CATEGORY[i] forState:UIControlStateNormal];
-        //            [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        //            [btn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
-        //            btn.titleLabel.font = [UIFont systemFontOfSize:FONTMIN];
-        //            CGSize size = [UIButton sizeOfLabelWithCustomMaxWidth:SCREEN_WIDTH systemFontSize:FONTMIN andFilledTextString:CATEGORY[i]];
-        
-        float originX =  i? 10*2+btnoffset:10;
-        
-        btn.frame = CGRectMake(originX, 0, 80, 60);
-        btnoffset = CGRectGetMaxX(btn.frame);
-        
-        
-        //            btn.titleLabel.textAlignment = NSTextAlignmentLeft;
-        [btn addTarget:self action:@selector(changeSelectedItem:) forControlEvents:UIControlEventTouchUpInside];
-        [_segmentScrollView addSubview:btn];
-        
-//        NSString *allPriceString = @"测试";
-//        NSString *allString = [NSString stringWithFormat:@"08:00 \n %@",allPriceString];
-        
-        
-        UILabel *label = [UILabel new];
-        label.font = [UIFont systemFontOfSize:18.];
-        label.numberOfLines = 0;
-        label.textAlignment = NSTextAlignmentCenter;
-        
-        [btn addSubview:label];
-        label.text = self.itemNameArr[i];
-        NSMutableString * string = self.itemNameArr[i];
-        NSString *qianggouStr = [string componentsSeparatedByString:@"\n"][1];
-//        label.textColor = [UIColor buttonTitleColor];
-        label.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] AllString:string SubStringArray:@[qianggouStr]];
-        
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerX.equalTo(btn.mas_centerX);
-//            make.top.equalTo(btn).offset(0);
-            make.center.equalTo(btn);
-        }];
-        
-        [self.titleButtons addObject:btn];
-        [self.titleLabels addObject:label];
-        
-        
-        
-        
-        //contentSize 等于按钮长度叠加
-        //默认选中第一个按钮
-        if (i == _currentIndex) {
-            
-            btn.selected = YES;
-//            btn.backgroundColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-            label.textColor = [UIColor orangeColor];
-            _previousButton = btn;
-            _previousLabel = label;
-            
-            _currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(btn.frame), self.segmentScrollView.frame.size.height - 2, 80, 2);
-        }else {
-            label.textColor = [UIColor blackColor];
-        }
     }
     
-    _segmentScrollView.contentSize = CGSizeMake(btnoffset+10, 25);
+//    [self.titleButtons removeAllObjects];
+//    [self.titleLabels removeAllObjects];
+    if (self.titleButtons.count == 0) {
+        NSInteger btnoffset = 0;
+        for (int i = 0; i < self.itemNameArr.count; i++) {
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            //            [btn setTitle:CATEGORY[i] forState:UIControlStateNormal];
+            //            [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            //            [btn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+            //            btn.titleLabel.font = [UIFont systemFontOfSize:FONTMIN];
+            //            CGSize size = [UIButton sizeOfLabelWithCustomMaxWidth:SCREEN_WIDTH systemFontSize:FONTMIN andFilledTextString:CATEGORY[i]];
+            
+            float originX =  i? 10*2+btnoffset:10;
+            
+            btn.frame = CGRectMake(originX, 0, 80, 60);
+            btnoffset = CGRectGetMaxX(btn.frame);
+            
+            
+            //            btn.titleLabel.textAlignment = NSTextAlignmentLeft;
+            [btn addTarget:self action:@selector(changeSelectedItem:) forControlEvents:UIControlEventTouchUpInside];
+            [_segmentScrollView addSubview:btn];
+            
+            //        NSString *allPriceString = @"测试";
+            //        NSString *allString = [NSString stringWithFormat:@"08:00 \n %@",allPriceString];
+            
+            
+            UILabel *label = [UILabel new];
+            label.font = [UIFont systemFontOfSize:18.];
+            label.numberOfLines = 0;
+            label.textAlignment = NSTextAlignmentCenter;
+            
+            [btn addSubview:label];
+            label.text = self.itemNameArr[i];
+            NSMutableString * string = self.itemNameArr[i];
+            NSString *qianggouStr = [string componentsSeparatedByString:@"\n"][1];
+            //        label.textColor = [UIColor buttonTitleColor];
+            label.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] AllString:string SubStringArray:@[qianggouStr]];
+            
+            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                //            make.centerX.equalTo(btn.mas_centerX);
+                //            make.top.equalTo(btn).offset(0);
+                make.center.equalTo(btn);
+            }];
+            
+            [self.titleButtons addObject:btn];
+            [self.titleLabels addObject:label];
+            //contentSize 等于按钮长度叠加
+            //默认选中第一个按钮
+            if (i == _currentIndex) {
+                
+                btn.selected = YES;
+                //            btn.backgroundColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+                label.textColor = [UIColor orangeColor];
+                _previousButton = btn;
+                _previousLabel = label;
+                
+                _currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(btn.frame), self.segmentScrollView.frame.size.height - 2, 80, 2);
+            }else {
+                label.textColor = [UIColor blackColor];
+            }
+        }
+        
+        _segmentScrollView.contentSize = CGSizeMake(btnoffset + 10, 25);
+    }
+    
 
     
 //    [self.tableView reloadData];
@@ -622,7 +612,7 @@
     currentButton.selected = YES;
     _previousButton = currentButton;
     _currentIndex = [self.titleButtons indexOfObject:currentButton];
-    
+    self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH *_currentIndex, 0);
     UILabel *currentLabel = self.titleLabels[_currentIndex];
     
 //    NSMutableString * string = self.itemNameArr[_currentIndex];
@@ -674,7 +664,7 @@
             
             self.currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(currentButton.frame), self.segmentScrollView.frame.size.height-2, currentButton.frame.size.width, 2);
         }
-        self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH *_currentIndex, 0);
+        
         
     }];
 }
