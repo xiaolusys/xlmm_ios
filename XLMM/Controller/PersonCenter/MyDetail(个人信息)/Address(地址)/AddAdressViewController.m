@@ -230,9 +230,7 @@
         NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
         self.provinceTextField.text = string;
         [self cancelLocatePicker];
-        if (!self.isAdd) {
-            [self enableTijiaoButton];
-        }
+        [self tijiaoButtonSelected];
     }
     
 }
@@ -284,18 +282,7 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
-    BOOL isCardB = YES;
-    if (self.isBondedGoods) {
-        isCardB = ![self.idCardTextField.text isEqualToString:@""];
-    }
-    BOOL isEnableButton = self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""] && isCardB;
-    if (isEnableButton) {
-        [self enableTijiaoButton];
-        
-    } else{
-        [self disableTijiaoButton];
-        
-    }
+    [self tijiaoButtonSelected];
 }
 
 
@@ -320,15 +307,7 @@
     
     return YES;
 }
-
-
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    
-//    [UIView animateWithDuration:0.3 animations:^{
-//            self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
-//    } completion:^(BOOL finished) {
-//        
-//    }];
+- (void)tijiaoButtonSelected {
     BOOL isCardB = YES;
     if (self.isBondedGoods) {
         isCardB = ![self.idCardTextField.text isEqualToString:@""];
@@ -341,6 +320,17 @@
         [self disableTijiaoButton];
         
     }
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self tijiaoButtonSelected];
+//    [UIView animateWithDuration:0.3 animations:^{
+//            self.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+//    } completion:^(BOOL finished) {
+//        
+//    }];
+
 //    if (self.streetTextView.text != nil && ![self.nameTextField.text isEqualToString:@""] && ![self.numberTextField.text isEqualToString:@""] && ![self.provinceTextField.text isEqualToString:@""]) {
 //        [self enableTijiaoButton];
 //        
