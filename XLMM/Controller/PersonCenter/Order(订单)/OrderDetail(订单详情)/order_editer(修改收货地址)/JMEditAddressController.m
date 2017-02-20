@@ -380,7 +380,10 @@
     
 }
 
-- (void)pickerDidChangeStatus:(AddressPickerView *)picker{
+- (void)pickerDidChangeStatus:(AddressPickerView *)picker Button:(UIButton *)btn {
+    if (btn.tag == 100) {
+        [self cancelLocatePicker];
+    }else {
     
     self.proLabel.text = picker.address.provinceName;
     self.cityLabel.text = picker.address.cityName;
@@ -389,9 +392,11 @@
     proStr = picker.address.provinceName;
     cityStr = picker.address.cityName;
     disStr = picker.address.countyName;
-    
+    [self cancelLocatePicker];
 //    NSString *string = [NSString stringWithFormat:@"%@%@%@", picker.address.provinceName, picker.address.cityName, picker.address.countyName];
 //    self.provinceTextField.text = string;
+    }
+    
 }
 
 #pragma mark ----- 点击选择地址的图片手势
@@ -429,7 +434,7 @@
     [self.conSigneeTF resignFirstResponder];
     [self.phoneNumTF resignFirstResponder];
     [self.detailAddressTF resignFirstResponder];
-    [self cancelLocatePicker];
+//    [self cancelLocatePicker];
 }
 /**
  *  隐藏

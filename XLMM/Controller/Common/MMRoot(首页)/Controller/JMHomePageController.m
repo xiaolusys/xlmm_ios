@@ -92,10 +92,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"main"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
+
     UIApplication *app = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(rootViewWillEnterForeground:)
@@ -120,17 +117,10 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    if (self.pageView) {
-        [self.pageView endAutoScroll];
-    }
     [MobClick endLogPageView:@"main"];
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (self.pageView) {
-        [self.pageView removeFromSuperview];
-        self.pageView = nil;
-    }
 }
 - (void)didReceiveMemoryWarning {
     [[JMGlobal global] clearAllSDCache];
@@ -181,6 +171,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self createNavigationBarWithTitle:@"" selecotr:nil];
     UIImage *launchImage = [JMStoreManager getDataImage:@"launchImageCache" Quality:0.];
     self.launchView = [JMLaunchView initImageWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Image:launchImage TimeSecond:3. HideSkip:YES LaunchAdClick:^{
     } TimeEnd:^{
@@ -188,7 +179,13 @@
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window addSubview:self.launchView];
     
-    [self createNavigationBarWithTitle:@"" selecotr:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
+    
+    
+    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];
     [self createSegmentControl];
     [self createRightItem];

@@ -17,6 +17,8 @@
 #import "JMHomeHeaderCell.h"
 #import "JumpUtils.h"
 #import "JMHomePageController.h"
+#import "UIImage+ColorImage.h"
+#import "JMRichTextTool.h"
 
 
 @interface JMHomeFirstController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate> {
@@ -36,10 +38,10 @@
 @property (nonatomic, strong) NSMutableArray *itemNameArr;
 @property (nonatomic, strong) NSMutableArray *controllArr;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, strong) UIScrollView *segmentScrollView;
+@property (nonatomic, strong) UIImageView *currentSelectedItemImageView;
 @property (nonatomic, strong) JMHomeSegmentView *segmentView;
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
-
-@property (nonatomic, strong) UIScrollView *segmentScrollView;
 
 @property(nonatomic,strong)NSMutableArray *tableViews;
 @property (nonatomic, strong) UITableView *currentTableView;
@@ -48,6 +50,13 @@
 @property (nonatomic, strong) JMHomePageController *pageVC;
 //记录上一个偏移量
 @property (nonatomic, assign) CGFloat lastTableViewOffsetY;
+//存放button
+@property(nonatomic,strong)NSMutableArray *titleButtons;
+@property(nonatomic,strong)NSMutableArray *titleLabels;
+//记录上一个button
+@property (nonatomic, strong) UIButton *previousButton;
+@property (nonatomic, strong) UILabel *previousLabel;
+
 @end
 
 @implementation JMHomeFirstController
@@ -81,9 +90,16 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"main"];
+    if (self.pageView) {
+        [self.pageView endAutoScroll];
+    }
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+        self.pageView = nil;
+    }
 }
 - (void)didReceiveMemoryWarning {
     [[JMGlobal global] clearAllSDCache];
@@ -95,6 +111,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     _currentIndex = 0;
+    self.titleLabels = [NSMutableArray array];
+    self.titleButtons = [NSMutableArray array];
 //    [self createTabelView];
     self.tableViews = [NSMutableArray array];
     
@@ -140,7 +158,7 @@
     }
     
     [cell.contentView addSubview:self.bottomScrollView];
-    [cell.contentView addSubview:self.segmentedControl];
+    [cell.contentView addSubview:self.segmentScrollView];
     [cell.contentView addSubview:self.pageView];
     
     
@@ -183,35 +201,55 @@
     }
     return _pageView;
 }
-- (HMSegmentedControl *)segmentedControl {
-    if (!_segmentedControl) {
+//- (HMSegmentedControl *)segmentedControl {
+//    if (!_segmentedControl) {
+//        
+//        self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60)];
+//        if (self.itemNameArr.count != 0) {
+//            self.segmentedControl.sectionTitles = self.itemNameArr;
+//        }
+//        self.segmentedControl.selectedSegmentIndex = _currentIndex;
+//        self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 30, 0, 30);
+//        self.segmentedControl.backgroundColor = [UIColor whiteColor];
+//        self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:15.]};
+//        self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
+//        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
+//        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
+//        self.segmentedControl.selectionIndicatorHeight = 1.0f;
+//        self.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+//        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
+//        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+//        //        self.segmentedControl.shouldAnimateUserSelection = NO;
+//        [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+//        //        __weak typeof(self) weakSelf = self;
+////        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
+//            //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
+////        }];
+//        
+//    }
+//    return _segmentedControl;
+//}
+- (UIScrollView *)segmentScrollView {
+    
+    if (!_segmentScrollView) {
         
-        self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60)];
-        if (self.itemNameArr.count != 0) {
-            self.segmentedControl.sectionTitles = self.itemNameArr;
-        }
-        self.segmentedControl.selectedSegmentIndex = _currentIndex;
-        self.segmentedControl.segmentEdgeInset = UIEdgeInsetsMake(0, 30, 0, 30);
-        self.segmentedControl.backgroundColor = [UIColor whiteColor];
-        self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:15.]};
-        self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
-        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
-        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
-        self.segmentedControl.selectionIndicatorHeight = 1.0f;
-        self.segmentedControl.selectionIndicatorColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-        self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
-        self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-        //        self.segmentedControl.shouldAnimateUserSelection = NO;
-        [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
-        //        __weak typeof(self) weakSelf = self;
-//        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-            //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
-//        }];
+        _segmentScrollView =  [[UIScrollView alloc]initWithFrame:CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60)];
+        [_segmentScrollView addSubview:self.currentSelectedItemImageView];
+        _segmentScrollView.showsHorizontalScrollIndicator = NO;
+        _segmentScrollView.showsVerticalScrollIndicator = NO;
+        _segmentScrollView.backgroundColor = [UIColor whiteColor];
         
     }
-    return _segmentedControl;
+    
+    return _segmentScrollView;
 }
-
+- (UIImageView *)currentSelectedItemImageView {
+    if (!_currentSelectedItemImageView) {
+        _currentSelectedItemImageView = [[UIImageView alloc] init];
+        _currentSelectedItemImageView.image = [UIImage imageWithColor:[UIColor orangeColor] Frame:CGRectMake(0, 0, 80, 2)];
+    }
+    return _currentSelectedItemImageView;
+}
 
 
 
@@ -286,20 +324,20 @@
     
     if ( tableViewoffsetY>=0 && tableViewoffsetY<=  SCREENWIDTH * 0.4) {
         self.pageController.baseScrollView.scrollEnabled = YES;
-        self.segmentedControl.frame = CGRectMake(0, SCREENWIDTH * 0.4-tableViewoffsetY - 0, SCREENWIDTH, 60);
+        self.segmentScrollView.frame = CGRectMake(0, SCREENWIDTH * 0.4-tableViewoffsetY - 0, SCREENWIDTH, 60);
         self.pageView.frame = CGRectMake(0, 0-tableViewoffsetY - 0, SCREENWIDTH, SCREENWIDTH * 0.4);
         [UIView animateWithDuration:0.3 animations:^{
             self.pageController.segmentControl.mj_y = 64;
-            self.pageController.baseScrollView.mj_y = 64 + 60;
+            self.pageController.baseScrollView.mj_y = 64 + 45;
         }];
     }else if( tableViewoffsetY < 0){
-        self.segmentedControl.frame = CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60);
+        self.segmentScrollView.frame = CGRectMake(0, SCREENWIDTH * 0.4, SCREENWIDTH, 60);
         self.pageView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4);
         if (tableViewoffsetY < -60) {
             [self.tableView.mj_header beginRefreshing];
         }
     }else if (tableViewoffsetY > SCREENWIDTH * 0.4){
-        self.segmentedControl.frame = CGRectMake(0, 64 - 64, SCREENWIDTH, 60);
+        self.segmentScrollView.frame = CGRectMake(0, 64 - 64, SCREENWIDTH, 60);
         self.pageView.frame = CGRectMake(0, -SCREENWIDTH * 0.4 - 64, SCREENWIDTH, SCREENWIDTH * 0.4);
         self.pageController.baseScrollView.scrollEnabled = NO;
         [UIView animateWithDuration:0.3 animations:^{
@@ -356,7 +394,7 @@
         [self.itemNameArr addObject:hourStr];
     }
     if (self.itemNameArr.count != 0) {
-        self.segmentedControl.sectionTitles = self.itemNameArr;
+//        self.segmentedControl.sectionTitles = self.itemNameArr;
         for (int i = 0; i < self.itemNameArr.count; i++) {
             JMHomeHourController *tableViewController = [[JMHomeHourController alloc] init];
             tableViewController.view.frame = CGRectMake(SCREENWIDTH * i, 0, SCREENWIDTH, SCREENHEIGHT - 64);
@@ -385,7 +423,79 @@
         self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
         
         
+        
+        
+        
+        
     }
+    NSInteger btnoffset = 0;
+    [self.titleButtons removeAllObjects];
+    [self.titleLabels removeAllObjects];
+    for (int i = 0; i < self.itemNameArr.count; i++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        //            [btn setTitle:CATEGORY[i] forState:UIControlStateNormal];
+        //            [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        //            [btn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        //            btn.titleLabel.font = [UIFont systemFontOfSize:FONTMIN];
+        //            CGSize size = [UIButton sizeOfLabelWithCustomMaxWidth:SCREEN_WIDTH systemFontSize:FONTMIN andFilledTextString:CATEGORY[i]];
+        
+        float originX =  i? 10*2+btnoffset:10;
+        
+        btn.frame = CGRectMake(originX, 0, 80, 60);
+        btnoffset = CGRectGetMaxX(btn.frame);
+        
+        
+        //            btn.titleLabel.textAlignment = NSTextAlignmentLeft;
+        [btn addTarget:self action:@selector(changeSelectedItem:) forControlEvents:UIControlEventTouchUpInside];
+        [_segmentScrollView addSubview:btn];
+        
+//        NSString *allPriceString = @"测试";
+//        NSString *allString = [NSString stringWithFormat:@"08:00 \n %@",allPriceString];
+        
+        
+        UILabel *label = [UILabel new];
+        label.font = [UIFont systemFontOfSize:18.];
+        label.numberOfLines = 0;
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        [btn addSubview:label];
+        label.text = self.itemNameArr[i];
+        NSMutableString * string = self.itemNameArr[i];
+        NSString *qianggouStr = [string componentsSeparatedByString:@"\n"][1];
+//        label.textColor = [UIColor buttonTitleColor];
+        label.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] AllString:string SubStringArray:@[qianggouStr]];
+        
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.centerX.equalTo(btn.mas_centerX);
+//            make.top.equalTo(btn).offset(0);
+            make.center.equalTo(btn);
+        }];
+        
+        [self.titleButtons addObject:btn];
+        [self.titleLabels addObject:label];
+        
+        
+        
+        
+        //contentSize 等于按钮长度叠加
+        //默认选中第一个按钮
+        if (i == _currentIndex) {
+            
+            btn.selected = YES;
+//            btn.backgroundColor = [UIColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+            label.textColor = [UIColor orangeColor];
+            _previousButton = btn;
+            _previousLabel = label;
+            
+            _currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(btn.frame), self.segmentScrollView.frame.size.height - 2, 80, 2);
+        }else {
+            label.textColor = [UIColor blackColor];
+        }
+    }
+    
+    _segmentScrollView.contentSize = CGSizeMake(btnoffset+10, 25);
+
+    
 //    [self.tableView reloadData];
 
     
@@ -504,6 +614,71 @@
     
     
 }
+
+#pragma  mark - 选项卡点击事件
+
+-(void)changeSelectedItem:(UIButton *)currentButton{
+    _previousButton.selected = NO;
+    currentButton.selected = YES;
+    _previousButton = currentButton;
+    _currentIndex = [self.titleButtons indexOfObject:currentButton];
+    
+    UILabel *currentLabel = self.titleLabels[_currentIndex];
+    
+//    NSMutableString * string = self.itemNameArr[_currentIndex];
+//    NSString *qianggouStr = [string componentsSeparatedByString:@"\n"][1];
+    //        label.textColor = [UIColor buttonTitleColor];
+//    _previousLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor blackColor] AllString:string SubStringArray:@[qianggouStr]];
+    _previousLabel.textColor = [UIColor blackColor];
+    currentLabel.textColor = [UIColor orangeColor];
+//    currentLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor orangeColor] AllString:string SubStringArray:@[qianggouStr]];
+    _previousLabel = currentLabel;
+    
+    JMHomeHourController *control = self.controllArr[_currentIndex];
+    self.currentTableView = self.tableViews[_currentIndex];
+    control.tableView = self.tableViews[_currentIndex];
+    control.dataSource = self.dataSource[_currentIndex];
+    
+//    self.currentTableView  = self.tableViews[index];
+    for (UITableView *tableView in self.tableViews) {
+        
+        if ( self.lastTableViewOffsetY>=0 &&  self.lastTableViewOffsetY<=SCREENWIDTH * 0.4) {
+            
+            tableView.contentOffset = CGPointMake(0,  self.lastTableViewOffsetY);
+            
+        }else if(self.lastTableViewOffsetY < 0){
+            
+            tableView.contentOffset = CGPointMake(0, 0);
+            
+        }else if ( self.lastTableViewOffsetY > SCREENWIDTH * 0.4){
+            
+            tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
+        }
+    }
+    
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        if (_currentIndex == 0) {
+            
+            self.currentSelectedItemImageView.frame = CGRectMake(10, self.segmentScrollView.frame.size.height - 2,80, 2);
+            
+        }else{
+            
+            
+            UIButton *preButton = self.titleButtons[_currentIndex - 1];
+            
+            float offsetX = CGRectGetMinX(preButton.frame)-10*2;
+            
+            [self.segmentScrollView scrollRectToVisible:CGRectMake(offsetX, 0, self.segmentScrollView.frame.size.width, self.segmentScrollView.frame.size.height) animated:YES];
+            
+            self.currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(currentButton.frame), self.segmentScrollView.frame.size.height-2, currentButton.frame.size.width, 2);
+        }
+        self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH *_currentIndex, 0);
+        
+    }];
+}
+
 
 
 #pragma mark 添加segmentViewController
