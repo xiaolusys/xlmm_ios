@@ -97,7 +97,7 @@ static NSUInteger selectedIndex = 0;
     NSString *jsonPath=[path stringByAppendingPathComponent:@"GoodsItemFile.json"];
     //==Json数据
     NSData *data=[NSData dataWithContentsOfFile:jsonPath];
-    if (data == nil) {
+    if (data != nil) {
         if ([NSString isStringEmpty:self.categoryUrl]) {
             [self emptyCategory];
         }else {
