@@ -183,6 +183,7 @@
     NSDictionary *dict = resultsDict[@"extra"];
     _myInvitation = dict[@"invite"];
     _boutiqueString = dict[@"boutique"];
+    _fansWebUrl = dict[@"fans_explain"];
     self.homeHeaderView.mamaNotReadNotice = dict[@"notice"];
 }
 #pragma mark ========== 妈妈页面主数据请求 ==========
