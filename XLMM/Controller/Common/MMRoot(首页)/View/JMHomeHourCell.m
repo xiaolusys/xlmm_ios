@@ -102,7 +102,7 @@
     self.titleLabel.text = model.name;
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.price floatValue]];
     NSDictionary *profitDic = model.profit;
-    self.profitLabel.text = [NSString stringWithFormat:@"利润:¥%@ ~ ¥%@",profitDic[@"min"],profitDic[@"max"]];
+    self.profitLabel.text = [NSString stringWithFormat:@"利润:¥%.1f ~ ¥%.1f",[profitDic[@"min"] floatValue],[profitDic[@"max"] floatValue]];
     
     
 }

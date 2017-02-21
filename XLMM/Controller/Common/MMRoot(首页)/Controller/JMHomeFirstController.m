@@ -79,7 +79,24 @@
     }
     return _controllArr;
 }
-
+- (NSMutableArray *)tableViews {
+    if (!_tableViews) {
+        _tableViews = [NSMutableArray array];
+    }
+    return _tableViews;
+}
+- (NSMutableArray *)titleLabels {
+    if (!_titleLabels) {
+        _titleLabels = [NSMutableArray array];
+    }
+    return _titleLabels;
+}
+- (NSMutableArray *)titleButtons {
+    if (!_titleButtons) {
+        _titleButtons = [NSMutableArray array];
+    }
+    return _titleButtons;
+}
 
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -111,10 +128,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     _currentIndex = 0;
-    self.titleLabels = [NSMutableArray array];
-    self.titleButtons = [NSMutableArray array];
 //    [self createTabelView];
-    self.tableViews = [NSMutableArray array];
     
     
     [self.view addSubview:self.tableView];
@@ -356,8 +370,8 @@
         if (!responseObject) return;
         [self.itemNameArr removeAllObjects];
         [self.dataSource removeAllObjects];
-        [self.controllArr removeAllObjects];
-        [self.tableViews removeAllObjects];
+//        [self.controllArr removeAllObjects];
+//        [self.tableViews removeAllObjects];
         [self fetchData:responseObject];
         [self endRefresh];
 //        [self.tableView reloadData];
@@ -408,7 +422,7 @@
                 
                 
             }
-            self.bottomScrollView.contentSize = CGSizeMake(self.controllArr.count * SCREENWIDTH, 0);
+            self.bottomScrollView.contentSize = CGSizeMake(self.itemNameArr.count * SCREENWIDTH, 0);
             
             JMHomeHourController *control = self.controllArr[_currentIndex];
             control.dataSource = self.dataSource[_currentIndex];
@@ -570,63 +584,58 @@
 //    }];
 //    return self.segmentedControl;
 //}
-- (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
-    NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
-    _currentIndex = segmentedControl.selectedSegmentIndex;
-    [self.segmentedControl setSelectedSegmentIndex:_currentIndex animated:YES];
-//    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
-//    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-//    [self.tableView reloadData];
-    self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
-    JMHomeHourController *control = self.controllArr[_currentIndex];
-    self.currentTableView = self.tableViews[_currentIndex];
-    for (UITableView *tableView in self.tableViews) {
-        if ( self.lastTableViewOffsetY>=0 &&  self.lastTableViewOffsetY<=SCREENWIDTH * 0.4) {
-            
-            tableView.contentOffset = CGPointMake(0,  self.lastTableViewOffsetY);
-            
-        }else if(self.lastTableViewOffsetY < 0){
-            
-            tableView.contentOffset = CGPointMake(0, 0);
-            
-        }else if ( self.lastTableViewOffsetY > SCREENWIDTH * 0.4){
-            tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
-//            tableView.contentOffset = CGPointMake(0, SCREENWIDTH * 0.4);
+//- (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
+//    NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
+//    _currentIndex = segmentedControl.selectedSegmentIndex;
+//    [self.segmentedControl setSelectedSegmentIndex:_currentIndex animated:YES];
+////    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
+////    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+////    [self.tableView reloadData];
+//    self.bottomScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
+//    JMHomeHourController *control = self.controllArr[_currentIndex];
+//    self.currentTableView = self.tableViews[_currentIndex];
+//    
+//    for (UITableView *tableView in self.tableViews) {
+//        if ( self.lastTableViewOffsetY>=0 &&  self.lastTableViewOffsetY<=SCREENWIDTH * 0.4) {
+//            
+//            tableView.contentOffset = CGPointMake(0,  self.lastTableViewOffsetY);
+//            
+//        }else if(self.lastTableViewOffsetY < 0){
+//            
 //            tableView.contentOffset = CGPointMake(0, 0);
-        }
-    }
-    
-    
-    control.tableView = self.tableViews[_currentIndex];
-    control.dataSource = self.dataSource[_currentIndex];
-    
-    
-    
-    
-}
+//            
+//        }else if ( self.lastTableViewOffsetY > SCREENWIDTH * 0.4){
+//            tableView.contentOffset = CGPointMake(0, self.lastTableViewOffsetY);
+////            tableView.contentOffset = CGPointMake(0, SCREENWIDTH * 0.4);
+////            tableView.contentOffset = CGPointMake(0, 0);
+//        }
+//    }
+//    
+//    
+//    control.tableView = self.currentTableView;
+//    control.dataSource = self.dataSource[_currentIndex];
+//    
+//    
+//    
+//    
+//}
 
 #pragma  mark - 选项卡点击事件
 
--(void)changeSelectedItem:(UIButton *)currentButton{
+- (void)changeSelectedItem:(UIButton *)currentButton {
     _previousButton.selected = NO;
     currentButton.selected = YES;
     _previousButton = currentButton;
     _currentIndex = [self.titleButtons indexOfObject:currentButton];
     self.bottomScrollView.contentOffset = CGPointMake(SCREENWIDTH *_currentIndex, 0);
     UILabel *currentLabel = self.titleLabels[_currentIndex];
-    
-//    NSMutableString * string = self.itemNameArr[_currentIndex];
-//    NSString *qianggouStr = [string componentsSeparatedByString:@"\n"][1];
-    //        label.textColor = [UIColor buttonTitleColor];
-//    _previousLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor blackColor] AllString:string SubStringArray:@[qianggouStr]];
     _previousLabel.textColor = [UIColor blackColor];
     currentLabel.textColor = [UIColor orangeColor];
-//    currentLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor orangeColor] AllString:string SubStringArray:@[qianggouStr]];
     _previousLabel = currentLabel;
     
     JMHomeHourController *control = self.controllArr[_currentIndex];
     self.currentTableView = self.tableViews[_currentIndex];
-    control.tableView = self.tableViews[_currentIndex];
+    control.tableView = self.currentTableView;
     control.dataSource = self.dataSource[_currentIndex];
     
 //    self.currentTableView  = self.tableViews[index];
