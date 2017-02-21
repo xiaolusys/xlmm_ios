@@ -388,7 +388,7 @@
     JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
     rootCategoryVC.cidString = CS_STRING(_currentCidString);
     rootCategoryVC.titleString = CS_STRING(_currentNameString);
-//    rootCategoryVC.categoryUrl = self.categoryUrlString;
+    rootCategoryVC.categoryUrl = urlCategory;
     [self.navigationController pushViewController:rootCategoryVC animated:YES];
 }
 
