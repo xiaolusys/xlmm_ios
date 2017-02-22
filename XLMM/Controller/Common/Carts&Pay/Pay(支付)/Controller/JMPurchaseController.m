@@ -268,7 +268,7 @@ static BOOL isAgreeTerms = YES;
         _couponNumber = 1;
     }
     for (NSDictionary *dic in goodsArr) {
-        if ([dic[@"product_type"] integerValue] != 1) {
+        if ([dic[@"product_type"] integerValue] == 1) {
             _isVirtualCoupone = YES;
         }
         if ([dic[@"is_bonded_goods"] boolValue]) {
