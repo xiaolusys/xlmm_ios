@@ -304,7 +304,7 @@
     [self.view addSubview:self.segmentControl];
     self.segmentControl.backgroundColor = [UIColor whiteColor];
     self.segmentControl.selectedSegmentIndex = 0;
-    self.segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 20, 0, 20);
+    self.segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
     self.segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.segmentControl.selectionIndicatorHeight = 2.f;
     self.segmentControl.selectionIndicatorColor = [UIColor orangeColor];

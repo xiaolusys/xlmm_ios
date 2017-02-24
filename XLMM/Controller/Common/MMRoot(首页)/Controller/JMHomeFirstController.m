@@ -445,7 +445,7 @@
             //            btn.titleLabel.font = [UIFont systemFontOfSize:FONTMIN];
             //            CGSize size = [UIButton sizeOfLabelWithCustomMaxWidth:SCREEN_WIDTH systemFontSize:FONTMIN andFilledTextString:CATEGORY[i]];
             
-            float originX =  i? 10*2+btnoffset:10;
+            float originX =  i? 5*2+btnoffset:10;
             
             btn.frame = CGRectMake(originX, 0, 65, 60);
             btnoffset = CGRectGetMaxX(btn.frame);
