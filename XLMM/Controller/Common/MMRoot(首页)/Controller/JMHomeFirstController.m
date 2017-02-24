@@ -260,7 +260,7 @@
 - (UIImageView *)currentSelectedItemImageView {
     if (!_currentSelectedItemImageView) {
         _currentSelectedItemImageView = [[UIImageView alloc] init];
-        _currentSelectedItemImageView.image = [UIImage imageWithColor:[UIColor orangeColor] Frame:CGRectMake(0, 0, 60, 2)];
+        _currentSelectedItemImageView.image = [UIImage imageWithColor:[UIColor orangeColor] Frame:CGRectMake(0, 0, 65, 2)];
     }
     return _currentSelectedItemImageView;
 }
