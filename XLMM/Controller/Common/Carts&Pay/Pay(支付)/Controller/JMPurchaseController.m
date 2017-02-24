@@ -127,7 +127,12 @@ static BOOL isAgreeTerms = YES;
 
 @implementation JMPurchaseController
 
-
+- (NSMutableArray *)purchaseGoodsArr {
+    if (!_purchaseGoodsArr) {
+        _purchaseGoodsArr = [NSMutableArray array];
+    }
+    return _purchaseGoodsArr;
+}
 - (NSMutableArray *)logisticsArr {
     if (!_logisticsArr) {
         _logisticsArr = [NSMutableArray array];
@@ -218,6 +223,7 @@ static BOOL isAgreeTerms = YES;
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
+        [self.purchaseGoodsArr removeAllObjects];
         [self fetchedCartsData:responseObject];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
@@ -259,7 +265,7 @@ static BOOL isAgreeTerms = YES;
 }
 #pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
-    [self.purchaseGoodsArr removeAllObjects];
+    
     NSArray *goodsArr = purchaseDic[@"cart_list"];
     NSDictionary *teamGoodsDic = goodsArr[0];
     if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
