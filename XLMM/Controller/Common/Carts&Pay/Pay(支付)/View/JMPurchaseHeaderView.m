@@ -57,7 +57,7 @@
 }
 - (void)setIsVirtualCoupone:(BOOL)isVirtualCoupone {
     _isVirtualCoupone = isVirtualCoupone;
-    if (isVirtualCoupone == NO) {
+    if (isVirtualCoupone) {
         if (self.addressView) {
             [self.addressView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@0);
