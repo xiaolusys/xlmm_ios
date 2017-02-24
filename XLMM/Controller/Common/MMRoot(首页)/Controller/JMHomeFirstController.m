@@ -237,7 +237,7 @@
 //        [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
 //        //        __weak typeof(self) weakSelf = self;
 ////        [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-//            //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
+//            //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 60, SCREENWIDTH, SCREENHEIGHT) animated:YES];
 ////        }];
 //        
 //    }
@@ -260,7 +260,7 @@
 - (UIImageView *)currentSelectedItemImageView {
     if (!_currentSelectedItemImageView) {
         _currentSelectedItemImageView = [[UIImageView alloc] init];
-        _currentSelectedItemImageView.image = [UIImage imageWithColor:[UIColor orangeColor] Frame:CGRectMake(0, 0, 80, 2)];
+        _currentSelectedItemImageView.image = [UIImage imageWithColor:[UIColor orangeColor] Frame:CGRectMake(0, 0, 65, 2)];
     }
     return _currentSelectedItemImageView;
 }
@@ -445,9 +445,9 @@
             //            btn.titleLabel.font = [UIFont systemFontOfSize:FONTMIN];
             //            CGSize size = [UIButton sizeOfLabelWithCustomMaxWidth:SCREEN_WIDTH systemFontSize:FONTMIN andFilledTextString:CATEGORY[i]];
             
-            float originX =  i? 10*2+btnoffset:10;
+            float originX =  i? 5*2+btnoffset:10;
             
-            btn.frame = CGRectMake(originX, 0, 80, 60);
+            btn.frame = CGRectMake(originX, 0, 65, 60);
             btnoffset = CGRectGetMaxX(btn.frame);
             
             
@@ -489,7 +489,7 @@
                 _previousButton = btn;
                 _previousLabel = label;
                 
-                _currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(btn.frame), self.segmentScrollView.frame.size.height - 2, 80, 2);
+                _currentSelectedItemImageView.frame = CGRectMake(CGRectGetMinX(btn.frame), self.segmentScrollView.frame.size.height - 2, 65, 2);
             }else {
                 label.textColor = [UIColor blackColor];
             }
@@ -580,7 +580,7 @@
 //    [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
 //    //        __weak typeof(self) weakSelf = self;
 //    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-//        //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 80, SCREENWIDTH, SCREENHEIGHT) animated:YES];
+//        //            [weakSelf.segmentScrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 60, SCREENWIDTH, SCREENHEIGHT) animated:YES];
 //    }];
 //    return self.segmentedControl;
 //}
@@ -660,7 +660,7 @@
         
         if (_currentIndex == 0) {
             
-            self.currentSelectedItemImageView.frame = CGRectMake(10, self.segmentScrollView.frame.size.height - 2,80, 2);
+            self.currentSelectedItemImageView.frame = CGRectMake(10, self.segmentScrollView.frame.size.height - 2,65, 2);
             
         }else{
             

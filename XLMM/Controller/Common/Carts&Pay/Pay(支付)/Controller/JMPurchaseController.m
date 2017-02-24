@@ -358,7 +358,7 @@ static BOOL isAgreeTerms = YES;
     if (_isIndentifierNum && _isBondedGoods) {
         [self userNotIdCardNumberMessage];
     }
-    if (_isVirtualCoupone == NO) {
+    if (_isVirtualCoupone) {
         CGRect frame = self.purchaseHeaderView.frame;
         frame.size.height = 60;
         self.purchaseHeaderView.frame = frame;

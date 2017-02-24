@@ -304,10 +304,10 @@
     [self.view addSubview:self.segmentControl];
     self.segmentControl.backgroundColor = [UIColor whiteColor];
     self.segmentControl.selectedSegmentIndex = 0;
-    self.segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 20, 0, 20);
+    self.segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
     self.segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.segmentControl.selectionIndicatorHeight = 2.f;
-    self.segmentControl.selectionIndicatorColor = [UIColor buttonEnabledBackgroundColor];
+    self.segmentControl.selectionIndicatorColor = [UIColor orangeColor];
     self.segmentControl.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:15.],
                                                 NSForegroundColorAttributeName : [UIColor blackColor]};
     self.segmentControl.selectedTitleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:16.],
