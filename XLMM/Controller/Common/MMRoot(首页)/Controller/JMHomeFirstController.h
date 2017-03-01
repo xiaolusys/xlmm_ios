@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @class JMHomePageController;
+
+@protocol JMHomeFirstControllerDelegate <NSObject>
+
+- (void)scrollViewDeceleratingScroll:(UIScrollView *)scrollView;
+
+@end
+
 @interface JMHomeFirstController : UIViewController
+
+@property (nonatomic, weak) id<JMHomeFirstControllerDelegate> delegate;
 
 @property (nonatomic, strong) NSArray *topImageArray;
 

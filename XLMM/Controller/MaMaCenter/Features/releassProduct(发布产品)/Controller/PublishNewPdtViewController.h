@@ -16,6 +16,7 @@
 
 @property (nonatomic, assign) BOOL isPushingDays;
 @property (nonatomic, copy) NSString *pushungDaysURL;
+@property (nonatomic, copy) NSString *titleString;
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 
 

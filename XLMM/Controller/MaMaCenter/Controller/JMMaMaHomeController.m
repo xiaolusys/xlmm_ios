@@ -40,6 +40,7 @@
 #import "JMCouponController.h"
 #import "PersonOrderViewController.h"
 #import "JMRefundBaseController.h"
+#import "PublishNewPdtViewController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -86,19 +87,18 @@
 @end
 
 @implementation JMMaMaHomeController
+
+#pragma mark  -- 懒加载
 - (NSMutableArray *)activeArray {
     if (_activeArray == nil) {
         _activeArray = [NSMutableArray array];
     }
     return _activeArray;
 }
+
+#pragma mark -- 视图生命周期
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
     [MobClick beginLogPageView:@"JMMaMaHomeController"];
     if (isShowRefresh) {
         isShowRefresh = NO;
@@ -106,17 +106,6 @@
     }else {
         [self setUserInfo];
     }
-    
-}
-- (void)updataAfterLogin:(NSNotification *)notification{
-    [self refresh];
-}
-- (void)updateMoneyLabel:(NSNotification *)center {
-//    self.homeHeaderView.withDrawMoney = center.object;
-    [self refresh];
-}
-- (void)phoneNumberLogin:(NSNotification *)notification{
-    [self refresh];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -125,22 +114,23 @@
         [self.homeHeaderView.pageView endAutoScroll];
     }
 }
-//- (void)viewDidDisappear:(BOOL)animated {
-//    self.homeHeaderView.lineChart = nil;
-//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
+    
     _qrCodeRequestDataIndex = 0;
     isShowRefresh = YES;
     [self createTableView];
     [self createPullHeaderRefresh];
     [self loaderweimaData];
-}
-- (void)refresh {
-    [self.tableView.mj_header beginRefreshing];
 }
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
@@ -157,6 +147,28 @@
         [self.tableView.mj_header endRefreshing];
     }
 }
+#pragma mark -- 通知事件处理
+- (void)updataAfterLogin:(NSNotification *)notification{
+    [self refresh];
+}
+- (void)updateMoneyLabel:(NSNotification *)center {
+    [self refresh];
+}
+- (void)phoneNumberLogin:(NSNotification *)notification{
+    [self refresh];
+}
+- (void)quitLogin {
+    self.navigationItem.rightBarButtonItem = nil;
+    self.homeHeaderView.userInfoDic = nil;
+}
+
+#pragma mark 对外提供的接口
+- (void)refresh {
+    [self.tableView.mj_header beginRefreshing];
+}
+
+#pragma mark 网络请求,数据处理
+// ========== 妈妈页面通知滚动请求 ==========
 - (void)loadMaMaMessage {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/mama/message/self_list",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -166,7 +178,7 @@
     } Progress:^(float progress) {
     }];
 }
-#pragma mark ========== 妈妈页面web链接请求 ==========
+// ========== 妈妈页面web链接请求 ==========
 - (void)loadMaMaWeb {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
@@ -186,7 +198,7 @@
     _fansWebUrl = dict[@"fans_explain"];
     self.homeHeaderView.mamaNotReadNotice = dict[@"notice"];
 }
-#pragma mark ========== 妈妈页面主数据请求 ==========
+// ========== 妈妈页面主数据请求 ==========
 - (void)loadDataSource {
     NSString *str = [NSString stringWithFormat:@"%@/rest/v2/mama/fortune", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:str WithParaments:nil WithSuccess:^(id responseObject) {
@@ -200,7 +212,6 @@
     }];
 }
 - (void)updateMaMaHome:(NSDictionary *)dic {
-    
     NSDictionary *fortuneDic = dic[@"mama_fortune"];
     self.mamaCenterModel = [JMMaMaCenterModel mj_objectWithKeyValues:fortuneDic];
     self.homeHeaderView.centerModel = self.mamaCenterModel;
@@ -215,8 +226,6 @@
     _orderRecord = [NSString stringWithFormat:@"%@", self.mamaCenterModel.order_num];                                        // 订单记录数量
     _earningsRecord = [NSString stringWithFormat:@"%.2f", [self.mamaCenterModel.carry_value floatValue]];                    // 累计收益
     _eventLink = self.mamaCenterModel.mama_event_link;                                                                  // 精选活动链接
-    
-    
 }
 // 折线图数据请求
 - (void)loadfoldLineData {
@@ -230,6 +239,7 @@
     } Progress:^(float progress) {
     }];
 }
+// 二维码数据请求
 - (void)loaderweimaData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/qrcode/get_wxpub_qrcode");
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -251,6 +261,7 @@
     } Progress:^(float progress) {
     }];
 }
+// 个人信息请求
 - (void)setUserInfo{
     [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
         if ([self isLogin]) {
@@ -264,16 +275,6 @@
         [self endRefresh];
         
     }];
-}
-- (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
-    return isXLMM;
-}
-- (BOOL)isLogin {
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isLog = [users boolForKey:kIsLogin];
-    return isLog;
 }
 - (void)updateUserInfo:(NSDictionary *)dic {
     if ([self isXiaolumama]) {
@@ -298,13 +299,16 @@
     }
     self.homeHeaderView.userInfoDic = dic;
 }
-- (void)quitLogin {
-    self.navigationItem.rightBarButtonItem = nil;
-    self.homeHeaderView.userInfoDic = nil;
+- (BOOL)isXiaolumama{
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isXLMM = [users boolForKey:kISXLMM];
+    return isXLMM;
 }
-
-
-
+- (BOOL)isLogin {
+    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+    BOOL isLog = [users boolForKey:kIsLogin];
+    return isLog;
+}
 
 
 #pragma ========== UI处理 ==========
@@ -322,9 +326,34 @@
     self.homeHeaderView.delegate = self;
     self.tableView.tableHeaderView = self.homeHeaderView;
     [self headerClick];
-    
+}
+- (void)craeteNavRightButton {
+    UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 80)];
+    [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [serViceButton setTitle:@"小鹿客服" forState:UIControlStateNormal];
+    [serViceButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    serViceButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    //    UIImageView *serviceImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 5, 30, 30)];
+    //    [serViceButton addSubview:serviceImage];
+    //    serviceImage.image = [UIImage imageNamed:@"serviceEnter"];
+    self.serViceButton = serViceButton;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:serViceButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
 }
 
+#pragma mark -- 点击事件处理 --
+- (void)serViceButtonClick:(UIButton *)button {
+    [MobClick event:@"MaMa_service"];
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
+    UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
+    [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
+}
+
+#pragma mark == UITableView 代理实现 ==
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 //    return self.activeArray.count;
     return 0;
@@ -342,30 +371,7 @@
 //    JMHomeActiveModel *model = self.activeArray[indexPath.row];
 //    [self skipWebView:model.act_applink activeDic:model];
 //}
-#pragma mark 创建小鹿客服入口
-- (void)craeteNavRightButton {
-    UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 80)];
-    [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [serViceButton setTitle:@"小鹿客服" forState:UIControlStateNormal];
-    [serViceButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    serViceButton.titleLabel.font = [UIFont systemFontOfSize:14.];
-    //    UIImageView *serviceImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 5, 30, 30)];
-    //    [serViceButton addSubview:serviceImage];
-    //    serviceImage.image = [UIImage imageNamed:@"serviceEnter"];
-    self.serViceButton = serViceButton;
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:serViceButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
-- (void)serViceButtonClick:(UIButton *)button {
-    [MobClick event:@"MaMa_service"];
-    button.enabled = NO;
-    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-    UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
-    [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
-}
-- (void)changeButtonStatus:(UIButton *)button {
-    button.enabled = YES;
-}
+
 
 #pragma mark 点击事件处理(跳转webView)  // https://m.xiaolumeimei.com/mall/activity/exam
 - (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
@@ -455,6 +461,7 @@
             if (isLogin) {
                 PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
                 order.index = 101;
+                order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
                 [self displayLoginView];
@@ -465,6 +472,7 @@
             if (isLogin) {
                 PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
                 order.index = 102;
+                order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
                 [self displayLoginView];
@@ -484,6 +492,7 @@
             if (isLogin) {
                 PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
                 order.index = 100;
+                order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
                 [self displayLoginView];
@@ -584,37 +593,6 @@
             [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
         }
             break;
-//        case 108:
-//        {
-//            MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
-//            carry.earningsRecord = _earningsRecord;
-//            carry.historyEarningsRecord = _historyEarningsRecord;
-//            [self.navigationController pushViewController:carry animated:YES];
-//        }
-//            break;
-//        case 109:
-//        {
-//            TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-//            today.visitorDate = kVisitorDay;
-//            [self.navigationController pushViewController:today animated:YES];
-//        }
-//            break;
-//        case 110:
-//        {
-//            MaMaOrderListViewController *orderList = [[MaMaOrderListViewController alloc] init];
-//            orderList.orderRecord = _orderRecord;
-//            [self.navigationController pushViewController:orderList animated:YES];
-//        }
-//            break;
-//        case 111:
-//        {
-//            JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
-//            mamaCenterFansVC.fansNum = _fansNum;
-//            mamaCenterFansVC.fansUrlStr = _fansWebUrl;
-//            mamaCenterFansVC.index = 100;
-//            [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
-//        }
-//            break;
         default:
             break;
     }

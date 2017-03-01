@@ -7,16 +7,17 @@
 //
 
 #import "JMFineCounpContentController.h"
-#import "JMEmptyView.h"
 #import "JMFineCouponModel.h"
 #import "JMRootgoodsCell.h"
 #import "JMGoodsDetailController.h"
+#import "JMReloadEmptyDataView.h"
 
-@interface JMFineCounpContentController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+
+@interface JMFineCounpContentController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
@@ -120,7 +121,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     NSArray *resultsArr = itemDic[@"results"];
     if (resultsArr.count == 0) {
         //展示空视图
-        [self emptyView];
+//        [self emptyView];
         return ;
     }else {
         for (NSDictionary *dic in resultsArr) {
@@ -128,14 +129,14 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
             [self.dataSource addObject:model];
         }
     }
-    [self.collectionView reloadData];
+    [self.collectionView cs_reloadData];
 }
 - (void)fatchClassifyListMoreData:(NSDictionary *)itemDic {
     _nextPageUrlString = itemDic[@"next"];
     NSArray *resultsArr = itemDic[@"results"];
     if (resultsArr.count == 0) {
         //展示空视图
-        [self emptyView];
+//        [self emptyView];
         return ;
     }
     _numArray = [NSMutableArray array];
@@ -158,7 +159,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
             NSLog(@"DEBUG: failure to batch update.  %@", except.description);
         }
     }
-    [self.collectionView reloadData];
+    [self.collectionView cs_reloadData];
     
     
 }
@@ -206,16 +207,29 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 120) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-    };
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"暂时没有商品哦~" DescTitle:@"" ButtonTitle:@"" Image:@"emptyGoods" ReloadBlcok:^{
+//            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 120) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"查看其它分类"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [weakSelf.navigationController popViewControllerAnimated:YES];
+//        }
+//    };
+//}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;

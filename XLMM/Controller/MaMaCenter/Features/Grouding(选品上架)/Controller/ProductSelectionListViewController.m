@@ -12,12 +12,12 @@
 #import "JMProductSelectListCell.h"
 #import "JMGoodsDetailController.h"
 #import "JMPopMenuView.h"
-#import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
 
 
 #define HeadViewHeight 35
 
-@interface ProductSelectionListViewController ()<UIAlertViewDelegate> //JMProductSelectListCellDelegate
+@interface ProductSelectionListViewController ()<UIAlertViewDelegate,CSTableViewPlaceHolderDelegate> //JMProductSelectListCellDelegate
 {
     int count;
     
@@ -49,6 +49,8 @@
 
 @property (nonatomic, strong) NSMutableDictionary *param;
 //@property (nonatomic, copy) NSString *numbersOfSelected;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
+
 /**
  *  下拉的标志
  */
@@ -61,7 +63,7 @@
  *  选品上架数据源
  */
 @property (nonatomic, strong) JMProductSelectionListModel *listModel;
-@property (nonatomic, strong) JMEmptyView *empty;
+//@property (nonatomic, strong) JMEmptyView *empty;
 
 @end
 
@@ -118,7 +120,7 @@
     //注册cell
     [self.view addSubview:self.tableView];
     [self createHeadView];
-    [self emptyView];
+//    [self emptyView];
 //    [self itemData];
     // --> 不需要删除,先注释掉
     //    [self createrightItem];
@@ -387,27 +389,40 @@
         [self.tableView.mj_footer endRefreshing];
     }
 }
-- (void)emptyView {
-    kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 160, SCREENWIDTH, SCREENHEIGHT - 160) Title:@"还没有商品哦~" DescTitle:@"去看看其他分类吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"查看分类"];
-    [self.view addSubview:self.empty];
-    self.empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            [weakSelf selectedClicked:nil];
-        }
-    };
-    self.empty.hidden = YES;
+//- (void)emptyView {
+//    kWeakSelf
+//    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 160, SCREENWIDTH, SCREENHEIGHT - 160) Title:@"还没有商品哦~" DescTitle:@"去看看其他分类吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"查看分类"];
+//    [self.view addSubview:self.empty];
+//    self.empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [weakSelf selectedClicked:nil];
+//        }
+//    };
+//    self.empty.hidden = YES;
+//}
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"还没有商品哦~" DescTitle:@"去看看其他分类吧~" ButtonTitle:@"查看分类" Image:@"gouwucheemptyimage" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
 - (void)fetchedDatalist:(NSDictionary *)dic{
     self.nextUrl = nil;
     NSArray *array = [dic objectForKey:@"results"];
     self.nextUrl = dic[@"next"];
     NSLog(@"next = %@", self.nextUrl);
     if (array.count == 0) {
-        self.empty.hidden = NO;
+//        self.empty.hidden = NO;
         return;
     }
-    self.empty.hidden = YES;
+//    self.empty.hidden = YES;
     for (NSDictionary *dict in array) {
         self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dict];
         [self.dataArr addObject:self.listModel];
@@ -421,7 +436,7 @@
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -436,7 +451,7 @@
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
         [MBProgressHUD hideHUDForView:self.view];
     } WithFail:^(NSError *error) {
         [self endRefresh];

@@ -17,7 +17,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
 @property (nonatomic, strong) UILabel *PriceLabel;
 @property (nonatomic, strong) UILabel *oldPriceLabel;
-@property (nonatomic, strong) UILabel *itemMask;
+@property (nonatomic, strong) UIButton *itemMask;
 
 @property (nonatomic, strong) UILabel *timerLabel;
 
@@ -52,11 +52,12 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         itemString = itemMask[0];
     
     }
-    self.itemMask.text = [NSString stringWithFormat:@"%@",itemString];
+    [self.itemMask setTitle:itemString forState:UIControlStateNormal];
+//    self.itemMask.text = [NSString stringWithFormat:@"%@",itemString];
     NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont boldSystemFontOfSize:14] forKey:NSFontAttributeName];
     CGSize size = [itemString sizeWithAttributes:dic];
     [self.itemMask mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(@(size.width + 20));
+        make.width.mas_equalTo(@(size.width + 10));
     }];
 //    self.itemMask.textAlignment = NSTextAlignmentCenter;
     
@@ -133,32 +134,65 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     [contentView addSubview:deletLine];
     deletLine.backgroundColor = [UIColor titleDarkGrayColor];
     
-    UIButton *shoucangButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [contentView addSubview:shoucangButton];
-    [shoucangButton setImage:[UIImage imageNamed:@"MyCollection_Nomal"] forState:UIControlStateNormal];
-    [shoucangButton setImage:[UIImage imageNamed:@"MyCollection_Selected"] forState:UIControlStateSelected];
+    
+    UIButton *lookWirter = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:lookWirter];
+    [lookWirter setTitle:@"查看文案" forState:UIControlStateNormal];
+    [lookWirter setTitleColor:[UIColor timeLabelColor] forState:UIControlStateNormal];
+    lookWirter.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [lookWirter setImage:[UIImage imageNamed:@"copyWenan"] forState:UIControlStateNormal];
+    lookWirter.layer.masksToBounds = YES;
+    lookWirter.layer.borderWidth = 0.5f;
+    lookWirter.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
+    lookWirter.layer.cornerRadius = 5.f;
+    lookWirter.tag = 100;
+    [self.contentView addSubview:lookWirter];
+    
+    
+//    UIButton *shoucangButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [contentView addSubview:shoucangButton];
+//    [shoucangButton setImage:[UIImage imageNamed:@"MyCollection_Nomal"] forState:UIControlStateNormal];
+//    [shoucangButton setImage:[UIImage imageNamed:@"MyCollection_Selected"] forState:UIControlStateSelected];
 //    [shoucangButton setTitle:@"加入收藏" forState:UIControlStateNormal];
 //    [shoucangButton setTitle:@"取消收藏" forState:UIControlStateSelected];
 //    [shoucangButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
 //    [shoucangButton setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
 //    shoucangButton.titleLabel.font = [UIFont systemFontOfSize:16.];
 //    [shoucangButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
-    self.storeUpButton = shoucangButton;
+    self.storeUpButton = lookWirter;
 //    shoucangButton.tag = 100;
 //    shoucangButton.selected = NO;
-    [shoucangButton addTarget:self action:@selector(storeUpClick:) forControlEvents:UIControlEventTouchUpInside];
-    shoucangButton.tag = 100;
+    [self.storeUpButton addTarget:self action:@selector(storeUpClick:) forControlEvents:UIControlEventTouchUpInside];
+
     
-    UILabel *baoyou = [UILabel new];
-    [contentView addSubview:baoyou];
-    baoyou.font = [UIFont systemFontOfSize:16.];
-    baoyou.textColor = [UIColor buttonEnabledBackgroundColor];
-    baoyou.textAlignment = NSTextAlignmentCenter;
-    baoyou.layer.masksToBounds = YES;
-    baoyou.layer.borderWidth = 1.0;
-    baoyou.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
-    baoyou.layer.cornerRadius = 5.;
-    self.itemMask = baoyou;
+    UIButton *baoyouBUtton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:baoyouBUtton];
+    [baoyouBUtton setTitle:@"包邮" forState:UIControlStateNormal];
+    [baoyouBUtton setTitleColor:[UIColor timeLabelColor] forState:UIControlStateNormal];
+    baoyouBUtton.titleLabel.font = [UIFont systemFontOfSize:14.];
+//    [baoyouBUtton setImage:[UIImage imageNamed:@"baoyouImage"] forState:UIControlStateNormal];
+    baoyouBUtton.layer.masksToBounds = YES;
+    baoyouBUtton.layer.borderWidth = 0.5f;
+    baoyouBUtton.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
+    baoyouBUtton.layer.cornerRadius = 5.f;
+//    baoyouBUtton.tag = 100;
+    [self.contentView addSubview:baoyouBUtton];
+    self.itemMask = baoyouBUtton;
+    
+    
+//    UILabel *baoyou = [UILabel new];
+//    [contentView addSubview:baoyou];
+//    baoyou.font = [UIFont systemFontOfSize:16.];
+//    baoyou.textColor = [UIColor buttonEnabledBackgroundColor];
+//    baoyou.textAlignment = NSTextAlignmentCenter;
+//    baoyou.layer.masksToBounds = YES;
+//    baoyou.layer.borderWidth = 1.0;
+//    baoyou.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+//    baoyou.layer.cornerRadius = 5.;
+//    self.itemMask = baoyou;
+    
+    
+    
     
     UIView *currentView = [UIView new];
     [self.contentView addSubview:currentView];
@@ -233,17 +267,18 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         make.height.mas_equalTo(@1);
     }];
     
-    [shoucangButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(baoyou.mas_centerY);
+    [lookWirter mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(baoyouBUtton.mas_centerY);
         make.width.mas_equalTo(@80);
-        make.height.mas_equalTo(@40);
-        make.right.equalTo(baoyou.mas_left);
+        make.height.mas_equalTo(@30);
+        make.right.equalTo(baoyouBUtton.mas_left).offset(-5);
     }];
     
-    [baoyou mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.contentView).offset(-15);
-        make.bottom.equalTo(contentView).offset(-20);
-        make.height.mas_equalTo(@20);
+    [baoyouBUtton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.contentView).offset(-5);
+        make.bottom.equalTo(contentView).offset(-10);
+        make.width.mas_equalTo(@60);
+        make.height.mas_equalTo(@30);
     }];
     
     [fineGoodsView mas_makeConstraints:^(MASConstraintMaker *make) {

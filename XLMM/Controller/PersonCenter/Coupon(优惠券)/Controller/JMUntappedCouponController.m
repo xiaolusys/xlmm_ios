@@ -10,9 +10,12 @@
 #import "JMCouponModel.h"
 #import "JMCouponRootCell.h"
 #import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
+#import "CSTableViewPlaceHolderDelegate.h"
+
 //#import "JMSelecterButton.h"
 
-@interface JMUntappedCouponController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JMUntappedCouponController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -21,6 +24,8 @@
 @property (nonatomic, strong) JMCouponModel *couponModel;
 @property (nonatomic, assign) BOOL isPopToRootView;
 //@property (nonatomic, strong) JMSelecterButton *sureButton;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
+
 @end
 
 @implementation JMUntappedCouponController {
@@ -60,14 +65,14 @@
 - (void)setCouponArray:(NSArray *)couponArray {
     _couponArray = couponArray;
     if (couponArray.count == 0) {
-        [self emptyView];
+//        [self emptyView];
     }else {
         for (NSDictionary *dic in couponArray) {
             self.couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:self.couponModel];
         }
     }
-    [self.tableView reloadData];
+    [self.tableView cs_reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
@@ -88,20 +93,31 @@
         NSLog(@"couponCount == 8 被点击");
     }
 }
-
-
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            self.isPopToRootView = YES;
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-        }
-    };
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"emptyYouhuiquanIcon" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            self.isPopToRootView = YES;
+//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//        }
+//    };
+//}
 
 - (void)displayEmptyView{
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];

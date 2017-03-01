@@ -45,6 +45,15 @@
                     success(responseObject);
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//                NSHTTPURLResponse *response = (NSHTTPURLResponse*)task.response;
+                //通讯协议状态码
+//                NSInteger statusCode = response.statusCode;
+//                //服务器返回的错误信息
+////                NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+//                NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:NSJSONReadingMutableContainers error:nil];
+//                [MBProgressHUD showError:dictionary[@"detail"]];
+                
+                
                 if (fail) {
                     fail(error);
                 }

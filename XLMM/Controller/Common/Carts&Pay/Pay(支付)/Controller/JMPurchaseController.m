@@ -684,7 +684,7 @@ static BOOL isAgreeTerms = YES;
     if (self.isUserCoupon && self.isEnoughCoupon && self.isCouponEnoughPay) {
         _totalPayment = 0.00;
         _discountfee = _discountfee + _couponValue;
-        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:use_coupon_allowed:%.2f", parms,  _couponInfo[@"pid"], _couponStringID, _couponValue];
+        parms = [NSString stringWithFormat:@"%@,pid:%@:couponid:%@:value:%.2f", parms,  _couponInfo[@"pid"], _couponStringID, _couponValue];
         _parmsStr = [NSString stringWithFormat:@"%@&discount_fee=%.2f&payment=%@&channel=%@&pay_extras=%@",_parmsStr,_discount,[NSNumber numberWithFloat:_totalPayment], @"budget", parms];
         [self submitBuyGoods];
     }else {

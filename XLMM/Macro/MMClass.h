@@ -23,6 +23,9 @@
 #import "MJAnimationHeader.h"
 #import "JMGlobal.h"
 #import "JMDevice.h"
+#import "UITableView+CSTableViewPlaceHolder.h"
+#import "UICollectionView+CSCollectionViewPlaceHolder.h"
+
 
 
 //#import "NSDictionary+Log.h"

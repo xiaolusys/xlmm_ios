@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@class JMHomeHourModel;
+@class JMHomeHourModel,JMHomeHourCell;
+@protocol JMHomeHourCellDelegate <NSObject>
+
+- (void)composeHourCell:(JMHomeHourCell *)cell Model:(JMHomeHourModel *)model ButtonClick:(UIButton *)button;
+
+
+@end
+
 @interface JMHomeHourCell : UITableViewCell
 
+@property (nonatomic, weak) id<JMHomeHourCellDelegate> delegate;
 @property (nonatomic, strong) JMHomeHourModel *model;
 
 @end

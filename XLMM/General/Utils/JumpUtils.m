@@ -25,6 +25,7 @@
 #import "CSTabBarController.h"
 #import "JMPurchaseController.h"
 #import "JMPushingDaysController.h"
+#import "JMFineCounpGoodsController.h"
 
 
 @implementation JumpUtils
