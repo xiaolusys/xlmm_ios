@@ -37,6 +37,11 @@
     UIImageView *iconImageView = [UIImageView new];
     [self.contentView addSubview:iconImageView];
     self.iconImageView = iconImageView;
+    self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImageView.layer.masksToBounds = YES;
+    self.iconImageView.layer.borderWidth = 0.5;
+    self.iconImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
+    self.iconImageView.layer.cornerRadius = 5;
     
     UILabel *goodsTitleL = [UILabel new];
     [self.contentView addSubview:goodsTitleL];
@@ -93,13 +98,7 @@
     /**
      *  处理图片显示...
      */
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];
-    self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconImageView.layer.masksToBounds = YES;
-    self.iconImageView.layer.borderWidth = 0.5;
-    self.iconImageView.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
-    self.iconImageView.layer.cornerRadius = 5;
-    
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[model.pic_path JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"profiles"]];    
     
 //     NSString *url = [model.pic_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"profiles"]];

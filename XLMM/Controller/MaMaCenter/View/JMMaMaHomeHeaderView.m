@@ -230,14 +230,20 @@ static NSString *currentTurnsNumberString;
         if ([waitPayString integerValue] != 0) {
             _daizhifuLabel.hidden = NO;
             _daizhifuLabel.text = CS_STRING(waitPayString);
+        }else {
+            _daizhifuLabel.hidden = YES;
         }
         if ([waitGoodsString integerValue] != 0) {
             _daishouhuoLabel.hidden = NO;
             _daishouhuoLabel.text = CS_STRING(waitGoodsString);
+        }else {
+            _daishouhuoLabel.hidden = YES;
         }
         if ([refundString integerValue] != 0) {
             _tuihuanhuoLabel.hidden = NO;
             _tuihuanhuoLabel.text = CS_STRING(refundString);
+        }else {
+            _tuihuanhuoLabel.hidden = YES;
         }
 
     }else { // 退出登录
@@ -767,21 +773,21 @@ static NSString *currentTurnsNumberString;
     _lingqianLabel = (UILabel *)[self viewWithTag:200];
     _xiaolubiLabel = (UILabel *)[self viewWithTag:201];
     _youhuiquanLabel = (UILabel *)[self viewWithTag:202];
-_daizhifuLabel = (UILabel *)[self viewWithTag:203];
-_daishouhuoLabel = (UILabel *)[self viewWithTag:204];
-_tuihuanhuoLabel = (UILabel *)[self viewWithTag:205];
-_wodedingdanLabel = (UILabel *)[self viewWithTag:206];
-_jinrifangkeLabel = (UILabel *)[self viewWithTag:207];
-_jinridingdanLabel = (UILabel *)[self viewWithTag:208];
-_jinrishouyiLabel = (UILabel *)[self viewWithTag:209];
+    _daizhifuLabel = (UILabel *)[self viewWithTag:203];
+    _daishouhuoLabel = (UILabel *)[self viewWithTag:204];
+    _tuihuanhuoLabel = (UILabel *)[self viewWithTag:205];
+    _wodedingdanLabel = (UILabel *)[self viewWithTag:206];
+    _jinrifangkeLabel = (UILabel *)[self viewWithTag:207];
+    _jinridingdanLabel = (UILabel *)[self viewWithTag:208];
+    _jinrishouyiLabel = (UILabel *)[self viewWithTag:209];
     _wodetixianLabel = (UILabel *)[self viewWithTag:210];
     _leijishouyiLabel = (UILabel *)[self viewWithTag:211];
     _fangkejiluLabel = (UILabel *)[self viewWithTag:212];
     _dingdanjuluLabel = (UILabel *)[self viewWithTag:213];
     _wodefensiLabel = (UILabel *)[self viewWithTag:214];
-        _lingqianLabel.text = @"0.00";
-        _xiaolubiLabel.text = @"0";
-        _youhuiquanLabel.text = @"0";
+    _lingqianLabel.text = @"0.00";
+    _xiaolubiLabel.text = @"0";
+    _youhuiquanLabel.text = @"0";
 
 
 //    // === 顶部图片 === //

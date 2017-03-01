@@ -9,12 +9,13 @@
 #import "Account1ViewController.h"
 #import "AccountModel.h"
 #import "JMWithdrawCashController.h"
-#import "JMEmptyView.h"
 #import "JMBillDetailController.h"
 #import "JMWithDrawDetailController.h"
 #import "JMAccountCell.h"
+#import "CSTableViewPlaceHolderDelegate.h"
+#import "JMReloadEmptyDataView.h"
 
-@interface Account1ViewController ()
+@interface Account1ViewController () <CSTableViewPlaceHolderDelegate>
 @property (nonatomic, strong)UITableView *tableView;
 
 @property (nonatomic, strong)NSString *nextPage;
@@ -24,6 +25,8 @@
 @property (nonatomic, assign)CGFloat headerH;
 
 @property (nonatomic, strong)UILabel *moneyLabel;
+
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 /**
  *  返回顶部按钮
  */
@@ -117,7 +120,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         [self.dataArr removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -135,7 +138,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -146,7 +149,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
-        [self emptyView];
+//        [self emptyView];
         return;
     }
     for (NSDictionary *account in results) {
@@ -208,18 +211,31 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 //    [self.tableView registerNib:[UINib nibWithNibName:@"AccountTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:identifier];
     
 }
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"你的钱包空空如也" DescTitle:@"" BackImage:@"wallet" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            self.isPopToRootView = YES;
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-        }
-    };
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"你的钱包空空如也" DescTitle:@"" BackImage:@"wallet" InfoStr:@"快去逛逛"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            self.isPopToRootView = YES;
+//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//        }
+//    };
+//}
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"你的钱包空空如也" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"wallet" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
 
 #pragma mark --邀请好友
 - (void)backBtnClicked:(UIButton *)button{

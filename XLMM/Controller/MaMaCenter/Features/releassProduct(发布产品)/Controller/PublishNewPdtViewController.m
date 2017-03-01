@@ -38,6 +38,9 @@
     NSMutableDictionary *_currentSaveDataSource;
     NSString *_getBeforeDayFive;
     NSArray *imageUrlArray;
+    NSString *_nextPageUrlString;
+    BOOL _isPullDown;
+    BOOL _isLoadMore;
 }
 @property (nonatomic, strong)PhotoView *photoView;
 @property (nonatomic, strong)UIView *watchesView;
@@ -110,17 +113,14 @@
 }
 
 
-//- (PhotoView *)photoView {
-//    if (!_photoView) {
-//        self.photoView = [[PhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//    }
-//    return _photoView;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor backgroundlightGrayColor];
-    [self createNavigationBarWithTitle:@"每日推送" selecotr:@selector(backClickAction)];
+    if ([NSString isStringEmpty:self.titleString]) {
+        self.titleString = @"每日推送";
+    }
+    [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClickAction)];
     _currentSaveDataSource = [NSMutableDictionary dictionary];
     sharImageArray = [NSMutableArray array];
     parameDic = [NSMutableDictionary dictionary];
@@ -137,7 +137,38 @@
     }else {
         [self loadPicData];
     }
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
+    [self.picCollectionView.mj_header beginRefreshing];
+    
 }
+#pragma mrak 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.picCollectionView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
+        _isPullDown = YES;
+        [self.picCollectionView.mj_footer resetNoMoreData];
+        [weakSelf loadPicData];
+    }];
+}
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.picCollectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadPicMoreData];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.picCollectionView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.picCollectionView.mj_footer endRefreshing];
+    }
+}
+
 - (void)dingshishuaxin{
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimeView) userInfo:nil repeats:YES];
 }
@@ -202,7 +233,6 @@
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicCollectionViewCell" bundle:nil]  forCellWithReuseIdentifier:@"picCollectionCell"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicHeaderCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"picHeader"];
     [self.picCollectionView registerNib:[UINib nibWithNibName:@"PicFooterCollectionReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"picFooter"];
-    [MBProgressHUD showLoading:@"正在加载..." ToView:self.view];
     
 }
 - (void)loadPicData {
@@ -217,17 +247,47 @@
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
-            [MBProgressHUD hideHUDForView:self.view];
+            [self endRefresh];
             return ;
         }
-        [MBProgressHUD hideHUDForView:self.view];
-        NSArray *arrPic = responseObject;
+        NSArray *arrPic;
+        if ([responseObject isKindOfClass:[NSDictionary class]] && [responseObject objectForKey:@"results"]) {
+            arrPic = responseObject[@"results"];
+            _nextPageUrlString = responseObject[@"next"];
+        }else {
+            arrPic = responseObject;
+        }
+        [self.dataArr removeAllObjects];
         [self requestData:arrPic];
+        [self endRefresh];
     } WithFail:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view];
         [MBProgressHUD showError:@"获取信息失败"];
+        [self endRefresh];
     } Progress:^(float progress) {
     }];
+}
+- (void)loadPicMoreData {
+    if ([NSString isStringEmpty:_nextPageUrlString]) {
+        [self endRefresh];
+        [self.picCollectionView.mj_footer endRefreshingWithNoMoreData];
+        return ;
+    }
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextPageUrlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        NSArray *arrPic;
+        if ([responseObject isKindOfClass:[NSDictionary class]] && [responseObject objectForKey:@"results"]) {
+            arrPic = responseObject[@"results"];
+            _nextPageUrlString = responseObject[@"next"];
+        }else {
+        }
+        [self requestData:arrPic];
+        [self endRefresh];
+    } WithFail:^(NSError *error) {
+        [self endRefresh];
+    } Progress:^(float progress) {
+        
+    }];
+    
 }
 - (void)loaderweimaData {
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v2/qrcode/get_wxpub_qrcode");
@@ -287,6 +347,9 @@
         return;
     }
     //    qrCodeUrlString = @"http://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQH_7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL01rTXVsUHJsT09aQklkd1R1MjFfAAIEeybmVwMEAI0nAA==";
+    
+    
+    
     for (NSDictionary *oneTurns in data) {
         NSMutableArray *muArray = [NSMutableArray array];
         NSArray *picArr = oneTurns[@"pic_arry"];
@@ -570,7 +633,7 @@
             UIImageWriteToSavedPhotosAlbum([UIImage imagewithURLString:picImageUrl], self, @selector(savedPhotoImage:didFinishSavingWithError:contextInfo:), nil);
         });
     }else {
-        [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD hideHUD];
     }
 }
 - (void)alertMessage {

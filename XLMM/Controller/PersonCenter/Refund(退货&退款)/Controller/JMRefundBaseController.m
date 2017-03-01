@@ -10,10 +10,10 @@
 #import "JMRefundBaseCell.h"
 #import "JMRefundModel.h"
 #import "RefundDetailsViewController.h"
-#import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
 #import "JMRefundDetailController.h"
 
-@interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource>
+@interface JMRefundBaseController ()<UITableViewDelegate,UITableViewDataSource,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -29,6 +29,7 @@
  */
 @property (nonatomic, assign) BOOL isLoadMore;
 @property (nonatomic, assign) BOOL isPopToRootView;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 @end
 
@@ -98,7 +99,7 @@
         [self.dataSource removeAllObjects];
         [self fetchedRefundData:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -115,7 +116,7 @@
         if (!responseObject)return;
         [self fetchedRefundData:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -126,7 +127,7 @@
     _nextPage = data[@"next"];
     NSArray *results = data[@"results"];
     if (results.count == 0 ) {
-        [self emptyView];
+//        [self emptyView];
         return;
     }
     for (NSDictionary *refund in results) {
@@ -160,18 +161,31 @@
     [self.navigationController pushViewController:refundDetailVC animated:YES];
     
 }
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 120) Title:@"亲,您暂时还没有退货(款)订单哦～快去看看吧!" DescTitle:@"再不抢购,就卖光啦~!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            self.isPopToRootView = YES;
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-        }
-    };
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 120) Title:@"亲,您暂时还没有退货(款)订单哦～快去看看吧!" DescTitle:@"再不抢购,就卖光啦~!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            self.isPopToRootView = YES;
+//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//        }
+//    };
+//}
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"亲,您暂时还没有退货(款)订单哦～" DescTitle:@"再不抢购,就卖光啦~!" ButtonTitle:@"快去逛逛" Image:@"dingdanemptyimage" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
 -(void)gotoLandingPage{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

@@ -135,6 +135,7 @@
     };
 }
 
+
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
     JMRegisterJS *regis = [[JMRegisterJS alloc] init];

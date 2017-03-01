@@ -173,7 +173,10 @@
     
     [self updateSegmentsRects];
 }
-
+- (void)setSectionDescTitles:(NSArray *)sectionDescTitles {
+    _sectionDescTitles = sectionDescTitles;
+    
+}
 - (void)setSectionTitles:(NSArray *)sectionTitles {
     _sectionTitles = sectionTitles;
     [self setNeedsDisplay]; // 添加这一行后,会重新执行 drawRect 方法
@@ -232,7 +235,32 @@
     }
     return CGRectIntegral((CGRect){CGPointZero, size}).size;
 }
-
+- (NSAttributedString *)attributedDescTitleAtIndex:(NSUInteger)index {
+    id title = self.sectionDescTitles[index];
+    BOOL selected = (index == self.selectedSegmentIndex) ? YES : NO;
+    if ([title isKindOfClass:[NSAttributedString class]]) {
+        return (NSAttributedString *)title;
+    } else if (!self.titleFormatter) {
+        
+        NSDictionary *titleAttrs = selected ? [self resultingSelectedDescTitleTextAttributes] : [self resultingDescTitleTextAttributes];
+        
+        // the color should be cast to CGColor in order to avoid invalid context on iOS7
+        UIColor *titleColor = titleAttrs[NSForegroundColorAttributeName];
+        
+        if (titleColor) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:titleAttrs];
+            
+            dict[NSForegroundColorAttributeName] = (id)titleColor.CGColor;
+            
+            titleAttrs = [NSDictionary dictionaryWithDictionary:dict];
+        }
+        
+        return [[NSAttributedString alloc] initWithString:(NSString *)title attributes:titleAttrs];
+    } else {
+        return self.titleFormatter(self, title, index, selected);
+    }
+    
+}
 - (NSAttributedString *)attributedTitleAtIndex:(NSUInteger)index {
     id title = self.sectionTitles[index];
     BOOL selected = (index == self.selectedSegmentIndex) ? YES : NO;
@@ -277,72 +305,151 @@
     
     if (self.type == HMSegmentedControlTypeText) {
         [self.sectionTitles enumerateObjectsUsingBlock:^(id titleString, NSUInteger idx, BOOL *stop) {
-
-            CGFloat stringWidth = 0;
-            CGFloat stringHeight = 0;
-            CGSize size = [self measureTitleAtIndex:idx];
-            stringWidth = size.width + 5;   // iOS 10.0 字体宽度改变.
-            stringHeight = size.height;
-            CGRect rectDiv, fullRect, bottomLineRect;
-            
-            // Text inside the CATextLayer will appear blurry unless the rect values are rounded
-            BOOL locationUp = (self.selectionIndicatorLocation == HMSegmentedControlSelectionIndicatorLocationUp);
-            BOOL selectionStyleNotBox = (self.selectionStyle != HMSegmentedControlSelectionStyleBox);
-
-            CGFloat y = roundf((CGRectGetHeight(self.frame) - selectionStyleNotBox * self.selectionIndicatorHeight) / 2 - stringHeight / 2 + self.selectionIndicatorHeight * locationUp);
-            CGRect rect;
-//            CGRect rect1; // 新添加
-            if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleFixed) {
-                rect = CGRectMake((self.segmentWidth * idx) + (self.segmentWidth - stringWidth) / 2, y, stringWidth, stringHeight);
-                rectDiv = CGRectMake((self.segmentWidth * idx) - (self.verticalDividerWidth / 2), self.frame.size.height * 0.2 , self.verticalDividerWidth, self.frame.size.height * 0.6);//y == self.selectionIndicatorHeight * 2  h == self.frame.size.height - (self.selectionIndicatorHeight * 4)
-                fullRect = CGRectMake(self.segmentWidth * idx, 0, self.segmentWidth, oldRect.size.height);
-                bottomLineRect = CGRectMake(0, self.frame.size.height - 0.5, SCREENWIDTH, 0.5);
-            } else if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {
-                // When we are drawing dynamic widths, we need to loop the widths array to calculate the xOffset
-                CGFloat xOffset = 0;
-                NSInteger i = 0;
-                for (NSNumber *width in self.segmentWidthsArray) {
-                    if (idx == i)
-                        break;
-                    xOffset = xOffset + [width floatValue];
-                    i++;
+            if(self.sectionDescTitles.count > 0) {
+                
+                CGFloat stringWidth = 0;
+                CGFloat stringHeight = 0;
+                CGSize size = [self measureTitleAtIndex:idx];
+                stringWidth = size.width;
+                stringHeight = size.height;
+                CGRect rectDiv, fullRect;
+                
+                // Text inside the CATextLayer will appear blurry unless the rect values are rounded
+                BOOL locationUp = (self.selectionIndicatorLocation == HMSegmentedControlSelectionIndicatorLocationUp);
+                BOOL selectionStyleNotBox = (self.selectionStyle != HMSegmentedControlSelectionStyleBox);
+                
+                CGFloat y = roundf((CGRectGetHeight(self.frame) - selectionStyleNotBox * self.selectionIndicatorHeight) / 2 - stringHeight / 2 + self.selectionIndicatorHeight * locationUp);
+                CGRect rect;
+                CGRect rectDesc;
+                if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleFixed) {
+                    rect = CGRectMake((self.segmentWidth * idx) + (self.segmentWidth - stringWidth) / 2, y, stringWidth, stringHeight);
+                    rectDiv = CGRectMake((self.segmentWidth * idx) - (self.verticalDividerWidth / 2), self.selectionIndicatorHeight * 2, self.verticalDividerWidth, self.frame.size.height - (self.selectionIndicatorHeight * 4));
+                    fullRect = CGRectMake(self.segmentWidth * idx, 0, self.segmentWidth, oldRect.size.height);
+                } else if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {
+                    // When we are drawing dynamic widths, we need to loop the widths array to calculate the xOffset
+                    CGFloat xOffset = 0;
+                    NSInteger i = 0;
+                    for (NSNumber *width in self.segmentWidthsArray) {
+                        if (idx == i)
+                            break;
+                        xOffset = xOffset + [width floatValue];
+                        i++;
+                    }
+                    
+                    CGFloat widthForIndex = [[self.segmentWidthsArray objectAtIndex:idx] floatValue];
+                    rect = CGRectMake(xOffset, y, widthForIndex, stringHeight);
+                    fullRect = CGRectMake(self.segmentWidth * idx, 0, widthForIndex, oldRect.size.height);
+                    rectDiv = CGRectMake(xOffset - (self.verticalDividerWidth / 2), self.selectionIndicatorHeight * 2, self.verticalDividerWidth, self.frame.size.height - (self.selectionIndicatorHeight * 4));
                 }
                 
-                CGFloat widthForIndex = [[self.segmentWidthsArray objectAtIndex:idx] floatValue];
-                rect = CGRectMake(xOffset, y, widthForIndex, stringHeight);
-                fullRect = CGRectMake(self.segmentWidth * idx, 0, widthForIndex, oldRect.size.height);
-                rectDiv = CGRectMake(xOffset - (self.verticalDividerWidth / 2), self.selectionIndicatorHeight * 2, self.verticalDividerWidth, self.frame.size.height - (self.selectionIndicatorHeight * 4));
-                bottomLineRect = CGRectMake(0, self.frame.size.height - 0.5, SCREENWIDTH, 0.5);
+                // Fix rect position/size to avoid blurry labels
+                rect = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y - 5), ceilf(rect.size.width), ceilf(rect.size.height));
+                rectDesc = CGRectMake(ceilf(rect.origin.x) - 10, ceilf(rect.origin.y - 5 + stringHeight + 5), ceilf(rect.size.width) + 20, ceilf(rect.size.height));
+                
+                CATextLayer *titleLayer = [CATextLayer layer];
+                titleLayer.frame = rect;
+                titleLayer.alignmentMode = kCAAlignmentCenter;
+                titleLayer.truncationMode = kCATruncationEnd;
+                titleLayer.font = nil; // 解决iOS10.0下文字显示不出来问题
+//                if ([UIDevice currentDevice].systemVersion.floatValue < 10.0 ) {
+                    //                titleLayer.truncationMode = kCATruncationEnd;
+//                }
+                titleLayer.string = [self attributedTitleAtIndex:idx];
+                titleLayer.contentsScale = [[UIScreen mainScreen] scale];
+                
+                
+                CATextLayer *titleDescLayer = [CATextLayer layer];
+                titleDescLayer.frame = rectDesc;
+                titleDescLayer.alignmentMode = kCAAlignmentCenter;
+                titleDescLayer.truncationMode = kCATruncationEnd;
+                titleDescLayer.font = nil; // 解决iOS10.0下文字显示不出来问题
+                titleDescLayer.contentsScale = [[UIScreen mainScreen] scale];
+                titleDescLayer.string = [self attributedDescTitleAtIndex:idx];
+                
+                
+                [self.scrollView.layer addSublayer:titleLayer];
+                [self.scrollView.layer addSublayer:titleDescLayer];
+                
+                // Vertical Divider
+                if (self.isVerticalDividerEnabled && idx > 0) {
+                    CALayer *verticalDividerLayer = [CALayer layer];
+                    verticalDividerLayer.frame = rectDiv;
+                    verticalDividerLayer.backgroundColor = self.verticalDividerColor.CGColor;
+                    
+                    [self.scrollView.layer addSublayer:verticalDividerLayer];
+                }
+                
+                [self addBackgroundAndBorderLayerWithRect:fullRect];
+                
+            }else {
+                CGFloat stringWidth = 0;
+                CGFloat stringHeight = 0;
+                CGSize size = [self measureTitleAtIndex:idx];
+                stringWidth = size.width + 5;   // iOS 10.0 字体宽度改变.
+                stringHeight = size.height;
+                CGRect rectDiv, fullRect, bottomLineRect;
+                
+                // Text inside the CATextLayer will appear blurry unless the rect values are rounded
+                BOOL locationUp = (self.selectionIndicatorLocation == HMSegmentedControlSelectionIndicatorLocationUp);
+                BOOL selectionStyleNotBox = (self.selectionStyle != HMSegmentedControlSelectionStyleBox);
+                
+                CGFloat y = roundf((CGRectGetHeight(self.frame) - selectionStyleNotBox * self.selectionIndicatorHeight) / 2 - stringHeight / 2 + self.selectionIndicatorHeight * locationUp);
+                CGRect rect;
+                //            CGRect rect1; // 新添加
+                if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleFixed) {
+                    rect = CGRectMake((self.segmentWidth * idx) + (self.segmentWidth - stringWidth) / 2, y, stringWidth, stringHeight);
+                    rectDiv = CGRectMake((self.segmentWidth * idx) - (self.verticalDividerWidth / 2), self.frame.size.height * 0.2 , self.verticalDividerWidth, self.frame.size.height * 0.6);//y == self.selectionIndicatorHeight * 2  h == self.frame.size.height - (self.selectionIndicatorHeight * 4)
+                    fullRect = CGRectMake(self.segmentWidth * idx, 0, self.segmentWidth, oldRect.size.height);
+                    bottomLineRect = CGRectMake(0, self.frame.size.height - 0.5, SCREENWIDTH, 0.5);
+                } else if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {
+                    // When we are drawing dynamic widths, we need to loop the widths array to calculate the xOffset
+                    CGFloat xOffset = 0;
+                    NSInteger i = 0;
+                    for (NSNumber *width in self.segmentWidthsArray) {
+                        if (idx == i)
+                            break;
+                        xOffset = xOffset + [width floatValue];
+                        i++;
+                    }
+                    
+                    CGFloat widthForIndex = [[self.segmentWidthsArray objectAtIndex:idx] floatValue];
+                    rect = CGRectMake(xOffset, y, widthForIndex, stringHeight);
+                    fullRect = CGRectMake(self.segmentWidth * idx, 0, widthForIndex, oldRect.size.height);
+                    rectDiv = CGRectMake(xOffset - (self.verticalDividerWidth / 2), self.selectionIndicatorHeight * 2, self.verticalDividerWidth, self.frame.size.height - (self.selectionIndicatorHeight * 4));
+                    bottomLineRect = CGRectMake(0, self.frame.size.height - 0.5, SCREENWIDTH, 0.5);
+                }
+                
+                // Fix rect position/size to avoid blurry labels
+                rect = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y), ceilf(rect.size.width), ceilf(rect.size.height));
+                //            rect1 = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y) + 3, ceilf(rect.size.width), ceilf(rect.size.height));
+                
+                CATextLayer *titleLayer = [CATextLayer layer];
+                titleLayer.frame = rect;
+                titleLayer.alignmentMode = kCAAlignmentCenter;
+                titleLayer.truncationMode = kCATruncationEnd;
+                titleLayer.font = nil; // 解决iOS10.0下文字显示不出来问题
+                titleLayer.string = [self attributedTitleAtIndex:idx];
+                titleLayer.contentsScale = [[UIScreen mainScreen] scale];
+                
+                [self.scrollView.layer addSublayer:titleLayer];
+                
+                // Vertical Divider
+                if (self.isVerticalDividerEnabled && idx > 0) {
+                    CALayer *verticalDividerLayer = [CALayer layer];
+                    verticalDividerLayer.frame = rectDiv;
+                    verticalDividerLayer.backgroundColor = self.verticalDividerColor.CGColor;
+                    
+                    CALayer *bottomLayer = [CALayer layer];
+                    bottomLayer.frame = bottomLineRect;
+                    bottomLayer.backgroundColor = self.verticalBottomLineColor.CGColor;
+                    
+                    [self.scrollView.layer addSublayer:verticalDividerLayer];
+                    [self.scrollView.layer addSublayer:bottomLayer];
+                }
+                
+                [self addBackgroundAndBorderLayerWithRect:fullRect];
             }
             
-            // Fix rect position/size to avoid blurry labels
-            rect = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y), ceilf(rect.size.width), ceilf(rect.size.height));
-//            rect1 = CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y) + 3, ceilf(rect.size.width), ceilf(rect.size.height));
-            
-            CATextLayer *titleLayer = [CATextLayer layer];
-            titleLayer.frame = rect;
-            titleLayer.alignmentMode = kCAAlignmentCenter;
-            titleLayer.truncationMode = kCATruncationEnd;
-            titleLayer.string = [self attributedTitleAtIndex:idx];
-            titleLayer.contentsScale = [[UIScreen mainScreen] scale];
-            
-            [self.scrollView.layer addSublayer:titleLayer];
-            
-            // Vertical Divider
-            if (self.isVerticalDividerEnabled && idx > 0) {
-                CALayer *verticalDividerLayer = [CALayer layer];
-                verticalDividerLayer.frame = rectDiv;
-                verticalDividerLayer.backgroundColor = self.verticalDividerColor.CGColor;
-                
-                CALayer *bottomLayer = [CALayer layer];
-                bottomLayer.frame = bottomLineRect;
-                bottomLayer.backgroundColor = self.verticalBottomLineColor.CGColor;
-                
-                [self.scrollView.layer addSublayer:verticalDividerLayer];
-                [self.scrollView.layer addSublayer:bottomLayer];
-            }
-        
-            [self addBackgroundAndBorderLayerWithRect:fullRect];
         }];
     } else if (self.type == HMSegmentedControlTypeImages) {
         [self.sectionImages enumerateObjectsUsingBlock:^(id iconImage, NSUInteger idx, BOOL *stop) {
@@ -425,6 +532,7 @@
             CATextLayer *titleLayer = [CATextLayer layer];
             titleLayer.frame = textRect;
             titleLayer.alignmentMode = kCAAlignmentCenter;
+            titleLayer.font = nil; // 解决iOS10.0下文字显示不出来问题
             titleLayer.string = [self attributedTitleAtIndex:idx];
             titleLayer.truncationMode = kCATruncationEnd;
 			
@@ -869,7 +977,7 @@
 
 - (NSDictionary *)resultingTitleTextAttributes {
     NSDictionary *defaults = @{
-        NSFontAttributeName : [UIFont systemFontOfSize:19.0f],
+        NSFontAttributeName : [UIFont systemFontOfSize:16.0f],
         NSForegroundColorAttributeName : [UIColor blackColor],
     };
     
@@ -890,6 +998,36 @@
     }
     
     return [resultingAttrs copy];
+}
+- (NSDictionary *)resultingDescTitleTextAttributes {
+    NSDictionary *defaults = @{
+                               NSFontAttributeName : [UIFont systemFontOfSize:11.0f],
+                               NSForegroundColorAttributeName : [UIColor blackColor],
+                               };
+    
+    //    NSMutableDictionary *resultingAttrs = [NSMutableDictionary dictionaryWithDictionary:defaults];
+    //
+    //    if (self.titleTextAttributes) {
+    //        [resultingAttrs addEntriesFromDictionary:self.titleTextAttributes];
+    //    }
+    
+    return [defaults copy];
+}
+
+- (NSDictionary *)resultingSelectedDescTitleTextAttributes {
+    NSDictionary *defaults = @{
+                               NSFontAttributeName : [UIFont systemFontOfSize:12.0f],
+                               NSForegroundColorAttributeName : [UIColor orangeColor],
+                               };
+    
+    
+    //    NSMutableDictionary *resultingAttrs = [NSMutableDictionary dictionaryWithDictionary:[self resultingTitleTextAttributes]];
+    //
+    //    if (self.selectedTitleTextAttributes) {
+    //        [resultingAttrs addEntriesFromDictionary:self.selectedTitleTextAttributes];
+    //    }
+    
+    return [defaults copy];
 }
 
 @end

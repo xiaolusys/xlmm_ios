@@ -90,6 +90,7 @@
     self.baseScrollView.showsVerticalScrollIndicator = NO;
     self.baseScrollView.pagingEnabled = YES;
     self.baseScrollView.delegate = self;
+    self.baseScrollView.scrollEnabled = NO;
     self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * 2, self.baseScrollView.frame.size.height);
     [self.view addSubview:self.baseScrollView];
     

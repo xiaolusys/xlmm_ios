@@ -51,7 +51,7 @@
     self.contentCollecionView.ContentCollectionIndexPath = indexPath;
     [self.contentCollecionView setContentOffset:self.contentCollecionView.contentOffset animated:NO];
     
-    [self.contentCollecionView reloadData];
+    [self.contentCollecionView cs_reloadData];
     
     
 }
