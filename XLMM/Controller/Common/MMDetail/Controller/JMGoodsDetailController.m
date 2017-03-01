@@ -111,6 +111,7 @@
 
 @implementation JMGoodsDetailController
 
+#pragma mark -- 懒加载 --
 - (JMShareModel *)shareModel {
     if (!_shareModel) {
         _shareModel = [[JMShareModel alloc] init];
@@ -179,6 +180,7 @@
     return _downViewLabel;
 }
 
+#pragma mark --- 视图生命周期 ---
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
@@ -207,7 +209,6 @@
     [super viewDidLoad];
     [MBProgressHUD showLoading:@""];
     self.view.backgroundColor = [UIColor countLabelColor];
-    //    self.navigationController.navigationBar.alpha = 0.0;
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     _paramer = [NSMutableDictionary dictionary];
@@ -224,6 +225,7 @@
     
 }
 
+#pragma mark ---- 创建UI ----
 - (void)createContentView {
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
@@ -269,6 +271,8 @@
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
 }
+
+#pragma mark ---- 网络请求,数据处理
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
@@ -456,7 +460,7 @@
         };
     }
 }
-#pragma mark --- 点击隐藏弹出视图
+#pragma mark --- UITableView 代理 ----
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
@@ -494,7 +498,7 @@
                 NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,self.goodsID];
                 //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
                 PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-                pushVC.isPushingDays = YES;
+//                pushVC.isPushingDays = YES;
                 pushVC.pushungDaysURL = urlString;
                 pushVC.titleString = @"文案精选";
                 [self.navigationController pushViewController:pushVC animated:YES];
@@ -544,6 +548,7 @@
         return nil;
     }
 }
+#pragma mark ---- UIScrollView 代理 ----
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offset = scrollView.contentOffset.y;
     if (scrollView == self.tableView) {
@@ -602,6 +607,8 @@
         }
     }
 }
+
+#pragma mark ---- 自定义弹出视图 (显示/隐藏) ----
 - (void)showPopView {
     isTop = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.maskView];

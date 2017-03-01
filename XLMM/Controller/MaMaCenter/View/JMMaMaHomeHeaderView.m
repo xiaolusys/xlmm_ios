@@ -35,7 +35,6 @@ static NSString *currentTurnsNumberString;
     UILabel *_jinrifangkeLabel;
     UILabel *_jinridingdanLabel;
     UILabel *_jinrishouyiLabel;
-    UILabel *_wodetixianLabel;
     UILabel *_leijishouyiLabel;
     UILabel *_fangkejiluLabel;
     UILabel *_dingdanjuluLabel;
@@ -165,7 +164,7 @@ static NSString *currentTurnsNumberString;
     self.currentTurnsNum = [NSString stringWithFormat:@"%@",currentTurnsNumberString];
     [self currentTurnsNum:currentTurnsNumberString];
     
-    _wodetixianLabel.text = [NSString stringWithFormat:@"%.2f元",[self.centerModel.cash_value floatValue]];                   // 我的提现
+//    _wodetixianLabel.text = [NSString stringWithFormat:@"%.2f元",[self.centerModel.cash_value floatValue]];                   // 我的提现
     _leijishouyiLabel.text = [NSString stringWithFormat:@"%.2f元",[self.centerModel.carry_value floatValue]];                  // 累计收益
     _fangkejiluLabel.text = @"查看访客记录";                                                                                   // 访客记录
     _dingdanjuluLabel.text = [NSString stringWithFormat:@"%@个",self.centerModel.order_num];                                   // 订单记录
@@ -711,11 +710,11 @@ static NSString *currentTurnsNumberString;
     }];
     
     
-    NSArray *imageArr3 = @[@"wodetixian",@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"wodefensi"]; // ,@"gerenpaiming",@"tuanduipaiming"
-    NSArray *titleArr3 = @[@"我的提现",@"累计收益",@"访客记录",@"订单记录",@"我的粉丝"];
-    NSArray *titleDescArr3 = @[@"88.88元",@"88.88元",@"查看访客记录",@"88个",@"88人"];
+    NSArray *imageArr3 = @[@"leijishouyi",@"fangkejilu",@"dingdanjilu",@"wodefensi"]; // ,@"gerenpaiming",@"tuanduipaiming"
+    NSArray *titleArr3 = @[@"累计收益",@"访客记录",@"订单记录",@"我的粉丝"];
+    NSArray *titleDescArr3 = @[@"88.88元",@"查看访客记录",@"88个",@"88人"];
     
-    UIView *selectBoxView2 = [[UIView alloc] initWithFrame:CGRectMake(0, selectBoxView.mj_max_Y + 15, SCREENWIDTH, 210)];
+    UIView *selectBoxView2 = [[UIView alloc] initWithFrame:CGRectMake(0, selectBoxView.mj_max_Y + 15, SCREENWIDTH, 130)];
     //    selectBoxView.backgroundColor = [UIColor countLabelColor];
     [wodedianpuView addSubview:selectBoxView2];
     
@@ -780,11 +779,10 @@ static NSString *currentTurnsNumberString;
     _jinrifangkeLabel = (UILabel *)[self viewWithTag:207];
     _jinridingdanLabel = (UILabel *)[self viewWithTag:208];
     _jinrishouyiLabel = (UILabel *)[self viewWithTag:209];
-    _wodetixianLabel = (UILabel *)[self viewWithTag:210];
-    _leijishouyiLabel = (UILabel *)[self viewWithTag:211];
-    _fangkejiluLabel = (UILabel *)[self viewWithTag:212];
-    _dingdanjuluLabel = (UILabel *)[self viewWithTag:213];
-    _wodefensiLabel = (UILabel *)[self viewWithTag:214];
+    _leijishouyiLabel = (UILabel *)[self viewWithTag:210];
+    _fangkejiluLabel = (UILabel *)[self viewWithTag:211];
+    _dingdanjuluLabel = (UILabel *)[self viewWithTag:212];
+    _wodefensiLabel = (UILabel *)[self viewWithTag:213];
     _lingqianLabel.text = @"0.00";
     _xiaolubiLabel.text = @"0";
     _youhuiquanLabel.text = @"0";

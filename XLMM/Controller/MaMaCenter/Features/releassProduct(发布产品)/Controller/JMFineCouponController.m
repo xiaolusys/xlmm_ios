@@ -156,7 +156,7 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic/get_nine_pic_by_modelid");
     urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
     PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-    pushVC.isPushingDays = YES;
+//    pushVC.isPushingDays = YES;
     pushVC.pushungDaysURL = urlString;
     [self.navigationController pushViewController:pushVC animated:YES];
     

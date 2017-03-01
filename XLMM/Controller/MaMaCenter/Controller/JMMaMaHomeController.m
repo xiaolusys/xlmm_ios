@@ -322,7 +322,7 @@
     [self.view addSubview:self.tableView];
     
     // 在这里创建headerView
-    self.homeHeaderView = [[JMMaMaHomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 680 + SCREENWIDTH / 4)];
+    self.homeHeaderView = [[JMMaMaHomeHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 600 + SCREENWIDTH / 4)];
     self.homeHeaderView.delegate = self;
     self.tableView.tableHeaderView = self.homeHeaderView;
     [self headerClick];
@@ -407,11 +407,10 @@
  *  112 --> 每日推送
  *  113 --> 选品佣金
  *  114 --> 邀请开店
- *  115 --> 我的提现
- *  116 --> 累计收益
- *  117 --> 访客记录
- *  118 --> 订单记录
- *  119 --> 我的粉丝
+ *  115 --> 累计收益
+ *  116 --> 访客记录
+ *  117 --> 订单记录
+ *  118 --> 我的粉丝
  */
 - (void)composeHomeHeader:(JMMaMaHomeHeaderView *)headerView ButtonActionClick:(UIButton *)button {
     NSInteger index = button.tag;
@@ -532,7 +531,7 @@
             break;
         case 112:
         {
-            JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
+            PublishNewPdtViewController *pushingVC = [[PublishNewPdtViewController alloc] init];
             [self.navigationController pushViewController:pushingVC animated:YES];
         }
             break;
@@ -557,34 +556,27 @@
             break;
         case 115:
         {
-            JMChoiseWithDrawController *choiseVC = [[JMChoiseWithDrawController alloc] init];
-            choiseVC.myBlance = _carryValue;
-            [self.navigationController pushViewController:choiseVC animated:YES];
-        }
-            break;
-        case 116:
-        {
             MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
             carry.earningsRecord = _earningsRecord;
             carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
         }
             break;
-        case 117:
+        case 116:
         {
             TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
             today.visitorDate = kVisitorDay;
             [self.navigationController pushViewController:today animated:YES];
         }
             break;
-        case 118:
+        case 117:
         {
             MaMaOrderListViewController *order = [[MaMaOrderListViewController alloc] init];
             order.orderRecord = _orderRecord;
             [self.navigationController pushViewController:order animated:YES];
         }
             break;
-        case 119:
+        case 118:
         {
             JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
             mamaCenterFansVC.fansNum = _fansNum;
