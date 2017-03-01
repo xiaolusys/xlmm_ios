@@ -44,9 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"粉丝列表";
-    
-    [self createNavigationBarWithTitle:@"粉丝列表" selecotr:@selector(backBtnClicked:)];
+    [self createNavigationBarWithTitle:@"我的粉丝" selecotr:@selector(backBtnClicked:)];
     
     [self createTableView];
     [self createButton];
@@ -57,7 +55,7 @@
     
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 35) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -230,7 +228,7 @@
     }
 }
 #pragma mark -- 添加滚动的协议方法
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
     CGFloat currentOffset = offset.y;
     if (currentOffset > SCREENHEIGHT) {
@@ -239,6 +237,7 @@
         self.topButton.hidden = YES;
     }
 }
+
 
 @end
 

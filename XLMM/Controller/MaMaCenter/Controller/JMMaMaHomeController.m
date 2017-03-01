@@ -15,7 +15,6 @@
 #import "JMMaMaCenterModel.h"
 #import "Udesk.h"
 #import "JMStoreManager.h"
-#import "JMHomeRootController.h"
 #import "JMRewardsController.h"
 #import "JMPushingDaysController.h"
 #import "ProductSelectionListViewController.h"
@@ -28,19 +27,18 @@
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaMaHuoyueduViewController.h"
-#import "JMMaMaCenterFansController.h"
 #import "JMChoiseWithDrawController.h"
 #import "JMLogInViewController.h"
 #import "JMSettingController.h"
 #import "Account1ViewController.h"
 #import "WebViewController.h"
-#import "JMStoreManager.h"
-#import "JMPersonalPageLayoutCell.h"
 #import "JMMineIntegralController.h"
 #import "JMCouponController.h"
-#import "PersonOrderViewController.h"
 #import "JMRefundBaseController.h"
 #import "PublishNewPdtViewController.h"
+#import "JMMaMaFansController.h"
+#import "JMOrderListController.h"
+
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -458,8 +456,8 @@
             break;
         case 104:
             if (isLogin) {
-                PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
-                order.index = 101;
+                JMOrderListController *order = [[JMOrderListController alloc] init];
+                order.currentIndex = 1;
                 order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
@@ -469,8 +467,8 @@
             break;
         case 105:
             if (isLogin) {
-                PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
-                order.index = 102;
+                JMOrderListController *order = [[JMOrderListController alloc] init];
+                order.currentIndex = 2;
                 order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
@@ -489,8 +487,8 @@
             break;
         case 107:
             if (isLogin) {
-                PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
-                order.index = 100;
+                JMOrderListController *order = [[JMOrderListController alloc] init];
+                order.currentIndex = 0;
                 order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
@@ -578,10 +576,8 @@
             break;
         case 118:
         {
-            JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
-            mamaCenterFansVC.fansNum = _fansNum;
-            mamaCenterFansVC.fansUrlStr = _fansWebUrl;
-            mamaCenterFansVC.index = 100;
+            JMMaMaFansController *mamaCenterFansVC = [[JMMaMaFansController alloc] init];
+            mamaCenterFansVC.aboutFansUrl = _fansWebUrl;
             [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
         }
             break;
@@ -634,8 +630,6 @@
     }
 }
 - (void)backClick:(UIButton *)button{
-//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//    JMKeyWindow.rootViewController = tabBarVC;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

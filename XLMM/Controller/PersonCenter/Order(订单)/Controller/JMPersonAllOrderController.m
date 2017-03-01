@@ -73,9 +73,8 @@
     [self.tableView.mj_header beginRefreshing];
  
 }
-
-- (NSString *)urlStr {
-    return kQuanbuDingdan_URL;
+- (void)refresh {
+    [self.tableView.mj_header beginRefreshing];
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -104,8 +103,8 @@
     }
 }
 - (void)loadDataSource {
-    NSString *string = [self urlStr];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+//    NSString *string = [self urlStr];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self.dataSource removeAllObjects];
         [self.sectionDataSource removeAllObjects];
@@ -163,7 +162,7 @@
     
 }
 - (void)createTabelView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 99) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) style:UITableViewStylePlain];
     self.tableView = tableView;
     [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;

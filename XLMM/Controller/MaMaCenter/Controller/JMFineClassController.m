@@ -17,7 +17,7 @@
 #import "JumpUtils.h"
 #import "IosJsBridge.h"
 #import "JMPayShareController.h"
-#import "PersonOrderViewController.h"
+#import "JMOrderListController.h"
 #import "JMRegisterJS.h"
 #import "JMEmptyView.h"
 #import "JMRootTabBarController.h"
@@ -172,8 +172,8 @@
 - (void)popview {
     NSLog(@"支付取消/支付失败");
     [MobClick event:@"fineCoupon_buyCancel_buyFail"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 1;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 - (void)couponTid:(NSNotification *)sender {
@@ -183,8 +183,6 @@
 
 
 - (void)backClick:(UIButton *)button{
-//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//    JMKeyWindow.rootViewController = tabBarVC;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

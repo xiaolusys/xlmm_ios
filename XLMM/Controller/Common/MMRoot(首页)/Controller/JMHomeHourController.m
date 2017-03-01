@@ -14,6 +14,7 @@
 #import "PublishNewPdtViewController.h"
 #import "JMShareModel.h"
 #import "JMShareViewController.h"
+#import "JMLogInViewController.h"
 
 
 @interface JMHomeHourController () <UITableViewDelegate,UITableViewDataSource,JMHomeHourCellDelegate> {
@@ -120,13 +121,19 @@
 #pragma mark JMHomeHourCellDelegate 点击事件
 - (void)composeHourCell:(JMHomeHourCell *)cell Model:(JMHomeHourModel *)model ButtonClick:(UIButton *)button {
     if (button.tag == 100) {
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,model.model_id];
-        //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
-        PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-//        pushVC.isPushingDays = YES;
-        pushVC.pushungDaysURL = urlString;
-        pushVC.titleString = @"文案精选";
-        [self.navigationController pushViewController:pushVC animated:YES];
+        if ([[JMGlobal global] userVerificationLogin]) {
+            NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,model.model_id];
+            //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
+            PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
+            //        pushVC.isPushingDays = YES;
+            pushVC.pushungDaysURL = urlString;
+            pushVC.titleString = @"文案精选";
+            [self.navigationController pushViewController:pushVC animated:YES];
+        }else {
+            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:enterVC animated:YES];
+        }
+        
     }else {
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,model.model_id];
         [self loadShareData:urlString];

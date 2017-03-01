@@ -20,7 +20,7 @@
 #import "UIView+RGSize.h"
 #import "WXApi.h"
 //#import "Pingpp.h"
-#import "PersonOrderViewController.h"
+#import "JMOrderListController.h"
 #import "JMPayShareController.h"
 #import "JMSegmentController.h"
 #import "JMCouponModel.h"
@@ -920,8 +920,8 @@ static BOOL isAgreeTerms = YES;
         [self backClick];
     }else if (alertView.tag == 102) {
         [MobClick event:@"buy_cancel"];
-        PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-        orderVC.index = 101;
+        JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+        orderVC.currentIndex = 1;
         [self.navigationController pushViewController:orderVC animated:YES];
     }else {}
 }
@@ -965,8 +965,8 @@ static BOOL isAgreeTerms = YES;
 - (void)popview{
     [MBProgressHUD hideHUD];
     [MobClick event:@"buy_cancel"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 1;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 - (void)paySuccessful{

@@ -286,8 +286,12 @@ static BOOL isNetPrompt;
     NSLog(@"结束时间距离当前时间的秒数: %lld 秒",(long long int)time);
     return time;
 }
-
-
+- (BOOL)userVerificationXLMM {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+}
+- (BOOL)userVerificationLogin {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+}
 
 - (BOOL)validateIdentityCard:(NSString *)value {
     // 简单判断 (前17位为数字,后一位可以是数字可以是x)

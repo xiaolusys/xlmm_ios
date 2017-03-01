@@ -10,11 +10,10 @@
 #import "JMOrderPayView.h"
 #import "UIView+RGSize.h"
 #import "WXApi.h"
-//#import "Pingpp.h"
-#import "PersonOrderViewController.h"
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
 #import "JMPayment.h"
+#import "JMOrderListController.h"
 
 
 
@@ -511,8 +510,8 @@
 }
 - (void)popview{
     [MobClick event:@"renewBuy_cancel"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 101;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 /**

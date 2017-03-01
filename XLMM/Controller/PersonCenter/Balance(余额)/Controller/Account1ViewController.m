@@ -175,7 +175,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 80;
+//    self.tableView.rowHeight = 80;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
@@ -301,15 +301,15 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     }
 }
 #pragma mark -- 添加滚动的协议方法
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat currentOffset = offset.y;
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat currentOffset = scrollView.contentOffset.y;
     if (currentOffset > SCREENHEIGHT) {
         self.topButton.hidden = NO;
     }else {
         self.topButton.hidden = YES;
     }
 }
+
 #pragma mark ---UItableView的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
@@ -335,6 +335,10 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     detailVC.isActiveValue = NO;
     detailVC.drawDict = [accountM mj_keyValues];
     [self.navigationController pushViewController:detailVC animated:YES];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AccountModel *accountM = self.dataArr[indexPath.row];
+    return accountM.cellHeight;
 }
 
 - (void)dealloc {

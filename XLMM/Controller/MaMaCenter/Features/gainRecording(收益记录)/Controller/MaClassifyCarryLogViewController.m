@@ -224,7 +224,7 @@ static NSString *cellIdentifier = @"carryLogCell";
 
 - (void)createTableViews {
     for (int i = 0; i < 4; i++) {
-        UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, self.bottomScrollView.frame.size.height - 35) style:UITableViewStyleGrouped];
+        UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(i * SCREENWIDTH, 0, SCREENWIDTH, self.bottomScrollView.frame.size.height - 64) style:UITableViewStyleGrouped];
         table.delegate = self;
         table.dataSource = self;
         table.rowHeight = 80;
@@ -395,7 +395,6 @@ static NSString *cellIdentifier = @"carryLogCell";
         self.topButton.hidden = YES;
     }
 }
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == self.bottomScrollView) {
         NSInteger offX = scrollView.contentOffset.x / SCREENWIDTH;

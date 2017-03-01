@@ -8,11 +8,7 @@
 
 #import "JMRootTabBarController.h"
 #import "RootNavigationController.h"
-#import "CSTabBarController.h"
-#import "JMHomeRootController.h"
 #import "JMCartViewController.h"
-#import "JMStoreupController.h"
-#import "JMPersonalPageController.h"
 #import "JMLogInViewController.h"
 #import "JMFineCounpGoodsController.h"
 
@@ -27,10 +23,7 @@
 
 
 @property (nonatomic, strong) NSMutableArray *vcArray;
-@property (nonatomic, strong) JMHomeRootController *homeVC;
 @property (nonatomic, strong) JMCartViewController *cartVC;
-@property (nonatomic, strong) JMStoreupController *storeVC;
-@property (nonatomic, strong) JMPersonalPageController *personalVC;
 @property (nonatomic, strong) JMFineCounpGoodsController *fineCouponVC;
 
 
@@ -54,6 +47,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -104,11 +100,7 @@
         
     }];
     self.selectedIndex = 0;
-    self.homeVC = self.vcArray[0];
-    self.fineCouponVC = self.vcArray[1];
-    self.cartVC = self.vcArray[2];
 //    self.storeVC = self.vcArray[3];
-    self.personalVC = self.vcArray[3];
     
 //    self.tabBar.barTintColor = [UIColor whiteColor];
 //    [self.tabBar setBackgroundImage:[UIImage new]];
@@ -146,10 +138,8 @@
     else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            self.personalVC.isHideNavigationBar = NO;
             //            [self.personalVC refreshUserInfo];
         }else {
-            self.personalVC.isHideNavigationBar = YES;
         }
     }else { }
 }
