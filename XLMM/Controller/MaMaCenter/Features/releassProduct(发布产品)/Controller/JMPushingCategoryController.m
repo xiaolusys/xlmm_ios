@@ -160,7 +160,7 @@
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
     urlString = [NSString stringWithFormat:@"%@?%@",urlString,[NSString stringWithFormat:@"sale_category=%@",dic[@"id"]]];
     PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-    pushVC.isPushingDays = YES;
+//    pushVC.isPushingDays = YES;
     pushVC.pushungDaysURL = urlString;
     [self.navigationController pushViewController:pushVC animated:YES];
     

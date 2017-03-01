@@ -804,7 +804,7 @@
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
             [MBProgressHUD hideHUD];
-            [self performSelector:@selector(popToview) withObject:nil afterDelay:.3];
+            [self popToview];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }

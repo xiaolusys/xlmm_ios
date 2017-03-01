@@ -123,7 +123,7 @@
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,model.model_id];
         //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
         PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-        pushVC.isPushingDays = YES;
+//        pushVC.isPushingDays = YES;
         pushVC.pushungDaysURL = urlString;
         pushVC.titleString = @"文案精选";
         [self.navigationController pushViewController:pushVC animated:YES];

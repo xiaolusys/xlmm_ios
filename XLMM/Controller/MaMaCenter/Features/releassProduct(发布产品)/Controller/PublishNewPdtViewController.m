@@ -199,13 +199,13 @@
     //    flowLayout.sectionInset = UIEdgeInsetsMake(10, 68, 10, 10);
     flowLayout.minimumInteritemSpacing = 1.5;
     flowLayout.minimumLineSpacing = 1.5;
-    CGFloat layoutHeight;
-    if (self.isPushingDays) {
-        layoutHeight = 0;
-    }else {
-        layoutHeight = 104;
-    }
-    self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - layoutHeight) collectionViewLayout:flowLayout];
+//    CGFloat layoutHeight;
+//    if (self.isPushingDays) {
+//        layoutHeight = 0;
+//    }else {
+//        layoutHeight = 104;
+//    }
+    self.picCollectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) collectionViewLayout:flowLayout];
     NSInteger hour = [self getCurrentTime];
     
     NSString *className = NSStringFromClass([self class]);
@@ -236,16 +236,18 @@
     
 }
 - (void)loadPicData {
-    NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
-    NSString *className = NSStringFromClass([self class]);
-    if ([className isEqual:@"PublishNewPdtViewController"]) {
-        if (self.isPushingDays) {
-            urlString = self.pushungDaysURL;
-        }
-    }else {
-        urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic?ordering=-save_times",Root_URL];
+    if ([NSString isStringEmpty:self.pushungDaysURL]) {
+        self.pushungDaysURL = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic");
     }
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+//    NSString *className = NSStringFromClass([self class]);
+//    if ([className isEqual:@"PublishNewPdtViewController"]) {
+//        if (self.isPushingDays) {
+//            urlString = self.pushungDaysURL;
+//        }
+//    }else {
+//        urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic?ordering=-save_times",Root_URL];
+//    }
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.pushungDaysURL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) {
             [self endRefresh];
             return ;

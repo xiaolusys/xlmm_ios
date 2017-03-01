@@ -127,6 +127,7 @@ static BOOL isAgreeTerms = YES;
 
 @implementation JMPurchaseController
 
+#pragma mark --- 懒加载 ---
 - (NSMutableArray *)purchaseGoodsArr {
     if (!_purchaseGoodsArr) {
         _purchaseGoodsArr = [NSMutableArray array];
@@ -147,10 +148,45 @@ static BOOL isAgreeTerms = YES;
     return _showViewVC;
 }
 
+#pragma mark --- 视图生命周期 ---
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(purchaseViewWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(purchaseViewDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
+    if ([WXApi isWXAppInstalled]) {
+        self.isInstallWX = YES;
+    }else {
+        self.isInstallWX = NO;
+    }
+    [MobClick beginLogPageView:@"purchase"];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidBecomeActiveNotification
+                                                  object:nil];
+    [MobClick endLogPageView:@"purchase"];
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backClick)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     
     self.isCanCoupon = NO;
     self.isUseXLW = NO;
@@ -192,32 +228,7 @@ static BOOL isAgreeTerms = YES;
         self.purchaseFooterView.termsButton.selected = NO;
     }
 }
-- (void)initView {
-    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0;
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePickerView)]];
-    
-    JMOrderPayView *payView = [[JMOrderPayView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 180, SCREENWIDTH, 180)];
-    self.payView = payView;
-    self.payView.delegate = self;
-
-}
-- (void)getCartID {
-    NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
-    if (self.purchaseGoodsArr.count == 0) {
-        return;
-    }
-    for (CartListModel *model in self.purchaseGoodsArr) {
-        NSString *str = [NSString stringWithFormat:@"%ld,",model.cartID];
-        [paramstring appendString:str];
-    }
-    NSRange rang =  {paramstring.length -1, 1};
-    [paramstring deleteCharactersInRange:rang];
-    self.paramstring = paramstring;
-    _cartIDs = [paramstring copy];
-}
-#pragma mark 订单支付网络请求
+#pragma mark 网络请求 订单支付信息, 地址请求. 数据处理
 - (void)loadDataSource {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/carts_payinfo?cart_ids=%@&device=%@", Root_URL,self.paramstring,@"app"];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -231,7 +242,7 @@ static BOOL isAgreeTerms = YES;
     } Progress:^(float progress) {
     }];
 }
-#pragma mark 地址信息网络请求
+// 地址信息网络请求
 - (void)loadAddressInfo {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kAddress_List_URL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
@@ -263,9 +274,7 @@ static BOOL isAgreeTerms = YES;
     }
     
 }
-#pragma mark 订单支付信息显示
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
-    
     NSArray *goodsArr = purchaseDic[@"cart_list"];
     NSDictionary *teamGoodsDic = goodsArr[0];
     if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
@@ -373,10 +382,68 @@ static BOOL isAgreeTerms = YES;
     self.purchaseHeaderView.isVirtualCoupone = _isVirtualCoupone;
     self.purchaseFooterView.isShowXiaoluCoinView = (_xiaoluCoinValue > 0 ? YES : NO) && _isVirtualCoupone;
 }
-- (void)userNotIdCardNumberMessage {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"收货地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-    [alert show];
+// 获取购物车ID
+- (void)getCartID {
+    NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
+    if (self.purchaseGoodsArr.count == 0) {
+        return;
+    }
+    for (CartListModel *model in self.purchaseGoodsArr) {
+        NSString *str = [NSString stringWithFormat:@"%ld,",model.cartID];
+        [paramstring appendString:str];
+    }
+    NSRange rang =  {paramstring.length -1, 1};
+    [paramstring deleteCharactersInRange:rang];
+    self.paramstring = paramstring;
+    _cartIDs = [paramstring copy];
 }
+
+
+#pragma mark ---- 创建视图 ----
+- (void)initView {
+    self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.maskView.backgroundColor = [UIColor blackColor];
+    self.maskView.alpha = 0;
+    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePickerView)]];
+    
+    JMOrderPayView *payView = [[JMOrderPayView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 180, SCREENWIDTH, 180)];
+    self.payView = payView;
+    self.payView.delegate = self;
+}
+- (void)createTableView {
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
+    [self.view addSubview:tableView];
+    self.tableView = tableView;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.rowHeight = 110.;
+}
+- (void)createTableHeaderView {
+    self.purchaseHeaderView = [[JMPurchaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 150)];
+    self.tableView.tableHeaderView = self.purchaseHeaderView;
+    self.purchaseHeaderView.delegate = self;
+}
+- (void)createTableFooterView {
+    self.purchaseFooterView = [[JMPurchaseFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 430)];
+    self.tableView.tableFooterView = self.purchaseFooterView;
+    self.purchaseFooterView.delegate = self;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.purchaseGoodsArr.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellID = @"cellID";
+    JMBaseGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    CartListModel *listModel = self.purchaseGoodsArr[indexPath.row];
+    [cell configPurchaseModel:listModel];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
 #pragma mark 计算最终选需要付款的金额
 - (void)calculationLabelValue {
     self.purchaseFooterView.postLabel.text = [NSString stringWithFormat:@"¥%.2f",_postfee];
@@ -388,7 +455,7 @@ static BOOL isAgreeTerms = YES;
         }else {
             self.isEnoughBudget = NO;
         }
-//        self.isEnoughBudget = self.isUseXLW ? YES : NO;
+        //        self.isEnoughBudget = self.isUseXLW ? YES : NO;
         _discount = _amontPayment;
         self.purchaseFooterView.goodsLabel.text = [NSString stringWithFormat:@"¥%.2f", 0.00];
         NSString *paymentStr = [NSString stringWithFormat:@"%.2f",0.00];
@@ -449,227 +516,6 @@ static BOOL isAgreeTerms = YES;
         }
     }
 }
-#pragma mark 创建视图
-- (void)createTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.rowHeight = 110.;
-}
-- (void)createTableHeaderView {
-    self.purchaseHeaderView = [[JMPurchaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 150)];
-    self.tableView.tableHeaderView = self.purchaseHeaderView;
-    self.purchaseHeaderView.delegate = self;
-}
-- (void)createTableFooterView {
-    self.purchaseFooterView = [[JMPurchaseFooterView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 430)];
-    self.tableView.tableFooterView = self.purchaseFooterView;
-    self.purchaseFooterView.delegate = self;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.purchaseGoodsArr.count;
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
-    JMBaseGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (!cell) {
-        cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
-    CartListModel *listModel = self.purchaseGoodsArr[indexPath.row];
-    [cell configPurchaseModel:listModel];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-#pragma mark 地址信息,物流信息选择.
-- (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
-    // 100->地址信息点击  101->物流信息点击
-    if (index == 100) {
-        AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
-        addVC.isButtonSelected = YES;
-        addVC.addressID = _addressID;
-        addVC.isSelected = YES;
-        addVC.isBondedGoods = _isBondedGoods;
-        addVC.delegate = self;
-        [self.navigationController pushViewController:addVC animated:YES];
-    }else if (index == 101) {
-        NSInteger count = self.logisticsArr.count;
-        [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 60 * (count + 1)) ViewController:self.showViewVC WithBlock:^(UIView *maskView) {
-        }];
-    }else { }
-}
-#pragma mark 选择地址,选择物流回调
-- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
-    self.purchaseHeaderView.addressModel = model;
-    _addressID = model.addressID;
-    if ([NSString isStringEmpty:model.identification_no]) {
-        _isIndentifierNum = YES;
-    }else {
-        _isIndentifierNum = NO;
-    }
-}
-- (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
-    [MobClick event:@"logistics_choose"];
-    self.purchaseHeaderView.logisticsLabel.text = model.name;
-    _logisticsID = model.logistcsID;
-}
-#pragma mark 底部视图按钮选择_处理事件
-- (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
-    if (button.tag != 100) {
-        for (int i = 1; i < 3; i++) {
-            UIButton *btn = (UIButton *)[[button superview]viewWithTag:100 + i];
-            //选中当前按钮时
-            if (button.tag == btn.tag) {
-                button.selected = !button.selected;
-            }else{
-                [btn setSelected:NO];
-            }
-        }
-    }
-    
-    // 100->优惠券  101->钱包  102->条款  103->结算
-    if (button.tag == 100) {
-        button.enabled = NO;
-        [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-        JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
-        segmentVC.cartID = _cartIDs;
-        segmentVC.isSelectedYHQ = YES;
-        segmentVC.selectedModelID = _yhqModelID;
-        segmentVC.couponNumber = _couponNumber;
-        segmentVC.directBuyGoodsTypeNumber = self.directBuyGoodsTypeNumber;
-//        segmentVC.couponData = _couponData;
-        segmentVC.delegate = self;
-        [self.navigationController pushViewController:segmentVC animated:YES];
-//        if (!self.isCanCoupon) {
-//            [SVProgressHUD showInfoWithStatus:@"当前优惠券不能使用!"];
-//            return ;
-//        }
-//        YouHuiQuanViewController *vc = [[YouHuiQuanViewController alloc] initWithNibName:@"YouHuiQuanViewController" bundle:nil];
-//        vc.isSelectedYHQ = YES;
-//        vc.payment = _totalfee;
-//        vc.delegate = self;
-//        vc.selectedModelID = _yhqModelID;
-//        [self.navigationController pushViewController:vc animated:YES];
-    }else if (button.tag == 101) {
-        _xlWallet = _xiaolulingqian;
-        _availableFloat = _xiaolulingqianValue;
-        if (_availableFloat > 0) {
-//            button.selected = !button.selected;
-            self.isUseXLW = button.selected;
-            self.isxiaoluCoin = NO;
-            [self calculationLabelValue];
-        }else {
-            [MBProgressHUD showWarning:@"钱包不足"];
-        }
-    }else if (button.tag == 102) {
-        _xlWallet = _xiaoluCoin;
-        _availableFloat = _xiaoluCoinValue;
-        if (_availableFloat > 0) {
-//            button.selected = !button.selected;
-            self.isUseXLW = button.selected;
-            self.isxiaoluCoin = YES;
-            [self calculationLabelValue];
-            
-        }else {
-            [MBProgressHUD showWarning:@"小鹿币不足"];
-        }
-        
-    }else if (button.tag == 103) {
-        button.selected = !button.selected;
-        if (button.selected) {
-            isAgreeTerms = YES;
-        }else {
-            isAgreeTerms = NO;
-        }
-    }else if (button.tag == 104) {
-        button.enabled = NO;
-        [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-        if (_isIndentifierNum && _isBondedGoods) {
-            [self userNotIdCardNumberMessage];
-            return ;
-        }
-        if (!isAgreeTerms) {
-//            [SVProgressHUD showInfoWithStatus:@"请您阅读和同意购买条款!"];
-            [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
-            return ;
-        }else {
-            if (self.isUseXLW) {
-                if (self.isEnoughBudget == NO) {
-                    self.isXLWforAlipay = YES;
-                    [self createPayPopView];
-                }else {
-                    self.isXLWforAlipay = NO;
-//                    [SVProgressHUD showWithStatus:@"小鹿正在为您支付....."];
-                    [MBProgressHUD showLoading:@"小鹿正在为您支付....."];
-                    [self payMoney];
-                }
-            }else {
-                if (self.isCouponEnoughPay) {
-                    [MBProgressHUD showLoading:@"小鹿正在为您支付....."];
-                    [self payMoney];
-                }else {
-                    [self createPayPopView];
-                }
-            }
-        }
-    }else {}
-}
-- (void)changeButtonStatus:(UIButton *)button {
-    NSLog(@"button.enabled = YES; ========== ");
-    button.enabled = YES;
-}
-- (void)composeFooterTapView:(JMPurchaseFooterView *)headerView {
-    NSString *terms = promptMessage_termsOfPurchase;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-    [alert show];
-}
-#pragma mark 支付弹出框 点击去结算按钮的时候弹出
-- (void)createPayPopView {
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.payView];
-    self.maskView.alpha = 0;
-    self.payView.top = self.view.height - 150;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0.3;
-        self.payView.bottom = self.view.height;
-    }];
-}
-- (void)hidePickerView {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0;
-        self.payView.top = self.view.height;
-    } completion:^(BOOL finished) {
-        [self.maskView removeFromSuperview];
-        [self.payView removeFromSuperview];
-    }];
-}
-#pragma mark --- 选择支付方式
-- (void)composePayButton:(JMOrderPayView *)payButton didClick:(NSInteger)index {
-    if (index == 100) { //点击后弹出选择放弃或者继续支付
-        [self payBackAlter];
-    }else if (index == 101) { // 选择了微信支付
-        _flagCount ++;
-//        [SVProgressHUD showWithStatus:@"正在支付中....."];
-        [MBProgressHUD showLoading:@"正在支付中....."];
-        if (!self.isInstallWX) {
-            _flagCount --;
-//            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
-            [MBProgressHUD showError:@"亲，没有安装微信哦!"];
-            return ;
-        }
-        _payMethod = @"wx";
-        [self hidePickerView];
-        [self payMoney];
-    }else if (index == 102) { // 选择了支付宝支付
-        _flagCount ++;
-        [MBProgressHUD showLoading:@"正在支付中....."];
-        _payMethod = @"alipay";
-        [self hidePickerView];
-        [self payMoney];
-    }else{}
-}
 #pragma mark 支付提交参数处理
 - (void)payMoney {
     self.purchaseFooterView.goPayButton.userInteractionEnabled = NO;
@@ -727,73 +573,133 @@ static BOOL isAgreeTerms = YES;
         }
     }
 }
-#pragma mark 支付提交请求
-- (void)submitBuyGoods {
-    [MobClick event:@"commit_buy"];
-    NSMutableString *paramString = [NSMutableString stringWithFormat:@"%@",_parmsStr];
-    [paramString appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsID],nil];
-    NSMutableDictionary *params = [self stringChangeDictionary:paramString];
-    if (_isTeamBuyGoods) {
-        params[@"order_type"] = @"3";
+#pragma mark  自定义代理实现 -> (自定义视图按钮点击回调,优惠券代理回调处理,支付方式代理回调处理)
+// JMPurchaseFooterViewDelegate (自定义按钮点击)
+- (void)composeFooterButtonView:(JMPurchaseFooterView *)headerView UIButton:(UIButton *)button {
+    if (button.tag != 100) {
+        for (int i = 1; i < 3; i++) {
+            UIButton *btn = (UIButton *)[[button superview]viewWithTag:100 + i];
+            //选中当前按钮时
+            if (button.tag == btn.tag) {
+                button.selected = !button.selected;
+            }else{
+                [btn setSelected:NO];
+            }
+        }
     }
-    NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
-//    JMPurchaseController * __weak weakSelf = self;
-    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
-        if (!responseObject) return ;
-        [MBProgressHUD hideHUD];
-        NSDictionary *dict = responseObject[@"trade"];
-        _orderTidNum = dict[@"tid"];
-        _orderGoodsIDNum = dict[@"id"];
-        if ([responseObject[@"code"] integerValue] != 0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)[responseObject[@"code"] integerValue]]};
-                [MobClick event:@"buy_fail" attributes:temp_dict];
-                [MBProgressHUD hideHUD];
-                NSString *errorStr = responseObject[@"info"];
-                NSString *messageStr = [NSString stringWithFormat:@"%@",errorStr];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"支付异常" message:messageStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                alert.tag = 101;
-                [alert show];
-            });
-            return;
+    // 100->优惠券  101->钱包  102->条款  103->结算
+    if (button.tag == 100) {
+        button.enabled = NO;
+        [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
+        JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
+        segmentVC.cartID = _cartIDs;
+        segmentVC.isSelectedYHQ = YES;
+        segmentVC.selectedModelID = _yhqModelID;
+        segmentVC.couponNumber = _couponNumber;
+        segmentVC.directBuyGoodsTypeNumber = self.directBuyGoodsTypeNumber;
+        //        segmentVC.couponData = _couponData;
+        segmentVC.delegate = self;
+        [self.navigationController pushViewController:segmentVC animated:YES];
+    }else if (button.tag == 101) {
+        _xlWallet = _xiaolulingqian;
+        _availableFloat = _xiaolulingqianValue;
+        if (_availableFloat > 0) {
+            //            button.selected = !button.selected;
+            self.isUseXLW = button.selected;
+            self.isxiaoluCoin = NO;
+            [self calculationLabelValue];
+        }else {
+            [MBProgressHUD showWarning:@"钱包不足"];
         }
-        if ([responseObject[@"channel"] isEqualToString:@"budget"] && [responseObject[@"code"] integerValue] == 0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUD];
-                [MobClick event:@"buy_succ"];
-//                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
-                [MBProgressHUD showSuccess:@"支付成功"];
-                if (_isTeamBuyGoods) {
-                    [self getTeam:_orderTidNum]; // == > 团购信息
-                }else {
-                    [self pushShareVC];
-                }
-            });
-            return;
+    }else if (button.tag == 102) {
+        _xlWallet = _xiaoluCoin;
+        _availableFloat = _xiaoluCoinValue;
+        if (_availableFloat > 0) {
+            //            button.selected = !button.selected;
+            self.isUseXLW = button.selected;
+            self.isxiaoluCoin = YES;
+            [self calculationLabelValue];
+            
+        }else {
+            [MBProgressHUD showWarning:@"小鹿币不足"];
         }
-        NSDictionary *chargeDic = responseObject[@"charge"];
-        if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
-                    _flagCount --;
-                    if (error.errorStatus == payMentErrorStatusSuccess) {
-                        [self paySuccessful];
-                    }else if (error.errorStatus == payMentErrorStatusFail) { // 取消
-                        [self popview];
-                    }else { }
-                }];
-            });
-        }
-        [MBProgressHUD hideHUD];
-    } WithFail:^(NSError *error) {
-        [MBProgressHUD hideHUD];
-//        [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
-        [MBProgressHUD showError:@"支付请求失败,请稍后重试!"];
-    } Progress:^(float progress) {
         
-    }];
+    }else if (button.tag == 103) {
+        button.selected = !button.selected;
+        if (button.selected) {
+            isAgreeTerms = YES;
+        }else {
+            isAgreeTerms = NO;
+        }
+    }else if (button.tag == 104) {
+        button.enabled = NO;
+        [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
+        if (_isIndentifierNum && _isBondedGoods) {
+            [self userNotIdCardNumberMessage];
+            return ;
+        }
+        if (!isAgreeTerms) {
+            [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
+            return ;
+        }else {
+            if (self.isUseXLW) {
+                if (self.isEnoughBudget == NO) {
+                    self.isXLWforAlipay = YES;
+                    [self createPayPopView];
+                }else {
+                    self.isXLWforAlipay = NO;
+                    [MBProgressHUD showLoading:@"小鹿正在为您支付....."];
+                    [self payMoney];
+                }
+            }else {
+                if (self.isCouponEnoughPay) {
+                    [MBProgressHUD showLoading:@"小鹿正在为您支付....."];
+                    [self payMoney];
+                }else {
+                    [self createPayPopView];
+                }
+            }
+        }
+    }else {}
 }
-#pragma mark  选择优惠券回调过来的代理方法
+- (void)changeButtonStatus:(UIButton *)button {
+    NSLog(@"button.enabled = YES; ========== ");
+    button.enabled = YES;
+}
+// JMPurchaseHeaderViewDelegate (地址信息 , 物流信息)
+- (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
+    // 100->地址信息点击  101->物流信息点击
+    if (index == 100) {
+        AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        addVC.isButtonSelected = YES;
+        addVC.addressID = _addressID;
+        addVC.isSelected = YES;
+        addVC.isBondedGoods = _isBondedGoods;
+        addVC.delegate = self;
+        [self.navigationController pushViewController:addVC animated:YES];
+    }else if (index == 101) {
+        NSInteger count = self.logisticsArr.count;
+        [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 60 * (count + 1)) ViewController:self.showViewVC WithBlock:^(UIView *maskView) {
+        }];
+    }else { }
+}
+// PurchaseAddressDelegate (地址选择修改代理回调)
+- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
+    self.purchaseHeaderView.addressModel = model;
+    _addressID = model.addressID;
+    if ([NSString isStringEmpty:model.identification_no]) {
+        _isIndentifierNum = YES;
+    }else {
+        _isIndentifierNum = NO;
+    }
+}
+// JMChoiseLogisControllerDelegate (选择物流代理回调)
+- (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
+    [MobClick event:@"logistics_choose"];
+    self.purchaseHeaderView.logisticsLabel.text = model.name;
+    _logisticsID = model.logistcsID;
+}
+// 优惠券
 - (void)updateYouhuiquanWithmodel:(NSArray *)modelArray {
     if (modelArray.count == 0) {
         self.purchaseFooterView.couponLabel.text = @"没有使用优惠券";
@@ -830,10 +736,107 @@ static BOOL isAgreeTerms = YES;
             _yhqModelID = [NSString stringWithFormat:@"%@", _couponStringID];
             [self calculationLabelValue];
         }
-        
     }
 }
-#pragma mark 团购支付
+// 支付方式
+- (void)composePayButton:(JMOrderPayView *)payButton didClick:(NSInteger)index {
+    if (index == 100) { //点击后弹出选择放弃或者继续支付
+        [self payBackAlter];
+    }else if (index == 101) { // 选择了微信支付
+        _flagCount ++;
+        //        [SVProgressHUD showWithStatus:@"正在支付中....."];
+        [MBProgressHUD showLoading:@"正在支付中....."];
+        if (!self.isInstallWX) {
+            _flagCount --;
+            //            [SVProgressHUD showErrorWithStatus:@"亲，没有安装微信哦!"];
+            [MBProgressHUD showError:@"亲，没有安装微信哦!"];
+            return ;
+        }
+        _payMethod = @"wx";
+        [self hidePickerView];
+        [self payMoney];
+    }else if (index == 102) { // 选择了支付宝支付
+        _flagCount ++;
+        [MBProgressHUD showLoading:@"正在支付中....."];
+        _payMethod = @"alipay";
+        [self hidePickerView];
+        [self payMoney];
+    }else{}
+}
+// 购买条款
+- (void)composeFooterTapView:(JMPurchaseFooterView *)headerView {
+    NSString *terms = promptMessage_termsOfPurchase;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"购买条款" message:terms delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+#pragma mark 网络请求 数据处理
+// -> 支付提交请求
+- (void)submitBuyGoods {
+    [MobClick event:@"commit_buy"];
+    NSMutableString *paramString = [NSMutableString stringWithFormat:@"%@",_parmsStr];
+    [paramString appendFormat:[NSString stringWithFormat:@"&logistics_company_id=%@",_logisticsID],nil];
+    NSMutableDictionary *params = [self stringChangeDictionary:paramString];
+    if (_isTeamBuyGoods) {
+        params[@"order_type"] = @"3";
+    }
+    NSString *payurlStr = [NSString stringWithFormat:@"%@/rest/v2/trades/shoppingcart_create",Root_URL];
+    //    JMPurchaseController * __weak weakSelf = self;
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:payurlStr WithParaments:params WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        [MBProgressHUD hideHUD];
+        NSDictionary *dict = responseObject[@"trade"];
+        _orderTidNum = dict[@"tid"];
+        _orderGoodsIDNum = dict[@"id"];
+        if ([responseObject[@"code"] integerValue] != 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSDictionary *temp_dict = @{@"code" : [NSString stringWithFormat:@"%ld",(unsigned long)[responseObject[@"code"] integerValue]]};
+                [MobClick event:@"buy_fail" attributes:temp_dict];
+                [MBProgressHUD hideHUD];
+                NSString *errorStr = responseObject[@"info"];
+                NSString *messageStr = [NSString stringWithFormat:@"%@",errorStr];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"支付异常" message:messageStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                alert.tag = 101;
+                [alert show];
+            });
+            return;
+        }
+        if ([responseObject[@"channel"] isEqualToString:@"budget"] && [responseObject[@"code"] integerValue] == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUD];
+                [MobClick event:@"buy_succ"];
+                //                [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                [MBProgressHUD showSuccess:@"支付成功"];
+                if (_isTeamBuyGoods) {
+                    [self getTeam:_orderTidNum]; // == > 团购信息
+                }else {
+                    [self pushShareVC];
+                }
+            });
+            return;
+        }
+        NSDictionary *chargeDic = responseObject[@"charge"];
+        if (![responseObject[@"channel"] isEqualToString:@"budget"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [JMPayment createPaymentWithType:thirdPartyPayMentTypeForWechat Parame:chargeDic URLScheme:kUrlScheme ErrorCodeBlock:^(JMPayError *error) {
+                    _flagCount --;
+                    if (error.errorStatus == payMentErrorStatusSuccess) {
+                        [self paySuccessful];
+                    }else if (error.errorStatus == payMentErrorStatusFail) { // 取消
+                        [self popview];
+                    }else { }
+                }];
+            });
+        }
+        [MBProgressHUD hideHUD];
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD hideHUD];
+        //        [SVProgressHUD showErrorWithStatus:@"支付请求失败,请稍后重试!"];
+        [MBProgressHUD showError:@"支付请求失败,请稍后重试!"];
+    } Progress:^(float progress) {
+        
+    }];
+}
+// -> 团购支付
 - (void)getTeamID:(NSString *)teamID {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/teambuy/%@/team_info",Root_URL,teamID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -856,7 +859,52 @@ static BOOL isAgreeTerms = YES;
     webView.isShowRightShareBtn = false;
     [self.navigationController pushViewController:webView animated:YES];
 }
-#pragma mark alterView 弹出与协议方法
+// -> 订单支付结果查询
+- (void)inquiryOrder:(NSString *)orderTid {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, orderTid];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        [MBProgressHUD hideHUD];
+        if ([responseObject[@"is_paid"] boolValue]) {
+            [self paySuccessful];
+        }else {
+            [self doSomeWork];
+        }
+    } WithFail:^(NSError *error) {
+        [self doSomeWork];
+        [MBProgressHUD hideHUD];
+    } Progress:^(float progress) {
+    }];
+}
+#pragma mark 自定义弹出框,系统弹出框
+- (void)createPayPopView {
+    [self.view addSubview:self.maskView];
+    [self.view addSubview:self.payView];
+    self.maskView.alpha = 0;
+    self.payView.top = self.view.height - 150;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.maskView.alpha = 0.3;
+        self.payView.bottom = self.view.height;
+    }];
+}
+- (void)hidePickerView {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.maskView.alpha = 0;
+        self.payView.top = self.view.height;
+    } completion:^(BOOL finished) {
+        [self.maskView removeFromSuperview];
+        [self.payView removeFromSuperview];
+    }];
+}
+- (void)userNotIdCardNumberMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"收货地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+- (void)doSomeWork {
+    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付被您取消或支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    alterView.tag = 102;
+    [alterView show];
+}
 - (void)payBackAlter {
     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"限时好货不等人,机不可失哦" delegate:self cancelButtonTitle:@"放弃订单" otherButtonTitles:@"继续支付", nil];
     alterView.tag = 100;
@@ -877,7 +925,43 @@ static BOOL isAgreeTerms = YES;
         [self.navigationController pushViewController:orderVC animated:YES];
     }else {}
 }
+
 #pragma mark 支付成功或取消后续操作
+- (void)pushShareVC {
+    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
+    payShareVC.ordNum = _orderTidNum;
+    [self.navigationController pushViewController:payShareVC animated:YES];
+}
+
+
+#pragma mark 当前页面数据处理函数
+- (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
+    NSArray *firstArr = [str componentsSeparatedByString:@"&"];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    for (NSString *segment in firstArr) {
+        NSArray *secondArr = [segment componentsSeparatedByString:@"="];
+        [dic setObject:secondArr[1] forKey:secondArr[0]];
+    }
+    return dic;
+}
+
+
+#pragma mark ---- 点击事件 ----
+- (void)backClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark ---- 通知事件 ----
+- (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
+    [MBProgressHUD showLoading:@""];
+}
+- (void)purchaseViewDidBecomeActive:(NSNotification *)notification {
+    if (_flagCount > 0) {
+        [self inquiryOrder:_orderGoodsIDNum];
+        _flagCount --;
+    }else {
+        [MBProgressHUD hideHUD];
+    }
+}
 - (void)popview{
     [MBProgressHUD hideHUD];
     [MobClick event:@"buy_cancel"];
@@ -893,94 +977,14 @@ static BOOL isAgreeTerms = YES;
     }else {
         [self pushShareVC];
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-}
-- (void)pushShareVC {
-    JMPayShareController *payShareVC = [[JMPayShareController alloc] init];
-    payShareVC.ordNum = _orderTidNum;
-    [self.navigationController pushViewController:payShareVC animated:YES];
-}
-#pragma mark 视图生命周期操作
-- (NSMutableDictionary *)stringChangeDictionary:(NSString *)str {
-    NSArray *firstArr = [str componentsSeparatedByString:@"&"];
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    for (NSString *segment in firstArr) {
-        NSArray *secondArr = [segment componentsSeparatedByString:@"="];
-        [dic setObject:secondArr[1] forKey:secondArr[0]];
-    }
-    return dic;
-}
-- (void)backClick {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(purchaseViewWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(purchaseViewDidBecomeActive:)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-    self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
-    if ([WXApi isWXAppInstalled]) {
-        self.isInstallWX = YES;
-    }else {
-        self.isInstallWX = NO;
-    }
-    [MobClick beginLogPageView:@"purchase"];
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationDidBecomeActiveNotification
-                                                  object:nil];
-    [MobClick endLogPageView:@"purchase"];
-}
-- (void)purchaseViewWillEnterForeground:(NSNotification *)notification {
-    [MBProgressHUD showLoading:@""];
-}
-- (void)purchaseViewDidBecomeActive:(NSNotification *)notification {
-    if (_flagCount > 0) {
-        [self inquiryOrder:_orderGoodsIDNum];
-        _flagCount --;
-    }else {
-        [MBProgressHUD hideHUD];
-    }
-    
 }
 
-- (void)doSomeWork {
-    UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:@"支付失败" message:@"支付被您取消或支付失败,请重试" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    alterView.tag = 102;
-    [alterView show];
-}
-- (void)inquiryOrder:(NSString *)orderTid {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, orderTid];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return ;
-        [MBProgressHUD hideHUD];
-        if ([responseObject[@"is_paid"] boolValue]) {
-            [self paySuccessful];
-        }else {
-            [self doSomeWork];
-        }
-    } WithFail:^(NSError *error) {
-        [self doSomeWork];
-        [MBProgressHUD hideHUD];
-    } Progress:^(float progress) {
-        
-    }];
-    
-}
+
+
+
+
+
+
 
 
     
