@@ -102,7 +102,7 @@
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
     
-    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20) usingUIWebView:NO];
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20 - ktabBarHeight) usingUIWebView:NO];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
     self.baseWebView.viewController = self;

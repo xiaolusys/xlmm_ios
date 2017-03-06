@@ -70,6 +70,7 @@
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
+#define ktabBarHeight 49     // 底部tabBar的高度
 
 #define kVisitorDay @14      // 加载访客记录(天数)
 #define KTITLENAME @"小鹿美美"

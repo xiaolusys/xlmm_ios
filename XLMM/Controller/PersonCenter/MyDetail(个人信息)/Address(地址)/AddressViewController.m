@@ -358,15 +358,22 @@
     
 }
 
-
-
 - (IBAction)addButtonClicked:(id)sender {
-    
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addVC.isAdd = YES;
     addVC.isBondedGoods = self.isBondedGoods;
     [self.navigationController pushViewController:addVC animated:YES];
+    
 }
+
+
+
+
+
+
+
+
+
 @end
 
 

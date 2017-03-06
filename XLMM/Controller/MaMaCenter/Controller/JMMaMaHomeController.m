@@ -114,7 +114,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
+    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
@@ -309,7 +309,7 @@
 
 #pragma ========== UI处理 ==========
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];

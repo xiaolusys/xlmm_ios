@@ -70,7 +70,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
@@ -228,7 +228,9 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 - (JMReloadEmptyDataView *)reload {
     if (!_reload) {
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"你的钱包空空如也" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"wallet" ReloadBlcok:^{
-            [self.navigationController popViewControllerAnimated:YES];
+            self.isPopToRootView = YES;
+            [self.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }];
         _reload = reload;
     }

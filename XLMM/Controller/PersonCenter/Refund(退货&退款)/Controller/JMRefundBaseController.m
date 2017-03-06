@@ -56,7 +56,7 @@
 }
 
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT + 44) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -176,17 +176,13 @@
 - (JMReloadEmptyDataView *)reload {
     if (!_reload) {
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"亲,您暂时还没有退货(款)订单哦～" DescTitle:@"再不抢购,就卖光啦~!" ButtonTitle:@"快去逛逛" Image:@"dingdanemptyimage" ReloadBlcok:^{
+            self.isPopToRootView = YES;
             [self.navigationController popViewControllerAnimated:YES];
         }];
         _reload = reload;
     }
     return _reload;
 }
-
--(void)gotoLandingPage{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
 - (void)backClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -200,7 +196,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMRefundBaseController"];

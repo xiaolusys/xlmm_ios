@@ -41,7 +41,7 @@
         [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:self.segmentedControl];
         
-        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 60, SCREENWIDTH, frame.size.height - 60)];
+        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 60, SCREENWIDTH, frame.size.height - 60 - 45)];
         self.segmentScrollView.pagingEnabled = YES;
         self.segmentScrollView.showsHorizontalScrollIndicator = NO;
         self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * controller.count, frame.size.height - 60);

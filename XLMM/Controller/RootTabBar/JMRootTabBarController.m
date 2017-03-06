@@ -10,8 +10,10 @@
 #import "RootNavigationController.h"
 #import "JMCartViewController.h"
 #import "JMLogInViewController.h"
-#import "JMFineCounpGoodsController.h"
-
+#import "JMMaMaHomeController.h"
+#import "JMHomeRootCategoryController.h"
+#import "JMFineClassController.h"
+#import "JMHomePageController.h"
 
 #define kClassKey   @"rootVCClassString"
 #define kTitleKey   @"title"
@@ -23,8 +25,11 @@
 
 
 @property (nonatomic, strong) NSMutableArray *vcArray;
-@property (nonatomic, strong) JMCartViewController *cartVC;
-@property (nonatomic, strong) JMFineCounpGoodsController *fineCouponVC;
+@property (nonatomic, strong) JMCartViewController *cartVC;             // 购物车
+@property (nonatomic, strong) JMMaMaHomeController *mamaHomeVC;         // 妈妈主页
+@property (nonatomic, strong) JMHomeRootCategoryController *categoryVC; // 分类页面
+@property (nonatomic, strong) JMFineClassController *fineVC;            // 精品汇
+@property (nonatomic, strong) JMHomePageController *homePageVC;         // 主页
 
 
 @property (nonatomic, strong) UIButton *bageButton;
@@ -46,7 +51,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
 }
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -60,12 +64,17 @@
     
     self.delegate = self;
     NSArray *childItemsArray = @[
-                                 @{kClassKey  : @"JMHomeRootController",
+                                 @{kClassKey  : @"JMHomePageController",
                                    kTitleKey  : @"首页",
                                    kImgKey    : @"tabBar_mianPageNomal",
                                    kSelImgKey : @"tabBar_mianPageSelected"},
-                                 
-                                 @{kClassKey  : @"JMFineCounpGoodsController",
+
+                                 @{kClassKey  : @"JMHomeRootCategoryController",
+                                   kTitleKey  : @"分类",
+                                   kImgKey    : @"tabBar_categoryNomal",
+                                   kSelImgKey : @"tabBar_categorySelected"},
+
+                                 @{kClassKey  : @"JMFineClassController",
                                    kTitleKey  : @"精品汇",
                                    kImgKey    : @"tabBar_featuredNomal",
                                    kSelImgKey : @"tabBar_featuredSelected"},
@@ -75,12 +84,7 @@
                                    kImgKey    : @"tabBar_shoppingCartNomal",
                                    kSelImgKey : @"tabBar_shoppingCartSelected"},
                                  
-//                                 @{kClassKey  : @"JMStoreupController",
-//                                   kTitleKey  : @"收藏",
-//                                   kImgKey    : @"tabBar_collectionNomal",
-//                                   kSelImgKey : @"tabBar_collectionSelected"},
-                                 
-                                 @{kClassKey  : @"JMPersonalPageController",
+                                 @{kClassKey  : @"JMMaMaHomeController",
                                    kTitleKey  : @"我的",
                                    kImgKey    : @"tabBar_personalNomal",
                                    kSelImgKey : @"tabBar_personalSelected"} ];
@@ -100,6 +104,11 @@
         
     }];
     self.selectedIndex = 0;
+    self.homePageVC = self.vcArray[0];
+    self.categoryVC = self.vcArray[1];
+    self.fineVC = self.vcArray[2];
+    self.cartVC = self.vcArray[3];
+    self.mamaHomeVC = self.vcArray[4];
 //    self.storeVC = self.vcArray[3];
     
 //    self.tabBar.barTintColor = [UIColor whiteColor];
@@ -116,12 +125,14 @@
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"首页"]) {
         
+    }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
+        //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
 //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-//            self.cartVC.isHideNavigationLeftItem = YES;
+            self.cartVC.isHideNavigationLeftItem = YES;
 //            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
             //            [self.cartVC refreshCartData];
         }else {
@@ -144,7 +155,17 @@
     }else { }
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
+    if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            return YES;
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            loginVC.isTabBarLogin = YES;
+            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+            [viewController presentViewController:rootNav animated:YES completion:nil];
+            return NO;
+        }
+    }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             return YES;
         }else {

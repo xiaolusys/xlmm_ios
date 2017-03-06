@@ -159,7 +159,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104 - 45) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - ktabBarHeight) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -233,7 +233,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-20);
-        make.bottom.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-70);
         make.width.height.mas_equalTo(@50);
     }];
     //    self.topButton.frame = CGRectMake(SCREENWIDTH - 70, SCREENHEIGHT - 70, 50, 50);
