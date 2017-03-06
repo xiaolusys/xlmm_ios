@@ -10,7 +10,7 @@
 #import "AddAdressViewController.h"
 #import "AddressModel.h"
 #import "AddressTableCell.h"
-#import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
 
 
 #define MAINSCREENWIDTH [UIScreen mainScreen].bounds.size.width
@@ -19,7 +19,7 @@
 
 
 
-@interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddressDelegate>
+@interface AddressViewController ()<UITableViewDataSource, UITableViewDelegate, AddressDelegate, CSTableViewPlaceHolderDelegate>
 {
     NSMutableArray *dataArray;
     AddressModel *deleteModel;
@@ -28,7 +28,7 @@
 }
 
 @property (nonatomic, strong)UITableView *addressTableView;
-@property (nonatomic, strong) JMEmptyView *empty;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 @end
 
@@ -128,11 +128,11 @@
     NSLog(@"addArray = %@", addressArray);
     if (addressArray.count == 0) {
         NSLog(@"数据下载错误");
-        self.empty.hidden = NO;
-        [self.addressTableView reloadData];
+//        self.empty.hidden = NO;
+//        [self.addressTableView reloadData];
         return;
     }
-    self.empty.hidden = YES;
+//    self.empty.hidden = YES;
     for (NSDictionary *dic in addressArray) {
         AddressModel *model = [[AddressModel alloc] init];
         model.addressID = [dic objectForKey:@"id"];
@@ -151,7 +151,7 @@
     MMLOG(dataArray);
     
     
-    [self.addressTableView reloadData];
+    [self.addressTableView cs_reloadData];
     
 }
 
@@ -315,21 +315,32 @@
         
     }
 }
-
-
-- (void)emptyView {
-//    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您还没有添加收货地址哦～" DescTitle:@"" BackImage:@"empty_address_icon" InfoStr:@""];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            UIButton *button = (UIButton *)[self.view viewWithTag:100];
-            button.hidden = YES;
-        }
-    };
-    self.empty = empty;
-    self.empty.hidden = YES;
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您还没有添加收货地址哦～" DescTitle:@"" ButtonTitle:@"" Image:@"empty_address_icon" ReloadBlcok:^{
+//            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
+//- (void)emptyView {
+////    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 120, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您还没有添加收货地址哦～" DescTitle:@"" BackImage:@"empty_address_icon" InfoStr:@""];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            UIButton *button = (UIButton *)[self.view viewWithTag:100];
+//            button.hidden = YES;
+//        }
+//    };
+//    self.empty = empty;
+//    self.empty.hidden = YES;
+//}
 
 #pragma mark --AddressDelegate--
 

@@ -47,7 +47,7 @@ NSString *const JMCartHistoryCellIdentifier = @"JMCartHistoryCellIdentifier";
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.iconImage.layer.cornerRadius = 5;
     
     UILabel *titleLabel = [UILabel new];

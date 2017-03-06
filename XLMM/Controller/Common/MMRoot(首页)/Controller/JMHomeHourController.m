@@ -10,123 +10,86 @@
 #import "JMHomeHourCell.h"
 #import "JMHomeHourModel.h"
 #import "JMGoodsDetailController.h"
+#import "JumpUtils.h"
+#import "PublishNewPdtViewController.h"
+#import "JMShareModel.h"
+#import "JMShareViewController.h"
 
 
-@interface JMHomeHourController () <UITableViewDelegate,UITableViewDataSource> {
+@interface JMHomeHourController () <UITableViewDelegate,UITableViewDataSource,JMHomeHourCellDelegate> {
     NSString *_nextPageUrl;
     NSMutableArray *_numArray;
 }
 
-//@property (nonatomic, strong) NSMutableArray *dataSource;
-
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
+@property (nonatomic, strong) JMShareViewController *goodsShareView;
+@property (nonatomic, strong) JMShareModel *shareModel;
 
 @end
 
 @implementation JMHomeHourController
-
-//- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//        [self.view addSubview:self.collectionView];
-//        
-//    }
-//    return self;
-//}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-//    [self createCollectionView];
-    [self.view addSubview:self.tableView];
-//    [self createPullFooterRefresh];
-    
-    
+#pragma mark 懒加载
+- (JMShareViewController *)goodsShareView {
+    if (!_goodsShareView) {
+        _goodsShareView = [[JMShareViewController alloc] init];
+    }
+    return _goodsShareView;
 }
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 60)];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.rowHeight = 175.f;
+        [_tableView registerClass:[JMHomeHourCell class] forCellReuseIdentifier:NSStringFromClass([JMHomeHourCell class])];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return _tableView;
+}
+#pragma mark 重写set方法
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
     [self.tableView reloadData];
 }
-//- (UICollectionView *)collectionView {
-//    if (!_collectionView) {
-//        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//        layout.itemSize = CGSizeMake((SCREENWIDTH - 10), 100);
-//        layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
-//        layout.minimumInteritemSpacing = 5;
-//        layout.minimumLineSpacing = 5;
-//        //    layout.scrollDirection = UICollectionViewScrollDirectionVertical; // 垂直滚动
-//        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) collectionViewLayout:layout];
-//        _collectionView.backgroundColor = [UIColor orangeColor];
-//        _collectionView.dataSource = self;
-//        _collectionView.delegate = self;
-//        _collectionView.scrollEnabled = NO;
-//        //    [self.collectionView.collectionViewLayout invalidateLayout];
-////        [self.view addSubview:self.collectionView];
-//        
-//        [_collectionView registerClass:[JMHomeHourCell class] forCellWithReuseIdentifier:CS_STRING([self class])];
-////        NSLog(@"%@",CS_STRING([self class]));
-//
-//        
-//    }
-//    return _collectionView;
-//}
-- (UITableView *)tableView {
-    if (!_tableView) {
-        
-        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 60)];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        [_tableView registerClass:[JMHomeHourCell class] forCellReuseIdentifier:NSStringFromClass([JMHomeHourCell class])];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4 + 60)];
-//        tableHeaderView.backgroundColor = [UIColor redColor];
-        
-        
-//        _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(SCREENWIDTH * 0.4, 0, 0, 0);
-        _tableView.tableHeaderView = tableHeaderView;
-        
-        
-        
-    }
-    return _tableView;
+#pragma mark 生命周期函数
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMHomeHourController"];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMHomeHourController"];
 }
-
-- (void)createCollectionView {
-//    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    layout.itemSize = CGSizeMake((SCREENWIDTH - 10), 100);
-//    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
-//    layout.minimumInteritemSpacing = 5;
-//    layout.minimumLineSpacing = 5;
-    //    layout.scrollDirection = UICollectionViewScrollDirectionVertical; // 垂直滚动
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
-
-//    self.tableView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) collectionViewLayout:layout];
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-//    self.tableView.scrollEnabled = NO;
-    self.tableView.rowHeight = 100.f;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 242)];
-    tableHeaderView.backgroundColor = [UIColor redColor];
-    
-    
-    _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
-    _tableView.tableHeaderView = tableHeaderView;
-    
-//    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(182, 0, 0, 0);
-//    self.tableView.translatesAutoresizingMaskIntoConstraints = YES;
-//    [self.collectionView.collectionViewLayout invalidateLayout];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    
-    [self.tableView registerClass:[JMHomeHourCell class] forCellReuseIdentifier:CS_STRING([self class])];
-//    [self.collectionView registerClass:[JMHomeHourCell class] forCellWithReuseIdentifier:CS_STRING([self class])];
-    NSLog(@"%@",CS_STRING([self class]));
 }
+#pragma mark 网络请求,数据处理
+- (void)loadShareData:(NSString *)urlString {
+    [MBProgressHUD showLoading:@"正在分享..."];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        self.shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
+        self.shareModel.share_type = @"link";
+        self.goodsShareView.model = self.shareModel;
+        [MBProgressHUD hideHUD];
+        [self popShareView];
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"分享失败"];
+    } Progress:^(float progress) {
+    }];
+}
+#pragma mark 弹出视图 (弹出分享界面)
+- (void)popShareView {
+    [MobClick event:@"GoodsDetail_share"];
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+    }];
+    self.goodsShareView.blcok = ^(UIButton *button) {
+        [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
+    };
+}
+#pragma mark UITableView 代理实现
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
@@ -140,6 +103,7 @@
     }
     JMHomeHourModel *model = self.dataSource[indexPath.row];
     cell.model = model;
+    cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -153,24 +117,21 @@
     detailVC.goodsID = model.model_id;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"JMHomeHourController"];
+#pragma mark JMHomeHourCellDelegate 点击事件
+- (void)composeHourCell:(JMHomeHourCell *)cell Model:(JMHomeHourModel *)model ButtonClick:(UIButton *)button {
+    if (button.tag == 100) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,model.model_id];
+        //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
+        PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
+//        pushVC.isPushingDays = YES;
+        pushVC.pushungDaysURL = urlString;
+        pushVC.titleString = @"文案精选";
+        [self.navigationController pushViewController:pushVC animated:YES];
+    }else {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,model.model_id];
+        [self loadShareData:urlString];
+    }
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"JMHomeHourController"];
-}
-
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-//        [tableView setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-//    }
-//}
 
 
 @end

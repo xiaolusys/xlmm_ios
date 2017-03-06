@@ -8,10 +8,11 @@
 
 #import "JMMineIntegralController.h"
 #import "JMMineIntegralCell.h"
-#import "JMEmptyView.h"
 #import "JMMineIntegralModel.h"
+#import "JMReloadEmptyDataView.h"
 
-@interface JMMineIntegralController () <UITableViewDelegate,UITableViewDataSource> {
+
+@interface JMMineIntegralController () <UITableViewDelegate,UITableViewDataSource,CSTableViewPlaceHolderDelegate> {
     NSString *_urlStr;
     NSString *_valueString;
 }
@@ -23,7 +24,7 @@
 
 @property (nonatomic,strong) UIButton *topButton;
 
-@property (nonatomic, strong) JMEmptyView *empty;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
@@ -102,28 +103,13 @@
         if (!responseObject) return;
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
         
     }];
 }
-//- (void)loadDataSource {
-//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kIntegrallogURL WithParaments:nil WithSuccess:^(id responseObject) {
-//        if (!responseObject) return;
-//        if (self.dataArray.count > 0) {
-//            [self.dataArray removeAllObjects];
-//        }
-//        [self refetch:responseObject];
-//        [self endRefresh];
-//        [self.tableView reloadData];
-//    } WithFail:^(NSError *error) {
-//        [self endRefresh];
-//    } Progress:^(float progress) {
-//        
-//    }];
-//}
 - (void)loadMore {
     if ([NSString isStringEmpty:_urlStr]) {
         [self endRefresh];
@@ -134,7 +120,7 @@
         if (!responseObject) return;
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -145,7 +131,7 @@
     _urlStr = data[@"next"];
     NSArray *arr = data[@"results"];
     if (arr.count == 0) {
-        [self emptyView];
+//        [self emptyView];
     }else {
         for (NSDictionary *dic in arr) {
             JMMineIntegralModel *fetureModel = [JMMineIntegralModel mj_objectWithKeyValues:dic];
@@ -153,17 +139,17 @@
         }
     }
 }
-- (void)emptyView {
-    kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 240, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时没有小鹿币记录哦~" DescTitle:@"快去赚取吧～" BackImage:@"emptyJifenIcon" InfoStr:@"快去抢购"];
-    [self.view addSubview:self.empty];
-    self.empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            weakSelf.isPopToRootView = YES;
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-        }
-    };
+- (UIView *)createPlaceHolderView {
+    return self.reload;
+}
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您还没有小鹿币哦!" DescTitle:@"快去赚取吧~!" ButtonTitle:@"快去抢购" Image:@"emptyJifenIcon" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
 }
 
 #pragma mark --UITableViewDelegate

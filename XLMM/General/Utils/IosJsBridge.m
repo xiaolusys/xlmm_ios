@@ -104,27 +104,19 @@
     }
     return dic;
 }
+/*
 
+ */
 + (void) universeShare:(UIViewController *)vc para:(NSDictionary *)data {
     JMShareViewController *shareView = [[JMShareViewController alloc] init];
     ((WebViewController *)vc).shareView = shareView;
-//    if([((WebViewController *)vc).webDiction[@"type_title"] isEqualToString:@"ProductDetail"]){
-//    ((WebViewController *)vc).share_model.share_type = [data objectForKey:@"share_type"];
-//    
-//    ((WebViewController *)vc).share_model.share_img = [data objectForKey:@"share_icon"]; //图片
-//    ((WebViewController *)vc).share_model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-//    
-//    ((WebViewController *)vc).share_model.title = [data objectForKey:@"share_title"]; //标题
-//    ((WebViewController *)vc).share_model.share_link = [data objectForKey:@"link"];
-//
-//    }
-    shareView.model = ((WebViewController *)vc).share_model;
-    shareView.model.share_type = [data objectForKey:@"share_type"];
-    shareView.model.share_img = [data objectForKey:@"share_icon"]; //图片
-    shareView.model.desc = [data objectForKey:@"share_desc"]; // 文字详情
-    shareView.model.title = [data objectForKey:@"share_title"]; //标题
-    shareView.model.share_link = [data objectForKey:@"link"];
-    shareView.model = shareView.model;
+    JMShareModel *model = [[JMShareModel alloc] init];
+    model.share_type = [data objectForKey:@"share_type"];
+    model.share_img = [data objectForKey:@"share_icon"]; //图片
+    model.desc = [data objectForKey:@"share_desc"]; // 文字详情
+    model.title = [data objectForKey:@"share_title"]; //标题
+    model.share_link = [data objectForKey:@"link"];
+    shareView.model = model;
     
     [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:shareView WithBlock:^(UIView *maskView) {
     }];

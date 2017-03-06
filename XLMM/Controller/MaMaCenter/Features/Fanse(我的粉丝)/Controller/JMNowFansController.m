@@ -9,10 +9,10 @@
 #import "JMNowFansController.h"
 #import "FanceModel.h"
 #import "JMFetureFansCell.h"
-#import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
 
 
-@interface JMNowFansController () <UITableViewDelegate,UITableViewDataSource>
+@interface JMNowFansController () <UITableViewDelegate,UITableViewDataSource,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong)UITableView *tableView;
 
@@ -24,6 +24,7 @@
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
 @property (nonatomic) BOOL isLoadMore;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 @end
 
@@ -52,10 +53,11 @@
     
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
- 
+    [self.tableView.mj_header beginRefreshing];
+    
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 35) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -99,7 +101,7 @@
         }
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -116,7 +118,7 @@
         if (!responseObject) return;
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -128,7 +130,7 @@
     
     NSArray *arr = data[@"results"];
     if (arr.count == 0) {
-        [self emptyView];
+//        [self emptyView];
     }else {
         for (NSDictionary *dic in arr) {
             FanceModel *fetureModel = [FanceModel mj_objectWithKeyValues:dic];
@@ -137,18 +139,29 @@
     }
 }
 
-#pragma mark --- 没有粉丝展示
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"您还没有粉丝哦..." DescTitle:@"分享您的精选给好友就会获得粉丝哦~" BackImage:@"heart" InfoStr:@"我的精选"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-    };
+//#pragma mark --- 没有粉丝展示
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"您还没有粉丝哦..." DescTitle:@"分享您的精选给好友就会获得粉丝哦~" BackImage:@"heart" InfoStr:@"我的精选"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [weakSelf.navigationController popViewControllerAnimated:YES];
+//        }
+//    };
+//}
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
-
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您还没有粉丝哦..." DescTitle:@"分享您的精选给好友就会获得粉丝哦~" ButtonTitle:@"快去分享" Image:@"heart" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
 
 
 #pragma mark --UITableViewDelegate
@@ -176,7 +189,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self.tableView.mj_header beginRefreshing];
     [MobClick beginLogPageView:@"JMNowFansController"];
     
 }

@@ -13,8 +13,9 @@
 #import "JMEmptyView.h"
 #import "JMEmptyGoodsView.h"
 #import "JMRootGoodsModel.h"
+#import "JMReloadEmptyDataView.h"
 
-@interface JMClassifyListController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface JMClassifyListController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
@@ -26,6 +27,7 @@
 @property (nonatomic) BOOL isLoadMore;
 
 @property (nonatomic, strong) JMSelecterButton *selectedButton;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 @end
 
@@ -121,7 +123,7 @@ static NSString * cellId = @"JMClassifyListController";
     NSArray *resultsArr = itemDic[@"results"];
     if (resultsArr.count == 0) {
         //展示空视图
-        [self emptyView];
+//        [self emptyView];
         return ;
     }else {
         for (NSDictionary *dic in resultsArr) {
@@ -129,14 +131,14 @@ static NSString * cellId = @"JMClassifyListController";
             [self.dataSource addObject:model];
         }
     }
-    [self.collectionView reloadData];
+    [self.collectionView cs_reloadData];
 }
 - (void)fatchClassifyListMoreData:(NSDictionary *)itemDic {
     _nextPageUrlString = itemDic[@"next"];
     NSArray *resultsArr = itemDic[@"results"];
     if (resultsArr.count == 0) {
         //展示空视图
-        [self emptyView];
+//        [self emptyView];
         return ;
     }
     _numArray = [NSMutableArray array];
@@ -159,7 +161,7 @@ static NSString * cellId = @"JMClassifyListController";
             NSLog(@"DEBUG: failure to batch update.  %@", except.description);
         }
     }
-    [self.collectionView reloadData];
+    [self.collectionView cs_reloadData];
 
     
 }
@@ -207,19 +209,38 @@ static NSString * cellId = @"JMClassifyListController";
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
-- (void)emptyView {
+//- (void)emptyView {
+//    if ([NSString isStringEmpty:self.emptyTitle]) {
+//        self.emptyTitle = @"查看其它分类";
+//    }
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:self.emptyTitle];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [weakSelf.navigationController popViewControllerAnimated:YES];
+//        }
+//    };
+//}
+
+- (UIView *)createPlaceHolderView {
+    return self.reload;
+}
+- (JMReloadEmptyDataView *)reload {
     if ([NSString isStringEmpty:self.emptyTitle]) {
         self.emptyTitle = @"查看其它分类";
     }
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有商品哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:self.emptyTitle];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-    };
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"暂时没有商品哦~" DescTitle:@"" ButtonTitle:self.emptyTitle Image:@"emptyGoods" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
 }
+
+
+
 
 //- (void)emptyView {
 //    JMEmptyGoodsView *empty = [[JMEmptyGoodsView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99)];

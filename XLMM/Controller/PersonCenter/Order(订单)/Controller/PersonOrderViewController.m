@@ -136,7 +136,11 @@ static NSString *identifier = @"orderStatic";
 
 
 - (void)btnClicked:(UIButton *)button{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (self.ispopToView) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark --pageViewControll代理方法

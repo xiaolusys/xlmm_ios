@@ -12,9 +12,9 @@
 #import "JMOrderGoodsModel.h"
 #import "JMAllOrderModel.h"
 #import "JMOrderDetailController.h"
-#import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
 
-@interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate>
+@interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate>
 
 /**
  *  订单详情模型
@@ -29,7 +29,7 @@
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *sectionDataSource;
-@property (nonatomic, strong) JMEmptyView *empty;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
@@ -69,7 +69,7 @@
     [self createTabelView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-    [self emptyView];
+//    [self emptyView];
     [self.tableView.mj_header beginRefreshing];
  
 }
@@ -111,7 +111,7 @@
         [self.sectionDataSource removeAllObjects];
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -129,7 +129,7 @@
         
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -142,10 +142,10 @@
     NSArray *allArr = data[@"results"];
     if (allArr.count == 0) {
         //没有订单
-        self.empty.hidden = NO;
+//        self.empty.hidden = NO;
         return ;
     }
-    self.empty.hidden = YES;
+//    self.empty.hidden = YES;
     
     for (NSDictionary *allDic in allArr) {
         JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
@@ -283,20 +283,34 @@
 }
 
 #pragma mark 没有订单显示空视图
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    self.empty = empty;
-    self.empty.hidden = YES;
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            self.isPopToRootView = YES;
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-        }
-    };
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 99, SCREENWIDTH, SCREENHEIGHT - 99) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" BackImage:@"dingdanemptyimage" InfoStr:@"快去逛逛"];
+//    [self.view addSubview:empty];
+//    self.empty = empty;
+//    self.empty.hidden = YES;
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            self.isPopToRootView = YES;
+//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//        }
+//    };
+//}
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" ButtonTitle:@"快去逛逛" Image:@"dingdanemptyimage" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
+
 -(void)gotoLandingPage{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

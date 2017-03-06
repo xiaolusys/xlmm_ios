@@ -24,6 +24,7 @@
 #import "JMPopViewAnimationDrop.h"
 #import "JMCartViewController.h"
 #import "JumpUtils.h"
+#import "PublishNewPdtViewController.h"
 
 
 #define BottomHeitht 60.0
@@ -110,6 +111,7 @@
 
 @implementation JMGoodsDetailController
 
+#pragma mark -- 懒加载 --
 - (JMShareModel *)shareModel {
     if (!_shareModel) {
         _shareModel = [[JMShareModel alloc] init];
@@ -178,6 +180,7 @@
     return _downViewLabel;
 }
 
+#pragma mark --- 视图生命周期 ---
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
@@ -206,7 +209,6 @@
     [super viewDidLoad];
     [MBProgressHUD showLoading:@""];
     self.view.backgroundColor = [UIColor countLabelColor];
-    //    self.navigationController.navigationBar.alpha = 0.0;
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     _paramer = [NSMutableDictionary dictionary];
@@ -223,6 +225,7 @@
     
 }
 
+#pragma mark ---- 创建UI ----
 - (void)createContentView {
     self.allContentView = [UIView new];
     self.allContentView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT * 2 - BottomHeitht * 2);
@@ -268,6 +271,8 @@
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
 }
+
+#pragma mark ---- 网络请求,数据处理
 - (void)loadShareData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,self.goodsID];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
@@ -455,7 +460,7 @@
         };
     }
 }
-#pragma mark --- 点击隐藏弹出视图
+#pragma mark --- UITableView 代理 ----
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
@@ -490,66 +495,13 @@
         cell.customInfoDic = coustomInfoDic;
         cell.block = ^(UIButton *button) {
             if (button.tag == 100) {
-                BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-                if (login == NO) {
-                    button.selected = NO;
-                    JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-                    [self.navigationController pushViewController:enterVC animated:YES];
-                    return;
-                }else {
-                    if (button.selected == NO) {
-                        // 收藏
-                        [MBProgressHUD showLoading:@"添加收藏~"];
-                        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-                        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                        param[@"model_id"] = self.goodsID;
-                        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
-                            if (!responseObject) return ;
-                            NSLog(@"%@",responseObject);
-                            NSInteger code = [responseObject[@"code"] integerValue];
-                            if (code == 0) {
-                                button.selected = YES;
-                                [MBProgressHUD showSuccess:@"收藏成功"];
-                                [MobClick event:@"addStoreUpSuccess"];
-                            }else {
-                                button.selected = NO;
-                                [MBProgressHUD showWarning:responseObject[@"info"]];
-                                NSDictionary *addStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
-                                [MobClick event:@"addStoreUpFail" attributes:addStoreUpFaildict];
-                            }
-                        } WithFail:^(NSError *error) {
-                            button.selected = NO;
-                            [MobClick event:@"addStoreUpFail"];
-                        } Progress:^(float progress) {
-                            
-                        }];
-                    }else {
-                        // 取消收藏
-                        [MBProgressHUD showLoading:@"取消收藏~"];
-                        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
-                        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-                        param[@"model_id"] = self.goodsID;
-                        [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
-                            if (!responseObject) return ;
-                            NSLog(@"%@",responseObject);
-                            NSInteger code = [responseObject[@"code"] integerValue];
-                            if (code == 0) {
-                                button.selected = NO;
-                                [MBProgressHUD showSuccess:@"取消成功"];
-                                [MobClick event:@"cancleStoreUpSuccess"];
-                            }else {
-                                button.selected = YES;
-                                [MBProgressHUD showWarning:responseObject[@"info"]];
-                                NSDictionary *cancleStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
-                                [MobClick event:@"cancleStoreUpFail" attributes:cancleStoreUpFaildict];
-                            }
-                        } WithFail:^(NSError *error) {
-                            button.selected = YES;
-                            [MobClick event:@"cancleStoreUpFail"];
-                        } Progress:^(float progress) {
-                        }];
-                    }
-                }
+                NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,self.goodsID];
+                //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
+                PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
+//                pushVC.isPushingDays = YES;
+                pushVC.pushungDaysURL = urlString;
+                pushVC.titleString = @"文案精选";
+                [self.navigationController pushViewController:pushVC animated:YES];
             }else {
                 // webview跳转
                 [JumpUtils jumpToLocation:_buyCouponUrl viewController:self];
@@ -596,6 +548,7 @@
         return nil;
     }
 }
+#pragma mark ---- UIScrollView 代理 ----
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offset = scrollView.contentOffset.y;
     if (scrollView == self.tableView) {
@@ -654,6 +607,8 @@
         }
     }
 }
+
+#pragma mark ---- 自定义弹出视图 (显示/隐藏) ----
 - (void)showPopView {
     isTop = NO;
     [[UIApplication sharedApplication].keyWindow addSubview:self.maskView];
@@ -1059,7 +1014,69 @@
 
 
 
-
+// 收藏
+/*
+ BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+ if (login == NO) {
+ button.selected = NO;
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ [self.navigationController pushViewController:enterVC animated:YES];
+ return;
+ }else {
+ if (button.selected == NO) {
+ // 收藏
+ [MBProgressHUD showLoading:@"添加收藏~"];
+ NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
+ NSMutableDictionary *param = [NSMutableDictionary dictionary];
+ param[@"model_id"] = self.goodsID;
+ [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
+ if (!responseObject) return ;
+ NSLog(@"%@",responseObject);
+ NSInteger code = [responseObject[@"code"] integerValue];
+ if (code == 0) {
+ button.selected = YES;
+ [MBProgressHUD showSuccess:@"收藏成功"];
+ [MobClick event:@"addStoreUpSuccess"];
+ }else {
+ button.selected = NO;
+ [MBProgressHUD showWarning:responseObject[@"info"]];
+ NSDictionary *addStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+ [MobClick event:@"addStoreUpFail" attributes:addStoreUpFaildict];
+ }
+ } WithFail:^(NSError *error) {
+ button.selected = NO;
+ [MobClick event:@"addStoreUpFail"];
+ } Progress:^(float progress) {
+ 
+ }];
+ }else {
+ // 取消收藏
+ [MBProgressHUD showLoading:@"取消收藏~"];
+ NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/favorites",Root_URL];
+ NSMutableDictionary *param = [NSMutableDictionary dictionary];
+ param[@"model_id"] = self.goodsID;
+ [JMHTTPManager requestWithType:RequestTypeDELETE WithURLString:urlString WithParaments:param WithSuccess:^(id responseObject) {
+ if (!responseObject) return ;
+ NSLog(@"%@",responseObject);
+ NSInteger code = [responseObject[@"code"] integerValue];
+ if (code == 0) {
+ button.selected = NO;
+ [MBProgressHUD showSuccess:@"取消成功"];
+ [MobClick event:@"cancleStoreUpSuccess"];
+ }else {
+ button.selected = YES;
+ [MBProgressHUD showWarning:responseObject[@"info"]];
+ NSDictionary *cancleStoreUpFaildict = @{@"code" : [NSString stringWithFormat:@"%ld",code]};
+ [MobClick event:@"cancleStoreUpFail" attributes:cancleStoreUpFaildict];
+ }
+ } WithFail:^(NSError *error) {
+ button.selected = YES;
+ [MobClick event:@"cancleStoreUpFail"];
+ } Progress:^(float progress) {
+ }];
+ }
+ }
+ */
 
 
 

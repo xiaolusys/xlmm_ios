@@ -14,8 +14,9 @@
 @interface PublishNewPdtViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate>
 
 
-@property (nonatomic, assign) BOOL isPushingDays;
+//@property (nonatomic, assign) BOOL isPushingDays;
 @property (nonatomic, copy) NSString *pushungDaysURL;
+@property (nonatomic, copy) NSString *titleString;
 @property (nonatomic, strong)UICollectionView *picCollectionView;
 
 

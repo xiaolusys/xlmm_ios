@@ -9,15 +9,15 @@
 #import "JMFineCouponController.h"
 #import "JMFIneCouponCell.h"
 #import "JMFineCouponModel.h"
-#import "JMEmptyView.h"
+#import "JMReloadEmptyDataView.h"
 #import "PublishNewPdtViewController.h"
 
 
-@interface JMFineCouponController () <UITableViewDataSource, UITableViewDelegate>
+@interface JMFineCouponController () <UITableViewDataSource, UITableViewDelegate, CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) JMEmptyView *empty;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 /**
  *  上拉加载的标志
  */
@@ -98,7 +98,7 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
         [self.dataSource removeAllObjects];
         [self fetchFineCouponData:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -116,7 +116,7 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
         if (!responseObject)return;
         [self fetchFineCouponData:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
+        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -128,7 +128,7 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
     self.nextPage = dict[@"next"];
     NSArray *resultsArr = dict[@"results"];
     if (resultsArr.count == 0) {
-        self.empty.hidden = NO;
+//        self.empty.hidden = NO;
         return ;
     }
     for (NSDictionary *dic in resultsArr) {
@@ -156,26 +156,37 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
     NSString *urlString = CS_DSTRING(Root_URL,@"/rest/v1/pmt/ninepic/get_nine_pic_by_modelid");
     urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
     PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-    pushVC.isPushingDays = YES;
+//    pushVC.isPushingDays = YES;
     pushVC.pushungDaysURL = urlString;
     [self.navigationController pushViewController:pushVC animated:YES];
     
     
 }
-
-
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有数据" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-        }
-    };
-    self.empty = empty;
-    self.empty.hidden = YES;
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"暂时没有数据" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"emptyGoods" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 220, SCREENWIDTH, SCREENHEIGHT - 220) Title:@"暂时没有数据" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@"快去逛逛"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//        }
+//    };
+//    self.empty = empty;
+//    self.empty.hidden = YES;
+//}
 
 
 

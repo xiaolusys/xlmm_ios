@@ -126,10 +126,15 @@
     [[JMMiPushManager miPushManager] registerForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"%@",error);
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [[JMMiPushManager miPushManager] application:application ReceiveRemoteNotification:userInfo];
 }
+//- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+//    [application registerForRemoteNotifications];
+//}
+
 // iOS10新加入的回调方法
 // 应用在前台收到通知
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {

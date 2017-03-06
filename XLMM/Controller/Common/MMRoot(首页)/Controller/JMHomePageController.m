@@ -23,10 +23,10 @@
 #import "JMStoreManager.h"
 #import "JMLaunchView.h"
 #import "AppDelegate.h"
+#import "JMFineCounpGoodsController.h"
 
 
-
-@interface JMHomePageController () <UIScrollViewDelegate, JMUpdataAppPopViewDelegate> {
+@interface JMHomePageController () <UIScrollViewDelegate, JMUpdataAppPopViewDelegate, JMHomeFirstControllerDelegate> {
     NSMutableArray *_categoryNameArray;
     NSMutableArray *_categoryCidArray;
     NSString *_currentCidString;
@@ -63,17 +63,12 @@
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
 @property (nonatomic, strong) JMLaunchView *launchView;
 
+@property (nonatomic, strong) UIView *suspensionView;
+
 @end
 
 @implementation JMHomePageController
-- (instancetype)init {
-    if (self == [super init]) {
-        _categoryNameArray = [NSMutableArray array];
-        _categoryCidArray = [NSMutableArray array];
-        _topImageArray = [NSMutableArray array];
-    }
-    return self;
-}
+#pragma mark -- 懒加载
 - (UIView *)maskView {
     if (!_maskView) {
         _maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -89,21 +84,8 @@
     return _updataPopView;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"main"];
 
-    UIApplication *app = [UIApplication sharedApplication];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(rootViewWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:app];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(rootViewDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:app];
-    
-}
+#pragma 程序前后台切换通知处理,  通知事件
 - (void)rootViewDidEnterBackground:(NSNotification *)notification {
     [self hideUpdataView];
 }
@@ -114,18 +96,6 @@
     }else {
     }
 }
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [MobClick endLogPageView:@"main"];
-}
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-- (void)didReceiveMemoryWarning {
-    [[JMGlobal global] clearAllSDCache];
-}
-#pragma mark 通知事件
 - (void)presentView:(NSNotification *)notification{
     //跳转到新的页面
     [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
@@ -141,6 +111,20 @@
 - (void)loginOut {
     
 }
+#pragma mark 登陆后刷新个人信息
+- (void)loginUpdateIsXiaoluMaMa {
+    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        if ([self isLogin]) {
+            if ([self isXiaolumama]) {
+                [self createRightItem];
+            }else {
+            }
+            //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
+        }else {
+        }
+    } failure:^(NSError *error) {
+    }];
+}
 - (BOOL)isXiaolumama{
     NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
     BOOL isXLMM = [users boolForKey:kISXLMM];
@@ -151,24 +135,39 @@
     BOOL isLog = [users boolForKey:kIsLogin];
     return isLog;
 }
-- (void)loginUpdateIsXiaoluMaMa {
-    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
-        if ([self isLogin]) {
-            if ([self isXiaolumama]) {
-                [self createRightItem];
-            }else {
-//                self.navigationItem.rightBarButtonItem = nil;
-            }
-            //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
-        }else {
-//            self.navigationItem.rightBarButtonItem = nil;
-        }
-    } failure:^(NSError *error) {
-//        self.navigationItem.rightBarButtonItem = nil;
-    }];
+#pragma mark 视图生命周期
+- (instancetype)init {
+    if (self == [super init]) {
+        _categoryNameArray = [NSMutableArray array];
+        _categoryCidArray = [NSMutableArray array];
+        _topImageArray = [NSMutableArray array];
+    }
+    return self;
 }
-
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"main"];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(rootViewWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:app];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(rootViewDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:app];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [MobClick endLogPageView:@"main"];
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)didReceiveMemoryWarning {
+    [[JMGlobal global] clearAllSDCache];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
@@ -197,7 +196,111 @@
     self.session = [self backgroundSession];           // 后台下载...
     
 }
-#pragma mark 创建自定义 navigationView
+#pragma mark 数据请求处理
+- (void)loadCatrsNumData {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
+        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+            if (!responseObject) return ;
+            [self cartViewUpData:responseObject];
+        } WithFail:^(NSError *error) {
+        } Progress:^(float progress) {
+        }];
+    }else {
+        self.cartsLabel.hidden = YES;
+    }
+}
+- (void)cartViewUpData:(NSDictionary *)dic {
+    NSInteger cartNum = [dic[@"result"] integerValue];
+    if (cartNum == 0) {
+        [JMGoodsCountTime initCountDownWithCurrentTime:0];
+        self.cartsLabel.hidden = YES;
+    }else {
+        self.cartsLabel.hidden = NO;
+        self.cartsLabel.text = [NSString stringWithFormat:@"%@",dic[@"result"]];
+    }
+}
+- (void)loadCategoryData {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal?exclude_fields=activitys",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [_topImageArray removeAllObjects];
+        [self fetchCategoryData:responseObject];
+    } WithFail:^(NSError *error) {
+    } Progress:^(float progress) {
+    }];
+}
+- (void)fetchCategoryData:(NSDictionary *)categoryDic {
+    NSArray *postersArr = categoryDic[@"posters"];
+    for (NSDictionary *dic in postersArr) {
+        [_topImageArray addObject:dic];
+    }
+    
+    NSArray *categorys = categoryDic[@"categorys"];
+    [_categoryNameArray addObjectsFromArray:@[@"今日特卖",@"精品活动"]];
+    for (NSDictionary *dic in categorys) {
+        [_categoryNameArray addObject:dic[@"name"]];
+        [_categoryCidArray addObject:dic[@"id"]];
+    }
+    self.segmentControl.sectionTitles = [_categoryNameArray copy];
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
+    [self addChildController];
+}
+#pragma mark -- 创建UI->自定义 navigationView 自定义悬浮按钮 (个人,精品汇,购物车)
+- (void)createSegmentControl {
+    self.segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 45)];
+    [self.view addSubview:self.segmentControl];
+    self.segmentControl.backgroundColor = [UIColor whiteColor];
+    self.segmentControl.selectedSegmentIndex = 0;
+    self.segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
+    self.segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    self.segmentControl.selectionIndicatorHeight = 2.f;
+    self.segmentControl.selectionIndicatorColor = [UIColor orangeColor];
+    self.segmentControl.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:15.],
+                                                NSForegroundColorAttributeName : [UIColor blackColor]};
+    self.segmentControl.selectedTitleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:16.],
+                                                        NSForegroundColorAttributeName : [UIColor orangeColor]};
+    [self createScrollView];
+    kWeakSelf
+    [self.segmentControl setIndexChangeBlock:^(NSInteger index) {
+        [weakSelf removeToPage:index];
+    }];
+}
+- (void)createScrollView {
+    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - CGRectGetMaxY(self.segmentControl.frame))];
+    self.baseScrollView.showsHorizontalScrollIndicator = NO;
+    self.baseScrollView.showsVerticalScrollIndicator = NO;
+    self.baseScrollView.pagingEnabled = YES;
+    self.baseScrollView.delegate = self;
+    [self.view addSubview:self.baseScrollView];
+
+}
+- (void)addChildController {
+    for (int i = 0 ; i < _categoryNameArray.count; i++) {
+        if (i == 0) {
+            JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
+            homeFirst.delegate = self;
+            homeFirst.pageController = self;
+            homeFirst.topImageArray = _topImageArray;
+            [self addChildViewController:homeFirst];
+        }else if (i == 1){
+            JMFineCounpGoodsController *fineVC = [[JMFineCounpGoodsController alloc] init];
+            [self addChildViewController:fineVC];
+        }else {
+            JMChildViewController *childCategoryVC = [[JMChildViewController alloc] init];
+            childCategoryVC.categoryCid = _categoryCidArray[i - 2];
+            [self addChildViewController:childCategoryVC];
+        }
+    }
+    self.baseScrollView.contentOffset = CGPointMake(0, 0);
+    
+    UIViewController *firstVC = [self.childViewControllers firstObject];
+    firstVC.view.frame = self.baseScrollView.bounds;
+    [self.baseScrollView addSubview:firstVC.view];
+    _currentCidString = _categoryCidArray[0];
+    _currentNameString = _categoryNameArray[1];
+    
+}
 - (void)createNavigaView {
     UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 83, 44)];
     UIImageView *titleImage = [UIImageView new];
@@ -239,161 +342,14 @@
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];
     }
-
 }
-// 请求购物车数量
-- (void)loadCatrsNumData {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
-        [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-            if (!responseObject) return ;
-            [self cartViewUpData:responseObject];
-        } WithFail:^(NSError *error) {
-        } Progress:^(float progress) {
-        }];
-    }else {
-        self.cartsLabel.hidden = YES;
-    }
-}
-- (void)cartViewUpData:(NSDictionary *)dic {
-    NSInteger cartNum = [dic[@"result"] integerValue];
-    if (cartNum == 0) {
-        [JMGoodsCountTime initCountDownWithCurrentTime:0];
-        self.cartsLabel.hidden = YES;
-    }else {
-        self.cartsLabel.hidden = NO;
-        self.cartsLabel.text = [NSString stringWithFormat:@"%@",dic[@"result"]];
-    }
-}
-
-- (void)loadCategoryData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal?exclude_fields=activitys",Root_URL];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return;
-        [_topImageArray removeAllObjects];
-        [self fetchCategoryData:responseObject];
-    } WithFail:^(NSError *error) {
-    } Progress:^(float progress) {
-    }];
-}
-- (void)fetchCategoryData:(NSDictionary *)categoryDic {
-    NSArray *postersArr = categoryDic[@"posters"];
-    for (NSDictionary *dic in postersArr) {
-        [_topImageArray addObject:dic];
-    }
-    
-    NSArray *categorys = categoryDic[@"categorys"];
-    [_categoryNameArray addObject:@"今日特卖"];
-    for (NSDictionary *dic in categorys) {
-        [_categoryNameArray addObject:dic[@"name"]];
-        [_categoryCidArray addObject:dic[@"id"]];
-    }
-    self.segmentControl.sectionTitles = [_categoryNameArray copy];
-    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
-    [self addChildController];
-}
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    NSLog(@"%@",scrollView);
-
-}
-/*
- 创建分页控制器
- */
-- (void)createSegmentControl {
-    self.segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 45)];
-    [self.view addSubview:self.segmentControl];
-    self.segmentControl.backgroundColor = [UIColor whiteColor];
-    self.segmentControl.selectedSegmentIndex = 0;
-    self.segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    self.segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.segmentControl.selectionIndicatorHeight = 2.f;
-    self.segmentControl.selectionIndicatorColor = [UIColor orangeColor];
-    self.segmentControl.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:15.],
-                                                NSForegroundColorAttributeName : [UIColor blackColor]};
-    self.segmentControl.selectedTitleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:16.],
-                                                        NSForegroundColorAttributeName : [UIColor orangeColor]};
-    [self createScrollView];
-    kWeakSelf
-    [self.segmentControl setIndexChangeBlock:^(NSInteger index) {
-        [weakSelf removeToPage:index];
-    }];
-}
-- (void)createScrollView {
-    self.baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - CGRectGetMaxY(self.segmentControl.frame))];
-    self.baseScrollView.showsHorizontalScrollIndicator = NO;
-    self.baseScrollView.showsVerticalScrollIndicator = NO;
-    self.baseScrollView.pagingEnabled = YES;
-    self.baseScrollView.delegate = self;
-    [self.view addSubview:self.baseScrollView];
-
-}
-/*
- 添加子视图
- */
-- (void)addChildController {
-    for (int i = 0 ; i < _categoryNameArray.count; i++) {
-        if (i == 0) {
-            JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
-            homeFirst.pageController = self;
-            homeFirst.topImageArray = _topImageArray;
-            [self addChildViewController:homeFirst];
-        }else {
-            JMChildViewController *childCategoryVC = [[JMChildViewController alloc] init];
-            childCategoryVC.categoryCid = _categoryCidArray[i - 1];
-            [self addChildViewController:childCategoryVC];
-        }
-    }
-    self.baseScrollView.contentOffset = CGPointMake(0, 0);
-    
-    UIViewController *firstVC = [self.childViewControllers firstObject];
-    firstVC.view.frame = self.baseScrollView.bounds;
-    [self.baseScrollView addSubview:firstVC.view];
-    _currentCidString = _categoryCidArray[0];
-    _currentNameString = _categoryNameArray[1];
-    
-}
-/*
- scrollView代理方法
- */
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat pageWidth = scrollView.frame.size.width;
-    NSInteger page = scrollView.contentOffset.x / pageWidth;
-    [self removeToPage:page];
-    [self.segmentControl setSelectedSegmentIndex:page animated:YES];
-}
-/*
- 移动到某个子视图
- */
-- (void)removeToPage:(NSInteger)index {
-    if (index == 0) {
-        _currentCidString = _categoryCidArray[index];
-        _currentNameString = _categoryNameArray[index];
-    }else {
-        _currentCidString = _categoryCidArray[index - 1];
-        _currentNameString = _categoryNameArray[index - 1];
-    }
-    self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
-    if (index == 0) {
-        JMHomeFirstController *homeFirst = self.childViewControllers[index];
-        homeFirst.view.frame = self.baseScrollView.bounds;
-        [self.baseScrollView addSubview:homeFirst.view];
-    }else {
-        JMChildViewController *childCategoryVC = self.childViewControllers[index];
-        childCategoryVC.view.frame = self.baseScrollView.bounds;
-        [self.baseScrollView addSubview:childCategoryVC.view];
-    }
-}
-
-- (void)searchBarClick:(UIButton *)button {
-    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
-    rootCategoryVC.cidString = CS_STRING(_currentCidString);
-    rootCategoryVC.titleString = CS_STRING(_currentNameString);
-    rootCategoryVC.categoryUrl = urlCategory;
-    [self.navigationController pushViewController:rootCategoryVC animated:YES];
-}
-
 - (void)createSuspensionView {
-    kWeakSelf
+    UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 90, 160, 50)];
+    [self.view addSubview:suspensionView];
+//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(suspensionViewTap:)];
+//    [suspensionView addGestureRecognizer:pan];
+    self.suspensionView = suspensionView;
+//    self.suspensionView.backgroundColor = [UIColor colorWithRed:1/255.f green:1/255.f blue:1/255.f alpha:0.1];
     NSArray *imageArr = @[@"tabBar_personalSelected",@"homePagejingpinhui",@"tabBar_shoppingCartSelected"];
     for (int i = 0 ; i < imageArr.count; i ++) {
         UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -404,10 +360,10 @@
         customButton.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
         customButton.tag = 100 + i;
         [customButton addTarget:self action:@selector(suspensionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:customButton];
+        [suspensionView addSubview:customButton];
         [customButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(weakSelf.view).offset(20 + 54 * i);
-            make.bottom.equalTo(weakSelf.view).offset(-20);
+            make.left.equalTo(suspensionView).offset(4 + 54 * i);
+            make.top.equalTo(suspensionView).offset(3);
             make.size.mas_equalTo(CGSizeMake(44, 44));
         }];
         
@@ -426,16 +382,52 @@
             self.cartsLabel.layer.cornerRadius = 8.;
             self.cartsLabel.layer.masksToBounds = YES;
             self.cartsLabel.hidden = YES;
-            
         }
-        
-        
-        
     }
     self.cartButton = (UIButton *)[self.view viewWithTag:102];
     
 }
-#pragma mark 点击悬浮按钮
+
+
+#pragma mark 移动到某个子视图
+- (void)removeToPage:(NSInteger)index {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.segmentControl.mj_y = 64;
+        self.baseScrollView.mj_y = 64 + 45;
+    }];
+    if (index == 0 || index == 1) {
+        _currentCidString = _categoryCidArray[0];
+        _currentNameString = _categoryNameArray[0];
+    }else {
+        _currentCidString = _categoryCidArray[index - 2];
+        _currentNameString = _categoryNameArray[index - 2];
+    }
+    self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
+    if (index == 0) {
+        JMHomeFirstController *homeFirst = self.childViewControllers[index];
+        homeFirst.view.frame = self.baseScrollView.bounds;
+        [self.baseScrollView addSubview:homeFirst.view];
+        [homeFirst didMoveToParentViewController:self];
+    }else if (index == 1) {
+        JMFineCounpGoodsController *fineVC = self.childViewControllers[index];
+        fineVC.view.frame = self.baseScrollView.bounds;
+        [self.baseScrollView addSubview:fineVC.view];
+        [fineVC didMoveToParentViewController:self];
+    }else {
+        JMChildViewController *childCategoryVC = self.childViewControllers[index];
+        childCategoryVC.view.frame = self.baseScrollView.bounds;
+        [self.baseScrollView addSubview:childCategoryVC.view];
+        [childCategoryVC didMoveToParentViewController:self];
+    }
+}
+#pragma mark 点击事件处理
+- (void)searchBarClick:(UIButton *)button {
+    JMHomeRootCategoryController *rootCategoryVC = [[JMHomeRootCategoryController alloc] init];
+    rootCategoryVC.cidString = CS_STRING(_currentCidString);
+    rootCategoryVC.titleString = CS_STRING(_currentNameString);
+    rootCategoryVC.categoryUrl = urlCategory;
+    [self.navigationController pushViewController:rootCategoryVC animated:YES];
+}
 - (void)suspensionButtonClick:(UIButton *)button {
     BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
@@ -478,7 +470,20 @@
     }
     
 }
-
+#pragma mark UIScrollViewDelegate 代理实现
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView { }
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = scrollView.contentOffset.x / pageWidth;
+    [self removeToPage:page];
+    [self.segmentControl setSelectedSegmentIndex:page animated:YES];
+}
+- (void)scrollViewDeceleratingScroll:(UIScrollView *)scrollView {
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = scrollView.contentOffset.x / pageWidth;
+    [self removeToPage:page];
+    [self.segmentControl setSelectedSegmentIndex:page animated:YES];
+}
 #pragma mark 版本 自动升级
 - (void)autoUpdateVersion{
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:UPDATE_URLSTRING WithParaments:nil WithSuccess:^(id responseObject) {
@@ -666,9 +671,46 @@
     NSLog(@"所有任务已完成!");
 }
 
-
-
-
+#pragma mark 悬浮视图手势事件
+- (void)suspensionViewTap:(UIPanGestureRecognizer *)pan {
+    CGFloat topInsetheight = 109.f;
+    CGFloat spaceFloat = 20.f;
+    CGPoint point = [pan translationInView:self.suspensionView];
+    CGRect originalFrame = self.suspensionView.frame;
+    if (originalFrame.origin.x >= 0 && originalFrame.origin.x + originalFrame.size.width <= SCREENWIDTH) {
+        originalFrame.origin.x += point.x;
+    }if (originalFrame.origin.y >= topInsetheight && originalFrame.origin.y + originalFrame.size.height <= SCREENHEIGHT) {
+        originalFrame.origin.y += point.y;
+    }
+    self.suspensionView.frame = originalFrame;
+    [pan setTranslation:CGPointZero inView:self.suspensionView];
+    if (pan.state == UIGestureRecognizerStateBegan) {
+//        self.suspensionView.enabled = NO;
+    }else if (pan.state == UIGestureRecognizerStateChanged){
+    } else {
+        CGRect frame = self.suspensionView.frame;
+        //是否越界
+        BOOL isOver = NO;
+        if (frame.origin.x < 0) {
+            frame.origin.x = spaceFloat;
+            isOver = YES;
+        } else if (frame.origin.x+frame.size.width > SCREENWIDTH) {
+            frame.origin.x = SCREENWIDTH - frame.size.width - spaceFloat;
+            isOver = YES;
+        }if (frame.origin.y < topInsetheight) {
+            frame.origin.y = topInsetheight + spaceFloat;
+            isOver = YES;
+        } else if (frame.origin.y+frame.size.height > SCREENHEIGHT) {
+            frame.origin.y = SCREENHEIGHT - frame.size.height - spaceFloat;
+            isOver = YES;
+        }if (isOver) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.suspensionView.frame = frame;
+            }];
+        }
+//        self.suspensionView.enabled = YES;
+    }
+}
 
 
 

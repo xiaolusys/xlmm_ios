@@ -25,6 +25,7 @@
 #import "CSTabBarController.h"
 #import "JMPurchaseController.h"
 #import "JMPushingDaysController.h"
+#import "JMFineCounpGoodsController.h"
 
 
 @implementation JumpUtils
@@ -123,7 +124,7 @@
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新
-        JMPushingDaysController *publish = [[JMPushingDaysController alloc] init];
+        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
         [vc.navigationController pushViewController:publish animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {

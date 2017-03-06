@@ -8,6 +8,7 @@
 
 #import "JMHomeHourCell.h"
 #import "JMHomeHourModel.h"
+#import "UIView+RGSize.h"
 
 
 @interface JMHomeHourCell ()
@@ -38,37 +39,69 @@
     self.iconImage.contentMode = UIViewContentModeScaleAspectFill;
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderWidth = 0.5;
-    self.iconImage.layer.borderColor = [UIColor dingfanxiangqingColor].CGColor;
+    self.iconImage.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     self.iconImage.layer.cornerRadius = 5;
     
     UILabel *titleLabel = [UILabel new];
     [self.contentView addSubview:titleLabel];
     self.titleLabel = titleLabel;
     self.titleLabel.textColor = [UIColor settingBackgroundColor];
-    self.titleLabel.font = [UIFont systemFontOfSize:14.];
+    self.titleLabel.font = [UIFont systemFontOfSize:16.];
     self.titleLabel.numberOfLines = 2;
     
     UILabel *PriceLabel = [UILabel new];
     [self.contentView addSubview:PriceLabel];
     self.PriceLabel = PriceLabel;
-    self.PriceLabel.font = [UIFont systemFontOfSize:14.];
+    self.PriceLabel.font = [UIFont systemFontOfSize:16.];
     self.PriceLabel.textColor = [UIColor settingBackgroundColor];
     
     UILabel *profitLabel = [UILabel new];
     [self.contentView addSubview:profitLabel];
     self.profitLabel = profitLabel;
-    self.profitLabel.font = [UIFont systemFontOfSize:13.];
+    self.profitLabel.font = [UIFont systemFontOfSize:14.];
     self.profitLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    
+    
+    UIButton *lookWirter = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:lookWirter];
+    [lookWirter setTitle:@"查看文案" forState:UIControlStateNormal];
+    [lookWirter setTitleColor:[UIColor timeLabelColor] forState:UIControlStateNormal];
+    lookWirter.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [lookWirter setImage:[UIImage imageNamed:@"copyWenan"] forState:UIControlStateNormal];
+    lookWirter.layer.masksToBounds = YES;
+    lookWirter.layer.borderWidth = 0.5f;
+    lookWirter.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    lookWirter.tag = 100;
+    [self.contentView addSubview:lookWirter];
+    
+    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:shareButton];
+    [shareButton setTitle:@"分享" forState:UIControlStateNormal];
+    [shareButton setTitleColor:[UIColor timeLabelColor] forState:UIControlStateNormal];
+    shareButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [shareButton setImage:[UIImage imageNamed:@"wenanShare"] forState:UIControlStateNormal];
+    shareButton.layer.masksToBounds = YES;
+    shareButton.layer.borderWidth = 0.5f;
+    shareButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    shareButton.tag = 101;
+    [self.contentView addSubview:shareButton];
+    
+    [lookWirter addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [shareButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *lineLabel = [UILabel new];
     [self.contentView addSubview:lineLabel];
-    lineLabel.backgroundColor = [UIColor lineGrayColor];
+    lineLabel.backgroundColor = [UIColor countLabelColor];
+    
+    
+    
+    
     
     kWeakSelf
     
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.contentView).offset(10);
-        make.width.height.mas_equalTo(@(80));
+        make.width.height.mas_equalTo(@(100));
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -80,16 +113,31 @@
     
     [self.PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.titleLabel);
-        make.bottom.equalTo(weakSelf.profitLabel.mas_top).offset(-5);
+        make.bottom.equalTo(weakSelf.profitLabel.mas_top).offset(-10);
     }];
     [self.profitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.titleLabel);
-        make.bottom.equalTo(weakSelf.iconImage.mas_bottom).offset(-5);
+        make.bottom.equalTo(weakSelf.iconImage.mas_bottom).offset(-2);
     }];
+
+    [lookWirter mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.contentView);
+        make.bottom.equalTo(weakSelf.contentView).offset(-15);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+        make.height.mas_equalTo(@(40));
+    }];
+    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(weakSelf.contentView);
+        make.bottom.equalTo(weakSelf.contentView).offset(-15);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+        make.height.mas_equalTo(@(40));
+    }];
+    
     [lineLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.equalTo(weakSelf.contentView);
-        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH, 0.5));
+        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH, 15));
     }];
+    
     
 }
 
@@ -98,7 +146,13 @@
 
 - (void)setModel:(JMHomeHourModel *)model {
     _model = model;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[model.pic imageGoodsOrderCompression] JMUrlEncodedString]]];
+    NSString *picString = model.pic;
+    NSMutableString *newImageUrl = [NSMutableString stringWithString:picString];
+    if ([picString hasPrefix:@"http:"] || [picString hasPrefix:@"https:"]) {
+    }else {
+        [newImageUrl insertString:@"http:" atIndex:0];
+    }
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.titleLabel.text = model.name;
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [model.price floatValue]];
     NSDictionary *profitDic = model.profit;
@@ -106,20 +160,15 @@
     
     
 }
+- (void)buttonClick:(UIButton *)button {
+    if (_delegate && [_delegate respondsToSelector:@selector(composeHourCell:Model:ButtonClick:)]) {
+        [_delegate composeHourCell:self Model:self.model ButtonClick:button];
+    }
+    
+}
 
 
 @end
-
-
-
-
-
-
-
-
-
-
-
 
 
 

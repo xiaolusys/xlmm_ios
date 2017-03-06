@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JMPageScrollController.h"
 
-
-@interface JMHomeHourController : UIViewController
+@interface JMHomeHourController : JMPageScrollController
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITableView *tableView;

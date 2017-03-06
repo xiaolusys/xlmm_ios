@@ -13,7 +13,7 @@
 #import "JMClassifyListController.h"
 #import "JMCategoryContentCell.h"
 #import "JMSearchViewController.h"
-
+#import "JMReloadEmptyDataView.h"
 
 #define TabWidth SCREENWIDTH * 0.25
 #define ColWidth SCREENWIDTH * 0.75
@@ -23,7 +23,7 @@ static NSString * CategoryCellId = @"JMHomeRootCategoryCell";
 
 static NSUInteger selectedIndex = 0;
 
-@interface JMHomeRootCategoryController () <UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface JMHomeRootCategoryController () <UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,CSTableViewPlaceHolderDelegate>
 
 
 @property (nonatomic, strong) UITableView *mainTableView;
@@ -36,6 +36,8 @@ static NSUInteger selectedIndex = 0;
 @property (nonatomic, strong) NSMutableArray *colSectionDataSource;
 
 @property (nonatomic, strong) JMEmptyView *empty;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
+
 
 @end
 
@@ -191,8 +193,8 @@ static NSUInteger selectedIndex = 0;
     
     [self.view addSubview:self.mainTableView];
     
-    [self emptyView];
-    self.empty.hidden = YES;
+//    [self emptyView];
+//    self.empty.hidden = YES;
 }
 - (void)crateContentTableView {
     // 添加测试数据
@@ -208,8 +210,8 @@ static NSUInteger selectedIndex = 0;
     
     [self.view addSubview:self.contentTableView];
     
-    [self emptyView];
-    self.empty.hidden = YES;
+//    [self emptyView];
+//    self.empty.hidden = YES;
     
 }
 - (void)createCollectionView {
@@ -229,17 +231,29 @@ static NSUInteger selectedIndex = 0;
     
     
 }
-
-- (void)emptyView {
-    //    kWeakSelf
-    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth, 220, SCREENWIDTH - TabWidth, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
-    [self.view addSubview:self.empty];
-    self.empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            //            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-        }
-    };
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"暂时没有分类哦~" DescTitle:@"" ButtonTitle:@"" Image:@"emptyGoods" ReloadBlcok:^{
+//            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
+//- (void)emptyView {
+//    //    kWeakSelf
+//    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(TabWidth, 220, SCREENWIDTH - TabWidth, SCREENHEIGHT - 220) Title:@"暂时没有分类哦~" DescTitle:@"" BackImage:@"emptyGoods" InfoStr:@""];
+//    [self.view addSubview:self.empty];
+//    self.empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            //            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+//        }
+//    };
+//}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectiomn {
@@ -301,20 +315,20 @@ static NSUInteger selectedIndex = 0;
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    self.empty.hidden = YES;
+//    self.empty.hidden = YES;
     NSArray *dicArr = self.colSectionDataSource[selectedIndex];
     if (dicArr.count == 0) {
-        self.empty.hidden = NO;
+//        self.empty.hidden = NO;
     }
     return dicArr.count;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    self.empty.hidden = YES;
+//    self.empty.hidden = YES;
     //    selectedIndex = [(JMContentCollectionView *)collectionView ContentCollectionIndexPath].row;
     NSArray *dicArr = self.colDataSource[selectedIndex];
     NSArray *dicRowArr = dicArr[section];
     if (dicRowArr.count == 0) {
-        self.empty.hidden = NO;
+//        self.empty.hidden = NO;
     }
     return dicRowArr.count;
     

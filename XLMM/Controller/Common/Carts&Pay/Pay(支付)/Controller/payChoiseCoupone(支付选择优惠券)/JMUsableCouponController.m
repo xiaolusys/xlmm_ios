@@ -10,13 +10,15 @@
 #import "JMCouponRootCell.h"
 #import "JMCouponModel.h"
 #import "JMSelecterButton.h"
-#import "JMEmptyView.h"
+#import "CSTableViewPlaceHolderDelegate.h"
+#import "JMReloadEmptyDataView.h"
 
-@interface JMUsableCouponController ()<UITableViewDelegate,UITableViewDataSource>
+@interface JMUsableCouponController ()<UITableViewDelegate,UITableViewDataSource,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) JMSelecterButton *disableButton;
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 
 @end
@@ -32,10 +34,11 @@
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
     if (dataSource.count == 0) {
-        [self emptyView];
+//        [self emptyView];
     }else {
-        [self.tableView reloadData];
+        
     }
+    [self.tableView cs_reloadData];
 }
 
 - (void)createTableView {
@@ -108,16 +111,29 @@
 - (void)changeButtonStatus:(UIButton *)button {
     button.enabled = YES;
 }
-- (void)emptyView {
-    kWeakSelf
-    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
-    [self.view addSubview:empty];
-    empty.block = ^(NSInteger index) {
-        if (index == 100) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        }
-    };
+//- (void)emptyView {
+//    kWeakSelf
+//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 240) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
+//    [self.view addSubview:empty];
+//    empty.block = ^(NSInteger index) {
+//        if (index == 100) {
+//            [weakSelf.navigationController popViewControllerAnimated:YES];
+//        }
+//    };
+//}
+- (UIView *)createPlaceHolderView {
+    return self.reload;
 }
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"emptyYouhuiquanIcon" ReloadBlcok:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
+
 
 - (void)gotoLeadingView{
     [self.navigationController popToRootViewControllerAnimated:YES];
