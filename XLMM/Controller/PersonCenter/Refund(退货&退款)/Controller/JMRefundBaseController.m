@@ -99,7 +99,6 @@
         [self.dataSource removeAllObjects];
         [self fetchedRefundData:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -116,7 +115,6 @@
         if (!responseObject)return;
         [self fetchedRefundData:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -126,14 +124,13 @@
 - (void)fetchedRefundData:(NSDictionary *)data {
     _nextPage = data[@"next"];
     NSArray *results = data[@"results"];
-    if (results.count == 0 ) {
-//        [self emptyView];
-        return;
+    if (results.count != 0 ) {
+        for (NSDictionary *refund in results) {
+            JMRefundModel *refundModel = [JMRefundModel mj_objectWithKeyValues:refund];
+            [self.dataSource addObject:refundModel];
+        }
     }
-    for (NSDictionary *refund in results) {
-        JMRefundModel *refundModel = [JMRefundModel mj_objectWithKeyValues:refund];
-        [self.dataSource addObject:refundModel];
-    }
+    [self.tableView cs_reloadData];
 }
 #pragma mark ---UItableView的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

@@ -10,6 +10,7 @@
 
 @interface NSString (URL)
 
+
 - (NSString *)JMUrlEncodedString;
 
 - (NSString *)JMURLDecodedString;

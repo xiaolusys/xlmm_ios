@@ -22,7 +22,6 @@
 #import "JMPayment.h"
 #import "JMCartViewController.h"
 #import "JMPurchaseController.h"
-#import "JMPushingDaysController.h"
 #import "JMFineCounpGoodsController.h"
 #import "JMMaMaHomeController.h"
 

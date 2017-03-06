@@ -44,3 +44,30 @@
 
 
 @end
+
+
+/*
+ {
+ "carry_description" = "\U606d\U559c\Uff0c\U53c8\U589e\U52a0\U4e00\U540d\U7c89\U4e1d\Uff01";
+ "carry_num" = "0.1";
+ "carry_type" = 3;
+ "carry_type_name" = "\U5956\U91d1";
+ "carry_value" = "0.1";
+ created = "2017-03-01T20:14:45";
+ "date_field" = "2017-03-01";
+ "mama_id" = 1;
+ modified = "2017-03-01T20:14:45";
+ status = 2;
+ "status_display" = "\U786e\U5b9a\U6536\U76ca";
+ "today_carry" = "0.1";
+ },
+
+ */
+
+
+
+
+
+
+
+

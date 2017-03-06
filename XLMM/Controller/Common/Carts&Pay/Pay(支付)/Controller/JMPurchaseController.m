@@ -17,9 +17,7 @@
 #import "AddressModel.h"
 #import "GoodsInfoModel.h"
 #import "JMOrderPayView.h"
-#import "UIView+RGSize.h"
 #import "WXApi.h"
-//#import "Pingpp.h"
 #import "JMOrderListController.h"
 #import "JMPayShareController.h"
 #import "JMSegmentController.h"
@@ -881,16 +879,16 @@ static BOOL isAgreeTerms = YES;
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.payView];
     self.maskView.alpha = 0;
-    self.payView.top = self.view.height - 150;
+    self.payView.cs_y = self.view.cs_h - 150;
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0.3;
-        self.payView.bottom = self.view.height;
+        self.payView.bottom = self.view.cs_h;
     }];
 }
 - (void)hidePickerView {
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0;
-        self.payView.top = self.view.height;
+        self.payView.cs_y = self.view.cs_h;
     } completion:^(BOOL finished) {
         [self.maskView removeFromSuperview];
         [self.payView removeFromSuperview];

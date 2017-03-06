@@ -110,7 +110,6 @@
         [self.sectionDataSource removeAllObjects];
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -125,10 +124,8 @@
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -136,30 +133,23 @@
     }];
 }
 - (void)refetch:(NSDictionary *)data {
-    
     _urlStr = data[@"next"];
     NSArray *allArr = data[@"results"];
-    if (allArr.count == 0) {
-        //没有订单
-//        self.empty.hidden = NO;
-        return ;
-    }
-//    self.empty.hidden = YES;
-    
-    for (NSDictionary *allDic in allArr) {
-        JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
-        [self.sectionDataSource addObject:allModel];
-        
-        _goodsArray = [NSMutableArray array];
-        NSArray *goodsArr = allDic[@"orders"];
-        for (NSDictionary *goodsDic in goodsArr) {
-            JMOrderGoodsModel *fetureModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsDic];
-            [_goodsArray addObject:fetureModel];
+    if (allArr.count != 0) {
+        for (NSDictionary *allDic in allArr) {
+            JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
+            [self.sectionDataSource addObject:allModel];
+            
+            _goodsArray = [NSMutableArray array];
+            NSArray *goodsArr = allDic[@"orders"];
+            for (NSDictionary *goodsDic in goodsArr) {
+                JMOrderGoodsModel *fetureModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsDic];
+                [_goodsArray addObject:fetureModel];
+            }
+            [self.dataSource addObject:_goodsArray];
         }
-        [self.dataSource addObject:_goodsArray];
     }
-    
-    
+    [self.tableView cs_reloadData];
 }
 - (void)createTabelView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) style:UITableViewStylePlain];

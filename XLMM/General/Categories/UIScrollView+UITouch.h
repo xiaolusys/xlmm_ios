@@ -10,7 +10,6 @@
 
 @interface UIScrollView (UITouch)
 
-
 /**
  *  判断指定的frame是否在当前屏幕的可视范围内
  *

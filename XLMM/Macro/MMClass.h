@@ -24,7 +24,7 @@
 #import "JMDevice.h"
 #import "UITableView+CSTableViewPlaceHolder.h"
 #import "UICollectionView+CSCollectionViewPlaceHolder.h"
-
+#import "UIView+RGSize.h"
 
 
 //#import "NSDictionary+Log.h"
@@ -54,6 +54,7 @@
  *  循环引用
  */
 #define kWeakSelf __weak typeof (self) weakSelf = self;
+#define kStrongSelf __strong typeof (weakSelf) strongSelf = weakSelf;
 // 当前版本
 #define FSystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define SSystemVersion ([[UIDevice currentDevice] systemVersion])

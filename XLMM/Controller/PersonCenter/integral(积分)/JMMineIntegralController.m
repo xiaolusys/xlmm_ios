@@ -69,6 +69,34 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 120)];
+    sectionView.backgroundColor = [UIColor whiteColor];
+    UILabel *valueLabel = [UILabel new];
+    [sectionView addSubview:valueLabel];
+    valueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    valueLabel.font = [UIFont systemFontOfSize:40.];
+    self.valueLabel = valueLabel;
+    self.valueLabel.text = [NSString stringWithFormat:@"%.2f",[_valueString floatValue]];;
+    
+    UILabel *titleLabel = [UILabel new];
+    [sectionView addSubview:titleLabel];
+    titleLabel.textColor = [UIColor buttonTitleColor];
+    titleLabel.font = [UIFont systemFontOfSize:14.];
+    titleLabel.text = @"我的小鹿币";
+    
+    [valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(sectionView.mas_centerX);
+        make.top.equalTo(sectionView).offset(20);
+    }];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(sectionView.mas_centerX);
+        make.top.equalTo(valueLabel.mas_bottom).offset(10);
+    }];
+    
+    self.tableView.tableHeaderView = sectionView;
+    
+    
+    
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -103,13 +131,16 @@
         if (!responseObject) return;
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
         
     }];
 }
+- (void)zhegshitihuanfangfa:(NSString *)canshu {
+    NSLog(@"%@ --> %@",[self class], canshu);
+}
+
 - (void)loadMore {
     if ([NSString isStringEmpty:_urlStr]) {
         [self endRefresh];
@@ -120,7 +151,6 @@
         if (!responseObject) return;
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -130,14 +160,13 @@
 - (void)refetch:(NSDictionary *)data {
     _urlStr = data[@"next"];
     NSArray *arr = data[@"results"];
-    if (arr.count == 0) {
-//        [self emptyView];
-    }else {
+    if (arr.count != 0) {
         for (NSDictionary *dic in arr) {
             JMMineIntegralModel *fetureModel = [JMMineIntegralModel mj_objectWithKeyValues:dic];
             [self.dataArray addObject:fetureModel];
         }
     }
+    [self.tableView cs_reloadData];
 }
 - (UIView *)createPlaceHolderView {
     return self.reload;
@@ -171,35 +200,35 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 120;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *sectionView = [UIView new];
-    sectionView.backgroundColor = [UIColor whiteColor];
-    UILabel *valueLabel = [UILabel new];
-    [sectionView addSubview:valueLabel];
-    valueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    valueLabel.font = [UIFont systemFontOfSize:40.];
-    self.valueLabel = valueLabel;
-    self.valueLabel.text = [NSString stringWithFormat:@"%.2f",[_valueString floatValue]];;
-    
-    UILabel *titleLabel = [UILabel new];
-    [sectionView addSubview:titleLabel];
-    titleLabel.textColor = [UIColor buttonTitleColor];
-    titleLabel.font = [UIFont systemFontOfSize:14.];
-    titleLabel.text = @"我的小鹿币";
-    
-    [valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(sectionView.mas_centerX);
-        make.top.equalTo(sectionView).offset(20);
-    }];
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(sectionView.mas_centerX);
-        make.top.equalTo(valueLabel.mas_bottom).offset(10);
-    }];
-    return sectionView;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 120;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    UIView *sectionView = [UIView new];
+//    sectionView.backgroundColor = [UIColor whiteColor];
+//    UILabel *valueLabel = [UILabel new];
+//    [sectionView addSubview:valueLabel];
+//    valueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+//    valueLabel.font = [UIFont systemFontOfSize:40.];
+//    self.valueLabel = valueLabel;
+//    self.valueLabel.text = [NSString stringWithFormat:@"%.2f",[_valueString floatValue]];;
+//    
+//    UILabel *titleLabel = [UILabel new];
+//    [sectionView addSubview:titleLabel];
+//    titleLabel.textColor = [UIColor buttonTitleColor];
+//    titleLabel.font = [UIFont systemFontOfSize:14.];
+//    titleLabel.text = @"我的小鹿币";
+//    
+//    [valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(sectionView.mas_centerX);
+//        make.top.equalTo(sectionView).offset(20);
+//    }];
+//    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(sectionView.mas_centerX);
+//        make.top.equalTo(valueLabel.mas_bottom).offset(10);
+//    }];
+//    return sectionView;
+//}
 
 #pragma mark 返回顶部  image == >backTop
 - (void)createButton {
@@ -231,14 +260,8 @@
     }
 }
 #pragma mark -- 添加滚动的协议方法
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat currentOffset = offset.y;
-    if (currentOffset > SCREENHEIGHT) {
-        self.topButton.hidden = NO;
-    }else {
-        self.topButton.hidden = YES;
-    }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

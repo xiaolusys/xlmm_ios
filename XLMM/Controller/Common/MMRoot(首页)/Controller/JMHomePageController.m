@@ -64,6 +64,7 @@
 @property (nonatomic, strong) JMLaunchView *launchView;
 
 @property (nonatomic, strong) UIView *suspensionView;
+@property (nonatomic, strong) JMHomeFirstController *homeFirst;
 
 @end
 
@@ -94,6 +95,9 @@
     if (self.isPopUpdataView == YES) {
         [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
     }else {
+    }
+    if (self.homeFirst) {
+        [self.homeFirst refresh];
     }
 }
 - (void)presentView:(NSNotification *)notification{
@@ -166,6 +170,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
     [[JMGlobal global] clearAllSDCache];
 }
 - (void)viewDidLoad {
@@ -283,6 +288,7 @@
             homeFirst.pageController = self;
             homeFirst.topImageArray = _topImageArray;
             [self addChildViewController:homeFirst];
+            self.homeFirst = homeFirst;
         }else if (i == 1){
             JMFineCounpGoodsController *fineVC = [[JMFineCounpGoodsController alloc] init];
             [self addChildViewController:fineVC];
@@ -344,7 +350,7 @@
     }
 }
 - (void)createSuspensionView {
-    UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 90, 160, 50)];
+    UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 70, 160, 50)];
     [self.view addSubview:suspensionView];
 //    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(suspensionViewTap:)];
 //    [suspensionView addGestureRecognizer:pan];

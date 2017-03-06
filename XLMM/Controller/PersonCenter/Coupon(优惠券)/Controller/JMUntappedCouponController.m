@@ -64,9 +64,7 @@
 }
 - (void)setCouponArray:(NSArray *)couponArray {
     _couponArray = couponArray;
-    if (couponArray.count == 0) {
-//        [self emptyView];
-    }else {
+    if (couponArray.count != 0) {
         for (NSDictionary *dic in couponArray) {
             self.couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:self.couponModel];

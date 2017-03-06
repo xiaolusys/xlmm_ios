@@ -16,12 +16,10 @@
 #import "Udesk.h"
 #import "JMStoreManager.h"
 #import "JMRewardsController.h"
-#import "JMPushingDaysController.h"
 #import "ProductSelectionListViewController.h"
 #import "JMVipRenewController.h"
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
-#import "MaClassifyCarryLogViewController.h"
 #import "JMRootTabBarController.h"
 #import "JMWithdrawShortController.h"
 #import "TodayVisitorViewController.h"
@@ -38,7 +36,7 @@
 #import "PublishNewPdtViewController.h"
 #import "JMMaMaFansController.h"
 #import "JMOrderListController.h"
-
+#import "JMTotalEarningController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -512,7 +510,7 @@
             break;
         case 110:
         {
-            MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
             carry.earningsRecord = _earningsRecord;
             carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
@@ -554,7 +552,7 @@
             break;
         case 115:
         {
-            MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
             carry.earningsRecord = _earningsRecord;
             carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];

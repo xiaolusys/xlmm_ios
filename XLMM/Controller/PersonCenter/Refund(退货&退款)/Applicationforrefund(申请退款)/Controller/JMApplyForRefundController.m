@@ -53,10 +53,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self registerForKeyboardNotifications];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     [self unregisterForKeyboardNotifications];
 }
 - (void)keyboardWasShown:(NSNotification *)Notification {

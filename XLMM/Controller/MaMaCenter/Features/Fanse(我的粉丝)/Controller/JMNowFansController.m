@@ -99,7 +99,6 @@
         }
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -116,7 +115,6 @@
         if (!responseObject) return;
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -127,14 +125,13 @@
     _urlStr = data[@"next"];
     
     NSArray *arr = data[@"results"];
-    if (arr.count == 0) {
-//        [self emptyView];
-    }else {
+    if (arr.count != 0) {
         for (NSDictionary *dic in arr) {
             FanceModel *fetureModel = [FanceModel mj_objectWithKeyValues:dic];
             [self.dataArray addObject:fetureModel];
         }
     }
+    [self.tableView cs_reloadData];
 }
 
 //#pragma mark --- 没有粉丝展示
@@ -229,13 +226,7 @@
 }
 #pragma mark -- 添加滚动的协议方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat currentOffset = offset.y;
-    if (currentOffset > SCREENHEIGHT) {
-        self.topButton.hidden = NO;
-    }else {
-        self.topButton.hidden = YES;
-    }
+    self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;
 }
 
 

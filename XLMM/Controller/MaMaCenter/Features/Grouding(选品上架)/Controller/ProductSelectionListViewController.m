@@ -418,17 +418,13 @@
     NSArray *array = [dic objectForKey:@"results"];
     self.nextUrl = dic[@"next"];
     NSLog(@"next = %@", self.nextUrl);
-    if (array.count == 0) {
-//        self.empty.hidden = NO;
-        return;
+    if (array.count != 0) {
+        for (NSDictionary *dict in array) {
+            self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dict];
+            [self.dataArr addObject:self.listModel];
+        }
     }
-//    self.empty.hidden = YES;
-    for (NSDictionary *dict in array) {
-        self.listModel = [JMProductSelectionListModel mj_objectWithKeyValues:dict];
-        [self.dataArr addObject:self.listModel];
-    }
-    
-    
+    [self.tableView cs_reloadData];
 }
 - (void)loadDataSource {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil  WithSuccess:^(id responseObject) {
@@ -436,7 +432,6 @@
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -451,7 +446,6 @@
         [self.dataArr removeAllObjects];
         [self fetchedDatalist:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
         [MBProgressHUD hideHUDForView:self.view];
     } WithFail:^(NSError *error) {
         [self endRefresh];
@@ -470,7 +464,6 @@
         if (!responseObject) return;
         [self fetchedDatalist:responseObject];
         [self endRefresh];
-        [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
