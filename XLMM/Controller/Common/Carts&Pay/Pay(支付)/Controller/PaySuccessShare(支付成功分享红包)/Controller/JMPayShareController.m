@@ -12,7 +12,7 @@
 #import "JMSharePackView.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
-#import "PersonOrderViewController.h"
+#import "JMOrderListController.h"
 
 @interface JMPayShareController ()<UITableViewDelegate,UITableViewDataSource,JMPaySucTitleViewDelegate>
 
@@ -147,8 +147,8 @@
 }
 - (void)jumpToWaitReceipt {
     // 支付成功后,跳转到待收货页面
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 102;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 2;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 

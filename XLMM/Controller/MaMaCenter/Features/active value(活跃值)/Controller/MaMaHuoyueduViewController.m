@@ -255,14 +255,8 @@
     }
 }
 #pragma mark -- 添加滚动的协议方法
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat currentOffset = offset.y;
-    if (currentOffset > SCREENHEIGHT) {
-        self.topButton.hidden = NO;
-    }else {
-        self.topButton.hidden = YES;
-    }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;
 }
 
 @end

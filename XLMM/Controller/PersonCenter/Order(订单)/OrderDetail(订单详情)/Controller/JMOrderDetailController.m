@@ -29,13 +29,13 @@
 #import "JMShareModel.h"
 #import "JMPayShareController.h"
 #import "WXApi.h"
-#import "PersonOrderViewController.h"
 #import "JMGoodsDetailController.h"
 #import "WebViewController.h"
 #import "JMClassPopView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPayment.h"
 #import "JMGoodsCountTime.h"
+#import "JMOrderListController.h"
 
 
 @interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
@@ -659,12 +659,12 @@
 }
 - (void)popview {
     [MobClick event:@"buy_cancel"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 1;
     [self.navigationController pushViewController:orderVC animated:YES];
     NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
     for (UIViewController *vc in marr) {
-        if ([vc isKindOfClass:[PersonOrderViewController class]]) {
+        if ([vc isKindOfClass:[JMOrderListController class]]) {
             [marr removeObject:vc];
             break;
         }

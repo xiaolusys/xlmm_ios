@@ -98,7 +98,6 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
         [self.dataSource removeAllObjects];
         [self fetchFineCouponData:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -116,7 +115,6 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
         if (!responseObject)return;
         [self fetchFineCouponData:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -127,14 +125,14 @@ static NSString *FineCouponCellIdentifier = @"FineCouponCellIdentifier";
 - (void)fetchFineCouponData:(NSDictionary *)dict {
     self.nextPage = dict[@"next"];
     NSArray *resultsArr = dict[@"results"];
-    if (resultsArr.count == 0) {
-//        self.empty.hidden = NO;
-        return ;
+    if (resultsArr.count != 0) {
+        for (NSDictionary *dic in resultsArr) {
+            JMFineCouponModel *model = [JMFineCouponModel mj_objectWithKeyValues:dic];
+            [self.dataSource addObject:model];
+        }
     }
-    for (NSDictionary *dic in resultsArr) {
-        JMFineCouponModel *model = [JMFineCouponModel mj_objectWithKeyValues:dic];
-        [self.dataSource addObject:model];
-    }
+    
+    [self.tableView cs_reloadData];
 }
 
 #pragma mark ---UItableView的代理

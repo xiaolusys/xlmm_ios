@@ -10,7 +10,6 @@
 #import "UMSocial.h"
 #import "SendMessageToWeibo.h"
 #import "WXApi.h"
-#import "UIImage+ImageWithSelectedView.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
 #import "PublishNewPdtViewController.h"
@@ -22,7 +21,7 @@
 #import "IMYWebView.h"
 #import "Webkit/WKScriptMessage.h"
 #import "IosJsBridge.h"
-#import "PersonOrderViewController.h"
+#import "JMOrderListController.h"
 #import "NJKWebViewProgressView.h"
 #import "JMPayShareController.h"
 #import "JMRegisterJS.h"
@@ -148,14 +147,16 @@
     [self.progressView removeFromSuperview];
     [MBProgressHUD hideHUDForView:self.view];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+    
 }
 - (void)dealloc {
     self.baseWebView = nil;
     self.progressView = nil;
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 
 - (void)paySuccessful {
@@ -168,8 +169,8 @@
 - (void)popview {
     NSLog(@"支付取消/支付失败");
     [MobClick event:@"fineCoupon_buyCancel_buyFail"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 1;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 - (void)couponTid:(NSNotification *)sender {
@@ -373,8 +374,8 @@
 }
 - (void)backClicked:(UIButton *)button{
     if (isTeamBuy) {
-        PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-        orderVC.index = 100;
+        JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+        orderVC.currentIndex = 0;
         [self.navigationController pushViewController:orderVC animated:YES];
     }else {
         [self.navigationController popViewControllerAnimated:YES];

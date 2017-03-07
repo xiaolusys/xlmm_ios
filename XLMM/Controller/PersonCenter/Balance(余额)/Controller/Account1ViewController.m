@@ -14,6 +14,7 @@
 #import "JMAccountCell.h"
 #import "CSTableViewPlaceHolderDelegate.h"
 #import "JMReloadEmptyDataView.h"
+#import "JMMineIntegralController.h"
 
 @interface Account1ViewController () <CSTableViewPlaceHolderDelegate>
 @property (nonatomic, strong)UITableView *tableView;
@@ -69,7 +70,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
@@ -85,7 +86,10 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
     accountMoneyValue = [self.accountMoney floatValue];
+
 }
+
+
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
     kWeakSelf
@@ -120,7 +124,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         [self.dataArr removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -138,7 +141,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         if (!responseObject)return;
         [self dataAnalysis:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -148,18 +150,15 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 - (void)dataAnalysis:(NSDictionary *)data {
     self.nextPage = data[@"next"];
     NSArray *results = data[@"results"];
-    if (results.count == 0 ) {
-//        [self emptyView];
-        return;
+    if (results.count != 0 ) {
+        for (NSDictionary *account in results) {
+            AccountModel *accountM = [[AccountModel alloc] init];
+            [accountM setValuesForKeysWithDictionary:account];
+            [self.dataArr addObject:accountM];
+        }
     }
-    for (NSDictionary *account in results) {
-        AccountModel *accountM = [[AccountModel alloc] init];
-        [accountM setValuesForKeysWithDictionary:account];
-        [self.dataArr addObject:accountM];
-    }
-    
+    [self.tableView cs_reloadData];
 }
-
 
 - (void)createRightbutton{
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(SCREENWIDTH - 20, 0, 44, 44)];
@@ -175,7 +174,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 80;
+//    self.tableView.rowHeight = 80;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
@@ -229,7 +228,9 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 - (JMReloadEmptyDataView *)reload {
     if (!_reload) {
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"你的钱包空空如也" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"wallet" ReloadBlcok:^{
-            [self.navigationController popViewControllerAnimated:YES];
+            self.isPopToRootView = YES;
+            [self.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }];
         _reload = reload;
     }
@@ -301,15 +302,10 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     }
 }
 #pragma mark -- 添加滚动的协议方法
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CGPoint offset = scrollView.contentOffset;
-    CGFloat currentOffset = offset.y;
-    if (currentOffset > SCREENHEIGHT) {
-        self.topButton.hidden = NO;
-    }else {
-        self.topButton.hidden = YES;
-    }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.topButton.hidden = scrollView.contentOffset.y > SCREENHEIGHT * 2 ? NO : YES;
 }
+
 #pragma mark ---UItableView的代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArr.count;
@@ -322,7 +318,6 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     }
     AccountModel *accountM = self.dataArr[indexPath.row];
     [cell fillDataOfCell:accountM];
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -336,10 +331,17 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     detailVC.drawDict = [accountM mj_keyValues];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AccountModel *accountM = self.dataArr[indexPath.row];
+    return accountM.cellHeight;
+}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+
 
 
 @end

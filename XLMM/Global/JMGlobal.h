@@ -67,6 +67,11 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
     验证身份证
  */
 - (BOOL)validateIdentityCard:(NSString *)value;
+/*
+    用户身份验证
+ */
+- (BOOL)userVerificationXLMM;
+- (BOOL)userVerificationLogin;
 
 // 获取图片
 - (NSData *)getCacheImageWithKey:(NSString *)key;

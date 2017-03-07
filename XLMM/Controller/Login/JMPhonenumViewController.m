@@ -11,7 +11,6 @@
 #import "MiPushSDK.h"
 #import "VerifyPhoneViewController.h"
 #import "JMLineView.h"
-#import "JMHomeRootController.h"
 #import "JMLogInViewController.h"
 
 #define rememberPwdKey @"rememberPwd"

@@ -113,7 +113,7 @@
 #pragma mark --- 类方法封装
 + (JMPopMenuView *)createMenuWithFrame:(CGRect)frame target:(UIViewController *)target dataArray:(NSArray *)dataArray itemsClickBlock:(void(^)(NSString *str, NSInteger tag))itemsClickBlock backViewTap:(void(^)())backViewTapBlock{
     CGFloat menuWidth = frame.size.width ? frame.size.width : 120;
-    JMPopMenuView *menuView = [[JMPopMenuView alloc] initWithFrame:CGRectMake(0, 0, menuWidth, 40 * 8)]; // dataArray.count
+    JMPopMenuView *menuView = [[JMPopMenuView alloc] initWithFrame:CGRectMake(0, 0, menuWidth, 40 * KDefaultMaxValue)]; // dataArray.count
     menuView.selfMenu = menuView;
     menuView.itemsClickBlock = itemsClickBlock;
     menuView.backViewTapBlock = backViewTapBlock;

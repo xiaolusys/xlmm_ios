@@ -7,6 +7,7 @@
 //
 
 #import "JMPurchaseHeaderView.h"
+#import "JMAddressModel.h"
 
 
 @interface JMPurchaseHeaderView ()
@@ -48,12 +49,12 @@
         
     }
 }
-- (void)setAddressModel:(AddressModel *)addressModel {
+- (void)setAddressModel:(JMAddressModel *)addressModel {
     _addressModel = addressModel;
     self.nomalLabel.hidden = YES;
-    self.addressNameLabel.text = addressModel.buyerName;
-    self.addressPhoneLabel.text = addressModel.phoneNumber;
-    self.addressDetailLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.provinceName,addressModel.cityName,addressModel.countyName,addressModel.streetName];
+    self.addressNameLabel.text = addressModel.receiver_name;
+    self.addressPhoneLabel.text = addressModel.receiver_mobile;
+    self.addressDetailLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.receiver_state,addressModel.receiver_city,addressModel.receiver_district,addressModel.receiver_address];
 }
 - (void)setIsVirtualCoupone:(BOOL)isVirtualCoupone {
     _isVirtualCoupone = isVirtualCoupone;

@@ -9,7 +9,6 @@
 #import <UIImageView+WebCache.h>
 #import "UIColor+RGBColor.h"
 #import "UIImage+ImageWithUrl.h"
-#import "NSArray+Log.h"
 #import <AFNetworking.h>
 #import <MJExtension.h>
 #import <Masonry.h>
@@ -25,7 +24,7 @@
 #import "JMDevice.h"
 #import "UITableView+CSTableViewPlaceHolder.h"
 #import "UICollectionView+CSCollectionViewPlaceHolder.h"
-
+#import "UIView+RGSize.h"
 
 
 //#import "NSDictionary+Log.h"
@@ -55,6 +54,7 @@
  *  循环引用
  */
 #define kWeakSelf __weak typeof (self) weakSelf = self;
+#define kStrongSelf __strong typeof (weakSelf) strongSelf = weakSelf;
 // 当前版本
 #define FSystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define SSystemVersion ([[UIDevice currentDevice] systemVersion])
@@ -70,6 +70,7 @@
 
 #define kUrlScheme @"wx25fcb32689872499" // 这个是你定义的 URL Scheme，支付宝、微信支付和测试模式需要。
 
+#define ktabBarHeight 49     // 底部tabBar的高度
 
 #define kVisitorDay @14      // 加载访客记录(天数)
 #define KTITLENAME @"小鹿美美"

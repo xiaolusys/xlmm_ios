@@ -17,7 +17,6 @@
 #import "WXApi.h"
 #import "UUID.h"
 #import "SSKeychain.h"
-#import "JMRootTabBarController.h"
 
 
 #define kService [NSBundle mainBundle].bundleIdentifier
@@ -195,8 +194,6 @@
  */
 + (void)callNativeBackToHome:(UIViewController *)vc{
     if(vc != nil){
-//        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//        JMKeyWindow.rootViewController = tabBarVC;
         [vc.navigationController popViewControllerAnimated:YES];
     }
 }

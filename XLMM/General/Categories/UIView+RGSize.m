@@ -10,33 +10,106 @@
 
 @implementation UIView (RGSize)
 
-- (CGFloat)left {
+- (CGFloat)cs_x {
     return self.frame.origin.x;
 }
-- (void)setLeft:(CGFloat)x {
-    CGRect frame = self.frame;
-    frame.origin.x = x;
-    self.frame = frame;
+- (void)setCs_x:(CGFloat)x {
+    CGRect rect = self.frame;
+    rect.origin.x = x;
+    self.frame = rect;
 }
-- (void)leftAdd:(CGFloat)add{
-    CGRect frame = self.frame;
-    frame.origin.x += add;
-    self.frame = frame;
-}
-
-
-- (CGFloat)top {
+- (CGFloat)cs_y {
     return self.frame.origin.y;
 }
-- (void)setTop:(CGFloat)y {
+- (void)setCs_y:(CGFloat)y {
+    CGRect rect = self.frame;
+    rect.origin.y = y;
+    self.frame = rect;
+}
+- (CGFloat)cs_w {
+    return self.frame.size.width;
+}
+- (void)setCs_w:(CGFloat)w {
+    CGRect rect = self.frame;
+    rect.size.width = w;
+    self.frame = rect;
+}
+
+- (CGFloat)cs_h {
+    return self.frame.size.height;
+}
+- (void)setCs_h:(CGFloat)h {
+    CGRect rect = self.frame;
+    rect.size.height = h;
+    self.frame = rect;
+}
+- (CGFloat)cs_centerX {
+    return self.center.x;
+}
+- (void)setCs_centerX:(CGFloat)centerX {
+    CGPoint center = self.center;
+    center.x = centerX;
+    self.center = center;
+}
+- (CGFloat)cs_centerY {
+    return self.center.y;
+}
+- (void)setCs_centerY:(CGFloat)centerY {
+    CGPoint center = self.center;
+    center.y = centerY;
+    self.center = center;
+}
+- (CGFloat)cs_max_X {
+    return CGRectGetMaxX(self.frame);
+}
+- (void)setCs_max_X:(CGFloat)cs_max_X {
+}
+- (CGFloat)cs_max_Y {
+    return CGRectGetMaxY(self.frame);
+}
+- (void)setCs_max_Y:(CGFloat)cs_max_Y {
+}
+- (CGSize)cs_size {
+    return self.frame.size;
+}
+- (void)setCs_size:(CGSize)cs_size {
     CGRect frame = self.frame;
-    frame.origin.y = y;
+    frame.size = cs_size;
     self.frame = frame;
 }
-- (void)topAdd:(CGFloat)add{
+- (CGPoint)cs_origin {
+    return self.frame.origin;
+}
+- (void)setCs_origin:(CGPoint)origin {
     CGRect frame = self.frame;
-    frame.origin.y += add;
+    frame.origin = origin;
     self.frame = frame;
+}
+
+
+- (CGFloat)cs_top {
+    return self.frame.origin.y;
+}
+- (void)setCs_top:(CGFloat)top {
+    self.frame = CGRectMake(self.cs_left, top, self.cs_w, self.cs_h);
+}
+- (CGFloat)cs_bottom {
+    return self.frame.origin.y + self.frame.size.height;
+}
+- (void)setCs_bottom:(CGFloat)bottom {
+    self.frame = CGRectMake(self.cs_left, bottom - self.cs_h, self.cs_w, self.cs_h);
+}
+- (CGFloat)cs_left {
+    return self.frame.origin.x;
+}
+- (void)setCs_left:(CGFloat)left {
+    self.frame = CGRectMake(left, self.cs_top, self.cs_w, self.cs_h);
+}
+- (CGFloat)cs_right {
+    return self.frame.origin.x + self.frame.size.width;
+}
+- (void)setCs_right:(CGFloat)right {
+    self.frame = CGRectMake(right - self.cs_w, self.cs_top, self.cs_w, self.cs_h);
 }
 
 
@@ -58,30 +131,19 @@
     self.frame = frame;
 }
 
-
-
-
-- (CGFloat)width {
-    return self.frame.size.width;
-}
-- (void)setWidth:(CGFloat)width {
+- (void)leftAdd:(CGFloat)add{
     CGRect frame = self.frame;
-    frame.size.width = width;
+    frame.origin.x += add;
+    self.frame = frame;
+}
+- (void)topAdd:(CGFloat)add{
+    CGRect frame = self.frame;
+    frame.origin.y += add;
     self.frame = frame;
 }
 - (void)widthAdd:(CGFloat)add {
     CGRect frame = self.frame;
     frame.size.width += add;
-    self.frame = frame;
-}
-
-
-- (CGFloat)height {
-    return self.frame.size.height;
-}
-- (void)setHeight:(CGFloat)height {
-    CGRect frame = self.frame;
-    frame.size.height = height;
     self.frame = frame;
 }
 - (void)heightAdd:(CGFloat)add {
@@ -90,22 +152,28 @@
     self.frame = frame;
 }
 
+- (UIView *)findFirstResponder {
+    if (self.isFirstResponder) {
+        return self;
+    }
+    for (UIView *subView in self.subviews) {
+        UIView *responder = [subView findFirstResponder];
+        if (responder) return responder;
+    }
+    return nil;
+}
 
-- (CGPoint)origin {
-    return self.frame.origin;
-}
-- (void)setOrigin:(CGPoint)origin {
-    CGRect frame = self.frame;
-    frame.origin = origin;
-    self.frame = frame;
-}
-- (CGSize)size {
-    return self.frame.size;
-}
-- (void)setSize:(CGSize)size {
-    CGRect frame = self.frame;
-    frame.size = size;
-    self.frame = frame;
-}
+
 
 @end
+
+
+
+
+
+
+
+
+
+
+

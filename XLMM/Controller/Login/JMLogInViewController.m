@@ -54,7 +54,7 @@
 
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick1:)];
     

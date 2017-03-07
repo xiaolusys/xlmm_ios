@@ -8,7 +8,6 @@
 
 #import "JMEditAddressController.h"
 #import "JMEditAddressModel.h"
-#import "UIView+RGSize.h"
 #import "JMSelecterButton.h"
 #import "AddressPickerView.h"
 #import "AddressModel.h"

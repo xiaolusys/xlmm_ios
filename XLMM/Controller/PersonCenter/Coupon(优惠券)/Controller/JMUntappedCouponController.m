@@ -64,9 +64,7 @@
 }
 - (void)setCouponArray:(NSArray *)couponArray {
     _couponArray = couponArray;
-    if (couponArray.count == 0) {
-//        [self emptyView];
-    }else {
+    if (couponArray.count != 0) {
         for (NSDictionary *dic in couponArray) {
             self.couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:self.couponModel];
@@ -99,6 +97,7 @@
 - (JMReloadEmptyDataView *)reload {
     if (!_reload) {
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"emptyYouhuiquanIcon" ReloadBlcok:^{
+            self.isPopToRootView = YES;
             [self.navigationController popViewControllerAnimated:YES];
         }];
         _reload = reload;
@@ -147,7 +146,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MobClick endLogPageView:@"YouHuiQuan"];
 }

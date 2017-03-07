@@ -8,7 +8,6 @@
 
 #import "JMHomeHourCell.h"
 #import "JMHomeHourModel.h"
-#import "UIView+RGSize.h"
 
 
 @interface JMHomeHourCell ()

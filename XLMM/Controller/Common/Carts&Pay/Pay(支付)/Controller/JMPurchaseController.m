@@ -13,14 +13,12 @@
 #import "CartListModel.h"
 #import "JMChoiseLogisController.h"
 #import "JMPopLogistcsModel.h"
-#import "AddressViewController.h"
+#import "JMAddressViewController.h"
 #import "AddressModel.h"
 #import "GoodsInfoModel.h"
 #import "JMOrderPayView.h"
-#import "UIView+RGSize.h"
 #import "WXApi.h"
-//#import "Pingpp.h"
-#import "PersonOrderViewController.h"
+#import "JMOrderListController.h"
 #import "JMPayShareController.h"
 #import "JMSegmentController.h"
 #import "JMCouponModel.h"
@@ -29,10 +27,11 @@
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
 #import "JMPayment.h"
+#import "JMAddressModel.h"
 
 
 
-@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
+@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,JMAddressViewControllerDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
     NSDictionary *_couponData;
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
@@ -68,10 +67,17 @@
     NSString *_orderGoodsIDNum;       //订单商品编号
     NSInteger _flagCount;             //标志是否弹出延迟框
     BOOL _isTeamBuyGoods;             //是否为团购
-    BOOL _isBondedGoods;              //是否为保税商品
-    BOOL _isIndentifierNum;           // 身份证号是否为空
+//    BOOL _isBondedGoods;              //是否为保税商品
+//    BOOL _isIndentifierNum;           // 身份证号是否为空
     BOOL _isVirtualCoupone;           // 是否为虚拟优惠券
     NSInteger _couponNumber;          // 优惠券购买商品个数
+    BOOL _isPerfectAddressInfo;       // 是否需要完善地址信息  carts_payinfo 的 max_personalinfo_level > 地址的 personalinfo_level 需要完善(YES)
+    NSInteger _cartsInfoLevel;        // carts_payinfo 的 max_personalinfo_level
+    NSInteger _addressInfoLevel;      // 地址的 personalinfo_level
+    
+    BOOL _cartPayInfoLoadFinish;
+    BOOL _addressInfoLoadFinish;
+    
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -196,10 +202,14 @@ static BOOL isAgreeTerms = YES;
     self.isUserCoupon = NO;
     self.isCouponEnoughPay = NO;
     self.isxiaoluCoin = NO;
-    _isIndentifierNum = NO;
-    _isBondedGoods = NO;
+//    _isIndentifierNum = NO;
+//    _isBondedGoods = NO;
     _isVirtualCoupone = NO;
+    _cartPayInfoLoadFinish = NO;
+    _addressInfoLoadFinish = NO;
     
+    _cartsInfoLevel = 0;
+    _addressInfoLevel = 0;
     _totalPayment = 0;              //应付款金额
     _discountfee = 0;               //优惠券金额
     _rightAmount = 0;               //app优惠
@@ -235,9 +245,11 @@ static BOOL isAgreeTerms = YES;
         if (!responseObject) return ;
         [self.logisticsArr removeAllObjects];
         [self.purchaseGoodsArr removeAllObjects];
+        _cartPayInfoLoadFinish = YES;
         [self fetchedCartsData:responseObject];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
+        _cartPayInfoLoadFinish = NO;
         [MBProgressHUD showError:@"获取数据失败"];
     } Progress:^(float progress) {
     }];
@@ -246,9 +258,11 @@ static BOOL isAgreeTerms = YES;
 - (void)loadAddressInfo {
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kAddress_List_URL WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
+        _addressInfoLoadFinish = YES;
         [self fetchedAddressData:responseObject];
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
+        _addressInfoLoadFinish = NO;
         [MBProgressHUD showError:@"获取数据失败"];
     } Progress:^(float progress) {
         
@@ -257,24 +271,20 @@ static BOOL isAgreeTerms = YES;
 - (void)fetchedAddressData:(NSArray *)purchaseArr {
     if (purchaseArr.count == 0) {
         _addressID = @"";
-        _isIndentifierNum = YES;
     }else {
         NSDictionary *dic = purchaseArr[0];
+        _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
         _addressID = [dic[@"id"] stringValue];
-        if ([NSString isStringEmpty:dic[@"identification_no"]]) {
-            _isIndentifierNum = YES;
-        }else {
-            _isIndentifierNum = NO;
-        }
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
-    
-    if (_isIndentifierNum && _isBondedGoods) {
-        [self userNotIdCardNumberMessage];
+    if (_addressInfoLoadFinish && _cartPayInfoLoadFinish) {
+        if (_cartsInfoLevel > _addressInfoLevel) {
+            [self userNotIdCardNumberMessage];
+        }
     }
-    
 }
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
+    _cartsInfoLevel = [purchaseDic[@"max_personalinfo_level"] integerValue];
     NSArray *goodsArr = purchaseDic[@"cart_list"];
     NSDictionary *teamGoodsDic = goodsArr[0];
     if ([self.directBuyGoodsTypeNumber isEqualToNumber:@5]) {
@@ -285,11 +295,6 @@ static BOOL isAgreeTerms = YES;
     for (NSDictionary *dic in goodsArr) {
         if ([dic[@"product_type"] integerValue] == 1) {
             _isVirtualCoupone = YES;
-        }
-        if ([dic[@"is_bonded_goods"] boolValue]) {
-            _isBondedGoods = (_isBondedGoods || YES);
-        }else {
-            _isBondedGoods = (_isBondedGoods || NO);
         }
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.purchaseGoodsArr addObject:model];
@@ -369,10 +374,7 @@ static BOOL isAgreeTerms = YES;
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
     [self calculationLabelValue];
-    
-    if (_isIndentifierNum && _isBondedGoods) {
-        [self userNotIdCardNumberMessage];
-    }
+
     if (_isVirtualCoupone) {
         CGRect frame = self.purchaseHeaderView.frame;
         frame.size.height = 60;
@@ -381,6 +383,13 @@ static BOOL isAgreeTerms = YES;
     }
     self.purchaseHeaderView.isVirtualCoupone = _isVirtualCoupone;
     self.purchaseFooterView.isShowXiaoluCoinView = (_xiaoluCoinValue > 0 ? YES : NO) && _isVirtualCoupone;
+    
+    if (_addressInfoLoadFinish && _cartPayInfoLoadFinish) {
+        if (_cartsInfoLevel > _addressInfoLevel) {
+            [self userNotIdCardNumberMessage];
+        }
+    }
+    
 }
 // 获取购物车ID
 - (void)getCartID {
@@ -634,9 +643,8 @@ static BOOL isAgreeTerms = YES;
     }else if (button.tag == 104) {
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-        if (_isIndentifierNum && _isBondedGoods) {
+        if (_cartsInfoLevel > _addressInfoLevel) {
             [self userNotIdCardNumberMessage];
-            return ;
         }
         if (!isAgreeTerms) {
             [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
@@ -670,13 +678,19 @@ static BOOL isAgreeTerms = YES;
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
-        AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
-        addVC.isButtonSelected = YES;
-        addVC.addressID = _addressID;
-        addVC.isSelected = YES;
-        addVC.isBondedGoods = _isBondedGoods;
-        addVC.delegate = self;
-        [self.navigationController pushViewController:addVC animated:YES];
+        if (_cartsInfoLevel != 0 && _addressInfoLevel != 0) {
+//            if (_cartsInfoLevel > _addressInfoLevel) {
+//                _isPerfectAddressInfo = YES; // 需要去完善信息
+//            }else {
+//                _isPerfectAddressInfo = NO;
+//            }
+            JMAddressViewController *addVC = [[JMAddressViewController alloc] init];
+            addVC.addressID = _addressID;
+            addVC.isSelected = YES;
+            addVC.cartsPayInfoLevel = _cartsInfoLevel;
+            addVC.delegate = self;
+            [self.navigationController pushViewController:addVC animated:YES];
+        }
     }else if (index == 101) {
         NSInteger count = self.logisticsArr.count;
         [[JMGlobal global] showpopBoxType:popViewTypeBox Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 60 * (count + 1)) ViewController:self.showViewVC WithBlock:^(UIView *maskView) {
@@ -684,14 +698,18 @@ static BOOL isAgreeTerms = YES;
     }else { }
 }
 // PurchaseAddressDelegate (地址选择修改代理回调)
-- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
+- (void)addressView:(JMAddressViewController *)addressVC model:(JMAddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
     _addressID = model.addressID;
-    if ([NSString isStringEmpty:model.identification_no]) {
-        _isIndentifierNum = YES;
-    }else {
-        _isIndentifierNum = NO;
+    _addressInfoLevel = [model.personalinfo_level integerValue];
+    if (_cartsInfoLevel > _addressInfoLevel) {
+        [self userNotIdCardNumberMessage];
     }
+//    if ([NSString isStringEmpty:model.identification_no]) {
+//        _isIndentifierNum = YES;
+//    }else {
+//        _isIndentifierNum = NO;
+//    }
 }
 // JMChoiseLogisControllerDelegate (选择物流代理回调)
 - (void)ClickLogistics:(JMChoiseLogisController *)click Model:(JMPopLogistcsModel *)model {
@@ -881,23 +899,23 @@ static BOOL isAgreeTerms = YES;
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.payView];
     self.maskView.alpha = 0;
-    self.payView.top = self.view.height - 150;
+    self.payView.cs_y = self.view.cs_h - 150;
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0.3;
-        self.payView.bottom = self.view.height;
+        self.payView.bottom = self.view.cs_h;
     }];
 }
 - (void)hidePickerView {
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0;
-        self.payView.top = self.view.height;
+        self.payView.cs_y = self.view.cs_h;
     } completion:^(BOOL finished) {
         [self.maskView removeFromSuperview];
         [self.payView removeFromSuperview];
     }];
 }
 - (void)userNotIdCardNumberMessage {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您购买的商品为保税商品,需要您填写身份证号哦~\n点击\"收货地址-修改-填写身份证号\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的收货地址信息不完善,请修改地址信息~\n点击\"收货地址-修改\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
 - (void)doSomeWork {
@@ -920,8 +938,8 @@ static BOOL isAgreeTerms = YES;
         [self backClick];
     }else if (alertView.tag == 102) {
         [MobClick event:@"buy_cancel"];
-        PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-        orderVC.index = 101;
+        JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+        orderVC.currentIndex = 1;
         [self.navigationController pushViewController:orderVC animated:YES];
     }else {}
 }
@@ -965,8 +983,8 @@ static BOOL isAgreeTerms = YES;
 - (void)popview{
     [MBProgressHUD hideHUD];
     [MobClick event:@"buy_cancel"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 1;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 - (void)paySuccessful{

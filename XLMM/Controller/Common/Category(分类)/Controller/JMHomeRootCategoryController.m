@@ -73,7 +73,7 @@ static NSUInteger selectedIndex = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor countLabelColor];
-    [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
+//    [self createNavigationBarWithTitle:self.titleString selecotr:@selector(backClick:)];
     
     [self createSearchBarView];
     [self itemDataSource];
@@ -157,9 +157,17 @@ static NSUInteger selectedIndex = 0;
     //    [self.mainCollectionView reloadData];
 }
 - (void)createSearchBarView {
+//    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [leftButton addTarget:self action:@selector(backClick:) forControlEvents:UIControlEventTouchUpInside];
+//    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2"]];
+//    leftImageview.frame = CGRectMake(0, 13, 18, 18);
+//    [leftButton addSubview:leftImageview];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:searchButton];
-    searchButton.backgroundColor = [UIColor whiteColor];
+    searchButton.backgroundColor = [UIColor lineGrayColor];
     [searchButton setImage:[UIImage imageNamed:@"searchBarImage"] forState:UIControlStateNormal];
     [searchButton setImage:[UIImage imageNamed:@"searchBarImage"] forState:UIControlStateSelected];
     [searchButton setTitle:@"查找所有精品" forState:UIControlStateNormal];
@@ -169,19 +177,22 @@ static NSUInteger selectedIndex = 0;
 //    searchButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
 //    searchButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     searchButton.layer.masksToBounds = YES;
-    searchButton.layer.cornerRadius = 2.;
+    searchButton.layer.cornerRadius = 5.;
+    searchButton.frame = CGRectMake(0, 0, SCREENWIDTH - 80, 30);
     
-    kWeakSelf
-    [searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakSelf.view.mas_centerX);
-        make.top.equalTo(weakSelf.view).offset(74);
-        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH - 30, 30));
-    }];
+    
+//    kWeakSelf
+//    [searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(weakSelf.view.mas_centerX);
+//        make.top.equalTo(weakSelf.view).offset(24);
+//        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH - 80, 30));
+//    }];
+    self.navigationItem.titleView = searchButton;
     
     
 }
 - (void)createTableView {
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50 + 64, TabWidth, SCREENHEIGHT - 50 - 64) style:UITableViewStylePlain];
+    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
     self.mainTableView.backgroundColor = [UIColor clearColor];
@@ -198,7 +209,7 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)crateContentTableView {
     // 添加测试数据
-    self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64 + 50, ColWidth, SCREENHEIGHT - 64 - 50) style:UITableViewStylePlain];
+    self.contentTableView = [[UITableView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
     self.contentTableView.dataSource = self;
     self.contentTableView.delegate = self;
     self.contentTableView.backgroundColor = [UIColor clearColor];
@@ -220,7 +231,7 @@ static NSUInteger selectedIndex = 0;
     layout.itemSize = CGSizeMake((ColWidth - 20) / 3, (ColWidth - 20) * 5 / 9);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64 - 50) collectionViewLayout:layout];
+    self.mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64 - ktabBarHeight) collectionViewLayout:layout];
     self.mainCollectionView.backgroundColor = [UIColor clearColor];
     self.mainCollectionView.dataSource = self;
     self.mainCollectionView.delegate = self;
@@ -297,8 +308,8 @@ static NSUInteger selectedIndex = 0;
         [self.contentTableView scrollRectToVisible:CGRectMake(0, 0, self.contentTableView.frame.size.width, self.contentTableView.frame.size.height) animated:YES];
         //        [self.mainCollectionView scrollRectToVisible:CGRectMake(0, 0, self.mainCollectionView.frame.size.width, self.mainCollectionView.frame.size.height) animated:YES];
         selectedIndex = indexPath.row;
-        NSString *titleStr = self.tabDataSource[selectedIndex];
-        [self createNavigationBarWithTitle:titleStr selecotr:@selector(backClick:)];
+//        NSString *titleStr = self.tabDataSource[selectedIndex];
+//        [self createNavigationBarWithTitle:titleStr selecotr:@selector(backClick:)];
         [self.contentTableView reloadData];
         
     }

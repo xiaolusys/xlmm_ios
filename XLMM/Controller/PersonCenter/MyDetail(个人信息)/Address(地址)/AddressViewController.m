@@ -126,33 +126,24 @@
     NSArray *addressArray = dic;
 
     NSLog(@"addArray = %@", addressArray);
-    if (addressArray.count == 0) {
-        NSLog(@"数据下载错误");
-//        self.empty.hidden = NO;
-//        [self.addressTableView reloadData];
-        return;
+    if (addressArray.count != 0) {
+        for (NSDictionary *dic in addressArray) {
+            AddressModel *model = [[AddressModel alloc] init];
+            model.addressID = [dic objectForKey:@"id"];
+            model.addressURL = [dic objectForKey:@"url"];
+            model.buyerID = [dic objectForKey:@"cus_uid"];
+            model.buyerName = [dic objectForKey:@"receiver_name"];
+            model.cityName = [dic objectForKey:@"receiver_city"];;
+            model.provinceName = [dic objectForKey:@"receiver_state"];
+            model.countyName = [dic objectForKey:@"receiver_district"];
+            model.streetName = [dic objectForKey:@"receiver_address"];
+            model.phoneNumber = [dic objectForKey:@"receiver_mobile"];
+            model.identification_no = [dic objectForKey:@"identification_no"];
+            model.isDefault = [[dic objectForKey:@"default"]boolValue];
+            [dataArray addObject:model];
+        }
     }
-//    self.empty.hidden = YES;
-    for (NSDictionary *dic in addressArray) {
-        AddressModel *model = [[AddressModel alloc] init];
-        model.addressID = [dic objectForKey:@"id"];
-        model.addressURL = [dic objectForKey:@"url"];
-        model.buyerID = [dic objectForKey:@"cus_uid"];
-        model.buyerName = [dic objectForKey:@"receiver_name"];
-        model.cityName = [dic objectForKey:@"receiver_city"];;
-        model.provinceName = [dic objectForKey:@"receiver_state"];
-        model.countyName = [dic objectForKey:@"receiver_district"];
-        model.streetName = [dic objectForKey:@"receiver_address"];
-        model.phoneNumber = [dic objectForKey:@"receiver_mobile"];
-        model.identification_no = [dic objectForKey:@"identification_no"];
-        model.isDefault = [[dic objectForKey:@"default"]boolValue];
-        [dataArray addObject:model];
-    }
-    MMLOG(dataArray);
-    
-    
     [self.addressTableView cs_reloadData];
-    
 }
 
 //   13816404857
@@ -367,15 +358,22 @@
     
 }
 
-
-
 - (IBAction)addButtonClicked:(id)sender {
-    
     AddAdressViewController *addVC = [[AddAdressViewController alloc] initWithNibName:@"AddAdressViewController" bundle:nil];
     addVC.isAdd = YES;
     addVC.isBondedGoods = self.isBondedGoods;
     [self.navigationController pushViewController:addVC animated:YES];
+    
 }
+
+
+
+
+
+
+
+
+
 @end
 
 

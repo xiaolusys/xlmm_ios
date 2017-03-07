@@ -73,9 +73,8 @@
     [self.tableView.mj_header beginRefreshing];
  
 }
-
-- (NSString *)urlStr {
-    return kQuanbuDingdan_URL;
+- (void)refresh {
+    [self.tableView.mj_header beginRefreshing];
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -104,14 +103,13 @@
     }
 }
 - (void)loadDataSource {
-    NSString *string = [self urlStr];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+//    NSString *string = [self urlStr];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self.dataSource removeAllObjects];
         [self.sectionDataSource removeAllObjects];
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -126,10 +124,8 @@
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -137,33 +133,26 @@
     }];
 }
 - (void)refetch:(NSDictionary *)data {
-    
     _urlStr = data[@"next"];
     NSArray *allArr = data[@"results"];
-    if (allArr.count == 0) {
-        //没有订单
-//        self.empty.hidden = NO;
-        return ;
-    }
-//    self.empty.hidden = YES;
-    
-    for (NSDictionary *allDic in allArr) {
-        JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
-        [self.sectionDataSource addObject:allModel];
-        
-        _goodsArray = [NSMutableArray array];
-        NSArray *goodsArr = allDic[@"orders"];
-        for (NSDictionary *goodsDic in goodsArr) {
-            JMOrderGoodsModel *fetureModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsDic];
-            [_goodsArray addObject:fetureModel];
+    if (allArr.count != 0) {
+        for (NSDictionary *allDic in allArr) {
+            JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
+            [self.sectionDataSource addObject:allModel];
+            
+            _goodsArray = [NSMutableArray array];
+            NSArray *goodsArr = allDic[@"orders"];
+            for (NSDictionary *goodsDic in goodsArr) {
+                JMOrderGoodsModel *fetureModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsDic];
+                [_goodsArray addObject:fetureModel];
+            }
+            [self.dataSource addObject:_goodsArray];
         }
-        [self.dataSource addObject:_goodsArray];
     }
-    
-    
+    [self.tableView cs_reloadData];
 }
 - (void)createTabelView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 99) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) style:UITableViewStylePlain];
     self.tableView = tableView;
     [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
@@ -303,6 +292,7 @@
 - (JMReloadEmptyDataView *)reload {
     if (!_reload) {
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" ButtonTitle:@"快去逛逛" Image:@"dingdanemptyimage" ReloadBlcok:^{
+            self.isPopToRootView = YES;
             [self.navigationController popViewControllerAnimated:YES];
         }];
         _reload = reload;
@@ -325,7 +315,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PersonOrder"];

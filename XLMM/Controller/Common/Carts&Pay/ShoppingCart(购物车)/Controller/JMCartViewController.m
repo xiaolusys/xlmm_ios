@@ -72,12 +72,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-//    if (self.isHideNavigationLeftItem) {
-//        [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
-//    }else {
-//        
-//    }
-    [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
+    if (self.isHideNavigationLeftItem) {
+        [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
+    }else {
+        [self createNavigationBarWithTitle:@"购物车" selecotr:@selector(backClick)];
+    }
+    
     
     [self createTableView];
     
@@ -179,7 +179,11 @@
     [self.maskView addSubview:self.emptyView];
     self.emptyView.block = ^(NSInteger index) {
         if (index == 100) {
-            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            if (weakSelf.isHideNavigationLeftItem) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+            }else {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }
         }
     };
 }
@@ -367,11 +371,11 @@
             JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 260) Title:@"你的购物车空空如也~快去装满它吧" DescTitle:@"快去挑选几件喜欢的宝贝吧~" BackImage:@"gouwucheemptyimage" InfoStr:@"随便逛逛"];
             empty.block = ^(NSInteger index) {
                 if (index == 100) {
-//                    if (self.isHideNavigationLeftItem) {
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-//                    }else {
-                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//                    }
+                    if (self.isHideNavigationLeftItem) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+                    }else {
+                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                    }
                 }
             };
             return empty;

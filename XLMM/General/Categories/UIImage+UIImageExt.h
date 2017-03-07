@@ -14,7 +14,11 @@
 - (UIImage *)imageByScalingAndCroppingForSize:(CGSize)targetSize;
 
 
++ (UIImage *) imageWithView:(UIView *)selectView;
++ (UIImage *)imagewithWebView:(UIWebView *)webView;
++ (UIImage *) imagewithScrollView:(UIScrollView *)scrollView;
 
++ (UIImage*)imageFromView:(UIView*)view;
 
 
 @end

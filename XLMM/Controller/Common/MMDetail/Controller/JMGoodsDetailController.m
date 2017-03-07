@@ -32,7 +32,7 @@
 #define HeaderScrolHeight SCREENHEIGHT * 0.65
 #define POPHeight SCREENHEIGHT * 0.6
 #define NavigationMaskWH 36
-#define kBottomViewTag 100
+#define kBottomViewTag 200
 
 @interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     CGFloat maxY;
@@ -61,7 +61,7 @@
     BOOL _isFineGoods;          // 判断商品是否是精品商品
     BOOL _isFineGoodsHeightShow;// 是否显示精品商品
     NSString *_buyCouponUrl;    // 购买精品券的链接
-
+    BOOL _isUserClickAddCart;   // 用户点击加入购物车
     
 }
 @property (nonatomic, strong) JMShareViewController *goodsShareView;
@@ -103,6 +103,7 @@
 @property (nonatomic, strong) JMShareModel *shareModel;
 @property (nonatomic, strong) UIButton *shopCartButton;
 @property (nonatomic, strong) UIButton *addCartButton;
+@property (nonatomic, strong) UIButton *buyNowButton;
 @property (nonatomic, strong) JMSelecterButton *groupBuyPersonal;
 @property (nonatomic, strong) JMSelecterButton *groupBuyTeam;
 
@@ -350,6 +351,7 @@
             self.groupBuyPersonal.hidden = NO;
             self.groupBuyTeam.hidden = NO;
             self.addCartButton.hidden = YES;
+            self.buyNowButton.hidden = YES;
             CGFloat moneyValueTeam = [dic[@"teambuy_price"] floatValue];
             CGFloat moneyValuePersonal = [detailContentDic[@"lowest_agent_price"] floatValue];
             NSString *teamString = [NSString stringWithFormat:@"%ld人购 ¥%.1f", (long)code1, moneyValueTeam];
@@ -359,10 +361,12 @@
         }else {
             _isTeamBuyGoods = NO;
             self.addCartButton.hidden = NO;
+            self.buyNowButton.hidden = NO;
         }
     }else {
         _isTeamBuyGoods = NO;
         self.addCartButton.hidden = NO;
+        self.buyNowButton.hidden = NO;
     }
     // === 显示商品出售状态 === //
     _isDirectBuyGoods = ([detailContentDic[@"is_boutique"] boolValue] || [detailContentDic[@"is_onsale"] boolValue]);
@@ -370,7 +374,7 @@
     NSString *saleStatus = detailContentDic[@"sale_state"];
     
     if (_isDirectBuyGoods) {
-        [self.addCartButton setTitle:@"立即购买" forState:UIControlStateNormal];
+//        [self.addCartButton setTitle:@"立即购买" forState:UIControlStateNormal];
     }
     
     if (_isTeamBuyGoods) { // 团购
@@ -441,10 +445,12 @@
         self.groupBuyPersonal.hidden = YES;
         self.groupBuyTeam.hidden = YES;
         self.addCartButton.hidden = NO;
+        self.buyNowButton.hidden = NO;
     }else {
         self.groupBuyPersonal.hidden = NO;
         self.groupBuyTeam.hidden = NO;
         self.addCartButton.hidden = YES;
+        self.buyNowButton.hidden = YES;
     }
 }
 #pragma mark ==== 导航栏点击事件 ====
@@ -495,13 +501,18 @@
         cell.customInfoDic = coustomInfoDic;
         cell.block = ^(UIButton *button) {
             if (button.tag == 100) {
-                NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,self.goodsID];
-                //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
-                PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
-//                pushVC.isPushingDays = YES;
-                pushVC.pushungDaysURL = urlString;
-                pushVC.titleString = @"文案精选";
-                [self.navigationController pushViewController:pushVC animated:YES];
+                if ([[JMGlobal global] userVerificationLogin]) {
+                    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,self.goodsID];
+                    //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
+                    PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
+                    //                pushVC.isPushingDays = YES;
+                    pushVC.pushungDaysURL = urlString;
+                    pushVC.titleString = @"文案精选";
+                    [self.navigationController pushViewController:pushVC animated:YES];
+                }else {
+                    JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+                    [self.navigationController pushViewController:enterVC animated:YES];
+                }
             }else {
                 // webview跳转
                 [JumpUtils jumpToLocation:_buyCouponUrl viewController:self];
@@ -664,7 +675,7 @@
             if (typeNumber == 3) {
                 [MobClick event:@"TeamAddShoppingCartSuccess"];
                 [self getCartsFirstGoodsInfoGoodsTypeNumber:@(typeNumber) Parmer:paramer];
-            }else if (typeNumber == 5) {
+            }else if (typeNumber == 5 && _isUserClickAddCart == NO) {
                 [MobClick event:@"TspecialAddShoppingCartSuccess"];
                 [self getCartsFirstGoodsInfoGoodsTypeNumber:@(typeNumber) Parmer:paramer];
             }else {
@@ -844,6 +855,19 @@
     [addCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     self.addCartButton = addCartButton;
     self.addCartButton.hidden = YES;
+    
+    UIButton *buyNowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:buyNowButton];
+    buyNowButton.layer.cornerRadius = 20.;
+    buyNowButton.tag = kBottomViewTag + 2;
+    buyNowButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    [buyNowButton setTitle:@"立即购买" forState:UIControlStateNormal];
+    [buyNowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    buyNowButton.titleLabel.font = [UIFont systemFontOfSize:16.];
+    [buyNowButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.buyNowButton = addCartButton;
+    self.buyNowButton.hidden = YES;
+
     kWeakSelf
     [shopCartButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.bottomView).offset(15);
@@ -859,7 +883,13 @@
         make.left.equalTo(shopCartButton.mas_right).offset(15);
         make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
         make.height.mas_equalTo(@40);
-        make.width.mas_equalTo(@(SCREENWIDTH - 85));
+        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 50));
+    }];
+    [buyNowButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(addCartButton.mas_right).offset(15);
+        make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+        make.height.mas_equalTo(@40);
+        make.width.mas_equalTo(@(SCREENWIDTH / 2 - 50));
     }];
     [self.cartsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(shopCartImage.mas_right).offset(-15);
@@ -872,14 +902,14 @@
     [self.bottomView addSubview:self.groupBuyPersonal];
     [self.groupBuyPersonal setNomalBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"个人购 ¥ xxx" TitleFont:14. CornerRadius:20.];
     self.groupBuyPersonal.backgroundColor = [UIColor whiteColor];
-    self.groupBuyPersonal.tag = kBottomViewTag + 2;
+    self.groupBuyPersonal.tag = kBottomViewTag + 3;
     [self.groupBuyPersonal addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     
     self.groupBuyTeam = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:self.groupBuyTeam];
     [self.groupBuyTeam setNomalBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor whiteColor] Title:@"团购 ¥ xxx" TitleFont:14. CornerRadius:20.];
     self.groupBuyTeam.backgroundColor = [UIColor buttonEnabledBackgroundColor];
-    self.groupBuyTeam.tag = kBottomViewTag + 3;
+    self.groupBuyTeam.tag = kBottomViewTag + 4;
     [self.groupBuyTeam addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.groupBuyPersonal mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -911,14 +941,23 @@
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-    }else if (button.tag == kBottomViewTag + 1) {
+    }else if (button.tag == kBottomViewTag + 1) {  // 加入购物车
+        _isUserClickAddCart = YES;
         if (isLogin) {
             [self showPopView];
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-    }else if (button.tag == kBottomViewTag + 2) {
+    }else if (button.tag == kBottomViewTag + 2) {  // 立即购买
+        _isUserClickAddCart = NO;
+        if (isLogin) {
+            [self showPopView];
+        }else {
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+    }else if (button.tag == kBottomViewTag + 3) {
         if (isLogin) {
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
             [self addCartUrlString:urlString Paramer:_paramer];
@@ -926,7 +965,7 @@
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-    }else if (button.tag == kBottomViewTag + 3) {
+    }else if (button.tag == kBottomViewTag + 4) {
         if (isLogin) {
             _paramer[@"type"] = @"3";
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
