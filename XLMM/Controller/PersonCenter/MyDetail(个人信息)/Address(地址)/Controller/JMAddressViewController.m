@@ -14,7 +14,7 @@
 #import "JMAddressCell.h"
 
 
-static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
+
 
 @interface JMAddressViewController () <UITableViewDelegate, UITableViewDataSource, JMAddressCellDelegate>
 
@@ -25,6 +25,8 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
 @property (nonatomic, strong) UIButton *addAddressButton;
 
 @end
+
+static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
 
 @implementation JMAddressViewController
 
@@ -140,16 +142,17 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
     if (!cell) {
         cell = [[JMAddressCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMAddressCellIdentifier];
     }
-    self.addressModel = self.dataSource[indexPath.row];
-    if ([self.addressModel.defaultValue boolValue]) {
+    JMAddressModel *model = self.dataSource[indexPath.row];
+    
+    if ([model.defaultValue boolValue] == 1) {
         cell.defaultLabel.hidden = NO;
         [cell.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(cell.contentView).offset(70);
         }];
     }
-    cell.nameLabel.text = self.addressModel.receiver_name;
-    cell.phoneLabel.text = self.addressModel.receiver_mobile;
-    cell.descAddressLabel.text = [NSString stringWithFormat:@"%@%@%@%@", self.addressModel.receiver_state, self.addressModel.receiver_city, self.addressModel.receiver_district, self.addressModel.receiver_address];
+    cell.nameLabel.text = model.receiver_name;
+    cell.phoneLabel.text = model.receiver_mobile;
+    cell.descAddressLabel.text = [NSString stringWithFormat:@"%@%@%@%@", model.receiver_state, model.receiver_city, model.receiver_district, model.receiver_address];
     if (self.isSelected) {
         cell.selectedImageView.hidden = NO;
         cell.modifyButton.hidden = NO;
@@ -158,29 +161,29 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
             make.left.equalTo(cell.contentView).offset(40);
             make.width.mas_equalTo(SCREENWIDTH - 140);
         }];
-        if ([self.addressID integerValue] == [self.addressModel.addressID integerValue]) {
+        if ([self.addressID integerValue] == [model.addressID integerValue]) {
             cell.selectedImageView.image = [UIImage imageNamed:@"mamaNewcomer_selector"];
         }
     }
-    cell.addressModel = self.addressModel;
+//    cell.addressModel = model;
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.addressModel = self.dataSource[indexPath.row];
+    JMAddressModel *model = self.dataSource[indexPath.row];
     if (self.isSelected) {
         if (_delegate && [_delegate respondsToSelector:@selector(addressView:model:)]) {
-            [_delegate addressView:self model:self.addressModel];
+            [_delegate addressView:self model:model];
         }
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         JMModifyAddressController *addVC = [[JMModifyAddressController alloc] init];
         addVC.isAdd = NO;
         addVC.cartsPayInfoLevel = self.cartsPayInfoLevel;
-        addVC.addressLevel = [self.addressModel.personalinfo_level integerValue];
+        addVC.addressLevel = [model.personalinfo_level integerValue];
 //        addVC.isBondedGoods = self.isBondedGoods;
-        addVC.addressModel = self.addressModel;
+        addVC.addressModel = model;
         [self.navigationController pushViewController:addVC animated:YES];
     }
     
