@@ -23,8 +23,9 @@
 
 
 @property (nonatomic, assign) BOOL isSelected;
-@property (nonatomic, assign) BOOL isBondedGoods;
+//@property (nonatomic, assign) BOOL isBondedGoods;
 //@property (nonatomic, assign) BOOL isButtonSelected;
+@property (nonatomic, assign) NSInteger cartsPayInfoLevel;
 
 @property (nonatomic, copy) NSString *addressID;
 

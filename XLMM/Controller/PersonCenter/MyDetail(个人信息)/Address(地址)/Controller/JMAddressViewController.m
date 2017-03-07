@@ -177,7 +177,9 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
     }else {
         JMModifyAddressController *addVC = [[JMModifyAddressController alloc] init];
         addVC.isAdd = NO;
-        addVC.isBondedGoods = self.isBondedGoods;
+        addVC.cartsPayInfoLevel = self.cartsPayInfoLevel;
+        addVC.addressLevel = [self.addressModel.personalinfo_level integerValue];
+//        addVC.isBondedGoods = self.isBondedGoods;
         addVC.addressModel = self.addressModel;
         [self.navigationController pushViewController:addVC animated:YES];
     }
@@ -202,7 +204,9 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
 - (void)modifyAddress:(JMAddressModel *)model{
     JMModifyAddressController *addAdVC = [[JMModifyAddressController alloc] init];
     addAdVC.isAdd = NO;
-    addAdVC.isBondedGoods = self.isBondedGoods;
+//    addAdVC.isBondedGoods = self.isBondedGoods;
+    addAdVC.cartsPayInfoLevel = self.cartsPayInfoLevel;
+    addAdVC.addressLevel = [model.personalinfo_level integerValue];
     addAdVC.addressModel = model;
     [self.navigationController pushViewController:addAdVC animated:YES];
 }
@@ -231,7 +235,9 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
 - (void)addAddressClick {
     JMModifyAddressController *addVC = [[JMModifyAddressController alloc] init];
     addVC.isAdd = YES;
-    addVC.isBondedGoods = self.isBondedGoods;
+//    addVC.isBondedGoods = self.isBondedGoods;
+    addVC.cartsPayInfoLevel = self.cartsPayInfoLevel;
+    addVC.addressLevel = 0;
     [self.navigationController pushViewController:addVC animated:YES];
 }
 - (void)backClick {

@@ -22,7 +22,7 @@
 #define iOS9_1Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.1f)
 
 
-@interface JMModifyAddressController () <UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface JMModifyAddressController () <UIGestureRecognizerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     NSString *province;
     NSString *city;
     NSString *county;
@@ -31,6 +31,14 @@
     NSString *sideBack;
     NSString *idCardName;
     NSString *idCardNum;
+    NSString *sideType;
+    
+    UIImageView *_sideFaceImage;
+    UIImageView *_sideBackImage;
+    UILabel *_sideFaceLabel;
+    UILabel *_sideBackLabel;
+ 
+    UIImage *_currentImage;
 }
 
 @property (nonatomic, strong) UIScrollView *maskScrollView;
@@ -44,6 +52,10 @@
 
 @property (nonatomic, strong) UITextView *addressTextView;
 @property (nonatomic, strong) UILabel *placeHolderLabel;
+
+@property (nonatomic, strong) UIView *idCardView;
+@property (nonatomic, strong) UIButton *againUpdatabutton;
+@property (nonatomic, strong) UIButton *savebutton;
 
 @property (nonatomic, strong) JMSelectAddressView *selectView;
 
@@ -74,6 +86,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     _selectedPhotos = [NSMutableArray array];
+    
     NSString *titleString = @"修改收货地址";
     if (self.isAdd) {
         titleString = @"新增收货地址";
@@ -97,6 +110,16 @@
         city = [cityStr copy];
         county = [disStr copy];
     };
+    
+    
+//    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:@"http://m.xiaolumeimei.com/rest/v1/address/175223.json" WithParaments:nil WithSuccess:^(id responseObject) {
+//        NSLog(@"%@",responseObject);
+//    } WithFail:^(NSError *error) {
+//        
+//    } Progress:^(float progress) {
+//    }];
+    
+    
     
 }
 #pragma mark 网络请求
@@ -135,7 +158,7 @@
 - (void)createInputBoxView {
     CGFloat firstSectionViewH = 100.;
     CGFloat labelWidth = 80.f;
-    if (self.isBondedGoods) {
+    if (self.cartsPayInfoLevel > 1) {
         firstSectionViewH = 140.;
     }
     UIView *firstSectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, firstSectionViewH)];
@@ -151,7 +174,7 @@
     [firstSectionView addSubview:phoneNumLabel];
     [firstSectionView addSubview:consigneeField];
     [firstSectionView addSubview:phoneNumField];
-    if (self.isBondedGoods) {
+    if (self.cartsPayInfoLevel > 1) {
         UILabel *idCardLabel = [self createLabelWithFrame:CGRectMake(20, phoneNumLabel.mj_max_Y, labelWidth * HomeCategoryRatio, 40) font:13. textColor:[UIColor buttonTitleColor] text:@"身份证号"];
             UITextField *idCardField = [self createTextFieldWithFrame:CGRectMake(labelWidth * HomeCategoryRatio + 20, phoneNumField.mj_max_Y + 10, SCREENWIDTH - consigneeLabel.mj_max_X - 20, 30) PlaceHolder:@"请输入身份证号" KeyboardType:UIKeyboardTypeNumbersAndPunctuation];
         self.idCardField = idCardField;
@@ -226,28 +249,121 @@
     [self.maskScrollView addSubview:warningLabel];
     self.warningLabel = warningLabel;
     
+    UIButton *againUpdatabutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    againUpdatabutton.frame = CGRectMake(15, warningLabel.mj_max_Y + 10, SCREENWIDTH - 30, 40);
+    againUpdatabutton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    [againUpdatabutton setTitle:@"修改上传身份证信息" forState:UIControlStateNormal];
+    [againUpdatabutton setTitle:@"不修改上传身份证信息" forState:UIControlStateSelected];
+    [againUpdatabutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    againUpdatabutton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    againUpdatabutton.layer.masksToBounds = YES;
+    againUpdatabutton.layer.cornerRadius = 20.f;
+    againUpdatabutton.selected = NO;
+    [againUpdatabutton addTarget:self action:@selector(againUpdatabuttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.maskScrollView addSubview:againUpdatabutton];
+    self.againUpdatabutton = againUpdatabutton;
     
-//    CGFloat _margin = 4;
-//    CGFloat _itemWH;
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    _itemWH = (self.view.mj_w - 2 * _margin - 4) / 3 - _margin;
-    layout.itemSize = CGSizeMake(90, 90);
-    layout.minimumInteritemSpacing = 5;
-    layout.minimumLineSpacing = 5;
-    UICollectionView *collecionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, warningLabel.mj_max_Y + 20, SCREENWIDTH, 100) collectionViewLayout:layout];
-    collecionView.alwaysBounceVertical = YES;
-    collecionView.backgroundColor = [UIColor whiteColor];
-    collecionView.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    collecionView.dataSource = self;
-    collecionView.delegate = self;
-    collecionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-    [collecionView registerClass:[JMAddressIDCardCell class] forCellWithReuseIdentifier:@"JMAddressIDCardCellIdentifier"];
-    [self.maskScrollView addSubview:collecionView];
-    self.collecionView = collecionView;
-
+    
+    CGFloat idcardViewHeiht;
+    UIView *idCardView = [UIView new];
+    idCardView.frame = CGRectMake(0, againUpdatabutton.mj_max_Y + 10, SCREENWIDTH, 110);
+    idCardView.backgroundColor = [UIColor whiteColor];
+    [self.maskScrollView addSubview:idCardView];
+    self.idCardView = idCardView;
+    
+    UIButton *sideFacebutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [idCardView addSubview:sideFacebutton];
+    sideFacebutton.layer.masksToBounds = YES;
+    sideFacebutton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    sideFacebutton.layer.borderWidth = 0.5f;
+    sideFacebutton.tag = 10;
+    [sideFacebutton addTarget:self action:@selector(idcardClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *sideBackbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [idCardView addSubview:sideBackbutton];
+    sideBackbutton.layer.masksToBounds = YES;
+    sideBackbutton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    sideBackbutton.layer.borderWidth = 0.5f;
+    sideBackbutton.tag = 11;
+    [sideBackbutton addTarget:self action:@selector(idcardClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _sideFaceImage = [UIImageView new];
+    [sideFacebutton addSubview:_sideFaceImage];
+    _sideFaceImage.contentMode = UIViewContentModeScaleAspectFit;
+    _sideFaceImage.image = [UIImage imageNamed:@"idCardSideFace"];
+    _sideBackImage = [UIImageView new];
+    [sideBackbutton addSubview:_sideBackImage];
+    _sideBackImage.contentMode = UIViewContentModeScaleAspectFit;
+    _sideBackImage.image = [UIImage imageNamed:@"idCardSideBack"];
+    
+    _sideFaceLabel = [UILabel new];
+    _sideFaceLabel.font = [UIFont systemFontOfSize:10.];
+    _sideFaceLabel.textColor = [UIColor buttonTitleColor];
+    _sideFaceLabel.text = @"请上传身份证正面照";
+    [sideFacebutton addSubview:_sideFaceLabel];
+    _sideBackLabel = [UILabel new];
+    _sideBackLabel.font = [UIFont systemFontOfSize:10.];
+    _sideBackLabel.textColor = [UIColor buttonTitleColor];
+    _sideBackLabel.text = @"请上传身份证反面照";
+    [sideBackbutton addSubview:_sideBackLabel];
+    
+    [sideFacebutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.equalTo(idCardView).offset(10);
+        make.width.height.mas_equalTo(@(90));
+    }];
+    [sideBackbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(sideFacebutton.mas_centerY);
+        make.left.equalTo(sideFacebutton.mas_right).offset(20);
+        make.width.height.mas_equalTo(@(90));
+    }];
+    [_sideFaceImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sideFacebutton).offset(10);
+        make.centerX.equalTo(sideFacebutton.mas_centerX);
+        make.width.mas_equalTo(@(51));
+        make.height.mas_equalTo(@(32));
+    }];
+    [_sideBackImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sideBackbutton).offset(10);
+        make.centerX.equalTo(sideBackbutton.mas_centerX);
+        make.width.mas_equalTo(@(51));
+        make.height.mas_equalTo(@(32));
+    }];
+    [_sideFaceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(sideFacebutton.mas_centerX);
+        make.bottom.equalTo(sideFacebutton).offset(-5);
+    }];
+    [_sideBackLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(sideBackbutton.mas_centerX);
+        make.bottom.equalTo(sideBackbutton).offset(-5);
+    }];
+    
+    if (self.cartsPayInfoLevel > 2) {
+        // 上传身份证
+        if (self.addressLevel > 2) {
+            // 已经上传,可以修改
+            self.idCardView.hidden = YES;
+            self.againUpdatabutton.hidden = NO;
+            self.idCardView.cs_h = 0.f;
+            self.againUpdatabutton.cs_h = 40;
+            self.idCardView.cs_y = self.againUpdatabutton.cs_max_Y + 10;
+            idcardViewHeiht = 60.f;
+        }else {
+            // 没有上传
+            self.againUpdatabutton.hidden = YES;
+            self.againUpdatabutton.cs_h = 0.f;
+            self.idCardView.cs_y = self.againUpdatabutton.cs_max_Y + 10;
+            idcardViewHeiht = 130.f;
+        }
+    }else {
+        self.againUpdatabutton.hidden = YES;
+        self.idCardView.hidden = YES;
+        self.idCardView.cs_h = 0.f;
+        self.againUpdatabutton.cs_h = 0.f;
+        idcardViewHeiht = 0.f;
+    }
+    
     
     UIButton *savebutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    savebutton.frame = CGRectMake(15, collecionView.mj_max_Y + 10, SCREENWIDTH - 30, 40);
+    savebutton.frame = CGRectMake(15, warningLabel.mj_max_Y + 10 + idcardViewHeiht, SCREENWIDTH - 30, 40);
     savebutton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
     [savebutton setTitle:@"保存" forState:UIControlStateNormal];
     [savebutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -256,7 +372,7 @@
     savebutton.layer.cornerRadius = 20.f;
     [savebutton addTarget:self action:@selector(saveAddressInfoClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.maskScrollView addSubview:savebutton];
-    
+    self.savebutton = savebutton;
     
     if (self.isAdd) {
     }else {
@@ -272,11 +388,9 @@
     if (self.addressTextView.text.length > 0) {
         self.placeHolderLabel.hidden = YES;
     }
-
-    self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, savebutton.mj_max_Y + 20);
-    self.maskScrollView.userInteractionEnabled = YES;
-    [self.collecionView reloadData];
     
+    self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, savebutton.mj_max_Y + 20);
+
 }
 
 - (UILabel *)createLabelWithFrame:(CGRect)frame font:(CGFloat)font textColor:(UIColor *)textColor text:(NSString *)text {
@@ -300,56 +414,37 @@
     return textField;
 }
 
-#pragma mark UICollectionView 代理实现
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _selectedPhotos.count + 1;
-}
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JMAddressIDCardCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JMAddressIDCardCellIdentifier" forIndexPath:indexPath];
-    if (indexPath.row == _selectedPhotos.count) {
-        [cell.imageView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.height.mas_equalTo(@(40));
-        }];
-        cell.imageView.image = [UIImage imageNamed:@"AlbumAddBtn"];
-        cell.deleteBtn.hidden = YES;
-        if ([NSString isStringEmpty:sideFace]) {
-            cell.titleLabel.text = @"请上传身份证正面照";
-        }else {
-            cell.titleLabel.text = @"请上传身份证反面照";
-        }
-        
-    } else {
-        cell.imageView.image = _selectedPhotos[indexPath.row];
-        cell.deleteBtn.hidden = NO;
-    }
-    cell.deleteBtn.tag = indexPath.row;
-    [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
-//    cell.backgroundColor = [UIColor redColor];
-    return cell;
-}
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == _selectedPhotos.count) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"去相册选择", nil];
-        [sheet showInView:self.view];
-        
+- (void)idcardClick:(UIButton *)button {
+    if (button.tag == 10) {
+        sideType = @"face";
+        [self showActionSheet];
     }else {
-        // 预览图片 (暂时不写)
+        sideType = @"back";
+        [self showActionSheet];
+    }
+}
+- (void)againUpdatabuttonClick:(UIButton *)button {
+    button.selected = !button.selected;
+    if (button.selected) {
+        self.idCardView.hidden = NO;
+        self.idCardView.cs_h = 110.f;
+        self.savebutton.cs_y = self.idCardView.cs_max_Y + 10;
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.savebutton.mj_max_Y + 20);
+    }else {
+        self.idCardView.hidden = YES;
+        self.idCardView.cs_h = 0.f;
+        self.savebutton.cs_y = self.idCardView.cs_max_Y + 10;
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.savebutton.mj_max_Y + 20);
         
     }
 }
 
-- (void)deleteBtnClik:(UIButton *)sender {
-    [_selectedPhotos removeObjectAtIndex:sender.tag];
-    
-    [self.collecionView performBatchUpdates:^{
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-        [self.collecionView deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:^(BOOL finished) {
-        [self.collecionView reloadData];
-    }];
+- (void)showActionSheet {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"去相册选择", nil];
+    [sheet showInView:self.view];
 }
-#pragma mark - UIActionSheetDelegate
 
+#pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { // take photo / 去拍照
         [self takePhoto];
@@ -357,18 +452,57 @@
         [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
     }
 }
-#pragma mark - UIImagePickerController
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 1 || alertView.tag == 2) {
+        if (buttonIndex == 1) { // 去设置界面，开启相机访问权限
+            if (iOS8Later) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            } else {
+                NSURL *privacyUrl;
+                if (alertView.tag == 1) {
+                    privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=CAMERA"];
+                } else {
+                    privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=PHOTOS"];
+                }
+                if ([[UIApplication sharedApplication] canOpenURL:privacyUrl]) {
+                    [[UIApplication sharedApplication] openURL:privacyUrl];
+                } else {
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"抱歉" message:@"无法跳转到隐私设置页面，请手动前往设置页面，谢谢" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alert show];
+                }
+            }
+        }
+    }else if (alertView.tag == 3) {
+        if (buttonIndex == 0) {
+            NSLog(@"取消");
+        } else if (buttonIndex == 1){
+            [self deleteAddress];
+        }
+    }else if (alertView.tag == 4) {
+        if (buttonIndex == 0) {
+        }else {
+            self.consigneeField.text = [NSString stringWithFormat:@"%@",idCardName];
+            self.idCardField.text = [NSString stringWithFormat:@"%@",idCardNum];
+        }
+        
+    }
+        
+        
+}
 
+#pragma mark - UIImagePickerController
 - (void)takePhoto {
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
         // 无相机权限 做一个友好的提示
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+        alert.tag = 1;
         [alert show];
         // 拍照之前还需要检查相册权限
     } else if ([self authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
-        alert.tag = 1;
+        alert.tag = 2;
         [alert show];
     } else if ([self authorizationStatus] == 0) { // 正在弹框询问用户是否允许访问相册，监听权限状态
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -394,9 +528,7 @@
     // ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     // 照相机
     // ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
-    // 4.设置代理
     ipc.delegate = self;
-    // 5.modal出这个控制器
     [self presentViewController:ipc animated:YES completion:nil];
     
     
@@ -404,37 +536,57 @@
 #pragma mark -- <UIImagePickerControllerDelegate>--
 // 获取图片后的操作
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    // 销毁控制器
     [picker dismissViewControllerAnimated:YES completion:nil];
+    [MBProgressHUD showLoading:@""];
     // 设置图片
-    UIImage *newImage = info[UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImageJPEGRepresentation(newImage, 0.5);
-    NSData *data = [self imageWithImage:newImage scaledToSize:CGSizeMake(300, 400)];
+    _currentImage = info[UIImagePickerControllerOriginalImage];
+    NSData *data = [self imageWithImage:_currentImage scaledToSize:CGSizeMake(100, 100)];
     NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"card_base64"] = encodedImageStr;
-    param[@"side"] = @"face";
+    param[@"side"] = sideType;
     NSString *string = [NSString stringWithFormat:@"%@/rest/v2/ocr/idcard_indentify", Root_URL];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:param WithSuccess:^(id responseObject) {
         NSLog(@"%@",responseObject);
-        if ([responseObject[@"code"] integerValue] == 0) {
-            
-            NSDictionary *dict = responseObject[@"card_infos"];
-            NSString *sideStr = [NSString stringWithFormat:@"%@",dict[@"side"]];
-            if ([sideStr isEqualToString:@"back"]) {
-                sideBack = dict[@"card_imgpath"];
-            }else {
-                sideFace = dict[@"card_imgpath"];
-                idCardNum = [dict[@"num"] stringValue];
-                idCardName = dict[@"name"];
-            }
-        }else {
-            [MBProgressHUD showWarning:responseObject[@"info"]];
-        }
+        [self fetchWithData:responseObject];
     } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"上传失败,请稍后重试"];
     } Progress:^(float progress) {
     }];
-    
+}
+- (void)fetchWithData:(NSDictionary *)response {
+    if ([response[@"code"] integerValue] == 0) {
+        NSDictionary *dict = response[@"card_infos"];
+        NSString *sideStr = [NSString stringWithFormat:@"%@",dict[@"side"]];
+        if ([sideStr isEqualToString:@"back"]) {
+            sideBack = dict[@"card_imgpath"];
+            _sideBackImage.image = _currentImage;
+            [_sideBackImage mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.height.mas_equalTo(@(70));
+            }];
+            _sideBackLabel.hidden = YES;
+        }else {
+            _sideFaceImage.image = _currentImage;
+            [_sideFaceImage mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.height.mas_equalTo(@(70));
+            }];
+            _sideFaceLabel.hidden = YES;
+            sideFace = dict[@"card_imgpath"];
+            idCardNum = [NSString stringWithFormat:@"%@",dict[@"num"]];
+            idCardName = dict[@"name"];
+            
+            if (![self.consigneeField.text isEqual:idCardName]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您上传的身份证姓名与当前收货人姓名不同,是否修改。\n 确定:点击修改; 取消:手动修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alertView.tag = 4;
+                [alertView show];
+            }
+            
+            
+        }
+        [MBProgressHUD hideHUD];
+    }else {
+        [MBProgressHUD showWarning:response[@"info"]];
+    }
     
 }
 //[_selectedPhotos addObject:newImage];
@@ -445,7 +597,7 @@
     [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
     UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return UIImageJPEGRepresentation(newImage, 0.8);
+    return UIImageJPEGRepresentation(newImage, 0.5);
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     if ([picker isKindOfClass:[UIImagePickerController class]]) {
@@ -488,13 +640,6 @@
         self.placeHolderLabel.hidden = YES;
     }
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        NSLog(@"取消");
-    } else if (buttonIndex == 1){
-        [self deleteAddress];
-    }
-}
 
 #pragma mark 自定义点击事件
 - (void)addressSwitchChange:(UISwitch *)addressSwitch {
@@ -529,7 +674,7 @@
         self.warningLabel.text = @"请填写手机号码";
         return ;
     }
-    if (self.isBondedGoods) {
+    if (self.cartsPayInfoLevel > 1) {
         if ([NSString isStringEmpty:self.idCardField.text]) {
             self.warningLabel.text = @"请填写身份证号";
             return ;
@@ -547,11 +692,14 @@
         self.warningLabel.text = @"请填写详细地址";
         return ;
     }
+    if (self.cartsPayInfoLevel > 2 && self.addressLevel < 3) {
+        if ([NSString isStringEmpty:sideFace] && [NSString isStringEmpty:sideBack]) {
+            self.warningLabel.text = @"请上传身份证信息";
+            return ;
+        }
+    }
     NSMutableDictionary *parame = [self parame];
     if (self.isAdd) {
-        if (self.isBondedGoods) {
-            parame[@"identification_no"] = self.idCardField.text;
-        }
         NSString *string = [NSString stringWithFormat:@"%@/rest/v1/address/create_address?format=json", Root_URL];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:parame WithSuccess:^(id responseObject) {
             NSInteger code = [responseObject[@"code"] integerValue];
@@ -567,9 +715,6 @@
         }];
     }else {
         parame[@"id"] = self.addressModel.addressID;
-        if (self.isBondedGoods) {
-            parame[@"identification_no"] = self.idCardField.text;
-        }
         NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,self.addressModel.addressID];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:modifyUrlStr WithParaments:parame WithSuccess:^(id responseObject) {
             NSInteger code = [responseObject[@"code"] integerValue];
@@ -597,11 +742,23 @@
     parame[@"receiver_address"] = self.addressTextView.text;
     parame[@"receiver_name"] = self.consigneeField.text;
     parame[@"receiver_mobile"] = self.phoneNumField.text;
+    if (self.cartsPayInfoLevel > 1) {
+        parame[@"identification_no"] = self.idCardField.text;
+    }
+    if (self.cartsPayInfoLevel > 2) {
+        if (![NSString isStringEmpty:sideFace]) {
+            parame[@"card_facepath"] = sideFace;
+        }
+        if (![NSString isStringEmpty:sideBack]) {
+            parame[@"card_backpath"] = sideBack;
+        }
+    }
     return parame;
 }
 // 删除地址事件
 - (void)rightNavigationClick:(UIButton *)button {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"确定要删除吗?" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.tag = 3;
     [alertView show];
 }
 

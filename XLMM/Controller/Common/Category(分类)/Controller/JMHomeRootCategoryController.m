@@ -308,8 +308,8 @@ static NSUInteger selectedIndex = 0;
         [self.contentTableView scrollRectToVisible:CGRectMake(0, 0, self.contentTableView.frame.size.width, self.contentTableView.frame.size.height) animated:YES];
         //        [self.mainCollectionView scrollRectToVisible:CGRectMake(0, 0, self.mainCollectionView.frame.size.width, self.mainCollectionView.frame.size.height) animated:YES];
         selectedIndex = indexPath.row;
-        NSString *titleStr = self.tabDataSource[selectedIndex];
-        [self createNavigationBarWithTitle:titleStr selecotr:@selector(backClick:)];
+//        NSString *titleStr = self.tabDataSource[selectedIndex];
+//        [self createNavigationBarWithTitle:titleStr selecotr:@selector(backClick:)];
         [self.contentTableView reloadData];
         
     }

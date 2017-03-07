@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) JMAddressModel *addressModel;
 @property (nonatomic, assign) BOOL isAdd;                  // 判断是添加地址还是修改地址
-@property (nonatomic, assign) BOOL isBondedGoods;          // 判断是否为保税区商品(是:填写身份证,否:不用填写身份证)
+//@property (nonatomic, assign) BOOL isBondedGoods;          // 判断是否为保税区商品(是:填写身份证,否:不用填写身份证)
+@property (nonatomic, assign) NSInteger cartsPayInfoLevel;
+@property (nonatomic, assign) NSInteger addressLevel;
 
 @end

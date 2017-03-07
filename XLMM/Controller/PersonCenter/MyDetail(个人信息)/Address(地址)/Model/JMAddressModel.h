@@ -26,6 +26,7 @@
 @property (nonatomic, copy) NSString *receiver_zip;
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSString *personalinfo_level;
 
 
 

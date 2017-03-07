@@ -647,6 +647,8 @@
 		1F7018DC1E6E40650070C2D9 /* JMAddressIDCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */; };
 		1F7018DD1E6E40650070C2D9 /* JMSelectAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */; };
 		1F7018E11E6E4A140070C2D9 /* AlbumAddBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */; };
+		1F7018E41E6E4F160070C2D9 /* idCardSideBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */; };
+		1F7018E51E6E4F160070C2D9 /* idCardSideFace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1900,6 +1902,8 @@
 		1F7018D51E6E40650070C2D9 /* JMSelectAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSelectAddressView.h; sourceTree = "<group>"; };
 		1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSelectAddressView.m; sourceTree = "<group>"; };
 		1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlbumAddBtn@2x.png"; sourceTree = "<group>"; };
+		1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "idCardSideBack@2x.png"; sourceTree = "<group>"; };
+		1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "idCardSideFace@2x.png"; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -2975,6 +2979,8 @@
 		1F12EC221DAC97E600511B58 /* setting */ = {
 			isa = PBXGroup;
 			children = (
+				1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */,
+				1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */,
 				1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */,
 				1F37941A1DEEFB530044E325 /* accounticon@2x.png */,
 				1F37941B1DEEFB530044E325 /* coupon@2x.png */,
@@ -6798,6 +6804,7 @@
 				1FF72C931DE7F55B0035F436 /* tabBar_mianPageNomal@2x.png in Resources */,
 				1F12ECA71DAC97E600511B58 /* mamaeryaoqingColor@2x.png in Resources */,
 				1F12ED741DAC97E700511B58 /* shareQQSpacing.png in Resources */,
+				1F7018E41E6E4F160070C2D9 /* idCardSideBack@2x.png in Resources */,
 				1F3794191DEEF8F60044E325 /* wodeweidian@2x.png in Resources */,
 				1F06CF281DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png in Resources */,
 				1F12ED231DAC97E700511B58 /* leftArrowIcon.png in Resources */,
@@ -6872,6 +6879,7 @@
 				1F498C371D2772D0007E77FC /* VersionController.xib in Resources */,
 				1F12EC891DAC97E600511B58 /* hongbao_back@2x.png in Resources */,
 				1F12ECDD1DAC97E600511B58 /* wallet_xiaolu@2x.png in Resources */,
+				1F7018E51E6E4F160070C2D9 /* idCardSideFace@2x.png in Resources */,
 				1F12ECB11DAC97E600511B58 /* MaMaRenewHalfyear_Selected@2x.png in Resources */,
 				1F12ED041DAC97E600511B58 /* 圈圈加载0022@2x.png in Resources */,
 				1F12ED501DAC97E700511B58 /* Icon-60@3x.png in Resources */,
