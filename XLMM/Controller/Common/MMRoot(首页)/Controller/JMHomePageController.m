@@ -227,6 +227,7 @@
         [_topImageArray removeAllObjects];
         [self fetchCategoryData:responseObject];
     } WithFail:^(NSError *error) {
+        NSLog(@"%@",error);
     } Progress:^(float progress) {
     }];
 }
