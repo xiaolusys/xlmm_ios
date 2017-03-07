@@ -13,7 +13,7 @@
 #import "CartListModel.h"
 #import "JMChoiseLogisController.h"
 #import "JMPopLogistcsModel.h"
-#import "AddressViewController.h"
+#import "JMAddressViewController.h"
 #import "AddressModel.h"
 #import "GoodsInfoModel.h"
 #import "JMOrderPayView.h"
@@ -27,10 +27,11 @@
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
 #import "JMPayment.h"
+#import "JMAddressModel.h"
 
 
 
-@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,PurchaseAddressDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
+@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,JMAddressViewControllerDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
     NSDictionary *_couponData;
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
@@ -668,8 +669,8 @@ static BOOL isAgreeTerms = YES;
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
-        AddressViewController *addVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
-        addVC.isButtonSelected = YES;
+        JMAddressViewController *addVC = [[JMAddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+//        addVC.isButtonSelected = YES;
         addVC.addressID = _addressID;
         addVC.isSelected = YES;
         addVC.isBondedGoods = _isBondedGoods;
@@ -682,7 +683,7 @@ static BOOL isAgreeTerms = YES;
     }else { }
 }
 // PurchaseAddressDelegate (地址选择修改代理回调)
-- (void)addressView:(AddressViewController *)addressVC model:(AddressModel *)model{
+- (void)addressView:(JMAddressViewController *)addressVC model:(JMAddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
     _addressID = model.addressID;
     if ([NSString isStringEmpty:model.identification_no]) {

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddressModel.h"
 
-@class JMPurchaseHeaderView;
+@class JMPurchaseHeaderView,JMAddressModel;
 @protocol JMPurchaseHeaderViewDelegate <NSObject>
 
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index;
@@ -28,7 +28,7 @@
 /**
  *  地址信息数据源
  */
-@property (nonatomic, strong) AddressModel *addressModel;
+@property (nonatomic, strong) JMAddressModel *addressModel;
 /**
  *  物流选择
  */

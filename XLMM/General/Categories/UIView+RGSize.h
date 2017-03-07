@@ -40,4 +40,7 @@
 - (void)widthAdd:(CGFloat)add;
 - (void)heightAdd:(CGFloat)add;
 
+
+- (UIView *)findFirstResponder;
+
 @end

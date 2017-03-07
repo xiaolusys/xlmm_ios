@@ -639,6 +639,14 @@
 		1F6B7A971DDB127E009AB446 /* JMCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6B7A961DDB127E009AB446 /* JMCartViewController.m */; };
 		1F7018B81E6D2C2C0070C2D9 /* tabBar_categoryNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018B61E6D2C2C0070C2D9 /* tabBar_categoryNomal@2x.png */; };
 		1F7018B91E6D2C2C0070C2D9 /* tabBar_categorySelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018B71E6D2C2C0070C2D9 /* tabBar_categorySelected@2x.png */; };
+		1F7018D71E6E40650070C2D9 /* JMAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018C81E6E40650070C2D9 /* JMAddressViewController.m */; };
+		1F7018D81E6E40650070C2D9 /* JMInpotBoxBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018CA1E6E40650070C2D9 /* JMInpotBoxBaseController.m */; };
+		1F7018D91E6E40650070C2D9 /* JMModifyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018CC1E6E40650070C2D9 /* JMModifyAddressController.m */; };
+		1F7018DA1E6E40650070C2D9 /* JMAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018CF1E6E40650070C2D9 /* JMAddressModel.m */; };
+		1F7018DB1E6E40650070C2D9 /* JMAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D21E6E40650070C2D9 /* JMAddressCell.m */; };
+		1F7018DC1E6E40650070C2D9 /* JMAddressIDCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */; };
+		1F7018DD1E6E40650070C2D9 /* JMSelectAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */; };
+		1F7018E11E6E4A140070C2D9 /* AlbumAddBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1877,6 +1885,21 @@
 		1F6B7A961DDB127E009AB446 /* JMCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCartViewController.m; sourceTree = "<group>"; };
 		1F7018B61E6D2C2C0070C2D9 /* tabBar_categoryNomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_categoryNomal@2x.png"; sourceTree = "<group>"; };
 		1F7018B71E6D2C2C0070C2D9 /* tabBar_categorySelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_categorySelected@2x.png"; sourceTree = "<group>"; };
+		1F7018C71E6E40650070C2D9 /* JMAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAddressViewController.h; sourceTree = "<group>"; };
+		1F7018C81E6E40650070C2D9 /* JMAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressViewController.m; sourceTree = "<group>"; };
+		1F7018C91E6E40650070C2D9 /* JMInpotBoxBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMInpotBoxBaseController.h; sourceTree = "<group>"; };
+		1F7018CA1E6E40650070C2D9 /* JMInpotBoxBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMInpotBoxBaseController.m; sourceTree = "<group>"; };
+		1F7018CB1E6E40650070C2D9 /* JMModifyAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMModifyAddressController.h; sourceTree = "<group>"; };
+		1F7018CC1E6E40650070C2D9 /* JMModifyAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMModifyAddressController.m; sourceTree = "<group>"; };
+		1F7018CE1E6E40650070C2D9 /* JMAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAddressModel.h; sourceTree = "<group>"; };
+		1F7018CF1E6E40650070C2D9 /* JMAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressModel.m; sourceTree = "<group>"; };
+		1F7018D11E6E40650070C2D9 /* JMAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAddressCell.h; sourceTree = "<group>"; };
+		1F7018D21E6E40650070C2D9 /* JMAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressCell.m; sourceTree = "<group>"; };
+		1F7018D31E6E40650070C2D9 /* JMAddressIDCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAddressIDCardCell.h; sourceTree = "<group>"; };
+		1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressIDCardCell.m; sourceTree = "<group>"; };
+		1F7018D51E6E40650070C2D9 /* JMSelectAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSelectAddressView.h; sourceTree = "<group>"; };
+		1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSelectAddressView.m; sourceTree = "<group>"; };
+		1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlbumAddBtn@2x.png"; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -2952,6 +2975,7 @@
 		1F12EC221DAC97E600511B58 /* setting */ = {
 			isa = PBXGroup;
 			children = (
+				1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */,
 				1F37941A1DEEFB530044E325 /* accounticon@2x.png */,
 				1F37941B1DEEFB530044E325 /* coupon@2x.png */,
 				1F37941C1DEEFB530044E325 /* pointicon@2x.png */,
@@ -3934,6 +3958,9 @@
 		1F498B721D2772D0007E77FC /* Address(地址) */ = {
 			isa = PBXGroup;
 			children = (
+				1F7018C61E6E40650070C2D9 /* Controller */,
+				1F7018CD1E6E40650070C2D9 /* Model */,
+				1F7018D01E6E40650070C2D9 /* View */,
 				1F498B731D2772D0007E77FC /* AddAdressViewController.h */,
 				1F498B741D2772D0007E77FC /* AddAdressViewController.m */,
 				1F498B751D2772D0007E77FC /* AddAdressViewController.xib */,
@@ -5770,6 +5797,41 @@
 			path = EmptyView;
 			sourceTree = "<group>";
 		};
+		1F7018C61E6E40650070C2D9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F7018C71E6E40650070C2D9 /* JMAddressViewController.h */,
+				1F7018C81E6E40650070C2D9 /* JMAddressViewController.m */,
+				1F7018C91E6E40650070C2D9 /* JMInpotBoxBaseController.h */,
+				1F7018CA1E6E40650070C2D9 /* JMInpotBoxBaseController.m */,
+				1F7018CB1E6E40650070C2D9 /* JMModifyAddressController.h */,
+				1F7018CC1E6E40650070C2D9 /* JMModifyAddressController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1F7018CD1E6E40650070C2D9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F7018CE1E6E40650070C2D9 /* JMAddressModel.h */,
+				1F7018CF1E6E40650070C2D9 /* JMAddressModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1F7018D01E6E40650070C2D9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1F7018D11E6E40650070C2D9 /* JMAddressCell.h */,
+				1F7018D21E6E40650070C2D9 /* JMAddressCell.m */,
+				1F7018D31E6E40650070C2D9 /* JMAddressIDCardCell.h */,
+				1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */,
+				1F7018D51E6E40650070C2D9 /* JMSelectAddressView.h */,
+				1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		1F7A1DD21E237FA50013A309 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -6650,6 +6712,7 @@
 				1F12ECE11DAC97E600511B58 /* Logistics.plist in Resources */,
 				3A2BC1C21D2CFF6D00F6F54B /* UMSCommentInputController.xib in Resources */,
 				1F12ECF51DAC97E600511B58 /* 圈圈加载0007@2x.png in Resources */,
+				1F7018E11E6E4A140070C2D9 /* AlbumAddBtn@2x.png in Resources */,
 				1F12ED751DAC97E700511B58 /* shareweibo.png in Resources */,
 				1F3794151DEEF8F60044E325 /* refund@2x.png in Resources */,
 				1F7EA8201E472AF500E44616 /* shopping_cart_add@2x.png in Resources */,
@@ -6982,6 +7045,7 @@
 				1F4C9EB41D9912600089CE74 /* UDTTTAttributedLabel.m in Sources */,
 				3A1E05941CE1C3FB001018AC /* LGRadioButtonsView.m in Sources */,
 				1F498C461D2772D0007E77FC /* JMOrderGoodsModel.m in Sources */,
+				1F7018DA1E6E40650070C2D9 /* JMAddressModel.m in Sources */,
 				1F5877981DB8A60D00949302 /* CarryLogModel.m in Sources */,
 				1F6B7A231DD9C25A009AB446 /* JMGlobal.m in Sources */,
 				1F5878831DB8ABD900949302 /* TixianHistoryViewController.m in Sources */,
@@ -7147,6 +7211,7 @@
 				1FDC35071DDD6F7600263E83 /* JMGoodsCountTime.m in Sources */,
 				1F4C9EA41D9912600089CE74 /* UdeskSDKConfig.m in Sources */,
 				3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */,
+				1F7018DC1E6E40650070C2D9 /* JMAddressIDCardCell.m in Sources */,
 				1F3793F91DEE827E0044E325 /* base64.m in Sources */,
 				1F498C4A1D2772D0007E77FC /* JMLogTimeListController.m in Sources */,
 				1F4C9EA01D9912600089CE74 /* UIImage+UdeskSDK.m in Sources */,
@@ -7184,6 +7249,7 @@
 				1F498C1B1D2772D0007E77FC /* JMComplaintSuggestController.m in Sources */,
 				1F3F75551D76BD3D0079D19B /* JMHomeActiveModel.m in Sources */,
 				1F498C141D2772D0007E77FC /* GuanzhuViewController.m in Sources */,
+				1F7018D71E6E40650070C2D9 /* JMAddressViewController.m in Sources */,
 				1F5878771DB8ABB200949302 /* JMWithDrawDetailController.m in Sources */,
 				1F498C671D2772D0007E77FC /* JMRefundView.m in Sources */,
 				1F7EA8261E48411D00E44616 /* UIScrollView+UITouch.m in Sources */,
@@ -7215,6 +7281,7 @@
 				1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */,
 				1F4C9E8A1D9912600089CE74 /* UdeskTipsCell.m in Sources */,
 				1F2F9E1D1D582A7A00E3A68B /* JMStoreUpModel.m in Sources */,
+				1F7018D81E6E40650070C2D9 /* JMInpotBoxBaseController.m in Sources */,
 				1F4C9E831D9912600089CE74 /* UdeskChatSend.m in Sources */,
 				1F4C9E9B1D9912600089CE74 /* UdeskTransitioningAnimation.m in Sources */,
 				1F3793871DEE82490044E325 /* FMDatabase.m in Sources */,
@@ -7242,6 +7309,7 @@
 				1F2F9E7D1D5C1C3D00E3A68B /* JMGoodsSafeGuardCell.m in Sources */,
 				3A3CF71A1CE224D000F0463D /* MMClass.m in Sources */,
 				1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */,
+				1F7018DD1E6E40650070C2D9 /* JMSelectAddressView.m in Sources */,
 				1F498C4F1D2772D0007E77FC /* JMGoodsListCell.m in Sources */,
 				1FF3FA1D1D40800400FABBCE /* JMPurchaseController.m in Sources */,
 				1F498C631D2772D0007E77FC /* ShenQingTuiHuoController.m in Sources */,
@@ -7280,6 +7348,7 @@
 				1F58780C1DB8A85900949302 /* TodayVisitorViewController.m in Sources */,
 				1F5877B71DB8A60D00949302 /* PicFooterCollectionReusableView.m in Sources */,
 				1F498C2F1D2772D0007E77FC /* ModifyPhoneController.m in Sources */,
+				1F7018DB1E6E40650070C2D9 /* JMAddressCell.m in Sources */,
 				1F4C9E891D9912600089CE74 /* UdeskProductCell.m in Sources */,
 				1F498C6C1D2772D0007E77FC /* JMGroupLogistics.m in Sources */,
 				1F7D99361D62E3B600E18FD1 /* JMClassifyListController.m in Sources */,
@@ -7307,6 +7376,7 @@
 				3A1E05951CE1C3FB001018AC /* LGTextField.m in Sources */,
 				1F6B79DB1DD9BF95009AB446 /* JMShareView.m in Sources */,
 				1F6B79FB1DD9C13F009AB446 /* JMToolTimeLineView.m in Sources */,
+				1F7018D91E6E40650070C2D9 /* JMModifyAddressController.m in Sources */,
 				1F498C401D2772D0007E77FC /* JMPopLogistcsCell.m in Sources */,
 				1F4C9E961D9912600089CE74 /* UdeskRobotViewController.m in Sources */,
 				1F02130E1E641C260088AD2D /* UITableView+CSTableViewPlaceHolder.m in Sources */,
