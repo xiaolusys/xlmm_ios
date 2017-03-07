@@ -149,6 +149,11 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
         [cell.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(cell.contentView).offset(70);
         }];
+    }else {
+        cell.defaultLabel.hidden = YES;
+        [cell.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.contentView).offset(10);
+        }];
     }
     cell.nameLabel.text = model.receiver_name;
     cell.phoneLabel.text = model.receiver_mobile;
@@ -163,9 +168,11 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
         }];
         if ([self.addressID integerValue] == [model.addressID integerValue]) {
             cell.selectedImageView.image = [UIImage imageNamed:@"mamaNewcomer_selector"];
+        }else {
+            cell.selectedImageView.image = [UIImage imageNamed:@"mamaNewcomer_normal"];
         }
     }
-//    cell.addressModel = model;
+    cell.addressModel = model;
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;

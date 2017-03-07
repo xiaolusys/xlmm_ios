@@ -76,8 +76,13 @@
     self.couponProsdescLabel.font = [UIFont systemFontOfSize:12.];
     self.couponProsdescLabel.textColor = [UIColor buttonTitleColor];
     
+    NSString *heightStr = @"优惠券";
+    CGFloat counpTypeHeight = [heightStr heightWithWidth:SCREENWIDTH andFont:12.].height;
+    UIView *counpTypeView = [UIView new];
+    [self.couponBackImage addSubview:counpTypeView];
+    
     UILabel *couponTypeLabel = [UILabel new];
-    [self.couponBackImage addSubview:couponTypeLabel];
+    [counpTypeView addSubview:couponTypeLabel];
     self.couponTypeLabel = couponTypeLabel;
     self.couponTypeLabel.font = [UIFont systemFontOfSize:12.];
     self.couponTypeLabel.textColor = [UIColor buttonTitleColor];
@@ -131,13 +136,16 @@
         make.top.equalTo(weakSelf.couponProsdescLabel.mas_bottom).offset(3);
         make.left.equalTo(weakSelf.couponProsdescLabel);
     }];
-    [self.couponTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [counpTypeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.couponUsefeeLabel.mas_bottom).offset(3);
         make.left.equalTo(weakSelf.couponValueLabel);
-//        make.width.mas_equalTo(@(SCREENWIDTH - 100 - spaceLeft));
-        make.right.equalTo(weakSelf.couponBackImage).offset(0);
+        make.right.equalTo(weakSelf.couponBackImage).offset(-5);
+        make.height.mas_equalTo(@(counpTypeHeight * 2));
     }];
-    
+    [self.couponTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(counpTypeView.mas_centerY);
+        make.left.right.equalTo(counpTypeView);
+    }];
     
     [self.rightImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.couponBackImage).offset(-20);

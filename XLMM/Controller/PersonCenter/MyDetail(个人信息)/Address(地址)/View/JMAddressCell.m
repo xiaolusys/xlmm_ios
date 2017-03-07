@@ -30,7 +30,7 @@
     self.nameLabel = [self createLabelWithFont:14. TextColor:[UIColor buttonTitleColor]];
     self.phoneLabel = [self createLabelWithFont:14. TextColor:[UIColor buttonTitleColor]];
     self.descAddressLabel = [self createLabelWithFont:13. TextColor:[UIColor dingfanxiangqingColor]];
-    self.descAddressLabel.numberOfLines = 0;
+    self.descAddressLabel.numberOfLines = 3;
     
     self.defaultLabel = [self createLabelWithFont:13. TextColor:[UIColor buttonEnabledBackgroundColor]];
     self.defaultLabel.layer.masksToBounds = YES;
