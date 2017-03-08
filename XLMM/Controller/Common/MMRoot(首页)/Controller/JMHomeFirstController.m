@@ -237,7 +237,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
     if (self.controllArr.count > 0) {
         for (int i = 0; i < self.controllArr.count; i++) {
             JMHomeHourController *hourVC = self.controllArr[i];
-            hourVC.dataSource = self.dataSource[i];
+            hourVC.dataSource = self.dataSource.count > 0 ? self.dataSource[i] : nil;
         }
     }else {
         for (int i = 0; i < self.itemNameArr.count; i ++) {

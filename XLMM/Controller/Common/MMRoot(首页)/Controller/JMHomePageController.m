@@ -196,75 +196,14 @@
     [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];
     [self createSegmentControl];
-    [self createRightItem];
+//    [self createRightItem];
     [self loadCategoryData];
 //    [self createSuspensionView];                       // 创建悬浮视图 (个人,精品汇,购物车)
     [self autoUpdateVersion];                          // 版本自动升级
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    
-    
-    
-    
- 
-    
-    
 }
-- (UIImage *)imageWithImage:(UIImage*)image
-               scaledToSize:(CGSize)newSize {
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-    
-    
-}
-- (void)getImage {
-    // 1.判断相册是否可以打开
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) return;
-    // 2. 创建图片选择控制器
-    UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
-    
-    /**
-     typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) {
-     UIImagePickerControllerSourceTypePhotoLibrary, // 相册
-     UIImagePickerControllerSourceTypeCamera, // 用相机拍摄获取
-     UIImagePickerControllerSourceTypeSavedPhotosAlbum // 相簿
-     }
-     */
-    // 3. 设置打开照片相册类型(显示所有相簿)
-    ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
-    // ipc.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    // 照相机
-    // ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
-    // 4.设置代理
-    ipc.delegate = self;
-    // 5.modal出这个控制器
-    [self presentViewController:ipc animated:YES completion:nil];
-    
-}
-#pragma mark -- <UIImagePickerControllerDelegate>--
-// 获取图片后的操作
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-    // 销毁控制器
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    // 设置图片
-    UIImage *originImage = info[UIImagePickerControllerOriginalImage];
-//    NSString *picUrl = @"http://a2.att.hudong.com/26/31/01200000029758136323318587280.jpg";
-//    UIImage *originImage = [UIImage imagewithURLString:picUrl];
-    UIImage *newImage = [self imageWithImage:originImage scaledToSize:CGSizeMake(300, 400)];
-    NSData *data = UIImageJPEGRepresentation(newImage, 0.5);
-    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    [JMStoreManager saveDataFromString:@"imageBase64.txt" WithString:encodedImageStr];
-    
-    
-    
-}
-
 #pragma mark 数据请求处理
 - (void)loadCatrsNumData {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -307,7 +246,7 @@
     }
     
     NSArray *categorys = categoryDic[@"categorys"];
-    [_categoryNameArray addObjectsFromArray:@[@"今日特卖",@"精品活动"]];
+    [_categoryNameArray addObjectsFromArray:@[@"精品推荐",@"精品活动"]];
     for (NSDictionary *dic in categorys) {
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];
@@ -405,16 +344,15 @@
     }else {}
 }
 - (void)rightNavigationClick:(UIButton *)button {
-    [self getImage];
-//    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-//    BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
-//    if (login && xlmm) {
-//        JMFineClassController *fineVC = [[JMFineClassController alloc] init];
-//        [self.navigationController pushViewController:fineVC animated:YES];
-//    }else {
-//        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-//        [self.navigationController pushViewController:enterVC animated:YES];
-//    }
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+    if (login && xlmm) {
+        JMFineClassController *fineVC = [[JMFineClassController alloc] init];
+        [self.navigationController pushViewController:fineVC animated:YES];
+    }else {
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+        [self.navigationController pushViewController:enterVC animated:YES];
+    }
 }
 - (void)createSuspensionView {
     UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 70, 160, 50)];

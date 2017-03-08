@@ -533,6 +533,8 @@
     
     
 }
+
+
 #pragma mark -- <UIImagePickerControllerDelegate>--
 // 获取图片后的操作
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
@@ -540,8 +542,10 @@
     [MBProgressHUD showLoading:@""];
     // 设置图片
     _currentImage = info[UIImagePickerControllerOriginalImage];
-    NSData *data = [self imageWithImage:_currentImage scaledToSize:CGSizeMake(100, 100)];
+    CGFloat whRatio = _currentImage.size.width / _currentImage.size.height;
+    NSData *data = [self imageWithImage:_currentImage scaledToSize:CGSizeMake(whRatio * 300, 300)];
     NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"card_base64"] = encodedImageStr;
     param[@"side"] = sideType;
@@ -574,9 +578,8 @@
             sideFace = dict[@"card_imgpath"];
             idCardNum = [NSString stringWithFormat:@"%@",dict[@"num"]];
             idCardName = dict[@"name"];
-            
-            if (![self.consigneeField.text isEqual:idCardName]) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您上传的身份证姓名与当前收货人姓名不同,是否修改。\n 确定:点击修改; 取消:手动修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            if (![self.consigneeField.text isEqual:idCardName] || ![self.idCardField.text isEqual:idCardNum]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您上传的身份证信息与当前收货人信息不同,是否修改。\n 确定:点击修改; 取消:手动修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                 alertView.tag = 4;
                 [alertView show];
             }
@@ -597,7 +600,7 @@
     [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
     UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return UIImageJPEGRepresentation(newImage, 0.5);
+    return UIImageJPEGRepresentation(newImage, 0.7);
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     if ([picker isKindOfClass:[UIImagePickerController class]]) {

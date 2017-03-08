@@ -143,7 +143,6 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
         cell = [[JMAddressCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMAddressCellIdentifier];
     }
     JMAddressModel *model = self.dataSource[indexPath.row];
-    
     if ([model.defaultValue boolValue] == 1) {
         cell.defaultLabel.hidden = NO;
         [cell.nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -166,6 +165,9 @@ static NSString *JMAddressCellIdentifier = @"JMAddressCellIdentifier";
             make.left.equalTo(cell.contentView).offset(40);
             make.width.mas_equalTo(SCREENWIDTH - 140);
         }];
+        if (self.dataSource.count == 1) {
+            cell.selectedImageView.image = [UIImage imageNamed:@"mamaNewcomer_selector"];
+        }
         if ([self.addressID integerValue] == [model.addressID integerValue]) {
             cell.selectedImageView.image = [UIImage imageNamed:@"mamaNewcomer_selector"];
         }else {
