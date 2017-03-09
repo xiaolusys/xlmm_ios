@@ -10,10 +10,10 @@
 #import "UILabel+CustomLabel.h"
 #import "JMSelectAddressView.h"
 #import "JMAddressModel.h"
-#import "JMAddressIDCardCell.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "JMRichTextTool.h"
 
 
 #define iOS7Later ([UIDevice currentDevice].systemVersion.floatValue >= 7.0f)
@@ -39,6 +39,9 @@
     UILabel *_sideBackLabel;
  
     UIImage *_currentImage;
+    
+    NSString *addressID;                // 地址ID
+    NSString *logistic_company_code;
 }
 
 @property (nonatomic, strong) UIScrollView *maskScrollView;
@@ -91,6 +94,10 @@
     if (self.isAdd) {
         titleString = @"新增收货地址";
     }
+    
+    addressID = self.orderDict[@"user_adress"][@"id"];
+    logistic_company_code = self.orderDict[@"logistic_company_code"];
+    
     [self createNavigationBarWithTitle:titleString selecotr:@selector(backClick)];
     self.view.backgroundColor = [UIColor countLabelColor];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)];
@@ -227,7 +234,7 @@
     
     
     CGFloat settingViewH = 40.f;
-    if (self.isAdd) {
+    if (self.isAdd || self.orderEditAddress) {
         settingViewH = 0.f;
     }else {
         UIView *settingView = [[UIView alloc] initWithFrame:CGRectMake(0, secondSectionView.mj_max_Y + 20, SCREENWIDTH, 40)];
@@ -298,13 +305,21 @@
     _sideFaceLabel = [UILabel new];
     _sideFaceLabel.font = [UIFont systemFontOfSize:10.];
     _sideFaceLabel.textColor = [UIColor buttonTitleColor];
-    _sideFaceLabel.text = @"请上传身份证正面照";
+    _sideFaceLabel.numberOfLines = 0;
+    _sideFaceLabel.textAlignment = NSTextAlignmentCenter;
+//    _sideFaceLabel.text = @"请上传身份证\n正面照";
     [sideFacebutton addSubview:_sideFaceLabel];
     _sideBackLabel = [UILabel new];
     _sideBackLabel.font = [UIFont systemFontOfSize:10.];
     _sideBackLabel.textColor = [UIColor buttonTitleColor];
-    _sideBackLabel.text = @"请上传身份证反面照";
+    _sideBackLabel.numberOfLines = 0;
+    _sideBackLabel.textAlignment = NSTextAlignmentCenter;
+//    _sideBackLabel.text = @"请上传身份证\n反面照";
     [sideBackbutton addSubview:_sideBackLabel];
+    
+    _sideFaceLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] SubColor:[UIColor redColor] AllString:@"请上传身份证\n正面照" SubStringArray:@[@"正面照"]];
+    _sideBackLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] SubColor:[UIColor redColor] AllString:@"请上传身份证\n反面照" SubStringArray:@[@"反面照"]];
+    
     
     [sideFacebutton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(idCardView).offset(10);
@@ -376,14 +391,30 @@
     
     if (self.isAdd) {
     }else {
-        [self createNavRightItem];
-        self.consigneeField.text = self.addressModel.receiver_name;
-        self.phoneNumField.text = self.addressModel.receiver_mobile;
-        self.addressTextView.text = self.addressModel.receiver_address;
-        province = self.addressModel.receiver_state;
-        city = self.addressModel.receiver_city;
-        county = self.addressModel.receiver_district;
-        self.areaField.text = [NSString stringWithFormat:@"%@%@%@",province,city,county];
+        if (self.orderEditAddress) {
+            NSMutableDictionary *addressDict = [NSMutableDictionary dictionary];
+            addressDict = self.orderDict[@"user_adress"];
+            self.consigneeField.text = addressDict[@"receiver_name"];
+            self.phoneNumField.text = addressDict[@"receiver_mobile"];
+            self.addressTextView.text = addressDict[@"receiver_address"];
+//            self.idCardField.text = _addressModel.identification_no;
+            province = addressDict[@"receiver_state"];
+            city = addressDict[@"receiver_city"];
+            county = addressDict[@"receiver_district"];
+            self.areaField.text = [NSString stringWithFormat:@"%@%@%@",province,city,county];
+            
+        }else {
+            [self createNavRightItem];
+            self.consigneeField.text = self.addressModel.receiver_name;
+            self.phoneNumField.text = self.addressModel.receiver_mobile;
+            self.addressTextView.text = self.addressModel.receiver_address;
+            self.idCardField.text = _addressModel.identification_no;
+            province = self.addressModel.receiver_state;
+            city = self.addressModel.receiver_city;
+            county = self.addressModel.receiver_district;
+            self.areaField.text = [NSString stringWithFormat:@"%@%@%@",province,city,county];
+        }
+        
     }
     if (self.addressTextView.text.length > 0) {
         self.placeHolderLabel.hidden = YES;
@@ -446,11 +477,7 @@
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) { // take photo / 去拍照
-        [self takePhoto];
-    } else if (buttonIndex == 1) {
-        [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
-    }
+    [self takePhoto:buttonIndex];
 }
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -492,29 +519,85 @@
 }
 
 #pragma mark - UIImagePickerController
-- (void)takePhoto {
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
-        // 无相机权限 做一个友好的提示
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
-        alert.tag = 1;
-        [alert show];
-        // 拍照之前还需要检查相册权限
-    } else if ([self authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
-        alert.tag = 2;
-        [alert show];
-    } else if ([self authorizationStatus] == 0) { // 正在弹框询问用户是否允许访问相册，监听权限状态
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            return [self takePhoto];
-        });
-    } else { // 调用相机
-        [self diaoyongxiangji:UIImagePickerControllerSourceTypeCamera];
+- (void)takePhoto:(NSInteger)index {
+    if (index == 0) {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (authStatus == AVAuthorizationStatusNotDetermined) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {//相机权限
+                if (granted) {
+                    NSLog(@"Authorized");
+                    [self takePhoto:0];
+                }else{
+                    NSLog(@"Denied or Restricted");
+                    
+                }
+            }];
+        }else if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
+            // 无相机权限 做一个友好的提示
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+            alert.tag = 1;
+            [alert show];
+            // 拍照之前还需要检查相册权限
+        }else if ([self authorizationStatus] == 0) {
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    NSLog(@"Authorized");
+                    [self diaoyongxiangji:UIImagePickerControllerSourceTypeCamera];
+                }else{
+                    NSLog(@"Denied or Restricted");
+                }
+            }];
+        }else if ([self authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+            alert.tag = 2;
+            [alert show];
+        }else {
+            [self diaoyongxiangji:UIImagePickerControllerSourceTypeCamera];
+        }
         
-       
+    }else {
+        if ([self authorizationStatus] == 0) {
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    NSLog(@"Authorized");
+                    [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
+                }else{
+                    NSLog(@"Denied or Restricted");
+                }
+            }];
+        }else if ([self authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+            alert.tag = 2;
+            [alert show];
+        }else {
+            [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+        
+        
     }
+    
+    
+    
+    
+    
+    
+//    if () {
+//        
+//        
+//    }
+//    } else if ([self authorizationStatus] == 0) { // 正在弹框询问用户是否允许访问相册，监听权限状态
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+////            return [self takePhoto];
+//            
+//        });
+//    } else { // 调用相机
+//        
+//        
+//       
+//    }
 }
 - (void)diaoyongxiangji:(UIImagePickerControllerSourceType)type {
+    
     UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
     /**
      typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) {
@@ -532,6 +615,7 @@
     [self presentViewController:ipc animated:YES completion:nil];
     
     
+    
 }
 
 
@@ -543,7 +627,7 @@
     // 设置图片
     _currentImage = info[UIImagePickerControllerOriginalImage];
     CGFloat whRatio = _currentImage.size.width / _currentImage.size.height;
-    NSData *data = [self imageWithImage:_currentImage scaledToSize:CGSizeMake(whRatio * 300, 300)];
+    NSData *data = [self imageWithImage:_currentImage scaledToSize:CGSizeMake(whRatio * 600, 600)];
     NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -579,7 +663,7 @@
             idCardNum = [NSString stringWithFormat:@"%@",dict[@"num"]];
             idCardName = dict[@"name"];
             if (![self.consigneeField.text isEqual:idCardName] || ![self.idCardField.text isEqual:idCardNum]) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您上传的身份证信息与当前收货人信息不同,是否修改。\n 确定:点击修改; 取消:手动修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您上传的身份证信息与当前收货人信息不同,是否修改。(建议手动填写)\n 确定:点击修改; 取消:手动修改" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                 alertView.tag = 4;
                 [alertView show];
             }
@@ -717,8 +801,8 @@
             
         }];
     }else {
-        parame[@"id"] = self.addressModel.addressID;
-        NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,self.addressModel.addressID];
+        parame[@"id"] = [NSString isStringEmpty:addressID] ? self.addressModel.addressID : addressID;
+        NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,parame[@"id"]];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:modifyUrlStr WithParaments:parame WithSuccess:^(id responseObject) {
             NSInteger code = [responseObject[@"code"] integerValue];
             if (code == 0) {
@@ -755,6 +839,10 @@
         if (![NSString isStringEmpty:sideBack]) {
             parame[@"card_backpath"] = sideBack;
         }
+    }
+    if (self.orderEditAddress) {
+        parame[@"logistic_company_code"] = [NSNull null];
+        parame[@"referal_trade_id"] = self.orderDict[@"id"];
     }
     return parame;
 }

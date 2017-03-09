@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddressModel.h"
 
 @class JMPurchaseHeaderView,JMAddressModel;
 @protocol JMPurchaseHeaderViewDelegate <NSObject>

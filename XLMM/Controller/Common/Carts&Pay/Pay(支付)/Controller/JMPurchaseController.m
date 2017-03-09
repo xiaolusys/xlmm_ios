@@ -14,7 +14,6 @@
 #import "JMChoiseLogisController.h"
 #import "JMPopLogistcsModel.h"
 #import "JMAddressViewController.h"
-#import "AddressModel.h"
 #import "GoodsInfoModel.h"
 #import "JMOrderPayView.h"
 #import "WXApi.h"

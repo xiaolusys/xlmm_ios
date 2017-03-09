@@ -91,7 +91,7 @@
     if (!_segmentView) {
         _segmentView = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 40)];
         _segmentView.sectionTitles = @[@"全部",@"奖金",@"返现",@"佣金"];
-        _segmentView.selectedSegmentIndex = 0;
+        _segmentView.selectedSegmentIndex = _currentIndex;
         _segmentView.backgroundColor = [UIColor whiteColor];
         _segmentView.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
         _segmentView.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor orangeColor],NSFontAttributeName:[UIFont systemFontOfSize:15.]};

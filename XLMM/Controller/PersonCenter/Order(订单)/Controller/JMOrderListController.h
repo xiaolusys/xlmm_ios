@@ -6,9 +6,9 @@
 //  Copyright © 2017年 上海己美. All rights reserved.
 //
 
-#import "VTMagicController.h"
+#import <UIKit/UIKit.h>
 
-@interface JMOrderListController : VTMagicController
+@interface JMOrderListController : UIViewController
 
 @property (nonatomic, assign) NSInteger currentIndex;
 //@property (nonatomic, copy) NSString *currentUrl;

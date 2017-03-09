@@ -247,8 +247,7 @@
  *  @return 需要的时间字符串
  */
 + (NSString *)yearDeal:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *year = strarray[0];
+    NSString *year = [str substringWithRange:NSMakeRange(0, 10)];
     return year;
 }
 

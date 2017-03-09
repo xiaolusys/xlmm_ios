@@ -28,7 +28,6 @@
 		1830728B1C97C00900B7665E /* UIImage+UIImageExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072731C97C00900B7665E /* UIImage+UIImageExt.m */; };
 		1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072751C97C00900B7665E /* UILabel+CustomLabel.m */; };
 		1830728D1C97C00900B7665E /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072771C97C00900B7665E /* UIViewController+NavigationBar.m */; };
-		1830728E1C97C00900B7665E /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830727B1C97C00900B7665E /* AddressPickerView.m */; };
 		1830728F1C97C00900B7665E /* ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1830727D1C97C00900B7665E /* ArrowView.m */; };
 		183073D51C97D17800B7665E /* FSLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072B01C97D17800B7665E /* FSLineChart.m */; };
 		183073D61C97D17800B7665E /* UIColor+FSPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 183072B21C97D17800B7665E /* UIColor+FSPalette.m */; };
@@ -46,12 +45,6 @@
 		1F0213171E6435030088AD2D /* UICollectionView+CSCollectionViewPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0213161E6435030088AD2D /* UICollectionView+CSCollectionViewPlaceHolder.m */; };
 		1F02131B1E6517690088AD2D /* copyWenan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0213191E6517690088AD2D /* copyWenan@2x.png */; };
 		1F02131C1E6517690088AD2D /* wenanShare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F02131A1E6517690088AD2D /* wenanShare@2x.png */; };
-		1F02135F1E669BD50088AD2D /* UIButton+VTMagic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F02134C1E669BD50088AD2D /* UIButton+VTMagic.m */; };
-		1F0213601E669BD50088AD2D /* UIColor+VTMagic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F02134E1E669BD50088AD2D /* UIColor+VTMagic.m */; };
-		1F0213631E669BD50088AD2D /* VTContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0213541E669BD50088AD2D /* VTContentView.m */; };
-		1F0213641E669BD50088AD2D /* VTMagicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0213581E669BD50088AD2D /* VTMagicController.m */; };
-		1F0213651E669BD50088AD2D /* VTMagicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F02135C1E669BD50088AD2D /* VTMagicView.m */; };
-		1F0213661E669BD50088AD2D /* VTMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F02135E1E669BD50088AD2D /* VTMenuBar.m */; };
 		1F0213691E669D490088AD2D /* JMMaMaFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0213681E669D490088AD2D /* JMMaMaFansController.m */; };
 		1F06CF281DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */; };
 		1F06CF291DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F06CF271DEBFC6500142510 /* tabBar_mianBBSSelected@2x.png */; };
@@ -395,10 +388,6 @@
 		1F498C1D1D2772D0007E77FC /* JMCompSugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B5F1D2772D0007E77FC /* JMCompSugView.m */; };
 		1F498C1E1D2772D0007E77FC /* JMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B611D2772D0007E77FC /* JMTextView.m */; };
 		1F498C241D2772D0007E77FC /* EmptyDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B6A1D2772D0007E77FC /* EmptyDefault.xib */; };
-		1F498C281D2772D0007E77FC /* AddAdressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B741D2772D0007E77FC /* AddAdressViewController.m */; };
-		1F498C291D2772D0007E77FC /* AddAdressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B751D2772D0007E77FC /* AddAdressViewController.xib */; };
-		1F498C2A1D2772D0007E77FC /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B771D2772D0007E77FC /* AddressViewController.m */; };
-		1F498C2B1D2772D0007E77FC /* AddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B781D2772D0007E77FC /* AddressViewController.xib */; };
 		1F498C2D1D2772D0007E77FC /* BoundingNewPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B7C1D2772D0007E77FC /* BoundingNewPhoneController.m */; };
 		1F498C2E1D2772D0007E77FC /* BoundingNewPhoneController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F498B7D1D2772D0007E77FC /* BoundingNewPhoneController.xib */; };
 		1F498C2F1D2772D0007E77FC /* ModifyPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498B7F1D2772D0007E77FC /* ModifyPhoneController.m */; };
@@ -419,7 +408,6 @@
 		1F498C451D2772D0007E77FC /* JMOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BAE1D2772D0007E77FC /* JMOrderDetailModel.m */; };
 		1F498C461D2772D0007E77FC /* JMOrderGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BB01D2772D0007E77FC /* JMOrderGoodsModel.m */; };
 		1F498C471D2772D0007E77FC /* JMPackAgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BB21D2772D0007E77FC /* JMPackAgeModel.m */; };
-		1F498C481D2772D0007E77FC /* JMEditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BB51D2772D0007E77FC /* JMEditAddressController.m */; };
 		1F498C491D2772D0007E77FC /* JMGoodsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BB91D2772D0007E77FC /* JMGoodsListController.m */; };
 		1F498C4A1D2772D0007E77FC /* JMLogTimeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BBB1D2772D0007E77FC /* JMLogTimeListController.m */; };
 		1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F498BBD1D2772D0007E77FC /* JMQueryLogInfoController.m */; };
@@ -644,19 +632,16 @@
 		1F7018D91E6E40650070C2D9 /* JMModifyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018CC1E6E40650070C2D9 /* JMModifyAddressController.m */; };
 		1F7018DA1E6E40650070C2D9 /* JMAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018CF1E6E40650070C2D9 /* JMAddressModel.m */; };
 		1F7018DB1E6E40650070C2D9 /* JMAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D21E6E40650070C2D9 /* JMAddressCell.m */; };
-		1F7018DC1E6E40650070C2D9 /* JMAddressIDCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */; };
 		1F7018DD1E6E40650070C2D9 /* JMSelectAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */; };
 		1F7018E11E6E4A140070C2D9 /* AlbumAddBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */; };
 		1F7018E41E6E4F160070C2D9 /* idCardSideBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */; };
 		1F7018E51E6E4F160070C2D9 /* idCardSideFace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */; };
+		1F7018E81E7109FA0070C2D9 /* JMDataManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018E71E7109FA0070C2D9 /* JMDataManger.m */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
 		1F760E3B1DB61F3B00307093 /* CollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E3A1DB61F3B00307093 /* CollectionModel.m */; };
-		1F760E3E1DB61FF900307093 /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E3D1DB61FF900307093 /* AddressModel.m */; };
 		1F760E411DB6203000307093 /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E401DB6203000307093 /* AccountModel.m */; };
-		1F760E621DB62C0900307093 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E601DB62C0900307093 /* AddressTableCell.m */; };
-		1F760E631DB62C0900307093 /* AddressTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F760E611DB62C0900307093 /* AddressTableCell.xib */; };
 		1F760EB21DB704E300307093 /* JMAutoLoopPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760EB11DB704E300307093 /* JMAutoLoopPageView.m */; };
 		1F7A1DCF1E1399160013A309 /* JMAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DCE1E1399160013A309 /* JMAccountCell.m */; };
 		1F7A1DF11E23B2360013A309 /* JMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7A1DF01E23B2360013A309 /* JMSearchViewController.m */; };
@@ -869,8 +854,6 @@
 		183072751C97C00900B7665E /* UILabel+CustomLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CustomLabel.m"; sourceTree = "<group>"; };
 		183072761C97C00900B7665E /* UIViewController+NavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NavigationBar.h"; sourceTree = "<group>"; };
 		183072771C97C00900B7665E /* UIViewController+NavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NavigationBar.m"; sourceTree = "<group>"; };
-		1830727A1C97C00900B7665E /* AddressPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressPickerView.h; sourceTree = "<group>"; };
-		1830727B1C97C00900B7665E /* AddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressPickerView.m; sourceTree = "<group>"; };
 		1830727C1C97C00900B7665E /* ArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowView.h; sourceTree = "<group>"; };
 		1830727D1C97C00900B7665E /* ArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrowView.m; sourceTree = "<group>"; };
 		183072931C97D0C000B7665E /* MMClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMClass.h; sourceTree = "<group>"; };
@@ -913,22 +896,6 @@
 		1F0213161E6435030088AD2D /* UICollectionView+CSCollectionViewPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+CSCollectionViewPlaceHolder.m"; sourceTree = "<group>"; };
 		1F0213191E6517690088AD2D /* copyWenan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyWenan@2x.png"; sourceTree = "<group>"; };
 		1F02131A1E6517690088AD2D /* wenanShare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wenanShare@2x.png"; sourceTree = "<group>"; };
-		1F02134B1E669BD50088AD2D /* UIButton+VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+VTMagic.h"; sourceTree = "<group>"; };
-		1F02134C1E669BD50088AD2D /* UIButton+VTMagic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+VTMagic.m"; sourceTree = "<group>"; };
-		1F02134D1E669BD50088AD2D /* UIColor+VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+VTMagic.h"; sourceTree = "<group>"; };
-		1F02134E1E669BD50088AD2D /* UIColor+VTMagic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+VTMagic.m"; sourceTree = "<group>"; };
-		1F0213531E669BD50088AD2D /* VTContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTContentView.h; sourceTree = "<group>"; };
-		1F0213541E669BD50088AD2D /* VTContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTContentView.m; sourceTree = "<group>"; };
-		1F0213551E669BD50088AD2D /* VTEnumType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTEnumType.h; sourceTree = "<group>"; };
-		1F0213561E669BD50088AD2D /* VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagic.h; sourceTree = "<group>"; };
-		1F0213571E669BD50088AD2D /* VTMagicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicController.h; sourceTree = "<group>"; };
-		1F0213581E669BD50088AD2D /* VTMagicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTMagicController.m; sourceTree = "<group>"; };
-		1F0213591E669BD50088AD2D /* VTMagicMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicMacros.h; sourceTree = "<group>"; };
-		1F02135A1E669BD50088AD2D /* VTMagicProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicProtocol.h; sourceTree = "<group>"; };
-		1F02135B1E669BD50088AD2D /* VTMagicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicView.h; sourceTree = "<group>"; };
-		1F02135C1E669BD50088AD2D /* VTMagicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTMagicView.m; sourceTree = "<group>"; };
-		1F02135D1E669BD50088AD2D /* VTMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMenuBar.h; sourceTree = "<group>"; };
-		1F02135E1E669BD50088AD2D /* VTMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTMenuBar.m; sourceTree = "<group>"; };
 		1F0213671E669D490088AD2D /* JMMaMaFansController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMMaMaFansController.h; sourceTree = "<group>"; };
 		1F0213681E669D490088AD2D /* JMMaMaFansController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMaFansController.m; sourceTree = "<group>"; };
 		1F06CF261DEBFC6500142510 /* tabBar_mianBBSNomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianBBSNomal@2x.png"; sourceTree = "<group>"; };
@@ -1427,12 +1394,6 @@
 		1F498B601D2772D0007E77FC /* JMTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTextView.h; sourceTree = "<group>"; };
 		1F498B611D2772D0007E77FC /* JMTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTextView.m; sourceTree = "<group>"; };
 		1F498B6A1D2772D0007E77FC /* EmptyDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyDefault.xib; sourceTree = "<group>"; };
-		1F498B731D2772D0007E77FC /* AddAdressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAdressViewController.h; sourceTree = "<group>"; };
-		1F498B741D2772D0007E77FC /* AddAdressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAdressViewController.m; sourceTree = "<group>"; };
-		1F498B751D2772D0007E77FC /* AddAdressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddAdressViewController.xib; sourceTree = "<group>"; };
-		1F498B761D2772D0007E77FC /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
-		1F498B771D2772D0007E77FC /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
-		1F498B781D2772D0007E77FC /* AddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressViewController.xib; sourceTree = "<group>"; };
 		1F498B7B1D2772D0007E77FC /* BoundingNewPhoneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingNewPhoneController.h; sourceTree = "<group>"; };
 		1F498B7C1D2772D0007E77FC /* BoundingNewPhoneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoundingNewPhoneController.m; sourceTree = "<group>"; };
 		1F498B7D1D2772D0007E77FC /* BoundingNewPhoneController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BoundingNewPhoneController.xib; sourceTree = "<group>"; };
@@ -1467,8 +1428,6 @@
 		1F498BB01D2772D0007E77FC /* JMOrderGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderGoodsModel.m; sourceTree = "<group>"; };
 		1F498BB11D2772D0007E77FC /* JMPackAgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPackAgeModel.h; sourceTree = "<group>"; };
 		1F498BB21D2772D0007E77FC /* JMPackAgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPackAgeModel.m; sourceTree = "<group>"; };
-		1F498BB41D2772D0007E77FC /* JMEditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEditAddressController.h; sourceTree = "<group>"; };
-		1F498BB51D2772D0007E77FC /* JMEditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEditAddressController.m; sourceTree = "<group>"; };
 		1F498BB81D2772D0007E77FC /* JMGoodsListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsListController.h; sourceTree = "<group>"; };
 		1F498BB91D2772D0007E77FC /* JMGoodsListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsListController.m; sourceTree = "<group>"; };
 		1F498BBA1D2772D0007E77FC /* JMLogTimeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLogTimeListController.h; sourceTree = "<group>"; };
@@ -1897,13 +1856,13 @@
 		1F7018CF1E6E40650070C2D9 /* JMAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressModel.m; sourceTree = "<group>"; };
 		1F7018D11E6E40650070C2D9 /* JMAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAddressCell.h; sourceTree = "<group>"; };
 		1F7018D21E6E40650070C2D9 /* JMAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressCell.m; sourceTree = "<group>"; };
-		1F7018D31E6E40650070C2D9 /* JMAddressIDCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAddressIDCardCell.h; sourceTree = "<group>"; };
-		1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAddressIDCardCell.m; sourceTree = "<group>"; };
 		1F7018D51E6E40650070C2D9 /* JMSelectAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSelectAddressView.h; sourceTree = "<group>"; };
 		1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSelectAddressView.m; sourceTree = "<group>"; };
 		1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlbumAddBtn@2x.png"; sourceTree = "<group>"; };
 		1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "idCardSideBack@2x.png"; sourceTree = "<group>"; };
 		1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "idCardSideFace@2x.png"; sourceTree = "<group>"; };
+		1F7018E61E7109FA0070C2D9 /* JMDataManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDataManger.h; sourceTree = "<group>"; };
+		1F7018E71E7109FA0070C2D9 /* JMDataManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDataManger.m; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -1912,13 +1871,8 @@
 		1F760E341DB61E2E00307093 /* BrandGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandGoodsModel.m; sourceTree = "<group>"; };
 		1F760E391DB61F3B00307093 /* CollectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionModel.h; sourceTree = "<group>"; };
 		1F760E3A1DB61F3B00307093 /* CollectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionModel.m; sourceTree = "<group>"; };
-		1F760E3C1DB61FF900307093 /* AddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressModel.h; sourceTree = "<group>"; };
-		1F760E3D1DB61FF900307093 /* AddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressModel.m; sourceTree = "<group>"; };
 		1F760E3F1DB6203000307093 /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
 		1F760E401DB6203000307093 /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
-		1F760E5F1DB62C0900307093 /* AddressTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
-		1F760E601DB62C0900307093 /* AddressTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
-		1F760E611DB62C0900307093 /* AddressTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressTableCell.xib; sourceTree = "<group>"; };
 		1F760EB01DB704E300307093 /* JMAutoLoopPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAutoLoopPageView.h; sourceTree = "<group>"; };
 		1F760EB11DB704E300307093 /* JMAutoLoopPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMAutoLoopPageView.m; sourceTree = "<group>"; };
 		1F7A1DCD1E1399160013A309 /* JMAccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAccountCell.h; sourceTree = "<group>"; };
@@ -2452,8 +2406,6 @@
 		183072791C97C00900B7665E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1830727A1C97C00900B7665E /* AddressPickerView.h */,
-				1830727B1C97C00900B7665E /* AddressPickerView.m */,
 				1830727C1C97C00900B7665E /* ArrowView.h */,
 				1830727D1C97C00900B7665E /* ArrowView.m */,
 			);
@@ -2476,7 +2428,6 @@
 			isa = PBXGroup;
 			children = (
 				1F561E7E1E681FB500799332 /* SwipeTableView */,
-				1F02134A1E669BD50088AD2D /* VTMagic */,
 				1F37938C1DEE827E0044E325 /* AliPaySDK */,
 				1F3793EF1DEE827E0044E325 /* WechatSDK */,
 				1F37937B1DEE82490044E325 /* fmdb */,
@@ -2565,29 +2516,6 @@
 				1F02131A1E6517690088AD2D /* wenanShare@2x.png */,
 			);
 			path = homePage;
-			sourceTree = "<group>";
-		};
-		1F02134A1E669BD50088AD2D /* VTMagic */ = {
-			isa = PBXGroup;
-			children = (
-				1F02134B1E669BD50088AD2D /* UIButton+VTMagic.h */,
-				1F02134C1E669BD50088AD2D /* UIButton+VTMagic.m */,
-				1F02134D1E669BD50088AD2D /* UIColor+VTMagic.h */,
-				1F02134E1E669BD50088AD2D /* UIColor+VTMagic.m */,
-				1F0213531E669BD50088AD2D /* VTContentView.h */,
-				1F0213541E669BD50088AD2D /* VTContentView.m */,
-				1F0213551E669BD50088AD2D /* VTEnumType.h */,
-				1F0213561E669BD50088AD2D /* VTMagic.h */,
-				1F0213571E669BD50088AD2D /* VTMagicController.h */,
-				1F0213581E669BD50088AD2D /* VTMagicController.m */,
-				1F0213591E669BD50088AD2D /* VTMagicMacros.h */,
-				1F02135A1E669BD50088AD2D /* VTMagicProtocol.h */,
-				1F02135B1E669BD50088AD2D /* VTMagicView.h */,
-				1F02135C1E669BD50088AD2D /* VTMagicView.m */,
-				1F02135D1E669BD50088AD2D /* VTMenuBar.h */,
-				1F02135E1E669BD50088AD2D /* VTMenuBar.m */,
-			);
-			path = VTMagic;
 			sourceTree = "<group>";
 		};
 		1F06CF2A1DEC129B00142510 /* RootTabBar */ = {
@@ -3967,17 +3895,6 @@
 				1F7018C61E6E40650070C2D9 /* Controller */,
 				1F7018CD1E6E40650070C2D9 /* Model */,
 				1F7018D01E6E40650070C2D9 /* View */,
-				1F498B731D2772D0007E77FC /* AddAdressViewController.h */,
-				1F498B741D2772D0007E77FC /* AddAdressViewController.m */,
-				1F498B751D2772D0007E77FC /* AddAdressViewController.xib */,
-				1F498B761D2772D0007E77FC /* AddressViewController.h */,
-				1F498B771D2772D0007E77FC /* AddressViewController.m */,
-				1F498B781D2772D0007E77FC /* AddressViewController.xib */,
-				1F760E3C1DB61FF900307093 /* AddressModel.h */,
-				1F760E3D1DB61FF900307093 /* AddressModel.m */,
-				1F760E5F1DB62C0900307093 /* AddressTableCell.h */,
-				1F760E601DB62C0900307093 /* AddressTableCell.m */,
-				1F760E611DB62C0900307093 /* AddressTableCell.xib */,
 			);
 			path = "Address(地址)";
 			sourceTree = "<group>";
@@ -4047,7 +3964,6 @@
 				1F498BAA1D2772D0007E77FC /* Model */,
 				1F498BCA1D2772D0007E77FC /* View */,
 				1F498BA41D2772D0007E77FC /* Controller */,
-				1F498BB31D2772D0007E77FC /* order_editer(修改收货地址) */,
 				1F498BB61D2772D0007E77FC /* querylogisticsInfo(查询物流信息) */,
 				1F498B9A1D2772D0007E77FC /* chooseLogistics(选择物流) */,
 			);
@@ -4115,15 +4031,6 @@
 				1F56E29F1D35FDD40092EC91 /* JMContinuePayModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		1F498BB31D2772D0007E77FC /* order_editer(修改收货地址) */ = {
-			isa = PBXGroup;
-			children = (
-				1F498BB41D2772D0007E77FC /* JMEditAddressController.h */,
-				1F498BB51D2772D0007E77FC /* JMEditAddressController.m */,
-			);
-			path = "order_editer(修改收货地址)";
 			sourceTree = "<group>";
 		};
 		1F498BB61D2772D0007E77FC /* querylogisticsInfo(查询物流信息) */ = {
@@ -5830,8 +5737,6 @@
 			children = (
 				1F7018D11E6E40650070C2D9 /* JMAddressCell.h */,
 				1F7018D21E6E40650070C2D9 /* JMAddressCell.m */,
-				1F7018D31E6E40650070C2D9 /* JMAddressIDCardCell.h */,
-				1F7018D41E6E40650070C2D9 /* JMAddressIDCardCell.m */,
 				1F7018D51E6E40650070C2D9 /* JMSelectAddressView.h */,
 				1F7018D61E6E40650070C2D9 /* JMSelectAddressView.m */,
 			);
@@ -6072,6 +5977,8 @@
 			children = (
 				1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */,
 				1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */,
+				1F7018E61E7109FA0070C2D9 /* JMDataManger.h */,
+				1F7018E71E7109FA0070C2D9 /* JMDataManger.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6581,7 +6488,6 @@
 				1F12EC8D1DAC97E600511B58 /* btn_close@2x.png in Resources */,
 				1F12ED2D1DAC97E700511B58 /* weixinIcon@2x.png in Resources */,
 				1F12ED301DAC97E700511B58 /* circle_wallet_Selected1.png in Resources */,
-				1F498C291D2772D0007E77FC /* AddAdressViewController.xib in Resources */,
 				1F12ED5F1DAC97E700511B58 /* back_image.png in Resources */,
 				1F12EC8A1DAC97E600511B58 /* weixinzhifu.png in Resources */,
 				3A2BC1C31D2CFF6D00F6F54B /* UMSCommentInputControlleriPad.xib in Resources */,
@@ -6610,7 +6516,6 @@
 				1F7EA8231E48145B00E44616 /* downArrow1@2x.png in Resources */,
 				1F12ECCF1DAC97E600511B58 /* 4lun@2x.png in Resources */,
 				1F12ED271DAC97E700511B58 /* refundStatusImage@2x.png in Resources */,
-				1F498C2B1D2772D0007E77FC /* AddressViewController.xib in Resources */,
 				1F12ECCB1DAC97E600511B58 /* 0lun@2x.png in Resources */,
 				1F498C3B1D2772D0007E77FC /* ThirdAccountViewController.xib in Resources */,
 				1F12EC8E1DAC97E600511B58 /* pop_bottom@2x.png in Resources */,
@@ -6764,7 +6669,6 @@
 				1F12ECB61DAC97E600511B58 /* mamafan.png in Resources */,
 				1F12EC9B1DAC97E600511B58 /* xuanpinshangjiaright.png in Resources */,
 				1F12ED5A1DAC97E700511B58 /* hide_passwd_icon@2x.png in Resources */,
-				1F760E631DB62C0900307093 /* AddressTableCell.xib in Resources */,
 				1F06CF351DEC292500142510 /* tabBar_collectionNomal@2x.png in Resources */,
 				1F12ECB51DAC97E600511B58 /* MaMa_renew@2x.png in Resources */,
 				1F12ED6E1DAC97E700511B58 /* zhanwei.png in Resources */,
@@ -7063,7 +6967,6 @@
 				1FF72C801DE7E7FF0035F436 /* JMMaMaHomeHeaderView.m in Sources */,
 				1FE52DE91D93C64D0051D5A0 /* JMMaMaMessageCell.m in Sources */,
 				1F4C9EB51D9912600089CE74 /* UdeskAlertController.m in Sources */,
-				1830728E1C97C00900B7665E /* AddressPickerView.m in Sources */,
 				1F498B301D276450007E77FC /* JMPayShareController.m in Sources */,
 				1F498B031D2761BE007E77FC /* WebViewController.m in Sources */,
 				1F498B3C1D276450007E77FC /* JMOrderPayView.m in Sources */,
@@ -7073,7 +6976,6 @@
 				1F5877EF1DB8A7AF00949302 /* JMProductSelectionListModel.m in Sources */,
 				1FD158D71D2F7FE4006C4B14 /* JMRefundModel.m in Sources */,
 				1F56E2861D348A0A0092EC91 /* JMCouponRootCell.m in Sources */,
-				1F498C481D2772D0007E77FC /* JMEditAddressController.m in Sources */,
 				1F58783E1DB8A9ED00949302 /* JMChoiseWithDrawController.m in Sources */,
 				1F4C9EB11D9912600089CE74 /* UdeskTools.m in Sources */,
 				1F3793FA1DEE827E0044E325 /* DataSigner.m in Sources */,
@@ -7117,7 +7019,6 @@
 				1F4C9E8B1D9912600089CE74 /* UdeskEmotionManagerView.m in Sources */,
 				1F5877991DB8A60D00949302 /* CarryLogHeaderView.m in Sources */,
 				1F4C9E7B1D9912600089CE74 /* UdeskFAQViewController.m in Sources */,
-				1F0213601E669BD50088AD2D /* UIColor+VTMagic.m in Sources */,
 				1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */,
 				1F498B3B1D276450007E77FC /* PayExtrasModel.m in Sources */,
 				1F90EE281E51A8CD0031F0DE /* JMHomeFirstController.m in Sources */,
@@ -7149,6 +7050,7 @@
 				1F4C9E9A1D9912600089CE74 /* UdeskShareTransitioningDelegateImpl.m in Sources */,
 				1FAC28D41E5558600032A005 /* JMHomeHourModel.m in Sources */,
 				1F5877931DB8A60D00949302 /* FanceModel.m in Sources */,
+				1F7018E81E7109FA0070C2D9 /* JMDataManger.m in Sources */,
 				1F5877AB1DB8A60D00949302 /* JMMaMateamCell.m in Sources */,
 				1F5878851DB8ABD900949302 /* TixianTableViewCell.m in Sources */,
 				1F561E7A1E67C7A300799332 /* JMEarningRecordTableView.m in Sources */,
@@ -7181,7 +7083,6 @@
 				1F5877F81DB8A7DC00949302 /* MyInvitationViewController.m in Sources */,
 				1F4C9EB31D9912600089CE74 /* UdeskViewExt.m in Sources */,
 				1FF72C521DE7E6E10035F436 /* JMPushingDaysController.m in Sources */,
-				1F02135F1E669BD50088AD2D /* UIButton+VTMagic.m in Sources */,
 				1F58A7631DFBB65100F738D2 /* JMBorwesScrollView.m in Sources */,
 				1F5877EC1DB8A7AF00949302 /* YixuanTableViewController.m in Sources */,
 				1F3793881DEE82490044E325 /* FMDatabaseAdditions.m in Sources */,
@@ -7213,13 +7114,10 @@
 				1F4C9EB01D9912600089CE74 /* UdeskStringSizeUtil.m in Sources */,
 				1F0213141E6420640088AD2D /* JMReloadEmptyDataView.m in Sources */,
 				1F5878931DB8ABFE00949302 /* TixianModel.m in Sources */,
-				1F498C2A1D2772D0007E77FC /* AddressViewController.m in Sources */,
 				1F6B79DD1DD9BF95009AB446 /* JMPopViewAnimationSpring.m in Sources */,
-				1F760E3E1DB61FF900307093 /* AddressModel.m in Sources */,
 				1FDC35071DDD6F7600263E83 /* JMGoodsCountTime.m in Sources */,
 				1F4C9EA41D9912600089CE74 /* UdeskSDKConfig.m in Sources */,
 				3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */,
-				1F7018DC1E6E40650070C2D9 /* JMAddressIDCardCell.m in Sources */,
 				1F3793F91DEE827E0044E325 /* base64.m in Sources */,
 				1F498C4A1D2772D0007E77FC /* JMLogTimeListController.m in Sources */,
 				1F4C9EA01D9912600089CE74 /* UIImage+UdeskSDK.m in Sources */,
@@ -7241,7 +7139,6 @@
 				1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */,
 				1F6B7A191DD9C224009AB446 /* JMStoreManager.m in Sources */,
 				1FF72C7A1DE7E7A30035F436 /* JMMaMaHomeController.m in Sources */,
-				1F498C281D2772D0007E77FC /* AddAdressViewController.m in Sources */,
 				1F7D99401D63FD7000E18FD1 /* JMRootGoodsModel.m in Sources */,
 				1F4C9E8D1D9912600089CE74 /* UdeskMessageTextView.m in Sources */,
 				1F58783F1DB8A9ED00949302 /* JMChoiseWithDrawCell.m in Sources */,
@@ -7250,7 +7147,6 @@
 				1FBDA3671CE94BB00047BEF2 /* JMAuthcodeViewController.m in Sources */,
 				1F4C9E8F1D9912600089CE74 /* UdeskTimerLabel.m in Sources */,
 				321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */,
-				1F0213641E669BD50088AD2D /* VTMagicController.m in Sources */,
 				1F498C5E1D2772D0007E77FC /* ShenQingTuikuanController.m in Sources */,
 				1F498B391D276450007E77FC /* CartListModel.m in Sources */,
 				1F498B3A1D276450007E77FC /* GoodsInfoModel.m in Sources */,
@@ -7275,7 +7171,6 @@
 				1FD158E01D2F8444006C4B14 /* JMRefundBaseController.m in Sources */,
 				1F2F9E321D58864200E3A68B /* JMGoodsExplainCell.m in Sources */,
 				1F5878781DB8ABB200949302 /* JMWithDrawDetailCell.m in Sources */,
-				1F0213631E669BD50088AD2D /* VTContentView.m in Sources */,
 				1FEDCB0B1D8FBBC200CB7D97 /* JMRichTextTool.m in Sources */,
 				1F760E411DB6203000307093 /* AccountModel.m in Sources */,
 				1F498B021D2761BE007E77FC /* WYWeakScriptMessageDelegate.m in Sources */,
@@ -7294,9 +7189,7 @@
 				1F4C9E9B1D9912600089CE74 /* UdeskTransitioningAnimation.m in Sources */,
 				1F3793871DEE82490044E325 /* FMDatabase.m in Sources */,
 				1F5877D81DB8A74E00949302 /* SelectedActivitiesViewController.m in Sources */,
-				1F0213651E669BD50088AD2D /* VTMagicView.m in Sources */,
 				1F1351471CE7193700D6138D /* JMLogInViewController.m in Sources */,
-				1F0213661E669BD50088AD2D /* VTMenuBar.m in Sources */,
 				321857BE1CA109550085FF21 /* WebViewJavascriptBridge.m in Sources */,
 				1F561E881E681FB500799332 /* STHeaderView.m in Sources */,
 				1F498C491D2772D0007E77FC /* JMGoodsListController.m in Sources */,
@@ -7375,7 +7268,6 @@
 				1F4C9EAC1D9912600089CE74 /* UdeskPhotographyHelper.m in Sources */,
 				1F4C9EBC1D9912600089CE74 /* UdeskReachability.m in Sources */,
 				1F1FB8C81D8E24D2004C60CE /* NJKWebViewProgressView.m in Sources */,
-				1F760E621DB62C0900307093 /* AddressTableCell.m in Sources */,
 				1F5877ED1DB8A7AF00949302 /* JMAlreadyChooseModel.m in Sources */,
 				1F3793891DEE82490044E325 /* FMDatabasePool.m in Sources */,
 				1F5877A81DB8A60D00949302 /* JMMaMaTeamController.m in Sources */,

@@ -221,14 +221,14 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         NSString *hourStr = [NSString stringWithFormat:@"%02d:00",hourInt];
         NSString *descStr;
         if (currentHourInt >= hourInt) {
-            descStr = @"抢购中";
+            descStr = @"热卖中";
             _currentIndex ++;
             _qiangouCurrentTimeHour = hourInt;
         }else {
             if (_currentTimeHour == -1) {
                 _currentTimeHour = hourInt;
             }
-            descStr = @"预热中";
+            descStr = @"热卖中";
         }
         [_timeHourArr addObject:@(hourInt)];
         [self.itemNameArr addObject:hourStr];

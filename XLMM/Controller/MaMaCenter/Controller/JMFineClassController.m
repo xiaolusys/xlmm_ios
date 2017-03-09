@@ -112,6 +112,7 @@
     [self.view addSubview:self.baseWebView];
     
     
+    
 }
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
     [[JMGlobal global] hideWaitLoading];

@@ -6,9 +6,9 @@
 //  Copyright © 2017年 上海己美. All rights reserved.
 //
 
-#import "VTMagicController.h"
+#import <UIKit/UIKit.h>
 
-@interface JMMaMaFansController : VTMagicController
+@interface JMMaMaFansController : UIViewController
 
 @property (nonatomic, copy) NSString *aboutFansUrl;
 

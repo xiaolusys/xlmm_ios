@@ -22,7 +22,7 @@
 #import "JMPopViewAnimationSpring.h"
 #import "JMOrderPayOutdateView.h"
 #import "JMPopLogistcsController.h"
-#import "JMEditAddressController.h"
+#import "JMModifyAddressController.h"
 #import "JMOrderDetailSectionView.h"
 #import "JMRefundController.h"
 #import "JMShareViewController.h"
@@ -403,8 +403,11 @@
 - (void)composeHeaderTapView:(JMOrderDetailHeaderView *)headerView TapClick:(NSInteger)index {
     if (index == 100) {
         // 修改地址
-        JMEditAddressController *editVC = [[JMEditAddressController alloc] init];
-        editVC.editDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
+        JMModifyAddressController *editVC = [[JMModifyAddressController alloc] init];
+        editVC.orderEditAddress = YES;
+        editVC.cartsPayInfoLevel = 0;
+        editVC.addressLevel = 0;
+        editVC.orderDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
         // 修改物流  (如果需要判断是否可以更改物流在这里弹出一个提示)

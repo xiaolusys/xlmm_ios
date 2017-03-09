@@ -9,22 +9,52 @@
 #import "JMOrderListController.h"
 #import "UIImage+ColorImage.h"
 #import "JMPersonAllOrderController.h"
+#import "HMSegmentedControl.h"
 
 
-@interface JMOrderListController () <VTMagicViewDataSource, VTMagicViewDelegate> {
+@interface JMOrderListController () <UIScrollViewDelegate> {
     NSArray *_itemArr;
     NSArray *_urlArr;
 }
-
+@property (nonatomic, strong) HMSegmentedControl *segmentControl;
+@property (nonatomic, strong) UIScrollView *baseScrollView;
 
 
 @end
 
 @implementation JMOrderListController
 
+#pragma mark 懒加载
+- (HMSegmentedControl *)segmentControl {
+    if (!_segmentControl) {
+        _segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 45)];
+        _segmentControl.backgroundColor = [UIColor whiteColor];
+        self.segmentControl.sectionTitles = _itemArr;
+        _segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
+        _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        _segmentControl.selectionIndicatorHeight = 2.f;
+        _segmentControl.selectionIndicatorColor = [UIColor orangeColor];
+        _segmentControl.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14.],
+                                                NSForegroundColorAttributeName : [UIColor blackColor]};
+        _segmentControl.selectedTitleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:15.],
+                                                        NSForegroundColorAttributeName : [UIColor orangeColor]};
+        [_segmentControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+    }
+    return _segmentControl;
+}
+- (UIScrollView *)baseScrollView {
+    if (!_baseScrollView) {
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - CGRectGetMaxY(self.segmentControl.frame))];
+        _baseScrollView.showsHorizontalScrollIndicator = NO;
+        _baseScrollView.showsVerticalScrollIndicator = NO;
+        _baseScrollView.pagingEnabled = YES;
+        _baseScrollView.delegate = self;
+    }
+    return _baseScrollView;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -34,65 +64,46 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"订单列表" selecotr:@selector(backClick)];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.magicView.navigationColor = [UIColor whiteColor];
-    self.magicView.layoutStyle = VTLayoutStyleDivide;
-    self.magicView.switchStyle = VTSwitchStyleDefault;
-    //    self.magicView.sliderStyle = VTSliderStyleDefault;
-    self.magicView.navigationHeight = 45.f;
-    self.magicView.itemScale = 1.1;
-    [self configCustomSlider];
     
     _itemArr = @[@"全部订单",@"待支付",@"待收货"];
     _urlArr = @[kQuanbuDingdan_URL,kWaitpay_List_URL,kWaitsend_List_URL];
-    //    [self.magicView reloadData];
-    [self.magicView reloadDataToPage:self.currentIndex];
     
+    [self.view addSubview:self.segmentControl];
+    _segmentControl.selectedSegmentIndex = self.currentIndex;
+    
+    [self.view addSubview:self.baseScrollView];
+    [self addChildController];
+    [self removeToPage:self.currentIndex];
+}
+- (void)addChildController {
+    for (int i = 0 ; i < _itemArr.count; i++) {
+        JMPersonAllOrderController *fineVC = [[JMPersonAllOrderController alloc] init];
+        [self addChildViewController:fineVC];
+    }
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _itemArr.count, self.baseScrollView.frame.size.height);
+}
+- (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
+    NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
+    NSInteger page = segmentedControl.selectedSegmentIndex;
+    [self removeToPage:page];
     
 }
-- (void)configCustomSlider {
-    UIImageView *sliderView = [[UIImageView alloc] init];
-    sliderView.image = [UIImage imageWithColor:[UIColor buttonEnabledBackgroundColor] Frame:CGRectMake(0, 0, SCREENWIDTH / 4, 2.f)];
-    sliderView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.magicView setSliderView:sliderView];
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = scrollView.contentOffset.x / pageWidth;
+//    _lastSelectedIndex = (int)page;
+    [self.segmentControl setSelectedSegmentIndex:page animated:YES];
+    [self removeToPage:page];
+    
 }
-- (NSArray<NSString *> *)menuTitlesForMagicView:(VTMagicView *)magicView {
-    return _itemArr;
+- (void)removeToPage:(NSInteger)index {
+    self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
+    JMPersonAllOrderController *homeFirst = self.childViewControllers[index];
+    homeFirst.urlString = _urlArr[index];
+    homeFirst.view.frame = self.baseScrollView.bounds;
+    [self.baseScrollView addSubview:homeFirst.view];
+    [homeFirst didMoveToParentViewController:self];
 }
-- (UIButton *)magicView:(VTMagicView *)magicView menuItemAtIndex:(NSUInteger)itemIndex {
-    static NSString *itemIdentifier = @"itemIdentifier";
-    UIButton *menuItem = [magicView dequeueReusableItemWithIdentifier:itemIdentifier];
-    if (!menuItem) {
-        menuItem = [UIButton buttonWithType:UIButtonTypeCustom];
-        [menuItem setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
-        [menuItem setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateSelected];
-        menuItem.titleLabel.font = [UIFont systemFontOfSize:15.f];
-    }
-    return menuItem;
-}
-- (UIViewController *)magicView:(VTMagicView *)magicView viewControllerAtPage:(NSUInteger)pageIndex {
-    static NSString *firstID = @"firstIdentifier";
-    JMPersonAllOrderController *recomViewController = [magicView dequeueReusablePageWithIdentifier:firstID];
-    if (!recomViewController) {
-        recomViewController = [[JMPersonAllOrderController alloc] init];
-    }
-    recomViewController.urlString = _urlArr[pageIndex];
-    return recomViewController;
-}
-#pragma mark - VTMagicViewDelegate
-- (void)magicView:(VTMagicView *)magicView viewDidAppear:(__kindof UIViewController *)viewController atPage:(NSUInteger)pageIndex {
-        NSLog(@"index:%ld viewDidAppear:%@", (long)pageIndex, viewController.view);
-}
-
-- (void)magicView:(VTMagicView *)magicView viewDidDisappear:(__kindof UIViewController *)viewController atPage:(NSUInteger)pageIndex {
-        NSLog(@"index:%ld viewDidDisappear:%@", (long)pageIndex, viewController.view);
-}
-
-- (void)magicView:(VTMagicView *)magicView didSelectItemAtIndex:(NSUInteger)itemIndex {
-        NSLog(@"didSelectItemAtIndex:%ld", (long)itemIndex);
-}
-
-
 - (void)backClick {
     if (self.ispopToView) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -104,6 +115,22 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
