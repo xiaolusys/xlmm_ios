@@ -11,7 +11,9 @@
 @interface JMPersonAllOrderController : UIViewController
 
 
-- (NSString *)urlStr;
+- (void)refresh;
+@property (nonatomic, copy) NSString *itemIndex;
+@property (nonatomic, copy) NSString *urlString;
 
 
 @end

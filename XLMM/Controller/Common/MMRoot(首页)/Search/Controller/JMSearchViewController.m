@@ -74,7 +74,7 @@
 }
 + (JMSearchViewController *)searchViewControllerWithHistorySearchs:(NSArray<NSString *> *)historySearchs searchBarPlaceHolder:(NSString *)placeHolder didSearchBlock:(JMDidSearchBlock)block {
     JMSearchViewController *searchVC = [self searchViewControllerWithHistorySearchs:historySearchs searchBarPlaceholder:placeHolder];
-    searchVC.didSearchBlock = [block copy];
+    searchVC.didSearchBlock = block;
     return searchVC;
     
 }
@@ -133,14 +133,13 @@
             tagModel.textColor = [UIColor textDarkGrayColor];
             tagModel.enable = YES;
             [self.tagView addTag:tagModel];
-
         }];
         kWeakSelf
         self.tagView.didTapTagAtIndex = ^(NSUInteger index) {
+            kStrongSelf
             NSLog(@"点击了第 %ld 个标签",index);
-            _defaultSearText = weakSelf.dataSource[index];
-            [weakSelf searchBarSearchButtonClicked:weakSelf.searchBar];
-
+            _defaultSearText = strongSelf.dataSource[index];
+            [weakSelf searchBarSearchButtonClicked:strongSelf.searchBar];
         };
         CGFloat tagHeight = self.tagView.intrinsicContentSize.height;
         self.tagView.frame = CGRectMake(0, 50, SCREENWIDTH, tagHeight);
@@ -323,18 +322,14 @@
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     searchBar.text = _defaultSearText;
-    if (self.didSearchBlock) self.didSearchBlock(self, searchBar, searchBar.text);
+    if (self.didSearchBlock) {
+        self.didSearchBlock(self, searchBar, searchBar.text);
+    }
 }
 
-
-
-
-
-
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.searchBar resignFirstResponder];
-}
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    [self.searchBar resignFirstResponder];
+//}
 
 
 // 键盘显示完成（弹出）

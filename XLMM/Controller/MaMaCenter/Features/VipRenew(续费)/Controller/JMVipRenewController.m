@@ -8,13 +8,11 @@
 
 #import "JMVipRenewController.h"
 #import "JMOrderPayView.h"
-#import "UIView+RGSize.h"
 #import "WXApi.h"
-//#import "Pingpp.h"
-#import "PersonOrderViewController.h"
 #import "WebViewController.h"
 #import "JMRichTextTool.h"
 #import "JMPayment.h"
+#import "JMOrderListController.h"
 
 
 
@@ -137,7 +135,7 @@
     JMOrderPayView *payView = [[JMOrderPayView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT - 180, SCREENWIDTH, 180)];
     self.payView = payView;
     self.payView.delegate = self;
-    self.payView.width = SCREENWIDTH;
+    self.payView.cs_w = SCREENWIDTH;
 
 }
 - (void)createRenewView {
@@ -511,8 +509,8 @@
 }
 - (void)popview{
     [MobClick event:@"renewBuy_cancel"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 101;
     [self.navigationController pushViewController:orderVC animated:YES];
 }
 /**
@@ -639,10 +637,10 @@
     [self.view addSubview:self.maskView];
     [self.view addSubview:self.payView];
     self.maskView.alpha = 0;
-    self.payView.top = self.view.height - 150;
+    self.payView.cs_x = self.view.cs_h - 150;
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0.3;
-        self.payView.bottom = self.view.height;
+        self.payView.bottom = self.view.cs_h;
     }];
 }
 /**
@@ -651,7 +649,7 @@
 - (void)hidePickerView {
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0;
-        self.payView.top = self.view.height;
+        self.payView.cs_x = self.view.cs_h;
     } completion:^(BOOL finished) {
         [self.maskView removeFromSuperview];
         [self.payView removeFromSuperview];

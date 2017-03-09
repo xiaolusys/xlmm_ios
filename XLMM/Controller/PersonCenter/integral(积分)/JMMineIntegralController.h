@@ -12,4 +12,6 @@
 
 @property (nonatomic, copy) NSString *xiaoluCoin;
 
+- (void)zhegshitihuanfangfa:(NSString *)canshu;
+
 @end

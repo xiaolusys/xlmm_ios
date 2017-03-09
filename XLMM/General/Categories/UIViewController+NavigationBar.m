@@ -8,7 +8,9 @@
 
 #import "UIViewController+NavigationBar.h"
 #import "UIImage+ColorImage.h"
+#import <objc/runtime.h>
 
+static const void *kVTReuseIdentifier = &kVTReuseIdentifier;
 
 @implementation UIViewController (NavigationBar)
 
@@ -60,6 +62,8 @@
         
     });
 }
+
+
 
 @end
 

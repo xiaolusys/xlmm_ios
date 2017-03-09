@@ -11,7 +11,7 @@
 #import "ChangeNicknameViewController.h"
 #import "WXLoginController.h"
 #import "VerifyPhoneViewController.h"
-#import "AddressViewController.h"
+#import "JMAddressViewController.h"
 #import "ThirdAccountViewController.h"
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
@@ -134,7 +134,7 @@
         ThirdAccountViewController *third = [[ThirdAccountViewController alloc] initWithNibName:@"ThirdAccountViewController" bundle:nil];
         [self.navigationController pushViewController:third animated:YES];
     }else if (index == 5) {
-        AddressViewController *addressVC = [[AddressViewController alloc] initWithNibName:@"AddressViewController" bundle:nil];
+        JMAddressViewController *addressVC = [[JMAddressViewController alloc] init];
         addressVC.isSelected = NO;
         [self.navigationController pushViewController:addressVC animated:YES];
     }else if (index == 6) {

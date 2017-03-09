@@ -15,32 +15,28 @@
 #import "JMMaMaCenterModel.h"
 #import "Udesk.h"
 #import "JMStoreManager.h"
-#import "JMHomeRootController.h"
 #import "JMRewardsController.h"
-#import "JMPushingDaysController.h"
 #import "ProductSelectionListViewController.h"
 #import "JMVipRenewController.h"
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
-#import "MaClassifyCarryLogViewController.h"
 #import "JMRootTabBarController.h"
 #import "JMWithdrawShortController.h"
 #import "TodayVisitorViewController.h"
 #import "MaMaOrderListViewController.h"
 #import "MaMaHuoyueduViewController.h"
-#import "JMMaMaCenterFansController.h"
 #import "JMChoiseWithDrawController.h"
 #import "JMLogInViewController.h"
 #import "JMSettingController.h"
 #import "Account1ViewController.h"
 #import "WebViewController.h"
-#import "JMStoreManager.h"
-#import "JMPersonalPageLayoutCell.h"
 #import "JMMineIntegralController.h"
 #import "JMCouponController.h"
-#import "PersonOrderViewController.h"
 #import "JMRefundBaseController.h"
 #import "PublishNewPdtViewController.h"
+#import "JMMaMaFansController.h"
+#import "JMOrderListController.h"
+#import "JMTotalEarningController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -118,7 +114,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:@selector(backClick:)];
+    [self createNavigationBarWithTitle:@"妈妈中心" selecotr:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
@@ -313,7 +309,7 @@
 
 #pragma ========== UI处理 ==========
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
@@ -458,8 +454,8 @@
             break;
         case 104:
             if (isLogin) {
-                PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
-                order.index = 101;
+                JMOrderListController *order = [[JMOrderListController alloc] init];
+                order.currentIndex = 1;
                 order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
@@ -469,8 +465,8 @@
             break;
         case 105:
             if (isLogin) {
-                PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
-                order.index = 102;
+                JMOrderListController *order = [[JMOrderListController alloc] init];
+                order.currentIndex = 2;
                 order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
@@ -489,8 +485,8 @@
             break;
         case 107:
             if (isLogin) {
-                PersonOrderViewController *order = [[PersonOrderViewController alloc] init];
-                order.index = 100;
+                JMOrderListController *order = [[JMOrderListController alloc] init];
+                order.currentIndex = 0;
                 order.ispopToView = YES;
                 [self.navigationController pushViewController:order animated:YES];
             }else{
@@ -514,7 +510,7 @@
             break;
         case 110:
         {
-            MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
             carry.earningsRecord = _earningsRecord;
             carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
@@ -556,7 +552,7 @@
             break;
         case 115:
         {
-            MaClassifyCarryLogViewController *carry = [[MaClassifyCarryLogViewController alloc] init];
+            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
             carry.earningsRecord = _earningsRecord;
             carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
@@ -578,10 +574,8 @@
             break;
         case 118:
         {
-            JMMaMaCenterFansController *mamaCenterFansVC = [[JMMaMaCenterFansController alloc] init];
-            mamaCenterFansVC.fansNum = _fansNum;
-            mamaCenterFansVC.fansUrlStr = _fansWebUrl;
-            mamaCenterFansVC.index = 100;
+            JMMaMaFansController *mamaCenterFansVC = [[JMMaMaFansController alloc] init];
+            mamaCenterFansVC.aboutFansUrl = _fansWebUrl;
             [self.navigationController pushViewController:mamaCenterFansVC animated:YES];
         }
             break;
@@ -634,8 +628,6 @@
     }
 }
 - (void)backClick:(UIButton *)button{
-//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//    JMKeyWindow.rootViewController = tabBarVC;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

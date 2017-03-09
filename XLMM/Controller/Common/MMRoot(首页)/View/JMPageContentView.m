@@ -41,7 +41,7 @@
         [self.segmentedControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:self.segmentedControl];
         
-        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 60, SCREENWIDTH, frame.size.height - 60)];
+        self.segmentScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 60, SCREENWIDTH, frame.size.height - 60 - 45)];
         self.segmentScrollView.pagingEnabled = YES;
         self.segmentScrollView.showsHorizontalScrollIndicator = NO;
         self.segmentScrollView.contentSize = CGSizeMake(SCREENWIDTH * controller.count, frame.size.height - 60);
@@ -70,7 +70,7 @@
     NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
     NSInteger page = segmentedControl.selectedSegmentIndex;
     self.segmentScrollView.contentOffset = CGPointMake(page * SCREENWIDTH, 0);
-    
+    _lastSelectedIndex = (int)page;
 //    JMHomeHourController *pageVC = _controllersArray[page];
 //    [pageVC refresh];
     
@@ -78,8 +78,14 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat pageWidth = scrollView.frame.size.width;
     NSInteger page = scrollView.contentOffset.x / pageWidth;
+    _lastSelectedIndex = (int)page;
     [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
-    
+
+}
+
+- (void)setLastSelectedIndex:(int)lastSelectedIndex {
+    _lastSelectedIndex = lastSelectedIndex;
+    self.segmentedControl.selectedSegmentIndex = lastSelectedIndex;
     
 }
 

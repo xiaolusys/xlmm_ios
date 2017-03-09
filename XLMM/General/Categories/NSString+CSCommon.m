@@ -247,8 +247,7 @@
  *  @return 需要的时间字符串
  */
 + (NSString *)yearDeal:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *year = strarray[0];
+    NSString *year = [str substringWithRange:NSMakeRange(0, 10)];
     return year;
 }
 
@@ -259,22 +258,11 @@
  */
 + (NSString *)getBeforeDay:(NSInteger)dayNum {
     NSDate *nowDate = [NSDate date];
-    NSDate *theDate;
-
-    if(dayNum != 0) {
-        NSTimeInterval oneDay = 24 * 3600;
-        theDate = [nowDate initWithTimeIntervalSinceNow:oneDay * dayNum];
-    }else {
-        theDate = nowDate;
-        
-    }
+    NSDate *lastDay = [NSDate dateWithTimeInterval:dayNum * 24 * 60 * 60 sinceDate:nowDate];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-    NSString *getDayString = [dateFormatter stringFromDate:theDate];
-//    NSString *date = [getDayString stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    NSString *getDayString = [dateFormatter stringFromDate:lastDay];
     return getDayString;
-
-    
 }
 /**
  *  获取当前时间
@@ -285,10 +273,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
-    
     return currentTime;
-    
-    
 }
 + (NSString *)getCurrentYMD {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

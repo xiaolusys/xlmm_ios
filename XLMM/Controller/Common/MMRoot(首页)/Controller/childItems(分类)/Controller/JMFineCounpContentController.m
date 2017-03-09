@@ -119,11 +119,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
 - (void)fatchClassifyListData:(NSDictionary *)itemDic {
     _nextPageUrlString = itemDic[@"next"];
     NSArray *resultsArr = itemDic[@"results"];
-    if (resultsArr.count == 0) {
-        //展示空视图
-//        [self emptyView];
-        return ;
-    }else {
+    if (resultsArr.count != 0) {
         for (NSDictionary *dic in resultsArr) {
             JMFineCouponModel *model = [JMFineCouponModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:model];
@@ -134,41 +130,36 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
 - (void)fatchClassifyListMoreData:(NSDictionary *)itemDic {
     _nextPageUrlString = itemDic[@"next"];
     NSArray *resultsArr = itemDic[@"results"];
-    if (resultsArr.count == 0) {
-        //展示空视图
-//        [self emptyView];
-        return ;
-    }
-    _numArray = [NSMutableArray array];
-    
-    for (NSDictionary *dic in resultsArr) {
-        NSIndexPath *index ;
-        index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
-        JMFineCouponModel *model = [JMFineCouponModel mj_objectWithKeyValues:dic];
-        [self.dataSource addObject:model];
-        [_numArray addObject:index];
-    }
-    if((_numArray != nil) && (_numArray.count > 0)){
-        @try{
-            [self.collectionView insertItemsAtIndexPaths:_numArray];
-            [_numArray removeAllObjects];
-            _numArray = nil;
+    if (resultsArr.count != 0) {
+        _numArray = [NSMutableArray array];
+        
+        for (NSDictionary *dic in resultsArr) {
+            NSIndexPath *index ;
+            index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
+            JMFineCouponModel *model = [JMFineCouponModel mj_objectWithKeyValues:dic];
+            [self.dataSource addObject:model];
+            [_numArray addObject:index];
         }
-        @catch(NSException *except)
-        {
-            NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+        if((_numArray != nil) && (_numArray.count > 0)){
+            @try{
+                [self.collectionView insertItemsAtIndexPaths:_numArray];
+                [_numArray removeAllObjects];
+                _numArray = nil;
+            }
+            @catch(NSException *except)
+            {
+                NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+            }
         }
     }
     [self.collectionView cs_reloadData];
-    
-    
 }
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104 - 45) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - ktabBarHeight) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -242,7 +233,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-20);
-        make.bottom.equalTo(self.view).offset(-20);
+        make.bottom.equalTo(self.view).offset(-70);
         make.width.height.mas_equalTo(@50);
     }];
     //    self.topButton.frame = CGRectMake(SCREENWIDTH - 70, SCREENHEIGHT - 70, 50, 50);

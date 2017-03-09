@@ -98,8 +98,6 @@
      *  返回主页
      */
     [self.bridge registerHandler:@"callNativeBackToHome" handler:^(id data, WVJBResponseCallback responseCallback) {
-//        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-//        JMKeyWindow.rootViewController = tabBarVC;
         [webVC.navigationController popViewControllerAnimated:YES];
     }];
     

@@ -22,20 +22,20 @@
 #import "JMPopViewAnimationSpring.h"
 #import "JMOrderPayOutdateView.h"
 #import "JMPopLogistcsController.h"
-#import "JMEditAddressController.h"
+#import "JMModifyAddressController.h"
 #import "JMOrderDetailSectionView.h"
 #import "JMRefundController.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
 #import "JMPayShareController.h"
 #import "WXApi.h"
-#import "PersonOrderViewController.h"
 #import "JMGoodsDetailController.h"
 #import "WebViewController.h"
 #import "JMClassPopView.h"
 #import "JMPopViewAnimationDrop.h"
 #import "JMPayment.h"
 #import "JMGoodsCountTime.h"
+#import "JMOrderListController.h"
 
 
 @interface JMOrderDetailController ()<NSURLConnectionDataDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,JMOrderDetailHeaderViewDelegate,JMBaseGoodsCellDelegate,JMRefundViewDelegate,JMOrderPayOutdateViewDelegate,JMPopLogistcsControllerDelegate,JMOrderDetailSectionViewDelegate,JMRefundControllerDelegate> {
@@ -403,8 +403,11 @@
 - (void)composeHeaderTapView:(JMOrderDetailHeaderView *)headerView TapClick:(NSInteger)index {
     if (index == 100) {
         // 修改地址
-        JMEditAddressController *editVC = [[JMEditAddressController alloc] init];
-        editVC.editDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
+        JMModifyAddressController *editVC = [[JMModifyAddressController alloc] init];
+        editVC.orderEditAddress = YES;
+        editVC.cartsPayInfoLevel = 1;
+        editVC.addressLevel = 1;
+        editVC.orderDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
         // 修改物流  (如果需要判断是否可以更改物流在这里弹出一个提示)
@@ -659,12 +662,12 @@
 }
 - (void)popview {
     [MobClick event:@"buy_cancel"];
-    PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-    orderVC.index = 101;
+    JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+    orderVC.currentIndex = 1;
     [self.navigationController pushViewController:orderVC animated:YES];
     NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
     for (UIViewController *vc in marr) {
-        if ([vc isKindOfClass:[PersonOrderViewController class]]) {
+        if ([vc isKindOfClass:[JMOrderListController class]]) {
             [marr removeObject:vc];
             break;
         }

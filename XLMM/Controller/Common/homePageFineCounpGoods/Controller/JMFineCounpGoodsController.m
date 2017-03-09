@@ -111,7 +111,7 @@
     [self.tableView reloadData];
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 ) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - 45) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor sectionViewColor];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -209,7 +209,7 @@
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-20);
-        make.bottom.equalTo(self.view).offset(-70);
+        make.bottom.equalTo(self.view).offset(-120);
         make.width.height.mas_equalTo(@50);
     }];
     //    self.topButton.frame = CGRectMake(SCREENWIDTH - 70, SCREENHEIGHT - 70, 50, 50);

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JMPageViewBaseController.h"
 
-@interface JMAboutFansController : JMPageViewBaseController <UIBarPositioningDelegate>
+@interface JMAboutFansController : UIViewController 
+
+@property (nonatomic, copy) NSString *fansUrlString;
 
 @end
