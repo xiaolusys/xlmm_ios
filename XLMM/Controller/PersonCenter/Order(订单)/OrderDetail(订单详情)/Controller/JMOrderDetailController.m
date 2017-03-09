@@ -405,8 +405,8 @@
         // 修改地址
         JMModifyAddressController *editVC = [[JMModifyAddressController alloc] init];
         editVC.orderEditAddress = YES;
-        editVC.cartsPayInfoLevel = 0;
-        editVC.addressLevel = 0;
+        editVC.cartsPayInfoLevel = 1;
+        editVC.addressLevel = 1;
         editVC.orderDict = (NSMutableDictionary *)[NSDictionary dictionaryWithDictionary:_orderDic];
         [self.navigationController pushViewController:editVC animated:YES];
     }else {
