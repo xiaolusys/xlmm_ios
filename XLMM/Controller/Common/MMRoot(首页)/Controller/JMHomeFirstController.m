@@ -27,6 +27,9 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
 @interface JMHomeFirstController () <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, JMAutoLoopPageViewDataSource, JMAutoLoopPageViewDelegate, JMPageScrollControllerDelegate> {
     BOOL _isPullDown;                        //下拉的标志
     int _currentIndex;
+    int _currentTimeHour;
+    int _qiangouCurrentTimeHour;
+    NSMutableArray *_timeHourArr;
 }
 @property (nonatomic, strong) JMHomePageController *pageVC;
 
@@ -143,6 +146,29 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
 
 }
 #pragma mrak 刷新界面
+- (void)refresh {
+//    int currentHourInt = [self getCurrentTimeHour];
+//    if (self.pageContentView == nil) {
+//        return ;
+//    }
+//    int qianggouCurrentTime = 0, yureCurrentTime = 0 , lastSelectedTime = 0;
+//    if (_timeHourArr.count > 0 && self.pageContentView != nil) {
+//        qianggouCurrentTime = [_timeHourArr[_currentIndex] intValue];
+//        if (_currentIndex + 1 >= _timeHourArr.count) {
+//            yureCurrentTime = [_timeHourArr[_currentIndex] intValue];
+//        }else {
+//            yureCurrentTime = [_timeHourArr[_currentIndex + 1] intValue];
+//        }
+//        
+//        
+//        lastSelectedTime = [_timeHourArr[self.pageContentView.lastSelectedIndex] intValue];
+//        if ((currentHourInt >= yureCurrentTime) || (qianggouCurrentTime != lastSelectedTime)) {
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self.tableView.mj_header beginRefreshing];
+//            });
+//        }
+//    }
+}
 - (void)createPullHeaderRefresh {
     kWeakSelf
     self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
@@ -178,12 +204,10 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
 }
 - (void)fetchData:(NSArray *)dataArray {
     _currentIndex = 0;
-    NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH"];
-    NSString *strHour = [dateFormatter stringFromDate:date];
-    int currentHourInt = [strHour intValue];
-    
+    _currentTimeHour = -1;
+    _qiangouCurrentTimeHour = 0;
+    _timeHourArr = [NSMutableArray array];
+    int currentHourInt = [self getCurrentTimeHour];
     for (NSDictionary *itemDic in dataArray) {
         NSMutableArray *itemsArr = [NSMutableArray array];
         NSArray *items = itemDic[@"items"];
@@ -197,18 +221,23 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         NSString *hourStr = [NSString stringWithFormat:@"%02d:00",hourInt];
         NSString *descStr;
         if (currentHourInt >= hourInt) {
-            descStr = @"抢购中";
+            descStr = @"热卖中";
             _currentIndex ++;
+            _qiangouCurrentTimeHour = hourInt;
         }else {
-            descStr = @"预热中";
+            if (_currentTimeHour == -1) {
+                _currentTimeHour = hourInt;
+            }
+            descStr = @"热卖中";
         }
+        [_timeHourArr addObject:@(hourInt)];
         [self.itemNameArr addObject:hourStr];
         [self.itemDescNameArr addObject:descStr];
     }
     if (self.controllArr.count > 0) {
         for (int i = 0; i < self.controllArr.count; i++) {
             JMHomeHourController *hourVC = self.controllArr[i];
-            hourVC.dataSource = self.dataSource[i];
+            hourVC.dataSource = self.dataSource.count > 0 ? self.dataSource[i] : nil;
         }
     }else {
         for (int i = 0; i < self.itemNameArr.count; i ++) {
@@ -219,6 +248,13 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         }
     }
     
+}
+- (int)getCurrentTimeHour {
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH"];
+    NSString *strHour = [dateFormatter stringFromDate:date];
+    return [strHour intValue];
 }
 #pragma mark- JMPageScrollControllerDelegate
 - (void)scrollViewIscanScroll:(UIScrollView *)scrollView { //    CGFloat tabOffsetY = [self.tableView rectForSection:0].origin.y;
@@ -274,7 +310,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"cellID";
+    NSString *cellID = @"cellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
@@ -284,10 +320,10 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         [cell.contentView addSubview:self.pageContentView];
         self.pageContentView.segmentedControl.sectionTitles = self.itemNameArr;
         self.pageContentView.segmentedControl.sectionDescTitles = self.itemDescNameArr;
-        if (_currentIndex > 1) {
+        if (_currentIndex > 0) {
             _currentIndex -= 1;
         }
-        self.pageContentView.segmentedControl.selectedSegmentIndex = _currentIndex;
+        self.pageContentView.lastSelectedIndex = _currentIndex;
         self.pageContentView.segmentScrollView.contentOffset = CGPointMake(_currentIndex * SCREENWIDTH, 0);
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

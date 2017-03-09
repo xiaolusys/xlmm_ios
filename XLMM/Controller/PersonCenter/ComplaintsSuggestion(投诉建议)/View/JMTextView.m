@@ -7,7 +7,6 @@
 //
 
 #import "JMTextView.h"
-#import "UIView+RGSize.h"
 
 @interface JMTextView ()
 
@@ -66,8 +65,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.placeHolderLabel.left = 5;
-    self.placeHolderLabel.top = 8;
+    self.placeHolderLabel.cs_x = 5;
+    self.placeHolderLabel.cs_y = 8;
     
 }
 

@@ -10,7 +10,6 @@
 #import "TixianSucceedViewController.h"
 #import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"
-#import "UIView+RGSize.h"
 
 
 @interface TixianViewController ()<UITextFieldDelegate> {
@@ -778,7 +777,7 @@
         return ;
     }
     [UIView animateWithDuration:0.3 animations:^{
-        self.view.bottom = SCREENHEIGHT - 120;
+        self.view.cs_max_Y = SCREENHEIGHT - 120;
     }];
 }
 - (void)keyboardDidHidden {
@@ -786,7 +785,7 @@
         return ;
     }
     [UIView animateWithDuration:0.3 animations:^{
-        self.view.bottom = SCREENHEIGHT;
+        self.view.cs_max_Y = SCREENHEIGHT;
     }];
 }
 

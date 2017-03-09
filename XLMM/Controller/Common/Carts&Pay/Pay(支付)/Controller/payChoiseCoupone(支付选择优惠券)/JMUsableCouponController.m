@@ -33,11 +33,6 @@
 
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
-    if (dataSource.count == 0) {
-//        [self emptyView];
-    }else {
-        
-    }
     [self.tableView cs_reloadData];
 }
 

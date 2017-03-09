@@ -34,7 +34,7 @@
     layout.itemSize = CGSizeMake((ColWidth - 20) / 3, (ColWidth - 20) * 5 / 9);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.contentCollecionView = [[JMContentCollectionView alloc] initWithFrame:CGRectMake(0, 0, ColWidth, SCREENHEIGHT - 64 - 50) collectionViewLayout:layout];
+    self.contentCollecionView = [[JMContentCollectionView alloc] initWithFrame:CGRectMake(0, 0, ColWidth, SCREENHEIGHT - 64 - ktabBarHeight) collectionViewLayout:layout];
     self.contentCollecionView.backgroundColor = [UIColor whiteColor];
 //    self.contentCollecionView.dataSource = self;
 //    self.contentCollecionView.delegate = self;

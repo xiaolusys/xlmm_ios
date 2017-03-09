@@ -9,7 +9,6 @@
 #import "JumpUtils.h"
 #import "PublishNewPdtViewController.h"
 #import "MMCollectionController.h"
-#import "JMHomeRootController.h"
 #import "ProductSelectionListViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
@@ -19,13 +18,12 @@
 #import "JMGoodsDetailController.h"
 #import "JMClassifyListController.h"
 #import "JMPayShareController.h"
-#import "PersonOrderViewController.h"
+#import "JMOrderListController.h"
 #import "JMPayment.h"
 #import "JMCartViewController.h"
-#import "CSTabBarController.h"
 #import "JMPurchaseController.h"
-#import "JMPushingDaysController.h"
 #import "JMFineCounpGoodsController.h"
+#import "JMMaMaHomeController.h"
 
 
 @implementation JumpUtils
@@ -43,8 +41,8 @@
         }else if(error.errorStatus == payMentErrorStatusFail) { // 取消
             [MobClick event:@"fineCoupon_buyCancel_buyFail"];
             [MBProgressHUD showError:@"支付失败~"];
-            PersonOrderViewController *orderVC = [[PersonOrderViewController alloc] init];
-            orderVC.index = 101;
+            JMOrderListController *orderVC = [[JMOrderListController alloc] init];
+            orderVC.currentIndex = 1;
             [vc.navigationController pushViewController:orderVC animated:YES];
         }else { }
     }];
@@ -116,11 +114,10 @@
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-        CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
-//        JMMaMaRootController *mamaCenterVC = [[JMMaMaRootController alloc] init];
-//        JMMaMaPersonCenterController *ma = [[JMMaMaPersonCenterController alloc] init];
-//        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
+//        CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
+//        JMKeyWindow.rootViewController = tabBarVC;
+        JMMaMaHomeController *mamaCenterVC = [[JMMaMaHomeController alloc] init];
+        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新

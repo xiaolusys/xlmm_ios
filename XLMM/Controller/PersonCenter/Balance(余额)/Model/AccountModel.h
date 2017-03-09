@@ -17,6 +17,8 @@
 @property (nonatomic, copy)NSString *desc;
 @property (nonatomic, copy)NSString *status;
 
+@property (nonatomic, assign) CGFloat cellHeight;
+
 
 @end
 

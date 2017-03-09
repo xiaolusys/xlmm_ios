@@ -121,11 +121,7 @@ static NSString * cellId = @"JMClassifyListController";
 - (void)fatchClassifyListData:(NSDictionary *)itemDic {
     _nextPageUrlString = itemDic[@"next"];
     NSArray *resultsArr = itemDic[@"results"];
-    if (resultsArr.count == 0) {
-        //展示空视图
-//        [self emptyView];
-        return ;
-    }else {
+    if (resultsArr.count != 0) {
         for (NSDictionary *dic in resultsArr) {
             JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
             [self.dataSource addObject:model];
@@ -136,34 +132,28 @@ static NSString * cellId = @"JMClassifyListController";
 - (void)fatchClassifyListMoreData:(NSDictionary *)itemDic {
     _nextPageUrlString = itemDic[@"next"];
     NSArray *resultsArr = itemDic[@"results"];
-    if (resultsArr.count == 0) {
-        //展示空视图
-//        [self emptyView];
-        return ;
-    }
-    _numArray = [NSMutableArray array];
-    
-    for (NSDictionary *dic in resultsArr) {
-        NSIndexPath *index ;
-        index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
-        JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
-        [self.dataSource addObject:model];
-        [_numArray addObject:index];
-    }
-    if((_numArray != nil) && (_numArray.count > 0)){
-        @try{
-            [self.collectionView insertItemsAtIndexPaths:_numArray];
-            [_numArray removeAllObjects];
-            _numArray = nil;
+    if (resultsArr.count != 0) {
+        _numArray = [NSMutableArray array];
+        for (NSDictionary *dic in resultsArr) {
+            NSIndexPath *index ;
+            index = [NSIndexPath indexPathForRow:self.dataSource.count inSection:0];
+            JMRootGoodsModel *model = [JMRootGoodsModel mj_objectWithKeyValues:dic];
+            [self.dataSource addObject:model];
+            [_numArray addObject:index];
         }
-        @catch(NSException *except)
-        {
-            NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+        if((_numArray != nil) && (_numArray.count > 0)){
+            @try{
+                [self.collectionView insertItemsAtIndexPaths:_numArray];
+                [_numArray removeAllObjects];
+                _numArray = nil;
+            }
+            @catch(NSException *except)
+            {
+                NSLog(@"DEBUG: failure to batch update.  %@", except.description);
+            }
         }
     }
     [self.collectionView cs_reloadData];
-
-    
 }
 - (void)createCollectionView {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];

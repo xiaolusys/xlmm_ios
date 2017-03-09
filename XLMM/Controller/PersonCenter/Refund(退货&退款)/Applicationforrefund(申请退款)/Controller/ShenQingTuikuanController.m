@@ -10,7 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "JMAppForRefundModel.h"
-#import "UIView+RGSize.h"
 #import "JMOrderGoodsModel.h"
 #import "JMRefundView.h"
 #import "JMPopViewAnimationSpring.h"
@@ -18,9 +17,6 @@
 
 @interface ShenQingTuikuanController ()<JMRefundViewDelegate,UITextViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
-{
-    
-}
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 

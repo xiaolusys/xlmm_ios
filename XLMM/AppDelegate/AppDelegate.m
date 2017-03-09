@@ -9,11 +9,10 @@
 #import "AppDelegate.h"
 #import "JMStoreManager.h"
 #import "Udesk.h"
-#import "JMHomeRootController.h"
 #import "JMPayment.h"
 #import "JMMiPushManager.h"
-#import "JMRootTabBarController.h"
 #import "JMHomePageController.h"
+#import "JMRootTabBarController.h"
 
 
 #define login @"login"
@@ -78,10 +77,8 @@
 - (void)fetchRootVC {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-//    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    JMHomePageController *root = [[JMHomePageController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:root];
-    self.window.rootViewController = nav;
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
 }
 #pragma mark ======== 程序开始启动 ========

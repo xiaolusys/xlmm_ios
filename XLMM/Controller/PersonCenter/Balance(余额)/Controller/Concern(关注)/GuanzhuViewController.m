@@ -7,7 +7,7 @@
 //
 
 #import "GuanzhuViewController.h"
-#import "UIImage+ChangeGray.h"
+#import "UIImage+UIImageExt.h"
 
 
 @interface GuanzhuViewController ()

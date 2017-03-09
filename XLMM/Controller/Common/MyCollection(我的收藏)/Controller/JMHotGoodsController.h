@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JMPageViewBaseController.h"
 
-@interface JMHotGoodsController : JMPageViewBaseController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface JMHotGoodsController : UIViewController <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 

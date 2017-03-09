@@ -24,5 +24,6 @@
 
 @property (nonatomic, strong) JMHomePageController *pageController;
 
+- (void)refresh;
 
 @end

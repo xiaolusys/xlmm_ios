@@ -37,8 +37,8 @@
 #define HomeCategorySpaceW              25 * HomeCategoryRatio
 #define HomeCategorySpaceH              20 * HomeCategoryRatio
 
-
-
+// 十六进制颜色
+#define UIColorRGB(rgb) ([[UIColor alloc] initWithRed:(((rgb >> 16) & 0xff) / 255.0f) green:(((rgb >> 8) & 0xff) / 255.0f) blue:(((rgb) & 0xff) / 255.0f) alpha:1.0f])
 
 
 

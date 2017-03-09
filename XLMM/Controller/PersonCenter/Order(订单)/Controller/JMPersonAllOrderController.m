@@ -13,6 +13,8 @@
 #import "JMAllOrderModel.h"
 #import "JMOrderDetailController.h"
 #import "JMReloadEmptyDataView.h"
+#import "JMDataManger.h"
+
 
 @interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate>
 
@@ -50,7 +52,7 @@
     NSMutableArray *_goodsArray;
 }
 
-
+#pragma 懒加载
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
@@ -63,6 +65,21 @@
     }
     return _sectionDataSource;
 }
+#pragma mark 生命周期函数
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.isPopToRootView = NO;
+    [MobClick beginLogPageView:@"PersonOrder"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.isPopToRootView) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+    }
+    [MBProgressHUD hideHUD];
+    [MobClick endLogPageView:@"PersonOrder"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"全部订单" selecotr:@selector(backBtnClicked:)];
@@ -71,11 +88,6 @@
     [self createPullFooterRefresh];
 //    [self emptyView];
     [self.tableView.mj_header beginRefreshing];
- 
-}
-
-- (NSString *)urlStr {
-    return kQuanbuDingdan_URL;
 }
 #pragma mrak 刷新界面
 - (void)createPullHeaderRefresh {
@@ -103,15 +115,18 @@
         [self.tableView.mj_footer endRefreshing];
     }
 }
+- (void)refresh {
+    [self.tableView.mj_header beginRefreshing];
+}
+#pragma mark 网络请求,数据处理
 - (void)loadDataSource {
-    NSString *string = [self urlStr];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
+//    NSString *string = [self urlStr];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self.dataSource removeAllObjects];
         [self.sectionDataSource removeAllObjects];
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -126,10 +141,8 @@
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
-        
         [self refetch:responseObject];
         [self endRefresh];
-        [self.tableView cs_reloadData];
     } WithFail:^(NSError *error) {
         [self endRefresh];
     } Progress:^(float progress) {
@@ -137,33 +150,27 @@
     }];
 }
 - (void)refetch:(NSDictionary *)data {
-    
     _urlStr = data[@"next"];
     NSArray *allArr = data[@"results"];
-    if (allArr.count == 0) {
-        //没有订单
-//        self.empty.hidden = NO;
-        return ;
-    }
-//    self.empty.hidden = YES;
-    
-    for (NSDictionary *allDic in allArr) {
-        JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
-        [self.sectionDataSource addObject:allModel];
-        
-        _goodsArray = [NSMutableArray array];
-        NSArray *goodsArr = allDic[@"orders"];
-        for (NSDictionary *goodsDic in goodsArr) {
-            JMOrderGoodsModel *fetureModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsDic];
-            [_goodsArray addObject:fetureModel];
+    if (allArr.count != 0) {
+        for (NSDictionary *allDic in allArr) {
+            JMAllOrderModel *allModel = [JMAllOrderModel mj_objectWithKeyValues:allDic];
+            [self.dataSource addObject:allModel];
+            
+//            _goodsArray = [NSMutableArray array];
+//            NSArray *goodsArr = allDic[@"orders"];
+//            for (NSDictionary *goodsDic in goodsArr) {
+//                JMOrderGoodsModel *fetureModel = [JMOrderGoodsModel mj_objectWithKeyValues:goodsDic];
+//                [_goodsArray addObject:fetureModel];
+//            }
+//            [self.dataSource addObject:_goodsArray];
         }
-        [self.dataSource addObject:_goodsArray];
     }
-    
-    
+    [self.tableView cs_reloadData];
 }
+#pragma 创建UI 实现 UITableView 代理
 - (void)createTabelView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 99) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45) style:UITableViewStylePlain];
     self.tableView = tableView;
     [self.view addSubview:self.tableView];
     self.tableView.dataSource = self;
@@ -176,30 +183,28 @@
     return self.dataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *sectionArr = self.dataSource[section];
-    return sectionArr.count;
+    JMAllOrderModel *allModel = self.dataSource[section];
+    return allModel.orders.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellID = @"JMPersonAllOrderController";
-    JMBaseGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    static NSString *JMPersonAllOrderControllerIdentifier = @"JMPersonAllOrderControllerIdentifier";
+    JMBaseGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:JMPersonAllOrderControllerIdentifier];
     if (!cell) {
-        cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[JMBaseGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JMPersonAllOrderControllerIdentifier];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    self.orderGoodsModel = [[JMOrderGoodsModel alloc] init];
-    self.orderGoodsModel = self.dataSource[indexPath.section][indexPath.row];
-    
 
-    [cell configWithAllOrder:self.orderGoodsModel];
+    JMAllOrderModel *allModel = self.dataSource[indexPath.section];
+    JMOrderGoodsModel *orderGoodsModel = allModel.orders[indexPath.row];
+    [cell configWithAllOrder:orderGoodsModel];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.orderDetailModel = self.sectionDataSource[indexPath.section];
+    JMAllOrderModel *allModel = self.dataSource[indexPath.section];
     JMOrderDetailController *orderDetailVC = [[JMOrderDetailController alloc] init];
-    orderDetailVC.allOrderModel = self.orderDetailModel;
-    orderDetailVC.orderTid = self.orderDetailModel.tid;
-    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, self.orderDetailModel.goodsID];
+    orderDetailVC.allOrderModel = allModel;
+    orderDetailVC.orderTid = allModel.tid;
+    orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, allModel.goodsID];
  
     [self.navigationController pushViewController:orderDetailVC animated:YES];
 //    NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
@@ -215,8 +220,7 @@
     return 50;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    self.orderDetailModel = [[JMAllOrderModel alloc] init];
-    self.orderDetailModel = self.sectionDataSource[section];
+    JMAllOrderModel *allModel = self.dataSource[section];
     
     UIView *sectionView = [UIView new];
     UIView *lineView = [UIView new];
@@ -235,15 +239,17 @@
     self.orderStatusLabel = orderStatusLabel;
     self.orderStatusLabel.font = [UIFont systemFontOfSize:13.];
     self.orderStatusLabel.textColor = [UIColor buttonEnabledBackgroundColor];
-    self.orderStatusLabel.text = self.orderDetailModel.status_display;
+    self.orderStatusLabel.text = allModel.status_display;
     
-    CGFloat payment = [self.orderDetailModel.payment floatValue];
+    CGFloat payment = [allModel.payment floatValue];
+    NSString *timeStr = [NSString yearDeal:allModel.created];
+    
     UILabel *orderPament = [UILabel new];
     [sectionShowView addSubview:orderPament];
     self.orderPament = orderPament;
     self.orderPament.font = [UIFont systemFontOfSize:13.];
     self.orderPament.textColor = [UIColor buttonTitleColor];
-    self.orderPament.text = [NSString stringWithFormat:@"实付金额: %.2f",payment];
+    self.orderPament.text = [NSString stringWithFormat:@"%@    金额: %.2f",timeStr,payment];
     
     
     UIImageView *shareRenpageImage = [UIImageView new];
@@ -297,12 +303,14 @@
 //        }
 //    };
 //}
+#pragma 无数据展示空视图
 - (UIView *)createPlaceHolderView {
     return self.reload;
 }
 - (JMReloadEmptyDataView *)reload {
     if (!_reload) {
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"亲,您暂时还没有订单哦～快去看看吧!" DescTitle:@"再不抢购，就卖光啦～!" ButtonTitle:@"快去逛逛" Image:@"dingdanemptyimage" ReloadBlcok:^{
+            self.isPopToRootView = YES;
             [self.navigationController popViewControllerAnimated:YES];
         }];
         _reload = reload;
@@ -311,24 +319,9 @@
 }
 
 
+
 -(void)gotoLandingPage{
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.isPopToRootView = NO;
-//    [self.tableView.mj_header beginRefreshing];
-//    [self loadDataSource];
-    [MobClick beginLogPageView:@"PersonOrder"];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    if (self.isPopToRootView) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-    }
-    [MBProgressHUD hideHUD];
-    [MobClick endLogPageView:@"PersonOrder"];
 }
 - (void)backBtnClicked:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];

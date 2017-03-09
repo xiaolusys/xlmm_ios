@@ -44,7 +44,7 @@
     self.sourceLabel = [UILabel new];
     [self.contentView addSubview:self.sourceLabel];
     self.sourceLabel.textColor = [UIColor buttonTitleColor];
-    self.sourceLabel.numberOfLines = 2;
+    self.sourceLabel.numberOfLines = 0;
     self.sourceLabel.font = [UIFont systemFontOfSize:14.];
     
     self.moneyLabel = [UILabel new];
@@ -68,12 +68,12 @@
     [self.sourceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.statusLabel);
         make.top.equalTo(weakSelf.statusLabel.mas_bottom).offset(10);
-        make.width.mas_equalTo(@(SCREENWIDTH - 140));
+        make.width.mas_equalTo(@(SCREENWIDTH - 20));
     }];
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+        make.centerY.equalTo(weakSelf.statusLabel.mas_centerY);
         make.right.equalTo(weakSelf.contentView).offset(-10);
-        make.width.mas_equalTo(@120);
+//        make.width.mas_equalTo(@120);
     }];
     [self.bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.bottom.equalTo(weakSelf.contentView).offset(-1);

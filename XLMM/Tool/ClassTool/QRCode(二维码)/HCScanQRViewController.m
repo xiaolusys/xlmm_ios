@@ -9,7 +9,6 @@
 #import "HCScanQRViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SystemFunctions.h"
-#import "UIView+RGSize.h"
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -283,14 +282,14 @@
     if (_up == YES) {
         CGFloat y = self.scrollLine.frame.origin.y;
         y += 2;
-        [self.scrollLine setTop:y];
+        [self.scrollLine setCs_y:y];
         if (y >= (kBgImgY+kBgImgWidth-kScrollLineHeight)) {
             _up = NO;
         }
     }else{
         CGFloat y = self.scrollLine.frame.origin.y;
         y -= 2;
-        [self.scrollLine setTop:y];
+        [self.scrollLine setCs_y:y];
         if (y <= kBgImgY) {
             _up = YES;
         }

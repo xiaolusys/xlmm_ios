@@ -24,9 +24,13 @@
 #import "JMLaunchView.h"
 #import "AppDelegate.h"
 #import "JMFineCounpGoodsController.h"
+#import "JMFineCounpContentController.h"
+#import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 
-@interface JMHomePageController () <UIScrollViewDelegate, JMUpdataAppPopViewDelegate, JMHomeFirstControllerDelegate> {
+
+@interface JMHomePageController () <UIScrollViewDelegate, JMUpdataAppPopViewDelegate, JMHomeFirstControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     NSMutableArray *_categoryNameArray;
     NSMutableArray *_categoryCidArray;
     NSString *_currentCidString;
@@ -64,6 +68,7 @@
 @property (nonatomic, strong) JMLaunchView *launchView;
 
 @property (nonatomic, strong) UIView *suspensionView;
+@property (nonatomic, strong) JMHomeFirstController *homeFirst;
 
 @end
 
@@ -95,6 +100,9 @@
         [self performSelector:@selector(updataAppPopView) withObject:nil afterDelay:10.0f];
     }else {
     }
+    if (self.homeFirst) {
+        [self.homeFirst refresh];
+    }
 }
 - (void)presentView:(NSNotification *)notification{
     //跳转到新的页面
@@ -116,7 +124,7 @@
     [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
         if ([self isLogin]) {
             if ([self isXiaolumama]) {
-                [self createRightItem];
+//                [self createRightItem];
             }else {
             }
             //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
@@ -166,6 +174,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
     [[JMGlobal global] clearAllSDCache];
 }
 - (void)viewDidLoad {
@@ -187,14 +196,13 @@
     [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];
     [self createSegmentControl];
-    [self createRightItem];
+//    [self createRightItem];
     [self loadCategoryData];
-    [self createSuspensionView];                       // 创建悬浮视图 (个人,精品汇,购物车)
+//    [self createSuspensionView];                       // 创建悬浮视图 (个人,精品汇,购物车)
     [self autoUpdateVersion];                          // 版本自动升级
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
-    
 }
 #pragma mark 数据请求处理
 - (void)loadCatrsNumData {
@@ -227,6 +235,7 @@
         [_topImageArray removeAllObjects];
         [self fetchCategoryData:responseObject];
     } WithFail:^(NSError *error) {
+        NSLog(@"%@",error);
     } Progress:^(float progress) {
     }];
 }
@@ -237,7 +246,7 @@
     }
     
     NSArray *categorys = categoryDic[@"categorys"];
-    [_categoryNameArray addObjectsFromArray:@[@"今日特卖",@"精品活动"]];
+    [_categoryNameArray addObjectsFromArray:@[@"精品推荐",@"精品活动"]];
     for (NSDictionary *dic in categorys) {
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];
@@ -283,12 +292,14 @@
             homeFirst.pageController = self;
             homeFirst.topImageArray = _topImageArray;
             [self addChildViewController:homeFirst];
+            self.homeFirst = homeFirst;
         }else if (i == 1){
             JMFineCounpGoodsController *fineVC = [[JMFineCounpGoodsController alloc] init];
             [self addChildViewController:fineVC];
         }else {
-            JMChildViewController *childCategoryVC = [[JMChildViewController alloc] init];
-            childCategoryVC.categoryCid = _categoryCidArray[i - 2];
+            JMFineCounpContentController *childCategoryVC = [[JMFineCounpContentController alloc] init];
+            childCategoryVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@", Root_URL,_categoryCidArray[i - 2]];
+//            childCategoryVC.categoryCid = _categoryCidArray[i - 2];
             [self addChildViewController:childCategoryVC];
         }
     }
@@ -313,12 +324,12 @@
         make.width.mas_equalTo(@83);
         make.height.mas_equalTo(@20);
     }];
-    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [leftButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
-    leftImageview.frame = CGRectMake(0, 13, 18, 18);
-    [leftButton addSubview:leftImageview];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+//    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    [leftButton addTarget:self action:@selector(searchBarClick:) forControlEvents:UIControlEventTouchUpInside];
+//    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchBarImage"]];
+//    leftImageview.frame = CGRectMake(0, 13, 18, 18);
+//    [leftButton addSubview:leftImageview];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 }
 - (void)createRightItem {
     if(self.navigationItem.rightBarButtonItem == nil) {
@@ -344,7 +355,7 @@
     }
 }
 - (void)createSuspensionView {
-    UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 90, 160, 50)];
+    UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 70, 160, 50)];
     [self.view addSubview:suspensionView];
 //    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(suspensionViewTap:)];
 //    [suspensionView addGestureRecognizer:pan];
@@ -414,7 +425,7 @@
         [self.baseScrollView addSubview:fineVC.view];
         [fineVC didMoveToParentViewController:self];
     }else {
-        JMChildViewController *childCategoryVC = self.childViewControllers[index];
+        JMFineCounpContentController *childCategoryVC = self.childViewControllers[index];
         childCategoryVC.view.frame = self.baseScrollView.bounds;
         [self.baseScrollView addSubview:childCategoryVC.view];
         [childCategoryVC didMoveToParentViewController:self];
