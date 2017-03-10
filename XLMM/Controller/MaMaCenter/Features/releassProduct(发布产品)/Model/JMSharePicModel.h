@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface SharePicModel : NSObject
+@interface JMSharePicModel : NSObject
 
 @property (nonatomic, strong)NSNumber* piID;
 @property (nonatomic, copy)NSString* title;
@@ -26,6 +26,9 @@
 @property (nonatomic, copy)NSString* sale_category;
 
 @property (nonatomic, assign) CGFloat headerHeight;
+
+
+
 
 
 @end

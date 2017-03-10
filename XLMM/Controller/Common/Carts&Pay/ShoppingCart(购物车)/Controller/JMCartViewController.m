@@ -92,6 +92,9 @@
 //    [self downloadHistoryCartData];
 //    
 //}
+- (void)refreshCartData {
+
+}
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
@@ -217,11 +220,11 @@
     self.bottomView = bottomView;
     [self.view addSubview:bottomView];
 
-//    CGFloat hideNavigationLeftItemHeight = 0;
-//    if (self.isHideNavigationLeftItem) {
-//        hideNavigationLeftItemHeight = 49.;
-//    }else {
-//    }
+    CGFloat hideNavigationLeftItemHeight = 0;
+    if (self.isHideNavigationLeftItem) {
+        hideNavigationLeftItemHeight = 49.;
+    }else {
+    }
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.view);
         make.top.equalTo(weakSelf.view).offset(64);
@@ -229,8 +232,8 @@
         make.bottom.equalTo(bottomView.mas_top);
     }];
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.equalTo(weakSelf.view);
-//        make.bottom.equalTo(weakSelf.view);
+        make.left.equalTo(weakSelf.view);
+        make.bottom.equalTo(weakSelf.view).offset(-hideNavigationLeftItemHeight);
         make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@(0));
     }];

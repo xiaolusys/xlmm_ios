@@ -34,6 +34,7 @@
 - (JMShareViewController *)goodsShareView {
     if (!_goodsShareView) {
         _goodsShareView = [[JMShareViewController alloc] init];
+        _goodsShareView.isShowEarningValue = YES;
     }
     return _goodsShareView;
 }
@@ -84,7 +85,7 @@
 #pragma mark 弹出视图 (弹出分享界面)
 - (void)popShareView {
     [MobClick event:@"GoodsDetail_share"];
-    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 340) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
     }];
     self.goodsShareView.blcok = ^(UIButton *button) {
         [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];

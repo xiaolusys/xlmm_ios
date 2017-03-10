@@ -14,16 +14,17 @@
 #import "JumpUtils.h"
 #import "JMLogInViewController.h"
 #import "WebViewController.h"
+#import "JMAutoLoopPageView.h"
 
 
-@interface JMFineCounpGoodsController () <UITableViewDelegate,UITableViewDataSource>
+@interface JMFineCounpGoodsController () <UITableViewDelegate,UITableViewDataSource, JMAutoLoopPageViewDelegate, JMAutoLoopPageViewDataSource>
 
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *topImageSource;
 @property (nonatomic, strong) NSMutableArray *activeSource;
 @property (nonatomic, strong) NSMutableDictionary *webDic;
-
+@property (nonatomic, strong) JMAutoLoopPageView *pageView;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 @property (nonatomic,strong) UIButton *topButton;
@@ -101,7 +102,7 @@
     for (NSDictionary *dic in postersArr) {
         [self.topImageSource addObject:dic];
     }
-//    [self.pageView reloadData];
+    [self.pageView reloadData];
     
     NSArray *activeArr = dic[@"activitys"];
     for (NSDictionary *dict in activeArr) {
@@ -120,18 +121,18 @@
     self.tableView.rowHeight = SCREENWIDTH * 0.5 + 10;
     [self.view addSubview:self.tableView];
     [self.tableView registerClass:[JMHomeActiveCell class] forCellReuseIdentifier:JMHomeActiveCellIdentifier];
-//    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
-//    self.pageView.dataSource = self;
-//    self.pageView.delegate = self;
-//    self.pageView.isCreatePageControl = YES;
-//    [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
-//    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
-//    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
-//    self.pageView.scrollForSingleCount = YES;
-//    self.pageView.atuoLoopScroll = YES;
-//    self.pageView.scrollFuture = YES;
-//    self.pageView.autoScrollInterVal = 4.0f;
-//    self.tableView.tableHeaderView = self.pageView;
+    self.pageView = [[JMAutoLoopPageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENWIDTH * 0.4)];
+    self.pageView.dataSource = self;
+    self.pageView.delegate = self;
+    self.pageView.isCreatePageControl = YES;
+    [self.pageView registerCellWithClass:[JMHomeHeaderCell class] identifier:@"JMHomeHeaderCell"];
+    self.pageView.scrollStyle = JMAutoLoopScrollStyleHorizontal;
+    self.pageView.scrollDirectionStyle = JMAutoLoopScrollStyleAscending;
+    self.pageView.scrollForSingleCount = YES;
+    self.pageView.atuoLoopScroll = YES;
+    self.pageView.scrollFuture = YES;
+    self.pageView.autoScrollInterVal = 4.0f;
+    self.tableView.tableHeaderView = self.pageView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.activeSource.count;
@@ -180,25 +181,25 @@
 
 
 #pragma mark 顶部视图滚动协议方法
-//- (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
-//    return self.topImageSource.count;
-//}
-//- (void)configCell:(__kindof UICollectionViewCell *)cell Index:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
-//    JMHomeHeaderCell *testCell = cell;
-//    NSDictionary *dict = self.topImageSource[index];
-//    testCell.topDic = dict;
-//}
-//- (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
-//    return @"JMHomeHeaderCell"; // 返回自定义cell的identifier
-//}
-//- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
-//    //    NSLog(@"JMHomeRootController ---> pageView滚动");
-//}
-//- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
-//    [MobClick event:@"banner_click"];
-//    NSDictionary *topDic = self.topImageSource[index];
-//    [JumpUtils jumpToLocation:topDic[@"app_link"] viewController:self];
-//}
+- (NSUInteger)numberOfItemWithPageView:(JMAutoLoopPageView *)pageView {
+    return self.topImageSource.count;
+}
+- (void)configCell:(__kindof UICollectionViewCell *)cell Index:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    JMHomeHeaderCell *testCell = cell;
+    NSDictionary *dict = self.topImageSource[index];
+    testCell.topDic = dict;
+}
+- (NSString *)cellIndentifierWithIndex:(NSUInteger)index PageView:(JMAutoLoopPageView *)pageView {
+    return @"JMHomeHeaderCell"; // 返回自定义cell的identifier
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidScrollToIndex:(NSUInteger)index {
+    //    NSLog(@"JMHomeRootController ---> pageView滚动");
+}
+- (void)JMAutoLoopPageView:(JMAutoLoopPageView *)pageView DidSelectedIndex:(NSUInteger)index {
+    [MobClick event:@"banner_click"];
+    NSDictionary *topDic = self.topImageSource[index];
+    [JumpUtils jumpToLocation:topDic[@"app_link"] viewController:self];
+}
 
 
 #pragma mark -- 添加返回顶部按钮
@@ -232,10 +233,6 @@
     [super didReceiveMemoryWarning];
     [[JMGlobal global] clearAllSDCache];
 }
-//- (void)backClick:(UIButton *)button {
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"JMFineCounpGoodsController"];
@@ -244,14 +241,16 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMFineCounpGoodsController"];
+    if (self.pageView) {
+        [self.pageView endAutoScroll];
+    }
 }
 
 - (void)dealloc {
-//    if (self.pageView) {
-//        [self.pageView removeFromSuperview];
-//        self.pageView = nil;
-//    }
-    
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+        self.pageView = nil;
+    }
 }
 
 

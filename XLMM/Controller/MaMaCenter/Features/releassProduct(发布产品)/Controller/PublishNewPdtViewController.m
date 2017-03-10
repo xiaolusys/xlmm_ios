@@ -11,17 +11,16 @@
 #import "PicHeaderCollectionReusableView.h"
 #import "PicFooterCollectionReusableView.h"
 #import "PhotoView.h"
-#import "SharePicModel.h"
+#import "JMSharePicModel.h"
 #import "CountdownView.h"
 #import "UILabel+CustomLabel.h"
 #import "JMStoreManager.h"
 #import "WXApi.h"
 #import "JMPushSaveModel.h"
 #import "JMRichTextTool.h"
-#import <Photos/Photos.h>
 #import "NSArray+Reverse.h"
 #import "JMPhotoBrowesView.h"
-
+#import "JMSystemPermissionsManager.h"
 
 
 #define CELLWIDTH (([UIScreen mainScreen].bounds.size.width - 24)/3)
@@ -49,7 +48,7 @@
 @property (nonatomic, strong)NSMutableArray *currentArr;
 @property (nonatomic, assign)NSInteger cellNum;
 @property (nonatomic, strong) JMPushSaveModel *pushSaveModel;
-@property (nonatomic, strong) SharePicModel *picModel;
+@property (nonatomic, strong) JMSharePicModel *picModel;
 @property (nonatomic, strong) NSMutableDictionary *imageDict;
 @property (nonatomic, strong) NSMutableArray *images;
 
@@ -67,9 +66,9 @@
     }
     return _imageDict;
 }
-- (SharePicModel *)picModel {
+- (JMSharePicModel *)picModel {
     if (!_picModel) {
-        _picModel = [[SharePicModel alloc] init];
+        _picModel = [[JMSharePicModel alloc] init];
     }
     return _picModel;
 }
@@ -368,7 +367,7 @@
                 [muArray replaceObjectAtIndex:4 withObject:_qrCodeUrlString];
             }
         }
-        SharePicModel *sharePic = [SharePicModel mj_objectWithKeyValues:oneTurns];
+        JMSharePicModel *sharePic = [JMSharePicModel mj_objectWithKeyValues:oneTurns];
         sharePic.pic_arry = muArray;
         [self.dataArr addObject:sharePic];
     }
@@ -384,14 +383,14 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    SharePicModel *picModel = self.dataArr[section];
+    JMSharePicModel *picModel = self.dataArr[section];
     //    self.cellNum = picModel.pic_arry.count;
     return picModel.pic_arry.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"picCollectionCell" forIndexPath:indexPath];
-    SharePicModel *picModel = self.dataArr[indexPath.section];
+    JMSharePicModel *picModel = self.dataArr[indexPath.section];
     NSInteger countNum = picModel.pic_arry.count;
     NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
     
@@ -415,7 +414,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SharePicModel *picModel = self.dataArr[indexPath.section];
+    JMSharePicModel *picModel = self.dataArr[indexPath.section];
     self.cellNum = picModel.pic_arry.count;
     if (self.cellNum == 1) {
         return CGSizeMake(CELLWIDTH + 30, CELLWIDTH + 80);
@@ -425,7 +424,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.images removeAllObjects];
-    SharePicModel *picModel = self.dataArr[indexPath.section];
+    JMSharePicModel *picModel = self.dataArr[indexPath.section];
     imageUrlArray = [picModel.pic_arry copy];
     for (int i = 0; i < imageUrlArray.count; i++) {
         NSString *sectionRot = [NSString stringWithFormat:@"%ld%d",indexPath.section,i];
@@ -452,14 +451,14 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
         PicHeaderCollectionReusableView *headerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picHeader" forIndexPath:indexPath];
-        SharePicModel *picModel = self.dataArr[indexPath.section];
+        JMSharePicModel *picModel = self.dataArr[indexPath.section];
         headerV.titleLabel.text = picModel.title_content;
         headerV.timeLabel.text = [NSString jm_cutOutYearWihtSec:picModel.start_time];
         headerV.propagandaLabel.text = picModel.descriptionTitle;
         return headerV;
     }else{
         PicFooterCollectionReusableView *footerV = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"picFooter" forIndexPath:indexPath];
-        SharePicModel *picModel = self.dataArr[indexPath.section];
+        JMSharePicModel *picModel = self.dataArr[indexPath.section];
         [footerV.likeButton setTitle:picModel.save_times forState:UIControlStateNormal];
         [footerV.shareButton setTitle:picModel.save_times forState:UIControlStateNormal];
         footerV.savePhotoBtn.tag = 100 + indexPath.section;
@@ -469,7 +468,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    SharePicModel *picModel = self.dataArr[section];
+    JMSharePicModel *picModel = self.dataArr[section];
     return CGSizeMake(SCREENWIDTH, picModel.headerHeight);
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
@@ -477,7 +476,7 @@
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    SharePicModel *picModel = self.dataArr[section];
+    JMSharePicModel *picModel = self.dataArr[section];
     self.cellNum = picModel.pic_arry.count;
     if (self.cellNum == 4) {
         return UIEdgeInsetsMake(5, 10, 5, CELLWIDTH + 10);
@@ -490,14 +489,14 @@
                currentPicArr:(NSMutableArray *)currentPicArr {
     NSInteger saveIndex = sender.tag - 100;
     self.saveIndex = saveIndex;
-    SharePicModel *picModel = self.dataArr[saveIndex];
+    JMSharePicModel *picModel = self.dataArr[saveIndex];
     _currentSaveIndex = picModel.piID;
     //判断是否有用户权限
-    if (![self isPhotoPermission]) {
+    if ([[JMSystemPermissionsManager sharedManager] requestAuthorization:KALAssetsLibrary] == NO) {
         //无权限
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        alert.tag = 101;
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        alert.tag = 101;
+//        [alert show];
         
     }else {
         UIPasteboard *pab = [UIPasteboard generalPasteboard];
@@ -646,10 +645,10 @@
 
 -(void)savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
     if (error) {
-        if (![self isPhotoPermission]) {
+        if ([[JMSystemPermissionsManager sharedManager] requestAuthorization:KALAssetsLibrary] == NO) {
             [MBProgressHUD hideHUD];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-            [alert show];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存失败！" message:@"请在 设置->隐私->照片 中开启小鹿美美对照片的访问权" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//            [alert show];
         }else {
             if (self.currentArr.count != 0) {
                 [self.currentArr removeObjectAtIndex:0];

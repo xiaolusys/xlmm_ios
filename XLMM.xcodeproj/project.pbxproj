@@ -362,6 +362,11 @@
 		1F3F25361E58165E007E783B /* JMCategoryColSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F25351E58165E007E783B /* JMCategoryColSectionReusableView.m */; };
 		1F3F25381E58194F007E783B /* homePagejingpinhui@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F25371E58194F007E783B /* homePagejingpinhui@2x.png */; };
 		1F3F75551D76BD3D0079D19B /* JMHomeActiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F75541D76BD3D0079D19B /* JMHomeActiveModel.m */; };
+		1F40442B1E715AA1001B3568 /* JMBlockAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F40442A1E715AA1001B3568 /* JMBlockAlertView.m */; };
+		1F40442E1E715AFF001B3568 /* JMSystemPermissionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F40442D1E715AFF001B3568 /* JMSystemPermissionsManager.m */; };
+		1F4044341E724531001B3568 /* JMPushingDaysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4044331E724531001B3568 /* JMPushingDaysCell.m */; };
+		1F4044371E724581001B3568 /* JMPushingDaysHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4044361E724581001B3568 /* JMPushingDaysHeaderView.m */; };
+		1F40443A1E724594001B3568 /* JMPushingDaysFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F4044391E724594001B3568 /* JMPushingDaysFooterView.m */; };
 		1F41B2B61CEAE0BA00E63E6F /* JMLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F41B2B51CEAE0BA00E63E6F /* JMLineView.m */; };
 		1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F41B2BD1CEB1A8200E63E6F /* JMSelecterButton.m */; };
 		1F476E611D5F102F00611D1E /* JMCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F476E601D5F102F00611D1E /* JMCountDownView.m */; };
@@ -548,7 +553,7 @@
 		1F5877AA1DB8A60D00949302 /* JMMaMaTeamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5877311DB8A60D00949302 /* JMMaMaTeamModel.m */; };
 		1F5877AB1DB8A60D00949302 /* JMMaMateamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5877341DB8A60D00949302 /* JMMaMateamCell.m */; };
 		1F5877B31DB8A60D00949302 /* JMPushSaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5877491DB8A60D00949302 /* JMPushSaveModel.m */; };
-		1F5877B41DB8A60D00949302 /* SharePicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58774B1DB8A60D00949302 /* SharePicModel.m */; };
+		1F5877B41DB8A60D00949302 /* JMSharePicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58774B1DB8A60D00949302 /* JMSharePicModel.m */; };
 		1F5877B51DB8A60D00949302 /* PicCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58774E1DB8A60D00949302 /* PicCollectionViewCell.m */; };
 		1F5877B61DB8A60D00949302 /* PicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F58774F1DB8A60D00949302 /* PicCollectionViewCell.xib */; };
 		1F5877B71DB8A60D00949302 /* PicFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5877511DB8A60D00949302 /* PicFooterCollectionReusableView.m */; };
@@ -1344,6 +1349,16 @@
 		1F3F25371E58194F007E783B /* homePagejingpinhui@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homePagejingpinhui@2x.png"; sourceTree = "<group>"; };
 		1F3F75531D76BD3D0079D19B /* JMHomeActiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeActiveModel.h; sourceTree = "<group>"; };
 		1F3F75541D76BD3D0079D19B /* JMHomeActiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeActiveModel.m; sourceTree = "<group>"; };
+		1F4044291E715AA1001B3568 /* JMBlockAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMBlockAlertView.h; sourceTree = "<group>"; };
+		1F40442A1E715AA1001B3568 /* JMBlockAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMBlockAlertView.m; sourceTree = "<group>"; };
+		1F40442C1E715AFF001B3568 /* JMSystemPermissionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSystemPermissionsManager.h; sourceTree = "<group>"; };
+		1F40442D1E715AFF001B3568 /* JMSystemPermissionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSystemPermissionsManager.m; sourceTree = "<group>"; };
+		1F4044321E724531001B3568 /* JMPushingDaysCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDaysCell.h; sourceTree = "<group>"; };
+		1F4044331E724531001B3568 /* JMPushingDaysCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDaysCell.m; sourceTree = "<group>"; };
+		1F4044351E724581001B3568 /* JMPushingDaysHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDaysHeaderView.h; sourceTree = "<group>"; };
+		1F4044361E724581001B3568 /* JMPushingDaysHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDaysHeaderView.m; sourceTree = "<group>"; };
+		1F4044381E724594001B3568 /* JMPushingDaysFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushingDaysFooterView.h; sourceTree = "<group>"; };
+		1F4044391E724594001B3568 /* JMPushingDaysFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushingDaysFooterView.m; sourceTree = "<group>"; };
 		1F41B2B41CEAE0BA00E63E6F /* JMLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMLineView.h; sourceTree = "<group>"; };
 		1F41B2B51CEAE0BA00E63E6F /* JMLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMLineView.m; sourceTree = "<group>"; };
 		1F41B2BC1CEB1A8200E63E6F /* JMSelecterButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSelecterButton.h; sourceTree = "<group>"; };
@@ -1700,8 +1715,8 @@
 		1F5877341DB8A60D00949302 /* JMMaMateamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMMaMateamCell.m; sourceTree = "<group>"; };
 		1F5877481DB8A60D00949302 /* JMPushSaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPushSaveModel.h; sourceTree = "<group>"; };
 		1F5877491DB8A60D00949302 /* JMPushSaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPushSaveModel.m; sourceTree = "<group>"; };
-		1F58774A1DB8A60D00949302 /* SharePicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePicModel.h; sourceTree = "<group>"; };
-		1F58774B1DB8A60D00949302 /* SharePicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePicModel.m; sourceTree = "<group>"; };
+		1F58774A1DB8A60D00949302 /* JMSharePicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSharePicModel.h; sourceTree = "<group>"; };
+		1F58774B1DB8A60D00949302 /* JMSharePicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSharePicModel.m; sourceTree = "<group>"; };
 		1F58774D1DB8A60D00949302 /* PicCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicCollectionViewCell.h; sourceTree = "<group>"; };
 		1F58774E1DB8A60D00949302 /* PicCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicCollectionViewCell.m; sourceTree = "<group>"; };
 		1F58774F1DB8A60D00949302 /* PicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PicCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2408,6 +2423,8 @@
 			children = (
 				1830727C1C97C00900B7665E /* ArrowView.h */,
 				1830727D1C97C00900B7665E /* ArrowView.m */,
+				1F4044291E715AA1001B3568 /* JMBlockAlertView.h */,
+				1F40442A1E715AA1001B3568 /* JMBlockAlertView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3135,6 +3152,8 @@
 				1F27A62E1D275F3E00A0F80B /* MMNavigationDelegate.h */,
 				1F27A6191D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.h */,
 				1F27A61A1D27597100A0F80B /* UINavigationController+FDFullscreenPopGesture.m */,
+				1F40442C1E715AFF001B3568 /* JMSystemPermissionsManager.h */,
+				1F40442D1E715AFF001B3568 /* JMSystemPermissionsManager.m */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -5085,8 +5104,8 @@
 				1FF72C571DE7E6EC0035F436 /* JMFineCouponModel.m */,
 				1F5877481DB8A60D00949302 /* JMPushSaveModel.h */,
 				1F5877491DB8A60D00949302 /* JMPushSaveModel.m */,
-				1F58774A1DB8A60D00949302 /* SharePicModel.h */,
-				1F58774B1DB8A60D00949302 /* SharePicModel.m */,
+				1F58774A1DB8A60D00949302 /* JMSharePicModel.h */,
+				1F58774B1DB8A60D00949302 /* JMSharePicModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5105,6 +5124,12 @@
 				1F5877531DB8A60D00949302 /* PicHeaderCollectionReusableView.h */,
 				1F5877541DB8A60D00949302 /* PicHeaderCollectionReusableView.m */,
 				1F5877551DB8A60D00949302 /* PicHeaderCollectionReusableView.xib */,
+				1F4044321E724531001B3568 /* JMPushingDaysCell.h */,
+				1F4044331E724531001B3568 /* JMPushingDaysCell.m */,
+				1F4044351E724581001B3568 /* JMPushingDaysHeaderView.h */,
+				1F4044361E724581001B3568 /* JMPushingDaysHeaderView.m */,
+				1F4044381E724594001B3568 /* JMPushingDaysFooterView.h */,
+				1F4044391E724594001B3568 /* JMPushingDaysFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6962,6 +6987,7 @@
 				1F6B7A231DD9C25A009AB446 /* JMGlobal.m in Sources */,
 				1F5878831DB8ABD900949302 /* TixianHistoryViewController.m in Sources */,
 				1F2F9E5F1D59A73900E3A68B /* JMGoodsInfoPopView.m in Sources */,
+				1F40442B1E715AA1001B3568 /* JMBlockAlertView.m in Sources */,
 				1F4C9EB71D9912600089CE74 /* UdeskHppleElement.m in Sources */,
 				1F6B79FA1DD9C13F009AB446 /* DotLineView.m in Sources */,
 				1FF72C801DE7E7FF0035F436 /* JMMaMaHomeHeaderView.m in Sources */,
@@ -6996,6 +7022,7 @@
 				1F58781B1DB8A87900949302 /* JMRewardsController.m in Sources */,
 				1F58778D1DB8A60D00949302 /* JMEarningsRankModel.m in Sources */,
 				1F23F9BE1D6AA37600C78EAE /* JMEmptyGoodsView.m in Sources */,
+				1F40442E1E715AFF001B3568 /* JMSystemPermissionsManager.m in Sources */,
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				1F5877B91DB8A60D00949302 /* PicHeaderCollectionReusableView.m in Sources */,
 				1F4C9E821D9912600089CE74 /* UdeskChatMessage.m in Sources */,
@@ -7035,6 +7062,7 @@
 				1F58780D1DB8A85900949302 /* JMVisitorModel.m in Sources */,
 				1F4C9E8C1D9912600089CE74 /* UdeskInputBar.m in Sources */,
 				1F498B321D276450007E77FC /* JMSharePackView.m in Sources */,
+				1F40443A1E724594001B3568 /* JMPushingDaysFooterView.m in Sources */,
 				1F27A65F1D275FB400A0F80B /* JMRepopView.m in Sources */,
 				3A5DF7B81CCE135D00FFE818 /* JumpUtils.m in Sources */,
 				1F4C9E851D9912600089CE74 /* UdeskTipsMessage.m in Sources */,
@@ -7042,7 +7070,7 @@
 				1F3794001DEE827E0044E325 /* RSADataVerifier.m in Sources */,
 				1F498AFF1D2761BE007E77FC /* CommonWebViewViewController.m in Sources */,
 				18FCFA231CAAC1BE006C75BC /* NSDictionary+UrlEncoding.m in Sources */,
-				1F5877B41DB8A60D00949302 /* SharePicModel.m in Sources */,
+				1F5877B41DB8A60D00949302 /* JMSharePicModel.m in Sources */,
 				1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */,
 				1F58A75D1DFBB40E00F738D2 /* JMBrowesLoadingImageView.m in Sources */,
 				1FF72C7B1DE7E7A30035F436 /* JMFineClassController.m in Sources */,
@@ -7137,6 +7165,7 @@
 				1F6B7A1A1DD9C224009AB446 /* Tool_FMDBGetDatabase.m in Sources */,
 				1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */,
 				1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */,
+				1F4044371E724581001B3568 /* JMPushingDaysHeaderView.m in Sources */,
 				1F6B7A191DD9C224009AB446 /* JMStoreManager.m in Sources */,
 				1FF72C7A1DE7E7A30035F436 /* JMMaMaHomeController.m in Sources */,
 				1F7D99401D63FD7000E18FD1 /* JMRootGoodsModel.m in Sources */,
@@ -7231,6 +7260,7 @@
 				3A1E05931CE1C3FB001018AC /* LGRadioButton.m in Sources */,
 				1F58785E1DB8AB3600949302 /* MaMaViewController.m in Sources */,
 				1F4C9EA71D9912600089CE74 /* UdeskSDKStyle.m in Sources */,
+				1F4044341E724531001B3568 /* JMPushingDaysCell.m in Sources */,
 				1F4C9EAA1D9912600089CE74 /* UdeskChatAlertController.m in Sources */,
 				1F498C311D2772D0007E77FC /* ChangeNicknameViewController.m in Sources */,
 				1F6B7A241DD9C25A009AB446 /* UUID.m in Sources */,
