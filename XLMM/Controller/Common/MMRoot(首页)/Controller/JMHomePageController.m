@@ -251,8 +251,6 @@
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];
     }
-    self.segmentControl.sectionTitles = [_categoryNameArray copy];
-    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
     [self addChildController];
 }
 #pragma mark -- 创建UI->自定义 navigationView 自定义悬浮按钮 (个人,精品汇,购物车)
@@ -285,6 +283,7 @@
 
 }
 - (void)addChildController {
+    self.segmentControl.sectionTitles = [_categoryNameArray copy];
     for (int i = 0 ; i < _categoryNameArray.count; i++) {
         if (i == 0) {
             JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
@@ -303,13 +302,8 @@
             [self addChildViewController:childCategoryVC];
         }
     }
-    self.baseScrollView.contentOffset = CGPointMake(0, 0);
-    
-    UIViewController *firstVC = [self.childViewControllers firstObject];
-    firstVC.view.frame = self.baseScrollView.bounds;
-    [self.baseScrollView addSubview:firstVC.view];
-    _currentCidString = _categoryCidArray[0];
-    _currentNameString = _categoryNameArray[1];
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
+    [self removeToPage:0];
     
 }
 - (void)createNavigaView {
@@ -406,13 +400,13 @@
         self.segmentControl.mj_y = 64;
         self.baseScrollView.mj_y = 64 + 45;
     }];
-    if (index == 0 || index == 1) {
-        _currentCidString = _categoryCidArray[0];
-        _currentNameString = _categoryNameArray[0];
-    }else {
-        _currentCidString = _categoryCidArray[index - 2];
-        _currentNameString = _categoryNameArray[index - 2];
-    }
+//    if (index == 0 || index == 1) {
+//        _currentCidString = _categoryCidArray[0];
+//        _currentNameString = _categoryNameArray[0];
+//    }else {
+//        _currentCidString = _categoryCidArray[index - 2];
+//        _currentNameString = _categoryNameArray[index - 2];
+//    }
     self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
     if (index == 0) {
         JMHomeFirstController *homeFirst = self.childViewControllers[index];
