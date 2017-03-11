@@ -24,7 +24,7 @@
 #import "JMPopViewAnimationDrop.h"
 #import "JMCartViewController.h"
 #import "JumpUtils.h"
-#import "PublishNewPdtViewController.h"
+#import "JMPushingDaysController.h"
 
 
 #define BottomHeitht 60.0
@@ -148,6 +148,7 @@
 - (JMShareViewController *)goodsShareView {
     if (!_goodsShareView) {
         _goodsShareView = [[JMShareViewController alloc] init];
+        _goodsShareView.isShowEarningValue = YES;
     }
     return _goodsShareView;
 }
@@ -286,7 +287,7 @@
     }];
 }
 - (void)loadCatrsNumData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json?type=5",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
@@ -459,7 +460,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     }else {
         [MobClick event:@"GoodsDetail_share"];
-        [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+        [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 340) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
         }];
         self.goodsShareView.blcok = ^(UIButton *button) {
             [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
@@ -504,10 +505,10 @@
                 if ([[JMGlobal global] userVerificationLogin]) {
                     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,self.goodsID];
                     //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
-                    PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
+                    JMPushingDaysController *pushVC = [[JMPushingDaysController alloc] init];
                     //                pushVC.isPushingDays = YES;
                     pushVC.pushungDaysURL = urlString;
-                    pushVC.titleString = @"文案精选";
+                    pushVC.navTitle = @"文案精选";
                     [self.navigationController pushViewController:pushVC animated:YES];
                 }else {
                     JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
@@ -847,10 +848,12 @@
     UIButton *addCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:addCartButton];
     addCartButton.layer.cornerRadius = 20.;
+    addCartButton.layer.borderColor = [UIColor buttonEnabledBackgroundColor].CGColor;
+    addCartButton.layer.borderWidth = 1.0f;
     addCartButton.tag = kBottomViewTag + 1;
-    addCartButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    addCartButton.backgroundColor = [UIColor whiteColor];
     [addCartButton setTitle:@"加入购物车" forState:UIControlStateNormal];
-    [addCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [addCartButton setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
     addCartButton.titleLabel.font = [UIFont systemFontOfSize:16.];
     [addCartButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
     self.addCartButton = addCartButton;
@@ -959,6 +962,7 @@
         }
     }else if (button.tag == kBottomViewTag + 3) {
         if (isLogin) {
+            _paramer[@"type"] = @"5";
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
             [self addCartUrlString:urlString Paramer:_paramer];
         }else {

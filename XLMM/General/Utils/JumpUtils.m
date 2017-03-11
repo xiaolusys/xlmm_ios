@@ -7,7 +7,7 @@
 //
 
 #import "JumpUtils.h"
-#import "PublishNewPdtViewController.h"
+#import "JMPushingDaysController.h"
 #import "MMCollectionController.h"
 #import "ProductSelectionListViewController.h"
 #import "WebViewController.h"
@@ -121,7 +121,7 @@
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+        JMPushingDaysController *publish = [[JMPushingDaysController alloc] init];
         [vc.navigationController pushViewController:publish animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {

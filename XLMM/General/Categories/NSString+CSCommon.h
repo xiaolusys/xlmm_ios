@@ -154,6 +154,13 @@
 + (NSString *)getCurrentTime;
 
 /**
+ *  获取当前时间 的小时
+ *
+ *  @return 当前的日期 的小时
+ */
++ (NSString *)getCurrentTimeWithHour;
+
+/**
  *  获取两个日期之间的天数
  *
  *  @return 相差天数

@@ -12,7 +12,7 @@
 #import "WXApi.h"
 #import "UIImage+UIImageExt.h"
 #import "WebViewJavascriptBridge.h"
-#import "PublishNewPdtViewController.h"
+#import "JMPushingDaysController.h"
 #import "MMCollectionController.h"
 #import "UUID.h"
 #import "SSKeychain.h"
