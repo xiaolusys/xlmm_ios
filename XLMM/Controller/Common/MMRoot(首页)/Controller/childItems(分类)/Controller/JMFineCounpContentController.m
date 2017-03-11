@@ -7,10 +7,10 @@
 //
 
 #import "JMFineCounpContentController.h"
-#import "JMFineCouponModel.h"
 #import "JMRootgoodsCell.h"
 #import "JMGoodsDetailController.h"
 #import "JMReloadEmptyDataView.h"
+#import "JMFineCouponModel.h"
 
 
 @interface JMFineCounpContentController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,CSTableViewPlaceHolderDelegate>

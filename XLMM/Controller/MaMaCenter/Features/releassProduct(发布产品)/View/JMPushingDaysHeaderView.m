@@ -21,6 +21,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        
         self.titleLabel = [UILabel new];
         self.titleLabel.font = [UIFont systemFontOfSize:16.];
         self.titleLabel.textColor = [UIColor blackColor];

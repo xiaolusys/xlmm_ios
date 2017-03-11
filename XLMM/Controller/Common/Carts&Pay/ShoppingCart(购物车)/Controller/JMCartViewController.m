@@ -98,7 +98,8 @@
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts.json?type=5",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         [self fetchedCartData:responseObject];
@@ -138,7 +139,8 @@
     
 }
 - (void)downloadHistoryCartData {
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history.json?type=5",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         [self fetchedHistoryCartData:responseObject];
@@ -508,12 +510,13 @@
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 #pragma mark ---- 重新购买按钮点击
-- (void)addCart:(CartListModel *)model{
+- (void)addCart:(CartListModel *)model {
     [MBProgressHUD showLoading:@""];
     [MobClick event:@"buy_again_click"];
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
-                                 @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID]
+                                 @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID],
+                                 @"type":@"5"
                                  };
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         NSInteger codeNum = [responseObject[@"code"] integerValue];

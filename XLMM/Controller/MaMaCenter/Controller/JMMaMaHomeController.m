@@ -33,7 +33,6 @@
 #import "JMMineIntegralController.h"
 #import "JMCouponController.h"
 #import "JMRefundBaseController.h"
-#import "PublishNewPdtViewController.h"
 #import "JMMaMaFansController.h"
 #import "JMOrderListController.h"
 #import "JMTotalEarningController.h"

@@ -409,15 +409,15 @@
 - (void)removeToPage:(NSInteger)index {
     [UIView animateWithDuration:0.2 animations:^{
         self.segmentControl.mj_y = 64;
-        self.baseScrollView.mj_y = 64 + 45;
+        self.baseScrollView.mj_y = self.segmentControl.cs_max_Y;
     }];
-    if (index == 0 || index == 1) {
-        _currentCidString = _categoryCidArray[0];
-        _currentNameString = _categoryNameArray[2];
-    }else {
-        _currentCidString = _categoryCidArray[index - 2];
-        _currentNameString = _categoryNameArray[index - 2];
-    }
+//    if (index == 0 || index == 1) {
+//        _currentCidString = _categoryCidArray[0];
+//        _currentNameString = _categoryNameArray[2];
+//    }else {
+//        _currentCidString = _categoryCidArray[index - 2];
+//        _currentNameString = _categoryNameArray[index - 2];
+//    }
     self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
     if (index == 0) {
         JMFineCounpGoodsController *fineVC = self.childViewControllers[index];

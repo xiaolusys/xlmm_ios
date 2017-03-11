@@ -137,9 +137,15 @@ static JMSystemPermissionsManager *systemPermissionsManager = nil;
                         [self executeAlterTips:tips isSupport:YES];
                         return NO;
                     }else if (authorizationStatus == PHAuthorizationStatusNotDetermined){
+                        __block BOOL libraryStatus;
                         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                            
+                            if (status == PHAuthorizationStatusAuthorized) {
+                                libraryStatus = YES;
+                            }else {
+                                libraryStatus = NO;
+                            }
                         }];
+                        return libraryStatus;
                     }
                     
                 }

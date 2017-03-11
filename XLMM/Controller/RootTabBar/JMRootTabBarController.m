@@ -214,7 +214,7 @@
 }
 
 - (void)requestCartNumber {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json?type=5",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self fetchData:responseObject];

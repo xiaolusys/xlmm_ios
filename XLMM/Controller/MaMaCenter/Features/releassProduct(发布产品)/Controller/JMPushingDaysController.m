@@ -316,7 +316,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         }
         
         NSInteger countNum = muArray.count;
-        if (![NSString isStringEmpty:_qrCodeUrlString]) {
+        if (![NSString isStringEmpty:_qrCodeUrlString] && [oneTurns[@"show_qrcode"] boolValue]) {
             if (countNum < 9) {
                 [muArray addObject:_qrCodeUrlString];
             }else {
@@ -341,10 +341,14 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JMPushingDaysCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:JMPushingDaysCellIdentifier forIndexPath:indexPath];
     JMSharePicModel *picModel = self.dataSource[indexPath.section];
-    NSInteger countNum = picModel.pic_arry.count;
-    NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
     NSString *url = CS_STRING(picModel.pic_arry[indexPath.row]);
-    if ((codeNum != indexPath.row) && ![NSString isStringEmpty:url]) {
+    if (picModel.show_qrcode) {
+        NSInteger countNum = picModel.pic_arry.count;
+        NSInteger codeNum = countNum < 9 ? countNum - 1 : 4;
+        if ((codeNum != indexPath.row) && ![NSString isStringEmpty:url]) {
+            url = [url imageGoodsOrderCompression];
+        }
+    }else {
         url = [url imageGoodsOrderCompression];
     }
     NSString *sectionRow = [NSString stringWithFormat:@"%ld%ld",indexPath.section,indexPath.row];
@@ -358,8 +362,8 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     JMSharePicModel *picModel = self.dataSource[indexPath.section];
-    _cellNum = picModel.pic_arry.count;
-    if (_cellNum == 1) {
+    NSInteger cellNum = picModel.pic_arry.count;
+    if (cellNum == 1) {
         return CGSizeMake(CELLWIDTH + 30, CELLWIDTH + 80);
     }
     return CGSizeMake(CELLWIDTH, CELLWIDTH);
@@ -407,8 +411,8 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     JMSharePicModel *picModel = self.dataSource[section];
-    _cellNum = picModel.pic_arry.count;
-    if (_cellNum == 4) {
+    NSInteger cellNum = picModel.pic_arry.count;
+    if (cellNum == 4) {
         return UIEdgeInsetsMake(5, 10, 5, CELLWIDTH + 10);
     }
     return UIEdgeInsetsMake(5, 10, 5, 10);
@@ -426,7 +430,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
             [MBProgressHUD showError:@"出错啦~! 请重新复制文案"];
             return ;
         }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"复制文案成功" message:@"亲爱的小鹿妈妈,现在文案复制成功了哦~可以去粘贴啦。" delegate:self cancelButtonTitle:@"" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"复制文案成功" message:@"亲爱的小鹿妈妈,现在文案复制成功了哦~可以去粘贴啦。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
             [MobClick event:@"DaysPush_success"];
         }
@@ -436,50 +440,52 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
 - (void)saveImageToIphone:(JMSharePicModel *)picModel {
     if ([[JMSystemPermissionsManager sharedManager] requestAuthorization:KALAssetsLibrary] == NO) {
         return ;
-    }
-    _currentSaveIndex = picModel.piID;
-    UIPasteboard *pab = [UIPasteboard generalPasteboard];
-    [pab setString:picModel.descriptionTitle];
-    if (pab == nil) {
-        [MobClick event:@"DaysPush_fail"];
-        [MBProgressHUD showError:@"出错啦~! 请重新复制文案"];
-        return ;
-    }else{
-        [MobClick event:@"DaysPush_success"];
-    }
-    NSArray *arr = [JMPushSaveModel findAll];
-    for (int i = 0; i < arr.count; i++) {
-        self.pushSaveModel = arr[i];
-        if ([self.pushSaveModel.pushID isEqualToNumber:_currentSaveIndex]) {
-            NSInteger count = self.pushSaveModel.imageArray.count;
-            for (int j = 0; j < count; j++) {
-                UIImage *image = [UIImage imageWithData:self.pushSaveModel.imageArray[j]];
-                [sharImageArray addObject:image];
-            }
-            if (_isNeedAleartMessage) {
-                [self alertMessage];
-            }else {
-                [self UIActivityMessage];
-            }
+    }else {
+        _currentSaveIndex = picModel.piID;
+        UIPasteboard *pab = [UIPasteboard generalPasteboard];
+        [pab setString:picModel.descriptionTitle];
+        if (pab == nil) {
+            [MobClick event:@"DaysPush_fail"];
+            [MBProgressHUD showError:@"出错啦~! 请重新复制文案"];
             return ;
+        }else{
+            [MobClick event:@"DaysPush_success"];
+        }
+        NSArray *arr = [JMPushSaveModel findAll];
+        for (int i = 0; i < arr.count; i++) {
+            self.pushSaveModel = arr[i];
+            if ([self.pushSaveModel.pushID isEqualToNumber:_currentSaveIndex]) {
+                NSInteger count = self.pushSaveModel.imageArray.count;
+                for (int j = 0; j < count; j++) {
+                    UIImage *image = [UIImage imageWithData:self.pushSaveModel.imageArray[j]];
+                    [sharImageArray addObject:image];
+                }
+                if (_isNeedAleartMessage) {
+                    [self alertMessage];
+                }else {
+                    [self UIActivityMessage];
+                }
+                return ;
+            }
+        }
+        [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
+        if (self.currentArr == nil) {
+            self.currentArr = [picModel.pic_arry mutableCopy];
+            [self downLoadImage:picModel];
+        }else if (self.currentArr.count > 0){
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showLoading:@"亲~ 慢点! (*^__^*) " ToView:self.view];
+            [self saveNextimage];
+        }else {
+            [self.currentArr addObjectsFromArray:picModel.pic_arry];
+            //            [self saveNext];
+            [self downLoadImage:picModel];
         }
     }
-    [MBProgressHUD showLoading:@"文案复制完成，正在保存图片..."];
-    if (self.currentArr == nil) {
-        self.currentArr = [picModel.pic_arry mutableCopy];
-        [self downLoadImage:picModel.piID];
-    }else if (self.currentArr.count > 0){
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showLoading:@"亲~ 慢点! (*^__^*) " ToView:self.view];
-        [self saveNextimage];
-    }else {
-        [self.currentArr addObjectsFromArray:picModel.pic_arry];
-        //            [self saveNext];
-        [self downLoadImage:picModel.piID];
-    }
+    
 }
-- (void)downLoadImage:(NSNumber *)pushID {
-    [self statisticsSaveNum:pushID];
+- (void)downLoadImage:(JMSharePicModel *)picModel {
+    [self statisticsSaveNum:picModel.piID];
     [self saveNextimage];
     NSArray *curArr = [self.currentArr copy];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -490,17 +496,22 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         NSString *picUrl = curArr[i];
         NSString *indexString = [picUrl md5];
         [indexArray addObject:indexString];
-        if (curArrCount < 9) {
-            if (i == (curArrCount - 1)) {
+        if (picModel.show_qrcode) {
+            if (curArrCount < 9) {
+                if (i == (curArrCount - 1)) {
+                }else {
+                    picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+                }
             }else {
-                picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+                if (i == 4) {
+                }else {
+                    picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
+                }
             }
         }else {
-            if (i == 4) {
-            }else {
-                picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
-            }
+            picUrl = [NSString stringWithFormat:@"%@?imageMogr2/thumbnail/578/format/jpg", picUrl]; // /quality/90
         }
+        
         dispatch_group_async(group, queue, ^{
             [UIImage imagewithURLString:picUrl Index:indexString];
         });

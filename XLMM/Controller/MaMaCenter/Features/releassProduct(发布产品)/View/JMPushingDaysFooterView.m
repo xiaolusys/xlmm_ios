@@ -64,6 +64,10 @@
         [self addSubview:self.shareButton];
         [self addSubview:self.saveWenanBtn];
         
+        UIView *lineView = [UIView new];
+        lineView.backgroundColor = [UIColor lineGrayColor];
+        [self addSubview:lineView];
+        
         kWeakSelf
         [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(weakSelf.shareButton.mas_left);
@@ -79,15 +83,21 @@
         }];
         [self.savePhotoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(weakSelf).offset(15);
-            make.bottom.equalTo(weakSelf).offset(-5);
+            make.bottom.equalTo(weakSelf).offset(-10);
             make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
             make.height.mas_equalTo(@(30));
         }];
         [self.saveWenanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(weakSelf).offset(-15);
-            make.bottom.equalTo(weakSelf).offset(-5);
+            make.bottom.equalTo(weakSelf).offset(-10);
             make.width.mas_equalTo(@(SCREENWIDTH / 2 - 30));
             make.height.mas_equalTo(@(30));
+        }];
+        [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(weakSelf).offset(-1);
+            make.right.equalTo(weakSelf);
+            make.width.mas_equalTo(@(SCREENWIDTH));
+            make.height.mas_equalTo(@(1));
         }];
     }
     return self;

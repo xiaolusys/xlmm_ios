@@ -8,7 +8,6 @@
 
 #import "TixianViewController.h"
 #import "TixianSucceedViewController.h"
-#import "PublishNewPdtViewController.h"
 #import "TixianHistoryViewController.h"
 
 

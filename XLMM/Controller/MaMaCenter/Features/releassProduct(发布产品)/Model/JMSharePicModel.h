@@ -19,7 +19,8 @@
 @property (nonatomic, strong)NSNumber* turns_num;
 @property (nonatomic, strong)NSArray* pic_arry;
 @property (nonatomic, strong)NSNumber* could_share;
-
+@property (nonatomic, assign) BOOL show_qrcode;
+@property (nonatomic, strong) NSDictionary *profit;
 
 @property (nonatomic, copy)NSString* save_times;
 @property (nonatomic, copy)NSString* share_times;
@@ -39,29 +40,26 @@
  *  
  {
  "could_share" = 1;
- description = "\U3010\U5c0f\U9e7f\U7f8e\U7f8e\U3011\U6211\U7684\U7cbe\U5fc3\U51c6\U5907\Uff0c\U53ea\U60f3\U8ba9\U4f60\U653e\U5fc3\Uff01
- \n\U5065\U5eb7\U6c34\U676f\Uff0c\U751f\U6d3b\U56e0\U4f60\U7684\U966a\U4f34\U800c\U7f8e\U4e3d~ \U5b89\U5168\U65e0\U6bd2\U65e0\U5bb3\Uff0c\U5f02\U5473\U5c0f\Uff0c\U5bc6\U5c01\U6027\U6781\U5f3a\U3002\U5706\U6da6\U8d34\U5408\U5507\U5f62\Uff0c\U559d\U6c34\U66f4\U8212\U9002\Uff01http://staging.xiaolumeimei.com/m/44/";
- id = 2551;
- "pic_arry" =     (
- "http://img.xiaolumeimei.com/nine_pic1474106605777",
- "http://img.xiaolumeimei.com/nine_pic1474106605919",
- "http://img.xiaolumeimei.com/nine_pic1474106605990",
- "http://img.xiaolumeimei.com/nine_pic1474106606039",
- "http://img.xiaolumeimei.com/nine_pic1474106606076",
- "http://img.xiaolumeimei.com/nine_pic1474106606161",
- "http://img.xiaolumeimei.com/nine_pic1474106606204",
- "http://img.xiaolumeimei.com/nine_pic1474106606302",
- "http://img.xiaolumeimei.com/nine_pic1474106606374"
+ description = "\U3010\U79d2\U51cf\U538b\U84b8\U6c7d\U773c\U7f69\U3011https://m.xiaolumeimei.com/m/44/?next=mall/product/details/25172\n\U82b1\U738b\U773c\U7f69\U4e0d\U4ec5\U81ea\U5df1\U7528\Uff0c\U8212\U7f13\U75b2\U52b3\U3001\U5b89\U7720\Uff0c\U6bcf\U5929\U665a\U4e0a\U7761\U89c9\U524d\U7ed9\U81ea\U5df1\U5b69\U5b50\U8d34\U4e00\U8d34\Uff0c\U7528\U6765\U4fdd\U62a4\U5b69\U5b50\U89c6\U529b\Uff0c\U73b0\U5728\U4e00\U5bb6\U5b50\U90fd\U79bb\U4e0d\U5f00\U82b1\U738b\U84b8\U6c7d\U773c\U7f69\U4e86\Uff01\n";
+ id = 5610;
+ "pic_arry" =             (
+ "http://img.xiaolumeimei.com/nine_pic1484535957241",
+ "http://img.xiaolumeimei.com/nine_pic1484535957255",
+ "http://img.xiaolumeimei.com/nine_pic1484535957268"
  );
- "sale_category" = 2;
- "save_times" = 7;
+ profit =             {
+ max = 37;
+ min = 15;
+ };
+ "sale_category" = 98;
+ "save_times" = 85;
  "share_times" = 0;
- "start_time" = "2016-10-17T11:00:00";
- title = "\U3010\U5c0f\U9e7f\U7f8e\U7f8e\U3011\U6211\U7684\U7cbe\U5fc3\U51c6\U5907\Uff0c\U53ea\U60f3\U8ba9\U4f60\U653e\U5fc3\Uff01
- \n\U5065\U5eb7\U6c34\U676f\Uff0c\U751f\U6d3b\U56e0\U4f60\U7684\U966a\U4f34\U800c\U7f8e\U4e3d~ \U5b89\U5168\U65e0\U6bd2\U65e0\U5bb3\Uff0c\U5f02\U5473\U5c0f\Uff0c\U5bc6\U5c01\U6027\U6781\U5f3a\U3002\U5706\U6da6\U8d34\U5408\U5507\U5f62\Uff0c\U559d\U6c34\U66f4\U8212\U9002\Uff01http://staging.xiaolumeimei.com/m/44/";
- "title_content" = "\U3010\U5c0f\U9e7f\U7f8e\U7f8e\U3011";
- "turns_num" = 2;
+ "show_qrcode" = 0;
+ "start_time" = "2017-01-16T20:30:00";
+ title = "\U3010\U79d2\U51cf\U538b\U84b8\U6c7d\U773c\U7f69\U3011https://m.xiaolumeimei.com/m/44/?next=mall/product/details/25172\n\U82b1\U738b\U773c\U7f69\U4e0d\U4ec5\U81ea\U5df1\U7528\Uff0c\U8212\U7f13\U75b2\U52b3\U3001\U5b89\U7720\Uff0c\U6bcf\U5929\U665a\U4e0a\U7761\U89c9\U524d\U7ed9\U81ea\U5df1\U5b69\U5b50\U8d34\U4e00\U8d34\Uff0c\U7528\U6765\U4fdd\U62a4\U5b69\U5b50\U89c6\U529b\Uff0c\U73b0\U5728\U4e00\U5bb6\U5b50\U90fd\U79bb\U4e0d\U5f00\U82b1\U738b\U84b8\U6c7d\U773c\U7f69\U4e86\Uff01\n";
+ "title_content" = "01\U670816\U65e5\Uff5c\U7b2c26\U8f6e \U5206\U4eab\U65f6\U95f4\Uff1a20:30";
+ "turns_num" = 26;
  }
- 
+
  
  */
