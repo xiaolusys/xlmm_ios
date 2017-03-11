@@ -30,6 +30,8 @@
 
 @property (nonatomic,copy) NSString *share_type;
 
+@property (nonatomic, strong) NSDictionary *profit;
+
 + (instancetype)modelWithModel:(JMShareModel *)model;
 
 - (instancetype)initWithModel:(JMShareModel *)model;

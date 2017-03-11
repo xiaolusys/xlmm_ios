@@ -97,7 +97,7 @@
     
     [self.valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(headerView.mas_centerX);
-        make.top.equalTo(headerView).offset(10);
+        make.top.equalTo(headerView).offset(20);
         make.width.mas_equalTo(SCREENWIDTH - 60);
     }];
     
@@ -110,10 +110,11 @@
     CGFloat topHeight;
     if (self.isShowEarningValue) {
         topHeight = 100;
-        NSString *minValue = @"9.90";
+        NSDictionary *profitDic = self.model.profit;
+        NSString *minValue = [NSString stringWithFormat:@"%.2f",[profitDic[@"min"] floatValue]];
         NSString *allStr = [NSString stringWithFormat:@"只要你的好友通过你的链接购买此商品,你就能得到至少%@元的利润哦~",minValue];
         self.headerView.hidden = NO;
-        self.valueLabel.text = [NSString stringWithFormat:@"赚%@",minValue];
+        self.valueLabel.text = [NSString stringWithFormat:@"赚 ¥%.2f ~ ¥%.2f",[profitDic[@"min"] floatValue],[profitDic[@"max"] floatValue]];
         self.earningLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allStr SubStringArray:@[minValue]];
         
     }else {

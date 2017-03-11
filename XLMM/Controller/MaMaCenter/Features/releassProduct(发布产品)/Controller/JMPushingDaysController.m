@@ -27,18 +27,18 @@ static NSString *JMPushingDaysHeaderViewIdentifier = @"JMPushingDaysHeaderViewId
 static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewIdentifier";
 
 @interface JMPushingDaysController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIAlertViewDelegate, JMPhotoBrowesViewDatasource, JMPhotoBrowesViewDelegate, JMPushingDaysFooterViewDelegate> {
-    NSTimer   *_theTimer;               // 定时器 (整点刷新)
-    BOOL      _isPullDown;              // 下拉标志
-    BOOL      _isLoadMore;              // 上拉标志
-    NSString  *_nextPageUrlString;      // 分页数据(下一页)
-    NSString  *_qrCodeUrlString;        // 二维码图片URL
-    NSInteger _qrCodeRequestDataIndex;  // 二维码图片请求次数
-    NSArray   *imageUrlArray;           // 图片预览数组
-    NSNumber *_currentSaveIndex;        // 当前保存图片 的ID 标志位
-    NSMutableArray *sharImageArray;     // 分享图片的数组
-    BOOL _isNeedAleartMessage;         // 是否需要弹出提示框
-    NSString *_getBeforeDayFive;
-    NSInteger _cellNum;
+    NSTimer         *_theTimer;               // 定时器 (整点刷新)
+    BOOL            _isPullDown;              // 下拉标志
+    BOOL            _isLoadMore;              // 上拉标志
+    NSString        *_nextPageUrlString;      // 分页数据(下一页)
+    NSString        *_qrCodeUrlString;        // 二维码图片URL
+    NSInteger       _qrCodeRequestDataIndex;  // 二维码图片请求次数
+    NSArray         *imageUrlArray;           // 图片预览数组
+    NSNumber        *_currentSaveIndex;       // 当前保存图片 的ID 标志位
+    NSMutableArray  *sharImageArray;          // 分享图片的数组
+    BOOL            _isNeedAleartMessage;     // 是否需要弹出提示框
+    NSString        *_getBeforeDayFive;
+    NSInteger       _cellNum;
     
 }
 @property (nonatomic, strong) UICollectionView      *collectionView;
@@ -84,7 +84,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
 - (UIView *)watchesView {
     if (!_watchesView) {
         _watchesView = [UIView new];
-        _watchesView.frame = CGRectMake(0, -200, SCREENWIDTH, 200);
+        _watchesView.frame           = CGRectMake(0, -200, SCREENWIDTH, 200);
         _watchesView.backgroundColor = [UIColor backgroundlightGrayColor];
         [_watchesView addSubview:self.bottomView];
     }
@@ -92,7 +92,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
 }
 - (UIView *)bottomView {
     if (!_bottomView) {
-        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 2, SCREENWIDTH, 180)];
+        _bottomView                 = [[UIView alloc] initWithFrame:CGRectMake(0, 2, SCREENWIDTH, 180)];
         _bottomView.backgroundColor = [UIColor backgroundlightGrayColor];
         [_bottomView addSubview:self.countdowmView];
     }
