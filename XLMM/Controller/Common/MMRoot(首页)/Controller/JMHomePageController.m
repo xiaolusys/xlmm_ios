@@ -317,6 +317,10 @@
     }
     self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
     [self removeToPage:0];
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 33e17bbe7d18fe57556bbf62c9ff56e0eb3feca4
 }
 - (void)createNavigaView {
     UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 83, 44)];
@@ -413,7 +417,11 @@
     }];
 //    if (index == 0 || index == 1) {
 //        _currentCidString = _categoryCidArray[0];
+<<<<<<< HEAD
 //        _currentNameString = _categoryNameArray[2];
+=======
+//        _currentNameString = _categoryNameArray[0];
+>>>>>>> 33e17bbe7d18fe57556bbf62c9ff56e0eb3feca4
 //    }else {
 //        _currentCidString = _categoryCidArray[index - 2];
 //        _currentNameString = _categoryNameArray[index - 2];

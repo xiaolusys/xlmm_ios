@@ -138,6 +138,9 @@
     }
     
 }
+- (void)refreshCartData {
+    
+}
 - (void)downloadHistoryCartData {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history.json?type=5",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
