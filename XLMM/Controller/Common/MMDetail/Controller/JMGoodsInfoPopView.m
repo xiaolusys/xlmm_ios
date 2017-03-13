@@ -11,7 +11,7 @@
 #import "JMBuyNumberView.h"
 
 
-#define TableViewH SCREENHEIGHT * 0.6
+//#define TableViewH SCREENHEIGHT * 0.6
 
 
 @interface JMGoodsInfoPopView ()<JMGoodsAttributeTypeViewDelegate> {
@@ -66,7 +66,7 @@
         _goodsAllArray = [NSMutableArray array];
         
         UIView *bottomView = [UIView new];
-        bottomView.frame = CGRectMake(0, TableViewH - 60, SCREENWIDTH, 60);
+        bottomView.frame = CGRectMake(0, self.mj_h - 60, SCREENWIDTH, 60);
         [self addSubview:bottomView];
         bottomView.layer.borderWidth = 1.;
         bottomView.layer.borderColor = [UIColor lineGrayColor].CGColor;
@@ -236,7 +236,7 @@
     
     self.nameTitle.text = _goodsTitleString;
     
-    UIScrollView *headerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, SCREENWIDTH, TableViewH - 160)];
+    UIScrollView *headerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, SCREENWIDTH, self.mj_h - 160)];
     //    self.tableView.tableHeaderView = headerView;
     [self addSubview:headerView];
     
@@ -266,6 +266,7 @@
     
     if (self.goodsColorArray.count == 1 && self.goodsSizeArray.count == 1) {
         self.buyNumView = [[JMBuyNumberView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 60)];
+        headerView.contentSize = CGSizeMake(SCREENWIDTH, 60);
     }else {
         self.colorView = [[JMGoodsAttributeTypeView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50) DataArray:self.goodsColorArray GoodsTypeName:@"颜色"];
         self.colorView.delegate = self;

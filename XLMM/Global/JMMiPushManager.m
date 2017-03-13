@@ -193,6 +193,7 @@
 - (void)didBecomeActive {
     if (_isFirst == YES && _isLaunchedByNotification == YES) {
         _isFirst = NO;
+        NSLog(@"%@",_pushInfo);
         if ((_pushInfo == nil) || [_pushInfo objectForKey:@"target_url"] == nil) {
         } else {
             dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2

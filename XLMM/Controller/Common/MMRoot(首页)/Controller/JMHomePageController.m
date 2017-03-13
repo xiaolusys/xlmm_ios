@@ -252,7 +252,7 @@
         [_topImageArray addObject:dic];
     }
     NSArray *categorys = categoryDic[@"categorys"];
-    [_categoryNameArray addObjectsFromArray:@[@"精品活动",@"精品推荐"]];
+    [_categoryNameArray addObjectsFromArray:@[@"精品活动",@"每日焦点"]];
     for (NSDictionary *dic in categorys) {
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];

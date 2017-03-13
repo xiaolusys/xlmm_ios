@@ -171,7 +171,7 @@ NSString *const JMCartCurrentCellIdentifier = @"JMCartCurrentCellIdentifier";
 }
 - (void)setCartModel:(CartListModel *)cartModel {
     _cartModel = cartModel;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[cartModel.pic_path imageGoodsOrderCompression] JMUrlEncodedString]]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[cartModel.pic_path imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.titleLabel.text = cartModel.title;
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [cartModel.price floatValue]];
     self.numberLabel.text = [NSString stringWithFormat:@"%ld", [cartModel.num integerValue]];

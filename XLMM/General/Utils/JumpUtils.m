@@ -73,9 +73,12 @@
 
 #pragma mark 解析targeturl 跳转到不同的界面
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc{
-    
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (!login) {
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+        [vc.navigationController pushViewController:enterVC animated:YES];
+        return ;
+    }
     if (target_url == nil) {
         NSLog(@"target_url null");
         return;
@@ -95,7 +98,6 @@
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         //跳到潮童专区
         JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
-        
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,@"1"];
         categoryVC.titleString = @"童装专区";
         categoryVC.urlString = urlString;

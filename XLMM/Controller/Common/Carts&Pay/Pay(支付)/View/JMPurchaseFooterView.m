@@ -45,8 +45,8 @@
     UIButton *couponeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:couponeButton];
     couponeButton.tag = 100;
-    couponeButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
-    couponeButton.layer.borderWidth = 1.;
+//    couponeButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+//    couponeButton.layer.borderWidth = 1.f;
 
     [couponeButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -72,7 +72,7 @@
     UIButton *walletButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:walletButton];
     walletButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
-    walletButton.layer.borderWidth = 1.;
+    walletButton.layer.borderWidth = 0.5f;
     [walletButton setTitle:@"零钱" forState:UIControlStateNormal];
     walletButton.titleLabel.font = [UIFont systemFontOfSize:14.];
     [walletButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];
@@ -92,7 +92,7 @@
     UIButton *xiaoluCoinButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:xiaoluCoinButton];
     xiaoluCoinButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
-    xiaoluCoinButton.layer.borderWidth = 1.;
+    xiaoluCoinButton.layer.borderWidth = 0.5f;
     [xiaoluCoinButton setTitle:@"小鹿币" forState:UIControlStateNormal];
     xiaoluCoinButton.titleLabel.font = [UIFont systemFontOfSize:14.];
     [xiaoluCoinButton setTitleColor:[UIColor buttonTitleColor] forState:UIControlStateNormal];

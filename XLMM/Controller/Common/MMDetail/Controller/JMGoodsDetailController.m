@@ -30,14 +30,14 @@
 #define BottomHeitht 60.0
 #define RollHeight 20.0
 #define HeaderScrolHeight SCREENHEIGHT * 0.65
-#define POPHeight SCREENHEIGHT * 0.6
+//#define POPHeight SCREENHEIGHT * 0.6
 #define NavigationMaskWH 36
 #define kBottomViewTag 200
 
 @interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     CGFloat maxY;
     CGFloat minY;
-    
+    CGFloat popHeight;
     BOOL isShowGoodsDetail;
     
     BOOL isTop;                 // 顶部视图 -- > 判断动画不同
@@ -140,7 +140,7 @@
 }
 - (UIView *)popView {
     if (!_popView) {
-        _popView = [[JMGoodsInfoPopView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, POPHeight)];
+        _popView = [[JMGoodsInfoPopView alloc] initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, popHeight)];
         _popView.delegate = self;
         _popView.backgroundColor = [UIColor whiteColor];
     }
@@ -214,6 +214,7 @@
     self.view.backgroundColor = [UIColor countLabelColor];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
+    popHeight = SCREENHEIGHT * 0.6;
     _paramer = [NSMutableDictionary dictionary];
     BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
@@ -428,6 +429,10 @@
             if (arr.count == 0) {
                 continue;
             }else {
+                if (arr.count == 1 && goodsArray.count == 1) {
+                    popHeight = 220.f;
+//                    self.popView.mj_h = popHeight;
+                }
                 NSDictionary *skuDic = arr[0];
                 _paramer[@"item_id"] = itemDic[@"product_id"];
                 _paramer[@"sku_id"] = skuDic[@"sku_id"];
@@ -640,7 +645,7 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.3 animations:^{
             self.view.layer.transform = [JMPopViewAnimationDrop secondStepTransform];
-            self.popView.transform = CGAffineTransformTranslate(self.popView.transform, 0, -POPHeight);
+            self.popView.transform = CGAffineTransformTranslate(self.popView.transform, 0, -popHeight);
         }];
     }];
 }
