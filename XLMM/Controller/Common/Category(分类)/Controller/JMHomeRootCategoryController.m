@@ -152,6 +152,7 @@ static NSUInteger selectedIndex = 0;
         [self.colDataSource addObject:dictArr2];
         [self.colSectionDataSource addObject:dictArr1];
     }
+    
     //    [self createTableView];
     //    [self.mainTableView reloadData];
     //    [self.mainCollectionView reloadData];
@@ -242,18 +243,18 @@ static NSUInteger selectedIndex = 0;
     
     
 }
-- (UIView *)createPlaceHolderView {
-    return self.reload;
-}
-- (JMReloadEmptyDataView *)reload {
-    if (!_reload) {
-        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"暂时没有分类哦~" DescTitle:@"" ButtonTitle:@"" Image:@"emptyGoods" ReloadBlcok:^{
-//            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        _reload = reload;
-    }
-    return _reload;
-}
+//- (UIView *)createPlaceHolderView {
+//    return self.reload;
+//}
+//- (JMReloadEmptyDataView *)reload {
+//    if (!_reload) {
+//        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"暂时没有分类哦~" DescTitle:@"" ButtonTitle:@"" Image:@"emptyGoods" ReloadBlcok:^{
+////            [self.navigationController popViewControllerAnimated:YES];
+//        }];
+//        _reload = reload;
+//    }
+//    return _reload;
+//}
 
 //- (void)emptyView {
 //    //    kWeakSelf
@@ -261,7 +262,7 @@ static NSUInteger selectedIndex = 0;
 //    [self.view addSubview:self.empty];
 //    self.empty.block = ^(NSInteger index) {
 //        if (index == 100) {
-//            //            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+////            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
 //        }
 //    };
 //}

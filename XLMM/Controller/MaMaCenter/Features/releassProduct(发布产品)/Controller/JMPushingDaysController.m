@@ -273,6 +273,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         
     }];
 }
+// 统计保存数
 - (void)statisticsSaveNum:(NSNumber *)piID {
     NSMutableDictionary *parameDic = [NSMutableDictionary dictionary];
     parameDic[@"save_times"] = @1;
@@ -418,7 +419,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
     return UIEdgeInsetsMake(5, 10, 5, 10);
 }
 
-#pragma mark -- 事件处理 --
+#pragma mark -- item的尾部视图的代理回调事件处理 --
 - (void)composeWithShareModel:(JMSharePicModel *)model Button:(UIButton *)button {
     if (button.tag == 100) { // 保存图片
         [self saveImageToIphone:model];
@@ -430,13 +431,14 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
             [MBProgressHUD showError:@"出错啦~! 请重新复制文案"];
             return ;
         }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"复制文案成功" message:@"亲爱的小鹿妈妈,现在文案复制成功了哦~可以去粘贴啦。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"小鹿小贴士" message:@"亲爱的小鹿妈妈,现在文案复制成功了哦~可以去朋友圈粘贴回复啦。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
             [MobClick event:@"DaysPush_success"];
         }
     }
     
 }
+#pragma mark -- 保存图片到手机 --
 - (void)saveImageToIphone:(JMSharePicModel *)picModel {
     if ([[JMSystemPermissionsManager sharedManager] requestAuthorization:KALAssetsLibrary] == NO) {
         return ;
@@ -482,8 +484,8 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
             [self downLoadImage:picModel];
         }
     }
-    
 }
+#pragma mark -- 下载图片到手机并保存到数据库中 --
 - (void)downLoadImage:(JMSharePicModel *)picModel {
     [self statisticsSaveNum:picModel.piID];
     [self saveNextimage];
@@ -553,6 +555,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         }
     });
 }
+/// 循环保存图片到相册
 - (void)saveNextimage {
     NSInteger countNum = self.currentArr.count;
     if (countNum > 0) {
@@ -567,11 +570,6 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
     }else {
         [MBProgressHUD hideHUD];
     }
-}
-- (void)alertMessage {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不再提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alert.tag = 102;
-    [alert show];
 }
 -(void)savedPhotoImage:(UIImage*)image didFinishSavingWithError: (NSError *)error contextInfo: (void *)contextInfo {
     if (error) {
@@ -592,6 +590,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         
     }
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 102) {
         if (buttonIndex == 1) {
@@ -603,6 +602,11 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         }
     }
 }
+- (void)alertMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享小贴士" message:@"亲爱的小鹿妈妈,现在可以直接分享微信了哦~点击'确定'就可以直接发朋友圈啦,点击'取消'本次不再提示此条信息。" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 102;
+    [alert show];
+}
 - (void)UIActivityMessage {
     [MBProgressHUD showLoading:@"火速加载~"];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:sharImageArray applicationActivities:nil];
@@ -613,6 +617,7 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
     [self presentViewController:activityVC animated:YES completion:nil];
     [MBProgressHUD hideHUD];
 }
+// 整点刷新
 - (void)timeRefresh {
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimeView) userInfo:nil repeats:YES];
 }
@@ -628,6 +633,8 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
         [self.collectionView reloadData];
     }
 }
+
+
 - (void)backClicked {
     [self.navigationController popViewControllerAnimated:YES];
 }

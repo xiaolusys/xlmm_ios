@@ -28,6 +28,11 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "JMEmptyView.h"
+#import "JMPushingDaysController.h"
+#import "JMRefundBaseController.h"
+#import "ProductSelectionListViewController.h"
+#import "JMClassifyListController.h"
+#import "JMCouponController.h"
 
 
 @interface JMHomePageController () <UIScrollViewDelegate, JMUpdataAppPopViewDelegate, JMHomeFirstControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {

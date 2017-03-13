@@ -26,5 +26,4 @@
 
 
 
-
 #endif /* JMPromptMessage_h */

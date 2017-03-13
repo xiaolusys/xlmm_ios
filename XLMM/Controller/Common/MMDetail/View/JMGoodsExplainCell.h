@@ -16,6 +16,7 @@ typedef void(^storeUpBlock)(UIButton *button);
 
 @property (nonatomic, strong) NSDictionary *detailContentDic;
 @property (nonatomic, strong) NSDictionary *customInfoDic;
+@property (nonatomic, assign) NSInteger promptIndex;
 
 @property (nonatomic, copy) storeUpBlock block;
 

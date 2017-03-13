@@ -12,7 +12,7 @@
 #import "ProductSelectionListViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
-#import "JMSegmentController.h"
+#import "JMCouponController.h"
 #import "JMRefundBaseController.h"
 #import "JMLogInViewController.h"
 #import "JMGoodsDetailController.h"
@@ -24,6 +24,7 @@
 #import "JMPurchaseController.h"
 #import "JMFineCounpGoodsController.h"
 #import "JMMaMaHomeController.h"
+#import "JMRootTabBarController.h"
 
 
 @implementation JumpUtils
@@ -108,16 +109,16 @@
         [vc.navigationController pushViewController:categoryVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         //跳转到用户未过期优惠券列表
-        JMSegmentController *youhuiVC = [[JMSegmentController alloc] init];
-        youhuiVC.isSelectedYHQ = NO;
+        JMCouponController *youhuiVC = [[JMCouponController alloc] init];
         [vc.navigationController pushViewController:youhuiVC animated:YES];
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-//        CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
-//        JMKeyWindow.rootViewController = tabBarVC;
-        JMMaMaHomeController *mamaCenterVC = [[JMMaMaHomeController alloc] init];
-        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
+        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
+        tabBarVC.selectedIndex = 4;
+//        JMMaMaHomeController *mamaCenterVC = [[JMMaMaHomeController alloc] init];
+//        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新
