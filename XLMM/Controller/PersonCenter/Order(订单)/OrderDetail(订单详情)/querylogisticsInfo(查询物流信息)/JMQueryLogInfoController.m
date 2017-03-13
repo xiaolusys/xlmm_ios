@@ -39,6 +39,7 @@
 @property (nonatomic,strong) NSMutableArray *orderListDataSource;
 
 @property (nonatomic,strong) JMPackAgeModel *packageModel;
+@property (nonatomic, strong) UIAlertView *alert;
 
 @end
 
@@ -141,25 +142,23 @@
     if (responseData == nil) {
         return;
     }
-    
     NSDictionary *dicJson = responseData;
     NSLog(@"json = %@", dicJson);
-    
-    
-    self.logNameLabel.text = [dicJson objectForKey:@"name"];
-    self.logNumLabel.text = [dicJson objectForKey:@"order"];
-    
-    
     self.infoArray = [dicJson objectForKey:@"data"];
     NSInteger length = self.infoArray.count;
-    
-    [self createTimeListView];
-    
     if (length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alertView show];
+        self.logNameLabel.text = self.logName;
+        self.logNumLabel.text = self.packetId;
+    }else {
+        self.logNameLabel.text = [dicJson objectForKey:@"name"];
+        self.logNumLabel.text = [dicJson objectForKey:@"order"];
+        if (![NSString isStringEmpty:self.logNumLabel.text]) {
+            self.logNumLabel.userInteractionEnabled = YES;
+        }
+        [self createTimeListView];
     }
-    
 }
 /**
  *  商品详情的展示列表  3101063787725,3101063787976,3101064389806,
@@ -176,18 +175,19 @@
 //    self.goodsListVC.goodsModel = self.goodsModel;
     self.logNameLabel.text = self.logName;
     self.logNameLabel.font = [UIFont systemFontOfSize:13.];
-    if (self.packageModel.assign_status_display.length == 0) {
-        if ([NSString isStringEmpty:self.packetId]) {
-            self.logNumLabel.text = @"未揽件";
-        }else {
-            self.logNumLabel.text = self.packetId;
-        }
+    
+    if ([NSString isStringEmpty:self.packetId]) {
+        self.logNumLabel.text = self.packageModel.assign_status_display.length == 0 ? @"未揽件" : self.packageModel.assign_status_display;
     }else {
-        self.logNumLabel.text = [NSString isStringEmpty:self.packetId] ? @"未揽件" : self.packetId;
-//        self.logNumLabel.text = self.packetId;//self.packageModel.assign_status_display;
+        self.logNumLabel.text = self.packetId;
+        self.logNumLabel.userInteractionEnabled = YES;
     }
+    
     self.logNumLabel.font = [UIFont systemFontOfSize:13.];
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    
+    
+    
 }
 /**
  *  物流信息展示列表
@@ -353,6 +353,9 @@
     [topBackView addSubview:logNumLabel];
     self.logNumLabel = logNumLabel;
     self.logNumLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(copyLogistID)];
+    [self.logNumLabel addGestureRecognizer:tap];
+    self.logNumLabel.userInteractionEnabled = NO;
     
     
     [topBackView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -394,6 +397,16 @@
         make.height.mas_equalTo(@16);
     }];
     
+}
+- (void)copyLogistID {
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    [pab setString:self.logNumLabel.text];
+    if (pab != nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"小鹿小贴士" message:@"亲爱的小鹿妈妈,现在运单号已经复制成功了哦~可以粘贴啦。" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }else {
+        [MBProgressHUD showWarning:@"复制失败!"];
+    }
 }
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];

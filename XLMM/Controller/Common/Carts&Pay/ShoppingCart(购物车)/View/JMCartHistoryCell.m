@@ -139,7 +139,7 @@ NSString *const JMCartHistoryCellIdentifier = @"JMCartHistoryCellIdentifier";
 
 - (void)setCartModel:(CartListModel *)cartModel {
     _cartModel = cartModel;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[cartModel.pic_path imageGoodsOrderCompression] JMUrlEncodedString]]];
+    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[cartModel.pic_path imageGoodsOrderCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
     self.titleLabel.text = cartModel.title;
     self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [cartModel.price floatValue]];
     self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.2f", [cartModel.std_sale_price floatValue]];

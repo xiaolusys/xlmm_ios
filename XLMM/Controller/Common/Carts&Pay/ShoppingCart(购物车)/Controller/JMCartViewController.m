@@ -16,6 +16,8 @@
 #import "JMCartCurrentCell.h"
 #import "JMCartHistoryCell.h"
 
+#define kSectionHeaderAndFooterHeight 30.f
+
 @interface JMCartViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, JMCartCurrentCellDelegate, JMCartHistoryCellDelegate> {
     BOOL currentCartDownLoad;
     BOOL historyCartDownLoad;
@@ -358,14 +360,14 @@
             [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@(20));
             }];
-            return 50;
+            return kSectionHeaderAndFooterHeight;
         }
     }
     return 0.1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
-        return 50;
+        return kSectionHeaderAndFooterHeight;
     }
     return 0.1;
 }
@@ -385,7 +387,7 @@
             };
             return empty;
         } else {
-            UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+            UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, kSectionHeaderAndFooterHeight)];
             footView.backgroundColor = [UIColor countLabelColor];
             UILabel *allPicLabel = [UILabel new];
             [footView addSubview:allPicLabel];
@@ -396,7 +398,7 @@
             NSString *allString = [NSString stringWithFormat:@"总金额%@",allPriceString];
             allPicLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allString SubStringArray:@[allPriceString]];
             [allPicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(footView.mas_centerY).offset(-5);
+                make.centerY.equalTo(footView.mas_centerY);
                 make.left.equalTo(footView).offset(15);
             }];
             return footView;
@@ -407,7 +409,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         if (self.historyCartDataSource.count != 0 && historyCartDownLoad) {
-            UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+            UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, kSectionHeaderAndFooterHeight)];
             headerView.backgroundColor = [UIColor countLabelColor];
             UILabel *canAgainBuy = [UILabel new];
             [headerView addSubview:canAgainBuy];
@@ -415,7 +417,7 @@
             canAgainBuy.font = [UIFont systemFontOfSize:13.];
             canAgainBuy.text = @"可重新购买的商品";
             [canAgainBuy mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(headerView.mas_centerY).offset(5);
+                make.centerY.equalTo(headerView.mas_centerY);
                 make.left.equalTo(headerView).offset(15);
             }];
             if (self.historyCartDataSource.count == 0) {

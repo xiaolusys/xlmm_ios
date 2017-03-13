@@ -203,7 +203,7 @@ static BOOL isAgreeTerms = YES;
     self.isxiaoluCoin = NO;
 //    _isIndentifierNum = NO;
 //    _isBondedGoods = NO;
-    _isVirtualCoupone = NO;
+    _isVirtualCoupone = YES;
     _cartPayInfoLoadFinish = NO;
     _addressInfoLoadFinish = NO;
     
@@ -276,11 +276,7 @@ static BOOL isAgreeTerms = YES;
         _addressID = [dic[@"id"] stringValue];
     }
     self.purchaseHeaderView.addressArr = purchaseArr;
-    if (_addressInfoLoadFinish && _cartPayInfoLoadFinish) {
-        if (_cartsInfoLevel > _addressInfoLevel) {
-            [self userNotIdCardNumberMessage];
-        }
-    }
+    [self layoutLevel];
 }
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
     _cartsInfoLevel = [purchaseDic[@"max_personalinfo_level"] integerValue];
@@ -292,8 +288,8 @@ static BOOL isAgreeTerms = YES;
         _couponNumber = 1;
     }
     for (NSDictionary *dic in goodsArr) {
-        if ([dic[@"product_type"] integerValue] == 1) {
-            _isVirtualCoupone = YES;
+        if ([dic[@"product_type"] integerValue] == 0) {
+            _isVirtualCoupone = NO;
         }
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
         [self.purchaseGoodsArr addObject:model];
@@ -383,19 +379,23 @@ static BOOL isAgreeTerms = YES;
     self.purchaseHeaderView.isVirtualCoupone = _isVirtualCoupone;
     self.purchaseFooterView.isShowXiaoluCoinView = (_xiaoluCoinValue > 0 ? YES : NO) && _isVirtualCoupone;
     
+    [self layoutLevel];
+    
+}
+- (void)layoutLevel {
     if (_addressInfoLoadFinish && _cartPayInfoLoadFinish) {
         if (_cartsInfoLevel > _addressInfoLevel) {
             [self userNotIdCardNumberMessage];
         }
         if (_cartsInfoLevel > 1) {
-            self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
             CGFloat strHeight = [self promptInfoStrHeight:@"温馨提示：保税区和直邮根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。"];
             self.purchaseHeaderView.mj_h = 150.f + strHeight;
+            self.tableView.tableHeaderView = self.purchaseHeaderView;
+            self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
         }else {
             self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
         }
     }
-    
 }
 // 获取购物车ID
 - (void)getCartID {
@@ -436,7 +436,7 @@ static BOOL isAgreeTerms = YES;
 }
 - (void)createTableHeaderView {
     self.purchaseHeaderView = [[JMPurchaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 150)];
-    self.purchaseHeaderView.backgroundColor = [UIColor redColor];
+    self.purchaseHeaderView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = self.purchaseHeaderView;
     self.purchaseHeaderView.delegate = self;
 }
@@ -1009,7 +1009,7 @@ static BOOL isAgreeTerms = YES;
 - (CGFloat)promptInfoStrHeight:(NSString *)string {
     CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
     CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
-    return contentH + 10;
+    return contentH + 20;
 }
 
 
