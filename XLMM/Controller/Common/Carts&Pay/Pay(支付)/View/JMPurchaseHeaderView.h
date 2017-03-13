@@ -24,6 +24,7 @@
 
 @property (nonatomic, strong) NSArray *addressArr;
 @property (nonatomic, assign) BOOL isVirtualCoupone;
+@property (nonatomic, assign) NSInteger cartsInfoLevel;
 /**
  *  地址信息数据源
  */
@@ -34,5 +35,7 @@
 @property (nonatomic, strong) UILabel *logisticsLabel;
 
 @property (nonatomic, weak) id<JMPurchaseHeaderViewDelegate> delegate;
+
+
 
 @end

@@ -62,6 +62,7 @@
     BOOL _isFineGoodsHeightShow;// 是否显示精品商品
     NSString *_buyCouponUrl;    // 购买精品券的链接
     BOOL _isUserClickAddCart;   // 用户点击加入购物车
+    NSInteger _goodsAddressLevel;// 商品的地址信息登记
     
 }
 @property (nonatomic, strong) JMShareViewController *goodsShareView;
@@ -217,6 +218,7 @@
     BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     _isFineGoodsHeightShow = isXLMM && isLogin;
+    _goodsAddressLevel = 0;
     
     [self lodaDataSource];          // 商品详情数据源
     [self loadShareData];           // 分享数据
@@ -314,6 +316,8 @@
 - (void)fetchData:(NSDictionary *)goodsDetailDic {
     detailContentDic = [NSDictionary dictionary];
     detailContentDic = goodsDetailDic[@"detail_content"];
+    _goodsAddressLevel = [goodsDetailDic[@"source_type"] integerValue];
+    
     NSString *waterMark = detailContentDic[@"watermark_op"];
     NSArray *imageArr = detailContentDic[@"head_imgs"];
     if ([NSString isStringEmpty:waterMark]) {
@@ -434,10 +438,9 @@
         }
 //        NSDictionary *itemDic = goodsArray[0];
 //        NSDictionary *skuDic = itemDic[@"sku_items"][0];
-        
     }
-
     _buyCouponUrl = goodsDetailDic[@"buy_coupon_url"];
+    
     
     [self.tableView reloadData];
 }
@@ -483,8 +486,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_isFineGoods && _isFineGoodsHeightShow) {
+            if (_goodsAddressLevel > 1) {
+                return 240;
+            }
             return 190;
         }
+        
         return 150;
     }else if (indexPath.section == 1) {
         return 110;
@@ -500,6 +507,7 @@
         JMGoodsExplainCell *cell = [tableView dequeueReusableCellWithIdentifier:JMGoodsExplainCellIdentifier];
         cell.detailContentDic = detailContentDic;
         cell.customInfoDic = coustomInfoDic;
+        cell.promptIndex = _goodsAddressLevel;
         cell.block = ^(UIButton *button) {
             if (button.tag == 100) {
                 if ([[JMGlobal global] userVerificationLogin]) {

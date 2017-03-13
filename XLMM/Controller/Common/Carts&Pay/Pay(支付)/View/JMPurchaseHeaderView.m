@@ -24,7 +24,9 @@
  *  地址_详细地址
  */
 @property (nonatomic, strong) UILabel *addressDetailLabel;
-
+/// 地址信息提示
+@property (nonatomic, strong) UIView *promptView;
+@property (nonatomic, strong) UILabel *promptLabel;
 
 @property (nonatomic, strong) UILabel *nomalLabel;
 
@@ -68,6 +70,27 @@
         }
     }
 }
+- (void)setCartsInfoLevel:(NSInteger)cartsInfoLevel {
+    _cartsInfoLevel = cartsInfoLevel;
+    if (cartsInfoLevel > 1) {
+        self.promptLabel.text = @"温馨提示：保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。";
+        CGFloat promptLabelHeight = [self promptInfoStrHeight:self.promptLabel.text];
+        [self.promptView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@(promptLabelHeight));
+        }];
+        [self.promptLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@(promptLabelHeight - 10));
+        }];
+    }else {
+
+    }
+    
+}
+- (CGFloat)promptInfoStrHeight:(NSString *)string {
+    CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
+    CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
+    return contentH + 10;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -109,6 +132,26 @@
     self.addressDetailLabel.font = [UIFont systemFontOfSize:12.];
     self.addressDetailLabel.textColor = [UIColor dingfanxiangqingColor];
     self.addressDetailLabel.numberOfLines = 0;
+    
+    UIView *promptView = [UIView new];
+    promptView.backgroundColor = [UIColor sectionViewColor];
+    [self addSubview:promptView];
+    self.promptView = promptView;
+    
+    UILabel *promptLabel = [UILabel new];
+    [promptView addSubview:promptLabel];
+    promptLabel = promptLabel;
+    promptLabel.font = [UIFont systemFontOfSize:12.];
+    promptLabel.textColor = [UIColor dingfanxiangqingColor];
+    promptLabel.numberOfLines = 0;
+//    self.promptLabel.textAlignment = NSTextAlignmentCenter;
+    self.promptLabel = promptLabel;
+    
+    UIView *lineView = [UIView new];
+    [self addSubview:lineView];
+    lineView.backgroundColor = [UIColor lineGrayColor];
+    
+    
     // == 物流信息视图 == //
     UIView *fourView = [UIView new];
     [self addSubview:fourView];
@@ -136,12 +179,7 @@
     self.logisticsLabel.textColor = [UIColor buttonTitleColor];
     self.logisticsLabel.text = @"小鹿推荐";
     
-    UIView *lineView = [UIView new];
-    [self addSubview:lineView];
-    lineView.backgroundColor = [UIColor lineGrayColor];
-
     kWeakSelf
-    
     // == 地址信息视图 == //
     [self.addressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(weakSelf);
@@ -165,6 +203,17 @@
         make.left.equalTo(addressImage.mas_right).offset(10);
         make.right.equalTo(weakSelf.addressView).offset(-10);
         make.bottom.equalTo(weakSelf.addressView).offset(-15);
+    }];
+    [promptView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.addressView.mas_bottom);
+        make.centerX.equalTo(weakSelf.mas_centerX);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(0.5));
+    }];
+    [promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.equalTo(promptView).offset(5);
+        make.width.mas_equalTo(@(SCREENWIDTH - 10));
+        make.height.mas_equalTo(0.5);
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
