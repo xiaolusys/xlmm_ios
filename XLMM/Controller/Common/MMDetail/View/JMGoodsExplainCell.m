@@ -13,8 +13,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
 @interface JMGoodsExplainCell ()//<JMCountDownViewDelegate>
 
+@property (nonatomic, strong) UIView *maskView;
 @property (nonatomic, strong) UILabel *nameTitle;
-
 @property (nonatomic, strong) UILabel *PriceLabel;
 @property (nonatomic, strong) UILabel *oldPriceLabel;
 @property (nonatomic, strong) UIButton *itemMask;
@@ -25,6 +25,9 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 
 @property (nonatomic, strong) JMCountDownView *countDownView;
 @property (nonatomic, strong) UIButton *fineGoodsView;
+/// 地址信息提示
+@property (nonatomic, strong) UIView *promptView;
+@property (nonatomic, strong) UILabel *promptLabel;
 
 @end
 
@@ -76,9 +79,13 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
             weakSelf.timerLabel.text = second == -1 ? @"商品已下架" : [NSString TimeformatDHMSFromSeconds:second];
         };
     }
+    
+    
     BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     BOOL isShow = isXLMM && isLogin;
+    
+
     
     if (isShow) {
         if (![detailContentDic[@"is_boutique"] boolValue]) {
@@ -87,6 +94,28 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }else {
         [self changeFineGoodsViewStatus];
     }
+
+    
+    
+}
+- (void)setPromptIndex:(NSInteger)promptIndex {
+    _promptIndex = promptIndex;
+    if (promptIndex > 1) {
+        self.promptLabel.text = @"温馨提示：保税区和直邮根据海关要求需要提供身份证号码，保税区发货预计5到10个工作日到货，直邮预计10-20工作日到货";
+        CGFloat promptLabelHeight = [self promptInfoStrHeight:self.promptLabel.text];
+        [self.promptView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@(promptLabelHeight));
+        }];
+        [self.promptLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(@(promptLabelHeight - 10));
+        }];
+    }else {
+//        kWeakSelf
+//        [self.fineGoodsView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(weakSelf.maskView.mas_bottom);
+//        }];
+    }
+    
 }
 - (void)changeFineGoodsViewStatus {
     [self.fineGoodsView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -105,6 +134,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
     UIView *contentView = [UIView new];
     [self.contentView addSubview:contentView];
+    self.maskView = contentView;
     
     UILabel *nameTitle = [UILabel new];
     [contentView addSubview:nameTitle];
@@ -191,12 +221,27 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 //    baoyou.layer.cornerRadius = 5.;
 //    self.itemMask = baoyou;
     
+    UIView *promptView = [UIView new];
+    promptView.backgroundColor = [UIColor sectionViewColor];
+    [self addSubview:promptView];
+    self.promptView = promptView;
+    
+    
+    UILabel *promptLabel = [UILabel new];
+    [promptView addSubview:promptLabel];
+    promptLabel = promptLabel;
+    promptLabel.font = [UIFont systemFontOfSize:12.];
+    promptLabel.textColor = [UIColor dingfanxiangqingColor];
+    promptLabel.numberOfLines = 0;
+    self.promptLabel = promptLabel;
+    //    self.promptLabel.textAlignment = NSTextAlignmentCenter;
+//    promptLabel.text = @"温馨提示：保税区和直邮根据海关要求需要提供身份证号码，保税区发货预计5到10个工作日到货，直邮预计10-20工作日到货";
     
     
     
-    UIView *currentView = [UIView new];
-    [self.contentView addSubview:currentView];
-    currentView.backgroundColor = [UIColor lineGrayColor];
+//    UIView *currentView = [UIView new];
+//    [self.contentView addSubview:currentView];
+//    currentView.backgroundColor = [UIColor lineGrayColor];
     
     UIButton *fineGoodsView = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.contentView addSubview:fineGoodsView];
@@ -236,6 +281,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     
 
     kWeakSelf
+    
     [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.contentView);
         make.width.mas_equalTo(@(SCREENWIDTH));
@@ -281,8 +327,21 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
         make.height.mas_equalTo(@30);
     }];
     
-    [fineGoodsView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    [promptView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(contentView.mas_bottom);
+        make.left.equalTo(weakSelf.contentView);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(0.5));
+    }];
+    [promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.equalTo(promptView).offset(5);
+        make.width.mas_equalTo(@(SCREENWIDTH - 10));
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    [fineGoodsView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(promptView.mas_bottom);
         make.left.equalTo(weakSelf.contentView);
         make.width.mas_equalTo(@(SCREENWIDTH));
         make.height.mas_equalTo(@(40));
@@ -335,6 +394,13 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 //}
 //
 
+
+
+- (CGFloat)promptInfoStrHeight:(NSString *)string {
+    CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
+    CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
+    return contentH + 10;
+}
 
 
 

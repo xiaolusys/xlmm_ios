@@ -288,6 +288,22 @@
     NSString *currentTime = [dateFormatter stringFromDate:currentData];
     return currentTime;
 }
++ (NSString *)getCurrentTimeWithHour {
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init] ;
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger unitFlags = NSCalendarUnitYear |
+    NSCalendarUnitMonth |
+    NSCalendarUnitDay |
+    NSCalendarUnitHour |
+    NSCalendarUnitMinute |
+    NSCalendarUnitSecond;
+    NSDateComponents * comps = [calendar components:unitFlags fromDate:date];
+    int hour = (int)[comps hour];
+    return [NSString stringWithFormat:@"%d",hour];
+}
+
 
 /**
  *  获取两个日期之间的天数

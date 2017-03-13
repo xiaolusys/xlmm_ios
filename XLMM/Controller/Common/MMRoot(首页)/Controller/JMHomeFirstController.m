@@ -279,7 +279,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         if(scrollOffsetY < contentOffsetY) {
             [UIView animateWithDuration:0.3 animations:^{
                 self.pageController.segmentControl.mj_y = 64;
-                self.pageController.baseScrollView.frame = CGRectMake(0, 64 + 45, SCREENWIDTH, SCREENHEIGHT - 64);
+                self.pageController.baseScrollView.frame = CGRectMake(0, 64 + 45, SCREENWIDTH, SCREENHEIGHT - 64 - 45);
             }];
             [[NSNotificationCenter defaultCenter] postNotificationName:JMPageScrollControllerLeaveTopNotifition object:nil];
         }else {

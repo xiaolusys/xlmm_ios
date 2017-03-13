@@ -11,7 +11,7 @@
 #import "JMHomeHourModel.h"
 #import "JMGoodsDetailController.h"
 #import "JumpUtils.h"
-#import "PublishNewPdtViewController.h"
+#import "JMPushingDaysController.h"
 #import "JMShareModel.h"
 #import "JMShareViewController.h"
 #import "JMLogInViewController.h"
@@ -34,6 +34,7 @@
 - (JMShareViewController *)goodsShareView {
     if (!_goodsShareView) {
         _goodsShareView = [[JMShareViewController alloc] init];
+        _goodsShareView.isShowEarningValue = YES;
     }
     return _goodsShareView;
 }
@@ -84,7 +85,7 @@
 #pragma mark 弹出视图 (弹出分享界面)
 - (void)popShareView {
     [MobClick event:@"GoodsDetail_share"];
-    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 240) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 340) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
     }];
     self.goodsShareView.blcok = ^(UIButton *button) {
         [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
@@ -124,10 +125,10 @@
         if ([[JMGlobal global] userVerificationLogin]) {
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/pmt/ninepic/page_list?model_id=%@",Root_URL,model.model_id];
             //    urlString = [NSString stringWithFormat:@"%@?model_id=%@",urlString,model.fineCouponModelID];
-            PublishNewPdtViewController *pushVC = [[PublishNewPdtViewController alloc] init];
+            JMPushingDaysController *pushVC = [[JMPushingDaysController alloc] init];
             //        pushVC.isPushingDays = YES;
             pushVC.pushungDaysURL = urlString;
-            pushVC.titleString = @"文案精选";
+            pushVC.navTitle = @"文案精选";
             [self.navigationController pushViewController:pushVC animated:YES];
         }else {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];

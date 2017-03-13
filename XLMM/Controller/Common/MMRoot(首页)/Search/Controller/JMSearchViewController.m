@@ -96,7 +96,7 @@
     } WithFail:^(NSError *error) {
         _defaultSearText = @"";
         self.searchBar.placeholder = @"请输入搜索关键字";
-        [MBProgressHUD showError:@"网络出错,请稍后重试..."];
+//        [MBProgressHUD showError:@"搜索历史加载失败 \n 请检查是否登录"];
         [self.sectionView removeFromSuperview];
     } Progress:^(float progress) {
     }];

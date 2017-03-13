@@ -13,7 +13,7 @@ typedef void(^shareCancelBlock)(UIButton *button);
 @interface JMShareViewController : UIViewController
 
 @property (nonatomic,strong) JMShareModel *model;
-
+@property (nonatomic, assign) BOOL isShowEarningValue;
 //@property (nonatomic,copy) NSString *activeID;
 
 //@property (nonatomic,strong) NSMutableDictionary *otherDict;

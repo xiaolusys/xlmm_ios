@@ -27,7 +27,12 @@
 #import "JMFineCounpContentController.h"
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-
+#import "JMEmptyView.h"
+#import "JMPushingDaysController.h"
+#import "JMRefundBaseController.h"
+#import "ProductSelectionListViewController.h"
+#import "JMClassifyListController.h"
+#import "JMCouponController.h"
 
 
 @interface JMHomePageController () <UIScrollViewDelegate, JMUpdataAppPopViewDelegate, JMHomeFirstControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
@@ -66,7 +71,7 @@
 
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
 @property (nonatomic, strong) JMLaunchView *launchView;
-
+@property (nonatomic, strong) JMEmptyView *empty;
 @property (nonatomic, strong) UIView *suspensionView;
 @property (nonatomic, strong) JMHomeFirstController *homeFirst;
 
@@ -196,6 +201,7 @@
     [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];
     [self createSegmentControl];
+    [self emptyView];
 //    [self createRightItem];
     [self loadCategoryData];
 //    [self createSuspensionView];                       // 创建悬浮视图 (个人,精品汇,购物车)
@@ -232,10 +238,11 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal?exclude_fields=activitys",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        self.empty.hidden = YES;
         [_topImageArray removeAllObjects];
         [self fetchCategoryData:responseObject];
     } WithFail:^(NSError *error) {
-        NSLog(@"%@",error);
+        self.empty.hidden = NO;
     } Progress:^(float progress) {
     }];
 }
@@ -244,9 +251,8 @@
     for (NSDictionary *dic in postersArr) {
         [_topImageArray addObject:dic];
     }
-    
     NSArray *categorys = categoryDic[@"categorys"];
-    [_categoryNameArray addObjectsFromArray:@[@"精品推荐",@"精品活动"]];
+    [_categoryNameArray addObjectsFromArray:@[@"精品活动",@"每日焦点"]];
     for (NSDictionary *dic in categorys) {
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];
@@ -282,19 +288,31 @@
     [self.view addSubview:self.baseScrollView];
 
 }
+- (void)emptyView {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];
+    [self.view addSubview:self.empty];
+    self.empty.hidden = YES;
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            weakSelf.empty.hidden = YES;
+            [weakSelf loadCategoryData];
+        }
+    };
+}
 - (void)addChildController {
     self.segmentControl.sectionTitles = [_categoryNameArray copy];
     for (int i = 0 ; i < _categoryNameArray.count; i++) {
         if (i == 0) {
+            JMFineCounpGoodsController *fineVC = [[JMFineCounpGoodsController alloc] init];
+            [self addChildViewController:fineVC];
+        }else if (i == 1){
             JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
             homeFirst.delegate = self;
             homeFirst.pageController = self;
             homeFirst.topImageArray = _topImageArray;
             [self addChildViewController:homeFirst];
             self.homeFirst = homeFirst;
-        }else if (i == 1){
-            JMFineCounpGoodsController *fineVC = [[JMFineCounpGoodsController alloc] init];
-            [self addChildViewController:fineVC];
         }else {
             JMFineCounpContentController *childCategoryVC = [[JMFineCounpContentController alloc] init];
             childCategoryVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@", Root_URL,_categoryCidArray[i - 2]];
@@ -304,7 +322,7 @@
     }
     self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
     [self removeToPage:0];
-    
+
 }
 - (void)createNavigaView {
     UIView *naviView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 83, 44)];
@@ -393,31 +411,30 @@
     
 }
 
-
 #pragma mark 移动到某个子视图
 - (void)removeToPage:(NSInteger)index {
     [UIView animateWithDuration:0.2 animations:^{
         self.segmentControl.mj_y = 64;
-        self.baseScrollView.mj_y = 64 + 45;
+        self.baseScrollView.mj_y = self.segmentControl.cs_max_Y;
     }];
 //    if (index == 0 || index == 1) {
 //        _currentCidString = _categoryCidArray[0];
-//        _currentNameString = _categoryNameArray[0];
+//        _currentNameString = _categoryNameArray[2];
 //    }else {
 //        _currentCidString = _categoryCidArray[index - 2];
 //        _currentNameString = _categoryNameArray[index - 2];
 //    }
     self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
     if (index == 0) {
-        JMHomeFirstController *homeFirst = self.childViewControllers[index];
-        homeFirst.view.frame = self.baseScrollView.bounds;
-        [self.baseScrollView addSubview:homeFirst.view];
-        [homeFirst didMoveToParentViewController:self];
-    }else if (index == 1) {
         JMFineCounpGoodsController *fineVC = self.childViewControllers[index];
         fineVC.view.frame = self.baseScrollView.bounds;
         [self.baseScrollView addSubview:fineVC.view];
         [fineVC didMoveToParentViewController:self];
+    }else if (index == 1) {
+        JMHomeFirstController *homeFirst = self.childViewControllers[index];
+        homeFirst.view.frame = self.baseScrollView.bounds;
+        [self.baseScrollView addSubview:homeFirst.view];
+        [homeFirst didMoveToParentViewController:self];
     }else {
         JMFineCounpContentController *childCategoryVC = self.childViewControllers[index];
         childCategoryVC.view.frame = self.baseScrollView.bounds;

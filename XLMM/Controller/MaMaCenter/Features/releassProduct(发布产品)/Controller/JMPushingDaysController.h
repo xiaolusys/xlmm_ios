@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 
-@interface JMPushingDaysController : UIViewController<UIScrollViewDelegate>
+@interface JMPushingDaysController : UIViewController
+
+@property (nonatomic, copy) NSString *pushungDaysURL;
+@property (nonatomic, copy) NSString *navTitle;
+
+
+
 
 @end

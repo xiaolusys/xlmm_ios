@@ -6,9 +6,9 @@
 //  Copyright © 2016年 上海己美. All rights reserved.
 //
 
-#import "SharePicModel.h"
+#import "JMSharePicModel.h"
 
-@implementation SharePicModel
+@implementation JMSharePicModel
 
 //- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
 //    if ([key isEqualToString:@"id"]) {

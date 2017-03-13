@@ -16,6 +16,8 @@
 #import "JMCartCurrentCell.h"
 #import "JMCartHistoryCell.h"
 
+#define kSectionHeaderAndFooterHeight 30.f
+
 @interface JMCartViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, JMCartCurrentCellDelegate, JMCartHistoryCellDelegate> {
     BOOL currentCartDownLoad;
     BOOL historyCartDownLoad;
@@ -92,10 +94,14 @@
 //    [self downloadHistoryCartData];
 //    
 //}
+- (void)refreshCartData {
+
+}
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:nil WithSuccess:^(id responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts.json?type=5",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         [self fetchedCartData:responseObject];
@@ -134,11 +140,9 @@
     }
     
 }
-- (void)refreshCartData {
-    
-}
 - (void)downloadHistoryCartData {
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_History_URL WithParaments:nil WithSuccess:^(id responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history.json?type=5",Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
         [self fetchedHistoryCartData:responseObject];
@@ -356,14 +360,14 @@
             [self.payMentMoneyLabel mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(@(20));
             }];
-            return 50;
+            return kSectionHeaderAndFooterHeight;
         }
     }
     return 0.1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
-        return 50;
+        return kSectionHeaderAndFooterHeight;
     }
     return 0.1;
 }
@@ -383,7 +387,7 @@
             };
             return empty;
         } else {
-            UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+            UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, kSectionHeaderAndFooterHeight)];
             footView.backgroundColor = [UIColor countLabelColor];
             UILabel *allPicLabel = [UILabel new];
             [footView addSubview:allPicLabel];
@@ -394,7 +398,7 @@
             NSString *allString = [NSString stringWithFormat:@"总金额%@",allPriceString];
             allPicLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:16.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allString SubStringArray:@[allPriceString]];
             [allPicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(footView.mas_centerY).offset(-5);
+                make.centerY.equalTo(footView.mas_centerY);
                 make.left.equalTo(footView).offset(15);
             }];
             return footView;
@@ -405,7 +409,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         if (self.historyCartDataSource.count != 0 && historyCartDownLoad) {
-            UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 50)];
+            UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, kSectionHeaderAndFooterHeight)];
             headerView.backgroundColor = [UIColor countLabelColor];
             UILabel *canAgainBuy = [UILabel new];
             [headerView addSubview:canAgainBuy];
@@ -413,7 +417,7 @@
             canAgainBuy.font = [UIFont systemFontOfSize:13.];
             canAgainBuy.text = @"可重新购买的商品";
             [canAgainBuy mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerY.equalTo(headerView.mas_centerY).offset(5);
+                make.centerY.equalTo(headerView.mas_centerY);
                 make.left.equalTo(headerView).offset(15);
             }];
             if (self.historyCartDataSource.count == 0) {
@@ -508,12 +512,13 @@
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 #pragma mark ---- 重新购买按钮点击
-- (void)addCart:(CartListModel *)model{
+- (void)addCart:(CartListModel *)model {
     [MBProgressHUD showLoading:@""];
     [MobClick event:@"buy_again_click"];
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
-                                 @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID]
+                                 @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID],
+                                 @"type":@"5"
                                  };
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         NSInteger codeNum = [responseObject[@"code"] integerValue];

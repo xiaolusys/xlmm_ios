@@ -7,7 +7,7 @@
 //
 
 #import "TixianSucceedViewController.h"
-#import "PublishNewPdtViewController.h"
+#import "JMPushingDaysController.h"
 #import "JMBillDetailController.h"
 #import "JMWithDrawDetailController.h"
 
@@ -268,7 +268,7 @@
     
  //NSLog(@"发布产品");
     
-    PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+    JMPushingDaysController *publish = [[JMPushingDaysController alloc] init];
     [self.navigationController pushViewController:publish animated:YES];
 }
 @end

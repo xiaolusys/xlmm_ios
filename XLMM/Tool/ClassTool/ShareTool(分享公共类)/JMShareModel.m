@@ -31,6 +31,8 @@
         self.status = model.status;
         self.title = model.title;
         self.url = model.url;
+        self.share_type = model.share_type;
+        self.profit = model.profit;
     }
     return self;
 }

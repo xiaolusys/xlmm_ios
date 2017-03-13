@@ -7,12 +7,12 @@
 //
 
 #import "JumpUtils.h"
-#import "PublishNewPdtViewController.h"
+#import "JMPushingDaysController.h"
 #import "MMCollectionController.h"
 #import "ProductSelectionListViewController.h"
 #import "WebViewController.h"
 #import "JMOrderDetailController.h"
-#import "JMSegmentController.h"
+#import "JMCouponController.h"
 #import "JMRefundBaseController.h"
 #import "JMLogInViewController.h"
 #import "JMGoodsDetailController.h"
@@ -24,6 +24,7 @@
 #import "JMPurchaseController.h"
 #import "JMFineCounpGoodsController.h"
 #import "JMMaMaHomeController.h"
+#import "JMRootTabBarController.h"
 
 
 @implementation JumpUtils
@@ -72,9 +73,12 @@
 
 #pragma mark 解析targeturl 跳转到不同的界面
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc{
-    
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-    
+    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (!login) {
+        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+        [vc.navigationController pushViewController:enterVC animated:YES];
+        return ;
+    }
     if (target_url == nil) {
         NSLog(@"target_url null");
         return;
@@ -94,7 +98,6 @@
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         //跳到潮童专区
         JMClassifyListController *categoryVC = [[JMClassifyListController alloc] init];
-        
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,@"1"];
         categoryVC.titleString = @"童装专区";
         categoryVC.urlString = urlString;
@@ -108,20 +111,20 @@
         [vc.navigationController pushViewController:categoryVC animated:YES];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/usercoupons/method"]){
         //跳转到用户未过期优惠券列表
-        JMSegmentController *youhuiVC = [[JMSegmentController alloc] init];
-        youhuiVC.isSelectedYHQ = NO;
+        JMCouponController *youhuiVC = [[JMCouponController alloc] init];
         [vc.navigationController pushViewController:youhuiVC animated:YES];
         
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-//        CSTabBarController * tabBarVC = [[CSTabBarController alloc] init];
-//        JMKeyWindow.rootViewController = tabBarVC;
-        JMMaMaHomeController *mamaCenterVC = [[JMMaMaHomeController alloc] init];
-        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
+        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
+        tabBarVC.selectedIndex = 4;
+//        JMMaMaHomeController *mamaCenterVC = [[JMMaMaHomeController alloc] init];
+//        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新
-        PublishNewPdtViewController *publish = [[PublishNewPdtViewController alloc] init];
+        JMPushingDaysController *publish = [[JMPushingDaysController alloc] init];
         [vc.navigationController pushViewController:publish animated:YES];
         
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/refunds"]) {

@@ -157,6 +157,11 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"小鹿提醒" message:@"您暂时还不是小鹿妈妈哦~ 请关注 \"小鹿美美\" 公众号,获取更多信息 " delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alert show];
+                return NO;
+            }
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
@@ -214,7 +219,7 @@
 }
 
 - (void)requestCartNumber {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json?type=5",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self fetchData:responseObject];

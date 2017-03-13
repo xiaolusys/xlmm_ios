@@ -15,14 +15,17 @@
 #import "UUID.h"
 #import "SSKeychain.h"
 #import "SendMessageToWeibo.h"
+#import "JMRichTextTool.h"
+
 
 @interface JMShareViewController ()<JMShareButtonViewDelegate>
 
 @property (nonatomic,strong) JMSelecterButton *canelButton;
-
 @property (nonatomic,strong) JMShareButtonView *shareButton;
-
+@property (nonatomic, strong) UILabel *earningLabel;
+@property (nonatomic, strong) UILabel *valueLabel;
 @property (nonatomic,strong) UIView *shareBackView;
+@property (nonatomic, strong) UIView *headerView;
 
 @property (nonatomic, strong)NSDictionary *nativeShare;
 
@@ -56,10 +59,69 @@
     
 }
 
-
+- (void)setIsShowEarningValue:(BOOL)isShowEarningValue {
+    _isShowEarningValue = isShowEarningValue;
+    
+}
 
 - (void)createShareButtom {
-
+    
+    UIView *headerView = [UIView new];
+    headerView.backgroundColor = [UIColor whiteColor];
+//    headerView.layer.masksToBounds = YES;
+//    headerView.layer.borderColor = [UIColor lineGrayColor].CGColor;
+//    headerView.layer.borderWidth = 1.0f;
+    
+    [self.view addSubview:headerView];
+    self.headerView = headerView;
+    [headerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.width.mas_equalTo(SCREENWIDTH);
+        make.height.mas_equalTo(100);
+    }];
+    UILabel *valueLabel = [UILabel new];
+    valueLabel.textColor = [UIColor buttonEnabledBackgroundColor];
+    valueLabel.font = [UIFont systemFontOfSize:24.f];
+    valueLabel.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:valueLabel];
+    self.valueLabel = valueLabel;
+    
+    UILabel *earningLabel = [UILabel new];
+    earningLabel.numberOfLines = 0;
+    earningLabel.textColor = [UIColor buttonTitleColor];
+    earningLabel.font = [UIFont systemFontOfSize:12.f];
+    earningLabel.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:earningLabel];
+    self.earningLabel = earningLabel;
+    
+    [self.valueLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView.mas_centerX);
+        make.top.equalTo(headerView).offset(20);
+        make.width.mas_equalTo(SCREENWIDTH - 60);
+    }];
+    
+    [self.earningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(headerView.mas_centerX);
+        make.top.equalTo(valueLabel.mas_bottom).offset(10);
+        make.width.mas_equalTo(SCREENWIDTH - 60);
+    }];
+    
+    CGFloat topHeight;
+    if (self.isShowEarningValue) {
+        topHeight = 100;
+        NSDictionary *profitDic = self.model.profit;
+        NSString *minValue = [NSString stringWithFormat:@"%.2f",[profitDic[@"min"] floatValue]];
+        NSString *allStr = [NSString stringWithFormat:@"只要你的好友通过你的链接购买此商品,你就能得到至少%@元的利润哦~",minValue];
+        self.headerView.hidden = NO;
+        self.valueLabel.text = [NSString stringWithFormat:@"赚 ¥%.2f ~ ¥%.2f",[profitDic[@"min"] floatValue],[profitDic[@"max"] floatValue]];
+        self.earningLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allStr SubStringArray:@[minValue]];
+        
+    }else {
+        topHeight = 0;
+        self.headerView.hidden = YES;
+    }
+    
     JMShareButtonView *shareButton = [[JMShareButtonView alloc] init];
     self.shareButton = shareButton;
     self.shareButton.delegate = self;
@@ -75,7 +137,7 @@
     [self.view addSubview:self.canelButton];
     
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view);
+        make.top.equalTo(self.view).offset(topHeight);
         make.centerX.equalTo(self.view.mas_centerX);
         make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(180);

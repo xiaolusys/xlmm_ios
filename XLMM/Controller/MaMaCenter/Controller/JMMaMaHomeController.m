@@ -33,10 +33,10 @@
 #import "JMMineIntegralController.h"
 #import "JMCouponController.h"
 #import "JMRefundBaseController.h"
-#import "PublishNewPdtViewController.h"
 #import "JMMaMaFansController.h"
 #import "JMOrderListController.h"
 #import "JMTotalEarningController.h"
+#import "JMPushingDaysController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -368,7 +368,6 @@
 //    [self skipWebView:model.act_applink activeDic:model];
 //}
 
-
 #pragma mark 点击事件处理(跳转webView)  // https://m.xiaolumeimei.com/mall/activity/exam
 - (void)skipWebView:(NSString *)appLink activeDic:(JMHomeActiveModel *)model {
     if(appLink.length == 0){
@@ -527,7 +526,7 @@
             break;
         case 112:
         {
-            PublishNewPdtViewController *pushingVC = [[PublishNewPdtViewController alloc] init];
+            JMPushingDaysController *pushingVC = [[JMPushingDaysController alloc] init];
             [self.navigationController pushViewController:pushingVC animated:YES];
         }
             break;
