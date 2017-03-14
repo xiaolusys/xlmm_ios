@@ -508,7 +508,7 @@
 - (void)purchaseClicked:(JMSelecterButton *)button {
     [MobClick event:@"purchase"];
     JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
-    purchaseVC.purchaseGoodsArr = self.currentCartDataSource;
+    purchaseVC.purchaseGoods = self.currentCartDataSource;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 #pragma mark ---- 重新购买按钮点击

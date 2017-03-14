@@ -96,6 +96,7 @@
  *  选择物流信息的数组
  */
 @property (nonatomic, strong) NSMutableArray *logisticsArr;
+@property (nonatomic, strong) NSMutableArray *purchaseGoodsArr;
 /**
  *  判断优惠券是否可用
  */
@@ -397,13 +398,17 @@ static BOOL isAgreeTerms = YES;
         }
     }
 }
+- (void)setPurchaseGoods:(NSMutableArray *)purchaseGoods {
+    _purchaseGoods = purchaseGoods;
+    self.purchaseGoodsArr = [purchaseGoods mutableCopy];
+}
 // 获取购物车ID
 - (void)getCartID {
     NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
-    if (self.purchaseGoodsArr.count == 0) {
+    if (self.purchaseGoods.count == 0) {
         return;
     }
-    for (CartListModel *model in self.purchaseGoodsArr) {
+    for (CartListModel *model in self.purchaseGoods) {
         NSString *str = [NSString stringWithFormat:@"%ld,",model.cartID];
         [paramstring appendString:str];
     }
