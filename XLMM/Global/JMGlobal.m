@@ -13,7 +13,7 @@
 #import "JMRepopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMRefreshLoadView.h"
-
+#import "CSLoadingAnimation.h"
 
 
 static BOOL isNetPrompt;
@@ -22,6 +22,7 @@ static BOOL isNetPrompt;
     NSString *httpStatus;
 }
 @property (nonatomic, strong) JMRefreshLoadView *loadView;
+@property (nonatomic, strong) CSLoadingAnimation *loadingView;
 @property (nonatomic, strong) UIView *maskView;
 
 
@@ -245,6 +246,41 @@ static BOOL isNetPrompt;
     self.loadView = nil;
     self.maskView = nil;
 }
+
+- (void)showLoading:(UIView *)view {
+    if (self.loadingView) {
+        [self removeLoadingView];
+    }
+    if (!self.loadingView) {
+        UIView *maskView = [[UIView alloc] init];
+        maskView.frame = view.bounds;
+        maskView.backgroundColor = [UIColor clearColor];
+//        maskView.alpha = 0.1;
+        [view addSubview:maskView];
+        self.maskView = maskView;
+        self.loadingView = [[CSLoadingAnimation alloc] initWithFrame:CGRectMake(maskView.mj_w / 2 - 30, maskView.mj_h / 2 - 30, 60, 60)];
+        [maskView addSubview:self.loadingView];
+    }
+    [self.loadingView beganRefreshing];
+}
+- (void)hideLoading {
+    if (!self.loadingView) {
+        return ;
+    }
+    [self.loadingView endRefreshing];
+    if (self.loadingView) {
+        [self removeLoadingView];
+    }
+}
+- (void)removeLoadingView {
+    [self.loadingView removeFromSuperview];
+    [self.maskView removeFromSuperview];
+    self.loadingView = nil;
+    self.maskView = nil;
+}
+
+
+
 
 /*
     befoData -- > 获取的当前时间几天 前/后 的时间 .

@@ -516,6 +516,10 @@
 		1F52E94F1DDC09EA00F9C286 /* JMCartCurrentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52E94E1DDC09EA00F9C286 /* JMCartCurrentCell.m */; };
 		1F5419011DA3930800804547 /* JMSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419001DA3930800804547 /* JMSettingController.m */; };
 		1F5419041DA397E200804547 /* JMSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419031DA397E200804547 /* JMSettingCell.m */; };
+		1F54F5711E778D950045AD36 /* CSOrderListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5701E778D950045AD36 /* CSOrderListController.m */; };
+		1F54F5741E77908C0045AD36 /* CSCustomerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5731E77908C0045AD36 /* CSCustomerTableView.m */; };
+		1F54F5771E7790CD0045AD36 /* CSCustomerColView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5761E7790CD0045AD36 /* CSCustomerColView.m */; };
+		1F54F57A1E77CF2F0045AD36 /* CSLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */; };
 		1F561E741E67C3A700799332 /* JMTotalEarningController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E731E67C3A700799332 /* JMTotalEarningController.m */; };
 		1F561E7A1E67C7A300799332 /* JMEarningRecordTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E791E67C7A300799332 /* JMEarningRecordTableView.m */; };
 		1F561E7D1E68032600799332 /* JMEarningRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E7C1E68032600799332 /* JMEarningRecordCell.m */; };
@@ -1636,6 +1640,14 @@
 		1F5419001DA3930800804547 /* JMSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMSettingController.m; path = "Setting(设置)/JMSettingController.m"; sourceTree = "<group>"; };
 		1F5419021DA397E200804547 /* JMSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSettingCell.h; sourceTree = "<group>"; };
 		1F5419031DA397E200804547 /* JMSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSettingCell.m; sourceTree = "<group>"; };
+		1F54F56F1E778D950045AD36 /* CSOrderListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSOrderListController.h; sourceTree = "<group>"; };
+		1F54F5701E778D950045AD36 /* CSOrderListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSOrderListController.m; sourceTree = "<group>"; };
+		1F54F5721E77908C0045AD36 /* CSCustomerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCustomerTableView.h; sourceTree = "<group>"; };
+		1F54F5731E77908C0045AD36 /* CSCustomerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCustomerTableView.m; sourceTree = "<group>"; };
+		1F54F5751E7790CD0045AD36 /* CSCustomerColView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCustomerColView.h; sourceTree = "<group>"; };
+		1F54F5761E7790CD0045AD36 /* CSCustomerColView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCustomerColView.m; sourceTree = "<group>"; };
+		1F54F5781E77CF2F0045AD36 /* CSLoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLoadingAnimation.h; sourceTree = "<group>"; };
+		1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLoadingAnimation.m; sourceTree = "<group>"; };
 		1F561E721E67C3A700799332 /* JMTotalEarningController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTotalEarningController.h; sourceTree = "<group>"; };
 		1F561E731E67C3A700799332 /* JMTotalEarningController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTotalEarningController.m; sourceTree = "<group>"; };
 		1F561E781E67C7A300799332 /* JMEarningRecordTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEarningRecordTableView.h; sourceTree = "<group>"; };
@@ -5598,6 +5610,8 @@
 				1F6B79E41DD9C047009AB446 /* MJPullGifHeader.m */,
 				1F6B79E51DD9C047009AB446 /* PhotoView.h */,
 				1F6B79E61DD9C047009AB446 /* PhotoView.m */,
+				1F54F5781E77CF2F0045AD36 /* CSLoadingAnimation.h */,
+				1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */,
 			);
 			path = RefreshView;
 			sourceTree = "<group>";
@@ -5949,6 +5963,8 @@
 				1F7EF9E91E66B18200E1C186 /* JMOrderListController.m */,
 				1F56E2A11D3617210092EC91 /* JMPersonAllOrderController.h */,
 				1F56E2A21D3617210092EC91 /* JMPersonAllOrderController.m */,
+				1F54F56F1E778D950045AD36 /* CSOrderListController.h */,
+				1F54F5701E778D950045AD36 /* CSOrderListController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5967,6 +5983,10 @@
 		1FF533551D27789D003DEABF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F54F5721E77908C0045AD36 /* CSCustomerTableView.h */,
+				1F54F5731E77908C0045AD36 /* CSCustomerTableView.m */,
+				1F54F5751E7790CD0045AD36 /* CSCustomerColView.h */,
+				1F54F5761E7790CD0045AD36 /* CSCustomerColView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6968,6 +6988,7 @@
 				1F41B2B61CEAE0BA00E63E6F /* JMLineView.m in Sources */,
 				1F6B79EE1DD9C086009AB446 /* JMPayment.m in Sources */,
 				1F498C3E1D2772D0007E77FC /* JMPopLogistcsController.m in Sources */,
+				1F54F57A1E77CF2F0045AD36 /* CSLoadingAnimation.m in Sources */,
 				1F5877EB1DB8A7AF00949302 /* ProductSelectionListViewController.m in Sources */,
 				1F498C521D2772D0007E77FC /* JMGoodsShowView.m in Sources */,
 				1F58781B1DB8A87900949302 /* JMRewardsController.m in Sources */,
@@ -7050,6 +7071,7 @@
 				1F498C361D2772D0007E77FC /* VersionController.m in Sources */,
 				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
 				1F37938A1DEE82490044E325 /* FMDatabaseQueue.m in Sources */,
+				1F54F5741E77908C0045AD36 /* CSCustomerTableView.m in Sources */,
 				1F3793FB1DEE827E0044E325 /* DataVerifier.m in Sources */,
 				1F4C9E901D9912600089CE74 /* UdeskVoiceRecordHUD.m in Sources */,
 				1F5877F11DB8A7AF00949302 /* YixuanTableViewCell.m in Sources */,
@@ -7081,6 +7103,7 @@
 				1F498B011D2761BE007E77FC /* IMY_NJKWebViewProgress.m in Sources */,
 				1F1FB8AD1D88EA50004C60CE /* JMMineIntegralCell.m in Sources */,
 				1F4C9E9C1D9912600089CE74 /* NSArray+UdeskSDK.m in Sources */,
+				1F54F5771E7790CD0045AD36 /* CSCustomerColView.m in Sources */,
 				1FAC28D11E5558500032A005 /* JMHomeHourCell.m in Sources */,
 				1F02128F1E614B140088AD2D /* JMPageContentView.m in Sources */,
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
@@ -7096,6 +7119,7 @@
 				1F4C9EA41D9912600089CE74 /* UdeskSDKConfig.m in Sources */,
 				3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */,
 				1F3793F91DEE827E0044E325 /* base64.m in Sources */,
+				1F54F5711E778D950045AD36 /* CSOrderListController.m in Sources */,
 				1F498C4A1D2772D0007E77FC /* JMLogTimeListController.m in Sources */,
 				1F4C9EA01D9912600089CE74 /* UIImage+UdeskSDK.m in Sources */,
 				1F4C9E8E1D9912600089CE74 /* UdeskSpectrumView.m in Sources */,
