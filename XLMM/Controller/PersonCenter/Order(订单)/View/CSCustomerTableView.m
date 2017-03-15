@@ -32,7 +32,7 @@
         [self registerClass:UITableViewCell.class forCellReuseIdentifier:@"CSCustomerTableViewIndentifier"];
         self.tableFooterView = [UIView new];
         [self createPullHeaderRefresh];
-        [self.mj_header beginRefreshing];
+//
         
     }
     return self;
@@ -41,7 +41,7 @@
     kWeakSelf
     self.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         _isPullDown = YES;
-//        [weakSelf.mj_footer resetNoMoreData];
+        [weakSelf.mj_footer resetNoMoreData];
         [weakSelf loadData];
     }];
 }
@@ -58,7 +58,8 @@
 }
 
 - (void)refreshWithCustomerTableViewData:(id)data atIndex:(NSInteger)index {
-    self.dataArray = (NSMutableArray *)[data objectForKey:[NSString stringWithFormat:@"%ld",index]];
+//    [self.mj_header beginRefreshing];
+    self.dataArray = (NSMutableArray *)[data objectForKey:@(index)];
     self.itemIndex = index;
     [self reloadData];
 }

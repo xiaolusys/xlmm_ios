@@ -10,4 +10,6 @@
 
 @interface CSCustomerColView : STCollectionView
 
+- (void)refreshWithCustomerColViewData:(id)data atIndex:(NSInteger)index;
+
 @end

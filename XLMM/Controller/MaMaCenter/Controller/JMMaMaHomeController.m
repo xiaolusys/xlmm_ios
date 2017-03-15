@@ -38,6 +38,7 @@
 #import "JMTotalEarningController.h"
 #import "JMPushingDaysController.h"
 #import "CSOrderListController.h"
+#import "CSVTMagicController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -423,8 +424,8 @@
             break;
         case 101:
             if (isLogin) {
-                CSOrderListController *orderListVC = [[CSOrderListController alloc] init];
-                orderListVC.currentIndex = 0;
+                CSVTMagicController *orderListVC = [[CSVTMagicController alloc] init];
+                orderListVC.currentIndex = 2;
                 [self.navigationController pushViewController:orderListVC animated:YES];
 //                Account1ViewController *account = [[Account1ViewController alloc] init];
 //                account.accountMoney = _accountMoney;

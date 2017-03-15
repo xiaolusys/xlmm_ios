@@ -27,6 +27,7 @@
 @property (nonatomic, strong) SwipeTableView        *swipeTableView;
 @property (nonatomic, strong) HMSegmentedControl    *segmentView;
 @property (nonatomic, strong) CSCustomerTableView   *tableView;
+@property (nonatomic, strong) CSCustomerColView     *collectionView;
 @property (nonatomic, strong) NSMutableArray        *dataSource;
 @property (nonatomic, strong) NSMutableDictionary   *tableViewData;
 
@@ -47,6 +48,7 @@
     [self loadDataSource:_itemUrls[_currentPageIndex]];
 //    [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
+    [self createPullFooterRefresh1];
 //    [self.tableView.mj_header beginRefreshing];
 }
 - (void)setCurrentIndex:(NSInteger)currentIndex {
@@ -62,9 +64,18 @@
 //        [weakSelf loadDataSource:[self getItemUrls][_currentPageIndex]];
 //    }];
 //}
+- (void)createPullFooterRefresh1 {
+    kWeakSelf
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.segmentView.userInteractionEnabled = NO;
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
 - (void)createPullFooterRefresh {
     kWeakSelf
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.segmentView.userInteractionEnabled = NO;
         _isLoadMore = YES;
         [weakSelf loadMore];
     }];
@@ -77,7 +88,9 @@
     if (_isLoadMore) {
         _isLoadMore = NO;
         [self.tableView.mj_footer endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
     }
+    self.segmentView.userInteractionEnabled = YES;
 }
 #pragma mark ==== 网络请求,数据处理 ====
 - (NSMutableArray *)getItemUrls {
@@ -115,7 +128,7 @@
         JMFineCouponModel *model = [JMFineCouponModel mj_objectWithKeyValues:dic];
         [dataArr addObject:model];
     }
-    [self.tableViewData setObject:[NSArray arrayWithArray:dataArr] forKey:[NSString stringWithFormat:@"%ld",_currentPageIndex]];
+    [self.tableViewData setObject:dataArr forKey:@(_currentPageIndex)];
     [self reloadDataWithIndex:_currentPageIndex];
 }
 - (void)loadMore {
@@ -187,20 +200,33 @@
     }
     return _segmentView;
 }
-
+- (CSCustomerColView *)collectionView {
+    if (nil == _collectionView) {
+        _collectionView = [[CSCustomerColView alloc]initWithFrame:_swipeTableView.bounds];
+    }
+    return _collectionView;
+}
+- (CSCustomerTableView *)tableView {
+    if (nil == _tableView) {
+        _tableView = [[CSCustomerTableView alloc]initWithFrame:_swipeTableView.bounds style:UITableViewStylePlain];
+    }
+    return _tableView;
+}
 
 #pragma mark ==== SwipeTableView 代理 ====
 - (NSInteger)numberOfItemsInSwipeTableView:(SwipeTableView *)swipeView {
     return [[self getItemTitles] count];
 }
 - (UIScrollView *)swipeTableView:(SwipeTableView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIScrollView *)view {
-    CSCustomerTableView *tableView = (CSCustomerTableView *)view;
-    if (!tableView) {
-        tableView = [[CSCustomerTableView alloc] initWithFrame:swipeView.bounds style:UITableViewStylePlain];
+    if (index %2 == 0) {
+        CSCustomerTableView *tableView = self.tableView;
+        [tableView refreshWithCustomerTableViewData:self.tableViewData atIndex:index];
+        view = self.tableView;
+    }else {
+        CSCustomerColView *colView = self.collectionView;
+        [colView refreshWithCustomerColViewData:self.tableViewData atIndex:index];
+        view = self.collectionView;
     }
-    [tableView refreshWithCustomerTableViewData:self.tableViewData atIndex:index];
-    self.tableView = tableView;
-    view = tableView;
     return view;
 }
 - (void)swipeTableViewCurrentItemIndexDidChange:(SwipeTableView *)swipeView {
@@ -219,16 +245,19 @@
 }
 #pragma mark ==== segmentView 点击事件, swipeTableView 移动事件
 - (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
+    if (_isLoadMore == YES) {
+        return ;
+    }
     _currentPageIndex = segmentedControl.selectedSegmentIndex;
     [self.swipeTableView scrollToItemAtIndex:_currentPageIndex animated:NO];
     [self getDataSource:_currentPageIndex];
     
 }
 - (void)getDataSource:(NSInteger)index {
-    NSArray *dataArr = [self.tableViewData objectForKey:[NSString stringWithFormat:@"%ld",index]];
+    NSArray *dataArr = [self.tableViewData objectForKey:@(index)];
     if (dataArr.count == 0) {
         [[JMGlobal global] showLoading:self.view];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self loadDataSource:_itemUrls[index]];
         });
         
@@ -237,7 +266,12 @@
     
 }
 - (void)reloadDataWithIndex:(NSInteger)index {
-    ((void (*)(void *, SEL, NSMutableDictionary *, NSInteger))objc_msgSend)((__bridge void *)(self.swipeTableView.currentItemView),@selector(refreshWithCustomerTableViewData:atIndex:), self.tableViewData,index);
+    if (index %2 == 0) {
+        ((void (*)(void *, SEL, NSMutableDictionary *, NSInteger))objc_msgSend)((__bridge void *)(self.swipeTableView.currentItemView),@selector(refreshWithCustomerTableViewData:atIndex:), self.tableViewData,index);
+    }else {
+        ((void (*)(void *, SEL, NSMutableDictionary *, NSInteger))objc_msgSend)((__bridge void *)(self.swipeTableView.currentItemView),@selector(refreshWithCustomerColViewData:atIndex:), self.tableViewData,index);
+    }
+    
 }
 
 
