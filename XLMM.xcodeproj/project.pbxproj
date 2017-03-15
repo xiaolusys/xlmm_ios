@@ -516,21 +516,7 @@
 		1F52E94F1DDC09EA00F9C286 /* JMCartCurrentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52E94E1DDC09EA00F9C286 /* JMCartCurrentCell.m */; };
 		1F5419011DA3930800804547 /* JMSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419001DA3930800804547 /* JMSettingController.m */; };
 		1F5419041DA397E200804547 /* JMSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419031DA397E200804547 /* JMSettingCell.m */; };
-		1F54F5711E778D950045AD36 /* CSOrderListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5701E778D950045AD36 /* CSOrderListController.m */; };
-		1F54F5741E77908C0045AD36 /* CSCustomerTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5731E77908C0045AD36 /* CSCustomerTableView.m */; };
-		1F54F5771E7790CD0045AD36 /* CSCustomerColView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5761E7790CD0045AD36 /* CSCustomerColView.m */; };
 		1F54F57A1E77CF2F0045AD36 /* CSLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */; };
-		1F54F57F1E78E8FA0045AD36 /* CSVTMagicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F57E1E78E8FA0045AD36 /* CSVTMagicController.m */; };
-		1F54F5951E78E93F0045AD36 /* UIButton+VTMagic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5821E78E93F0045AD36 /* UIButton+VTMagic.m */; };
-		1F54F5961E78E93F0045AD36 /* UIColor+VTMagic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5841E78E93F0045AD36 /* UIColor+VTMagic.m */; };
-		1F54F5971E78E93F0045AD36 /* UIScrollView+VTMagic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5861E78E93F0045AD36 /* UIScrollView+VTMagic.m */; };
-		1F54F5981E78E93F0045AD36 /* UIViewController+VTMagic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5881E78E93F0045AD36 /* UIViewController+VTMagic.m */; };
-		1F54F5991E78E93F0045AD36 /* VTContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F58A1E78E93F0045AD36 /* VTContentView.m */; };
-		1F54F59A1E78E93F0045AD36 /* VTMagicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F58E1E78E93F0045AD36 /* VTMagicController.m */; };
-		1F54F59B1E78E93F0045AD36 /* VTMagicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5921E78E93F0045AD36 /* VTMagicView.m */; };
-		1F54F59C1E78E93F0045AD36 /* VTMenuBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5941E78E93F0045AD36 /* VTMenuBar.m */; };
-		1F54F59F1E78ECBA0045AD36 /* CSTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F59E1E78ECBA0045AD36 /* CSTableViewController.m */; };
-		1F54F5A21E78ECC70045AD36 /* CSCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5A11E78ECC70045AD36 /* CSCollectionController.m */; };
 		1F561E741E67C3A700799332 /* JMTotalEarningController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E731E67C3A700799332 /* JMTotalEarningController.m */; };
 		1F561E7A1E67C7A300799332 /* JMEarningRecordTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E791E67C7A300799332 /* JMEarningRecordTableView.m */; };
 		1F561E7D1E68032600799332 /* JMEarningRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E7C1E68032600799332 /* JMEarningRecordCell.m */; };
@@ -651,7 +637,6 @@
 		1F7018E11E6E4A140070C2D9 /* AlbumAddBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */; };
 		1F7018E41E6E4F160070C2D9 /* idCardSideBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */; };
 		1F7018E51E6E4F160070C2D9 /* idCardSideFace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */; };
-		1F7018E81E7109FA0070C2D9 /* JMDataManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7018E71E7109FA0070C2D9 /* JMDataManger.m */; };
 		1F70F7A11D5D74E1003FB13F /* JMReturnProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */; };
 		1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E2B1DB61CC400307093 /* LogisticsModel.m */; };
 		1F760E351DB61E2E00307093 /* BrandGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F760E341DB61E2E00307093 /* BrandGoodsModel.m */; };
@@ -1651,40 +1636,8 @@
 		1F5419001DA3930800804547 /* JMSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMSettingController.m; path = "Setting(设置)/JMSettingController.m"; sourceTree = "<group>"; };
 		1F5419021DA397E200804547 /* JMSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSettingCell.h; sourceTree = "<group>"; };
 		1F5419031DA397E200804547 /* JMSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSettingCell.m; sourceTree = "<group>"; };
-		1F54F56F1E778D950045AD36 /* CSOrderListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSOrderListController.h; sourceTree = "<group>"; };
-		1F54F5701E778D950045AD36 /* CSOrderListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSOrderListController.m; sourceTree = "<group>"; };
-		1F54F5721E77908C0045AD36 /* CSCustomerTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCustomerTableView.h; sourceTree = "<group>"; };
-		1F54F5731E77908C0045AD36 /* CSCustomerTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCustomerTableView.m; sourceTree = "<group>"; };
-		1F54F5751E7790CD0045AD36 /* CSCustomerColView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCustomerColView.h; sourceTree = "<group>"; };
-		1F54F5761E7790CD0045AD36 /* CSCustomerColView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCustomerColView.m; sourceTree = "<group>"; };
 		1F54F5781E77CF2F0045AD36 /* CSLoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLoadingAnimation.h; sourceTree = "<group>"; };
 		1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLoadingAnimation.m; sourceTree = "<group>"; };
-		1F54F57D1E78E8FA0045AD36 /* CSVTMagicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVTMagicController.h; sourceTree = "<group>"; };
-		1F54F57E1E78E8FA0045AD36 /* CSVTMagicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSVTMagicController.m; sourceTree = "<group>"; };
-		1F54F5811E78E93F0045AD36 /* UIButton+VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+VTMagic.h"; sourceTree = "<group>"; };
-		1F54F5821E78E93F0045AD36 /* UIButton+VTMagic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+VTMagic.m"; sourceTree = "<group>"; };
-		1F54F5831E78E93F0045AD36 /* UIColor+VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+VTMagic.h"; sourceTree = "<group>"; };
-		1F54F5841E78E93F0045AD36 /* UIColor+VTMagic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+VTMagic.m"; sourceTree = "<group>"; };
-		1F54F5851E78E93F0045AD36 /* UIScrollView+VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+VTMagic.h"; sourceTree = "<group>"; };
-		1F54F5861E78E93F0045AD36 /* UIScrollView+VTMagic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+VTMagic.m"; sourceTree = "<group>"; };
-		1F54F5871E78E93F0045AD36 /* UIViewController+VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+VTMagic.h"; sourceTree = "<group>"; };
-		1F54F5881E78E93F0045AD36 /* UIViewController+VTMagic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+VTMagic.m"; sourceTree = "<group>"; };
-		1F54F5891E78E93F0045AD36 /* VTContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTContentView.h; sourceTree = "<group>"; };
-		1F54F58A1E78E93F0045AD36 /* VTContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTContentView.m; sourceTree = "<group>"; };
-		1F54F58B1E78E93F0045AD36 /* VTEnumType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTEnumType.h; sourceTree = "<group>"; };
-		1F54F58C1E78E93F0045AD36 /* VTMagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagic.h; sourceTree = "<group>"; };
-		1F54F58D1E78E93F0045AD36 /* VTMagicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicController.h; sourceTree = "<group>"; };
-		1F54F58E1E78E93F0045AD36 /* VTMagicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTMagicController.m; sourceTree = "<group>"; };
-		1F54F58F1E78E93F0045AD36 /* VTMagicMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicMacros.h; sourceTree = "<group>"; };
-		1F54F5901E78E93F0045AD36 /* VTMagicProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicProtocol.h; sourceTree = "<group>"; };
-		1F54F5911E78E93F0045AD36 /* VTMagicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMagicView.h; sourceTree = "<group>"; };
-		1F54F5921E78E93F0045AD36 /* VTMagicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTMagicView.m; sourceTree = "<group>"; };
-		1F54F5931E78E93F0045AD36 /* VTMenuBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTMenuBar.h; sourceTree = "<group>"; };
-		1F54F5941E78E93F0045AD36 /* VTMenuBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTMenuBar.m; sourceTree = "<group>"; };
-		1F54F59D1E78ECBA0045AD36 /* CSTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSTableViewController.h; sourceTree = "<group>"; };
-		1F54F59E1E78ECBA0045AD36 /* CSTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSTableViewController.m; sourceTree = "<group>"; };
-		1F54F5A01E78ECC70045AD36 /* CSCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCollectionController.h; sourceTree = "<group>"; };
-		1F54F5A11E78ECC70045AD36 /* CSCollectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCollectionController.m; sourceTree = "<group>"; };
 		1F561E721E67C3A700799332 /* JMTotalEarningController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTotalEarningController.h; sourceTree = "<group>"; };
 		1F561E731E67C3A700799332 /* JMTotalEarningController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTotalEarningController.m; sourceTree = "<group>"; };
 		1F561E781E67C7A300799332 /* JMEarningRecordTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEarningRecordTableView.h; sourceTree = "<group>"; };
@@ -1908,8 +1861,6 @@
 		1F7018E01E6E4A140070C2D9 /* AlbumAddBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AlbumAddBtn@2x.png"; sourceTree = "<group>"; };
 		1F7018E21E6E4F160070C2D9 /* idCardSideBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "idCardSideBack@2x.png"; sourceTree = "<group>"; };
 		1F7018E31E6E4F160070C2D9 /* idCardSideFace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "idCardSideFace@2x.png"; sourceTree = "<group>"; };
-		1F7018E61E7109FA0070C2D9 /* JMDataManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDataManger.h; sourceTree = "<group>"; };
-		1F7018E71E7109FA0070C2D9 /* JMDataManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDataManger.m; sourceTree = "<group>"; };
 		1F70F79F1D5D74E1003FB13F /* JMReturnProgressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMReturnProgressController.h; sourceTree = "<group>"; };
 		1F70F7A01D5D74E1003FB13F /* JMReturnProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMReturnProgressController.m; sourceTree = "<group>"; };
 		1F760E2A1DB61CC400307093 /* LogisticsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsModel.h; sourceTree = "<group>"; };
@@ -3991,7 +3942,6 @@
 		1F498B981D2772D0007E77FC /* Order(订单) */ = {
 			isa = PBXGroup;
 			children = (
-				1F54F5801E78E93F0045AD36 /* VTMagic */,
 				1FF533541D27789D003DEABF /* Model */,
 				1FF533551D27789D003DEABF /* View */,
 				1FF533481D27789D003DEABF /* Controller */,
@@ -4788,33 +4738,6 @@
 				1F4C9E781D9912600089CE74 /* UdeskReachability.m */,
 			);
 			path = UDReachability;
-			sourceTree = "<group>";
-		};
-		1F54F5801E78E93F0045AD36 /* VTMagic */ = {
-			isa = PBXGroup;
-			children = (
-				1F54F5811E78E93F0045AD36 /* UIButton+VTMagic.h */,
-				1F54F5821E78E93F0045AD36 /* UIButton+VTMagic.m */,
-				1F54F5831E78E93F0045AD36 /* UIColor+VTMagic.h */,
-				1F54F5841E78E93F0045AD36 /* UIColor+VTMagic.m */,
-				1F54F5851E78E93F0045AD36 /* UIScrollView+VTMagic.h */,
-				1F54F5861E78E93F0045AD36 /* UIScrollView+VTMagic.m */,
-				1F54F5871E78E93F0045AD36 /* UIViewController+VTMagic.h */,
-				1F54F5881E78E93F0045AD36 /* UIViewController+VTMagic.m */,
-				1F54F5891E78E93F0045AD36 /* VTContentView.h */,
-				1F54F58A1E78E93F0045AD36 /* VTContentView.m */,
-				1F54F58B1E78E93F0045AD36 /* VTEnumType.h */,
-				1F54F58C1E78E93F0045AD36 /* VTMagic.h */,
-				1F54F58D1E78E93F0045AD36 /* VTMagicController.h */,
-				1F54F58E1E78E93F0045AD36 /* VTMagicController.m */,
-				1F54F58F1E78E93F0045AD36 /* VTMagicMacros.h */,
-				1F54F5901E78E93F0045AD36 /* VTMagicProtocol.h */,
-				1F54F5911E78E93F0045AD36 /* VTMagicView.h */,
-				1F54F5921E78E93F0045AD36 /* VTMagicView.m */,
-				1F54F5931E78E93F0045AD36 /* VTMenuBar.h */,
-				1F54F5941E78E93F0045AD36 /* VTMenuBar.m */,
-			);
-			path = VTMagic;
 			sourceTree = "<group>";
 		};
 		1F561E7E1E681FB500799332 /* SwipeTableView */ = {
@@ -6028,10 +5951,6 @@
 				1F7EF9E91E66B18200E1C186 /* JMOrderListController.m */,
 				1F56E2A11D3617210092EC91 /* JMPersonAllOrderController.h */,
 				1F56E2A21D3617210092EC91 /* JMPersonAllOrderController.m */,
-				1F54F56F1E778D950045AD36 /* CSOrderListController.h */,
-				1F54F5701E778D950045AD36 /* CSOrderListController.m */,
-				1F54F57D1E78E8FA0045AD36 /* CSVTMagicController.h */,
-				1F54F57E1E78E8FA0045AD36 /* CSVTMagicController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -6041,8 +5960,6 @@
 			children = (
 				1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */,
 				1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */,
-				1F7018E61E7109FA0070C2D9 /* JMDataManger.h */,
-				1F7018E71E7109FA0070C2D9 /* JMDataManger.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6050,14 +5967,6 @@
 		1FF533551D27789D003DEABF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1F54F5721E77908C0045AD36 /* CSCustomerTableView.h */,
-				1F54F5731E77908C0045AD36 /* CSCustomerTableView.m */,
-				1F54F5751E7790CD0045AD36 /* CSCustomerColView.h */,
-				1F54F5761E7790CD0045AD36 /* CSCustomerColView.m */,
-				1F54F59D1E78ECBA0045AD36 /* CSTableViewController.h */,
-				1F54F59E1E78ECBA0045AD36 /* CSTableViewController.m */,
-				1F54F5A01E78ECC70045AD36 /* CSCollectionController.h */,
-				1F54F5A11E78ECC70045AD36 /* CSCollectionController.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6978,14 +6887,12 @@
 				1F5877881DB8A60D00949302 /* HuoyuezhiModel.m in Sources */,
 				1F498B2D1D276450007E77FC /* JMChoiseLogisController.m in Sources */,
 				1F6B79E91DD9C047009AB446 /* MJPullGifHeader.m in Sources */,
-				1F54F57F1E78E8FA0045AD36 /* CSVTMagicController.m in Sources */,
 				183071EE1C97BE3700B7665E /* RegisterViewController.m in Sources */,
 				1FD8011C1DF6920800382E44 /* JMSliderLockView.m in Sources */,
 				1F0212921E614BAE0088AD2D /* JMPageScrollController.m in Sources */,
 				183071F21C97BE3700B7665E /* SetPasswordViewController.m in Sources */,
 				1F4C9EAD1D9912600089CE74 /* UdeskBaseModel.m in Sources */,
 				183073D51C97D17800B7665E /* FSLineChart.m in Sources */,
-				1F54F5951E78E93F0045AD36 /* UIButton+VTMagic.m in Sources */,
 				1F5877A91DB8A60D00949302 /* JMMaMaSelfTeamModel.m in Sources */,
 				1F4C9E941D9912600089CE74 /* UdeskAgentMenuViewController.m in Sources */,
 				1F498C6E1D2772D0007E77FC /* JMUserAddressModel.m in Sources */,
@@ -6993,7 +6900,6 @@
 				1F90EE251E519AB30031F0DE /* JMHomePageController.m in Sources */,
 				1830728A1C97C00900B7665E /* UIImage+ImageWithUrl.m in Sources */,
 				1F4C9E991D9912600089CE74 /* UdeskAnimatorPush.m in Sources */,
-				1F54F59F1E78ECBA0045AD36 /* CSTableViewController.m in Sources */,
 				1F498C6A1D2772D0007E77FC /* JMChooseLogisticsController.m in Sources */,
 				3A1E05921CE1C3FB001018AC /* LGLabel.m in Sources */,
 				1F6B79E71DD9C047009AB446 /* JMRefreshLoadView.m in Sources */,
@@ -7047,7 +6953,6 @@
 				1F6B79D91DD9BF95009AB446 /* JMPopMenuView.m in Sources */,
 				1F5877EF1DB8A7AF00949302 /* JMProductSelectionListModel.m in Sources */,
 				1FD158D71D2F7FE4006C4B14 /* JMRefundModel.m in Sources */,
-				1F54F59B1E78E93F0045AD36 /* VTMagicView.m in Sources */,
 				1F56E2861D348A0A0092EC91 /* JMCouponRootCell.m in Sources */,
 				1F58783E1DB8A9ED00949302 /* JMChoiseWithDrawController.m in Sources */,
 				1F4C9EB11D9912600089CE74 /* UdeskTools.m in Sources */,
@@ -7123,10 +7028,8 @@
 				1F4C9E9A1D9912600089CE74 /* UdeskShareTransitioningDelegateImpl.m in Sources */,
 				1FAC28D41E5558600032A005 /* JMHomeHourModel.m in Sources */,
 				1F5877931DB8A60D00949302 /* FanceModel.m in Sources */,
-				1F7018E81E7109FA0070C2D9 /* JMDataManger.m in Sources */,
 				1F5877AB1DB8A60D00949302 /* JMMaMateamCell.m in Sources */,
 				1F5878851DB8ABD900949302 /* TixianTableViewCell.m in Sources */,
-				1F54F5961E78E93F0045AD36 /* UIColor+VTMagic.m in Sources */,
 				1F561E7A1E67C7A300799332 /* JMEarningRecordTableView.m in Sources */,
 				1F24A2741D9CC88500403213 /* NSString+CSCommon.m in Sources */,
 				1F5419041DA397E200804547 /* JMSettingCell.m in Sources */,
@@ -7147,12 +7050,10 @@
 				1F498C361D2772D0007E77FC /* VersionController.m in Sources */,
 				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
 				1F37938A1DEE82490044E325 /* FMDatabaseQueue.m in Sources */,
-				1F54F5741E77908C0045AD36 /* CSCustomerTableView.m in Sources */,
 				1F3793FB1DEE827E0044E325 /* DataVerifier.m in Sources */,
 				1F4C9E901D9912600089CE74 /* UdeskVoiceRecordHUD.m in Sources */,
 				1F5877F11DB8A7AF00949302 /* YixuanTableViewCell.m in Sources */,
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
-				1F54F5991E78E93F0045AD36 /* VTContentView.m in Sources */,
 				1F58781C1DB8A87900949302 /* JMRewardsCell.m in Sources */,
 				1F6B7A911DDA99FC009AB446 /* JMMiPushManager.m in Sources */,
 				1F561E871E681FB500799332 /* STCollectionView.m in Sources */,
@@ -7180,7 +7081,6 @@
 				1F498B011D2761BE007E77FC /* IMY_NJKWebViewProgress.m in Sources */,
 				1F1FB8AD1D88EA50004C60CE /* JMMineIntegralCell.m in Sources */,
 				1F4C9E9C1D9912600089CE74 /* NSArray+UdeskSDK.m in Sources */,
-				1F54F5771E7790CD0045AD36 /* CSCustomerColView.m in Sources */,
 				1FAC28D11E5558500032A005 /* JMHomeHourCell.m in Sources */,
 				1F02128F1E614B140088AD2D /* JMPageContentView.m in Sources */,
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
@@ -7196,7 +7096,6 @@
 				1F4C9EA41D9912600089CE74 /* UdeskSDKConfig.m in Sources */,
 				3A1E05981CE1C3FB001018AC /* LGTextViewDelegateObject.m in Sources */,
 				1F3793F91DEE827E0044E325 /* base64.m in Sources */,
-				1F54F5711E778D950045AD36 /* CSOrderListController.m in Sources */,
 				1F498C4A1D2772D0007E77FC /* JMLogTimeListController.m in Sources */,
 				1F4C9EA01D9912600089CE74 /* UIImage+UdeskSDK.m in Sources */,
 				1F4C9E8E1D9912600089CE74 /* UdeskSpectrumView.m in Sources */,
@@ -7215,7 +7114,6 @@
 				1F6B7A1A1DD9C224009AB446 /* Tool_FMDBGetDatabase.m in Sources */,
 				1F41B2BE1CEB1A8200E63E6F /* JMSelecterButton.m in Sources */,
 				1FE52DEC1D93CEA30051D5A0 /* JMHomeHeaderCell.m in Sources */,
-				1F54F59C1E78E93F0045AD36 /* VTMenuBar.m in Sources */,
 				1F4044371E724581001B3568 /* JMPushingDaysHeaderView.m in Sources */,
 				1F6B7A191DD9C224009AB446 /* JMStoreManager.m in Sources */,
 				1FF72C7A1DE7E7A30035F436 /* JMMaMaHomeController.m in Sources */,
@@ -7229,14 +7127,12 @@
 				321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */,
 				1F04ED681E72951C0099BE46 /* JMFineCouponModel.m in Sources */,
 				1F498C5E1D2772D0007E77FC /* ShenQingTuikuanController.m in Sources */,
-				1F54F59A1E78E93F0045AD36 /* VTMagicController.m in Sources */,
 				1F498B391D276450007E77FC /* CartListModel.m in Sources */,
 				1F498B3A1D276450007E77FC /* GoodsInfoModel.m in Sources */,
 				1F498C1B1D2772D0007E77FC /* JMComplaintSuggestController.m in Sources */,
 				1F3F75551D76BD3D0079D19B /* JMHomeActiveModel.m in Sources */,
 				1F498C141D2772D0007E77FC /* GuanzhuViewController.m in Sources */,
 				1F7018D71E6E40650070C2D9 /* JMAddressViewController.m in Sources */,
-				1F54F5981E78E93F0045AD36 /* UIViewController+VTMagic.m in Sources */,
 				1F5878771DB8ABB200949302 /* JMWithDrawDetailController.m in Sources */,
 				1F498C671D2772D0007E77FC /* JMRefundView.m in Sources */,
 				1F7EA8261E48411D00E44616 /* UIScrollView+UITouch.m in Sources */,
@@ -7313,7 +7209,6 @@
 				3A1E05931CE1C3FB001018AC /* LGRadioButton.m in Sources */,
 				1F58785E1DB8AB3600949302 /* MaMaViewController.m in Sources */,
 				1F4C9EA71D9912600089CE74 /* UdeskSDKStyle.m in Sources */,
-				1F54F5971E78E93F0045AD36 /* UIScrollView+VTMagic.m in Sources */,
 				1F4044341E724531001B3568 /* JMPushingDaysCell.m in Sources */,
 				1F4C9EAA1D9912600089CE74 /* UdeskChatAlertController.m in Sources */,
 				1F498C311D2772D0007E77FC /* ChangeNicknameViewController.m in Sources */,
@@ -7349,7 +7244,6 @@
 				1F4C9EA31D9912600089CE74 /* UdeskLanguageTool.m in Sources */,
 				1F4C9EAC1D9912600089CE74 /* UdeskPhotographyHelper.m in Sources */,
 				1F4C9EBC1D9912600089CE74 /* UdeskReachability.m in Sources */,
-				1F54F5A21E78ECC70045AD36 /* CSCollectionController.m in Sources */,
 				1F1FB8C81D8E24D2004C60CE /* NJKWebViewProgressView.m in Sources */,
 				1F5877ED1DB8A7AF00949302 /* JMAlreadyChooseModel.m in Sources */,
 				1F3793891DEE82490044E325 /* FMDatabasePool.m in Sources */,
