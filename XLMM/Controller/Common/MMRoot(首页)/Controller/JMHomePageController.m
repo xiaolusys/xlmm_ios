@@ -257,6 +257,10 @@
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];
     }
+    // 移除已经添加的子控制器
+    [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromParentViewController];
+    }];
     [self addChildController];
 }
 #pragma mark -- 创建UI->自定义 navigationView 自定义悬浮按钮 (个人,精品汇,购物车)

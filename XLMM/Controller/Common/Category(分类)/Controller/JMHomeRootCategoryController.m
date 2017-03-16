@@ -157,15 +157,8 @@ static NSUInteger selectedIndex = 0;
     //    [self.mainTableView reloadData];
     //    [self.mainCollectionView reloadData];
 }
+#pragma mark ==== 创建搜索框 ====
 - (void)createSearchBarView {
-//    UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-//    [leftButton addTarget:self action:@selector(backClick:) forControlEvents:UIControlEventTouchUpInside];
-//    UIImageView *leftImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_image2"]];
-//    leftImageview.frame = CGRectMake(0, 13, 18, 18);
-//    [leftButton addSubview:leftImageview];
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    
-    
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:searchButton];
     searchButton.backgroundColor = [UIColor lineGrayColor];
@@ -180,20 +173,11 @@ static NSUInteger selectedIndex = 0;
     searchButton.layer.masksToBounds = YES;
     searchButton.layer.cornerRadius = 5.;
     searchButton.frame = CGRectMake(0, 0, SCREENWIDTH - 80, 30);
-    
-    
-//    kWeakSelf
-//    [searchButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(weakSelf.view.mas_centerX);
-//        make.top.equalTo(weakSelf.view).offset(24);
-//        make.size.mas_equalTo(CGSizeMake(SCREENWIDTH - 80, 30));
-//    }];
     self.navigationItem.titleView = searchButton;
-    
-    
+
 }
 - (void)createTableView {
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
+    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, TabWidth, SCREENHEIGHT - ktabBarHeight) style:UITableViewStylePlain];
     self.mainTableView.dataSource = self;
     self.mainTableView.delegate = self;
     self.mainTableView.backgroundColor = [UIColor clearColor];

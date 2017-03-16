@@ -516,7 +516,6 @@
 		1F52E94F1DDC09EA00F9C286 /* JMCartCurrentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52E94E1DDC09EA00F9C286 /* JMCartCurrentCell.m */; };
 		1F5419011DA3930800804547 /* JMSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419001DA3930800804547 /* JMSettingController.m */; };
 		1F5419041DA397E200804547 /* JMSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5419031DA397E200804547 /* JMSettingCell.m */; };
-		1F54F57A1E77CF2F0045AD36 /* CSLoadingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */; };
 		1F561E741E67C3A700799332 /* JMTotalEarningController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E731E67C3A700799332 /* JMTotalEarningController.m */; };
 		1F561E7A1E67C7A300799332 /* JMEarningRecordTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E791E67C7A300799332 /* JMEarningRecordTableView.m */; };
 		1F561E7D1E68032600799332 /* JMEarningRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E7C1E68032600799332 /* JMEarningRecordCell.m */; };
@@ -1636,8 +1635,6 @@
 		1F5419001DA3930800804547 /* JMSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JMSettingController.m; path = "Setting(设置)/JMSettingController.m"; sourceTree = "<group>"; };
 		1F5419021DA397E200804547 /* JMSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSettingCell.h; sourceTree = "<group>"; };
 		1F5419031DA397E200804547 /* JMSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSettingCell.m; sourceTree = "<group>"; };
-		1F54F5781E77CF2F0045AD36 /* CSLoadingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLoadingAnimation.h; sourceTree = "<group>"; };
-		1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLoadingAnimation.m; sourceTree = "<group>"; };
 		1F561E721E67C3A700799332 /* JMTotalEarningController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMTotalEarningController.h; sourceTree = "<group>"; };
 		1F561E731E67C3A700799332 /* JMTotalEarningController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMTotalEarningController.m; sourceTree = "<group>"; };
 		1F561E781E67C7A300799332 /* JMEarningRecordTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEarningRecordTableView.h; sourceTree = "<group>"; };
@@ -5598,8 +5595,6 @@
 				1F6B79E41DD9C047009AB446 /* MJPullGifHeader.m */,
 				1F6B79E51DD9C047009AB446 /* PhotoView.h */,
 				1F6B79E61DD9C047009AB446 /* PhotoView.m */,
-				1F54F5781E77CF2F0045AD36 /* CSLoadingAnimation.h */,
-				1F54F5791E77CF2F0045AD36 /* CSLoadingAnimation.m */,
 			);
 			path = RefreshView;
 			sourceTree = "<group>";
@@ -6968,7 +6963,6 @@
 				1F41B2B61CEAE0BA00E63E6F /* JMLineView.m in Sources */,
 				1F6B79EE1DD9C086009AB446 /* JMPayment.m in Sources */,
 				1F498C3E1D2772D0007E77FC /* JMPopLogistcsController.m in Sources */,
-				1F54F57A1E77CF2F0045AD36 /* CSLoadingAnimation.m in Sources */,
 				1F5877EB1DB8A7AF00949302 /* ProductSelectionListViewController.m in Sources */,
 				1F498C521D2772D0007E77FC /* JMGoodsShowView.m in Sources */,
 				1F58781B1DB8A87900949302 /* JMRewardsController.m in Sources */,
