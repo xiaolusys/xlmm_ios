@@ -712,7 +712,6 @@
 		1FE52DF91D94CCA50051D5A0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE52DF81D94CCA50051D5A0 /* CoreMotion.framework */; };
 		1FE52E431D94E2330051D5A0 /* JMHomeRootCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */; };
 		1FE52E461D950BBE0051D5A0 /* JMHomeRootCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */; };
-		1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */; };
 		1FEDCB0B1D8FBBC200CB7D97 /* JMRichTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEDCB0A1D8FBBC200CB7D97 /* JMRichTextTool.m */; };
 		1FF3FA1D1D40800400FABBCE /* JMPurchaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FA1C1D40800400FABBCE /* JMPurchaseController.m */; };
 		1FF3FA201D4083C600FABBCE /* JMPurchaseHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF3FA1F1D4083C600FABBCE /* JMPurchaseHeaderView.m */; };
@@ -1984,8 +1983,6 @@
 		1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootCategoryController.m; sourceTree = "<group>"; };
 		1FE52E441D950BBE0051D5A0 /* JMHomeRootCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeRootCategoryCell.h; sourceTree = "<group>"; };
 		1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeRootCategoryCell.m; sourceTree = "<group>"; };
-		1FE52E471D96124F0051D5A0 /* JMCategoryContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryContentCell.h; sourceTree = "<group>"; };
-		1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryContentCell.m; sourceTree = "<group>"; };
 		1FEDCB091D8FBBC200CB7D97 /* JMRichTextTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMRichTextTool.h; sourceTree = "<group>"; };
 		1FEDCB0A1D8FBBC200CB7D97 /* JMRichTextTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMRichTextTool.m; sourceTree = "<group>"; };
 		1FEDCB0C1D8FDA8200CB7D97 /* JMToolMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMToolMacro.h; sourceTree = "<group>"; };
@@ -5924,8 +5921,6 @@
 			children = (
 				1FE52E441D950BBE0051D5A0 /* JMHomeRootCategoryCell.h */,
 				1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */,
-				1FE52E471D96124F0051D5A0 /* JMCategoryContentCell.h */,
-				1FE52E481D96124F0051D5A0 /* JMCategoryContentCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7080,7 +7075,6 @@
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
 				1F58A7581DFAA72300F738D2 /* JMPageControl.m in Sources */,
 				1F689CB01E0A132F0070109B /* JMRefundDetailController.m in Sources */,
-				1FE52E491D96124F0051D5A0 /* JMCategoryContentCell.m in Sources */,
 				1F23F9DE1D6C331100C78EAE /* JMMainTableView.m in Sources */,
 				1F4C9EB01D9912600089CE74 /* UdeskStringSizeUtil.m in Sources */,
 				1F0213141E6420640088AD2D /* JMReloadEmptyDataView.m in Sources */,
