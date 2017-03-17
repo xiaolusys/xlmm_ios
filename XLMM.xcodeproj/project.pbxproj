@@ -732,6 +732,7 @@
 		1FF72C941DE7F55B0035F436 /* tabBar_mianPageSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C8E1DE7F55B0035F436 /* tabBar_mianPageSelected@2x.png */; };
 		1FF72C951DE7F55B0035F436 /* tabBar_personalNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C8F1DE7F55B0035F436 /* tabBar_personalNomal@2x.png */; };
 		1FF72C961DE7F55B0035F436 /* tabBar_personalSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */; };
+		1FFE22021E7B8AC4003C417B /* JMCategoryPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE22011E7B8AC4003C417B /* JMCategoryPageController.m */; };
 		321857BE1CA109550085FF21 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B71CA109550085FF21 /* WebViewJavascriptBridge.m */; };
 		321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B91CA109550085FF21 /* WebViewJavascriptBridge_JS.m */; };
 		321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857BB1CA109550085FF21 /* WebViewJavascriptBridgeBase.m */; };
@@ -2018,6 +2019,8 @@
 		1FF72C8E1DE7F55B0035F436 /* tabBar_mianPageSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_mianPageSelected@2x.png"; sourceTree = "<group>"; };
 		1FF72C8F1DE7F55B0035F436 /* tabBar_personalNomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_personalNomal@2x.png"; sourceTree = "<group>"; };
 		1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_personalSelected@2x.png"; sourceTree = "<group>"; };
+		1FFE22001E7B8AC4003C417B /* JMCategoryPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryPageController.h; sourceTree = "<group>"; };
+		1FFE22011E7B8AC4003C417B /* JMCategoryPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryPageController.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321857B61CA109550085FF21 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
@@ -5905,6 +5908,8 @@
 			children = (
 				1FE52E411D94E2330051D5A0 /* JMHomeRootCategoryController.h */,
 				1FE52E421D94E2330051D5A0 /* JMHomeRootCategoryController.m */,
+				1FFE22001E7B8AC4003C417B /* JMCategoryPageController.h */,
+				1FFE22011E7B8AC4003C417B /* JMCategoryPageController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -6987,6 +6992,7 @@
 				1F4C9E7B1D9912600089CE74 /* UdeskFAQViewController.m in Sources */,
 				1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */,
 				1F498B3B1D276450007E77FC /* PayExtrasModel.m in Sources */,
+				1FFE22021E7B8AC4003C417B /* JMCategoryPageController.m in Sources */,
 				1F90EE281E51A8CD0031F0DE /* JMHomeFirstController.m in Sources */,
 				1F27A65B1D275FB400A0F80B /* MMCollectionController.m in Sources */,
 				1F6B79DC1DD9BF95009AB446 /* JMPopViewAnimationDrop.m in Sources */,
