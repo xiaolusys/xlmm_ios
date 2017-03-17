@@ -164,11 +164,14 @@
 - (void)createPullFooterRefresh {
     //    kWeakSelf
     self.recordTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showLoading:@""];
         _isLoadMore = YES;
         [self loadMore];
     }];
 }
 - (void)endRefresh {
+    [MBProgressHUD hideHUD];
     if (_isLoadMore) {
         _isLoadMore = NO;
         [self.recordTableView.mj_footer endRefreshing];
@@ -240,7 +243,7 @@
     for (int i = 0; i < keysArr.count; i++) {
         [currentDataArr addObject:currentDataDic[keysArr[i]]];
     }
-    [MBProgressHUD hideHUD];
+    
     // 刷新 数据
     [self getDataWithIndex:_currentIndex];
 }
@@ -303,7 +306,7 @@
     if (keysArr.count == 0) {
         [self loadDataUrl:_urlArray[_currentIndex]];
     }
-    
+    [self.recordTableView.mj_footer resetNoMoreData];
 }
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];

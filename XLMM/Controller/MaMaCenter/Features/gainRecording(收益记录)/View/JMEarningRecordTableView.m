@@ -10,14 +10,16 @@
 #import "JMEarningRecordTableView.h"
 #import "CarryLogModel.h"
 #import "JMEarningRecordCell.h"
+#import "JMReloadEmptyDataView.h"
 
 
-@interface JMEarningRecordTableView () <UITableViewDelegate, UITableViewDataSource>
+@interface JMEarningRecordTableView () <UITableViewDelegate, UITableViewDataSource, CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong) NSArray *itemDataArr;
 @property (nonatomic, strong) NSMutableArray *itemDataSource;
 
+@property (nonatomic, strong) JMReloadEmptyDataView *reload;
 
 @end
 
@@ -25,7 +27,18 @@ static NSString *const JMEarningRecordCellIdentifier = @"JMEarningRecordCellIden
 
 @implementation JMEarningRecordTableView
 
-
+- (UIView *)createPlaceHolderView {
+    return self.reload;
+}
+- (JMReloadEmptyDataView *)reload {
+    if (!_reload) {
+        __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"您还没有收益哦..." DescTitle:@"暂时还没有收益记录哦~" ButtonTitle:@"" Image:@"emptyJifenIcon" ReloadBlcok:^{
+            
+        }];
+        _reload = reload;
+    }
+    return _reload;
+}
 
 - (NSMutableArray *)itemDataSource {
     if (!_itemDataSource) {

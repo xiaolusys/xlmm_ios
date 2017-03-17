@@ -184,7 +184,7 @@ static NSUInteger selectedIndex = 0;
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(TabWidth, 64, ColWidth, SCREENHEIGHT - 64 - ktabBarHeight) collectionViewLayout:layout];
-    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     [self.collectionView registerClass:[JMCategoryListCell class] forCellWithReuseIdentifier:@"JMCategoryListCellIdentifier"];
