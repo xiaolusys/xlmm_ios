@@ -13,6 +13,8 @@
 #import "JMClassifyListController.h"
 #import "JMSearchViewController.h"
 #import "JMCategoryColSectionReusableView.h"
+#import "JMCategoryPageController.h"
+
 
 #define TabWidth SCREENWIDTH * 0.25
 #define ColWidth SCREENWIDTH * 0.75
@@ -247,13 +249,17 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *indexPathArr = self.colDataSource[selectedIndex];
-    NSDictionary *dic = indexPathArr[indexPath.section][indexPath.row];
-    NSString *cid = dic[@"cid"];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
-    JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
-    itemVC.titleString = dic[@"name"];
-    itemVC.urlString = urlString;
-    [self.navigationController pushViewController:itemVC animated:YES];
+    JMCategoryPageController *pageVC = [[JMCategoryPageController alloc] init];
+    pageVC.sectionItems = indexPathArr[indexPath.section];
+    pageVC.currentIndex = indexPath.row + 1;
+    [self.navigationController pushViewController:pageVC animated:YES];
+//    NSDictionary *dic = indexPathArr[indexPath.section][indexPath.row];
+//    NSString *cid = dic[@"cid"];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@&page=1&page_size=10",Root_URL,cid];
+//    JMClassifyListController *itemVC = [[JMClassifyListController alloc] init];
+//    itemVC.titleString = dic[@"name"];
+//    itemVC.urlString = urlString;
+//    [self.navigationController pushViewController:itemVC animated:YES];
 }
 #pragma mark ==== 搜索框搜索事件 ====
 - (void)searchButtonClick {

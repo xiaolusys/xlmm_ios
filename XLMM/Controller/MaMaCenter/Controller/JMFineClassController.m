@@ -23,7 +23,7 @@
 #import "JMRootTabBarController.h"
 
 
-@interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
+@interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate,WKNavigationDelegate> {
     NSString *_fineCouponTid;
 }
 
@@ -50,6 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
     
     [self createWebView];
@@ -94,7 +95,7 @@
     NSDictionary *extraDict = resultsDict[@"extra"];
     self.urlString = extraDict[@"boutique"];
     [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
-    
+//    self.baseWebView.cs_h = 0.f;
 }
 
 - (void)createWebView {
@@ -103,8 +104,10 @@
     [self.view addSubview:statusBarView];
     
     self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20 - ktabBarHeight) usingUIWebView:NO];
+    self.baseWebView.backgroundColor = [UIColor clearColor];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
+    
     self.baseWebView.viewController = self;
 //    self.baseWebView.progressBlock = ^(double estimatedProgress) {
 //        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
@@ -122,8 +125,11 @@
     
 }
 - (void)webViewDidFinishLoad:(IMYWebView *)webView {
+//    self.baseWebView.cs_h = SCREENHEIGHT - 20 - ktabBarHeight;
     [[JMGlobal global] hideWaitLoading];
 }
+
+
 - (void)emptyView {
     kWeakSelf
     self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];

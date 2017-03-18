@@ -29,7 +29,7 @@
     if (!_segmentControl) {
         _segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 45)];
         _segmentControl.backgroundColor = [UIColor whiteColor];
-        self.segmentControl.sectionTitles = _itemArr;
+        _segmentControl.sectionTitles = _itemArr;
         _segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
         _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
         _segmentControl.selectionIndicatorHeight = 2.f;

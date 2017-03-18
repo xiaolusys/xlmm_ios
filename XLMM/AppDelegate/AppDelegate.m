@@ -96,7 +96,7 @@
     [JMStoreManager recoderAppLoadNum];
     NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
     if ([string isEqual:@"1"] || string == nil) {
-        [MiPushSDK registerMiPush:[JMMiPushManager miPushManager] type:0 connect:YES];
+        [self openPushMessage];
     }else { }
     
     [self umengShareInit];

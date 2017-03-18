@@ -120,7 +120,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"logout" object:nil];
     
     _qrCodeRequestDataIndex = 0;
     isShowRefresh = YES;

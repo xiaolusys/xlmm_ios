@@ -141,12 +141,6 @@
         TSettingViewController *set = [[TSettingViewController alloc] init];
         [self.navigationController pushViewController:set animated:YES];
     }else if (index == 7) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:NO forKey:@"login"];
-        [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-        [userDefaults setBool:NO forKey:@"isXLMM"];
-        [userDefaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
         
         //   http://m.xiaolu.so/rest/v1/users/customer_logout
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
@@ -160,12 +154,13 @@
                 [MiPushSDK unsetAccount:user_account];
                 [user setObject:@"" forKey:@"user_account"];
             }
-            
-            //发送通知修改NewLeft中的用户信息
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
-            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setBool:NO forKey:@"login"];
+            [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
+            [userDefaults setBool:NO forKey:@"isXLMM"];
+            [userDefaults synchronize];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
             [self.navigationController popViewControllerAnimated:YES];
-            
             UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
             

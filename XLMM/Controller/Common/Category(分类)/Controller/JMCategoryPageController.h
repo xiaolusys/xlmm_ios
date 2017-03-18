@@ -10,15 +10,8 @@
 
 @interface JMCategoryPageController : UIViewController
 
-
-
-
-
-
-
-
-
-
+@property (nonatomic, strong) NSArray *sectionItems;
+@property (nonatomic, assign) NSInteger currentIndex;
 
 
 
