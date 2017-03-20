@@ -449,6 +449,10 @@
         [self.baseScrollView addSubview:childCategoryVC.view];
         [childCategoryVC didMoveToParentViewController:self];
     }
+    
+    NSDictionary *tempDict = @{@"segmentPage" : [NSString stringWithFormat:@"%@",_categoryNameArray[index]]};
+    [MobClick event:@"currentSegmentPageWithHomeRoot" attributes:tempDict];
+    
 }
 #pragma mark 点击事件处理
 - (void)searchBarClick:(UIButton *)button {

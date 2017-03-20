@@ -167,14 +167,13 @@
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
-        NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
-        NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             if (![[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"小鹿提醒" message:@"您暂时还不是小鹿妈妈哦~ 请关注 \"小鹿美美\" 公众号,获取更多信息 " delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alert show];
                 return NO;
             }
+            [MobClick event:@"tabBarWithFine"];
             refreshFineIndex += 1;
             return YES;
         }else {
@@ -186,6 +185,7 @@
         }
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            [MobClick event:@"tabBarWithShoopingCart"];
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
@@ -194,6 +194,12 @@
             [viewController presentViewController:rootNav animated:YES completion:nil];
             return NO;
         }
+    }else if ([viewController.tabBarItem.title isEqualToString:@"首页"]) {
+        [MobClick event:@"tabBarWithHomeRoot"];
+        return YES;
+    }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
+        [MobClick event:@"tabBarWithMineCategory"];
+        return YES;
     }
 //    else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
 //        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -208,6 +214,7 @@
 //    }
     else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            [MobClick event:@"tabBarWithMine"];
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
