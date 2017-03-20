@@ -20,7 +20,9 @@
 #define kImgKey     @"imageName"
 #define kSelImgKey  @"selectedImageName"
 
-@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate>
+@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate> {
+    NSInteger refreshFineIndex;
+}
 
 
 
@@ -61,6 +63,10 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber) name:@"shoppingCartNumChange" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    refreshFineIndex = 0;
     
     self.delegate = self;
     NSArray *childItemsArray = @[
@@ -128,6 +134,11 @@
     }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
         //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isRefreshFine"] && refreshFineIndex > 1) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.fineVC refreshLoadMaMaWeb];
+        }
 //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
 //        [self.homeVC endAutoScroll];
@@ -156,12 +167,15 @@
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
+        NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
+        NSLog(@"%d",[[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]);
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             if (![[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"小鹿提醒" message:@"您暂时还不是小鹿妈妈哦~ 请关注 \"小鹿美美\" 公众号,获取更多信息 " delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alert show];
                 return NO;
             }
+            refreshFineIndex += 1;
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];

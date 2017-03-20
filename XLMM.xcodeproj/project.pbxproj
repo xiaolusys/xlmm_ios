@@ -733,7 +733,6 @@
 		1FF72C951DE7F55B0035F436 /* tabBar_personalNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C8F1DE7F55B0035F436 /* tabBar_personalNomal@2x.png */; };
 		1FF72C961DE7F55B0035F436 /* tabBar_personalSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */; };
 		1FFE22021E7B8AC4003C417B /* JMCategoryPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE22011E7B8AC4003C417B /* JMCategoryPageController.m */; };
-		1FFE22051E7BC226003C417B /* DOPDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE22041E7BC226003C417B /* DOPDropDownMenu.m */; };
 		1FFE220D1E7BD8E7003C417B /* icon_chose_arrow_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE22061E7BD8E7003C417B /* icon_chose_arrow_nor@2x.png */; };
 		1FFE220E1E7BD8E7003C417B /* icon_chose_arrow_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE22071E7BD8E7003C417B /* icon_chose_arrow_sel@2x.png */; };
 		1FFE220F1E7BD8E7003C417B /* icon_chose_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE22081E7BD8E7003C417B /* icon_chose_bottom@2x.png */; };
@@ -742,7 +741,7 @@
 		1FFE22121E7BD8E7003C417B /* SortingWithPrice_Nomarl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE220B1E7BD8E7003C417B /* SortingWithPrice_Nomarl@2x.png */; };
 		1FFE22131E7BD8E7003C417B /* SortingWithPrice_Selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE220C1E7BD8E7003C417B /* SortingWithPrice_Selected@2x.png */; };
 		1FFE22151E7BE28A003C417B /* categoryPauxu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFE22141E7BE28A003C417B /* categoryPauxu@2x.png */; };
-		1FFE22181E7CCC34003C417B /* CSDropdownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE22171E7CCC34003C417B /* CSDropdownMenu.m */; };
+		1FFE221B1E7D24A0003C417B /* JMCategorySortingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFE221A1E7D24A0003C417B /* JMCategorySortingCell.m */; };
 		321857BE1CA109550085FF21 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B71CA109550085FF21 /* WebViewJavascriptBridge.m */; };
 		321857BF1CA109550085FF21 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857B91CA109550085FF21 /* WebViewJavascriptBridge_JS.m */; };
 		321857C01CA109550085FF21 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 321857BB1CA109550085FF21 /* WebViewJavascriptBridgeBase.m */; };
@@ -2031,8 +2030,6 @@
 		1FF72C901DE7F55B0035F436 /* tabBar_personalSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_personalSelected@2x.png"; sourceTree = "<group>"; };
 		1FFE22001E7B8AC4003C417B /* JMCategoryPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryPageController.h; sourceTree = "<group>"; };
 		1FFE22011E7B8AC4003C417B /* JMCategoryPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategoryPageController.m; sourceTree = "<group>"; };
-		1FFE22031E7BC226003C417B /* DOPDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOPDropDownMenu.h; sourceTree = "<group>"; };
-		1FFE22041E7BC226003C417B /* DOPDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOPDropDownMenu.m; sourceTree = "<group>"; };
 		1FFE22061E7BD8E7003C417B /* icon_chose_arrow_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_nor@2x.png"; sourceTree = "<group>"; };
 		1FFE22071E7BD8E7003C417B /* icon_chose_arrow_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_arrow_sel@2x.png"; sourceTree = "<group>"; };
 		1FFE22081E7BD8E7003C417B /* icon_chose_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_chose_bottom@2x.png"; sourceTree = "<group>"; };
@@ -2041,8 +2038,8 @@
 		1FFE220B1E7BD8E7003C417B /* SortingWithPrice_Nomarl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SortingWithPrice_Nomarl@2x.png"; sourceTree = "<group>"; };
 		1FFE220C1E7BD8E7003C417B /* SortingWithPrice_Selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SortingWithPrice_Selected@2x.png"; sourceTree = "<group>"; };
 		1FFE22141E7BE28A003C417B /* categoryPauxu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "categoryPauxu@2x.png"; sourceTree = "<group>"; };
-		1FFE22161E7CCC34003C417B /* CSDropdownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSDropdownMenu.h; sourceTree = "<group>"; };
-		1FFE22171E7CCC34003C417B /* CSDropdownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSDropdownMenu.m; sourceTree = "<group>"; };
+		1FFE22191E7D24A0003C417B /* JMCategorySortingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategorySortingCell.h; sourceTree = "<group>"; };
+		1FFE221A1E7D24A0003C417B /* JMCategorySortingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCategorySortingCell.m; sourceTree = "<group>"; };
 		2E8DB9681C1690B500FC33C2 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		321857B61CA109550085FF21 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
@@ -5590,10 +5587,6 @@
 				1F6B79D01DD9BF95009AB446 /* JMPopView.m */,
 				1F6B79D11DD9BF95009AB446 /* JMShareView.h */,
 				1F6B79D21DD9BF95009AB446 /* JMShareView.m */,
-				1FFE22031E7BC226003C417B /* DOPDropDownMenu.h */,
-				1FFE22041E7BC226003C417B /* DOPDropDownMenu.m */,
-				1FFE22161E7CCC34003C417B /* CSDropdownMenu.h */,
-				1FFE22171E7CCC34003C417B /* CSDropdownMenu.m */,
 				1F6B79D31DD9BF95009AB446 /* POPAnimation */,
 			);
 			path = POPView;
@@ -5960,6 +5953,8 @@
 			children = (
 				1FE52E441D950BBE0051D5A0 /* JMHomeRootCategoryCell.h */,
 				1FE52E451D950BBE0051D5A0 /* JMHomeRootCategoryCell.m */,
+				1FFE22191E7D24A0003C417B /* JMCategorySortingCell.h */,
+				1FFE221A1E7D24A0003C417B /* JMCategorySortingCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7079,7 +7074,6 @@
 				1F5877861DB8A60D00949302 /* MaMaHuoyueduViewController.m in Sources */,
 				1F561E741E67C3A700799332 /* JMTotalEarningController.m in Sources */,
 				1F5877F01DB8A7AF00949302 /* JMProductSelectListCell.m in Sources */,
-				1FFE22051E7BC226003C417B /* DOPDropDownMenu.m in Sources */,
 				1830728C1C97C00900B7665E /* UILabel+CustomLabel.m in Sources */,
 				1F2F9E461D5978EB00E3A68B /* JMGoodsDetailController.m in Sources */,
 				1F498C1D1D2772D0007E77FC /* JMCompSugView.m in Sources */,
@@ -7089,7 +7083,6 @@
 				1FF533E31D2DF8AA003DEABF /* JMOrderDetailController.m in Sources */,
 				1F37938A1DEE82490044E325 /* FMDatabaseQueue.m in Sources */,
 				1F3793FB1DEE827E0044E325 /* DataVerifier.m in Sources */,
-				1FFE22181E7CCC34003C417B /* CSDropdownMenu.m in Sources */,
 				1F4C9E901D9912600089CE74 /* UdeskVoiceRecordHUD.m in Sources */,
 				1F5877F11DB8A7AF00949302 /* YixuanTableViewCell.m in Sources */,
 				1830728F1C97C00900B7665E /* ArrowView.m in Sources */,
@@ -7283,6 +7276,7 @@
 				1F4C9EAC1D9912600089CE74 /* UdeskPhotographyHelper.m in Sources */,
 				1F4C9EBC1D9912600089CE74 /* UdeskReachability.m in Sources */,
 				1F1FB8C81D8E24D2004C60CE /* NJKWebViewProgressView.m in Sources */,
+				1FFE221B1E7D24A0003C417B /* JMCategorySortingCell.m in Sources */,
 				1F5877ED1DB8A7AF00949302 /* JMAlreadyChooseModel.m in Sources */,
 				1F3793891DEE82490044E325 /* FMDatabasePool.m in Sources */,
 				1F5877A81DB8A60D00949302 /* JMMaMaTeamController.m in Sources */,

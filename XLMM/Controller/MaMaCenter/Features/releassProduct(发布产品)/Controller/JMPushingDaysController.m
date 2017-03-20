@@ -387,7 +387,11 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
     return self.images[index];
 }
 - (NSURL *)photoBrowser:(JMPhotoBrowesView *)browser highQualityImageURLForIndex:(NSInteger)index {
-    return [NSURL URLWithString:[imageUrlArray[index] imageNormalCompression]];
+    NSString *picUrlString = imageUrlArray[index];
+    if ([NSString isStringEmpty:picUrlString]) {
+        return nil;
+    }
+    return [NSURL URLWithString:[picUrlString imageNormalCompression]];
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
@@ -496,6 +500,9 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
     NSInteger curArrCount = curArr.count;
     for (int i = 0; i < curArrCount; i++) {
         NSString *picUrl = curArr[i];
+        if ([NSString isStringEmpty:picUrl]) {
+            continue;
+        }
         NSString *indexString = [picUrl md5];
         [indexArray addObject:indexString];
         if (picModel.show_qrcode) {

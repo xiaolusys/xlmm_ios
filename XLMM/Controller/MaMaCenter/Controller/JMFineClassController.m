@@ -53,6 +53,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
     
+    NSString *librayrfPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *cookiesfolderPath = [librayrfPath stringByAppendingString:@"/Cookies"];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:cookiesfolderPath error:&error];
+    
     [self createWebView];
     [self emptyView];
     [self loadMaMaWeb];
@@ -63,12 +68,16 @@
     }
     
     
+    
 }
 
 - (void)refreshWebView {
     if (![NSString isStringEmpty:self.urlString] && self.baseWebView != nil) {
         [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
     }
+}
+- (void)refreshLoadMaMaWeb {
+    [self loadMaMaWeb];
 }
 
 - (void)loadMaMaWeb {
@@ -89,11 +98,14 @@
     }];
 }
 - (void)mamaWebViewData:(NSDictionary *)mamaDic {
+    NSLog(@"JMFineClassController --> kIsLogin %d",[[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
+    NSLog(@"JMFineClassController --> kISXLMM %d",[[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]);
     NSArray *resultsArr = mamaDic[@"results"];
     NSDictionary *resultsDict = [NSDictionary dictionary];
     resultsDict = resultsArr[0];
     NSDictionary *extraDict = resultsDict[@"extra"];
     self.urlString = extraDict[@"boutique"];
+    NSLog(@"JMFineClassController --> self.urlString %@",self.urlString);
     [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
 //    self.baseWebView.cs_h = 0.f;
 }

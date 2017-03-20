@@ -657,6 +657,7 @@ static BOOL isAgreeTerms = YES;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (_cartsInfoLevel > _addressInfoLevel) {
             [self userNotIdCardNumberMessage];
+            return ;
         }
         if (!isAgreeTerms) {
             [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];

@@ -214,17 +214,24 @@ static NSUInteger selectedIndex = 0;
 }
 #pragma mark ==== UICollectionView 代理实现 ====
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    NSArray *dicArr = self.colSectionDataSource[selectedIndex];
-    if (dicArr.count == 0) {
+    if (self.colSectionDataSource.count <= selectedIndex) {
+        return 1;
+    }else {
+        NSArray *dicArr = self.colSectionDataSource[selectedIndex];
+        return dicArr.count;
     }
-    return dicArr.count;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSArray *dicArr = self.colDataSource[selectedIndex];
-    NSArray *dicRowArr = dicArr[section];
-    if (dicRowArr.count == 0) {
+    if (self.colDataSource.count <= selectedIndex) {
+        return 0;
+    }else {
+        NSArray *dicArr = self.colDataSource[selectedIndex];
+        if (dicArr.count <= section) {
+            return 0;
+        }
+        NSArray *dicRowArr = dicArr[section];
+        return dicRowArr.count;
     }
-    return dicRowArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     JMCategoryListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JMCategoryListCellIdentifier" forIndexPath:indexPath];

@@ -176,29 +176,6 @@
 }
 
 #pragma mark- WKNavigationDelegate
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
-    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
-    NSLog(@"\n====================================\n");
-    //读取wkwebview中的cookie 方法1
-    for (NSHTTPCookie *cookie in cookies) {
-        //        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-        NSLog(@"wkwebview中的cookie:%@", cookie);
-    }
-    NSLog(@"\n====================================\n");
-    //读取wkwebview中的cookie 方法2 读取Set-Cookie字段
-    NSString *cookieString = [[response allHeaderFields] valueForKey:@"Set-Cookie"];
-    NSLog(@"wkwebview中的cookie:%@", cookieString);
-    NSLog(@"\n====================================\n");
-    //看看存入到了NSHTTPCookieStorage了没有
-    NSHTTPCookieStorage *cookieJar2 = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *cookie in cookieJar2.cookies) {
-        NSLog(@"NSHTTPCookieStorage中的cookie%@", cookie);
-    }
-    NSLog(@"\n====================================\n");
-    
-    decisionHandler(WKNavigationResponsePolicyAllow);
-}
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     BOOL resultBOOL = [self callback_webViewShouldStartLoadWithRequest:navigationAction.request navigationType:navigationAction.navigationType];
