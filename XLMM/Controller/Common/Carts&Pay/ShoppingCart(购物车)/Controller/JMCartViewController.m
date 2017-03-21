@@ -23,6 +23,7 @@
     BOOL historyCartDownLoad;
     BOOL isEmpty;
     float allPrice;
+    NSInteger _currentRowIndex;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -162,7 +163,6 @@
     if (array.count <= 0 && currentCartDownLoad && isEmpty) {
         [self displayDefaultView];
     }
-    
     [self.historyCartDataSource removeAllObjects];
     for (NSDictionary *dic in array) {
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
@@ -304,8 +304,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         self.deleteModel = [self.currentCartDataSource objectAtIndex:indexPath.row];
-        [self.currentCartDataSource removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        _currentRowIndex = indexPath.row;
         [self deleteClicked];
     }
 }
@@ -492,6 +491,8 @@
         if (code == 0) {
             [self downloadCurrentCartData];
             [self downloadHistoryCartData];
+            [self.currentCartDataSource removeObjectAtIndex:_currentRowIndex];
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_currentRowIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }

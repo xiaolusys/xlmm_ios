@@ -365,7 +365,7 @@ static BOOL isAgreeTerms = YES;
     }
     _uuid = [purchaseDic objectForKey:@"uuid"];
     if (![NSString isStringEmpty:[purchaseDic objectForKey:@"cart_ids"]]) {
-        _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
+        _cartIDs = [NSString stringWithFormat:@"%@",[purchaseDic objectForKey:@"cart_ids"]];
     }
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
@@ -611,9 +611,15 @@ static BOOL isAgreeTerms = YES;
     // 100->优惠券  101->钱包  102->条款  103->结算
     if (button.tag == 100) {
         button.enabled = NO;
+        if ([NSString isStringEmpty:_cartIDs] && [NSString isStringEmpty:self.paramstring]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"优惠券暂不可用,请重新添加购买~" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            button.enabled = YES;
+            return ;
+        }
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
-        segmentVC.cartID = _cartIDs;
+        segmentVC.cartID = [NSString isStringEmpty:_cartIDs] ? self.paramstring : _cartIDs;
         segmentVC.isSelectedYHQ = YES;
         segmentVC.selectedModelID = _yhqModelID;
         segmentVC.couponNumber = _couponNumber;
