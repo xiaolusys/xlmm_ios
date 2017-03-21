@@ -170,6 +170,7 @@ static BOOL isNetPrompt;
         }
         if (([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0)) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
         }else {
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
         }

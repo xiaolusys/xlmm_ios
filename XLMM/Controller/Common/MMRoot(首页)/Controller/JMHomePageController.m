@@ -114,14 +114,10 @@
     [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
 }
 - (void)updataAfterLogin:(NSNotification *)notification{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     // 微信登录
     [self loginUpdateIsXiaoluMaMa];
 }
 - (void)phoneNumberLogin:(NSNotification *)notification{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     //  NSLog(@"手机登录");
     [self loginUpdateIsXiaoluMaMa];
 }

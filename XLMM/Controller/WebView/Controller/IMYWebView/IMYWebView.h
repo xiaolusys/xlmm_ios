@@ -24,7 +24,7 @@ typedef void (^IMYWebViewProgressBlock)(double estimatedProgress);
 @end
 
 ///无缝切换UIWebView   会根据系统版本自动选择 使用WKWebView 还是  UIWebView
-@interface IMYWebView : UIView 
+@interface IMYWebView : UIView
 
 ///使用UIWebView
 - (instancetype)initWithFrame:(CGRect)frame usingUIWebView:(BOOL)usingUIWebView;

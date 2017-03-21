@@ -23,7 +23,7 @@
 #import "JMRootTabBarController.h"
 
 
-@interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate,WKNavigationDelegate> {
+@interface JMFineClassController () <IMYWebViewDelegate,UIWebViewDelegate,WKUIDelegate> {
     NSString *_fineCouponTid;
 }
 
@@ -53,11 +53,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
     
-    NSString *librayrfPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *cookiesfolderPath = [librayrfPath stringByAppendingString:@"/Cookies"];
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:cookiesfolderPath error:&error];
-    
     [self createWebView];
     [self emptyView];
     [self loadMaMaWeb];
@@ -66,9 +61,6 @@
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
         [self registerJsBridge];
     }
-    
-    
-    
 }
 
 - (void)refreshWebView {
@@ -98,8 +90,6 @@
     }];
 }
 - (void)mamaWebViewData:(NSDictionary *)mamaDic {
-    NSLog(@"JMFineClassController --> kIsLogin %d",[[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]);
-    NSLog(@"JMFineClassController --> kISXLMM %d",[[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]);
     NSArray *resultsArr = mamaDic[@"results"];
     NSDictionary *resultsDict = [NSDictionary dictionary];
     resultsDict = resultsArr[0];
@@ -219,6 +209,18 @@
 
 
 
+
+//     清除缓存
+//WKWebsiteDataStore *dataStore = [WKWebsiteDataStore defaultDataStore];
+//[dataStore fetchDataRecordsOfTypes:[WKWebsiteDataStore allWebsiteDataTypes] completionHandler:^(NSArray<WKWebsiteDataRecord *> * _Nonnull records) {
+//    for (WKWebsiteDataRecord *recird in records) {
+//        //            if ([recird.displayName containsString:@""]) {
+//        [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:recird.dataTypes forDataRecords:@[recird] completionHandler:^{
+//            NSLog(@"Cookise for %@ deleted successfully",recird.displayName);
+//        }];
+//        //            }
+//    }
+//}];
 
 
 
