@@ -9,7 +9,6 @@
 #import "JMWithdrawCashController.h"
 #import "TixianSucceedViewController.h"
 #import "JMSelecterButton.h"
-#import "WXLoginController.h"
 
 #define COUNTING_LIMIT 60
 

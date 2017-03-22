@@ -9,12 +9,12 @@
 #import "JMSettingController.h"
 #import "JMChoiseWithDrawCell.h"
 #import "ChangeNicknameViewController.h"
-#import "WXLoginController.h"
-#import "VerifyPhoneViewController.h"
 #import "JMAddressViewController.h"
 #import "ThirdAccountViewController.h"
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
+#import "JMVerificationCodeController.h"
+
 
 @interface JMSettingController () <UITableViewDataSource,UITableViewDelegate> {
     NSMutableArray *cellDataArr;              // 自定义在cell上展示的类型
@@ -120,16 +120,17 @@
         [self.navigationController pushViewController:changeNicknameView animated:YES];
     }else if (index == 2) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
-        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-            wxloginVC.userInfo = dic;
-            [self.navigationController pushViewController:wxloginVC animated:YES];
-        } // -- > 不做判断
+//        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+            JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+            vc.verificationCodeType = SMSVerificationCodeWithBind;
+            vc.userInfo = dic;
+            [self.navigationController pushViewController:vc animated:YES];
+//        } // -- > 不做判断
         
     }else if (index == 3) {
-        VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-        verifyVC.config = @{@"title":@"请验证手机",@"isUpdateMobile":@YES};
-        [self.navigationController pushViewController:verifyVC animated:YES];
+        JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+        verfyCodeVC.verificationCodeType = SMSVerificationCodeWithChangePWD;
+        [self.navigationController pushViewController:verfyCodeVC animated:YES];
     }else if (index == 4) {
         ThirdAccountViewController *third = [[ThirdAccountViewController alloc] initWithNibName:@"ThirdAccountViewController" bundle:nil];
         [self.navigationController pushViewController:third animated:YES];

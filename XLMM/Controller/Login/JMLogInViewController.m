@@ -9,11 +9,10 @@
 #import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "JMPhonenumViewController.h"
-#import "JMAuthcodeViewController.h"
-#import "RegisterViewController.h"
 #import "MiPushSDK.h"
 #import "JMSelecterButton.h"
-#import "VerifyPhoneViewController.h"
+#import "JMVerificationCodeController.h"
+
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -305,15 +304,15 @@
 }
 //跳转到验证码登录
 - (void)jumpToAuthcodeLoginVC:(UIButton *)btn {
-    JMAuthcodeViewController *authL = [[JMAuthcodeViewController alloc] init];
-    authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
-    [self.navigationController pushViewController:authL animated:YES];
+    JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+    verfyCodeVC.verificationCodeType = SMSVerificationCodeWithLogin;
+    [self.navigationController pushViewController:verfyCodeVC animated:YES];
 }
 //跳转到注册界面
 - (void)jumpToRegisterVC:(UIButton *)btn {
-    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES, @"isMessageLogin":@NO};
-    [self.navigationController pushViewController:verifyVC animated:YES];
+    JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+    verfyCodeVC.verificationCodeType = SMSVerificationCodeWithRegistered;
+    [self.navigationController pushViewController:verfyCodeVC animated:YES];
 }
 
 #pragma mark ---- 微信登录成功调用函数

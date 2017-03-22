@@ -9,9 +9,9 @@
 #import "JMPhonenumViewController.h"
 #import "WXApi.h"
 #import "MiPushSDK.h"
-#import "VerifyPhoneViewController.h"
 #import "JMLineView.h"
 #import "JMLogInViewController.h"
+#import "JMVerificationCodeController.h"
 
 #define rememberPwdKey @"rememberPwd"
 
@@ -189,9 +189,9 @@
 
 #pragma mark ------ 登录按钮点击
 - (void)loginBtnClick:(UIButton *)btn {
+    btn.enabled = NO;
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
-    
     
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;
@@ -207,6 +207,7 @@
             //            [self alertMessage:[responseObject objectForKey:@"msg"]];
             //            [SVProgressHUD dismiss];
             [MBProgressHUD showError:[responseObject objectForKey:@"msg"]];
+            btn.enabled = YES;
             return ;
         }
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -220,12 +221,14 @@
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
         [MBProgressHUD showMessage:@"登录中....."];
+        btn.enabled = YES;
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         [self setDevice];
         [self backApointInterface];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"登录失败，请重试"];
+        btn.enabled = YES;
     } Progress:^(float progress) {
         
     }];
@@ -261,13 +264,11 @@
 
 
 #pragma mark ---- 忘记密码按钮点击
-
 - (void)forgetPasswordClicked:(UIButton *)sender {
-    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO,@"isVerifyPsd":@YES};
+    JMVerificationCodeController *verifyVC = [[JMVerificationCodeController alloc] init];
+    verifyVC.verificationCodeType = SMSVerificationCodeWithForgetPWD;
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
-
 #pragma mark ----- 是否显示密码明文或者暗文
 - (void)seePasswordButtonClicked:(UIButton *)sender {
     UIImage *image = nil;
@@ -283,21 +284,21 @@
 
 #pragma mark -----UITextFieldDelegate
 //是否允许本字段结束编辑，允许-->文本字段会失去firse responder
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     
     return YES;
 }
 //输入框获得焦点，执行这个方法
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     [textField becomeFirstResponder];
 }
 //点击键盘的返回键  执行这个方法  -- 用来隐藏键盘
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
     
