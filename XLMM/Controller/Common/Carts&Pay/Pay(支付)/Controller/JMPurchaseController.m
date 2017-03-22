@@ -251,6 +251,7 @@ static BOOL isAgreeTerms = YES;
     } WithFail:^(NSError *error) {
         _cartPayInfoLoadFinish = NO;
         [MBProgressHUD showError:@"获取数据失败"];
+        self.purchaseFooterView.goPayButton.enabled = NO;
     } Progress:^(float progress) {
     }];
 }
