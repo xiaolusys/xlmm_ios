@@ -8,6 +8,8 @@
 
 #import "JMEarningRecordCell.h"
 #import "CarryLogModel.h"
+#import "JMEarningModel.h"
+
 
 @interface JMEarningRecordCell ()
 
@@ -29,17 +31,17 @@
     return self;
 }
 - (void)initUI {
-    UIImageView *iconImageView = [UIImageView new];
-    iconImageView.layer.masksToBounds = YES;
-    iconImageView.layer.cornerRadius = 22.f;
-    [self.contentView addSubview:iconImageView];
-    self.iconImageView = iconImageView;
+//    UIImageView *iconImageView = [UIImageView new];
+//    iconImageView.layer.masksToBounds = YES;
+//    iconImageView.layer.cornerRadius = 22.f;
+//    [self.contentView addSubview:iconImageView];
+//    self.iconImageView = iconImageView;
     
-    UILabel *statusLabel = [UILabel new];
-    statusLabel.font = [UIFont systemFontOfSize:13.];
-    statusLabel.textColor = [UIColor orangeColor];
-    [self.contentView addSubview:statusLabel];
-    self.statusLabel = statusLabel;
+//    UILabel *statusLabel = [UILabel new];
+//    statusLabel.font = [UIFont systemFontOfSize:13.];
+//    statusLabel.textColor = [UIColor orangeColor];
+//    [self.contentView addSubview:statusLabel];
+//    self.statusLabel = statusLabel;
     
     UILabel *nameLabel = [UILabel new];
     nameLabel.font = [UIFont systemFontOfSize:13.];
@@ -53,11 +55,11 @@
     [self.contentView addSubview:descLabel];
     self.descLabel = descLabel;
     
-    UILabel *timeLabel = [UILabel new];
-    timeLabel.font = [UIFont systemFontOfSize:13.];
-    timeLabel.textColor = [UIColor buttonTitleColor];
-    [self.contentView addSubview:timeLabel];
-    self.timeLabel = timeLabel;
+//    UILabel *timeLabel = [UILabel new];
+//    timeLabel.font = [UIFont systemFontOfSize:13.];
+//    timeLabel.textColor = [UIColor buttonTitleColor];
+//    [self.contentView addSubview:timeLabel];
+//    self.timeLabel = timeLabel;
     
     UILabel *earningLabel = [UILabel new];
     earningLabel.font = [UIFont systemFontOfSize:18.];
@@ -66,28 +68,28 @@
     self.earningLabel = earningLabel;
     
     kWeakSelf
-    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.contentView).offset(10);
-        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
-        make.width.height.mas_equalTo(@(44));
-    }];
-    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
-        make.top.equalTo(weakSelf.iconImageView);
-    }];
+//    [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(weakSelf.contentView).offset(10);
+//        make.centerY.equalTo(weakSelf.contentView.mas_centerY);
+//        make.width.height.mas_equalTo(@(44));
+//    }];
+//    [self.statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
+//        make.top.equalTo(weakSelf.iconImageView);
+//    }];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.statusLabel.mas_right).offset(10);
-        make.width.mas_equalTo(@(SCREENWIDTH - 180));
-        make.centerY.equalTo(weakSelf.statusLabel.mas_centerY);
+        make.left.equalTo(weakSelf.contentView).offset(10);
+        make.top.equalTo(weakSelf.contentView).offset(15);
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.statusLabel);
-        make.top.equalTo(weakSelf.statusLabel.mas_bottom).offset(10);
+        make.left.equalTo(weakSelf.nameLabel);
+        make.bottom.equalTo(weakSelf.contentView).offset(-15);
+        make.width.mas_equalTo(@(SCREENWIDTH - 120));
     }];
-    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakSelf.contentView).offset(-10);
-        make.centerY.equalTo(weakSelf.statusLabel.mas_centerY);
-    }];
+//    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakSelf.contentView).offset(-10);
+//        make.centerY.equalTo(weakSelf.statusLabel.mas_centerY);
+//    }];
     [self.earningLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.contentView).offset(-10);
         make.centerY.equalTo(weakSelf.contentView.mas_centerY);
@@ -95,6 +97,11 @@
     
     
     
+}
+- (void)configEarningModel:(JMEarningModel *)model {
+    self.nameLabel.text = [NSString jm_subWithHourMinuteSe:model.created];
+    self.descLabel.text = model.type;
+    self.earningLabel.text = [NSString stringWithFormat:@"+%.2f", ([model.amount floatValue] / 100.f)];
 }
 
 - (void)configModel:(CarryLogModel *)model Index:(NSInteger)index {

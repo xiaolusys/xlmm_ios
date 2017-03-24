@@ -9,12 +9,12 @@
 #import "JMSettingController.h"
 #import "JMChoiseWithDrawCell.h"
 #import "ChangeNicknameViewController.h"
-#import "WXLoginController.h"
-#import "VerifyPhoneViewController.h"
 #import "JMAddressViewController.h"
 #import "ThirdAccountViewController.h"
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
+#import "JMVerificationCodeController.h"
+
 
 @interface JMSettingController () <UITableViewDataSource,UITableViewDelegate> {
     NSMutableArray *cellDataArr;              // 自定义在cell上展示的类型
@@ -121,15 +121,16 @@
     }else if (index == 2) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
         if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
-            WXLoginController *wxloginVC = [[WXLoginController alloc]  initWithNibName:@"WXLoginController" bundle:nil];
-            wxloginVC.userInfo = dic;
-            [self.navigationController pushViewController:wxloginVC animated:YES];
+            JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+            vc.verificationCodeType = SMSVerificationCodeWithBind;
+            vc.userInfo = dic;
+            [self.navigationController pushViewController:vc animated:YES];
         } // -- > 不做判断
         
     }else if (index == 3) {
-        VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-        verifyVC.config = @{@"title":@"请验证手机",@"isUpdateMobile":@YES};
-        [self.navigationController pushViewController:verifyVC animated:YES];
+        JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+        verfyCodeVC.verificationCodeType = SMSVerificationCodeWithChangePWD;
+        [self.navigationController pushViewController:verfyCodeVC animated:YES];
     }else if (index == 4) {
         ThirdAccountViewController *third = [[ThirdAccountViewController alloc] initWithNibName:@"ThirdAccountViewController" bundle:nil];
         [self.navigationController pushViewController:third animated:YES];
@@ -141,12 +142,6 @@
         TSettingViewController *set = [[TSettingViewController alloc] init];
         [self.navigationController pushViewController:set animated:YES];
     }else if (index == 7) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:NO forKey:@"login"];
-        [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-        [userDefaults setBool:NO forKey:@"isXLMM"];
-        [userDefaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
         
         //   http://m.xiaolu.so/rest/v1/users/customer_logout
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
@@ -160,12 +155,13 @@
                 [MiPushSDK unsetAccount:user_account];
                 [user setObject:@"" forKey:@"user_account"];
             }
-            
-            //发送通知修改NewLeft中的用户信息
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
-            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setBool:NO forKey:@"login"];
+            [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
+            [userDefaults setBool:NO forKey:@"isXLMM"];
+            [userDefaults synchronize];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
             [self.navigationController popViewControllerAnimated:YES];
-            
             UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
             

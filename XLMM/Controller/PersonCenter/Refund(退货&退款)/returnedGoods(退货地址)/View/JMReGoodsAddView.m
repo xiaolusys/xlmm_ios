@@ -56,6 +56,13 @@
 //    self.PhoneL.text = [NSString stringWithFormat:@"联系电话:%@",reGoodsDic[@"mobile"]];
 //    NSString *douhaoStr = @"，";
     NSString *addressStr = reGoodsDic[@"return_address"];
+    if ([NSString isStringEmpty:addressStr]) {
+        self.nameL.text = @"";
+        self.PhoneL.text = @"";
+        self.addressL.text = @"退货地址请咨询小鹿美美客服哦";
+        self.addressL.textColor = [UIColor redColor];
+        return ;
+    }
     if ([addressStr rangeOfString:@"，"].location != NSNotFound) {
         NSArray *arr = [addressStr componentsSeparatedByString:@"，"];
         NSString *addStr = @"";

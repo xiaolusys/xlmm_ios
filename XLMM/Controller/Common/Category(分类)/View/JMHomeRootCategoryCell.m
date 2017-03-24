@@ -32,13 +32,6 @@
 
 
 - (void)initUI {
-    
-    self.contentView.backgroundColor = [UIColor countLabelColor];
-    UIView *aView = [[UIView alloc]initWithFrame:self.contentView.frame];
-    aView.backgroundColor = [UIColor whiteColor];
-    self.selectedBackgroundView = aView;
-    
-    
     self.nameLabel = [UILabel new];
     [self.contentView addSubview:self.nameLabel];
     self.nameLabel.textColor = [UIColor buttonTitleColor];

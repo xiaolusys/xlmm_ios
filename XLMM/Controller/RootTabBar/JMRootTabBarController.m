@@ -20,7 +20,9 @@
 #define kImgKey     @"imageName"
 #define kSelImgKey  @"selectedImageName"
 
-@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate>
+@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate> {
+    NSInteger refreshFineIndex;
+}
 
 
 
@@ -61,6 +63,10 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber) name:@"shoppingCartNumChange" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    refreshFineIndex = 0;
     
     self.delegate = self;
     NSArray *childItemsArray = @[
@@ -128,6 +134,11 @@
     }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
         //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isRefreshFine"] && refreshFineIndex > 1) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.fineVC refreshLoadMaMaWeb];
+        }
 //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
 //        [self.homeVC endAutoScroll];
@@ -162,6 +173,8 @@
                 [alert show];
                 return NO;
             }
+            [MobClick event:@"tabBarWithFine"];
+            refreshFineIndex += 1;
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
@@ -172,6 +185,7 @@
         }
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            [MobClick event:@"tabBarWithShoopingCart"];
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
@@ -180,6 +194,12 @@
             [viewController presentViewController:rootNav animated:YES completion:nil];
             return NO;
         }
+    }else if ([viewController.tabBarItem.title isEqualToString:@"首页"]) {
+        [MobClick event:@"tabBarWithHomeRoot"];
+        return YES;
+    }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
+        [MobClick event:@"tabBarWithMineCategory"];
+        return YES;
     }
 //    else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
 //        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
@@ -194,6 +214,7 @@
 //    }
     else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+            [MobClick event:@"tabBarWithMine"];
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];

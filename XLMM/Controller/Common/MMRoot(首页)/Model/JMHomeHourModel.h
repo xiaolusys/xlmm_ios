@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *price;
 @property (nonatomic, copy) NSDictionary *profit;
 @property (nonatomic, copy) NSString *start_time;
-
+@property (nonatomic, copy) NSString *activity_id;
 
 
 @end
@@ -27,6 +27,7 @@
  hour = 13;
  items =     (
  {
+ "activity_id" = 825;
  hour = 13;
  "model_id" = 24847;
  name = "\U767e\U642d\U4fdd\U6696\U957f\U6b3e\U7f8a\U6bdb\U62ab\U80a9";

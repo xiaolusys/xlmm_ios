@@ -11,11 +11,11 @@
 @interface JMPurchaseController : UIViewController
 
 
-@property (nonatomic, strong) NSMutableArray *purchaseGoodsArr;
+@property (nonatomic, strong) NSMutableArray *purchaseGoods;
 @property (nonatomic, strong) NSNumber * directBuyGoodsTypeNumber;
 /**
  *  获取商品购买商品ID
  */
-@property (nonatomic ,strong) NSMutableString *paramstring;
+@property (nonatomic ,copy) NSString *paramstring;
 
 @end

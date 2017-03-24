@@ -9,9 +9,11 @@
 #import "JMPhonenumViewController.h"
 #import "WXApi.h"
 #import "MiPushSDK.h"
-#import "VerifyPhoneViewController.h"
 #import "JMLineView.h"
 #import "JMLogInViewController.h"
+#import "JMVerificationCodeController.h"
+#import "AESEncryption.h"
+
 
 #define rememberPwdKey @"rememberPwd"
 
@@ -71,14 +73,15 @@
     //设置账号和密码的默认值
     self.phoneNumTextF.text = [defaults objectForKey:kUserName];
     if (self.rememberPwdBtn.selected) {
-        self.passwordTextF.text = [defaults objectForKey:kPassWord];
+        NSString *decryptedStr = [AESEncryption decrypt:[defaults objectForKey:kPassWord] password:self.phoneNumTextF.text];
+        self.passwordTextF.text = decryptedStr;
     }
     
 //    [self textChange];
     
     //设置记住密码按钮默认值
     NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
-    self.rememberPwdBtn.selected = [defaultsPwd boolForKey:@"rememberPwd"];
+    self.rememberPwdBtn.selected = [defaultsPwd boolForKey:rememberPwdKey];
     
     
 }
@@ -189,9 +192,9 @@
 
 #pragma mark ------ 登录按钮点击
 - (void)loginBtnClick:(UIButton *)btn {
+    btn.enabled = NO;
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
-    
     
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;
@@ -199,6 +202,7 @@
         [MBProgressHUD showWarning:@"请输入正确的信息！"];
         return;
     }
+    [MBProgressHUD showMessage:@"登录中....."];
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password,
                                  @"devtype":LOGINDEVTYPE};
@@ -207,6 +211,7 @@
             //            [self alertMessage:[responseObject objectForKey:@"msg"]];
             //            [SVProgressHUD dismiss];
             [MBProgressHUD showError:[responseObject objectForKey:@"msg"]];
+            btn.enabled = YES;
             return ;
         }
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -214,18 +219,20 @@
         [defaults setBool:YES forKey:kIsLogin];
         [defaults setObject:Root_URL forKey:@"serverip"];
         
-        NSDictionary *userInfo = @{kUserName:self.phoneNumTextF.text,
-                                   kPassWord:self.passwordTextF.text};
-        [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
+        NSString *encryptionStr = [AESEncryption encrypt:self.passwordTextF.text password:self.phoneNumTextF.text];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:self.phoneNumTextF.text forKey:kUserName];
+        [userDefaults setObject:encryptionStr forKey:kPassWord];
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
-        [MBProgressHUD showMessage:@"登录中....."];
+        btn.enabled = YES;
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         [self setDevice];
         [self backApointInterface];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"登录失败，请重试"];
+        btn.enabled = YES;
     } Progress:^(float progress) {
         
     }];
@@ -261,13 +268,11 @@
 
 
 #pragma mark ---- 忘记密码按钮点击
-
 - (void)forgetPasswordClicked:(UIButton *)sender {
-    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"请验证手机",@"isRegister":@NO,@"isMessageLogin":@NO,@"isVerifyPsd":@YES};
+    JMVerificationCodeController *verifyVC = [[JMVerificationCodeController alloc] init];
+    verifyVC.verificationCodeType = SMSVerificationCodeWithForgetPWD;
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
-
 #pragma mark ----- 是否显示密码明文或者暗文
 - (void)seePasswordButtonClicked:(UIButton *)sender {
     UIImage *image = nil;
@@ -283,21 +288,21 @@
 
 #pragma mark -----UITextFieldDelegate
 //是否允许本字段结束编辑，允许-->文本字段会失去firse responder
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     
     return YES;
 }
 //输入框获得焦点，执行这个方法
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     [textField becomeFirstResponder];
 }
 //点击键盘的返回键  执行这个方法  -- 用来隐藏键盘
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
     
@@ -328,10 +333,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:_phoneNumTextF.text forKey:kUserName];
-    [userDefaults setObject:_passwordTextF.text forKey:kPassWord];
-    [userDefaults synchronize];
+    
 }
 
 
@@ -400,11 +402,11 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMPhonenumViewController"];
 }
 
 - (void)backApointInterface {
+    [MBProgressHUD hideHUD];
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];
     if (count >= 2) {

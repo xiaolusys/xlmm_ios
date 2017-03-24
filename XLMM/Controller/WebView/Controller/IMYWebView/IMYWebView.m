@@ -127,8 +127,8 @@
     _njkWebViewProgress.webViewProxyDelegate = self;
     _njkWebViewProgress.progressDelegate = self;
     
-//    webView.delegate = self;
-//    webView.userInteractionEnabled = YES;
+    //    webView.delegate = self;
+    //    webView.userInteractionEnabled = YES;
     
     _realWebView = webView;
 }
@@ -141,7 +141,7 @@
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-//    self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    //    self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if(self.originRequest == nil)
     {
         self.originRequest = webView.request;
@@ -200,9 +200,9 @@
 }
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-//    [webView evaluateJavaScript:@"getNativeMobileSNCode" completionHandler:^(id _Nullable value, NSError * _Nullable error) {
-//        
-//    }];
+    //    [webView evaluateJavaScript:@"getNativeMobileSNCode" completionHandler:^(id _Nullable value, NSError * _Nullable error) {
+    //
+    //    }];
     [self callback_webViewDidFinishLoad];
     
 }
@@ -241,10 +241,10 @@
 #pragma mark- CALLBACK IMYVKWebView Delegate
 
 - (void)callback_webViewDidFinishLoad
- {
-     [MBProgressHUD hideHUDForView:self.viewController.view];
+{
+    [MBProgressHUD hideHUDForView:self.viewController.view];
     NSLog(@"MYwebview callback_webViewDidFinishLoad");
-     [[JMDevice defaultDecice] cerateUserAgent:self];
+    [[JMDevice defaultDecice] cerateUserAgent:self];
     if([self.delegate respondsToSelector:@selector(webViewDidFinishLoad:)])
     {
         [self.delegate webViewDidFinishLoad:self];
@@ -259,7 +259,7 @@
 }
 - (void)callback_webViewDidFailLoadWithError:(NSError *)error
 {
-//    [MBProgressHUD showError:@"加载失败" ToView:self.viewController.view];
+    //    [MBProgressHUD showError:@"加载失败" ToView:self.viewController.view];
     [MBProgressHUD hideHUDForView:self.viewController.view];
     if([self.delegate respondsToSelector:@selector(webView:didFailLoadWithError:)])
     {
@@ -649,17 +649,17 @@
     NSLog(@"WKScriptMessageHandler %@ %@",message.name, message.body);
     [IosJsBridge dispatchJsBridgeFunc:self.viewController name:message.name para:message.body];
     
-//    IosJsBridge *ios = [IosJsBridge new];
-//    ios.deviceBlock = ^(NSString *uuid) {
-//        message(uuid);
-//    };
+    //    IosJsBridge *ios = [IosJsBridge new];
+    //    ios.deviceBlock = ^(NSString *uuid) {
+    //        message(uuid);
+    //    };
     
 }
 
 - (void)registerWkwebviewJsBridge:(WKWebViewConfiguration*) configuration{
     
     NSLog(@"registerWkwebviewJsBridge!");
-
+    
     [configuration.userContentController  addScriptMessageHandler:self name:@"jumpToNativeLocation"];
     
     /**

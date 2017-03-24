@@ -149,7 +149,6 @@
 - (JMShareViewController *)goodsShareView {
     if (!_goodsShareView) {
         _goodsShareView = [[JMShareViewController alloc] init];
-        _goodsShareView.isShowEarningValue = YES;
     }
     return _goodsShareView;
 }
@@ -1018,7 +1017,7 @@
     NSDictionary *dic = careArr[0];
     CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
     [cartArray addObject:model];
-    purchaseVC.purchaseGoodsArr = cartArray;
+    purchaseVC.purchaseGoods = cartArray;
     purchaseVC.directBuyGoodsTypeNumber = directBuyGoodsTypeNumber;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }

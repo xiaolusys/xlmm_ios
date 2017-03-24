@@ -50,7 +50,7 @@
     float _xiaolulingqianValue;       //小鹿零钱余额
     
     NSString *_uuid;                  //uuid
-    NSString *_cartIDs;               //购物车id
+//    NSString *_cartIDs;               //购物车id
     float _totalfee;                  //总金额
     float _postfee;                   //运费金额`
     float _amontPayment;              //总需支付金额
@@ -96,6 +96,7 @@
  *  选择物流信息的数组
  */
 @property (nonatomic, strong) NSMutableArray *logisticsArr;
+@property (nonatomic, strong) NSMutableArray *purchaseGoodsArr;
 /**
  *  判断优惠券是否可用
  */
@@ -250,6 +251,7 @@ static BOOL isAgreeTerms = YES;
     } WithFail:^(NSError *error) {
         _cartPayInfoLoadFinish = NO;
         [MBProgressHUD showError:@"获取数据失败"];
+        self.purchaseFooterView.goPayButton.enabled = NO;
     } Progress:^(float progress) {
     }];
 }
@@ -363,8 +365,9 @@ static BOOL isAgreeTerms = YES;
         
     }
     _uuid = [purchaseDic objectForKey:@"uuid"];
-    if (![NSString isStringEmpty:[purchaseDic objectForKey:@"cart_ids"]]) {
-        _cartIDs = [purchaseDic objectForKey:@"cart_ids"];
+    NSString *cartIDs = purchaseDic[@"cart_ids"];
+    if (![NSString isStringEmpty:cartIDs]) {
+        self.paramstring = [NSString stringWithFormat:@"%@",cartIDs];
     }
     _totalfee = [[purchaseDic objectForKey:@"total_fee"] floatValue];
     _postfee = [[purchaseDic objectForKey:@"post_fee"] floatValue];
@@ -397,20 +400,24 @@ static BOOL isAgreeTerms = YES;
         }
     }
 }
+- (void)setPurchaseGoods:(NSMutableArray *)purchaseGoods {
+    _purchaseGoods = purchaseGoods;
+    self.purchaseGoodsArr = [purchaseGoods mutableCopy];
+}
 // 获取购物车ID
 - (void)getCartID {
-    NSMutableString *paramstring = [[NSMutableString alloc] initWithCapacity:0];
-    if (self.purchaseGoodsArr.count == 0) {
+    if (self.purchaseGoods.count == 0) {
         return;
     }
-    for (CartListModel *model in self.purchaseGoodsArr) {
-        NSString *str = [NSString stringWithFormat:@"%ld,",model.cartID];
+    NSMutableString *paramstring = [NSMutableString string];
+    for (CartListModel *model in self.purchaseGoods) {
+        NSString *str = [NSString stringWithFormat:@"%ld,",(long)model.cartID];
         [paramstring appendString:str];
     }
     NSRange rang =  {paramstring.length -1, 1};
     [paramstring deleteCharactersInRange:rang];
-    self.paramstring = paramstring;
-    _cartIDs = [paramstring copy];
+    self.paramstring = [NSString stringWithFormat:@"%@",paramstring];
+//    _cartIDs = [NSString stringWithFormat:@"%@",paramstring];
 }
 
 
@@ -541,7 +548,7 @@ static BOOL isAgreeTerms = YES;
         return ;
     }
     NSString *parms = [NSString stringWithFormat:@"pid:%@:value:%@",_rightReduce[@"pid"],_rightReduce[@"value"]];
-    _parmsStr = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",_cartIDs,_addressID,[NSString stringWithFormat:@"%.2f", _postfee],[NSString stringWithFormat:@"%.2f", _totalfee],_uuid];
+    _parmsStr = [NSString stringWithFormat:@"cart_ids=%@&addr_id=%@&post_fee=%@&total_fee=%@&uuid=%@",self.paramstring,_addressID,[NSString stringWithFormat:@"%.2f", _postfee],[NSString stringWithFormat:@"%.2f", _totalfee],_uuid];
     //是否使用优惠券
     if (self.isUserCoupon && self.isEnoughCoupon && self.isCouponEnoughPay) {
         _totalPayment = 0.00;
@@ -606,9 +613,15 @@ static BOOL isAgreeTerms = YES;
     // 100->优惠券  101->钱包  102->条款  103->结算
     if (button.tag == 100) {
         button.enabled = NO;
+        if ([NSString isStringEmpty:self.paramstring]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"优惠券暂不可用,请重新添加购买~" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            button.enabled = YES;
+            return ;
+        }
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
-        segmentVC.cartID = _cartIDs;
+        segmentVC.cartID = self.paramstring;
         segmentVC.isSelectedYHQ = YES;
         segmentVC.selectedModelID = _yhqModelID;
         segmentVC.couponNumber = _couponNumber;
@@ -652,6 +665,7 @@ static BOOL isAgreeTerms = YES;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (_cartsInfoLevel > _addressInfoLevel) {
             [self userNotIdCardNumberMessage];
+            return ;
         }
         if (!isAgreeTerms) {
             [MBProgressHUD showWarning:@"请您阅读和同意购买条款!"];
@@ -685,7 +699,7 @@ static BOOL isAgreeTerms = YES;
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
-        if (_cartsInfoLevel != 0 && _addressInfoLevel != 0) {
+        if (_cartsInfoLevel != 0) { // && _addressInfoLevel != 0
 //            if (_cartsInfoLevel > _addressInfoLevel) {
 //                _isPerfectAddressInfo = YES; // 需要去完善信息
 //            }else {

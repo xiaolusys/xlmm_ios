@@ -131,6 +131,7 @@
  *  @return 需要的时间字符串
  */
 + (NSString *)jm_subWithHourAndMinute:(NSString *)str;
++ (NSString *)jm_subWithHourMinuteSe:(NSString *)str;
 
 /**
  *  时间字符串只包含年月日

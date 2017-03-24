@@ -13,6 +13,7 @@
 @interface JMFineClassController : UIViewController
 
 - (void)refreshWebView;
+- (void)refreshLoadMaMaWeb;
 
 @property (nonatomic, copy) NSString *urlString;
 

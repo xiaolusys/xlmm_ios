@@ -555,7 +555,7 @@
             [self diaoyongxiangji:UIImagePickerControllerSourceTypeCamera];
         }
         
-    }else {
+    }else if (index == 1) {
         if ([self authorizationStatus] == 0) {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                 if (status == PHAuthorizationStatusAuthorized) {
@@ -573,6 +573,8 @@
             [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
         }
         
+        
+    }else {
         
     }
     

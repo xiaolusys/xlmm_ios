@@ -16,4 +16,6 @@
 
 @property (nonatomic, copy) NSString *emptyTitle;
 
+- (void)refresh;
+
 @end

@@ -71,11 +71,12 @@
     lookWirter.layer.borderWidth = 0.5f;
     lookWirter.layer.borderColor = [UIColor lineGrayColor].CGColor;
     lookWirter.tag = 100;
+    [self edgeInset:lookWirter Space:2];
     [self.contentView addSubview:lookWirter];
     
     UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.contentView addSubview:shareButton];
-    [shareButton setTitle:@"分享" forState:UIControlStateNormal];
+    [shareButton setTitle:@"单品分享" forState:UIControlStateNormal];
     [shareButton setTitleColor:[UIColor timeLabelColor] forState:UIControlStateNormal];
     shareButton.titleLabel.font = [UIFont systemFontOfSize:14.];
     [shareButton setImage:[UIImage imageNamed:@"wenanShare"] forState:UIControlStateNormal];
@@ -83,18 +84,29 @@
     shareButton.layer.borderWidth = 0.5f;
     shareButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
     shareButton.tag = 101;
+    [self edgeInset:shareButton Space:2];
     [self.contentView addSubview:shareButton];
+    
+    UIButton *jiaodianButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.contentView addSubview:jiaodianButton];
+    [jiaodianButton setTitle:@"页面分享" forState:UIControlStateNormal];
+    [jiaodianButton setTitleColor:[UIColor timeLabelColor] forState:UIControlStateNormal];
+    jiaodianButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    [jiaodianButton setImage:[UIImage imageNamed:@"fenxiangjiaodian"] forState:UIControlStateNormal];
+    jiaodianButton.layer.masksToBounds = YES;
+    jiaodianButton.layer.borderWidth = 0.5f;
+    jiaodianButton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    jiaodianButton.tag = 102;
+    [self edgeInset:jiaodianButton Space:2];
+    [self.contentView addSubview:jiaodianButton];
     
     [lookWirter addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [shareButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [jiaodianButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *lineLabel = [UILabel new];
     [self.contentView addSubview:lineLabel];
     lineLabel.backgroundColor = [UIColor countLabelColor];
-    
-    
-    
-    
     
     kWeakSelf
     
@@ -122,13 +134,19 @@
     [lookWirter mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.contentView);
         make.bottom.equalTo(weakSelf.contentView).offset(-15);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+        make.width.mas_equalTo(@(SCREENWIDTH / 3));
         make.height.mas_equalTo(@(40));
     }];
     [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(lookWirter.mas_right);
+        make.bottom.equalTo(weakSelf.contentView).offset(-15);
+        make.width.mas_equalTo(@(SCREENWIDTH / 3));
+        make.height.mas_equalTo(@(40));
+    }];
+    [jiaodianButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.contentView);
         make.bottom.equalTo(weakSelf.contentView).offset(-15);
-        make.width.mas_equalTo(@(SCREENWIDTH / 2));
+        make.width.mas_equalTo(@(SCREENWIDTH / 3));
         make.height.mas_equalTo(@(40));
     }];
     
@@ -139,7 +157,10 @@
     
     
 }
-
+- (void)edgeInset:(UIButton *)button Space:(CGFloat)space {
+    [button setImageEdgeInsets:UIEdgeInsetsMake(0, -space, 0, 0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -space)];
+}
 
 
 

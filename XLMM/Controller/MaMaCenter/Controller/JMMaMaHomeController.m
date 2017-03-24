@@ -35,7 +35,7 @@
 #import "JMRefundBaseController.h"
 #import "JMMaMaFansController.h"
 #import "JMOrderListController.h"
-#import "JMTotalEarningController.h"
+#import "JMEarningListController.h"
 #import "JMPushingDaysController.h"
 
 
@@ -120,7 +120,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"quit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"logout" object:nil];
     
     _qrCodeRequestDataIndex = 0;
     isShowRefresh = YES;
@@ -509,9 +509,9 @@
             break;
         case 110:
         {
-            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
-            carry.earningsRecord = _earningsRecord;
-            carry.historyEarningsRecord = _historyEarningsRecord;
+            JMEarningListController *carry = [[JMEarningListController alloc] init];
+//            carry.earningsRecord = _earningsRecord;
+//            carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
         }
             break;
@@ -551,9 +551,9 @@
             break;
         case 115:
         {
-            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
-            carry.earningsRecord = _earningsRecord;
-            carry.historyEarningsRecord = _historyEarningsRecord;
+            JMEarningListController *carry = [[JMEarningListController alloc] init];
+//            carry.earningsRecord = _earningsRecord;
+//            carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
         }
             break;

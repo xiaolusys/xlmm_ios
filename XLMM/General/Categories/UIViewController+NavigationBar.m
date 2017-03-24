@@ -14,6 +14,25 @@ static const void *kVTReuseIdentifier = &kVTReuseIdentifier;
 
 @implementation UIViewController (NavigationBar)
 
+//+ (void)load {    Method Swizzling
+//    [super load];
+//    Method fromMethod = class_getInstanceMethod([self class], @selector(viewDidLoad));
+//    Method toMethod = class_getInstanceMethod([self class], @selector(swizzlingViewDidLoad));
+//    
+//    if (!class_addMethod([self class], @selector(viewDidLoad), method_getImplementation(toMethod), method_getTypeEncoding(toMethod))) {
+//        method_exchangeImplementations(fromMethod, toMethod);
+//    }
+//    
+//}
+//- (void)swizzlingViewDidLoad {
+//    NSString *str = [NSString stringWithFormat:@"%@", self.class];
+//    // 我们在这里加一个判断，将系统的UIViewController的对象剔除掉
+//    if([str rangeOfString:@"UI"].location == NSNotFound){
+//        NSLog(@"统计打点 : %@", self.class);
+//    }
+//    [self swizzlingViewDidLoad];
+//}
+
 
 - (void)createNavigationBarWithTitle:(NSString *)title selecotr:(SEL)aSelector{
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];

@@ -13,7 +13,6 @@
 #import "JMAllOrderModel.h"
 #import "JMOrderDetailController.h"
 #import "JMReloadEmptyDataView.h"
-#import "JMDataManger.h"
 
 
 @interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate>

@@ -97,7 +97,7 @@
     CGRect rectWifi = CGRectZero;
     rectWifi.size = CGSizeMake(120, 120);
     rectWifi.origin.x = (self.frame.size.width - 120) / 2.0;
-    rectWifi.origin.y = (self.frame.size.height - 240) / 2.0;
+    rectWifi.origin.y = (self.frame.size.height - 360) / 2.0;
     self.emptyImageView.frame = rectWifi;
     
     CGRect rectLabel = CGRectZero ;

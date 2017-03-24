@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class CarryLogModel;
+@class CarryLogModel,JMEarningModel;
 @interface JMEarningRecordCell : UITableViewCell
 
 - (void)configModel:(CarryLogModel *)model Index:(NSInteger)index;
+- (void)configEarningModel:(JMEarningModel *)model;
+
 
 @end

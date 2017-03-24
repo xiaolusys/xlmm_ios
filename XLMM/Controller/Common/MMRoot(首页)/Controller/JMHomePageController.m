@@ -257,6 +257,10 @@
         [_categoryNameArray addObject:dic[@"name"]];
         [_categoryCidArray addObject:dic[@"id"]];
     }
+    // 移除已经添加的子控制器
+    [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj removeFromParentViewController];
+    }];
     [self addChildController];
 }
 #pragma mark -- 创建UI->自定义 navigationView 自定义悬浮按钮 (个人,精品汇,购物车)
@@ -306,18 +310,21 @@
         if (i == 0) {
             JMFineCounpGoodsController *fineVC = [[JMFineCounpGoodsController alloc] init];
             [self addChildViewController:fineVC];
+            [fineVC didMoveToParentViewController:self];
         }else if (i == 1){
             JMHomeFirstController *homeFirst = [[JMHomeFirstController alloc] init];
             homeFirst.delegate = self;
             homeFirst.pageController = self;
             homeFirst.topImageArray = _topImageArray;
             [self addChildViewController:homeFirst];
+            [homeFirst didMoveToParentViewController:self];
             self.homeFirst = homeFirst;
         }else {
             JMFineCounpContentController *childCategoryVC = [[JMFineCounpContentController alloc] init];
             childCategoryVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/modelproducts?cid=%@", Root_URL,_categoryCidArray[i - 2]];
 //            childCategoryVC.categoryCid = _categoryCidArray[i - 2];
             [self addChildViewController:childCategoryVC];
+            [childCategoryVC didMoveToParentViewController:self];
         }
     }
     self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _categoryNameArray.count, self.baseScrollView.frame.size.height);
@@ -429,18 +436,20 @@
         JMFineCounpGoodsController *fineVC = self.childViewControllers[index];
         fineVC.view.frame = self.baseScrollView.bounds;
         [self.baseScrollView addSubview:fineVC.view];
-        [fineVC didMoveToParentViewController:self];
+//        [fineVC didMoveToParentViewController:self];
     }else if (index == 1) {
         JMHomeFirstController *homeFirst = self.childViewControllers[index];
         homeFirst.view.frame = self.baseScrollView.bounds;
         [self.baseScrollView addSubview:homeFirst.view];
-        [homeFirst didMoveToParentViewController:self];
+//        [homeFirst didMoveToParentViewController:self];
     }else {
         JMFineCounpContentController *childCategoryVC = self.childViewControllers[index];
         childCategoryVC.view.frame = self.baseScrollView.bounds;
         [self.baseScrollView addSubview:childCategoryVC.view];
-        [childCategoryVC didMoveToParentViewController:self];
+//        [childCategoryVC didMoveToParentViewController:self];
     }
+    NSDictionary *tempDict = @{@"segmentPage" : [NSString stringWithFormat:@"%@",_categoryNameArray[index]]};
+    [MobClick event:@"currentSegmentPageWithHomeRoot" attributes:tempDict];
 }
 #pragma mark 点击事件处理
 - (void)searchBarClick:(UIButton *)button {
@@ -459,7 +468,7 @@
             if (login) {
                 JMMaMaHomeController *personalVC = [[JMMaMaHomeController alloc] init];
                 [self.navigationController pushViewController:personalVC animated:YES];
-            }else {
+            }else {       
                 JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
                 [self.navigationController pushViewController:enterVC animated:YES];
             }

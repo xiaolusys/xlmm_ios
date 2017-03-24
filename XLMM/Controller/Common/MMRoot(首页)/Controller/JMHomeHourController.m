@@ -34,7 +34,6 @@
 - (JMShareViewController *)goodsShareView {
     if (!_goodsShareView) {
         _goodsShareView = [[JMShareViewController alloc] init];
-        _goodsShareView.isShowEarningValue = YES;
     }
     return _goodsShareView;
 }
@@ -52,6 +51,8 @@
 #pragma mark 重写set方法
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
+    
+    [self goodsShareView];
     [self.tableView reloadData];
 }
 #pragma mark 生命周期函数
@@ -72,20 +73,41 @@
     [MBProgressHUD showLoading:@"正在分享..."];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
-        self.shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
-        self.shareModel.share_type = @"link";
-        self.goodsShareView.model = self.shareModel;
+        JMShareModel *shareModel = [JMShareModel mj_objectWithKeyValues:responseObject];
+        shareModel.share_type = @"link";
+//        self.goodsShareView.isShowEarningValue = YES;
+        self.goodsShareView.model = shareModel;
         [MBProgressHUD hideHUD];
-        [self popShareView];
+        [self popShareView:340];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"分享失败"];
     } Progress:^(float progress) {
     }];
 }
+- (void)loadSharDataWithHour:(NSString *)urlString {
+    [MBProgressHUD showLoading:@"正在分享..."];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        JMShareModel *shareModel = [[JMShareModel alloc] init];
+        shareModel.share_type = [responseObject objectForKey:@"share_type"];
+        shareModel.share_img = [responseObject objectForKey:@"share_icon"]; //图片
+        shareModel.desc = [responseObject objectForKey:@"active_dec"]; // 文字详情
+        shareModel.title = [responseObject objectForKey:@"title"]; //标题
+        shareModel.share_link = [responseObject objectForKey:@"share_link"];
+//        self.goodsShareView.isShowEarningValue = NO;
+        self.goodsShareView.model = shareModel;
+        [MBProgressHUD hideHUD];
+        [self popShareView:240];
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"分享失败"];
+    } Progress:^(float progress) {
+        
+    }];
+}
 #pragma mark 弹出视图 (弹出分享界面)
-- (void)popShareView {
+- (void)popShareView:(CGFloat)popHeeight {
     [MobClick event:@"GoodsDetail_share"];
-    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 340) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
+    [[JMGlobal global] showpopBoxType:popViewTypeShare Frame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, popHeeight) ViewController:self.goodsShareView WithBlock:^(UIView *maskView) {
     }];
     self.goodsShareView.blcok = ^(UIButton *button) {
         [MobClick event:@"GoodsDetail_share_fail_clickCancelButton"];
@@ -135,9 +157,13 @@
             [self.navigationController pushViewController:enterVC animated:YES];
         }
         
-    }else {
+    }else if (button.tag == 101) {
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/share/model?model_id=%@",Root_URL,model.model_id];
         [self loadShareData:urlString];
+    }else {
+        NSString *activeID = [NSString stringWithFormat:@"%@",model.activity_id];
+        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys/%@/get_share_params", Root_URL, activeID];
+        [self loadSharDataWithHour:urlString];
     }
 }
 
