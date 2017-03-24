@@ -699,7 +699,7 @@ static BOOL isAgreeTerms = YES;
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index {
     // 100->地址信息点击  101->物流信息点击
     if (index == 100) {
-        if (_cartsInfoLevel != 0 && _addressInfoLevel != 0) {
+        if (_cartsInfoLevel != 0) { // && _addressInfoLevel != 0
 //            if (_cartsInfoLevel > _addressInfoLevel) {
 //                _isPerfectAddressInfo = YES; // 需要去完善信息
 //            }else {
