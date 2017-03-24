@@ -191,6 +191,7 @@
             [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TResetPwd_URL WithParaments:parameters WithSuccess:^(id responseObject) {
                 NSString *result = [responseObject objectForKey:@"rcode"];
                 if ([result intValue] == 0) {
+                    [MBProgressHUD hideHUD];
                     NSString *successString = @"";
                     if (self.pwdType == PWDWithInstall) { // 设置密码
                         successString = @"密码设置成功,快去登陆吧！";
@@ -200,7 +201,6 @@
                     UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:successString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                     alterView.delegate = self;
                     [alterView show];
-                    [MBProgressHUD hideHUD];
                 }else {
                     [MBProgressHUD hideHUD];
                     [MBProgressHUD showWarning:responseObject[@"msg"]];

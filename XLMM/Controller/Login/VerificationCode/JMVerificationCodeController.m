@@ -38,7 +38,7 @@
 - (UIScrollView *)maskScrollView {
     if (!_maskScrollView) {
         _maskScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-//        _maskScrollView.scrollEnabled = NO;
+        _maskScrollView.delegate = self;
     }
     return _maskScrollView;
 }
@@ -57,13 +57,27 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.phoneNumberField resignFirstResponder];
+    [self.verificationCodeField resignFirstResponder];
     [MobClick endLogPageView:@"JMVerificationCodeController"];
+}
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    if (IS_IOS8) {
+    }else {
+        if (self.verificationCodeType == SMSVerificationCodeWithBind) {
+            self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+        }else {
+            self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
+        }
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor countLabelColor];
     [self createNavigationBarWithTitle:self.title selecotr:@selector(backClick)];
+    
     self.fd_interactivePopDisabled = YES;
     isUnlock = NO;
     isClickGetCode = NO;
@@ -130,7 +144,10 @@
     self.verificationCodeButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     self.verificationCodeButton.frame = CGRectMake(verificationCodeField.cs_max_X + 15, verificationCodeField.cs_y, 90, 30);
     [self.verificationCodeButton setNomalBorderColor:[UIColor buttonDisabledBorderColor] TitleColor:[UIColor buttonDisabledBackgroundColor] Title:@"获取验证码" TitleFont:13. CornerRadius:15.];
-    [self verificationButton:-1];
+//    [self verificationButton:-1];
+    self.verificationCodeButton.titleLabel.text = @"获取验证码";
+    self.verificationCodeButton.selected = NO;
+    self.verificationCodeButton.enabled = NO;
     [self.verificationCodeButton addTarget:self action:@selector(getAuthcodeClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.maskScrollView addSubview:textFieldView];
@@ -194,11 +211,11 @@
         self.skipButton = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
         [self.maskScrollView addSubview:self.skipButton];
         [self.skipButton setSelecterBorderColor:[UIColor buttonEnabledBackgroundColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"跳过" TitleFont:14. CornerRadius:20.];
-        self.skipButton.frame = CGRectMake(spaceing, self.sureButton.mj_max_Y + 10, SCREENWIDTH - spaceing * 2, 40);
+        self.skipButton.frame = CGRectMake(spaceing, self.sureButton.cs_max_Y + 10, SCREENWIDTH - spaceing * 2, 40);
         [self.skipButton addTarget:self action:@selector(skipClick) forControlEvents:UIControlEventTouchUpInside];
-        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.mj_max_Y + 20);
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
     }else {
-        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.mj_max_Y + 20);
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
     }
     
     
@@ -279,7 +296,7 @@
 }
 // === 验证码 ====
 - (void)startTime {
-    [JMGoodsCountTime initCountDownWithCurrentTime:60];
+    [JMGoodsCountTime initCountDownWithCurrentTime:61];
     kWeakSelf
     [JMGoodsCountTime shareCountTime].countBlock = ^(int second) {
         [weakSelf verificationButton:second];
@@ -289,8 +306,9 @@
 - (void)verificationButton:(int)second {
     if (second == -1) {
         self.verificationCodeButton.titleLabel.text = @"获取验证码";
-        self.verificationCodeButton.selected = NO;
-        self.verificationCodeButton.enabled = NO;
+        self.verificationCodeButton.selected = YES;
+        self.verificationCodeButton.enabled = YES;
+        [self delayMethod];
     }else {
         self.verificationCodeButton.titleLabel.text = [NSString stringWithFormat:@" 剩余%02d秒",second];
         self.verificationCodeButton.selected = NO;
@@ -363,6 +381,7 @@
         [self verifyAfter:responseObject];
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
+        [self reductionSlider];
         [MBProgressHUD showError:@"登录失败！"];
     } Progress:^(float progress) {
         
@@ -373,6 +392,7 @@
     if (dic.count == 0)return;
     NSString *phoneNumber = self.phoneNumberField.text;
     if ([[dic objectForKey:@"rcode"] integerValue] != 0){
+        [self reductionSlider];
         [self alertMessage:[dic objectForKey:@"msg"]];
         return;
     }
@@ -451,6 +471,9 @@
             self.sureButton.cs_y = self.sliderView.cs_max_Y + 20;
             if (self.verificationCodeType == SMSVerificationCodeWithBind) {
                 self.skipButton.cs_y = self.sureButton.cs_max_Y + 10;
+                self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+            }else {
+                self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
             }
 //            [self verificationButton:YES];
             self.verificationCodeButton.selected = YES;
@@ -460,6 +483,9 @@
             self.sureButton.cs_y = self.sliderView.cs_max_Y + 20;
             if (self.verificationCodeType == SMSVerificationCodeWithBind) {
                 self.skipButton.cs_y = self.sureButton.cs_max_Y + 10;
+                self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+            }else {
+                self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
             }
 //            [self verificationButton:NO];
             self.verificationCodeButton.selected = NO;
@@ -533,6 +559,9 @@
     self.sureButton.cs_y = self.sliderView.cs_max_Y + 20;
     if (self.verificationCodeType == SMSVerificationCodeWithBind) {
         self.skipButton.cs_y = self.sureButton.cs_max_Y + 10;
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+    }else {
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
     }
     [self performSelector:@selector(showSliderView) withObject:self.sliderView afterDelay:2.f];
 }
@@ -541,6 +570,9 @@
     self.sureButton.cs_y = self.sliderView.cs_max_Y + 20;
     if (self.verificationCodeType == SMSVerificationCodeWithBind) {
         self.skipButton.cs_y = self.sureButton.cs_max_Y + 10;
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+    }else {
+        self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
     }
     self.waringLabel.text = @"";
     self.sliderView.text = @"向右滑动验证";
@@ -558,7 +590,10 @@
 }
 
 
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.phoneNumberField resignFirstResponder];
+    [self.verificationCodeField resignFirstResponder];
+}
 - (void)skipClick {
     [self backApointInterface];
 }

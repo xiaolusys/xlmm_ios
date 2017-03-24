@@ -16,6 +16,6 @@
 /**
  *  获取商品购买商品ID
  */
-@property (nonatomic ,strong) NSMutableString *paramstring;
+@property (nonatomic ,copy) NSString *paramstring;
 
 @end

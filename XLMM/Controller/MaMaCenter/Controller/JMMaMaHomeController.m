@@ -35,8 +35,9 @@
 #import "JMRefundBaseController.h"
 #import "JMMaMaFansController.h"
 #import "JMOrderListController.h"
-#import "JMTotalEarningController.h"
+#import "JMEarningListController.h"
 #import "JMPushingDaysController.h"
+#import "JMTotalEarningController.h"
 
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
@@ -509,9 +510,9 @@
             break;
         case 110:
         {
-            JMTotalEarningController *carry = [[JMTotalEarningController alloc] init];
-            carry.earningsRecord = _earningsRecord;
-            carry.historyEarningsRecord = _historyEarningsRecord;
+            JMEarningListController *carry = [[JMEarningListController alloc] init];
+//            carry.earningsRecord = _earningsRecord;
+//            carry.historyEarningsRecord = _historyEarningsRecord;
             [self.navigationController pushViewController:carry animated:YES];
         }
             break;

@@ -120,12 +120,12 @@
         [self.navigationController pushViewController:changeNicknameView animated:YES];
     }else if (index == 2) {
         NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
-//        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
             JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
             vc.verificationCodeType = SMSVerificationCodeWithBind;
             vc.userInfo = dic;
             [self.navigationController pushViewController:vc animated:YES];
-//        } // -- > 不做判断
+        } // -- > 不做判断
         
     }else if (index == 3) {
         JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];

@@ -12,6 +12,8 @@
 #import "JMLineView.h"
 #import "JMLogInViewController.h"
 #import "JMVerificationCodeController.h"
+#import "AESEncryption.h"
+
 
 #define rememberPwdKey @"rememberPwd"
 
@@ -71,14 +73,15 @@
     //设置账号和密码的默认值
     self.phoneNumTextF.text = [defaults objectForKey:kUserName];
     if (self.rememberPwdBtn.selected) {
-        self.passwordTextF.text = [defaults objectForKey:kPassWord];
+        NSString *decryptedStr = [AESEncryption decrypt:[defaults objectForKey:kPassWord] password:self.phoneNumTextF.text];
+        self.passwordTextF.text = decryptedStr;
     }
     
 //    [self textChange];
     
     //设置记住密码按钮默认值
     NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
-    self.rememberPwdBtn.selected = [defaultsPwd boolForKey:@"rememberPwd"];
+    self.rememberPwdBtn.selected = [defaultsPwd boolForKey:rememberPwdKey];
     
     
 }
@@ -199,6 +202,7 @@
         [MBProgressHUD showWarning:@"请输入正确的信息！"];
         return;
     }
+    [MBProgressHUD showMessage:@"登录中....."];
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password,
                                  @"devtype":LOGINDEVTYPE};
@@ -215,12 +219,12 @@
         [defaults setBool:YES forKey:kIsLogin];
         [defaults setObject:Root_URL forKey:@"serverip"];
         
-        NSDictionary *userInfo = @{kUserName:self.phoneNumTextF.text,
-                                   kPassWord:self.passwordTextF.text};
-        [defaults setObject:userInfo forKey:kPhoneNumberUserInfo];
+        NSString *encryptionStr = [AESEncryption encrypt:self.passwordTextF.text password:self.phoneNumTextF.text];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:self.phoneNumTextF.text forKey:kUserName];
+        [userDefaults setObject:encryptionStr forKey:kPassWord];
         [defaults setObject:kPhoneLogin forKey:kLoginMethod];
         [defaults synchronize];
-        [MBProgressHUD showMessage:@"登录中....."];
         btn.enabled = YES;
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
@@ -329,10 +333,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:_phoneNumTextF.text forKey:kUserName];
-    [userDefaults setObject:_passwordTextF.text forKey:kPassWord];
-    [userDefaults synchronize];
+    
 }
 
 
@@ -401,11 +402,11 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"JMPhonenumViewController"];
 }
 
 - (void)backApointInterface {
+    [MBProgressHUD hideHUD];
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];
     if (count >= 2) {

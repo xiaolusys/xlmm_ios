@@ -149,7 +149,6 @@
 - (JMShareViewController *)goodsShareView {
     if (!_goodsShareView) {
         _goodsShareView = [[JMShareViewController alloc] init];
-        _goodsShareView.isShowEarningValue = YES;
     }
     return _goodsShareView;
 }
