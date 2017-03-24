@@ -161,7 +161,7 @@
     }];
 }
 - (void)dataAnalysis:(NSDictionary *)dic {
-    self.valueLabel.text = [NSString stringWithFormat:@"%.2f",[dic[@"total"] floatValue]];
+    self.valueLabel.text = [NSString stringWithFormat:@"%.2f",([dic[@"total"] floatValue] / 100.f)];
     _nextUrlString = dic[@"next"];
     NSArray *results = dic[@"results"];
     for (NSDictionary *dict in results) {
@@ -181,7 +181,6 @@
     for (int i = 0; i < keysArr.count; i++) {
         [self.dataSource addObject:self.currentDataDic[keysArr[i]]];
     }
-    
     // 刷新 数据
     [self.tableView cs_reloadData];
     
