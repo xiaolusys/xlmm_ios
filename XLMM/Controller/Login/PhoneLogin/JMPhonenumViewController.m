@@ -67,23 +67,16 @@
     [self prepareInitUI];
     
     //设置记住密码的默认值
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.rememberPwdBtn.selected = [defaults boolForKey:rememberPwdKey];
+    self.rememberPwdBtn.selected = [[NSUserDefaults standardUserDefaults] boolForKey:rememberPwdKey];
     
     //设置账号和密码的默认值
-    self.phoneNumTextF.text = [defaults objectForKey:kUserName];
+    self.phoneNumTextF.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     if (self.rememberPwdBtn.selected) {
-        NSString *decryptedStr = [AESEncryption decrypt:[defaults objectForKey:kPassWord] password:self.phoneNumTextF.text];
+        NSString *decryptedStr = [AESEncryption decrypt:[[NSUserDefaults standardUserDefaults] objectForKey:kPassWord] password:self.phoneNumTextF.text];
         self.passwordTextF.text = decryptedStr;
     }
     
 //    [self textChange];
-    
-    //设置记住密码按钮默认值
-    NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
-    self.rememberPwdBtn.selected = [defaultsPwd boolForKey:rememberPwdKey];
-    
-    
 }
 
 
@@ -170,24 +163,9 @@
 
 #pragma mark --- 记住密码按钮的点击
 - (void)remenberClick:(UIButton *)sender {
-    
-    if (self.rememberPwdBtn.selected) {
-        self.rememberPwdBtn.selected = NO;
-    }else {
-        self.rememberPwdBtn.selected = YES;
-    }
-    
-    NSUserDefaults *defaultsPwd = [NSUserDefaults standardUserDefaults];
-    [defaultsPwd setBool:self.rememberPwdBtn.selected forKey:@"rememberPwd"];
-    [defaultsPwd synchronize];
-}
-
-#pragma mark ----- 保存记住密码按钮的数据到用户偏好设置
-- (void)saveRememberPwdBtn {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:self.rememberPwdBtn.selected forKey:rememberPwdKey];
-    [defaults synchronize];
+    self.rememberPwdBtn.selected = !self.rememberPwdBtn.selected;
+    [[NSUserDefaults standardUserDefaults] setBool:self.rememberPwdBtn.selected forKey:rememberPwdKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark ------ 登录按钮点击

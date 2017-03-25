@@ -43,7 +43,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.rowHeight = 175.f;
-        [_tableView registerClass:[JMHomeHourCell class] forCellReuseIdentifier:NSStringFromClass([JMHomeHourCell class])];
+        [_tableView registerClass:[JMHomeHourCell class] forCellReuseIdentifier:@"JMHomeHourCellIdentifier"];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _tableView;
@@ -51,8 +51,6 @@
 #pragma mark 重写set方法
 - (void)setDataSource:(NSMutableArray *)dataSource {
     _dataSource = dataSource;
-    
-    [self goodsShareView];
     [self.tableView reloadData];
 }
 #pragma mark 生命周期函数
@@ -66,6 +64,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self goodsShareView];
     [self.view addSubview:self.tableView];
 }
 #pragma mark 网络请求,数据处理
@@ -118,9 +117,9 @@
     return self.dataSource.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JMHomeHourCell *cell = [tableView dequeueReusableCellWithIdentifier:CS_STRING([JMHomeHourCell class])];
+    JMHomeHourCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JMHomeHourCellIdentifier"];
     if (!cell) {
-        cell = [[JMHomeHourCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CS_STRING([JMHomeHourCell class])];
+        cell = [[JMHomeHourCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"JMHomeHourCellIdentifier"];
     }
     if (self.dataSource.count == 0) {
         return nil;

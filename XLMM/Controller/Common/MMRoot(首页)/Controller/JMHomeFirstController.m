@@ -103,6 +103,10 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
 }
 - (JMPageContentView *)pageContentView {
     if (!_pageContentView) {
+        // 移除已经添加的子控制器
+        [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj removeFromParentViewController];
+        }];
         _pageContentView = [[JMPageContentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Controllers:self.controllArr TitleArray:self.itemNameArr DescTitleArray:self.itemDescNameArr PageController:self];
     }
     return _pageContentView;
@@ -194,6 +198,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         [self.itemDescNameArr removeAllObjects];
         [self.dataSource removeAllObjects];
         [self.controllArr removeAllObjects];
+        self.pageContentView = nil;
         [self fetchData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
@@ -242,6 +247,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         ceshiVC.delegate = self;
         ceshiVC.dataSource = self.dataSource[i];
     }
+
     
 }
 - (int)getCurrentTimeHour {
