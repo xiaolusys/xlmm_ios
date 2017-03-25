@@ -31,6 +31,8 @@
     return self;
 }
 - (void)initUI {
+    self.layer.borderWidth = 0.5f;
+    self.layer.borderColor = [UIColor lineGrayColor].CGColor;
 //    UIImageView *iconImageView = [UIImageView new];
 //    iconImageView.layer.masksToBounds = YES;
 //    iconImageView.layer.cornerRadius = 22.f;
@@ -45,13 +47,13 @@
     
     UILabel *nameLabel = [UILabel new];
     nameLabel.font = [UIFont systemFontOfSize:13.];
-    nameLabel.textColor = [UIColor buttonTitleColor];
+    nameLabel.textColor = [UIColor dingfanxiangqingColor];
     [self.contentView addSubview:nameLabel];
     self.nameLabel = nameLabel;
     
     UILabel *descLabel = [UILabel new];
     descLabel.font = [UIFont systemFontOfSize:13.];
-    descLabel.textColor = [UIColor dingfanxiangqingColor];
+    descLabel.textColor = [UIColor buttonTitleColor];
     [self.contentView addSubview:descLabel];
     self.descLabel = descLabel;
     

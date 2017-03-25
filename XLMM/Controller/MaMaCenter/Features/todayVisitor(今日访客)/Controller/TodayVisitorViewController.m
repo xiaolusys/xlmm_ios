@@ -208,8 +208,7 @@
 }
 
 - (NSString *)dateDeal:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *year = strarray[0];
+    NSString *year = [NSString yearDeal:str];
     NSString *date = [year stringByReplacingOccurrencesOfString:@"-" withString:@""];
     return date;
 }
@@ -234,7 +233,7 @@
 
 #pragma mark --tableView代理
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.dataDic.count;
+    return [self.dataDic allKeys].count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

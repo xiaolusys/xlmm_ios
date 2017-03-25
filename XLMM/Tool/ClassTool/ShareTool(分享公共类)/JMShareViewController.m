@@ -135,7 +135,7 @@
 
 }
 - (void)upDataWithModeProfit:(NSDictionary *)profitDic {
-    if (profitDic.count != 0) {
+    if (profitDic != nil) {
         if (!self.headerView) {
             return ;
         }
@@ -223,7 +223,8 @@
     
     _titleUrlString = [NSString stringWithFormat:@"%@",_content];
     
-    NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
+    NSLog(@"_titleStr -- > %@, \n _content -- > %@, \n  _imageUrlString -- > %@, \n _url -- > %@, \n _titleUrlString -- > %@, \n _isPic -- > %d",_titleStr,_content,_imageUrlString,_url,_titleUrlString,_isPic);
+    
 }
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {
