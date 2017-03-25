@@ -192,17 +192,14 @@
             btn.enabled = YES;
             return ;
         }
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         // 手机登录成功 ，保存用户信息以及登录途径
-        [defaults setBool:YES forKey:kIsLogin];
-        [defaults setObject:Root_URL forKey:@"serverip"];
-        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
+        [[NSUserDefaults standardUserDefaults] setObject:Root_URL forKey:@"serverip"];
         NSString *encryptionStr = [AESEncryption encrypt:self.passwordTextF.text password:self.phoneNumTextF.text];
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:self.phoneNumTextF.text forKey:kUserName];
-        [userDefaults setObject:encryptionStr forKey:kPassWord];
-        [defaults setObject:kPhoneLogin forKey:kLoginMethod];
-        [defaults synchronize];
+        [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumTextF.text forKey:kUserName];
+        [[NSUserDefaults standardUserDefaults] setObject:encryptionStr forKey:kPassWord];
+        [[NSUserDefaults standardUserDefaults] setObject:kPhoneLogin forKey:kLoginMethod];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         btn.enabled = YES;
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
