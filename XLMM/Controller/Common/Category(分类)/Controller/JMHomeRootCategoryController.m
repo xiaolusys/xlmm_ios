@@ -19,8 +19,8 @@
 #define TabWidth SCREENWIDTH * 0.25
 #define ColWidth SCREENWIDTH * 0.75
 
-static NSString * homeCategoryCellId = @"JMHomeRootCategoryController";
-static NSString * CategoryCellId = @"JMHomeRootCategoryCell";
+static NSString * const homeCategoryCellId = @"JMHomeRootCategoryController";
+static NSString * const CategoryCellId = @"JMHomeRootCategoryCell";
 
 static NSUInteger selectedIndex = 0;
 
@@ -256,7 +256,11 @@ static NSUInteger selectedIndex = 0;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *indexPathArr = self.colDataSource[selectedIndex];
+    NSArray *arr = self.colSectionDataSource[selectedIndex];
+    NSString *titleStr = arr[indexPath.section][@"name"];
+    
     JMCategoryPageController *pageVC = [[JMCategoryPageController alloc] init];
+    pageVC.title = titleStr;
     pageVC.sectionItems = indexPathArr[indexPath.section];
     pageVC.currentIndex = indexPath.row + 1;
     [self.navigationController pushViewController:pageVC animated:YES];

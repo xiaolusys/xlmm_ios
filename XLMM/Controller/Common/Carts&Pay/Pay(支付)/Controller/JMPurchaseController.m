@@ -171,6 +171,7 @@ static BOOL isAgreeTerms = YES;
     }else {
         self.isInstallWX = NO;
     }
+    [self loadAddressInfo];
     [MobClick beginLogPageView:@"purchase"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -229,7 +230,6 @@ static BOOL isAgreeTerms = YES;
     [self createTableView];
     [self createTableHeaderView];
     [self createTableFooterView];
-    [self loadAddressInfo];
     [self loadDataSource];
     
     if (isAgreeTerms) {
@@ -250,7 +250,7 @@ static BOOL isAgreeTerms = YES;
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         _cartPayInfoLoadFinish = NO;
-        [MBProgressHUD showError:@"获取数据失败"];
+        [MBProgressHUD showError:@"支付信息获取失败~!"];
         self.purchaseFooterView.goPayButton.enabled = NO;
     } Progress:^(float progress) {
     }];
@@ -264,7 +264,7 @@ static BOOL isAgreeTerms = YES;
         [self.tableView reloadData];
     } WithFail:^(NSError *error) {
         _addressInfoLoadFinish = NO;
-        [MBProgressHUD showError:@"获取数据失败"];
+        [MBProgressHUD showError:@"地址信息获取失败~!"];
     } Progress:^(float progress) {
         
     }];
@@ -272,6 +272,7 @@ static BOOL isAgreeTerms = YES;
 - (void)fetchedAddressData:(NSArray *)purchaseArr {
     if (purchaseArr.count == 0) {
         _addressID = @"";
+        _addressInfoLevel = 0;
     }else {
         NSDictionary *dic = purchaseArr[0];
         _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];

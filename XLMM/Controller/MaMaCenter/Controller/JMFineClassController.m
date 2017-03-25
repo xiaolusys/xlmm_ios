@@ -127,6 +127,7 @@
     
 }
 - (void)webViewDidFinishLoad:(IMYWebView *)webView {
+    self.empty.hidden = YES;
 //    self.baseWebView.cs_h = SCREENHEIGHT - 20 - ktabBarHeight;
     [[JMGlobal global] hideWaitLoading];
 }

@@ -399,7 +399,7 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 - (CGFloat)promptInfoStrHeight:(NSString *)string {
     CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
     CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
-    return contentH + 10;
+    return contentH + 20;
 }
 
 

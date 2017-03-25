@@ -151,7 +151,6 @@
     }
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_nextUrlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
-        [self.dataSource removeAllObjects];
         [self dataAnalysis:responseObject];
         [self endRefresh];
     } WithFail:^(NSError *error) {
@@ -164,22 +163,22 @@
     self.valueLabel.text = [NSString stringWithFormat:@"%.2f",([dic[@"total"] floatValue] / 100.f)];
     _nextUrlString = dic[@"next"];
     NSArray *results = dic[@"results"];
-    for (NSDictionary *dict in results) {
-        JMEarningModel *model = [JMEarningModel mj_objectWithKeyValues:dict];
-        NSString *date = [self dateDeal:model.created];
-        NSMutableArray *currentArr = [[self.currentDataDic allKeys] mutableCopy];
-        if ([currentArr containsObject:date]) {
-            NSMutableArray *orderArr = [self.currentDataDic objectForKey:date];
-            [orderArr addObject:model];
-        }else {
-            NSMutableArray *orderArr = [NSMutableArray array];
-            [orderArr addObject:model];
-            [self.currentDataDic setObject:orderArr forKey:date];
+    if (results.count > 0) {
+        for (NSDictionary *dict in results) {
+            JMEarningModel *model = [JMEarningModel mj_objectWithKeyValues:dict];
+            NSString *date = [self dateDeal:model.created];
+            self.dataSource = [[self.currentDataDic allKeys] mutableCopy];
+            if ([self.dataSource containsObject:date]) {
+                NSMutableArray *orderArr = self.currentDataDic[date];
+                [orderArr addObject:model];
+            }else {
+                NSMutableArray *orderArr = [NSMutableArray array];
+                [orderArr addObject:model];
+                [self.currentDataDic setObject:orderArr forKey:date];
+            }
         }
-    }
-    NSArray *keysArr = [self sortAllKeyArray:[[self.currentDataDic allKeys] mutableCopy]];
-    for (int i = 0; i < keysArr.count; i++) {
-        [self.dataSource addObject:self.currentDataDic[keysArr[i]]];
+        self.dataSource = [[self.currentDataDic allKeys] mutableCopy];
+        self.dataSource = [self sortAllKeyArray:self.dataSource];
     }
     // 刷新 数据
     [self.tableView cs_reloadData];
@@ -190,8 +189,8 @@
     return self.dataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSArray *sectionArr = self.dataSource[section];
-    return sectionArr.count;;
+    NSString *key = self.dataSource[section];
+    return [self.currentDataDic[key] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80;
@@ -201,7 +200,8 @@
     if (!cell) {
         cell = [[JMEarningRecordCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"JMEarningRecordCellIdentifier"];
     }
-    JMEarningModel *model = self.dataSource[indexPath.section][indexPath.row];
+    NSString *key = self.dataSource[indexPath.section];
+    JMEarningModel *model = self.currentDataDic[key][indexPath.row];
     [cell configEarningModel:model];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -224,13 +224,10 @@
     if (self.dataSource.count == 0) {
         return sectionView;
     }
-    NSArray *rowArr = self.dataSource[section];
-    for (JMEarningModel *model in rowArr) {
-        //        totalValue += [model.carry_value floatValue];
-        if ([NSString isStringEmpty:timeLabel.text]) {
-            timeLabel.text = [NSString yearDeal:model.created];
-        }
-    }
+    NSString *key = self.dataSource[section];
+    NSMutableArray *orderArr = self.currentDataDic[key];
+    JMEarningModel *model = [orderArr firstObject];
+    timeLabel.text = [NSString yearDeal:model.created];
     return sectionView;
 }
 
