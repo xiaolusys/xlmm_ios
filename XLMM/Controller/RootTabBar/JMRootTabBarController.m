@@ -20,11 +20,7 @@
 #define kImgKey     @"imageName"
 #define kSelImgKey  @"selectedImageName"
 
-@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate> {
-    NSInteger refreshFineIndex;
-}
-
-
+@interface JMRootTabBarController () <UITabBarControllerDelegate,UITabBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray *vcArray;
 @property (nonatomic, strong) JMCartViewController *cartVC;             // 购物车
@@ -66,7 +62,6 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    refreshFineIndex = 0;
     
     self.delegate = self;
     NSArray *childItemsArray = @[
@@ -134,7 +129,7 @@
     }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
         //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isRefreshFine"] && refreshFineIndex > 1) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isRefreshFine"]) {
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self.fineVC refreshLoadMaMaWeb];
@@ -174,7 +169,6 @@
                 return NO;
             }
             [MobClick event:@"tabBarWithFine"];
-            refreshFineIndex += 1;
             return YES;
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];

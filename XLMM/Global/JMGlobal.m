@@ -16,6 +16,7 @@
 
 
 static BOOL isNetPrompt;
+static NSString *userCustomerID;
 
 @interface JMGlobal () <UIAlertViewDelegate> {
     NSString *httpStatus;
@@ -34,6 +35,7 @@ static BOOL isNetPrompt;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         global = [[JMGlobal alloc] init];
+        userCustomerID = nil;
     });
     return global;
 }
@@ -170,7 +172,10 @@ static BOOL isNetPrompt;
         }
         if (([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0)) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
+            if (![userCustomerID isEqual:responseObject[@"id"]]) {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
+            }
+            userCustomerID = responseObject[@"id"];
         }else {
             [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
         }
