@@ -391,7 +391,8 @@ static NSString *JMPushingDaysFooterViewIdentifier = @"JMPushingDaysFooterViewId
     if ([NSString isStringEmpty:picUrlString]) {
         return nil;
     }
-    return [NSURL URLWithString:[picUrlString imageNormalCompression]];
+    NSString *picString = [picUrlString imageNormalCompression];
+    return [NSURL URLWithString:picString];
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if (kind == UICollectionElementKindSectionHeader) {
