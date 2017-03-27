@@ -5,6 +5,7 @@
 
 #import "NSData+ImageContentType.h"
 
+
 @implementation NSData (ImageContentType)
 
 + (NSString *)sd_contentTypeForImageData:(NSData *)data {

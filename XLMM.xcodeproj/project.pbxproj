@@ -360,6 +360,7 @@
 		1F3C1A411E83CBD0008720B2 /* fenxiangjiaodian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3C1A401E83CBD0008720B2 /* fenxiangjiaodian@2x.png */; };
 		1F3C1A441E84B3AF008720B2 /* JMEarningListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C1A431E84B3AF008720B2 /* JMEarningListController.m */; };
 		1F3C1A471E84B57F008720B2 /* JMEarningModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3C1A461E84B57F008720B2 /* JMEarningModel.m */; };
+		1F3C1A741E8927C3008720B2 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3C1A731E8927C3008720B2 /* UMMobClick.framework */; };
 		1F3EE5C31D7FE1A8006033FC /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EE5C01D7FE1A8006033FC /* HMSegmentedControl.m */; };
 		1F3F25361E58165E007E783B /* JMCategoryColSectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F25351E58165E007E783B /* JMCategoryColSectionReusableView.m */; };
 		1F3F25381E58194F007E783B /* homePagejingpinhui@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3F25371E58194F007E783B /* homePagejingpinhui@2x.png */; };
@@ -1341,6 +1342,7 @@
 		1F3C1A431E84B3AF008720B2 /* JMEarningListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEarningListController.m; sourceTree = "<group>"; };
 		1F3C1A451E84B57F008720B2 /* JMEarningModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMEarningModel.h; sourceTree = "<group>"; };
 		1F3C1A461E84B57F008720B2 /* JMEarningModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMEarningModel.m; sourceTree = "<group>"; };
+		1F3C1A731E8927C3008720B2 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.2.5/UMMobClick.framework"; sourceTree = "<group>"; };
 		1F3EE5BF1D7FE1A8006033FC /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		1F3EE5C01D7FE1A8006033FC /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		1F3F25341E58165E007E783B /* JMCategoryColSectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCategoryColSectionReusableView.h; sourceTree = "<group>"; };
@@ -2188,6 +2190,7 @@
 				1F140A471D87C012001B13EE /* UMMobClick.framework in Frameworks */,
 				1F99F87B1D65678800C6B79C /* libxml2.tbd in Frameworks */,
 				1F99F7B91D65661300C6B79C /* libsqlite3.tbd in Frameworks */,
+				1F3C1A741E8927C3008720B2 /* UMMobClick.framework in Frameworks */,
 				1F7D993B1D632E4A00E18FD1 /* libMBProgressHUD.a in Frameworks */,
 				1F9169EE1D50662D00327408 /* libRESideMenu.a in Frameworks */,
 				1F9169EA1D5064D700327408 /* libMJRefresh.a in Frameworks */,
@@ -2233,6 +2236,7 @@
 		1463567F77B797326B629CFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F3C1A731E8927C3008720B2 /* UMMobClick.framework */,
 				1F0213091E640E6E0088AD2D /* UserNotifications.framework */,
 				1F6B79C11DD6F51B009AB446 /* CoreText.framework */,
 				1F7C10901DB0CA2F00609BC4 /* Photos.framework */,
@@ -7457,6 +7461,7 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 					"$(PROJECT_DIR)/XLMM/Venders/AliPaySDK",
 					"$(PROJECT_DIR)/XLMM/Venders/YYPhotoBrowseView/YYWebImage/Vendor",
+					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.2.5",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";
@@ -7553,6 +7558,7 @@
 					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5",
 					"$(PROJECT_DIR)/XLMM/Venders/AliPaySDK",
 					"$(PROJECT_DIR)/XLMM/Venders/YYPhotoBrowseView/YYWebImage/Vendor",
+					"$(PROJECT_DIR)/Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.2.5",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/XLMM/PrefixHeader.pch";
