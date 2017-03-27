@@ -74,6 +74,9 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    if ([NSString isStringEmpty:self.cartType]) {
+        self.cartType = @"5";
+    }
     
     if (self.isHideNavigationLeftItem) {
         [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
@@ -100,8 +103,8 @@
 }
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts.json?type=5",Root_URL];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil userInfo:@{@"type":self.cartType}];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts?type=%@",Root_URL,self.cartType];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
@@ -142,7 +145,7 @@
     
 }
 - (void)downloadHistoryCartData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history.json?type=5",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history?type=%@",Root_URL,self.cartType];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
@@ -519,7 +522,7 @@
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
                                  @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID],
-                                 @"type":@"5"
+                                 @"type":self.cartType
                                  };
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         NSInteger codeNum = [responseObject[@"code"] integerValue];
