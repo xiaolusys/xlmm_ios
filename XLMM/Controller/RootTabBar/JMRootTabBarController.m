@@ -45,7 +45,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self requestCartNumber];
+    [self requestCartNumber:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -57,7 +57,7 @@
     [super viewDidLoad];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber) name:@"shoppingCartNumChange" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
@@ -139,6 +139,7 @@
 //        [self.homeVC endAutoScroll];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
             self.cartVC.isHideNavigationLeftItem = YES;
+            self.cartVC.cartType = @"5";
 //            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
             //            [self.cartVC refreshCartData];
         }else {
@@ -233,8 +234,14 @@
     self.cartVC.tabBarItem.badgeValue = nil;
 }
 
-- (void)requestCartNumber {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json?type=5",Root_URL];
+- (void)requestCartNumber:(NSNotification *)dict {
+    NSString *typeS;
+//    if (dict == nil) {
+    typeS = @"5";
+//    }else {
+//        typeS = dict.userInfo[@"type"];
+//    }
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json?type=%@",Root_URL,typeS];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         [self fetchData:responseObject];

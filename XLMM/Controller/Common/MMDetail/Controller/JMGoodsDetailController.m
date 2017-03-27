@@ -33,6 +33,7 @@
 //#define POPHeight SCREENHEIGHT * 0.6
 #define NavigationMaskWH 36
 #define kBottomViewTag 200
+static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购物车 type=0 , 精品购物车 type=5 , 团购 type=3) 默认为 @5;
 
 @interface JMGoodsDetailController ()<JMGoodsInfoPopViewDelegate,UIWebViewDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,WKScriptMessageHandler,IMYWebViewDelegate,JMAutoLoopPageViewDataSource,JMAutoLoopPageViewDelegate> {
     CGFloat maxY;
@@ -289,7 +290,10 @@
     }];
 }
 - (void)loadCatrsNumData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json?type=5",Root_URL];
+    if ([NSString isStringEmpty:currentCartsType]) {
+        return ;
+    }
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num?type=%@",Root_URL,currentCartsType];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         NSLog(@"%@",responseObject);
@@ -309,6 +313,7 @@
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[urlString JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return ;
         [self fetchData:responseObject];
+        [self loadCatrsNumData];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];
@@ -374,15 +379,19 @@
         self.buyNowButton.hidden = NO;
     }
     // === 显示商品出售状态 === //
-    _isDirectBuyGoods = ([detailContentDic[@"is_boutique"] boolValue] || [detailContentDic[@"is_onsale"] boolValue]);
+    _isDirectBuyGoods = [detailContentDic[@"is_onsale"] boolValue];
     _isFineGoods = [detailContentDic[@"is_boutique"] boolValue];
     NSString *saleStatus = detailContentDic[@"sale_state"];
     
-    if (_isDirectBuyGoods) {
+    if (_isFineGoods) {
 //        [self.addCartButton setTitle:@"立即购买" forState:UIControlStateNormal];
+        currentCartsType = @"5";
+    }else {
+        currentCartsType = @"0";
     }
     
     if (_isTeamBuyGoods) { // 团购
+        currentCartsType = @"3";
         if ([saleStatus isEqual:@"on"]) {
             if ([detailContentDic[@"is_sale_out"] boolValue]) {
                 [self getStatusButton:YES];
@@ -445,6 +454,19 @@
     }
     _buyCouponUrl = goodsDetailDic[@"buy_coupon_url"];
     
+    if (!_isTeamBuyGoods) {
+        if (_isDirectBuyGoods) {
+            self.addCartButton.hidden = YES;
+            self.buyNowButton.hidden = NO;
+            kWeakSelf
+            [self.buyNowButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(weakSelf.shopCartButton.mas_right).offset(15);
+                make.centerY.equalTo(weakSelf.bottomView.mas_centerY);
+                make.height.mas_equalTo(@40);
+                make.width.mas_equalTo(@(SCREENWIDTH - 85));
+            }];
+        }
+    }
     
     [self.tableView reloadData];
 }
@@ -668,12 +690,16 @@
 }
 #pragma mark -- 加入购物车选择商品属性回调
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts?type=%@",Root_URL,currentCartsType];
     if (_isDirectBuyGoods) {
-        attrubuteDic[@"type"] = @"5";
         [MBProgressHUD showLoading:@""];
     }else {
         [MBProgressHUD showLoading:@"正在加入购物车~"];
+    }
+    if (_isFineGoods) {
+        attrubuteDic[@"type"] = @"5";
+    }else {
+        attrubuteDic[@"type"] = @"0";
     }
     [self addCartUrlString:urlString Paramer:attrubuteDic];
 }
@@ -880,7 +906,7 @@
     [buyNowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     buyNowButton.titleLabel.font = [UIFont systemFontOfSize:16.];
     [buyNowButton addTarget:self action:@selector(cartButton:) forControlEvents:UIControlEventTouchUpInside];
-    self.buyNowButton = addCartButton;
+    self.buyNowButton = buyNowButton;
     self.buyNowButton.hidden = YES;
 
     kWeakSelf
@@ -951,6 +977,7 @@
     if (button.tag == kBottomViewTag + 0) {
         if (isLogin) {
             JMCartViewController *cartVC = [[JMCartViewController alloc] init];
+            cartVC.cartType = currentCartsType;
             [self.navigationController pushViewController:cartVC animated:YES];
         }else {
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
@@ -997,7 +1024,8 @@
 }
 - (void)getCartsFirstGoodsInfoGoodsTypeNumber:(NSNumber *)directBuyGoodsTypeNumber Parmer:(NSMutableDictionary *)parmer {
     [MBProgressHUD showLoading:@""];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:kCart_URL WithParaments:parmer WithSuccess:^(id responseObject) {
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts?type=%@",Root_URL,currentCartsType];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:parmer WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
 //        [MBProgressHUD showSuccess:@"加入购物车成功"];

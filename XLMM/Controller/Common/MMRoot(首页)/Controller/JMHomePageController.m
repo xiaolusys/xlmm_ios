@@ -202,9 +202,7 @@
     [self createNavigaView];
     [self createSegmentControl];
     [self emptyView];
-//    [self createRightItem];
     [self loadCategoryData];
-//    [self createSuspensionView];                       // 创建悬浮视图 (个人,精品汇,购物车)
     [self autoUpdateVersion];                          // 版本自动升级
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
@@ -350,73 +348,6 @@
 //    [leftButton addSubview:leftImageview];
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
 }
-- (void)createRightItem {
-    if(self.navigationItem.rightBarButtonItem == nil) {
-        NSString *titleStr = @"精品汇";
-        CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
-        self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
-        [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.navRightButton setTitle:titleStr forState:UIControlStateNormal];
-        [self.navRightButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:14.];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
-    }else {}
-}
-- (void)rightNavigationClick:(UIButton *)button {
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
-    if (login && xlmm) {
-        JMFineClassController *fineVC = [[JMFineClassController alloc] init];
-        [self.navigationController pushViewController:fineVC animated:YES];
-    }else {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-        [self.navigationController pushViewController:enterVC animated:YES];
-    }
-}
-- (void)createSuspensionView {
-    UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 70, 160, 50)];
-    [self.view addSubview:suspensionView];
-//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(suspensionViewTap:)];
-//    [suspensionView addGestureRecognizer:pan];
-    self.suspensionView = suspensionView;
-//    self.suspensionView.backgroundColor = [UIColor colorWithRed:1/255.f green:1/255.f blue:1/255.f alpha:0.1];
-    NSArray *imageArr = @[@"tabBar_personalSelected",@"homePagejingpinhui",@"tabBar_shoppingCartSelected"];
-    for (int i = 0 ; i < imageArr.count; i ++) {
-        UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        customButton.backgroundColor = [UIColor blackColor];
-        customButton.alpha = 0.8;
-        customButton.layer.cornerRadius = 22;
-        customButton.layer.borderWidth = 1;
-        customButton.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
-        customButton.tag = 100 + i;
-        [customButton addTarget:self action:@selector(suspensionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [suspensionView addSubview:customButton];
-        [customButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(suspensionView).offset(4 + 54 * i);
-            make.top.equalTo(suspensionView).offset(3);
-            make.size.mas_equalTo(CGSizeMake(44, 44));
-        }];
-        
-        UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
-        iconView.image = [UIImage imageNamed:imageArr[i]];
-        iconView.userInteractionEnabled = NO;
-        [customButton addSubview:iconView];
-        
-        if (i == (imageArr.count - 1)) {
-            self.cartsLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, -6, 16, 16)];
-            [iconView addSubview:self.cartsLabel];
-            self.cartsLabel.font = [UIFont systemFontOfSize:10.];
-            self.cartsLabel.textColor = [UIColor whiteColor];
-            self.cartsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
-            self.cartsLabel.textAlignment = NSTextAlignmentCenter;
-            self.cartsLabel.layer.cornerRadius = 8.;
-            self.cartsLabel.layer.masksToBounds = YES;
-            self.cartsLabel.hidden = YES;
-        }
-    }
-    self.cartButton = (UIButton *)[self.view viewWithTag:102];
-    
-}
 
 #pragma mark 移动到某个子视图
 - (void)removeToPage:(NSInteger)index {
@@ -459,48 +390,7 @@
     rootCategoryVC.categoryUrl = urlCategory;
     [self.navigationController pushViewController:rootCategoryVC animated:YES];
 }
-- (void)suspensionButtonClick:(UIButton *)button {
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
-    switch (button.tag) {
-        case 100:
-        {
-            if (login) {
-                JMMaMaHomeController *personalVC = [[JMMaMaHomeController alloc] init];
-                [self.navigationController pushViewController:personalVC animated:YES];
-            }else {       
-                JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-                [self.navigationController pushViewController:enterVC animated:YES];
-            }
-        }
-            break;
-        case 101:
-        {
-            if (login && xlmm) {
-                JMFineClassController *fineVC = [[JMFineClassController alloc] init];
-                [self.navigationController pushViewController:fineVC animated:YES];
-            }else {
-                JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-                [self.navigationController pushViewController:enterVC animated:YES];
-            }
-        }
-            break;
-        case 102:
-        {
-            if (login) {
-                JMCartViewController *cartVC = [[JMCartViewController alloc] init];
-                [self.navigationController pushViewController:cartVC animated:YES];
-            }else {
-                JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-                [self.navigationController pushViewController:enterVC animated:YES];
-            }
-        }
-            break;
-        default:
-            break;
-    }
-    
-}
+
 #pragma mark UIScrollViewDelegate 代理实现
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView { }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -766,7 +656,124 @@
 
 
 
+/*
+ //    [self createRightItem];
+ 
+ - (void)createRightItem {
+ if(self.navigationItem.rightBarButtonItem == nil) {
+ NSString *titleStr = @"精品汇";
+ CGFloat titleStrWidth = [titleStr widthWithHeight:0. andFont:14.].width;
+ self.navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleStrWidth, 44)];
+ [self.navRightButton addTarget:self action:@selector(rightNavigationClick:) forControlEvents:UIControlEventTouchUpInside];
+ [self.navRightButton setTitle:titleStr forState:UIControlStateNormal];
+ [self.navRightButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+ self.navRightButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+ self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
+ }else {}
+ }
+ - (void)rightNavigationClick:(UIButton *)button {
+ BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+ BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+ if (login && xlmm) {
+ JMFineClassController *fineVC = [[JMFineClassController alloc] init];
+ [self.navigationController pushViewController:fineVC animated:YES];
+ }else {
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ [self.navigationController pushViewController:enterVC animated:YES];
+ }
+ }
 
+ //    [self createSuspensionView];                       // 创建悬浮视图 (个人,精品汇,购物车)
+ 
+ 
+ - (void)createSuspensionView {
+ UIView *suspensionView = [[UIView alloc] initWithFrame:CGRectMake(20, SCREENHEIGHT - 70, 160, 50)];
+ [self.view addSubview:suspensionView];
+ //    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(suspensionViewTap:)];
+ //    [suspensionView addGestureRecognizer:pan];
+ self.suspensionView = suspensionView;
+ //    self.suspensionView.backgroundColor = [UIColor colorWithRed:1/255.f green:1/255.f blue:1/255.f alpha:0.1];
+ NSArray *imageArr = @[@"tabBar_personalSelected",@"homePagejingpinhui",@"tabBar_shoppingCartSelected"];
+ for (int i = 0 ; i < imageArr.count; i ++) {
+ UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+ customButton.backgroundColor = [UIColor blackColor];
+ customButton.alpha = 0.8;
+ customButton.layer.cornerRadius = 22;
+ customButton.layer.borderWidth = 1;
+ customButton.layer.borderColor = [UIColor settingBackgroundColor].CGColor;
+ customButton.tag = 100 + i;
+ [customButton addTarget:self action:@selector(suspensionButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+ [suspensionView addSubview:customButton];
+ [customButton mas_makeConstraints:^(MASConstraintMaker *make) {
+ make.left.equalTo(suspensionView).offset(4 + 54 * i);
+ make.top.equalTo(suspensionView).offset(3);
+ make.size.mas_equalTo(CGSizeMake(44, 44));
+ }];
+ 
+ UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 20, 20)];
+ iconView.image = [UIImage imageNamed:imageArr[i]];
+ iconView.userInteractionEnabled = NO;
+ [customButton addSubview:iconView];
+ 
+ if (i == (imageArr.count - 1)) {
+ self.cartsLabel = [[UILabel alloc] initWithFrame:CGRectMake(14, -6, 16, 16)];
+ [iconView addSubview:self.cartsLabel];
+ self.cartsLabel.font = [UIFont systemFontOfSize:10.];
+ self.cartsLabel.textColor = [UIColor whiteColor];
+ self.cartsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
+ self.cartsLabel.textAlignment = NSTextAlignmentCenter;
+ self.cartsLabel.layer.cornerRadius = 8.;
+ self.cartsLabel.layer.masksToBounds = YES;
+ self.cartsLabel.hidden = YES;
+ }
+ }
+ self.cartButton = (UIButton *)[self.view viewWithTag:102];
+ 
+ }
+
+ - (void)suspensionButtonClick:(UIButton *)button {
+ BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+ BOOL xlmm = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+ switch (button.tag) {
+ case 100:
+ {
+ if (login) {
+ JMMaMaHomeController *personalVC = [[JMMaMaHomeController alloc] init];
+ [self.navigationController pushViewController:personalVC animated:YES];
+ }else {
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ [self.navigationController pushViewController:enterVC animated:YES];
+ }
+ }
+ break;
+ case 101:
+ {
+ if (login && xlmm) {
+ JMFineClassController *fineVC = [[JMFineClassController alloc] init];
+ [self.navigationController pushViewController:fineVC animated:YES];
+ }else {
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ [self.navigationController pushViewController:enterVC animated:YES];
+ }
+ }
+ break;
+ case 102:
+ {
+ if (login) {
+ JMCartViewController *cartVC = [[JMCartViewController alloc] init];
+ [self.navigationController pushViewController:cartVC animated:YES];
+ }else {
+ JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
+ [self.navigationController pushViewController:enterVC animated:YES];
+ }
+ }
+ break;
+ default:
+ break;
+ }
+ 
+ }
+ */
 
 
 
