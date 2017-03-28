@@ -922,6 +922,7 @@ static BOOL isAgreeTerms = YES;
     [self.view addSubview:self.payView];
     self.maskView.alpha = 0;
     self.payView.cs_y = self.view.cs_h - 150;
+    self.payView.payMent = self.purchaseFooterView.goodsLabel.text;
     [UIView animateWithDuration:0.3 animations:^{
         self.maskView.alpha = 0.3;
         self.payView.bottom = self.view.cs_h;

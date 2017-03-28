@@ -190,8 +190,7 @@
 }
 - (void)setPayMent:(NSString *)payMent {
     _payMent = payMent;
-    
-    self.moneyL.text = [NSString stringWithFormat:@"应付金额%@",_payMent];
+    self.moneyL.text = [NSString stringWithFormat:@"应付金额 %@",payMent];
 }
 - (void)payTapClick:(UITapGestureRecognizer *)tap {
     UIView *tapView = [tap view];
