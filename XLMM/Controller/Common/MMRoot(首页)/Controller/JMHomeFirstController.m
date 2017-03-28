@@ -103,6 +103,10 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
 }
 - (JMPageContentView *)pageContentView {
     if (!_pageContentView) {
+        // 移除已经添加的子控制器
+        [self.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj removeFromParentViewController];
+        }];
         _pageContentView = [[JMPageContentView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Controllers:self.controllArr TitleArray:self.itemNameArr DescTitleArray:self.itemDescNameArr PageController:self];
     }
     return _pageContentView;
@@ -193,7 +197,8 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         [self.itemNameArr removeAllObjects];
         [self.itemDescNameArr removeAllObjects];
         [self.dataSource removeAllObjects];
-//        [self.controllArr removeAllObjects];
+        [self.controllArr removeAllObjects];
+        self.pageContentView = nil;
         [self fetchData:responseObject];
         [self endRefresh];
         [self.tableView reloadData];
@@ -216,6 +221,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
             [itemsArr addObject:model];
         }
         [self.dataSource addObject:itemsArr];
+        
         int hourInt = [itemDic[@"hour"] intValue];
         
         NSString *hourStr = [NSString stringWithFormat:@"%02d:00",hourInt];
@@ -233,20 +239,15 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
         [_timeHourArr addObject:@(hourInt)];
         [self.itemNameArr addObject:hourStr];
         [self.itemDescNameArr addObject:descStr];
+        
     }
-    if (self.controllArr.count > 0) {
-        for (int i = 0; i < self.controllArr.count; i++) {
-            JMHomeHourController *hourVC = self.controllArr[i];
-            hourVC.dataSource = self.dataSource.count > 0 ? self.dataSource[i] : nil;
-        }
-    }else {
-        for (int i = 0; i < self.itemNameArr.count; i ++) {
-            JMHomeHourController *ceshiVC = [[JMHomeHourController alloc] init];
-            [self.controllArr addObject:ceshiVC];
-            ceshiVC.delegate = self;
-            ceshiVC.dataSource = self.dataSource[i];
-        }
+    for (int i = 0; i < self.itemNameArr.count; i ++) {
+        JMHomeHourController *ceshiVC = [[JMHomeHourController alloc] init];
+        [self.controllArr addObject:ceshiVC];
+        ceshiVC.delegate = self;
+        ceshiVC.dataSource = self.dataSource[i];
     }
+
     
 }
 - (int)getCurrentTimeHour {

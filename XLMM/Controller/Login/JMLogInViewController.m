@@ -9,11 +9,10 @@
 #import "JMLogInViewController.h"
 #import "WXApi.h"
 #import "JMPhonenumViewController.h"
-#import "JMAuthcodeViewController.h"
-#import "RegisterViewController.h"
 #import "MiPushSDK.h"
 #import "JMSelecterButton.h"
-#import "VerifyPhoneViewController.h"
+#import "JMVerificationCodeController.h"
+
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
 
@@ -87,13 +86,6 @@
     headView.userInteractionEnabled = YES;
     self.headView.clipsToBounds = YES;
     
-//    UIView *backView = [UIView new];
-//    [self.headView addSubview:backView];
-//    backView.backgroundColor = [UIColor blackColor];
-//    backView.hidden = YES;
-//    backView.layer.cornerRadius = 18.;
-//    self.backView = backView;
-//    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.headView addSubview:backButton];
     [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateNormal];
@@ -107,12 +99,6 @@
     self.bottomView = bottomView;
     bottomView.backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:244/255. alpha:1.];
     
-//    UIButton *cancleBtn = [[UIButton alloc] init];
-//    [self.headView addSubview:cancleBtn];
-//    self.cancleBtn = cancleBtn;
-//    [cancleBtn setBackgroundImage:[UIImage imageNamed:@"cancle_login"] forState:UIControlStateNormal];
-//    [cancleBtn addTarget:self action:@selector(cancleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [cancleBtn setAdjustsImageWhenHighlighted:NO];
     //========微信登录按钮
     JMSelecterButton *wechatBtn = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
     [self.bottomView addSubview:wechatBtn];
@@ -174,19 +160,12 @@
     
     
 }
-
-
 #pragma mark --- 注册微信登录的通知
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    
-    BOOL islogin = [[NSUserDefaults standardUserDefaults]boolForKey:kIsLogin];
-    if (islogin) {
-    }
-    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector: @selector(update:) name:@"login" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
     [MobClick beginLogPageView:@"JMLogInViewController"];
 
 }
@@ -199,17 +178,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark --- 监听微信登录的通知
-- (void)update:(NSNotificationCenter *)notification {
-    dic = [[NSUserDefaults standardUserDefaults] objectForKey:@"userInfo"];
+- (void)WeChatLoginNoti:(NSNotificationCenter *)notification {
+    dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
     NSArray *randomArray = [self randomArray];
     unsigned long count = (unsigned long)randomArray.count;
     int index = 0;
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
     NSLog(@"timeSp:%@",timeSp);
-    
     __unused long time = [timeSp integerValue];
     NSLog(@"time = %ld", (long)time);
-    
     randomstring = [[NSMutableString alloc] initWithCapacity:0];
     for (int i = 0; i<8; i++) {
         index = arc4random()%count;
@@ -223,11 +200,8 @@
     //获得参数，升序排列
     NSString* sign_params = [NSString stringWithFormat:@"noncestr=%@&secret=%@&timestamp=%@",noncestr, SECRET,timeSp];
     NSLog(@"1.————》%@", sign_params);
-    
     NSString *sign = [sign_params sha1];
-    
     NSLog(@"sign = %@", sign);
-    
     [MBProgressHUD showLoading:@"正在登录......"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
     NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
@@ -249,9 +223,7 @@
         NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
         [userdefaults setBool:YES forKey:kIsLogin];
         [userdefaults synchronize];
-        [MBProgressHUD hideHUD];
         [self loginSuccessful];
-        
         
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
@@ -261,15 +233,13 @@
 }
 #pragma mark --- 移除通知
 - (void)dealloc {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"login" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"WeChatLogin" object:nil];
 }
 #pragma mark ---- 点击微信登录的按钮
 - (void)wechatBtnClick:(UIButton *)btn {
-    
     self.wechatBtn.enabled = NO;
-    
+    [self performSelector:@selector(buttonEnable:) withObject:self.wechatBtn afterDelay:0.5];
     if ([WXApi isWXAppInstalled]) {
         
     } else{
@@ -277,12 +247,10 @@
         [alterView show];
         return;
     }
-    
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
     [userdefaults synchronize];
-    
-    
+
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
     req.state = @"xiaolumeimei" ;
@@ -290,14 +258,10 @@
     [WXApi sendReq:req];
     
 }
-
-
+- (void)buttonEnable:(UIButton *)button {
+    button.enabled = YES;
+}
 #pragma mark ---- 选择使用手机号登录 或者 验证码 或者 注册新的账号
-
-//- (void)cancleBtnClick {
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
-
 //跳转到手机号登陆
 - (void)jumpToPhoneLoginVC:(UIButton *)btn {
     JMPhonenumViewController *phoneL = [[JMPhonenumViewController alloc] init];
@@ -305,22 +269,20 @@
 }
 //跳转到验证码登录
 - (void)jumpToAuthcodeLoginVC:(UIButton *)btn {
-    JMAuthcodeViewController *authL = [[JMAuthcodeViewController alloc] init];
-    authL.config = @{@"title":@"短信验证码登录",@"isRegister":@YES,@"isMessageLogin":@YES};
-    [self.navigationController pushViewController:authL animated:YES];
+    JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+    verfyCodeVC.verificationCodeType = SMSVerificationCodeWithLogin;
+    [self.navigationController pushViewController:verfyCodeVC animated:YES];
 }
 //跳转到注册界面
 - (void)jumpToRegisterVC:(UIButton *)btn {
-    VerifyPhoneViewController *verifyVC = [[VerifyPhoneViewController alloc] initWithNibName:@"VerifyPhoneViewController" bundle:nil];
-    verifyVC.config = @{@"title":@"手机注册",@"isRegister":@YES, @"isMessageLogin":@NO};
-    [self.navigationController pushViewController:verifyVC animated:YES];
+    JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+    verfyCodeVC.verificationCodeType = SMSVerificationCodeWithRegistered;
+    [self.navigationController pushViewController:verfyCodeVC animated:YES];
 }
 
 #pragma mark ---- 微信登录成功调用函数
-- (void) loginSuccessful {
-    [MBProgressHUD hideHUD];
+- (void)loginSuccessful {
     [self dismissViewControllerAnimated:YES completion:nil];
-//    [MobClick profileSignInWithPUID:@"playerID"];
     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
     [notificationCenter postNotification: broadcastMessage];
@@ -385,9 +347,7 @@
 }
 
 - (void)initAutolayout {
-    
     kWeakSelf
-    
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.view);
         make.width.mas_equalTo(SCREENWIDTH);
@@ -436,6 +396,7 @@
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.phoneNumBtn.mas_bottom).offset(20);
+        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
         make.width.mas_equalTo(SCREENWIDTH);
         make.height.mas_equalTo(@1);
     }];
@@ -476,6 +437,7 @@
     
 }
 - (void)backApointInterface {
+    [MBProgressHUD hideHUD];
     NSInteger count = 0;
     count = [[self.navigationController viewControllers] indexOfObject:self];
     if ((count > 2) && (count < [self.navigationController viewControllers].count)) {

@@ -240,6 +240,10 @@
     NSString *string = [str substringWithRange:NSMakeRange(11, 5)];
     return string;
 }
++ (NSString *)jm_subWithHourMinuteSe:(NSString *)str {
+    NSString *string = [str substringWithRange:NSMakeRange(11, str.length - 11)];
+    return string;
+}
 
 /**
  *  时间字符串只包含年月日

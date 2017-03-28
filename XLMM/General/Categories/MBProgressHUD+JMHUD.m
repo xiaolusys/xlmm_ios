@@ -39,6 +39,7 @@
     if (view == nil) view = (UIView *)[UIApplication sharedApplication].delegate.window;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.label.text = title;
+//    hud.label.font = [UIFont systemFontOfSize:14.];
 //    hud.dimBackground = NO;
 //    hud.offset = CGPointMake(0.f, MBProgressMaxOffset);     // 指示框位置
 //    hud.detailsLabel.text = @"我是文本详情";                  // 可以设置文本详情

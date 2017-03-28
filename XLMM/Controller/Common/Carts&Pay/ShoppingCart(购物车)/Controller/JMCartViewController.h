@@ -11,6 +11,7 @@
 @interface JMCartViewController : UIViewController
 
 @property (nonatomic, assign) BOOL isHideNavigationLeftItem;
+@property (nonatomic, copy) NSString *cartType;
 - (void)refreshCartData;
 
 @end

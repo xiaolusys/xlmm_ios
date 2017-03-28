@@ -460,7 +460,6 @@
 		567599408832CF002D1286017E855C4E /* QNDnsManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDnsManager.m; path = HappyDNS/Common/QNDnsManager.m; sourceTree = "<group>"; };
 		570E5D4665331BCDA2F7EBEA253C7E64 /* NSObject+MJProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+MJProperty.h"; path = "MJExtension/NSObject+MJProperty.h"; sourceTree = "<group>"; };
 		577DC8DF554A512B148A65613D6BD51F /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNHijackingDetectWrapper.m; path = HappyDNS/Local/QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
-		57D0F88FC71AF922AF5D3268D8CEF539 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "umsdk_IOS_analyics_no-idfa_v4.0.5/UMMobClick.framework"; sourceTree = "<group>"; };
 		58500879C4D15B46D473FE79AD8048C1 /* QNNetworkInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNetworkInfo.h; path = HappyDNS/Common/QNNetworkInfo.h; sourceTree = "<group>"; };
 		58907311FE97EC87A31D7497B6FCF3BB /* QNUploadManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNUploadManager.h; path = QiniuSDK/Storage/QNUploadManager.h; sourceTree = "<group>"; };
 		58A4667C6B1D14FEC2A016C022D35664 /* QNVersion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNVersion.h; path = QiniuSDK/Common/QNVersion.h; sourceTree = "<group>"; };
@@ -647,6 +646,7 @@
 		F7B35B8962A34C363DB4873DCE954F1D /* SDWebImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-prefix.pch"; sourceTree = "<group>"; };
 		F80B06744BD9B81C1DAEEF9F01886DC2 /* QNPHAssetResource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNPHAssetResource.m; path = QiniuSDK/Common/QNPHAssetResource.m; sourceTree = "<group>"; };
 		F82A9677CAA101F9F1723B36A4451DB3 /* Pods-XLMM-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XLMM-resources.sh"; sourceTree = "<group>"; };
+		F9E3048BDC9D7FCBD733AFD81F7E323C /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "umsdk_IOS_analyics_no-idfa_v4.2.5/UMMobClick.framework"; sourceTree = "<group>"; };
 		FB4E604A05442C4B0A2C0F25327B1CD6 /* QNAssessment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNAssessment.m; path = HappyDNS/Assessment/QNAssessment.m; sourceTree = "<group>"; };
 		FB84DDA91B0D81E1A16C6267A9B65975 /* MJExtension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MJExtension-dummy.m"; sourceTree = "<group>"; };
 		FC5418062A6E1DB49896A7E7D1E22BA9 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+WebCache.h"; path = "SDWebImage/UIImageView+WebCache.h"; sourceTree = "<group>"; };
@@ -903,6 +903,14 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		488F06962698037401C9C9F11FEE7300 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F9E3048BDC9D7FCBD733AFD81F7E323C /* UMMobClick.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5B9D6DF0F6B275EBA2608695EFCB5AB2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1145,17 +1153,9 @@
 		B1DAA5C151CC23073036B4AF68ABB0FF /* UMengAnalytics-NO-IDFA */ = {
 			isa = PBXGroup;
 			children = (
-				B314E92B93D8D1661755C6F0F6ABDD7A /* Frameworks */,
+				488F06962698037401C9C9F11FEE7300 /* Frameworks */,
 			);
 			path = "UMengAnalytics-NO-IDFA";
-			sourceTree = "<group>";
-		};
-		B314E92B93D8D1661755C6F0F6ABDD7A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				57D0F88FC71AF922AF5D3268D8CEF539 /* UMMobClick.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B7709F8471EFE492AE4F066FFA5EA9C7 /* Support Files */ = {

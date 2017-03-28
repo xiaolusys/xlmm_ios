@@ -233,7 +233,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [self.topButton addTarget:self action:@selector(topButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-20);
-        make.bottom.equalTo(self.view).offset(-100);
+        make.bottom.equalTo(self.view).offset(-70);
         make.width.height.mas_equalTo(@50);
     }];
     //    self.topButton.frame = CGRectMake(SCREENWIDTH - 70, SCREENHEIGHT - 70, 50, 50);

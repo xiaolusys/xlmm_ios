@@ -288,28 +288,15 @@
                  }
                  */
                 self.userInfo = dic;
-                //                NSLog(@"tokeninfo = %@", self.tokenInfo);
-                //                NSLog(@"userInfo = %@", self.userInfo);
-                
                 NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
                 [userdefault setObject:dic forKey:kWxLoginUserInfo];
                 [userdefault setBool:YES forKey:kIsLogin];
                 [userdefault setObject:kWeiXinLogin forKey:kLoginMethod];
-                NSDictionary *wxUserInfo = @{@"nickname":[dic objectForKey:@"nickname"],
-                                             @"headimgurl":[dic objectForKey:@"headimgurl"]
-                                             };
-                [userdefault setObject:wxUserInfo forKey:kWeiXinUserInfo];
+                NSString *author = [userdefault objectForKey:kWeiXinauthorize];
                 [userdefault synchronize];
                 
-                //                NSLog(@"name = %@", [dic objectForKey:@"nickname"]);
-                //  发送微信登录成功的通知
-                
-                NSUserDefaults *userdefault0 = [NSUserDefaults standardUserDefaults];
-                NSString *author = [userdefault0 objectForKey:kWeiXinauthorize];
-                
                 if ([author isEqualToString:@"wxlogin"]) {
-                    
-                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"login" object:self];
+                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"WeChatLogin" object:self];
                     NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
                     [notificationCenter postNotification: broadcastMessage];
                 } else if([author isEqualToString:@"binding"]){

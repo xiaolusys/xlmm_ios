@@ -312,14 +312,7 @@
 
 
 - (void)logout {
-    //退出
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:kIsLogin];
-    [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-    [userDefaults setBool:NO forKey:kISXLMM];
-    [userDefaults synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
-    
+    //退出    
     //   http://m.xiaolu.so/rest/v1/users/customer_logout
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/customer_logout", Root_URL];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
@@ -332,8 +325,12 @@
             [MiPushSDK unsetAccount:user_account];
             [user setObject:@"" forKey:@"user_account"];
         }
-        //发送通知修改NewLeft中的用户信息
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"quit" object:nil];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:NO forKey:kIsLogin];
+        [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
+        [userDefaults setBool:NO forKey:kISXLMM];
+        [userDefaults synchronize];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
     } WithFail:^(NSError *error) {
         
     } Progress:^(float progress) {

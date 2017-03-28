@@ -26,6 +26,7 @@
 @property (nonatomic, strong) JMEarningRecordTableView *recordTableView;
 
 @property (nonatomic, strong) NSMutableArray *tableViewDataArr;
+@property (nonatomic, strong) NSMutableArray *tableViewDataDicArr;
 @property (nonatomic, strong) NSMutableArray *sectionKeysArr;
 
 //上拉的标志
@@ -126,6 +127,16 @@
     }
     return _tableViewDataArr;
 }
+- (NSMutableArray *)tableViewDataDicArr {
+    if (!_tableViewDataDicArr) {
+        _tableViewDataDicArr = [NSMutableArray array];
+        for (int i = 0; i < 4; i++) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [_tableViewDataDicArr addObject:dict];
+        }
+    }
+    return _tableViewDataDicArr;
+}
 
 #pragma mark 生命周期函数
 - (void)viewWillAppear:(BOOL)animated {
@@ -153,11 +164,14 @@
 - (void)createPullFooterRefresh {
     //    kWeakSelf
     self.recordTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showLoading:@""];
         _isLoadMore = YES;
         [self loadMore];
     }];
 }
 - (void)endRefresh {
+    [MBProgressHUD hideHUD];
     if (_isLoadMore) {
         _isLoadMore = NO;
         [self.recordTableView.mj_footer endRefreshing];
@@ -211,7 +225,7 @@
     [_nextUrlDict setObject:dic[@"next"] forKey:currentUrlNum];
     NSArray *results = dic[@"results"];
     NSMutableArray *currentDataArr = self.tableViewDataArr[_currentIndex];
-    NSMutableDictionary *currentDataDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *currentDataDic = self.tableViewDataDicArr[_currentIndex];
     for (NSDictionary *dict in results) {
         CarryLogModel *model = [CarryLogModel mj_objectWithKeyValues:dict];
         NSString *date = [self dateDeal:model.date_field];
@@ -229,11 +243,11 @@
     for (int i = 0; i < keysArr.count; i++) {
         [currentDataArr addObject:currentDataDic[keysArr[i]]];
     }
-    [MBProgressHUD hideHUD];
+    
     // 刷新 数据
     [self getDataWithIndex:_currentIndex];
-    
 }
+
 - (NSMutableArray *)sortAllKeyArray:(NSMutableArray *)keyArr {
     for (int i = 0; i < keyArr.count; i++) {
         for (int j = 0; j < keyArr.count - i - 1; j++) {
@@ -292,7 +306,7 @@
     if (keysArr.count == 0) {
         [self loadDataUrl:_urlArray[_currentIndex]];
     }
-    
+    [self.recordTableView.mj_footer resetNoMoreData];
 }
 - (void)backClick {
     [self.navigationController popViewControllerAnimated:YES];

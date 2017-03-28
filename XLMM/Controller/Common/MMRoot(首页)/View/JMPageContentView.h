@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIScrollView *segmentScrollView;
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, assign) int lastSelectedIndex;
+@property (nonatomic, strong) NSArray *dataSource;
 
 
 @end

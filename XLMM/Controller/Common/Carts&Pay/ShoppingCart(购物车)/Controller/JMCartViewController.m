@@ -23,6 +23,7 @@
     BOOL historyCartDownLoad;
     BOOL isEmpty;
     float allPrice;
+    NSInteger _currentRowIndex;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -73,6 +74,9 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    if ([NSString isStringEmpty:self.cartType]) {
+        self.cartType = @"5";
+    }
     
     if (self.isHideNavigationLeftItem) {
         [self createNavigationBarWithTitle:@"购物车" selecotr:nil];
@@ -99,8 +103,8 @@
 }
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil];
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts.json?type=5",Root_URL];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil userInfo:@{@"type":self.cartType}];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts?type=%@",Root_URL,self.cartType];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
@@ -141,7 +145,7 @@
     
 }
 - (void)downloadHistoryCartData {
-    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history.json?type=5",Root_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_history?type=%@",Root_URL,self.cartType];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if (!responseObject) return ;
@@ -162,7 +166,6 @@
     if (array.count <= 0 && currentCartDownLoad && isEmpty) {
         [self displayDefaultView];
     }
-    
     [self.historyCartDataSource removeAllObjects];
     for (NSDictionary *dic in array) {
         CartListModel *model = [CartListModel mj_objectWithKeyValues:dic];
@@ -304,8 +307,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         self.deleteModel = [self.currentCartDataSource objectAtIndex:indexPath.row];
-        [self.currentCartDataSource removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        _currentRowIndex = indexPath.row;
         [self deleteClicked];
     }
 }
@@ -492,6 +494,8 @@
         if (code == 0) {
             [self downloadCurrentCartData];
             [self downloadHistoryCartData];
+            [self.currentCartDataSource removeObjectAtIndex:_currentRowIndex];
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_currentRowIndex inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }
@@ -508,7 +512,7 @@
 - (void)purchaseClicked:(JMSelecterButton *)button {
     [MobClick event:@"purchase"];
     JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
-    purchaseVC.purchaseGoodsArr = self.currentCartDataSource;
+    purchaseVC.purchaseGoods = self.currentCartDataSource;
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 #pragma mark ---- 重新购买按钮点击
@@ -518,7 +522,7 @@
     NSDictionary *parameters = @{@"item_id": model.item_id,
                                  @"sku_id":model.sku_id,
                                  @"cart_id":[NSString stringWithFormat:@"%ld",model.cartID],
-                                 @"type":@"5"
+                                 @"type":self.cartType
                                  };
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:kCart_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         NSInteger codeNum = [responseObject[@"code"] integerValue];

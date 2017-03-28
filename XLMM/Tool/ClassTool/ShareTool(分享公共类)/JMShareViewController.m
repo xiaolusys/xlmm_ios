@@ -59,10 +59,6 @@
     
 }
 
-- (void)setIsShowEarningValue:(BOOL)isShowEarningValue {
-    _isShowEarningValue = isShowEarningValue;
-    
-}
 
 - (void)createShareButtom {
     
@@ -107,21 +103,6 @@
         make.width.mas_equalTo(SCREENWIDTH - 60);
     }];
     
-    CGFloat topHeight;
-    if (self.isShowEarningValue) {
-        topHeight = 100;
-        NSDictionary *profitDic = self.model.profit;
-        NSString *minValue = [NSString stringWithFormat:@"%.2f",[profitDic[@"min"] floatValue]];
-        NSString *allStr = [NSString stringWithFormat:@"只要你的好友通过你的链接购买此商品,你就能得到至少%@元的利润哦~",minValue];
-        self.headerView.hidden = NO;
-        self.valueLabel.text = [NSString stringWithFormat:@"赚 ¥%.2f ~ ¥%.2f",[profitDic[@"min"] floatValue],[profitDic[@"max"] floatValue]];
-        self.earningLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allStr SubStringArray:@[minValue]];
-        
-    }else {
-        topHeight = 0;
-        self.headerView.hidden = YES;
-    }
-    
     JMShareButtonView *shareButton = [[JMShareButtonView alloc] init];
     self.shareButton = shareButton;
     self.shareButton.delegate = self;
@@ -137,7 +118,7 @@
     [self.view addSubview:self.canelButton];
     
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(topHeight);
+        make.top.equalTo(self.view).offset(0);
         make.centerX.equalTo(self.view.mas_centerX);
         make.width.mas_equalTo(SCREENWIDTH - 30);
         make.height.mas_equalTo(180);
@@ -150,9 +131,31 @@
         make.height.mas_equalTo(40);
     }];
     
+    [self upDataWithModeProfit:self.model.profit];
 
-    
-    
+}
+- (void)upDataWithModeProfit:(NSDictionary *)profitDic {
+    if (profitDic != nil) {
+        if (!self.headerView) {
+            return ;
+        }
+        [self.shareButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(100);
+        }];
+        NSString *minValue = [NSString stringWithFormat:@"%.2f",[profitDic[@"min"] floatValue]];
+        NSString *allStr = [NSString stringWithFormat:@"只要你的好友通过你的链接购买此商品,你就能得到至少%@元的利润哦~",minValue];
+        self.headerView.hidden = NO;
+        self.valueLabel.text = [NSString stringWithFormat:@"赚 ¥%.2f ~ ¥%.2f",[profitDic[@"min"] floatValue],[profitDic[@"max"] floatValue]];
+        self.earningLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:13.] SubColor:[UIColor buttonEnabledBackgroundColor] AllString:allStr SubStringArray:@[minValue]];
+    }else {
+        if (!self.headerView) {
+            return ;
+        }
+        [self.shareButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(0);
+        }];
+        self.headerView.hidden = YES;
+    }
 }
 
 //- (void)setUrlStr:(NSString *)urlStr {
@@ -164,6 +167,7 @@
 
 - (void)setModel:(JMShareModel *)model {
     _model = model;
+    [self upDataWithModeProfit:model.profit];
     [self createData];
 }
 
@@ -219,7 +223,8 @@
     
     _titleUrlString = [NSString stringWithFormat:@"%@",_content];
     
-    NSLog(@"Share _isPic=%d _imageUrlString=%@",_isPic, _imageUrlString);
+    NSLog(@"_titleStr -- > %@, \n _content -- > %@, \n  _imageUrlString -- > %@, \n _url -- > %@, \n _titleUrlString -- > %@, \n _isPic -- > %d",_titleStr,_content,_imageUrlString,_url,_titleUrlString,_isPic);
+    
 }
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {

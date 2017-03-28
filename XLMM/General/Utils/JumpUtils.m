@@ -113,8 +113,13 @@
         //跳转到用户未过期优惠券列表
         JMCouponController *youhuiVC = [[JMCouponController alloc] init];
         [vc.navigationController pushViewController:youhuiVC animated:YES];
+ 
+    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/home"]){
+        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
+        tabBarVC.selectedIndex = 0;
         
-    }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
+    } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
         JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
         JMKeyWindow.rootViewController = tabBarVC;
@@ -138,15 +143,20 @@
         ProductSelectionListViewController *mamachoiceVC = [[ProductSelectionListViewController alloc] init];
         [vc.navigationController pushViewController:mamachoiceVC animated:YES];
         
-    }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
+    }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
         BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
-        
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [vc.navigationController pushViewController:enterVC animated:YES];
             return;
         }else {
+            NSArray *typeArr = [target_url componentsSeparatedByString:@"?"];
+            NSString *typeStr = [target_url substringFromIndex:([[typeArr firstObject] length] + 1)];
+            NSArray *typeA = [typeStr componentsSeparatedByString:@"="];
+            NSString *typeS = [typeStr substringFromIndex:([[typeA firstObject] length] + 1)];
+            
             JMCartViewController *cartVC = [[JMCartViewController alloc] init];
+            cartVC.cartType = [NSString stringWithFormat:@"%@",typeS];
             [vc.navigationController pushViewController:cartVC animated:YES];
 //            CartViewController *cartVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
 //            [vc.navigationController pushViewController:cartVC animated:YES];
@@ -187,6 +197,7 @@
     }
     
 }
+
 
 +(void) jumpToBrand:(NSString *)target_url viewController:(UIViewController *)vc{
     if([target_url rangeOfString:@"?"].length > 0){

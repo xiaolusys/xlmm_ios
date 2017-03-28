@@ -808,6 +808,9 @@
         if (code == 0) {
             [MBProgressHUD hideHUD];
             [self popToview];
+            if (_delegate && [_delegate respondsToSelector:@selector(composeWithPopViewRefresh:)]) {
+                [_delegate composeWithPopViewRefresh:self];
+            }
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }
