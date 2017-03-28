@@ -73,8 +73,8 @@
 - (void)setCartsInfoLevel:(NSInteger)cartsInfoLevel {
     _cartsInfoLevel = cartsInfoLevel;
     if (cartsInfoLevel > 1) {
-        self.promptLabel.text = @"温馨提示：保税区和直邮发货根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。";
-        CGFloat promptLabelHeight = [self promptInfoStrHeight:self.promptLabel.text];
+        self.promptLabel.text = payOrderLevelInfo;
+        CGFloat promptLabelHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
         [self.promptView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(@(promptLabelHeight));
         }];
@@ -86,12 +86,6 @@
     }
     
 }
-- (CGFloat)promptInfoStrHeight:(NSString *)string {
-    CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
-    CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
-    return contentH + 20;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self setUpTopUI];

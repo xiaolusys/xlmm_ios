@@ -392,7 +392,7 @@ static BOOL isAgreeTerms = YES;
             [self userNotIdCardNumberMessage];
         }
         if (_cartsInfoLevel > 1) {
-            CGFloat strHeight = [self promptInfoStrHeight:@"温馨提示：保税区和直邮根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。"];
+            CGFloat strHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
             self.purchaseHeaderView.mj_h = 150.f + strHeight;
             self.tableView.tableHeaderView = self.purchaseHeaderView;
             self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
@@ -1025,15 +1025,6 @@ static BOOL isAgreeTerms = YES;
         [self pushShareVC];
     }
 }
-
-
-
-- (CGFloat)promptInfoStrHeight:(NSString *)string {
-    CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
-    CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
-    return contentH + 20;
-}
-
 
 
 
