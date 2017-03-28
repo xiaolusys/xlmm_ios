@@ -938,7 +938,13 @@ static BOOL isAgreeTerms = YES;
     }];
 }
 - (void)userNotIdCardNumberMessage {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的收货地址信息不完善,请修改地址信息~\n点击\"收货地址-修改\"填写一下吧" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    NSString *msgStr = @"";
+    if (_addressInfoLevel == 0) {
+        msgStr = @"收货地址不完善,请填写收货地址。";
+    }else {
+        msgStr = @"订单中包含进口保税区发货商品，根据海关监管要求，需要提供收货人身份证信息。此信息加密保存，只用于此订单海关通关，请点击地址进行修改。\n点击\"收货地址-修改\"填写一下身份证吧";
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msgStr delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
     [alert show];
 }
 - (void)doSomeWork {
