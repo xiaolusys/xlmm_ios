@@ -15,7 +15,7 @@
 #import "JMReloadEmptyDataView.h"
 
 
-@interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate>
+@interface JMPersonAllOrderController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate, JMOrderDetailControllerDelegate>
 
 /**
  *  订单详情模型
@@ -204,7 +204,7 @@
     orderDetailVC.allOrderModel = allModel;
     orderDetailVC.orderTid = allModel.tid;
     orderDetailVC.urlString = [NSString stringWithFormat:@"%@/rest/v2/trades/%@?device=app", Root_URL, allModel.goodsID];
- 
+    orderDetailVC.delegate = self;
     [self.navigationController pushViewController:orderDetailVC animated:YES];
 //    NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
 //    for (UIViewController *vc in marr) {
@@ -286,7 +286,9 @@
     
     return sectionView;
 }
-
+- (void)composeWithPopViewRefresh:(JMOrderDetailController *)orderVC {
+    [self.tableView.mj_header beginRefreshing];
+}
 #pragma mark 没有订单显示空视图
 //- (void)emptyView {
 //    kWeakSelf

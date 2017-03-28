@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "JMAllOrderModel.h"
 
+@class JMOrderDetailController;
+@protocol JMOrderDetailControllerDelegate <NSObject>
+
+- (void)composeWithPopViewRefresh:(JMOrderDetailController *)orderVC;
+
+@end
+
 @interface JMOrderDetailController : UIViewController
 
-@property (nonatomic, copy) NSString *urlString;
+@property (nonatomic, weak) id<JMOrderDetailControllerDelegate> delegate;
 
+@property (nonatomic, copy) NSString *urlString;
 
 @property (nonatomic, strong) JMAllOrderModel *allOrderModel;
 
