@@ -142,7 +142,7 @@
     [promptView addSubview:promptLabel];
     promptLabel = promptLabel;
     promptLabel.font = [UIFont systemFontOfSize:12.];
-    promptLabel.textColor = [UIColor dingfanxiangqingColor];
+    promptLabel.textColor = [UIColor redColor];
     promptLabel.numberOfLines = 0;
 //    self.promptLabel.textAlignment = NSTextAlignmentCenter;
     self.promptLabel = promptLabel;
