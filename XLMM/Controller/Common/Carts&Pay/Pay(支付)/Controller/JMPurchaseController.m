@@ -273,13 +273,30 @@ static BOOL isAgreeTerms = YES;
     if (purchaseArr.count == 0) {
         _addressID = @"";
         _addressInfoLevel = 0;
+        self.purchaseHeaderView.addressArr = purchaseArr;
     }else {
-        NSDictionary *dic = purchaseArr[0];
-        _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
-        _addressID = [dic[@"id"] stringValue];
+        if (self.purchaseHeaderView.addressModel == nil) {
+            NSDictionary *dic = purchaseArr[0];
+            _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
+            _addressID = [dic[@"id"] stringValue];
+            self.purchaseHeaderView.addressArr = purchaseArr;
+        }else {
+            for (NSDictionary *dic in purchaseArr) {
+                if ([[dic[@"id"] stringValue] isEqual:self.purchaseHeaderView.addressModel.addressID]) {
+                    _addressID = self.purchaseHeaderView.addressModel.addressID;
+                    _addressInfoLevel = [self.purchaseHeaderView.addressModel.personalinfo_level integerValue];
+                    [self layoutLevel];
+                    return ;
+                }
+            }
+            NSDictionary *dic = purchaseArr[0];
+            _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
+            _addressID = [dic[@"id"] stringValue];
+            self.purchaseHeaderView.addressArr = purchaseArr;
+        }
     }
-    self.purchaseHeaderView.addressArr = purchaseArr;
     [self layoutLevel];
+    
 }
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
     _cartsInfoLevel = [purchaseDic[@"max_personalinfo_level"] integerValue];
@@ -392,7 +409,7 @@ static BOOL isAgreeTerms = YES;
             [self userNotIdCardNumberMessage];
         }
         if (_cartsInfoLevel > 1) {
-            CGFloat strHeight = [self promptInfoStrHeight:@"温馨提示：保税区和直邮根据海关要求需要提供身份证号码，为了避免清关失败，提供的身份证必须和收货人一致。"];
+            CGFloat strHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
             self.purchaseHeaderView.mj_h = 150.f + strHeight;
             self.tableView.tableHeaderView = self.purchaseHeaderView;
             self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
@@ -722,11 +739,11 @@ static BOOL isAgreeTerms = YES;
 // PurchaseAddressDelegate (地址选择修改代理回调)
 - (void)addressView:(JMAddressViewController *)addressVC model:(JMAddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
-    _addressID = model.addressID;
-    _addressInfoLevel = [model.personalinfo_level integerValue];
-    if (_cartsInfoLevel > _addressInfoLevel) {
-        [self userNotIdCardNumberMessage];
-    }
+//    _addressID = model.addressID;
+//    _addressInfoLevel = [model.personalinfo_level integerValue];
+//    if (_cartsInfoLevel > _addressInfoLevel) {
+//        [self userNotIdCardNumberMessage];
+//    }
 //    if ([NSString isStringEmpty:model.identification_no]) {
 //        _isIndentifierNum = YES;
 //    }else {
@@ -1025,15 +1042,6 @@ static BOOL isAgreeTerms = YES;
         [self pushShareVC];
     }
 }
-
-
-
-- (CGFloat)promptInfoStrHeight:(NSString *)string {
-    CGFloat contentW = [UIScreen mainScreen].bounds.size.width - 10;
-    CGFloat contentH = [string boundingRectWithSize:CGSizeMake(contentW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.]} context:nil].size.height;
-    return contentH + 20;
-}
-
 
 
 
