@@ -273,13 +273,30 @@ static BOOL isAgreeTerms = YES;
     if (purchaseArr.count == 0) {
         _addressID = @"";
         _addressInfoLevel = 0;
+        self.purchaseHeaderView.addressArr = purchaseArr;
     }else {
-        NSDictionary *dic = purchaseArr[0];
-        _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
-        _addressID = [dic[@"id"] stringValue];
+        if (self.purchaseHeaderView.addressModel == nil) {
+            NSDictionary *dic = purchaseArr[0];
+            _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
+            _addressID = [dic[@"id"] stringValue];
+            self.purchaseHeaderView.addressArr = purchaseArr;
+        }else {
+            for (NSDictionary *dic in purchaseArr) {
+                if ([[dic[@"id"] stringValue] isEqual:self.purchaseHeaderView.addressModel.addressID]) {
+                    _addressID = self.purchaseHeaderView.addressModel.addressID;
+                    _addressInfoLevel = [self.purchaseHeaderView.addressModel.personalinfo_level integerValue];
+                    [self layoutLevel];
+                    return ;
+                }
+            }
+            NSDictionary *dic = purchaseArr[0];
+            _addressInfoLevel = [dic[@"personalinfo_level"] integerValue];
+            _addressID = [dic[@"id"] stringValue];
+            self.purchaseHeaderView.addressArr = purchaseArr;
+        }
     }
-    self.purchaseHeaderView.addressArr = purchaseArr;
     [self layoutLevel];
+    
 }
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
     _cartsInfoLevel = [purchaseDic[@"max_personalinfo_level"] integerValue];
@@ -722,11 +739,11 @@ static BOOL isAgreeTerms = YES;
 // PurchaseAddressDelegate (地址选择修改代理回调)
 - (void)addressView:(JMAddressViewController *)addressVC model:(JMAddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
-    _addressID = model.addressID;
-    _addressInfoLevel = [model.personalinfo_level integerValue];
-    if (_cartsInfoLevel > _addressInfoLevel) {
-        [self userNotIdCardNumberMessage];
-    }
+//    _addressID = model.addressID;
+//    _addressInfoLevel = [model.personalinfo_level integerValue];
+//    if (_cartsInfoLevel > _addressInfoLevel) {
+//        [self userNotIdCardNumberMessage];
+//    }
 //    if ([NSString isStringEmpty:model.identification_no]) {
 //        _isIndentifierNum = YES;
 //    }else {

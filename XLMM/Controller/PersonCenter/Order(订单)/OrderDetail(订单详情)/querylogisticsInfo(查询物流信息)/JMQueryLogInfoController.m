@@ -114,12 +114,11 @@
             http://192.168.1.8:8005/rest/v1/wuliu/get_wuliu_by_packetid?packetid=227838694987&company_code=STO
  */
 - (void)loadData {
-    
     _urlStr = [NSString stringWithFormat:@"%@/rest/v1/wuliu/get_wuliu_by_packetid?packetid=%@&company_code=%@", Root_URL, self.packetId, self.companyCode];
     NSLog(@"%@", _urlStr);
     
     [MBProgressHUD showLoading:@"获取物流信息"];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:[_urlStr JMUrlEncodedString] WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
         if(responseObject == nil) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"您的订单暂未查询到物流信息，可能快递公司数据还未更新，请稍候查询或到快递公司网站查询" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -137,7 +136,7 @@
         
     }];
 }
-- (void)fetchedWuliuData:(NSDictionary *)responseData{
+- (void)fetchedWuliuData:(NSDictionary *)responseData {
     // NSLog(@"%@",responseData);
     if (responseData == nil) {
         return;
