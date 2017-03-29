@@ -12,7 +12,7 @@
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size;
 - (UIImage *)imageByScalingAndCroppingForSize:(CGSize)targetSize;
-
+- (UIImage *)imageWithCornerRadius:(CGFloat)radius;
 
 + (UIImage *) imageWithView:(UIView *)selectView;
 + (UIImage *)imagewithWebView:(UIWebView *)webView;

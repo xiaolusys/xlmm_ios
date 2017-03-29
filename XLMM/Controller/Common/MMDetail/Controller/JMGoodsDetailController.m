@@ -513,7 +513,8 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
     if (indexPath.section == 0) {
         if (_isFineGoods && _isFineGoodsHeightShow) {
             if (_goodsAddressLevel > 1) {
-                return 240;
+                CGFloat promptLabelHeight = [orderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
+                return 190 + promptLabelHeight;
             }
             return 190;
         }

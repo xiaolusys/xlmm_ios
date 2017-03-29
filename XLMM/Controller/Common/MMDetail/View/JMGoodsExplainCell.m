@@ -101,8 +101,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
 - (void)setPromptIndex:(NSInteger)promptIndex {
     _promptIndex = promptIndex;
     if (promptIndex > 1) {
-        self.promptLabel.text = @"温馨提示：保税区和直邮根据海关要求需要提供身份证号码，保税区发货预计5到10个工作日到货，直邮预计10-20工作日到货,为了避免清关失败，提供的身份证必须和收货人一致。";
-        CGFloat promptLabelHeight = [self promptInfoStrHeight:self.promptLabel.text];
+        self.promptLabel.text = orderLevelInfo;
+        CGFloat promptLabelHeight = [orderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
         [self.promptView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(@(promptLabelHeight));
         }];
