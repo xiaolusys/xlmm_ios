@@ -21,7 +21,6 @@
 #import "JMUpdataAppPopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMStoreManager.h"
-#import "JMLaunchView.h"
 #import "AppDelegate.h"
 #import "JMFineCounpGoodsController.h"
 #import "JMFineCounpContentController.h"
@@ -70,7 +69,6 @@
 @property (nonatomic, strong) UILabel *cartsLabel;
 
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
-@property (nonatomic, strong) JMLaunchView *launchView;
 @property (nonatomic, strong) JMEmptyView *empty;
 @property (nonatomic, strong) UIView *suspensionView;
 @property (nonatomic, strong) JMHomeFirstController *homeFirst;
@@ -185,12 +183,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
-    UIImage *launchImage = [JMStoreManager getDataImage:@"launchImageCache" Quality:0.];
-    self.launchView = [JMLaunchView initImageWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Image:launchImage TimeSecond:3. HideSkip:YES LaunchAdClick:^{
-    } TimeEnd:^{
-    }];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [window addSubview:self.launchView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];

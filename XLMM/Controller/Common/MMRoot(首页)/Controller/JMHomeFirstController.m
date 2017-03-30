@@ -15,7 +15,7 @@
 #import "JMHomeHeaderCell.h"
 #import "JumpUtils.h"
 #import "JMHomePageController.h"
-#import "UIImage+ColorImage.h"
+#import "UIImage+UIImageExt.h"
 #import "JMRichTextTool.h"
 #import "JMPageContentView.h"
 

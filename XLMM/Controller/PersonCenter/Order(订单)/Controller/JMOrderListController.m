@@ -7,7 +7,7 @@
 //
 
 #import "JMOrderListController.h"
-#import "UIImage+ColorImage.h"
+#import "UIImage+UIImageExt.h"
 #import "JMPersonAllOrderController.h"
 #import "HMSegmentedControl.h"
 

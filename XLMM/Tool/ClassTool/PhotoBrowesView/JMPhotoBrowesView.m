@@ -9,7 +9,7 @@
 #import "JMPhotoBrowesView.h"
 #import "JMBorwesScrollView.h"
 #import "JMPageControl.h"
-#import "UIImage+ColorImage.h"
+#import "UIImage+UIImageExt.h"
 
 
 @interface JMPhotoBrowesView () <JMBorwesScrollViewDelegate, UIScrollViewDelegate>

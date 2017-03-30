@@ -57,7 +57,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick1:)];
     
-    
     [self initUI];
     [self initAutolayout];
     [self isWechatInstall];
@@ -93,6 +92,11 @@
     backButton.layer.cornerRadius = 18.;
     [backButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.backButton = backButton;
+    if (self.navigationController.viewControllers.count == 1) {
+        self.backButton.hidden = YES;
+    }else {
+        self.backButton.hidden = NO;
+    }
 
     UIView *bottomView = [[UIView alloc] init];
     [self.view addSubview:bottomView];
