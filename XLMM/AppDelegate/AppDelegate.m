@@ -61,8 +61,8 @@
 - (void)getLaunchImage {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return ;
-        _imageUrl = @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg"; //responseObject[@"picture"];
+        if (!responseObject) return ; // @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg";
+        _imageUrl = responseObject[@"picture"];
         if ([NSString isStringEmpty:_imageUrl]) {
             return ;
         }
