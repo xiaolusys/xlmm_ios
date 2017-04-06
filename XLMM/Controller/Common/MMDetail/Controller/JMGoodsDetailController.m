@@ -199,9 +199,6 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
         [self.pageView endAutoScroll];
     }
 }
-- (void)viewDidAppear:(BOOL)animated {
-    [MBProgressHUD hideHUD];
-}
 - (void)dealloc {
     if (self.pageView) {
         [self.pageView removeFromSuperview];
@@ -314,6 +311,7 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
         if (!responseObject) return ;
         [self fetchData:responseObject];
         [self loadCatrsNumData];
+        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) {
     }];

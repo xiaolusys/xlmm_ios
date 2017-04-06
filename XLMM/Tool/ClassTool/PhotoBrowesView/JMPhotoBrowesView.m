@@ -50,7 +50,7 @@
 }
 
 - (void)initUI {
-    self.backgroundColor = [UIColor colorWithRed:10 / 255. green:10 / 255. blue:10 / 255. alpha:0.95];
+    self.backgroundColor = [UIColor colorWithRed:10 / 255. green:10 / 255. blue:10 / 255. alpha:0.9];
     self.visibleBorwesScrollViews = [[NSMutableSet alloc] init];
     self.reusableBorwesScrollViews = [[NSMutableSet alloc] init];
     [self placeholderImage];
