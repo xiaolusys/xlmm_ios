@@ -120,8 +120,8 @@
     
 }
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
-    self.empty.hidden = NO;
-    [[JMGlobal global] hideWaitLoading];
+//    self.empty.hidden = NO;
+//    [[JMGlobal global] hideWaitLoading];
 }
 - (void)webViewDidStartLoad:(IMYWebView *)webView {
     

@@ -7,7 +7,7 @@
 //
 
 #import "JMMaMaFansController.h"
-#import "UIImage+ColorImage.h"
+#import "UIImage+UIImageExt.h"
 #import "JMNowFansController.h"
 #import "JMAboutFansController.h"
 #import "HMSegmentedControl.h"

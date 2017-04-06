@@ -10,15 +10,15 @@
 
 @interface UIImage (UIImageExt)
 
-- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size;
-- (UIImage *)imageByScalingAndCroppingForSize:(CGSize)targetSize;
-- (UIImage *)imageWithCornerRadius:(CGFloat)radius;
-
-+ (UIImage *) imageWithView:(UIView *)selectView;
-+ (UIImage *)imagewithWebView:(UIWebView *)webView;
-+ (UIImage *) imagewithScrollView:(UIScrollView *)scrollView;
-
 + (UIImage*)imageFromView:(UIView*)view;
++ (UIImage *)imageWithColor:(UIColor *)color Frame:(CGRect)frame;
++ (UIImage *)boxblurImage:(UIImage *)image withBlurNumber:(CGFloat)blur;
++ (UIImage *)coreBlurImage:(UIImage *)image withBlurNumber:(CGFloat)blur;
+
+
++(nullable UIImage *)xh_imageWithName:(nonnull NSString *)imageName;
++(nullable UIImage *)xh_imageWithData:(nonnull NSData *)imageData;
+
 
 
 @end

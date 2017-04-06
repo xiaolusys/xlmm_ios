@@ -177,9 +177,6 @@
 
 
 + (NSString *)miPushTetOperateType:(NSString *)selector;
-
-
-
 + (NSString *)TimeformatDHMSFromSeconds:(int)second;
 + (NSString *)TimeformatMSFromSeconds:(int)second;
 
