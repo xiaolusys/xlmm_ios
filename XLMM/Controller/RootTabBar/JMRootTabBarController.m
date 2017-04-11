@@ -60,8 +60,8 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
     
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     self.delegate = self;
     NSArray *childItemsArray = @[
@@ -129,11 +129,11 @@
     }else if ([viewController.tabBarItem.title isEqualToString:@"分类"]) {
         //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isRefreshFine"]) {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self.fineVC refreshLoadMaMaWeb];
-        }
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isRefreshFine"]) {
+//            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            [self.fineVC refreshLoadMaMaWeb];
+//        }
 //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
 //        [self.homeVC endAutoScroll];

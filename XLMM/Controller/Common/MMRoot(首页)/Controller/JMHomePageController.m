@@ -111,41 +111,41 @@
     //跳转到新的页面
     [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
 }
-- (void)updataAfterLogin:(NSNotification *)notification{
-    // 微信登录
-    [self loginUpdateIsXiaoluMaMa];
-}
-- (void)phoneNumberLogin:(NSNotification *)notification{
-    //  NSLog(@"手机登录");
-    [self loginUpdateIsXiaoluMaMa];
-}
-- (void)loginOut {
-    
-}
-#pragma mark 登陆后刷新个人信息
-- (void)loginUpdateIsXiaoluMaMa {
-    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
-        if ([self isLogin]) {
-            if ([self isXiaolumama]) {
-//                [self createRightItem];
-            }else {
-            }
-            //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
-        }else {
-        }
-    } failure:^(NSError *error) {
-    }];
-}
-- (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
-    return isXLMM;
-}
-- (BOOL)isLogin {
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isLog = [users boolForKey:kIsLogin];
-    return isLog;
-}
+//- (void)updataAfterLogin:(NSNotification *)notification{
+//    // 微信登录
+//    [self loginUpdateIsXiaoluMaMa];
+//}
+//- (void)phoneNumberLogin:(NSNotification *)notification{
+//    //  NSLog(@"手机登录");
+//    [self loginUpdateIsXiaoluMaMa];
+//}
+//- (void)loginOut {
+//    
+//}
+//#pragma mark 登陆后刷新个人信息
+//- (void)loginUpdateIsXiaoluMaMa {
+//    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+//        if ([self isLogin]) {
+//            if ([self isXiaolumama]) {
+////                [self createRightItem];
+//            }else {
+//            }
+//            //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
+//        }else {
+//        }
+//    } failure:^(NSInteger errorCode) {
+//    }];
+//}
+//- (BOOL)isXiaolumama{
+//    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+//    BOOL isXLMM = [users boolForKey:kISXLMM];
+//    return isXLMM;
+//}
+//- (BOOL)isLogin {
+//    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+//    BOOL isLog = [users boolForKey:kIsLogin];
+//    return isLog;
+//}
 #pragma mark 视图生命周期
 - (instancetype)init {
     if (self == [super init]) {
@@ -185,12 +185,12 @@
     [self createNavigationBarWithTitle:@"" selecotr:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
     
     
-    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
+//    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];
     [self createSegmentControl];
     [self emptyView];

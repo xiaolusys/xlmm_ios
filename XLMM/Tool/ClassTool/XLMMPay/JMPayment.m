@@ -290,8 +290,7 @@
                 self.userInfo = dic;
                 NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
                 [userdefault setObject:dic forKey:kWxLoginUserInfo];
-                [userdefault setBool:YES forKey:kIsLogin];
-                [userdefault setObject:kWeiXinLogin forKey:kLoginMethod];
+//                [userdefault setBool:YES forKey:kIsLogin];
                 NSString *author = [userdefault objectForKey:kWeiXinauthorize];
                 [userdefault synchronize];
                 

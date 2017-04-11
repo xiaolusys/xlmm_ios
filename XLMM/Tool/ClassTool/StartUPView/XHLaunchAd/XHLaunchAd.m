@@ -21,7 +21,7 @@ dispatch_source_cancel(time);\
 time = nil;\
 }
 
-static NSInteger defaultWaitDataDuration = 1;
+static NSInteger defaultWaitDataDuration = 2;
 
 @interface XHLaunchAd()
 
