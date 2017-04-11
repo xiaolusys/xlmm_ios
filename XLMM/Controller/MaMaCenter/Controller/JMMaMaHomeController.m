@@ -26,7 +26,6 @@
 #import "MaMaOrderListViewController.h"
 #import "MaMaHuoyueduViewController.h"
 #import "JMChoiseWithDrawController.h"
-#import "JMLogInViewController.h"
 #import "JMSettingController.h"
 #import "Account1ViewController.h"
 #import "WebViewController.h"
@@ -37,7 +36,7 @@
 #import "JMOrderListController.h"
 #import "JMEarningListController.h"
 #import "JMPushingDaysController.h"
-
+#import "JMLogInViewController.h"
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
     NSString *_orderRecord;             // 订单记录
@@ -127,6 +126,9 @@
     [self createTableView];
     [self createPullHeaderRefresh];
     [self loaderweimaData];
+    
+    NSLog(@"%@",self.navigationController.viewControllers);
+    
 }
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
@@ -156,6 +158,7 @@
 - (void)quitLogin {
     self.navigationItem.rightBarButtonItem = nil;
     self.homeHeaderView.userInfoDic = nil;
+
 }
 
 #pragma mark 对外提供的接口
@@ -260,31 +263,32 @@
 // 个人信息请求
 - (void)setUserInfo{
     [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
-        if ([self isLogin]) {
-            [self updateUserInfo:responseObject];
+        [self updateUserInfo:responseObject];
+        [self endRefresh];
+    } failure:^(NSInteger errorCode) {
+        if (errorCode == 403) {
+//            [self quitLogin];
+            [self endRefresh];
         }else {
-            [self quitLogin];
+            [MBProgressHUD showError:@"请求失败,请手动刷新"];
         }
-        [self endRefresh];
-    } failure:^(NSError *error) {
-        [self quitLogin];
-        [self endRefresh];
-        
     }];
 }
 - (void)updateUserInfo:(NSDictionary *)dic {
-    if ([self isXiaolumama]) {
-        [self loadMaMaWeb];
-        [self loadDataSource];
-        [self loadMaMaMessage];
-        [self loadfoldLineData];
-        [self craeteNavRightButton];
-        [self customUserInfo];
-    }else {
-        self.navigationItem.rightBarButtonItem = nil;
-        [self endRefresh];
-    }
     _persinCenterDict = dic;
+    [self loadMaMaWeb];
+    [self loadDataSource];
+    [self loadMaMaMessage];
+    [self loadfoldLineData];
+    [self craeteNavRightButton];
+    [self customUserInfo];
+    
+//    if ([self isXiaolumama]) {
+//        
+//    }else {
+//        self.navigationItem.rightBarButtonItem = nil;
+//        [self endRefresh];
+//    }
     //判断是否为0
     if ([[dic objectForKey:@"user_budget"] isKindOfClass:[NSNull class]]) {
         _accountMoney = [NSNumber numberWithFloat:0.00];
@@ -605,13 +609,13 @@
     [self.navigationController pushViewController:activity animated:YES];
 }
 #pragma mark - 小鹿客服注册个人信息
-- (void)customUserInfo {
-    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
-    if (userInfo == nil) {
+- (void)customUserInfo {  // _persinCenterDict
+//    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
+    if (_persinCenterDict == nil) {
         return ;
     }
-    NSString *nick_name = userInfo[@"nick"];
-    NSString *sdk_token = [NSString stringWithFormat:@"%@",userInfo[@"id"]];
+    NSString *nick_name = _persinCenterDict[@"nick"];
+    NSString *sdk_token = [NSString stringWithFormat:@"%@",_persinCenterDict[@"id"]];
     //    NSString *cellphone = self.userInfoDic[@"mobile"];
     NSDictionary *parameters = @{
                                  @"user": @{

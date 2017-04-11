@@ -161,56 +161,61 @@ static NSString *userCustomerID;
 }
 #pragma mark ======== 请求个人信息,保存登录信息 ========
 - (void)upDataLoginStatusSuccess:(void (^)(id responseObject))success
-                         failure:(void (^)(NSError *error))failure {
+                         failure:(void (^)(NSInteger errorCode))failure {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject){
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            return;
-        }
-        if (([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0)) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
-            if (![userCustomerID isEqual:responseObject[@"id"]]) {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
-            }
-            userCustomerID = responseObject[@"id"];
-        }else {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
-        }
-        if([[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kISXLMM];
-        }else {
-            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
-        }
+        if (!responseObject) return ;
+        BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        [[NSUserDefaults standardUserDefaults] setBool:kIsLoginStatus forKey:kIsLogin];
+        [[NSUserDefaults standardUserDefaults] setBool:kIsXLMMStatus forKey:kISXLMM];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
-        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
+//        if (!responseObject){
+//            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
+//            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            return;
+//        }
+//        if (([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0)) {
+//            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
+//            if (![userCustomerID isEqual:responseObject[@"id"]]) {
+//                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isRefreshFine"];
+//            }
+//            userCustomerID = responseObject[@"id"];
+//        }else {
+//            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
+//        }
+//        if([[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]]){
+//            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kISXLMM];
+//        }else {
+//            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
+//        }
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//        [JMStoreManager removeFileByFileName:@"usersInfo.plist"];
+//        [JMStoreManager saveDataFromDictionary:@"usersInfo.plist" WithData:responseObject];
         if (success) {
             success(responseObject);
         }
     } WithFail:^(NSError *error) {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSInteger statusCode = 200;
+//        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
+//        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
+//        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
         NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
         if (response) {
             if (response.statusCode) {
-                NSInteger statusCode = response.statusCode;
+                statusCode = response.statusCode;
                 if (statusCode == 403) {
                     NSLog(@"%ld",statusCode);
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsLogin];
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:kISXLMM];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }else {
-                    
                 }
             }
         }
+        [[NSUserDefaults standardUserDefaults] synchronize];
         if (failure) {
-            failure(error);
+            failure(statusCode);
         }
     } Progress:^(float progress) {
     }];

@@ -12,6 +12,9 @@
 #import "JMGoodsCountTime.h"
 #import "MiPushSDK.h"
 #import "JMInstallPasswordController.h"
+#import "WebViewController.h"
+#import "JMRootTabBarController.h"
+#import "Udesk.h"
 
 
 @interface JMVerificationCodeController () <JMSliderLockViewDelegate, UIGestureRecognizerDelegate, UITextFieldDelegate> {
@@ -27,8 +30,12 @@
 @property (nonatomic, strong) UITextField *phoneNumberField;
 @property (nonatomic, strong) UITextField *verificationCodeField;
 @property (nonatomic, strong) UILabel *waringLabel;
-
+@property (nonatomic, strong) UIButton *registeredButton;
 @property (nonatomic, assign) BOOL isShowSliderView;
+/**
+ *  MaMa客服入口
+ */
+@property (nonatomic, strong) UIButton *serViceButton;
 
 @end
 
@@ -53,7 +60,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"JMVerificationCodeController"];
-    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -88,7 +94,7 @@
     
     [self.view addSubview:self.maskScrollView];
     [self createUI];
-
+    [self craeteNavRightButton];
 }
 
 #pragma mark ==== 创建视图 ====
@@ -156,12 +162,26 @@
     [textFieldView addSubview:verificationCodeField];
     [textFieldView addSubview:self.verificationCodeButton];
     
-    self.waringLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceing, textFieldView.cs_max_Y + 10, SCREENWIDTH - spaceing * 2, 20)];
+    CGFloat registW = [@"如何注册" widthWithHeight:20. andFont:13.].width;
+    self.registeredButton  = [[UIButton alloc] initWithFrame:CGRectMake(spaceing, textFieldView.cs_max_Y + 10, registW, 20)];
+    [self.maskScrollView addSubview:self.registeredButton];
+    //设置按钮文字的下划线
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"如何注册"];
+    NSRange titleRange = {0,[title length]};
+    [self.registeredButton setTitle:@"如何注册" forState:UIControlStateNormal];
+    [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:titleRange];
+    [self.registeredButton setAttributedTitle:title forState:UIControlStateNormal];
+    [self.registeredButton.titleLabel setFont:[UIFont systemFontOfSize:13.]];
+    self.registeredButton.titleLabel.textColor = [UIColor redColor];
+    [self.registeredButton addTarget:self action:@selector(registeredButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.waringLabel = [[UILabel alloc] initWithFrame:CGRectMake(spaceing, self.registeredButton.cs_max_Y + 10, SCREENWIDTH - spaceing * 2, 20)];
     [self.maskScrollView addSubview:self.waringLabel];
     self.waringLabel.text = @"";
     self.waringLabel.textColor = [UIColor redColor];
     self.waringLabel.font = CS_SYSTEMFONT(13.);
     self.waringLabel.textAlignment = NSTextAlignmentCenter;
+    
     
     self.sliderView = [[JMSliderLockView alloc] initWithFrame:CGRectMake(spaceing, self.waringLabel.cs_max_Y + 10, SCREENWIDTH - spaceing * 2, 60)];
     self.sliderView.thumbHidden = NO;
@@ -183,8 +203,8 @@
     switch (self.verificationCodeType) {
         case SMSVerificationCodeWithLogin:      // 验证码登录
             [self.sureButton setTitle:@"登录" forState:UIControlStateNormal];
-            self.verificationCodeField.placeholder = @"请输入登录密码";
-            self.title = @"短信验证码登录";
+            self.verificationCodeField.placeholder = @"请输入验证码";
+            self.title = @"短信登录";
             break;
         case SMSVerificationCodeWithRegistered: // 注册新用户
             [self.sureButton setTitle:@"确定" forState:UIControlStateNormal];
@@ -218,9 +238,6 @@
         self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
     }
     
-    
-    
-    
 }
 - (UITextField *)createTextFieldWithFrame:(CGRect)frame PlaceHolder:(NSString *)placeHolder KeyboardType:(UIKeyboardType)keyboardType {
     UITextField *textField = [[UITextField alloc] initWithFrame:frame];
@@ -236,6 +253,10 @@
 - (void)getAuthcodeClick:(UIButton *)sender {
     [self.phoneNumberField resignFirstResponder];
     [self.verificationCodeField resignFirstResponder];
+    if (self.userNotXLMM) {
+        [MBProgressHUD showMessage:@"您还不是小鹿精英妈妈~!"];
+        return;
+    }
     isClickGetCode = YES;
     if ([NSString isStringEmpty:self.phoneNumberField.text]) {
         self.waringLabel.text = @"请输入手机号";
@@ -382,7 +403,7 @@
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
         [self reductionSlider];
-        [MBProgressHUD showError:@"登录失败！"];
+        [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
     } Progress:^(float progress) {
         
     }];
@@ -391,7 +412,7 @@
 - (void)verifyAfter:(NSDictionary *)dic {
     if (dic.count == 0)return;
     NSString *phoneNumber = self.phoneNumberField.text;
-    if ([[dic objectForKey:@"rcode"] integerValue] != 0){
+    if ([[dic objectForKey:@"rcode"] integerValue] != 0) {
         [self reductionSlider];
         [self alertMessage:[dic objectForKey:@"msg"]];
         return;
@@ -420,6 +441,8 @@
         //发送通知在root中接收
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
         [self backApointInterface];
+        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
     }else if (self.verificationCodeType == SMSVerificationCodeWithForgetPWD) {
         JMInstallPasswordController *pwdVC = [[JMInstallPasswordController alloc] init];
         pwdVC.pwdType = 0;
@@ -433,7 +456,9 @@
         pwdVC.phomeNumber = self.phoneNumberField.text;
         [self.navigationController pushViewController:pwdVC animated:YES];
     }else {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self backApointInterface];
+        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+        JMKeyWindow.rootViewController = tabBarVC;
     }
 }
 
@@ -467,15 +492,18 @@
     NSLog(@"%@",muString);
     if (textField == self.phoneNumberField) {
         if ([muString hasPrefix:@"1"] && muString.length == 11) {
-            self.sliderView.cs_h = 60.f;
-            self.sureButton.cs_y = self.sliderView.cs_max_Y + 20;
-            if (self.verificationCodeType == SMSVerificationCodeWithBind) {
-                self.skipButton.cs_y = self.sureButton.cs_max_Y + 10;
-                self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+            if (self.userNotXLMM) {
+                
             }else {
-                self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
+                self.sliderView.cs_h = 60.f;
+                self.sureButton.cs_y = self.sliderView.cs_max_Y + 20;
+                if (self.verificationCodeType == SMSVerificationCodeWithBind) {
+                    self.skipButton.cs_y = self.sureButton.cs_max_Y + 10;
+                    self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.skipButton.cs_max_Y + 20);
+                }else {
+                    self.maskScrollView.contentSize = CGSizeMake(SCREENWIDTH, self.sureButton.cs_max_Y + 20);
+                }
             }
-//            [self verificationButton:YES];
             self.verificationCodeButton.selected = YES;
             self.verificationCodeButton.enabled = YES;
         }else {
@@ -605,7 +633,11 @@
     [self.view endEditing:YES];
 }
 - (void)backClick {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.userLoginMethodWithWechat) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else {
+        [self backApointInterface];
+    }
 }
 - (void)backApointInterface {
     NSInteger count = 0;
@@ -616,6 +648,61 @@
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+- (void)registeredButtonClicked {
+    NSString *urlString = @"https://m.xiaolumeimei.com/mall/boutiqueinvite";
+    NSString *active = @"myInvite";
+    NSString *titleName = @"我的邀请";
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:@38 forKey:@"activity_id"];
+    [dict setValue:urlString forKey:@"web_url"];
+    [dict setValue:active forKey:@"type_title"];
+    [dict setValue:titleName forKey:@"name_title"];
+    [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
+    
+}
+- (void)pushWebView:(NSMutableDictionary *)dict ShowNavBar:(BOOL)isShowNavBar ShowRightShareBar:(BOOL)isShowRightShareBar Title:(NSString *)title {
+    WebViewController *activity = [[WebViewController alloc] init];
+    if (title != nil) {
+        activity.titleName = title;
+    }
+    activity.webDiction = dict;
+    activity.isShowNavBar = isShowNavBar;
+    activity.isShowRightShareBtn = isShowRightShareBar;
+    [self.navigationController pushViewController:activity animated:YES];
+}
+
+- (void)craeteNavRightButton {
+    NSString *userName = self.profileUserInfo ? self.profileUserInfo[@"nick"] : @"新用户";
+    NSString *userID = self.profileUserInfo ? self.profileUserInfo[@"id"] : @"-1";
+    NSDictionary *parameters = @{
+                                 @"user": @{
+                                         @"sdk_token":userID,
+                                         @"nick_name":userName,
+                                         }
+                                 };
+    [UdeskManager createCustomerWithCustomerInfo:parameters];
+    UIButton *serViceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 80)];
+    [serViceButton addTarget:self action:@selector(serViceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [serViceButton setTitle:@"小鹿客服" forState:UIControlStateNormal];
+    [serViceButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    serViceButton.titleLabel.font = [UIFont systemFontOfSize:14.];
+    //    UIImageView *serviceImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 5, 30, 30)];
+    //    [serViceButton addSubview:serviceImage];
+    //    serviceImage.image = [UIImage imageNamed:@"serviceEnter"];
+    self.serViceButton = serViceButton;
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:serViceButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+- (void)serViceButtonClick:(UIButton *)button {
+    [MobClick event:@"MaMa_service"];
+    button.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
+    UdeskSDKManager *chatViewManager = [[UdeskSDKManager alloc] initWithSDKStyle:[UdeskSDKStyle defaultStyle]];
+    [chatViewManager pushUdeskViewControllerWithType:UdeskRobot viewController:self];
+}
+- (void)changeButtonStatus:(UIButton *)button {
+    button.enabled = YES;
 }
 
 

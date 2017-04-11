@@ -27,7 +27,6 @@
     NSString *_fineCouponTid;
 }
 
-
 @property (nonatomic ,strong) IMYWebView *baseWebView;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
 @property (nonatomic, strong) WebViewJavascriptBridge* bridge;
@@ -37,7 +36,6 @@
 
 @end
 
-
 @implementation JMFineClassController
 - (JMShareViewController *)shareView {
     if (!_shareView) {
@@ -45,9 +43,6 @@
     }
     return _shareView;
 }
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -62,7 +57,6 @@
         [self registerJsBridge];
     }
 }
-
 - (void)refreshWebView {
     if (![NSString isStringEmpty:self.urlString] && self.baseWebView != nil) {
         [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
@@ -71,7 +65,6 @@
 - (void)refreshLoadMaMaWeb {
     [self loadMaMaWeb];
 }
-
 - (void)loadMaMaWeb {
     [[JMGlobal global] showWaitLoadingInView:self.baseWebView];
     NSString *str = [NSString stringWithFormat:@"%@/rest/v1/mmwebviewconfig?version=1.0", Root_URL];
@@ -95,7 +88,6 @@
     resultsDict = resultsArr[0];
     NSDictionary *extraDict = resultsDict[@"extra"];
     self.urlString = extraDict[@"boutique"];
-    NSLog(@"JMFineClassController --> self.urlString %@",self.urlString);
     [self.baseWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
 //    self.baseWebView.cs_h = 0.f;
 }
@@ -115,9 +107,6 @@
 //        [weakSelf.progressView setProgress:estimatedProgress animated:YES];
 //    };
     [self.view addSubview:self.baseWebView];
-    
-    
-    
 }
 - (void)webView:(IMYWebView *)webView didFailLoadWithError:(NSError *)error {
 //    self.empty.hidden = NO;
@@ -131,8 +120,6 @@
 //    self.baseWebView.cs_h = SCREENHEIGHT - 20 - ktabBarHeight;
     [[JMGlobal global] hideWaitLoading];
 }
-
-
 - (void)emptyView {
     kWeakSelf
     self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];
@@ -140,31 +127,24 @@
     self.empty.hidden = YES;
     self.empty.block = ^(NSInteger index) {
         if (index == 100) {
-            weakSelf.empty.hidden = YES;
-            [weakSelf loadMaMaWeb];
+            kStrongSelf
+            strongSelf.empty.hidden = YES;
+            [strongSelf loadMaMaWeb];
         }
     };
 }
-
-
 #pragma mark - 注册js bridge供h5页面调用
 - (void)registerJsBridge {
     JMRegisterJS *regis = [[JMRegisterJS alloc] init];
     [regis registerJSBridgeBeforeIOSSeven:self WebView:self.baseWebView];
 }
-
-
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick endLogPageView:@"JMFineClassController"];
     self.navigationController.navigationBarHidden = YES;
-//    [[JMGlobal global] hideWaitLoading];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
-    
-    
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -190,16 +170,9 @@
 - (void)couponTid:(NSNotification *)sender {
     _fineCouponTid = sender.object;
 }
-
-
-
 - (void)backClick:(UIButton *)button{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
-
 
 @end
 

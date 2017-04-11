@@ -13,6 +13,8 @@
 #import "JMLogInViewController.h"
 #import "JMVerificationCodeController.h"
 #import "AESEncryption.h"
+#import "JMRootTabBarController.h"
+#import "AppDelegate.h"
 
 
 #define rememberPwdKey @"rememberPwd"
@@ -193,26 +195,88 @@
             return ;
         }
         // 手机登录成功 ，保存用户信息以及登录途径
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
         [[NSUserDefaults standardUserDefaults] setObject:Root_URL forKey:@"serverip"];
         NSString *encryptionStr = [AESEncryption encrypt:self.passwordTextF.text password:self.phoneNumTextF.text];
         [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumTextF.text forKey:kUserName];
         [[NSUserDefaults standardUserDefaults] setObject:encryptionStr forKey:kPassWord];
         [[NSUserDefaults standardUserDefaults] setObject:kPhoneLogin forKey:kLoginMethod];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        btn.enabled = YES;
         // 发送手机号码登录成功的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+        [self loadUserInfo];
         [self setDevice];
-        [self backApointInterface];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"登录失败，请重试"];
         btn.enabled = YES;
     } Progress:^(float progress) {
-        
     }];
 }
-
+#pragma mark ---- 登录成功后获取用户信息
+- (void)loadUserInfo {
+    /*
+     1. 用户绑定手机, 且是精英妈妈.  ---> 跳转到主页
+     2. 用户绑定手机, 但不是精英妈妈. ---> 提示此用户权限不够.
+     3. 用户没用绑定手机, 但是是精英妈妈. ---> 跳转到绑定手机.
+     4. 用户没有绑定手机, 且不是精英妈妈. ---> 提示用户需要注册成为会员
+     */
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsVIP = NO;
+        if (kIsXLMMStatus) {
+            NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
+            kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
+        }
+        [[NSUserDefaults standardUserDefaults] setBool:kIsLoginStatus forKey:kIsLogin];
+        [[NSUserDefaults standardUserDefaults] setBool:kIsXLMMStatus forKey:kISXLMM];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [MBProgressHUD hideHUD];
+        if (kIsVIP) {
+            if (kIsBindPhone) {
+                // 跳主页
+                [self backApointInterface];
+                JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+                JMKeyWindow.rootViewController = tabBarVC;
+            }else {
+                // 绑定手机
+                NSDictionary *weChatInfo = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
+                JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+                vc.verificationCodeType = SMSVerificationCodeWithBind;
+                vc.userInfo = weChatInfo;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else {
+            JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+            vc.verificationCodeType = SMSVerificationCodeWithLogin;
+            vc.userNotXLMM = YES;
+            vc.profileUserInfo = responseObject;
+            [self.navigationController pushViewController:vc animated:YES];
+            // 提示
+            //            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
+        }
+        self.loginBtn.enabled = YES;
+    } WithFail:^(NSError *error) {
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsLogin];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kISXLMM];
+                }
+            }
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        self.loginBtn.enabled = YES;
+    } Progress:^(float progress) {
+    }];
+}
 - (void)setDevice{
     NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
@@ -246,6 +310,7 @@
 - (void)forgetPasswordClicked:(UIButton *)sender {
     JMVerificationCodeController *verifyVC = [[JMVerificationCodeController alloc] init];
     verifyVC.verificationCodeType = SMSVerificationCodeWithForgetPWD;
+    verifyVC.userLoginMethodWithWechat = YES;
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 #pragma mark ----- 是否显示密码明文或者暗文
@@ -290,15 +355,12 @@
     
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    
     self.loginBtn.enabled = NO;
-    
     return YES;
 }
 
 
--(void) alertMessage:(NSString*)msg
-{
+-(void) alertMessage:(NSString*)msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
 }

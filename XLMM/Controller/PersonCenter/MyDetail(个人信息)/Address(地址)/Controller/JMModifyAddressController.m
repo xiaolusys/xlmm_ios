@@ -756,12 +756,13 @@
         return ;
     }
     if ([NSString isStringEmpty:self.phoneNumField.text]) {
-        if (self.phoneNumField.text.length != 11) {
+        self.warningLabel.text = @"请填写手机号码";
+        return ;
+    }else {
+        if (self.phoneNumField.text.length != 11  || ![NSString isStringWithNumber:self.phoneNumField.text]) {
             self.warningLabel.text = @"请填写正确的手机号码";
             return ;
         }
-        self.warningLabel.text = @"请填写手机号码";
-        return ;
     }
     if (self.cartsPayInfoLevel > 1) {
         if ([NSString isStringEmpty:self.idCardField.text]) {

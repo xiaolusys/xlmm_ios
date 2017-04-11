@@ -14,6 +14,9 @@
 #import "TSettingViewController.h"
 #import "MiPushSDK.h"
 #import "JMVerificationCodeController.h"
+#import "JMLogInViewController.h"
+#import "RootNavigationController.h"
+#import "AppDelegate.h"
 
 
 @interface JMSettingController () <UITableViewDataSource,UITableViewDelegate> {
@@ -39,7 +42,8 @@
     [self getData:self.userInfoDict];
     [self.tableView reloadData];
     self.tableView.scrollEnabled = self.tableView.contentSize.height > SCREENHEIGHT ? YES : NO;
-    
+    NSLog(@"%@",self.navigationController.viewControllers);
+    NSLog(@"%@",JMKeyWindow);
 //    [self ishavemobel];
 //    [self loadUserData];
     
@@ -130,6 +134,7 @@
     }else if (index == 3) {
         JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
         verfyCodeVC.verificationCodeType = SMSVerificationCodeWithChangePWD;
+        verfyCodeVC.userLoginMethodWithWechat = YES;
         [self.navigationController pushViewController:verfyCodeVC animated:YES];
     }else if (index == 4) {
         ThirdAccountViewController *third = [[ThirdAccountViewController alloc] initWithNibName:@"ThirdAccountViewController" bundle:nil];
@@ -157,15 +162,17 @@
             }
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setBool:NO forKey:@"login"];
-            [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
             [userDefaults setBool:NO forKey:@"isXLMM"];
+            [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
             [userDefaults synchronize];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
-            [self.navigationController popViewControllerAnimated:YES];
-            UIAlertView *alterView = [[UIAlertView alloc] initWithTitle:nil message:@"退出成功" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(performDismiss:) userInfo:@{@"alterView":alterView} repeats:NO];
-            
-            [alterView show];
+            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+            loginVC.isTabBarLogin = YES;
+            [self.navigationController pushViewController:loginVC animated:YES];
+//            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+//            [XLMM_APP.window.rootViewController presentViewController:rootNav animated:YES completion:nil];
+//            [self.navigationController popViewControllerAnimated:YES];
+//            [self removeFromParentViewController];
         } WithFail:^(NSError *error) {
             
         } Progress:^(float progress) {

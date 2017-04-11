@@ -72,7 +72,7 @@
         imageAdconfiguration.imageNameOrURLString = _imageUrl;
         imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
         imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
-        imageAdconfiguration.showFinishAnimate =ShowFinishAnimateLite;
+        imageAdconfiguration.showFinishAnimate = ShowFinishAnimateLite;
         imageAdconfiguration.skipButtonType = SkipTypeTimeText;
         imageAdconfiguration.showEnterForeground = NO;
         [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
@@ -85,17 +85,44 @@
 - (void)fetchRootVC {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-        self.window.rootViewController = tabBarVC;
-    }else {
-        JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
-        self.window.rootViewController = nav;
+    NSInteger netWorkStatus = [AFNetworkReachabilityManager manager].networkReachabilityStatus;
+    if (netWorkStatus == 0) {
+        [self rootWithLoginVC];
+        return ;
     }
-    [XHLaunchAd setWaitDataDuration:1];
     [self getLaunchImage];
+    [self lodaUserInfo];
+    [XHLaunchAd setWaitDataDuration:2];
+}
+- (void)lodaUserInfo {
+    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsVIP = NO;
+        if (kIsXLMMStatus) {
+            NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
+            kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
+        }
+        if (kIsVIP) {
+            if (kIsBindPhone) {
+                [self rootWithTabBar];
+                return ;
+            }
+        }
+        [self rootWithLoginVC];
+    } failure:^(NSInteger errorCode) {
+        [self rootWithLoginVC];
+    }];
+}
+- (void)rootWithTabBar {
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    self.window.rootViewController = tabBarVC;
+    [self.window makeKeyAndVisible];
+}
+- (void)rootWithLoginVC {
+    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
 }
 #pragma mark ======== 程序开始启动 ========
@@ -106,8 +133,6 @@
     [[JMGlobal global] monitoringNetworkStatus];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
     
     [[JMDevice defaultDecice] getServerIP];
     /**
@@ -132,14 +157,6 @@
     [self fetchRootVC];
     
     return YES;
-}
-- (void)updataAfterLogin:(NSNotification *)notification{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    self.window.rootViewController = tabBarVC;
-}
-- (void)phoneNumberLogin:(NSNotification *)notification{
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    self.window.rootViewController = tabBarVC;
 }
 - (void)openPushMessage {
     [MiPushSDK registerMiPush:[JMMiPushManager miPushManager] type:0 connect:YES];
