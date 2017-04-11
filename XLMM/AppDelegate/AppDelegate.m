@@ -86,7 +86,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     NSInteger netWorkStatus = [AFNetworkReachabilityManager manager].networkReachabilityStatus;
-    if (netWorkStatus == 0) {
+    if (netWorkStatus <= 0) {
         [self rootWithLoginVC];
         return ;
     }
