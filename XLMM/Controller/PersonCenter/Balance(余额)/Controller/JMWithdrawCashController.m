@@ -376,7 +376,7 @@
             if (code == 0) {
                 _withDrawMoney -= _textFieldMoney;
                 NSString *str = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"drawCashMoeny" object:str];
+                [JMNotificationCenter postNotificationName:@"drawCashMoeny" object:str];
                 self.myBlanceLabel.text = [NSString stringWithFormat:@"%.2f",_withDrawMoney];
                 TixianSucceedViewController *successVC = [[TixianSucceedViewController alloc] init];
                 successVC.tixianjine = _textFieldMoney;

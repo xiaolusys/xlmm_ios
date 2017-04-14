@@ -289,6 +289,8 @@
 		1F1351471CE7193700D6138D /* JMLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1351461CE7193600D6138D /* JMLogInViewController.m */; };
 		1F13A4C61E10C8B800239A6E /* CameraImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F13A4C51E10C8B800239A6E /* CameraImage.png */; };
 		1F140A471D87C012001B13EE /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F140A461D87C012001B13EE /* UMMobClick.framework */; };
+		1F15C77C1E9F7E8700667429 /* JMPayCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F15C77B1E9F7E8700667429 /* JMPayCouponController.m */; };
+		1F15C77F1E9F80D900667429 /* JMUserCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F15C77E1E9F80D900667429 /* JMUserCouponController.m */; };
 		1F1FB89A1D87E79D004C60CE /* HCScanQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FB8971D87E79D004C60CE /* HCScanQRViewController.m */; };
 		1F1FB89B1D87E79D004C60CE /* SystemFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FB8991D87E79D004C60CE /* SystemFunctions.m */; };
 		1F1FB8AA1D88E92F004C60CE /* JMMineIntegralController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FB8A91D88E92F004C60CE /* JMMineIntegralController.m */; };
@@ -533,9 +535,7 @@
 		1F561E881E681FB500799332 /* STHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E821E681FB500799332 /* STHeaderView.m */; };
 		1F561E891E681FB500799332 /* SwipeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F561E841E681FB500799332 /* SwipeTableView.m */; };
 		1F56E2701D33CDE00092EC91 /* JMCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E26F1D33CDE00092EC91 /* JMCouponController.m */; };
-		1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2791D347EF70092EC91 /* JMExpiredCouponController.m */; };
 		1F56E27D1D347F0B0092EC91 /* JMUntappedCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E27C1D347F0B0092EC91 /* JMUntappedCouponController.m */; };
-		1F56E2801D347F390092EC91 /* JMUsedCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E27F1D347F390092EC91 /* JMUsedCouponController.m */; };
 		1F56E2831D3486CF0092EC91 /* JMCouponModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2821D3486CF0092EC91 /* JMCouponModel.m */; };
 		1F56E2861D348A0A0092EC91 /* JMCouponRootCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E2851D348A0A0092EC91 /* JMCouponRootCell.m */; };
 		1F56E2A01D35FDD40092EC91 /* JMContinuePayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56E29F1D35FDD40092EC91 /* JMContinuePayModel.m */; };
@@ -692,7 +692,6 @@
 		1FAC28D41E5558600032A005 /* JMHomeHourModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC28D31E5558600032A005 /* JMHomeHourModel.m */; };
 		1FB4287E1DAF4FF9002F98B4 /* libMiPushSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */; };
 		1FCDC51A1D23B5FB00554777 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DB96E1C169EEF00FC33C2 /* CoreTelephony.framework */; };
-		1FCF19B01DBB634D004D5CEC /* JMSpecialCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCF19AF1DBB634D004D5CEC /* JMSpecialCouponController.m */; };
 		1FD158CB1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */; };
 		1FD158CE1D2E5F7C006C4B14 /* JMAllOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158CD1D2E5F7C006C4B14 /* JMAllOrderModel.m */; };
 		1FD158D11D2E8387006C4B14 /* JMOrderDetailSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD158D01D2E8387006C4B14 /* JMOrderDetailSectionView.m */; };
@@ -706,9 +705,6 @@
 		1FD8011C1DF6920800382E44 /* JMSliderLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD8011B1DF6920800382E44 /* JMSliderLockView.m */; };
 		1FDC35071DDD6F7600263E83 /* JMGoodsCountTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC35061DDD6F7600263E83 /* JMGoodsCountTime.m */; };
 		1FDD07191D4303790010231F /* JMUpdataAppPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07181D4303790010231F /* JMUpdataAppPopView.m */; };
-		1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD071C1D45AABF0010231F /* JMSegmentController.m */; };
-		1FDD07261D45BA7F0010231F /* JMUsableCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07251D45BA7F0010231F /* JMUsableCouponController.m */; };
-		1FDD07291D45BA910010231F /* JMDisableCouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD07281D45BA910010231F /* JMDisableCouponController.m */; };
 		1FDF7C8D1D66E64600C7456E /* JMHomeActiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */; };
 		1FDF7C931D66E6D000C7456E /* JMHomeCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FDF7C921D66E6D000C7456E /* JMHomeCategoryCell.m */; };
 		1FE52DE91D93C64D0051D5A0 /* JMMaMaMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE52DE81D93C64D0051D5A0 /* JMMaMaMessageCell.m */; };
@@ -1148,6 +1144,10 @@
 		1F140A421D87BC4D001B13EE /* libZXingObjC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZXingObjC.a; path = "../../Library/Developer/Xcode/DerivedData/XLMM-dmhaehdscwmtnldosygnathgzejc/Build/Products/Debug-iphoneos/ZXingObjC/libZXingObjC.a"; sourceTree = "<group>"; };
 		1F140A441D87BDE2001B13EE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		1F140A461D87C012001B13EE /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMMobClick.framework; path = "Pods/UMengAnalytics-NO-IDFA/umsdk_IOS_analyics_no-idfa_v4.0.5/UMMobClick.framework"; sourceTree = "<group>"; };
+		1F15C77A1E9F7E8700667429 /* JMPayCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMPayCouponController.h; sourceTree = "<group>"; };
+		1F15C77B1E9F7E8700667429 /* JMPayCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMPayCouponController.m; sourceTree = "<group>"; };
+		1F15C77D1E9F80D900667429 /* JMUserCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUserCouponController.h; sourceTree = "<group>"; };
+		1F15C77E1E9F80D900667429 /* JMUserCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUserCouponController.m; sourceTree = "<group>"; };
 		1F1FB8961D87E79D004C60CE /* HCScanQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCScanQRViewController.h; sourceTree = "<group>"; };
 		1F1FB8971D87E79D004C60CE /* HCScanQRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCScanQRViewController.m; sourceTree = "<group>"; };
 		1F1FB8981D87E79D004C60CE /* SystemFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemFunctions.h; sourceTree = "<group>"; };
@@ -1682,12 +1682,8 @@
 		1F561E841E681FB500799332 /* SwipeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeTableView.m; sourceTree = "<group>"; };
 		1F56E26E1D33CDE00092EC91 /* JMCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponController.h; sourceTree = "<group>"; };
 		1F56E26F1D33CDE00092EC91 /* JMCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponController.m; sourceTree = "<group>"; };
-		1F56E2781D347EF70092EC91 /* JMExpiredCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMExpiredCouponController.h; sourceTree = "<group>"; };
-		1F56E2791D347EF70092EC91 /* JMExpiredCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMExpiredCouponController.m; sourceTree = "<group>"; };
 		1F56E27B1D347F0B0092EC91 /* JMUntappedCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUntappedCouponController.h; sourceTree = "<group>"; };
 		1F56E27C1D347F0B0092EC91 /* JMUntappedCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUntappedCouponController.m; sourceTree = "<group>"; };
-		1F56E27E1D347F390092EC91 /* JMUsedCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUsedCouponController.h; sourceTree = "<group>"; };
-		1F56E27F1D347F390092EC91 /* JMUsedCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUsedCouponController.m; sourceTree = "<group>"; };
 		1F56E2811D3486CF0092EC91 /* JMCouponModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponModel.h; sourceTree = "<group>"; };
 		1F56E2821D3486CF0092EC91 /* JMCouponModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMCouponModel.m; sourceTree = "<group>"; };
 		1F56E2841D348A0A0092EC91 /* JMCouponRootCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMCouponRootCell.h; sourceTree = "<group>"; };
@@ -1963,8 +1959,6 @@
 		1FB4287A1DAF4ACD002F98B4 /* XLMM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XLMM.entitlements; sourceTree = "<group>"; };
 		1FB4287C1DAF4FF9002F98B4 /* libMiPushSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMiPushSDK.a; sourceTree = "<group>"; };
 		1FB4287D1DAF4FF9002F98B4 /* MiPushSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiPushSDK.h; sourceTree = "<group>"; };
-		1FCF19AE1DBB634D004D5CEC /* JMSpecialCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSpecialCouponController.h; sourceTree = "<group>"; };
-		1FCF19AF1DBB634D004D5CEC /* JMSpecialCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSpecialCouponController.m; sourceTree = "<group>"; };
 		1FD158C91D2E3FA0006C4B14 /* JMOrderPayOutdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOrderPayOutdateView.h; sourceTree = "<group>"; };
 		1FD158CA1D2E3FA0006C4B14 /* JMOrderPayOutdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOrderPayOutdateView.m; sourceTree = "<group>"; };
 		1FD158CC1D2E5F7C006C4B14 /* JMAllOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMAllOrderModel.h; sourceTree = "<group>"; };
@@ -1989,12 +1983,6 @@
 		1FDC35061DDD6F7600263E83 /* JMGoodsCountTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsCountTime.m; sourceTree = "<group>"; };
 		1FDD07171D4303790010231F /* JMUpdataAppPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUpdataAppPopView.h; sourceTree = "<group>"; };
 		1FDD07181D4303790010231F /* JMUpdataAppPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUpdataAppPopView.m; sourceTree = "<group>"; };
-		1FDD071B1D45AABF0010231F /* JMSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSegmentController.h; sourceTree = "<group>"; };
-		1FDD071C1D45AABF0010231F /* JMSegmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSegmentController.m; sourceTree = "<group>"; };
-		1FDD07241D45BA7F0010231F /* JMUsableCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMUsableCouponController.h; sourceTree = "<group>"; };
-		1FDD07251D45BA7F0010231F /* JMUsableCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMUsableCouponController.m; sourceTree = "<group>"; };
-		1FDD07271D45BA910010231F /* JMDisableCouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMDisableCouponController.h; sourceTree = "<group>"; };
-		1FDD07281D45BA910010231F /* JMDisableCouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMDisableCouponController.m; sourceTree = "<group>"; };
 		1FDF7C8B1D66E64600C7456E /* JMHomeActiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeActiveCell.h; sourceTree = "<group>"; };
 		1FDF7C8C1D66E64600C7456E /* JMHomeActiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHomeActiveCell.m; sourceTree = "<group>"; };
 		1FDF7C911D66E6D000C7456E /* JMHomeCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHomeCategoryCell.h; sourceTree = "<group>"; };
@@ -2423,8 +2411,8 @@
 			isa = PBXGroup;
 			children = (
 				183072931C97D0C000B7665E /* MMClass.h */,
-				3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */,
 				3A3CF7191CE224D000F0463D /* MMClass.m */,
+				3A5DF7B91CCE24BD00FFE818 /* XlmmMall.h */,
 				1FEDCB0C1D8FDA8200CB7D97 /* JMToolMacro.h */,
 				1FAA736B1DDE9BF200CEE342 /* JMPromptMessage.h */,
 			);
@@ -4834,12 +4822,6 @@
 				1F56E26F1D33CDE00092EC91 /* JMCouponController.m */,
 				1F56E27B1D347F0B0092EC91 /* JMUntappedCouponController.h */,
 				1F56E27C1D347F0B0092EC91 /* JMUntappedCouponController.m */,
-				1F56E2781D347EF70092EC91 /* JMExpiredCouponController.h */,
-				1F56E2791D347EF70092EC91 /* JMExpiredCouponController.m */,
-				1F56E27E1D347F390092EC91 /* JMUsedCouponController.h */,
-				1F56E27F1D347F390092EC91 /* JMUsedCouponController.m */,
-				1FCF19AE1DBB634D004D5CEC /* JMSpecialCouponController.h */,
-				1FCF19AF1DBB634D004D5CEC /* JMSpecialCouponController.m */,
 			);
 			name = "youhuiquan ";
 			sourceTree = "<group>";
@@ -5963,12 +5945,10 @@
 		1FDD071A1D45A6240010231F /* payChoiseCoupone(支付选择优惠券) */ = {
 			isa = PBXGroup;
 			children = (
-				1FDD071B1D45AABF0010231F /* JMSegmentController.h */,
-				1FDD071C1D45AABF0010231F /* JMSegmentController.m */,
-				1FDD07241D45BA7F0010231F /* JMUsableCouponController.h */,
-				1FDD07251D45BA7F0010231F /* JMUsableCouponController.m */,
-				1FDD07271D45BA910010231F /* JMDisableCouponController.h */,
-				1FDD07281D45BA910010231F /* JMDisableCouponController.m */,
+				1F15C77A1E9F7E8700667429 /* JMPayCouponController.h */,
+				1F15C77B1E9F7E8700667429 /* JMPayCouponController.m */,
+				1F15C77D1E9F80D900667429 /* JMUserCouponController.h */,
+				1F15C77E1E9F80D900667429 /* JMUserCouponController.m */,
 			);
 			path = "payChoiseCoupone(支付选择优惠券)";
 			sourceTree = "<group>";
@@ -6989,7 +6969,6 @@
 				1F3C1B121E8B9FCF008720B2 /* XHLaunchAdConfiguration.m in Sources */,
 				1F5877941DB8A60D00949302 /* JMFetureFansModel.m in Sources */,
 				1FD8004C1DF1111B00382E44 /* JMFineCounpGoodsController.m in Sources */,
-				1FDD07291D45BA910010231F /* JMDisableCouponController.m in Sources */,
 				1F58784A1DB8AADB00949302 /* JMCouponSuccessController.m in Sources */,
 				1F498C4B1D2772D0007E77FC /* JMQueryLogInfoController.m in Sources */,
 				1F498C4D1D2772D0007E77FC /* JMTimeInfoModel.m in Sources */,
@@ -7058,7 +7037,6 @@
 				325BA0F41B68B18A006D64BD /* main.m in Sources */,
 				1F4C9E821D9912600089CE74 /* UdeskChatMessage.m in Sources */,
 				1F4C9E9F1D9912600089CE74 /* UIColor+UdeskSDK.m in Sources */,
-				1FDD07261D45BA7F0010231F /* JMUsableCouponController.m in Sources */,
 				1F916A5E1D51831200327408 /* JMHTTPManager.m in Sources */,
 				1FF533EB1D2DFACB003DEABF /* JMOrderDetailFooterView.m in Sources */,
 				321857C11CA109550085FF21 /* WKWebViewJavascriptBridge.m in Sources */,
@@ -7077,7 +7055,6 @@
 				1F4C9E8B1D9912600089CE74 /* UdeskEmotionManagerView.m in Sources */,
 				1F5877991DB8A60D00949302 /* CarryLogHeaderView.m in Sources */,
 				1F4C9E7B1D9912600089CE74 /* UdeskFAQViewController.m in Sources */,
-				1F56E27A1D347EF70092EC91 /* JMExpiredCouponController.m in Sources */,
 				1F2B010A1E824D8700E8C47E /* JMInstallPasswordController.m in Sources */,
 				1F498B3B1D276450007E77FC /* PayExtrasModel.m in Sources */,
 				1FFE22021E7B8AC4003C417B /* JMCategoryPageController.m in Sources */,
@@ -7149,7 +7126,6 @@
 				1F5877EC1DB8A7AF00949302 /* YixuanTableViewController.m in Sources */,
 				1F3793881DEE82490044E325 /* FMDatabaseAdditions.m in Sources */,
 				1F561E891E681FB500799332 /* SwipeTableView.m in Sources */,
-				1FDD071D1D45AABF0010231F /* JMSegmentController.m in Sources */,
 				1F6B7A1B1DD9C224009AB446 /* Tool_FMDBModel.m in Sources */,
 				1F498C4C1D2772D0007E77FC /* JMQueryLogInfoModel.m in Sources */,
 				1F56E2831D3486CF0092EC91 /* JMCouponModel.m in Sources */,
@@ -7166,6 +7142,7 @@
 				1F498B011D2761BE007E77FC /* IMY_NJKWebViewProgress.m in Sources */,
 				1F1FB8AD1D88EA50004C60CE /* JMMineIntegralCell.m in Sources */,
 				1F4C9E9C1D9912600089CE74 /* NSArray+UdeskSDK.m in Sources */,
+				1F15C77F1E9F80D900667429 /* JMUserCouponController.m in Sources */,
 				1FAC28D11E5558500032A005 /* JMHomeHourCell.m in Sources */,
 				1F02128F1E614B140088AD2D /* JMPageContentView.m in Sources */,
 				1F23F9AA1D6712C700C78EAE /* JMHomeGoodsCell.m in Sources */,
@@ -7233,7 +7210,7 @@
 				1FEDCB0B1D8FBBC200CB7D97 /* JMRichTextTool.m in Sources */,
 				1F760E411DB6203000307093 /* AccountModel.m in Sources */,
 				1F498B021D2761BE007E77FC /* WYWeakScriptMessageDelegate.m in Sources */,
-				1F56E2801D347F390092EC91 /* JMUsedCouponController.m in Sources */,
+				1F15C77C1E9F7E8700667429 /* JMPayCouponController.m in Sources */,
 				1F498C681D2772D0007E77FC /* RefundDetailsViewController.m in Sources */,
 				1F4C9E7C1D9912600089CE74 /* UdeskSearchController.m in Sources */,
 				1F498C121D2772D0007E77FC /* Account1ViewController.m in Sources */,
@@ -7302,7 +7279,6 @@
 				1F4C9EBB1D9912600089CE74 /* UdeskPhotoView.m in Sources */,
 				1F498C471D2772D0007E77FC /* JMPackAgeModel.m in Sources */,
 				1F5878041DB8A80C00949302 /* JMMaMaOrderListCell.m in Sources */,
-				1FCF19B01DBB634D004D5CEC /* JMSpecialCouponController.m in Sources */,
 				1F5878911DB8ABFE00949302 /* TixianSucceedViewController.m in Sources */,
 				1F4C9EAF1D9912600089CE74 /* UdeskImageUtil.m in Sources */,
 				3A1E05961CE1C3FB001018AC /* LGTextFieldDelegateObject.m in Sources */,

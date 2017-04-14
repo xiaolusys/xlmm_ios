@@ -176,8 +176,7 @@ static NSString *currentTurnsNumberString;
 - (void)setUserInfoDic:(NSDictionary *)userInfoDic {
     _userInfoDic = userInfoDic;
     if (_userInfoDic != nil) {
-        NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-        BOOL isXLMM = [users boolForKey:kISXLMM];
+        BOOL isXLMM = [JMUserDefaults boolForKey:kISXLMM];
         if (isXLMM) {
             self.wodedianpuView.hidden = NO;
             CGFloat space = 40 * HomeCategoryRatio;
@@ -329,7 +328,7 @@ static NSString *currentTurnsNumberString;
     self.redCircle.hidden = YES;
     
     self.userNameLabel = [UILabel new];
-    self.userNameLabel.font = CS_SYSTEMFONT(12.);
+    self.userNameLabel.font = CS_UIFontSize(12.);
     self.userNameLabel.textColor = [UIColor whiteColor];
     self.userNameLabel.text = @"点击登录";
     [_headImageButton addSubview:self.userNameLabel];
@@ -397,7 +396,7 @@ static NSString *currentTurnsNumberString;
         [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         UILabel *valueLabel = [UILabel new];
         [button addSubview:valueLabel];
-        valueLabel.font = CS_SYSTEMFONT(16.);
+        valueLabel.font = CS_UIFontSize(16.);
         valueLabel.textColor = [UIColor buttonTitleColor];
         valueLabel.tag = 200 + i;
         
@@ -501,7 +500,7 @@ static NSString *currentTurnsNumberString;
         oederNumLabel.textColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
         oederNumLabel.backgroundColor = [UIColor whiteColor];
         oederNumLabel.textAlignment = NSTextAlignmentCenter;
-        oederNumLabel.font = CS_BOLDSYSTEMFONT(11.);
+        oederNumLabel.font = CS_UIFontBoldSize(11.);
         oederNumLabel.layer.masksToBounds = YES;
         oederNumLabel.layer.cornerRadius = 9.;
         oederNumLabel.layer.borderWidth = 1.5;
@@ -569,7 +568,7 @@ static NSString *currentTurnsNumberString;
     UILabel *unReadMessageLabel = [UILabel new];
     [promptImage addSubview:unReadMessageLabel];
     unReadMessageLabel.textColor = [UIColor whiteColor];
-    unReadMessageLabel.font = CS_SYSTEMFONT(10.);
+    unReadMessageLabel.font = CS_UIFontSize(10.);
     unReadMessageLabel.backgroundColor = [UIColor redColor];
     unReadMessageLabel.layer.cornerRadius = 5.;
     unReadMessageLabel.layer.masksToBounds = YES;
@@ -699,7 +698,7 @@ static NSString *currentTurnsNumberString;
     self.currentTurnsLabel.textColor = [UIColor whiteColor];
     self.currentTurnsLabel.backgroundColor = [UIColor colorWithR:255 G:56 B:64 alpha:1];
     self.currentTurnsLabel.textAlignment = NSTextAlignmentCenter;
-    self.currentTurnsLabel.font = CS_SYSTEMFONT(9.);
+    self.currentTurnsLabel.font = CS_UIFontSize(9.);
     self.currentTurnsLabel.layer.masksToBounds = YES;
     self.currentTurnsLabel.layer.cornerRadius = 7.;
     self.currentTurnsLabel.hidden = YES;

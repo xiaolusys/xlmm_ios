@@ -19,7 +19,7 @@
 #import "WXApi.h"
 #import "JMOrderListController.h"
 #import "JMPayShareController.h"
-#import "JMSegmentController.h"
+#import "JMPayCouponController.h"
 #import "JMCouponModel.h"
 #import "JMDelayPopView.h"
 #import "JMPopViewAnimationSpring.h"
@@ -30,7 +30,7 @@
 
 
 
-@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMSegmentControllerDelegate,JMAddressViewControllerDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
+@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMPayCouponControllerDelegate,JMAddressViewControllerDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
     NSDictionary *_couponData;
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
@@ -126,7 +126,7 @@
 @property (nonatomic,assign) BOOL isXLWforAlipay;
 
 @property (nonatomic, strong) UIButton *tmpBtn;
-
+@property (nonatomic, strong) UIView *naviDesView;
 @end
 
 static BOOL isAgreeTerms = YES;
@@ -157,12 +157,10 @@ static BOOL isAgreeTerms = YES;
 #pragma mark --- 视图生命周期 ---
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(purchaseViewWillEnterForeground:)
+    [JMNotificationCenter addObserver:self selector:@selector(purchaseViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(purchaseViewDidBecomeActive:)
+    [JMNotificationCenter addObserver:self selector:@selector(purchaseViewDidBecomeActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     self.purchaseFooterView.goPayButton.userInteractionEnabled = YES;
@@ -176,24 +174,22 @@ static BOOL isAgreeTerms = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
+    [JMNotificationCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification
                                                   object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationDidBecomeActiveNotification
+    [JMNotificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification
                                                   object:nil];
     [MobClick endLogPageView:@"purchase"];
 }
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"确认订单" selecotr:@selector(backClick)];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     
     self.isCanCoupon = NO;
     self.isUseXLW = NO;
@@ -296,7 +292,6 @@ static BOOL isAgreeTerms = YES;
         }
     }
     [self layoutLevel];
-    
 }
 - (void)fetchedCartsData:(NSDictionary *)purchaseDic {
     _cartsInfoLevel = [purchaseDic[@"max_personalinfo_level"] integerValue];
@@ -401,6 +396,7 @@ static BOOL isAgreeTerms = YES;
     self.purchaseFooterView.isShowXiaoluCoinView = (_xiaoluCoinValue > 0 ? YES : NO) && _isVirtualCoupone;
     
     [self layoutLevel];
+
     
 }
 - (void)layoutLevel {
@@ -638,9 +634,9 @@ static BOOL isAgreeTerms = YES;
             return ;
         }
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
-        JMSegmentController *segmentVC = [[JMSegmentController alloc] init];
+        JMPayCouponController *segmentVC = [[JMPayCouponController alloc] init];
         segmentVC.cartID = self.paramstring;
-        segmentVC.isSelectedYHQ = YES;
+        segmentVC.isSelectedYHQ = self.isUserCoupon;
         segmentVC.selectedModelID = _yhqModelID;
         segmentVC.couponNumber = _couponNumber;
         segmentVC.directBuyGoodsTypeNumber = self.directBuyGoodsTypeNumber;
@@ -1232,20 +1228,48 @@ static BOOL isAgreeTerms = YES;
 
 
 
+//
+//
+//
+//
+//CGFloat h = 60.;
+//CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - h;
+//CGFloat x = 0;
+//CGFloat w = self.view.cs_w;
+//UIView *naviDesView = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, h)];
+//naviDesView.backgroundColor = [UIColor redColor];
+//self.naviDesView = naviDesView;
+////插入导航控制器下导航条下面
+//[self.navigationController.view insertSubview:naviDesView belowSubview:self.navigationController.navigationBar];
+//
+//
+//
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//
+//
+//
+//
+////动画往下面平移
+//[UIView animateWithDuration:0.25 animations:^{
+//    self.naviDesView.transform = CGAffineTransformMakeTranslation(0, 60);
+//    self.tableView.transform = CGAffineTransformMakeTranslation(0, 60);
+//    self.tableView.mj_h = SCREENHEIGHT - 60;
+//} completion:^(BOOL finished) {
+//    //网上面平移
+//    //        [UIView animateWithDuration:0.25 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
+//    //            //还原
+//    //            self.naviDesView.transform = CGAffineTransformIdentity;
+//    //            self.tableView.transform = CGAffineTransformIdentity;
+//    //            self.tableView.mj_h = SCREENHEIGHT;
+//    //        } completion:^(BOOL finished) {
+//    //            [self.naviDesView removeFromSuperview];
+//    //        }];
+//}];
+//
+//
+//
+//
 
 
 

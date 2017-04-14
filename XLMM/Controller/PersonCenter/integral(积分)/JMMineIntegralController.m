@@ -274,7 +274,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MobClick endLogPageView:@"JMMineIntegralController"];
 }

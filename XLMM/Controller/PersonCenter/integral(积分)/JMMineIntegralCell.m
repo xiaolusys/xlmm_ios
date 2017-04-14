@@ -101,7 +101,7 @@
 //    self.orderLabel.text = [NSString stringWithFormat:@"订单号  %@",[model.order_info objectForKey:@"order_id"]];
     CGFloat amountValue = [model.amount floatValue] / 100.00;
     if ([model.iro_type isEqual:@"支出"]) {
-        self.valueLabel.text = [NSString stringWithFormat:@"%.1f",amountValue];
+        self.valueLabel.text = [NSString stringWithFormat:@"-%.1f",amountValue];
     }else {
         self.valueLabel.text = [NSString stringWithFormat:@"+%.1f",amountValue];
     }

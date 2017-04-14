@@ -11,13 +11,14 @@
 #import "JMGoodsDetailController.h"
 #import "JMReloadEmptyDataView.h"
 #import "JMFineCouponModel.h"
-
+#import "JMEmptyView.h"
 
 @interface JMFineCounpContentController () <UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,CSTableViewPlaceHolderDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) JMReloadEmptyDataView *reload;
+@property (nonatomic, strong) JMEmptyView *empty;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 //上拉的标志
@@ -49,9 +50,10 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"精品汇" selecotr:nil];
     [self createCollectionView];
+    [self createTopButton];
+    [self emptyView];
     [self createPullHeaderRefresh];
     [self createPullFooterRefresh];
-    [self createTopButton];
     [self.collectionView.mj_header beginRefreshing];
 
 }
@@ -89,10 +91,12 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject)return ;
         NSLog(@"%@",responseObject);
+        self.empty.hidden = YES;
         [self.dataSource removeAllObjects];
         [self fatchClassifyListData:responseObject];
         [self endRefresh];
     } WithFail:^(NSError *error) {
+        self.empty.hidden = NO;
         [self endRefresh];
     } Progress:^(float progress) {
         
@@ -159,7 +163,7 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     layout.sectionInset = UIEdgeInsetsMake(5, 5, 0, 5);
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - ktabBarHeight) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - kAppTabBarHeight) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -168,7 +172,18 @@ static NSString * JMFineCounpContentControllerIdentifier = @"JMFineCounpContentC
     [self.collectionView registerClass:[JMRootgoodsCell class] forCellWithReuseIdentifier:JMFineCounpContentControllerIdentifier];
     
 }
-
+- (void)emptyView {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2 - 45, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];
+    [self.view addSubview:self.empty];
+    self.empty.hidden = YES;
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            weakSelf.empty.hidden = YES;
+            [weakSelf refresh];
+        }
+    };
+}
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;

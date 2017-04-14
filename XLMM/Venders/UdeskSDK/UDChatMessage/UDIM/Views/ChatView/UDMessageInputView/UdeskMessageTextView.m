@@ -61,7 +61,7 @@
 #pragma mark - Life cycle
 
 - (void)setup {
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    [JMNotificationCenter addObserver:self
                                              selector:@selector(didReceiveTextDidChangeNotification:)
                                                  name:UITextViewTextDidChangeNotification
                                                object:self];
@@ -92,7 +92,7 @@
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:self];
+    [JMNotificationCenter removeObserver:self name:UITextViewTextDidChangeNotification object:self];
 }
 
 @end

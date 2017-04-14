@@ -46,7 +46,7 @@
     [self createComSug];
     [self setUpTextView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doneButtonShow:) name:UIKeyboardDidShowNotification object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(doneButtonShow:) name:UIKeyboardDidShowNotification object:nil];
     
 }
 
@@ -184,7 +184,7 @@
     //    [_textView becomeFirstResponder];
 }
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
     
 }
 - (void)backClick:(UIButton *)btn {
@@ -219,7 +219,7 @@
 @end
 
 /**
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextViewTextDidChangeNotification object:nil];
+ [JMNotificationCenter addObserver:self selector:@selector(textChange) name:UITextViewTextDidChangeNotification object:nil];
 
  *  - (void)textChange {
  //判断textView有没有内容

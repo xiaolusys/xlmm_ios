@@ -218,18 +218,26 @@
     
     
 }
-- (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID {
+- (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID Index:(NSInteger)index {
     NSString *imageStr = @"";
-    NSArray *selectedIDArr = [selectedID componentsSeparatedByString:@"/"];
-    NSString *selectedFirstID = selectedIDArr[0];
-    if (isselectedYHQ == YES) {
-        if ([selectedFirstID isEqualToString:couponModel.couponID]) {
-            imageStr = @"used_nomalcoupon";
-            self.couponValueLabel.textColor = [UIColor redColor];
+    if (index == 0) {
+        imageStr = @"noUsed_coupon";
+        if (isselectedYHQ == YES) {
+            NSArray *selectedIDArr = [selectedID componentsSeparatedByString:@"/"];
+            NSString *selectedFirstID = selectedIDArr[0];
+            if ([selectedFirstID isEqualToString:couponModel.couponID]) {
+                imageStr = @"used_nomalcoupon";
+                self.couponValueLabel.textColor = [UIColor redColor];
+            }else {
+                imageStr = @"noUsed_coupon";
+                self.couponValueLabel.textColor = [UIColor redColor];
+            }
         }else {
             imageStr = @"noUsed_coupon";
             self.couponValueLabel.textColor = [UIColor redColor];
         }
+    }else {
+        imageStr = @"newyouhuiquanbukeyongbg";
     }
     self.couponBackImage.image = [UIImage imageNamed:imageStr];
     self.couponValueLabel.text = [NSString stringWithFormat:@"¥%.2f",[couponModel.coupon_value floatValue]];

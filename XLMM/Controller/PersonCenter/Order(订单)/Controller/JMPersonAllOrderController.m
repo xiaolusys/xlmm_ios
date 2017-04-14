@@ -74,7 +74,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"PersonOrder"];
@@ -300,7 +300,7 @@
 //        if (index == 100) {
 //            self.isPopToRootView = YES;
 //            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+////            [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
 //        }
 //    };
 //}

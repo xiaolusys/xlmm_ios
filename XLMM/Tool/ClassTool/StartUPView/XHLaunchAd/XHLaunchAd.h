@@ -184,6 +184,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(NSString *)xhLaunchAdCachePath;
 
+/**
+ *  取消等待时间
+ */
++ (void)cancelWatiTimer;
+
 @end
 NS_ASSUME_NONNULL_END
 

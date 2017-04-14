@@ -115,11 +115,11 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"logout" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(quitLogin) name:@"logout" object:nil];
     
     _qrCodeRequestDataIndex = 0;
     isShowRefresh = YES;
@@ -271,6 +271,7 @@
             [self endRefresh];
         }else {
             [MBProgressHUD showError:@"请求失败,请手动刷新"];
+            [self endRefresh];
         }
     }];
 }
@@ -300,20 +301,18 @@
     self.homeHeaderView.userInfoDic = dic;
 }
 - (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
+    BOOL isXLMM = [JMUserDefaults boolForKey:kISXLMM];
     return isXLMM;
 }
 - (BOOL)isLogin {
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isLog = [users boolForKey:kIsLogin];
+    BOOL isLog = [JMUserDefaults boolForKey:kIsLogin];
     return isLog;
 }
 
 
 #pragma ========== UI处理 ==========
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64 - kAppTabBarHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
@@ -500,7 +499,7 @@
         case 108:
         {
             TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-            today.visitorDate = kVisitorDay;
+            today.visitorDate = [NSNumber numberWithInteger:kAppVisitoryDay];
             [self.navigationController pushViewController:today animated:YES];
         }
             break;
@@ -564,7 +563,7 @@
         case 116:
         {
             TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-            today.visitorDate = kVisitorDay;
+            today.visitorDate = [NSNumber numberWithInteger:kAppVisitoryDay];
             [self.navigationController pushViewController:today animated:YES];
         }
             break;
@@ -635,7 +634,7 @@
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
     NSLog(@"JMMaMaHomeController  --> dealloc被调用");
     if (self.homeHeaderView) {
         if (self.homeHeaderView.pageView) {

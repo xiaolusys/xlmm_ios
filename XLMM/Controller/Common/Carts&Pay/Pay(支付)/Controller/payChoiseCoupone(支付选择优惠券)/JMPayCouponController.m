@@ -1,37 +1,32 @@
 //
-//  JMCouponController.m
+//  JMPayCouponController.m
 //  XLMM
 //
-//  Created by zhang on 16/7/11.
-//  Copyright © 2016年 上海己美. All rights reserved.
+//  Created by zhang on 17/4/13.
+//  Copyright © 2017年 上海己美. All rights reserved.
 //
 
-#import "JMCouponController.h"
+#import "JMPayCouponController.h"
 #import "HMSegmentedControl.h"
-#import "JMUntappedCouponController.h"
+#import "JMUserCouponController.h"
 
 
-@interface JMCouponController () {
+@interface JMPayCouponController () <JMUserCouponControllerDelegate> {
     NSMutableArray *_itemArr;
     NSArray *_urlArr;
-    NSArray *_typeArr;
 }
 
-
-@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UIScrollView *baseScrollView;
 @property (nonatomic, strong) HMSegmentedControl *segmentControl;
 
-
-@property (nonatomic, strong) JMUntappedCouponController *untappedCouponVC;
-
-
 @end
 
-@implementation JMCouponController
+@implementation JMPayCouponController
 - (void)setSegmentSectionTitle:(NSArray *)segmentSectionTitle {
     _segmentSectionTitle = segmentSectionTitle;
-    self.segmentControl.sectionTitles = segmentSectionTitle;
+    NSString *str1 = [NSString stringWithFormat:@"可用优惠券(%@)",segmentSectionTitle[0]];
+    NSString *str2 = [NSString stringWithFormat:@"不可用优惠券(%@)",segmentSectionTitle[1]];
+    _segmentControl.sectionTitles = @[str1,str2];
 }
 #pragma mark 懒加载
 - (HMSegmentedControl *)segmentControl {
@@ -61,43 +56,48 @@
     }
     return _baseScrollView;
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [MobClick beginLogPageView:@"seeCoupon"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"seeCoupon"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick)];
-    self.view.backgroundColor = [UIColor countLabelColor];
-    _itemArr = [NSMutableArray arrayWithObjects:@"未使用",@"精品券",@"已过期",@"已使用", nil];
-    NSString *string1 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"0"];
-    NSString *string2 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"0"];
-    NSString *string3 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"3"];
-    NSString *string4 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"1"];
-    _urlArr = @[string1,string2,string3,string4];
-    _typeArr = @[@"0",@"0",@"3",@"1"];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self createNavigationBarWithTitle:@"使用优惠券" selecotr:@selector(backClick)];
     
-    
+    _itemArr = [NSMutableArray arrayWithObjects:@"可用优惠券",@"不可用优惠券", nil];
+    NSString *usableUrlStr = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/coupon_able?cart_ids=%@&type=%@",Root_URL,self.cartID,@"usable"];
+    NSString *disableUrlStr = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/coupon_able?cart_ids=%@&type=%@",Root_URL,self.cartID,@"disable"];
+    _urlArr = @[usableUrlStr,disableUrlStr];
     [self.view addSubview:self.segmentControl];
     _segmentControl.selectedSegmentIndex = 0;
     [self.view addSubview:self.baseScrollView];
     [self addChildController];
     [self removeToPage:0];
+
     
 }
-
+- (void)updateYouhuiquanmodel:(NSArray *)modelArr {
+    if (_delegate && [_delegate respondsToSelector:@selector(updateYouhuiquanWithmodel:)]) {
+        [_delegate updateYouhuiquanWithmodel:modelArr];
+    }
+}
 
 - (void)addChildController {
     for (int i = 0 ; i < _itemArr.count; i++) {
-        JMUntappedCouponController *couponVC = [[JMUntappedCouponController alloc] init];
-        couponVC.couponStatus = [_typeArr[i] integerValue];
+        JMUserCouponController *couponVC = [[JMUserCouponController alloc] init];
+        if (i == 0) {
+            couponVC.isSelectedYHQ = self.isSelectedYHQ;
+            couponVC.selectedModelID = self.selectedModelID;
+            couponVC.couponNumber = self.couponNumber;
+            couponVC.directBuyGoodsTypeNumber = self.directBuyGoodsTypeNumber;
+            couponVC.delegate = self;
+        }
+        couponVC.couponStatus = i;
         couponVC.payCouponVC = self;
-        couponVC.itemArr = _itemArr;
-        couponVC.segmentIndex = i;
         [self addChildViewController:couponVC];
         [couponVC didMoveToParentViewController:self];
     }
@@ -119,7 +119,7 @@
 }
 - (void)removeToPage:(NSInteger)index {
     self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
-    JMUntappedCouponController *couponVC = self.childViewControllers[index];
+    JMUserCouponController *couponVC = self.childViewControllers[index];
     couponVC.urlString = _urlArr[index];
     couponVC.view.frame = self.baseScrollView.bounds;
     [self.baseScrollView addSubview:couponVC.view];
@@ -129,50 +129,11 @@
 }
 
 
+
 @end
 
-/**
- *
- http://m.xiaolumeimei.com/rest/v1/usercoupons/get_user_coupons?status=3
- 
- UNUSED = 0
- USED = 1
- FREEZE = 2
- PAST = 3
- USER_COUPON_STATUS = ((UNUSED, u"未使用"), (USED, u"已使用"), (FREEZE, u"冻结中"), (PAST, u"已经过期"))
- */
 
 
-/**
- *  //- (NSArray *)classArr {
- //    return @[@"JMUntappedCouponController",@"JMExpiredCouponController",@"JMUsedCouponController"];
- //}
- //- (NSArray *)titleArr {
- //    [SVProgressHUD showWithStatus:@"优惠券努力加载中......"];
- //    NSArray *countArr = @[@"0",@"3",@"1"];
- //    NSInteger count = 0;
- //    _titleArr = [NSMutableArray array];
- //    NSArray *tArr = @[@"未使用",@"已过期",@"已使用"];
- //    for (int i = 0; i < [self classArr].count; i++) {
- //        count = [countArr[i] integerValue];
- //        NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%ld",Root_URL,count];
- //        NSURL *url = [NSURL URLWithString:string];
- //        NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
- //        NSURLResponse *response = nil;
- //        NSError *error = nil;
- //        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
- //        if (error != nil) {
- //
- //        }else {
- //
- //        }
- //        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
- //        [_titleArr addObject:[NSString stringWithFormat:@"%@(%ld)",tArr[i],arr.count]];
- //    }
- //    [SVProgressHUD dismiss];
- //    return _titleArr;
- //}
- */
 
 
 

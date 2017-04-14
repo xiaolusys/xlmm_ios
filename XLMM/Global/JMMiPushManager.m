@@ -106,9 +106,8 @@
                                      @"device_id":_deviceUUID,
                                      @"ios_token":_deviceToken
                                      };
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:parameters forKey:@"MiPush"];
-        [defaults synchronize];
+        [JMUserDefaults setObject:parameters forKey:@"MiPush"];
+        [JMUserDefaults synchronize];
         NSLog(@"parameters = %@", parameters);
         NSLog(@"urlStr = %@", urlString);
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:parameters WithSuccess:^(id responseObject) {
@@ -118,9 +117,8 @@
             if ((user_account != nil) && ![user_account isEqualToString:@""]){
                 [MiPushSDK setAccount:user_account];
                 //保存user_account
-                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-                [user setObject:user_account forKey:@"user_account"];
-                [user synchronize];
+                [JMUserDefaults setObject:user_account forKey:@"user_account"];
+                [JMUserDefaults synchronize];
                 //                NSString *infoString = [NSString stringWithFormat:@"--%@--",user_account];
                 //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"user_account" message:infoString delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 //                [alert show];
@@ -166,7 +164,7 @@
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments | NSJSONReadingMutableLeaves | NSJSONReadingAllowFragments error:nil];
     if ((jsonDic != nil) && (jsonDic[@"type"]!=nil) && [jsonDic[@"type"] isEqual:@"mama_ordercarry_broadcast"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
+        [JMNotificationCenter postNotificationName:@"SubscribeMessage" object:jsonDic[@"content"]];
     }else {
     }
     //    NSString *infoString = [NSString stringWithFormat:@"miPushReceiveNotification %@",data];
@@ -179,14 +177,14 @@
     
     if (target_url != nil) {
         if (_isLaunchedByNotification == YES) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+            [JMNotificationCenter postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
             return;
         }
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
+            //            [JMNotificationCenter postNotificationName:@"Notification" object:nil userInfo:@{@"target_url":target_url}];
             return;
         } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
+            [JMNotificationCenter postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":target_url}];
         }
     }
 }
@@ -197,7 +195,7 @@
         if ((_pushInfo == nil) || [_pushInfo objectForKey:@"target_url"] == nil) {
         } else {
             dispatch_after(1.0f, dispatch_get_main_queue(), ^(void){ // 2
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[_pushInfo objectForKey:@"target_url"]}];
+                [JMNotificationCenter postNotificationName:@"PresentView" object:nil userInfo:@{@"target_url":[_pushInfo objectForKey:@"target_url"]}];
             });
         }
     }

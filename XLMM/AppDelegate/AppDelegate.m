@@ -83,14 +83,11 @@
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
     NSInteger netWorkStatus = [AFNetworkReachabilityManager manager].networkReachabilityStatus;
     if (netWorkStatus == 0) {
         [self rootWithLoginVC];
         return ;
     }
-    [self getLaunchImage];
     [self lodaUserInfo];
     [XHLaunchAd setWaitDataDuration:2];
 }
@@ -115,15 +112,23 @@
     }];
 }
 - (void)rootWithTabBar {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     self.window.rootViewController = tabBarVC;
-    [self.window makeKeyAndVisible];
+    [self.window makeKeyAndVisible ];
+    [XHLaunchAd cancelWatiTimer];
+    [self getLaunchImage];
 }
 - (void)rootWithLoginVC {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
     JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    [XHLaunchAd cancelWatiTimer];
+    [self getLaunchImage];
 }
 #pragma mark ======== 程序开始启动 ========
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -132,14 +137,14 @@
     [self umengTrackInit];
     [[JMGlobal global] monitoringNetworkStatus];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
     
     [[JMDevice defaultDecice] getServerIP];
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
     [JMStoreManager recoderAppLoadNum];
-    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
+    NSString *string = [JMUserDefaults objectForKey:kIsReceivePushTZ];
     if ([string isEqual:@"1"] || string == nil) {
         [self openPushMessage];
     }else { }
@@ -216,10 +221,7 @@
 - (void)dealloc {
     NSLog(@"dealloc ---> dealloc调用");
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"openPushMessageSwitch" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
-    
+    [JMNotificationCenter removeObserver:self name:@"openPushMessageSwitch" object:nil];
 }
 // 程序即将退出 -- > 在这里添加退出前的清理代码以及其他工作代码
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -250,9 +252,9 @@
 - (BOOL)xiaoluPay:(NSURL *)url {
     return [JMPayment handleOpenURL:url WithErrorCodeBlock:^(JMPayError *error) {
         if (error.errorStatus == payMentErrorStatusSuccess) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
+            [JMNotificationCenter postNotificationName:@"ZhifuSeccessfully" object:nil];
         }else if (error.errorStatus == payMentErrorStatusFail) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+            [JMNotificationCenter postNotificationName:@"CancleZhifu" object:nil];
         }else { }
     }];
     
@@ -312,7 +314,7 @@
 //- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
 //{
 //    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
+//    [JMNotificationCenter postNotificationName:@"presentLeftMenuVC" object:nil];
 //}
 //
 //- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController

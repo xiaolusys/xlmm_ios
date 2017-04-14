@@ -136,9 +136,9 @@
     }else {
         self.navigationController.navigationBarHidden = YES;
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
     
     
 }
@@ -147,15 +147,15 @@
     [self.progressView removeFromSuperview];
     [MBProgressHUD hideHUDForView:self.view];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"fineCouponTid" object:nil];
     
 }
 - (void)dealloc {
     self.baseWebView = nil;
     self.progressView = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 
 }
 
@@ -202,7 +202,7 @@
     super.baseWebView.viewController = self;
     if(super.baseWebView.usingUIWebView) {
         NSLog(@"7.0 UIWebView");
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
+        [JMNotificationCenter addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
 //        [self registerJsBridge];
 //        self.baseWebView.delegate = self;
     }else {

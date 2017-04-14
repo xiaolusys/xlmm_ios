@@ -36,7 +36,7 @@
     // Drawing code
    
   
-    UIImage *image = [UIImage imageNamed:@"countdowmBackImage.png"];
+    UIImage *image = CS_UIImageName(@"countdowmBackImage");
     [image drawInRect:self.bounds];
     
     UIBezierPath * path0 = [[UIBezierPath alloc] init];
@@ -153,7 +153,7 @@
 }
 
 - (void)initLabel{
-    UIFont *font = [UIFont systemFontOfSize:12];
+    UIFont *font = CS_UIFontSize(12.);
     UIColor *color = [UIColor blackColor];
     
     CGFloat width = self.frame.size.width;
@@ -169,17 +169,17 @@
     [self addSubview:number6Label];
     [self addSubview:number9Label];
     [self addSubview:number12Label];
-    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 45, height/2 - 45, 90, 30) font:[UIFont systemFontOfSize:18] textColor:[UIColor countLabelColor]text:@"倒计时"];
+    topLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 45, height/2 - 45, 90, 30) font:CS_UIFontSize(18.) textColor:[UIColor countLabelColor]text:@"倒计时"];
     [self addSubview:topLabel];
     timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 80, height/2 - 20, 160, 40)];
     timeLabel.textColor = [UIColor orangeThemeColor];
     timeLabel.text = @"       ";
-    timeLabel.font = [UIFont systemFontOfSize:24];
+    timeLabel.font = CS_UIFontSize(24.);
     timeLabel.backgroundColor = [UIColor clearColor];
     timeLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:timeLabel];
     
-    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 80, height/2 + 20, 160, 20) font:[UIFont systemFontOfSize:12] textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
+    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2 - 80, height/2 + 20, 160, 20) font:CS_UIFontSize(12.) textColor:[UIColor countLabelColor] text:@"开始今天第一轮特卖"];
     [self addSubview:infoLabel];
 }
 

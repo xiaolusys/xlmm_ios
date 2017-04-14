@@ -40,10 +40,10 @@
     //添加键盘的监听事件
     
     //注册通知,监听键盘弹出事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
     //注册通知,监听键盘消失事件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
     
     [MobClick beginLogPageView:@"DebugSettingViewController"];
 }
@@ -51,8 +51,8 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     
     [MobClick endLogPageView:@"DebugSettingViewController"];
 }
@@ -287,17 +287,11 @@
         if([rcode integerValue] == 0){
             NSLog(@"debug check success");
             [self logout];
-            
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            
-            [defaults setBool:NO forKey:kIsLogin];
-            
+            [JMUserDefaults setBool:NO forKey:kIsLogin];
             Root_URL = serverip;
-            
             [MBProgressHUD showSuccess:[NSString stringWithFormat:@"switch to server %@", serverip]];
-            
             [self.navigationController popToRootViewControllerAnimated:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
+            [JMNotificationCenter postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         }
         else{
             NSLog(@"debug check failed");
@@ -319,18 +313,16 @@
         NSDictionary *dic = responseObject;
         if ([[dic objectForKey:@"code"] integerValue] != 0) return;
         //注销账号
-        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-        NSString *user_account = [user objectForKey:@"user_account"];
+        NSString *user_account = [JMUserDefaults objectForKey:@"user_account"];
         if (!([user_account isEqualToString:@""] || [user_account class] == [NSNull null])) {
             [MiPushSDK unsetAccount:user_account];
-            [user setObject:@"" forKey:@"user_account"];
+            [JMUserDefaults setObject:@"" forKey:@"user_account"];
         }
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:NO forKey:kIsLogin];
-        [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-        [userDefaults setBool:NO forKey:kISXLMM];
-        [userDefaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
+        [JMUserDefaults setBool:NO forKey:kIsLogin];
+        [JMUserDefaults setObject:@"unlogin" forKey:kLoginMethod];
+        [JMUserDefaults setBool:NO forKey:kISXLMM];
+        [JMUserDefaults synchronize];
+        [JMNotificationCenter postNotificationName:@"logout" object:nil];
     } WithFail:^(NSError *error) {
         
     } Progress:^(float progress) {

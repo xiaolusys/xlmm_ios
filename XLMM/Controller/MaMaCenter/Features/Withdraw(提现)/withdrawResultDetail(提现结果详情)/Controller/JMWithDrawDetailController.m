@@ -184,7 +184,7 @@
     [headerView addSubview:takeoutMoney];
     takeoutMoney = takeoutMoney;
     takeoutMoney.text = @"出账余额(元)";
-    takeoutMoney.font = CS_SYSTEMFONT(13.);
+    takeoutMoney.font = CS_UIFontSize(13.);
     takeoutMoney.textAlignment = NSTextAlignmentCenter;
     self.takeoutMoney = takeoutMoney;
     
@@ -196,7 +196,7 @@
     UILabel *moneyLabel = [[UILabel alloc] init];
     [headerView addSubview:moneyLabel];
     self.moneyLabel = moneyLabel;
-    self.moneyLabel.font = CS_SYSTEMFONT(40.);
+    self.moneyLabel.font = CS_UIFontSize(40.);
     self.moneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(takeoutMoney.mas_centerX);

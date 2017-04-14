@@ -21,7 +21,7 @@ dispatch_source_cancel(time);\
 time = nil;\
 }
 
-static NSInteger defaultWaitDataDuration = 2;
+static NSInteger defaultWaitDataDuration = 12;
 
 @interface XHLaunchAd()
 
@@ -106,6 +106,9 @@ static NSInteger defaultWaitDataDuration = 2;
 {
     return [XHLaunchAdCache xhLaunchAdCachePath];
 }
++ (void)cancelWatiTimer {
+    [[XHLaunchAd shareLaunchAd] cancelWaitDataTimer];
+}
 
 #pragma mark - private
 +(XHLaunchAd *)shareLaunchAd{
@@ -125,7 +128,7 @@ static NSInteger defaultWaitDataDuration = 2;
         
         [self setupLaunchAd];
         
-        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        [JMNotificationCenter addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             
             if(_imageAdConfiguration&&_imageAdConfiguration.showEnterForeground)
             {
@@ -416,7 +419,6 @@ static NSInteger defaultWaitDataDuration = 2;
     }
     
 }
-
 -(XHLaunchAdConfiguration *)commonConfiguration
 {
     XHLaunchAdConfiguration *configuration;
@@ -434,6 +436,28 @@ static NSInteger defaultWaitDataDuration = 2;
 {
     __block NSInteger duration = defaultWaitDataDuration;
     if(_waitDataDuration) duration = _waitDataDuration;
+    NSTimeInterval period = 1.0;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    _waitDataTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(_waitDataTimer, dispatch_walltime(NULL, 0), period * NSEC_PER_SEC, 0);
+    dispatch_source_set_event_handler(_waitDataTimer, ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(duration==0)
+            {
+                DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
+                [self remove]; return ;
+            }
+            duration--;
+        });
+    });
+    
+    dispatch_resume(_waitDataTimer);
+}
+- (void)cancelWaitDataTimer {
+    DISPATCH_SOURCE_CANCEL_SAFE(_waitDataTimer);
+    DISPATCH_SOURCE_CANCEL_SAFE(_skipTimer);
+    __block NSInteger duration = 2;
     NSTimeInterval period = 1.0;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     _waitDataTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);

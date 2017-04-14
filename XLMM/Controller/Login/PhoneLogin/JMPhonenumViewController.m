@@ -69,12 +69,12 @@
     [self prepareInitUI];
     
     //设置记住密码的默认值
-    self.rememberPwdBtn.selected = [[NSUserDefaults standardUserDefaults] boolForKey:rememberPwdKey];
+    self.rememberPwdBtn.selected = [JMUserDefaults boolForKey:rememberPwdKey];
     
     //设置账号和密码的默认值
-    self.phoneNumTextF.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    self.phoneNumTextF.text = [JMUserDefaults objectForKey:kUserName];
     if (self.rememberPwdBtn.selected) {
-        NSString *decryptedStr = [AESEncryption decrypt:[[NSUserDefaults standardUserDefaults] objectForKey:kPassWord] password:self.phoneNumTextF.text];
+        NSString *decryptedStr = [AESEncryption decrypt:[JMUserDefaults objectForKey:kPassWord] password:self.phoneNumTextF.text];
         self.passwordTextF.text = decryptedStr;
     }
     
@@ -166,8 +166,8 @@
 #pragma mark --- 记住密码按钮的点击
 - (void)remenberClick:(UIButton *)sender {
     self.rememberPwdBtn.selected = !self.rememberPwdBtn.selected;
-    [[NSUserDefaults standardUserDefaults] setBool:self.rememberPwdBtn.selected forKey:rememberPwdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [JMUserDefaults setBool:self.rememberPwdBtn.selected forKey:rememberPwdKey];
+    [JMUserDefaults synchronize];
 }
 
 #pragma mark ------ 登录按钮点击
@@ -182,7 +182,7 @@
         [MBProgressHUD showWarning:@"请输入正确的信息！"];
         return;
     }
-    [MBProgressHUD showMessage:@"登录中....."];
+    [MBProgressHUD showLoading:@"登录中....."];
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password,
                                  @"devtype":LOGINDEVTYPE};
@@ -196,14 +196,14 @@
         }
         // 手机登录成功 ，保存用户信息以及登录途径
 //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
-        [[NSUserDefaults standardUserDefaults] setObject:Root_URL forKey:@"serverip"];
+        [JMUserDefaults setObject:Root_URL forKey:@"serverip"];
         NSString *encryptionStr = [AESEncryption encrypt:self.passwordTextF.text password:self.phoneNumTextF.text];
-        [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumTextF.text forKey:kUserName];
-        [[NSUserDefaults standardUserDefaults] setObject:encryptionStr forKey:kPassWord];
-        [[NSUserDefaults standardUserDefaults] setObject:kPhoneLogin forKey:kLoginMethod];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults setObject:self.phoneNumTextF.text forKey:kUserName];
+        [JMUserDefaults setObject:encryptionStr forKey:kPassWord];
+        [JMUserDefaults setObject:kPhoneLogin forKey:kLoginMethod];
+        [JMUserDefaults synchronize];
         // 发送手机号码登录成功的通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
         [self loadUserInfo];
         [self setDevice];
     } WithFail:^(NSError *error) {
@@ -231,10 +231,9 @@
             NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
             kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
         }
-        [[NSUserDefaults standardUserDefaults] setBool:kIsLoginStatus forKey:kIsLogin];
-        [[NSUserDefaults standardUserDefaults] setBool:kIsXLMMStatus forKey:kISXLMM];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [MBProgressHUD hideHUD];
+        [JMUserDefaults setBool:kIsLoginStatus forKey:kIsLogin];
+        [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
+        [JMUserDefaults synchronize];
         if (kIsVIP) {
             if (kIsBindPhone) {
                 // 跳主页
@@ -243,7 +242,7 @@
                 JMKeyWindow.rootViewController = tabBarVC;
             }else {
                 // 绑定手机
-                NSDictionary *weChatInfo = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
+                NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
                 JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
                 vc.verificationCodeType = SMSVerificationCodeWithBind;
                 vc.userInfo = weChatInfo;
@@ -260,6 +259,7 @@
             //            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
         }
         self.loginBtn.enabled = YES;
+        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
         NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
         if (response) {
@@ -267,18 +267,20 @@
                 NSInteger statusCode = response.statusCode;
                 if (statusCode == 403) {
                     NSLog(@"%ld",statusCode);
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsLogin];
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kISXLMM];
+                    [JMUserDefaults removeObjectForKey:kIsLogin];
+                    [JMUserDefaults removeObjectForKey:kISXLMM];
                 }
             }
         }
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults synchronize];
         self.loginBtn.enabled = YES;
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"登录失败，请重试"];
     } Progress:^(float progress) {
     }];
 }
 - (void)setDevice{
-    NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+    NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     
     NSLog(@"urlStr = %@", urlString);
@@ -292,9 +294,8 @@
         } else {
             [MiPushSDK setAccount:user_account];
             //保存user_account
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setObject:user_account forKey:@"user_account"];
-            [user synchronize];
+            [JMUserDefaults setObject:user_account forKey:@"user_account"];
+            [JMUserDefaults synchronize];
         }
     } WithFail:^(NSError *error) {
         

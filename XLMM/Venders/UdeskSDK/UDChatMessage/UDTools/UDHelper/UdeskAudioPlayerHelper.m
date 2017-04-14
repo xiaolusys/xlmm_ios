@@ -120,12 +120,12 @@
         if (enable) {
             
             //添加近距离事件监听，添加前先设置为YES，如果设置完后还是NO的读话，说明当前设备没有近距离传感器
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorStateChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
+            [JMNotificationCenter addObserver:self selector:@selector(sensorStateChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
             
         } else {
             
             //删除近距离事件监听
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
+            [JMNotificationCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
             [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
         }
     }

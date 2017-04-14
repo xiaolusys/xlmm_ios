@@ -63,7 +63,7 @@
         //创建用户
         [self createCustomer];
         //网络监测
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kUdeskReachabilityChangedNotification object:nil];
+        [JMNotificationCenter addObserver:self selector:@selector(reachabilityChanged:) name:kUdeskReachabilityChangedNotification object:nil];
         self.reachability  = [UdeskReachability reachabilityWithHostName:@"www.baidu.com"];
         [self.reachability startNotifier];
     }
@@ -625,7 +625,7 @@
 - (void)dealloc
 {
     NSLog(@"%@销毁了",[self class]);
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kUdeskReachabilityChangedNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:kUdeskReachabilityChangedNotification object:nil];
     self.chatAlert.delegate = nil;
 }
 

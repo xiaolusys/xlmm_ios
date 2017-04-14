@@ -73,7 +73,7 @@
 
 #pragma mark 解析targeturl 跳转到不同的界面
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc{
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL login = [JMUserDefaults boolForKey:kIsLogin];
     if (!login) {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [vc.navigationController pushViewController:enterVC animated:YES];
@@ -88,12 +88,12 @@
     if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_today"]) {
         //跳到今日上新
         [vc.navigationController popToRootViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
+        [JMNotificationCenter postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"today"}];
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/promote_previous"]){
         //跳到昨日推荐
         [vc.navigationController popToRootViewControllerAnimated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"previous"}];
+        [JMNotificationCenter postNotificationName:@"fromActivityToToday" object:nil userInfo:@{@"param":@"previous"}];
         
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/products/childlist"]){
         //跳到潮童专区
@@ -144,7 +144,7 @@
         [vc.navigationController pushViewController:mamachoiceVC animated:YES];
         
     }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+        BOOL login = [JMUserDefaults boolForKey:@"login"];
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [vc.navigationController pushViewController:enterVC animated:YES];

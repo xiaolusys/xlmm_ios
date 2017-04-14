@@ -415,16 +415,16 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(keyboardDidHidden) name:UIKeyboardDidHideNotification object:nil];
     self.navigationController.navigationBarHidden = NO;
     [MobClick beginLogPageView:@"TixianViewController"];
     
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     self.navigationController.navigationBarHidden = YES;
     [MobClick endLogPageView:@"TixianViewController"];
 }
@@ -499,7 +499,7 @@
         TixianSucceedViewController *vc = [[TixianSucceedViewController alloc] init];
         if (code == 0) {
             NSString *str = [NSString stringWithFormat:@"%.2f",_cantixianjine];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"drawCashMoeny" object:str];
+            [JMNotificationCenter postNotificationName:@"drawCashMoeny" object:str];
             vc.tixianjine = tixianjine;
             vc.activeValueNum = _activeValue;
             vc.surplusMoney = self.cantixianjine;

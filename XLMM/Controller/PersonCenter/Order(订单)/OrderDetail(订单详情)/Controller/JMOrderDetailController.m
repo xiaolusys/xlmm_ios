@@ -657,8 +657,8 @@
 - (void)paySuccessful{
     [MobClick event:@"buy_succ"];
     [self pushShareVC];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"CancleZhifu" object:nil];
 }
 - (void)popview {
     [MobClick event:@"buy_cancel"];
@@ -678,10 +678,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     UIApplication *app = [UIApplication sharedApplication];
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    [JMNotificationCenter addObserver:self
                                              selector:@selector(purchaseViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
@@ -699,7 +699,7 @@
     [super viewWillDisappear:animated];
     [MBProgressHUD hideHUD];
     UIApplication *app = [UIApplication sharedApplication];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
+    [JMNotificationCenter removeObserver:self
                                                     name:UIApplicationWillEnterForegroundNotification
                                                   object:app];
     [MobClick endLogPageView:@"OrderDetail"];

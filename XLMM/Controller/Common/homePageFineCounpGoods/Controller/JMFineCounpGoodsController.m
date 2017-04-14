@@ -15,6 +15,7 @@
 #import "JMLogInViewController.h"
 #import "WebViewController.h"
 #import "JMAutoLoopPageView.h"
+#import "JMEmptyView.h"
 
 
 @interface JMFineCounpGoodsController () <UITableViewDelegate,UITableViewDataSource, JMAutoLoopPageViewDelegate, JMAutoLoopPageViewDataSource>
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) NSMutableArray *activeSource;
 @property (nonatomic, strong) NSMutableDictionary *webDic;
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
+@property (nonatomic, strong) JMEmptyView *empty;
 //下拉的标志
 @property (nonatomic) BOOL isPullDown;
 @property (nonatomic,strong) UIButton *topButton;
@@ -78,6 +80,7 @@
     
     [self createTableView];
     [self createTopButton];
+    [self emptyView];
     [self createPullHeaderRefresh];
     [self.tableView.mj_header beginRefreshing];
     
@@ -88,11 +91,13 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/portal", Root_URL]; // ?category=jingpin(只显示精品)
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:self WithSuccess:^(id responseObject) {
         if (!responseObject) return;
+        self.empty.hidden = YES;
         [self.topImageSource removeAllObjects];
         [self.activeSource removeAllObjects];
         [self fetchActive:responseObject];
         [self endRefresh];
     } WithFail:^(NSError *error) {
+        self.empty.hidden = NO;
         [self endRefresh];
     } Progress:^(float progress) {
     }];
@@ -112,7 +117,7 @@
     [self.tableView reloadData];
 }
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - ktabBarHeight) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 45 - kAppTabBarHeight) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor sectionViewColor];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -134,6 +139,18 @@
     self.pageView.autoScrollInterVal = 4.0f;
     self.tableView.tableHeaderView = self.pageView;
 }
+- (void)emptyView {
+    kWeakSelf
+    self.empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, (SCREENHEIGHT - 300) / 2 - 45, SCREENWIDTH, 300) Title:@"~~(>_<)~~" DescTitle:@"网络加载失败~!" BackImage:@"netWaring" InfoStr:@"重新加载"];
+    [self.view addSubview:self.empty];
+    self.empty.hidden = YES;
+    self.empty.block = ^(NSInteger index) {
+        if (index == 100) {
+            weakSelf.empty.hidden = YES;
+            [weakSelf.tableView.mj_header beginRefreshing];
+        }
+    };
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.activeSource.count;
 }
@@ -151,7 +168,7 @@
     JMHomeActiveModel *model = self.activeSource[indexPath.row];
     NSDictionary *dic = model.mj_keyValues;
     NSString *appLink = model.act_applink;
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+    if ([JMUserDefaults boolForKey:kIsLogin]) {
         [self skipWebView:appLink activeDic:dic];
     }else {
         if ([model.login_required boolValue]) {

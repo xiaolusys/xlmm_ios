@@ -64,13 +64,13 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     [super viewWillAppear:animated];
     self.isPopToRootView = NO;
     [self.tableView.mj_header beginRefreshing];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     [MobClick beginLogPageView:@"BlanceAccount"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.isPopToRootView) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+        [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
     }
     [MBProgressHUD hideHUD];
     [MobClick endLogPageView:@"BlanceAccount"];
@@ -183,13 +183,13 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
     
     self.moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, SCREENWIDTH, 50)];
     self.moneyLabel.textColor = [UIColor orangeThemeColor];
-    self.moneyLabel.font = [UIFont systemFontOfSize:35];
+    self.moneyLabel.font = CS_UIFontSize(35.);
     self.moneyLabel.textAlignment = NSTextAlignmentCenter;
     self.moneyLabel.text = [NSString stringWithFormat:@"%.2f", [self.accountMoney floatValue]];
     
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREENWIDTH * 0.5 - 50, 75, 100, 20)];
-    titleLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.font = CS_UIFontSize(14.);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = @"零钱(元)";
     
@@ -218,7 +218,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 //        if (index == 100) {
 //            self.isPopToRootView = YES;
 //            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+////            [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
 //        }
 //    };
 //}
@@ -230,7 +230,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         __block JMReloadEmptyDataView *reload = [[JMReloadEmptyDataView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) Title:@"你的钱包空空如也" DescTitle:@"" ButtonTitle:@"快去逛逛" Image:@"wallet" ReloadBlcok:^{
             self.isPopToRootView = YES;
             [self.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+//            [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
         }];
         _reload = reload;
     }
@@ -283,7 +283,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
         make.bottom.equalTo(self.view).offset(-20);
         make.width.height.mas_equalTo(@50);
     }];
-    [self.topButton setImage:[UIImage imageNamed:@"backTop"] forState:UIControlStateNormal];
+    [self.topButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
     self.topButton.hidden = YES;
     [self.topButton bringSubviewToFront:self.view];
 }
@@ -337,7 +337,7 @@ static NSString *JMAccountCellIdentifier = @"JMAccountCellIdentifier";
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 
 

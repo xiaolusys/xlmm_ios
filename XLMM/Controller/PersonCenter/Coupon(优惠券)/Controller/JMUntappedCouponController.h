@@ -8,25 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-//@class JMCouponModel;
-//@protocol JMUsableCouponControllerDelegate <NSObject>
-//
-//
-//- (void)updateYouhuiquanWithmodel:(JMCouponModel *)model;
-//
-//@end
-
+@class JMCouponController;
 @interface JMUntappedCouponController : UIViewController
 
-//@property (weak, nonatomic) id <JMUsableCouponControllerDelegate> delegate;
-
-- (NSInteger)couponCount;
-//
-//- (NSString *)urlStr;
-
-@property (nonatomic, strong) NSArray *couponArray;
-
-//- (void)createUsedButton;
+@property (nonatomic, copy) NSString *urlString;
+@property (nonatomic, assign) NSInteger couponStatus;
+@property (nonatomic, assign) NSInteger segmentIndex;
+@property (nonatomic, strong) JMCouponController *payCouponVC;
+@property (nonatomic, strong) NSMutableArray *itemArr;
 
 @end
 

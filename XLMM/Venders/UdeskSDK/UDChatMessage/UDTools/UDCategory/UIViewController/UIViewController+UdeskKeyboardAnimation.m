@@ -45,12 +45,12 @@ static void *UDAnimationsCompletionBlockAssociationKey = &UDAnimationsCompletion
     objc_setAssociatedObject(self, UDAnimationsCompletionBlockAssociationKey, completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     // subscribe to keyboard animations
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    [JMNotificationCenter addObserver:self
                                              selector:@selector(ud_handleWillShowKeyboardNotification:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    [JMNotificationCenter addObserver:self
                                              selector:@selector(ud_handleWillHideKeyboardNotification:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
@@ -62,8 +62,8 @@ static void *UDAnimationsCompletionBlockAssociationKey = &UDAnimationsCompletion
     objc_setAssociatedObject(self, UDAnimationsCompletionBlockAssociationKey, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     // unsubscribe from keyboard animations
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [JMNotificationCenter removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark private

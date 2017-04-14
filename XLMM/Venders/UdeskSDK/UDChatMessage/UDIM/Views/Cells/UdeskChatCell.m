@@ -129,7 +129,7 @@
             [_failureImageView addGestureRecognizer:tapFailureImage];
         }
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVAudioPlayerDidFinishPlay) name:VoicePlayHasInterrupt object:nil];
+        [JMNotificationCenter addObserver:self selector:@selector(AVAudioPlayerDidFinishPlay) name:VoicePlayHasInterrupt object:nil];
         contentVoiceIsPlaying = NO;
 
     }
@@ -370,7 +370,7 @@
 
         if (!contentVoiceIsPlaying) {
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:VoicePlayHasInterrupt object:nil];
+            [JMNotificationCenter postNotificationName:VoicePlayHasInterrupt object:nil];
             contentVoiceIsPlaying = YES;
             [animationVoiceImageView startAnimating];
             playerHelper.delegate = self;
@@ -427,7 +427,7 @@
             self.activityIndicatorView.hidden = NO;
             [self.activityIndicatorView startAnimating];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:UdeskClickResendMessage object:nil userInfo:@{@"failedMessage":_chatMessage}];
+            [JMNotificationCenter postNotificationName:UdeskClickResendMessage object:nil userInfo:@{@"failedMessage":_chatMessage}];
             
         }
         else {
@@ -463,7 +463,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:VoicePlayHasInterrupt object:nil];
+    [JMNotificationCenter removeObserver:self name:VoicePlayHasInterrupt object:nil];
 }
 
 @end

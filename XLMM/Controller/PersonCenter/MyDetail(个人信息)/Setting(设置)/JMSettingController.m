@@ -123,8 +123,8 @@
         };
         [self.navigationController pushViewController:changeNicknameView animated:YES];
     }else if (index == 2) {
-        NSDictionary *dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
-        if ([phoneString isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+        NSDictionary *dic = [JMUserDefaults objectForKey:kWxLoginUserInfo];
+        if ([phoneString isEqualToString:@""] && [[JMUserDefaults objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
             JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
             vc.verificationCodeType = SMSVerificationCodeWithBind;
             vc.userInfo = dic;
@@ -154,18 +154,16 @@
             NSDictionary *dic = responseObject;
             if ([[dic objectForKey:@"code"] integerValue] != 0) return;
             //注销账号
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            NSString *user_account = [user objectForKey:@"user_account"];
+            NSString *user_account = [JMUserDefaults objectForKey:@"user_account"];
             if (!([user_account isEqualToString:@""] || [user_account class] == [NSNull null])) {
                 [MiPushSDK unsetAccount:user_account];
-                [user setObject:@"" forKey:@"user_account"];
+                [JMUserDefaults setObject:@"" forKey:@"user_account"];
             }
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setBool:NO forKey:@"login"];
-            [userDefaults setBool:NO forKey:@"isXLMM"];
-            [userDefaults setObject:@"unlogin" forKey:kLoginMethod];
-            [userDefaults synchronize];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
+            [JMUserDefaults setBool:NO forKey:@"login"];
+            [JMUserDefaults setBool:NO forKey:@"isXLMM"];
+            [JMUserDefaults setObject:@"unlogin" forKey:kLoginMethod];
+            [JMUserDefaults synchronize];
+            [JMNotificationCenter postNotificationName:@"logout" object:nil];
             JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
             loginVC.isTabBarLogin = YES;
             [self.navigationController pushViewController:loginVC animated:YES];

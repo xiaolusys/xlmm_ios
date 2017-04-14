@@ -10,7 +10,7 @@
 
 @interface JMCouponController : UIViewController<UIScrollViewDelegate>
 
-
+@property (nonatomic, strong) NSArray *segmentSectionTitle;
 
 
 @end
