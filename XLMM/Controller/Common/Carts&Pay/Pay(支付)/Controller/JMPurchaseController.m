@@ -68,7 +68,7 @@
     BOOL _isTeamBuyGoods;             //是否为团购
 //    BOOL _isBondedGoods;              //是否为保税商品
 //    BOOL _isIndentifierNum;           // 身份证号是否为空
-    BOOL _isVirtualCoupone;           // 是否为虚拟优惠券
+    BOOL _isVirtualCoupone;           // 是否为虚拟优惠券 (不显示地址信息)
     NSInteger _couponNumber;          // 优惠券购买商品个数
     BOOL _isPerfectAddressInfo;       // 是否需要完善地址信息  carts_payinfo 的 max_personalinfo_level > 地址的 personalinfo_level 需要完善(YES)
     NSInteger _cartsInfoLevel;        // carts_payinfo 的 max_personalinfo_level

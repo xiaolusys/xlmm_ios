@@ -177,7 +177,7 @@
     }else if([orderM.carry_type intValue] == 3 || [orderM.carry_type intValue] == 4) {
         self.isAPP.text = @"下属订单";
     }else {
-        
+        self.isAPP.text = @"";
     }
     
     //    self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
