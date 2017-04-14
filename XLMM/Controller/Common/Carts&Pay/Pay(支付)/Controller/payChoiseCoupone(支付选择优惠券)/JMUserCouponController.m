@@ -119,6 +119,7 @@
     NSInteger code = [couponData[@"code"] integerValue];
     if (code != 0) {
         [MBProgressHUD showWarning:couponData[@"info"]];
+        [self.tableView cs_reloadData];
         return;
     }
     _urlStr = couponData[@"next"];
