@@ -46,7 +46,6 @@
  */
 @property (nonatomic,strong) UILabel *deductLabel;
 
-@property (nonatomic,assign) BOOL isAppImage;
 
 @end
 
@@ -70,7 +69,11 @@
     UILabel *isAPP = [[UILabel alloc] init];
     [self.contentView addSubview:isAPP];
     self.isAPP = isAPP;
-
+    self.isAPP.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    self.isAPP.textColor = [UIColor whiteColor];
+    self.isAPP.font = [UIFont systemFontOfSize:12.];
+    
+    
     UILabel *userName = [[UILabel alloc] init];
     [self.contentView addSubview:userName];
     self.userName = userName;
@@ -86,7 +89,7 @@
     [self.contentView addSubview:timeLabel];
     self.timeLabel = timeLabel;
     self.timeLabel.textColor = [UIColor timeLabelColor];
-    self.timeLabel.font = [UIFont systemFontOfSize:14.];
+    self.timeLabel.font = [UIFont systemFontOfSize:12.];
     
     UILabel *actualPay = [[UILabel alloc] init];
     [self.contentView addSubview:actualPay];
@@ -114,36 +117,11 @@
         make.left.equalTo(weakSelf.contentView).offset(10);
         make.width.height.mas_equalTo(@60);
     }];
-    
-    if (self.isAppImage == NO) {
-        [self.isAPP mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
-            make.bottom.equalTo(weakSelf.iconImageView.mas_bottom).offset(-5);
-        }];
-        
-        [self.actualPay mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(weakSelf.isAPP.mas_centerY);
-            make.left.equalTo(weakSelf.isAPP.mas_right).offset(10);
-        }];
-    }else {
-        [self.actualPay mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(weakSelf.iconImageView).offset(-5);
-            make.left.equalTo(weakSelf.iconImageView.mas_right);
-        }];
-    }
-    
-    [self.incomeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.actualPay.mas_right).offset(5);
-        make.centerY.equalTo(weakSelf.actualPay.mas_centerY);
-    }];
-    
-    
     [self.userName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.iconImageView).offset(5);
         make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
         make.width.mas_equalTo(@(100));
     }];
-    
     [self.payState mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakSelf.userName.mas_centerY);
         make.left.equalTo(weakSelf.userName.mas_right).offset(10);
@@ -153,6 +131,23 @@
         make.right.equalTo(weakSelf.contentView).offset(-10);
         make.centerY.equalTo(weakSelf.userName.mas_centerY);
     }];
+    
+    [self.isAPP mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
+        make.bottom.equalTo(weakSelf.iconImageView.mas_bottom).offset(-5);
+    }];
+    
+    [self.actualPay mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(weakSelf.isAPP.mas_centerY);
+        make.left.equalTo(weakSelf.isAPP.mas_right).offset(10);
+    }];
+    [self.incomeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weakSelf.actualPay.mas_right).offset(5);
+        make.centerY.equalTo(weakSelf.actualPay.mas_centerY);
+    }];
+    
+    
+    
     
     [self.deductLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.contentView).offset(-10);
@@ -165,9 +160,6 @@
 
 
 - (void)fillDataOfCell:(MaMaOrderModel *)orderM {
-    
-
-    
     //    UIImageView *imageView = (UIImageView *)[self.contentView viewWithTag:100];
     
     //    self.isAPP = imageView;
@@ -179,25 +171,11 @@
     self.userName.text = orderM.contributor_nick;
     
     if ([orderM.carry_type intValue] == 1) {
-
-        self.isAppImage = NO;
-        self.isAPP = nil;
+        self.isAPP.text = @"";
     }else if([orderM.carry_type intValue] == 2) {
-
-        self.isAppImage = YES;
-        self.isAPP.backgroundColor = [UIColor buttonEnabledBackgroundColor];
         self.isAPP.text = @"APP";
-        self.isAPP.textColor = [UIColor whiteColor];
-        self.isAPP.font = [UIFont systemFontOfSize:12.];
-//        self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
-
-    }else if([orderM.carry_type intValue] == 3) {
-        self.isAppImage = YES;
-//        self.isAPP.image = [UIImage imageNamed:@"isApp_orderList"];
-        self.isAPP.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    }else if([orderM.carry_type intValue] == 3 || [orderM.carry_type intValue] == 4) {
         self.isAPP.text = @"下属订单";
-        self.isAPP.textColor = [UIColor whiteColor];
-        self.isAPP.font = [UIFont systemFontOfSize:12.];
     }else {
         
     }
@@ -222,16 +200,8 @@
     self.actualPay.text = [NSString stringWithFormat:@"实付 %.2f", [orderM.order_value floatValue]];
     //    self.actualPay.text = orderM.carry_type_name;
     
-    self.timeLabel.text = [self dealDate:orderM.created];
-    self.timeLabel.font = [UIFont systemFontOfSize:12];
+    self.timeLabel.text = [NSString jm_subWithHourAndMinute:orderM.created];
     
-}
-
-- (NSString *)dealDate:(NSString *)str {
-    NSArray *strarray = [str componentsSeparatedByString:@"T"];
-    NSString *hour = strarray[1];
-    NSString *time = [hour substringToIndex:5];
-    return time;
 }
 
 @end
