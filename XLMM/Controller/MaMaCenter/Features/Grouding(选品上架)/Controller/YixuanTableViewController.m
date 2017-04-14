@@ -291,7 +291,7 @@ static NSString *const cellIdentifier = @"YixuanCell";
     
     
     
-    NSString *url = [NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
+    NSString *url = CS_DSTRING(Root_URL, @"/rest/v1/pmt/cushoppros/remove_pro_from_shop");//[NSString stringWithFormat:@"%@/rest/v1/pmt/cushoppros/remove_pro_from_shop", Root_URL];
     NSDictionary *parameters = @{@"product":cell.pdtID};
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];

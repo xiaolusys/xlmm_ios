@@ -58,7 +58,7 @@
 //    goinImage.image = [UIImage imageNamed:@"rightArrow"];
     UILabel *chakanwuliu = [UILabel new];
     [baseView addSubview:chakanwuliu];
-    chakanwuliu.font = CS_SYSTEMFONT(12.f);
+    chakanwuliu.font = CS_UIFontSize(12.f);
     chakanwuliu.text = @"查看物流";
     chakanwuliu.textColor = [UIColor buttonEnabledBackgroundColor];
     chakanwuliu.textAlignment = NSTextAlignmentCenter;

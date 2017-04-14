@@ -51,14 +51,14 @@
     [super viewWillDisappear:animated];
 }
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
+    [JMNotificationCenter  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
+    [JMNotificationCenter  addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
+    [JMNotificationCenter  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
     
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
@@ -137,7 +137,7 @@
 //        [self.homeVC endAutoScroll];
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
 //        [self.homeVC endAutoScroll];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if ([JMUserDefaults boolForKey:kIsLogin]) {
             self.cartVC.isHideNavigationLeftItem = YES;
             self.cartVC.cartType = @"5";
 //            [[JMGlobal global] showWaitLoadingInView:self.cartVC.view];
@@ -155,7 +155,7 @@
 //    }
     else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
 //        [self.homeVC endAutoScroll];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if ([JMUserDefaults boolForKey:kIsLogin]) {
             //            [self.personalVC refreshUserInfo];
         }else {
         }
@@ -163,8 +163,8 @@
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"精品汇"]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM]) {
+        if ([JMUserDefaults boolForKey:kIsLogin]) {
+            if (![JMUserDefaults boolForKey:kISXLMM]) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"小鹿提醒" message:@"您暂时还不是小鹿妈妈哦~ 请关注 \"小鹿美美\" 公众号,获取更多信息 " delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alert show];
                 return NO;
@@ -179,7 +179,7 @@
             return NO;
         }
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if ([JMUserDefaults boolForKey:kIsLogin]) {
             [MobClick event:@"tabBarWithShoopingCart"];
             return YES;
         }else {
@@ -208,7 +208,7 @@
 //        }
 //    }
     else if ([viewController.tabBarItem.title isEqualToString:@"我的"]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if ([JMUserDefaults boolForKey:kIsLogin]) {
             [MobClick event:@"tabBarWithMine"];
             return YES;
         }else {

@@ -167,9 +167,9 @@ static NSString *userCustomerID;
         if (!responseObject) return ;
         BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
         BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
-        [[NSUserDefaults standardUserDefaults] setBool:kIsLoginStatus forKey:kIsLogin];
-        [[NSUserDefaults standardUserDefaults] setBool:kIsXLMMStatus forKey:kISXLMM];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults setBool:kIsLoginStatus forKey:kIsLogin];
+        [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
+        [JMUserDefaults synchronize];
 //        if (!responseObject){
 //            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kIsLogin];
 //            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kISXLMM];
@@ -208,12 +208,12 @@ static NSString *userCustomerID;
                 statusCode = response.statusCode;
                 if (statusCode == 403) {
                     NSLog(@"%ld",statusCode);
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsLogin];
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kISXLMM];
+                    [JMUserDefaults removeObjectForKey:kIsLogin];
+                    [JMUserDefaults removeObjectForKey:kISXLMM];
                 }
             }
         }
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults synchronize];
         if (failure) {
             failure(statusCode);
         }
@@ -297,10 +297,10 @@ static NSString *userCustomerID;
     return time;
 }
 - (BOOL)userVerificationXLMM {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
+    return [JMUserDefaults boolForKey:kISXLMM];
 }
 - (BOOL)userVerificationLogin {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    return [JMUserDefaults boolForKey:kIsLogin];
 }
 
 - (BOOL)validateIdentityCard:(NSString *)value {

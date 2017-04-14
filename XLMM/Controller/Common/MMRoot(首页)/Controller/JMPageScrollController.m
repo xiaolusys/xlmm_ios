@@ -19,7 +19,7 @@ extern NSString *const JMPageScrollControllerLeaveTopNotifition;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leaveFromTop) name:JMPageScrollControllerLeaveTopNotifition object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(leaveFromTop) name:JMPageScrollControllerLeaveTopNotifition object:nil];
 }
 
 - (void)leaveFromTop {
@@ -38,7 +38,7 @@ extern NSString *const JMPageScrollControllerLeaveTopNotifition;
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     // 首先判断otherGestureRecognizer是不是系统pop手势

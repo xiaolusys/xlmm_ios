@@ -179,7 +179,7 @@
     [self.maskScrollView addSubview:self.waringLabel];
     self.waringLabel.text = @"";
     self.waringLabel.textColor = [UIColor redColor];
-    self.waringLabel.font = CS_SYSTEMFONT(13.);
+    self.waringLabel.font = CS_UIFontSize(13.);
     self.waringLabel.textAlignment = NSTextAlignmentCenter;
     
     
@@ -419,7 +419,7 @@
     }
     if (self.verificationCodeType == SMSVerificationCodeWithRegistered || self.verificationCodeType == SMSVerificationCodeWithLogin) {
         [self alertMessage:[dic objectForKey:@"msg"]];
-        NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+        NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
         [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
             NSString *user_account = [responseObject objectForKey:@"user_account"];
@@ -427,19 +427,17 @@
             } else {
                 [MiPushSDK setAccount:user_account];
                 //保存user_account
-                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-                [user setObject:user_account forKey:@"user_account"];
-                [user synchronize];
+                [JMUserDefaults setObject:user_account forKey:@"user_account"];
+                [JMUserDefaults synchronize];
             }
         } WithFail:^(NSError *error) {
         } Progress:^(float progress) {
         }];
         //设置用户名在newLeft中使用
-        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-        [user setObject:phoneNumber forKey:kUserName];
-        [user setBool:YES forKey:kIsLogin];
+        [JMUserDefaults setObject:phoneNumber forKey:kUserName];
+        [JMUserDefaults setBool:YES forKey:kIsLogin];
         //发送通知在root中接收
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
         [self backApointInterface];
         JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
         JMKeyWindow.rootViewController = tabBarVC;

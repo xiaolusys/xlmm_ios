@@ -53,7 +53,7 @@
     [self loadMaMaWeb];
     
     if(self.baseWebView.usingUIWebView) {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
+//        [JMNotificationCenter addObserver:self selector:@selector(registerJsBridge) name:@"registerJsBridge" object:nil];
         [self registerJsBridge];
     }
 }
@@ -97,7 +97,7 @@
     statusBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:statusBarView];
     
-    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20 - ktabBarHeight) usingUIWebView:NO];
+    self.baseWebView = [[IMYWebView alloc] initWithFrame:CGRectMake(0, 20, SCREENWIDTH, SCREENHEIGHT - 20 - kAppTabBarHeight) usingUIWebView:NO];
     self.baseWebView.backgroundColor = [UIColor clearColor];
     self.baseWebView.scalesPageToFit = YES;
     self.baseWebView.delegate = self;
@@ -117,7 +117,7 @@
 }
 - (void)webViewDidFinishLoad:(IMYWebView *)webView {
     self.empty.hidden = YES;
-//    self.baseWebView.cs_h = SCREENHEIGHT - 20 - ktabBarHeight;
+//    self.baseWebView.cs_h = SCREENHEIGHT - 20 - kAppTabBarHeight;
     [[JMGlobal global] hideWaitLoading];
 }
 - (void)emptyView {
@@ -142,16 +142,16 @@
     [super viewWillAppear:animated];
     [MobClick endLogPageView:@"JMFineClassController"];
     self.navigationController.navigationBarHidden = YES;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(couponTid:) name:@"fineCouponTid" object:nil];
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [MobClick beginLogPageView:@"JMFineClassController"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CancleZhifu" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fineCouponTid" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"fineCouponTid" object:nil];
 }
 - (void)paySuccessful {
     NSLog(@"支付成功");

@@ -36,7 +36,7 @@
     [self.contentView addSubview:self.nameLabel];
     self.nameLabel.textColor = [UIColor buttonTitleColor];
     self.nameLabel.highlightedTextColor = [UIColor buttonEnabledBackgroundColor];
-    self.nameLabel.font = CS_SYSTEMFONT(16.);
+    self.nameLabel.font = CS_UIFontSize(16.);
     
     
     

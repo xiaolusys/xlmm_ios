@@ -56,14 +56,14 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [MobClick beginLogPageView:@"JMLogInViewController"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMLogInViewController"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"WeChatLogin" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -146,7 +146,7 @@
 }
 #pragma mark --- 监听微信登录的通知
 - (void)WeChatLoginNoti:(NSNotificationCenter *)notification {
-    dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
+    dic = [JMUserDefaults objectForKey:kWxLoginUserInfo];
     NSArray *randomArray = [self randomArray];
     unsigned long count = (unsigned long)randomArray.count;
     int index = 0;
@@ -191,14 +191,15 @@
         [self loadUserInfo];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"登录失败，请重试"];
     } Progress:^(float progress) {
         
     }];
 }
 #pragma mark --- 移除通知
 //- (void)dealloc {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"WeChatLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
 //}
 #pragma mark ---- 点击微信登录的按钮
 - (void)wechatBtnClick:(UIButton *)btn {
@@ -211,9 +212,8 @@
         [alterView show];
         return;
     }
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
-    [userdefaults synchronize];
+    [JMUserDefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
+    [JMUserDefaults synchronize];
 
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
@@ -264,11 +264,10 @@
             NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
             kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
         }
-        [[NSUserDefaults standardUserDefaults] setBool:kIsLoginStatus forKey:kIsLogin];
-        [[NSUserDefaults standardUserDefaults] setBool:kIsXLMMStatus forKey:kISXLMM];
-        [[NSUserDefaults standardUserDefaults] setObject:kWeiXinLogin forKey:kLoginMethod];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [MBProgressHUD hideHUD];
+        [JMUserDefaults setBool:kIsLoginStatus forKey:kIsLogin];
+        [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
+        [JMUserDefaults setObject:kWeiXinLogin forKey:kLoginMethod];
+        [JMUserDefaults synchronize];
         if (kIsVIP) {
             if (kIsBindPhone) {
                 // 跳主页
@@ -276,7 +275,7 @@
                 JMKeyWindow.rootViewController = tabBarVC;
             }else {
                 // 绑定手机
-                NSDictionary *weChatInfo = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
+                NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
                 JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
                 vc.verificationCodeType = SMSVerificationCodeWithBind;
                 vc.userInfo = weChatInfo;
@@ -294,6 +293,7 @@
             // 提示
 //            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
         }
+        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
         NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
         if (response) {
@@ -301,19 +301,20 @@
                 NSInteger statusCode = response.statusCode;
                 if (statusCode == 403) {
                     NSLog(@"%ld",statusCode);
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsLogin];
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kISXLMM];
+                    [JMUserDefaults removeObjectForKey:kIsLogin];
+                    [JMUserDefaults removeObjectForKey:kISXLMM];
                 }
             }
         }
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults synchronize];
+        [MBProgressHUD showError:@"登录失败，请重试"];
         [MBProgressHUD hideHUD];
     } Progress:^(float progress) {
     }];
 }
 #pragma mark ---- 登录成功后获取Device
 - (void)setDevice{
-    NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+    NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
         NSString *user_account = [responseObject objectForKey:@"user_account"];
@@ -321,9 +322,8 @@
         } else {
             [MiPushSDK setAccount:user_account];
             //保存user_account
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setObject:user_account forKey:@"user_account"];
-            [user synchronize];
+            [JMUserDefaults setObject:user_account forKey:@"user_account"];
+            [JMUserDefaults synchronize];
         }
     } WithFail:^(NSError *error) {
         

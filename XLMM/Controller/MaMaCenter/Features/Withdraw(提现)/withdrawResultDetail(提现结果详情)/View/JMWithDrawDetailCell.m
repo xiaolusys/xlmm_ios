@@ -29,12 +29,12 @@
     self.contentView.backgroundColor = [UIColor countLabelColor];
     
     self.titleLabel = [UILabel new];
-    self.titleLabel.font = CS_SYSTEMFONT(12.);
+    self.titleLabel.font = CS_UIFontSize(12.);
     self.titleLabel.textColor = [UIColor buttonTitleColor];
     [self.contentView addSubview:self.titleLabel];
     
     self.descTitleLabel = [UILabel new];
-    self.descTitleLabel.font = CS_SYSTEMFONT(12.);
+    self.descTitleLabel.font = CS_UIFontSize(12.);
     self.descTitleLabel.textColor = [UIColor dingfanxiangqingColor];
     [self.contentView addSubview:self.descTitleLabel];
     kWeakSelf

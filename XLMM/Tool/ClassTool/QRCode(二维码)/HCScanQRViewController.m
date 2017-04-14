@@ -138,7 +138,7 @@
     tipLabel.numberOfLines = 0;
     tipLabel.textColor = [UIColor whiteColor];
     tipLabel.textAlignment = NSTextAlignmentCenter;
-    tipLabel.font = [UIFont systemFontOfSize:14.];
+    tipLabel.font = CS_UIFontSize(14.);
 //    self.tip = tipLabel;
     [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.bgImg.mas_bottom).offset(20);
@@ -271,7 +271,7 @@
     [rightBtn addTarget:self action:@selector(openPhoto) forControlEvents:UIControlEventTouchUpInside];
     [rightBtn setTitle:@"相册" forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:14.];
+    rightBtn.titleLabel.font = CS_UIFontSize(14.);
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
 }

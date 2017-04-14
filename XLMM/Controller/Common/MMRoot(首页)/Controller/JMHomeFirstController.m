@@ -125,7 +125,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
     }
 }
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
     if (self.pageView) {
         [self.pageView removeFromSuperview];
         self.pageView = nil;
@@ -139,9 +139,9 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updataAfterLogin) name:@"weixinlogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin) name:@"phoneNumberLogin" object:nil];
 
     self.pageController.baseScrollView.delegate = self;
     [self.view addSubview:self.tableView];
@@ -282,7 +282,7 @@ NSString *const JMPageScrollControllerLeaveTopNotifition = @"JMPageScrollControl
                 self.pageController.segmentControl.mj_y = 64;
                 self.pageController.baseScrollView.frame = CGRectMake(0, 64 + 45, SCREENWIDTH, SCREENHEIGHT - 64 - 45);
             }];
-            [[NSNotificationCenter defaultCenter] postNotificationName:JMPageScrollControllerLeaveTopNotifition object:nil];
+            [JMNotificationCenter postNotificationName:JMPageScrollControllerLeaveTopNotifition object:nil];
         }else {
             [UIView animateWithDuration:0.3 animations:^{
                 self.pageController.segmentControl.mj_y = 64 - 45;

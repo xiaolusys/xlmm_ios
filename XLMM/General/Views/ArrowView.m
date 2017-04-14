@@ -285,7 +285,7 @@
         [button setTag:i];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-        [button.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [button.titleLabel setFont:CS_UIFontSize(15.)];
         [button addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
     }

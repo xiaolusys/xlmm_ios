@@ -37,9 +37,7 @@
         UIImageView *tooShortRecordImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 140, 140)];
         UIImage *tooShortImage;
         
-        
-        NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
-        NSArray* languages = [defs objectForKey:@"AppleLanguages"];
+        NSArray* languages = [JMUserDefaults objectForKey:@"AppleLanguages"];
         NSString* preferredLang = [languages objectAtIndex:0];
         if ([preferredLang isEqualToString:@"zh-Hans-CN"]) {
             tooShortImage = [UIImage ud_defaultVoiceTooShortImageCN];

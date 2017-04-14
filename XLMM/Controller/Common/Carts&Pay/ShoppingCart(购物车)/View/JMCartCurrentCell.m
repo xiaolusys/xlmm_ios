@@ -88,20 +88,20 @@ NSString *const JMCartCurrentCellIdentifier = @"JMCartCurrentCellIdentifier";
     [self.addButton addTarget:self action:@selector(addGoodsClick:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *addImage = [UIImageView new];
     [self.addButton addSubview:addImage];
-    addImage.image = CS_IMAGE(@"shopping_cart_add");
+    addImage.image = CS_UIImageName(@"shopping_cart_add");
     
     self.jianButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.contentView addSubview:self.jianButton];
     [self.jianButton addTarget:self action:@selector(jianGoodsClick:) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *jianImage = [UIImageView new];
     [self.jianButton addSubview:jianImage];
-    jianImage.image = CS_IMAGE(@"shopping_cart_jian");
+    jianImage.image = CS_UIImageName(@"shopping_cart_jian");
     
     self.numberLabel = [UILabel new];
     [self.contentView addSubview:self.numberLabel];
     self.numberLabel.textColor = [UIColor settingBackgroundColor];
     self.numberLabel.textAlignment = NSTextAlignmentCenter;
-    self.numberLabel.font = CS_SYSTEMFONT(18.);
+    self.numberLabel.font = CS_UIFontSize(18.);
     
     kWeakSelf
     

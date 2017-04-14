@@ -25,8 +25,8 @@
 @implementation IosJsBridge
 
 + (void)dispatchJsBridgeFunc:(UIViewController *)vc name:(NSString *)name para:(NSString*)para{
-//    [[NSNotificationCenter defaultCenter] addObserver:vc selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:vc selector:@selector(popview) name:@"CancleZhifu" object:nil];
+//    [JMNotificationCenter addObserver:vc selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+//    [JMNotificationCenter addObserver:vc selector:@selector(popview) name:@"CancleZhifu" object:nil];
     
     NSDictionary *data = [self dictionaryWithJsonString:para];
     if ([name isEqualToString:@"jumpToNativeLocation"]) {
@@ -66,7 +66,7 @@
 + (void)jumpToCallNativePurchase:(UIViewController *)vc para:(NSDictionary *)data{
     NSDictionary *dataDic = data[@"charge"];
     NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
+    [JMNotificationCenter postNotificationName:@"fineCouponTid" object:tidString];
     [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:vc];
     
     
@@ -148,7 +148,7 @@
  */
 + (void)callNativeUniShareFunc:(UIViewController *)vc para:(NSDictionary *)data{
     NSLog(@"callNativeUniShareFunc");
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    BOOL login = [JMUserDefaults boolForKey:@"login"];
     if (login == NO) {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [vc.navigationController pushViewController:enterVC animated:YES];
@@ -162,7 +162,7 @@
  *   进入购物车  -- 判断是否登录
  */
 + (void)jumpToNativeLogin:(UIViewController *)vc para:(NSDictionary *)data{
-    BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+    BOOL login = [JMUserDefaults boolForKey:@"login"];
     if (login == NO) {
         JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
         [vc.navigationController pushViewController:enterVC animated:YES];

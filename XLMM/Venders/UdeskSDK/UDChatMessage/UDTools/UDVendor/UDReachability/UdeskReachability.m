@@ -55,7 +55,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
     UdeskReachability* noteObject = (__bridge UdeskReachability *)info;
     // Post a notification to notify the client that the network reachability changed.
-    [[NSNotificationCenter defaultCenter] postNotificationName: kUdeskReachabilityChangedNotification object: noteObject];
+    [JMNotificationCenter postNotificationName: kUdeskReachabilityChangedNotification object: noteObject];
 }
 
 

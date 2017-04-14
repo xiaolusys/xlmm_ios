@@ -64,8 +64,8 @@
         _sdkConfig = config;
         self.hidesBottomBarWhenPushed = YES;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resendClickFailedMessage:) name:UdeskClickResendMessage object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendProductMessageURL:) name:UdeskTouchProductUrlSendButton object:nil];
+        [JMNotificationCenter addObserver:self selector:@selector(resendClickFailedMessage:) name:UdeskClickResendMessage object:nil];
+        [JMNotificationCenter addObserver:self selector:@selector(sendProductMessageURL:) name:UdeskTouchProductUrlSendButton object:nil];
     }
     return  self;
 }
@@ -813,8 +813,8 @@
     NSLog(@"%@销毁了",[self class]);
     //取消所有请求
     [UdeskManager ud_cancelAllOperations];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UdeskClickResendMessage object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UdeskTouchProductUrlSendButton object:nil];
+    [JMNotificationCenter removeObserver:self name:UdeskClickResendMessage object:nil];
+    [JMNotificationCenter removeObserver:self name:UdeskTouchProductUrlSendButton object:nil];
     _messageTableView.delegate = nil;
     _messageTableView.dataSource = nil;
 }

@@ -200,9 +200,8 @@
         if (aresp.errCode== 0) {
             NSString *code = aresp.code;
             self.wxCode = code;
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setValue:code forKey:@"wxCode"];
-            [userDefaults synchronize];
+            [JMUserDefaults setValue:code forKey:@"wxCode"];
+            [JMUserDefaults synchronize];
         }else {
             NSLog(@"取消登录");
             return;
@@ -288,11 +287,10 @@
                  }
                  */
                 self.userInfo = dic;
-                NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
-                [userdefault setObject:dic forKey:kWxLoginUserInfo];
+                [JMUserDefaults setObject:dic forKey:kWxLoginUserInfo];
 //                [userdefault setBool:YES forKey:kIsLogin];
-                NSString *author = [userdefault objectForKey:kWeiXinauthorize];
-                [userdefault synchronize];
+                NSString *author = [JMUserDefaults objectForKey:kWeiXinauthorize];
+                [JMUserDefaults synchronize];
                 
                 if ([author isEqualToString:@"wxlogin"]) {
                     NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"WeChatLogin" object:self];

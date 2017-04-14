@@ -213,8 +213,8 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
     
     popHeight = SCREENHEIGHT * 0.6;
     _paramer = [NSMutableDictionary dictionary];
-    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL isXLMM = [JMUserDefaults boolForKey:kISXLMM];
+    BOOL isLogin = [JMUserDefaults boolForKey:kIsLogin];
     _isFineGoodsHeightShow = isXLMM && isLogin;
     _goodsAddressLevel = 0;
     
@@ -971,8 +971,7 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
 - (void)cartButton:(UIButton *)button {
     button.enabled = NO;
     [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:1.0f];
-    NSUserDefaults *defalts = [NSUserDefaults standardUserDefaults];
-    BOOL isLogin = [defalts boolForKey:kIsLogin];
+    BOOL isLogin = [JMUserDefaults boolForKey:kIsLogin];
     if (button.tag == kBottomViewTag + 0) {
         if (isLogin) {
             JMCartViewController *cartVC = [[JMCartViewController alloc] init];

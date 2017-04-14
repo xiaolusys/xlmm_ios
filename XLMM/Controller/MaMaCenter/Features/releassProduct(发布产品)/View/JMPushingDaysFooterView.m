@@ -27,14 +27,14 @@
         self.likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.likeButton setImage:[UIImage imageNamed:@"pushingDays_saveImage"] forState:UIControlStateNormal];
         [self.likeButton setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
-        self.likeButton.titleLabel.font = CS_SYSTEMFONT(12.);
+        self.likeButton.titleLabel.font = CS_UIFontSize(12.);
         self.likeButton.enabled = NO;
         self.likeButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
         
         self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.shareButton setImage:[UIImage imageNamed:@"pushingDays_shareImage"] forState:UIControlStateNormal];
         [self.shareButton setTitleColor:[UIColor dingfanxiangqingColor] forState:UIControlStateNormal];
-        self.shareButton.titleLabel.font = CS_SYSTEMFONT(12.);
+        self.shareButton.titleLabel.font = CS_UIFontSize(12.);
         self.shareButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
         self.shareButton.enabled = NO;
         

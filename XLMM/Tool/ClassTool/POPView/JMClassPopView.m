@@ -68,7 +68,7 @@
         
         UILabel *titleLabel = [UILabel new];
         [baseView addSubview:titleLabel];
-        titleLabel.font = CS_BOLDSYSTEMFONT(18.);
+        titleLabel.font = CS_UIFontBoldSize(18.);
         titleLabel.textColor = [UIColor blackColor];
         titleLabel.numberOfLines = 0;
         titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -84,7 +84,7 @@
         
         UILabel *descTitleLabel = [UILabel new];
         [descView addSubview:descTitleLabel];
-        descTitleLabel.font = [UIFont systemFontOfSize:14.];
+        descTitleLabel.font = CS_UIFontSize(14.);
         descTitleLabel.textColor = [UIColor buttonTitleColor];
         descTitleLabel.numberOfLines = 0;
         descTitleLabel.text = descTitle;

@@ -21,6 +21,6 @@
 
 - (void)configData:(JMCouponModel *)couponModel Index:(NSInteger)index;
 
-- (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID;
+- (void)configUsableData:(JMCouponModel *)couponModel IsSelectedYHQ:(BOOL)isselectedYHQ SelectedID:(NSString *)selectedID Index:(NSInteger)index;
 
 @end

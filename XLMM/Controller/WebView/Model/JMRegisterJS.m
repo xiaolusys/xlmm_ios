@@ -51,7 +51,7 @@
         NSLog(@"%@",data);
         NSDictionary *dataDic = data[@"charge"];
         NSString *tidString = [NSString stringWithFormat:@"%@",dataDic[@"order_no"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fineCouponTid" object:tidString];
+        [JMNotificationCenter postNotificationName:@"fineCouponTid" object:tidString];
         [JumpUtils jumpToCallNativePurchase:dataDic Tid:tidString viewController:webVC];
     }];
     
@@ -60,7 +60,7 @@
      */
     [self.bridge registerHandler:@"callNativeUniShareFunc" handler:^(id data, WVJBResponseCallback responseCallback) {
         NSLog(@"callNativeUniShareFunc");
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+        BOOL login = [JMUserDefaults boolForKey:@"login"];
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [webVC.navigationController pushViewController:enterVC animated:YES];
@@ -74,7 +74,7 @@
      *   进入购物车  -- 判断是否登录
      */
     [self.bridge registerHandler:@"jumpToNativeLogin" handler:^(id data, WVJBResponseCallback responseCallback) {
-        BOOL login = [[NSUserDefaults standardUserDefaults] boolForKey:@"login"];
+        BOOL login = [JMUserDefaults boolForKey:@"login"];
         if (login == NO) {
             JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
             [webVC.navigationController pushViewController:enterVC animated:YES];

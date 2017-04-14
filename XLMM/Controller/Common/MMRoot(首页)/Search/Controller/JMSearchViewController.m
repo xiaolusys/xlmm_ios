@@ -162,7 +162,7 @@
 
 /** 初始化 */
 - (void)setup {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
     UIButton *navRightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [navRightButton addTarget:self action:@selector(cancelDidClick) forControlEvents:UIControlEventTouchUpInside];
@@ -347,7 +347,7 @@
 }
 // 控制器销毁
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 
 

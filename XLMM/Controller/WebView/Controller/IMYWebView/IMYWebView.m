@@ -138,8 +138,8 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     NSLog(@"MYwebview webViewDidFinishLoad");
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [JMUserDefaults setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+    [JMUserDefaults synchronize];
     
     //    self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     if(self.originRequest == nil)
@@ -168,7 +168,7 @@
     
     self.estimatedProgress = progress;
     if (progress >= 1.0) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerJsBridge" object:nil];
+        [JMNotificationCenter postNotificationName:@"registerJsBridge" object:nil];
     }
     if (_progressBlock) {
         _progressBlock(progress);
