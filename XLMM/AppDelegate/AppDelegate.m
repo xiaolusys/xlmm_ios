@@ -76,14 +76,10 @@
         imageAdconfiguration.skipButtonType = SkipTypeTimeText;
         imageAdconfiguration.showEnterForeground = NO;
         [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
-//        [self performSelector:@selector(dsfafasf) withObject:nil afterDelay:3.];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) { 
         
     }];
-}
-- (void)dsfafasf {
-    
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
@@ -120,7 +116,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     self.window.rootViewController = tabBarVC;
-    [self.window makeKeyAndVisible];
+    [self.window makeKeyAndVisible ];
     [XHLaunchAd cancelWatiTimer];
     [self getLaunchImage];
 }
