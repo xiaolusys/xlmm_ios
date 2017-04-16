@@ -38,7 +38,7 @@
     NSDictionary *_xlWallet;          // 钱包
     NSDictionary *_xiaoluCoin;        // 小鹿币
     NSDictionary *_xiaolulingqian;    // 小鹿零钱
-    
+    CGFloat _addressInfoHeight;       // 地址等级提示信息
     
     NSString *_payMethod;             //支付方式
     float _totalPayment;              //应付款金额
@@ -126,7 +126,7 @@
 @property (nonatomic,assign) BOOL isXLWforAlipay;
 
 @property (nonatomic, strong) UIButton *tmpBtn;
-@property (nonatomic, strong) UIView *naviDesView;
+@property (nonatomic, strong) UIView *addressDesView;
 @end
 
 static BOOL isAgreeTerms = YES;
@@ -174,6 +174,7 @@ static BOOL isAgreeTerms = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self hideNaviDesViwe];
     [JMNotificationCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification
                                                   object:nil];
     [JMNotificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification
@@ -396,8 +397,25 @@ static BOOL isAgreeTerms = YES;
     self.purchaseFooterView.isShowXiaoluCoinView = (_xiaoluCoinValue > 0 ? YES : NO) && _isVirtualCoupone;
     
     [self layoutLevel];
-
     
+}
+- (void)showNaviDesViwe {
+    [self.navigationController.view insertSubview:self.addressDesView belowSubview:self.navigationController.navigationBar];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.addressDesView.transform = CGAffineTransformMakeTranslation(0, _addressInfoHeight);
+        self.tableView.transform = CGAffineTransformMakeTranslation(0, _addressInfoHeight);
+        self.tableView.mj_h = SCREENHEIGHT - _addressInfoHeight;
+    } completion:^(BOOL finished) {
+    }];
+}
+- (void)hideNaviDesViwe {
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.addressDesView.transform = CGAffineTransformIdentity;
+        self.tableView.transform = CGAffineTransformIdentity;
+        self.tableView.mj_h = SCREENHEIGHT;
+    } completion:^(BOOL finished) {
+        [self.addressDesView removeFromSuperview];
+    }];
 }
 - (void)layoutLevel {
     if (_addressInfoLoadFinish && _cartPayInfoLoadFinish) {
@@ -405,10 +423,11 @@ static BOOL isAgreeTerms = YES;
             [self userNotIdCardNumberMessage];
         }
         if (_cartsInfoLevel > 1) {
-            CGFloat strHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
-            self.purchaseHeaderView.mj_h = 150.f + strHeight;
+//            CGFloat strHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
+            self.purchaseHeaderView.mj_h = 200;
             self.tableView.tableHeaderView = self.purchaseHeaderView;
             self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
+            [self showNaviDesViwe];
         }else {
             self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
         }
@@ -454,6 +473,56 @@ static BOOL isAgreeTerms = YES;
     self.tableView.dataSource = self;
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.rowHeight = 110.;
+    
+    
+    _addressInfoHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 50 andFont:12.].height + 20;
+    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - _addressInfoHeight;
+    CGFloat x = 0;
+    CGFloat w = self.view.cs_w;
+    UIView *addressDesView = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, _addressInfoHeight)];
+    addressDesView.backgroundColor = [UIColor redColor];
+    addressDesView.alpha = 0.6;
+    self.addressDesView = addressDesView;
+    //插入导航控制器下导航条下面
+    [self.navigationController.view insertSubview:addressDesView belowSubview:self.navigationController.navigationBar];
+    
+    UIImageView *messageImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageImage"]];
+    [addressDesView addSubview:messageImage];
+    messageImage.contentMode = UIViewContentModeScaleAspectFill;
+    messageImage.clipsToBounds = YES;
+    
+    UILabel *messageLabel = [UILabel new];
+    [addressDesView addSubview:messageLabel];
+    messageLabel.font = CS_UIFontSize(12.);
+    messageLabel.textColor = [UIColor whiteColor];
+    messageLabel.numberOfLines = 0.;
+    messageLabel.text = payOrderLevelInfo;
+    
+    UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [addressDesView addSubview:messageButton];
+    [messageButton setTitle:@"x" forState:UIControlStateNormal];
+    [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [messageButton addTarget:self action:@selector(messageButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    [messageImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(addressDesView).offset(10);
+        make.centerY.equalTo(addressDesView.mas_centerY);
+        make.width.height.mas_equalTo(@(15));
+    }];
+    [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(messageImage.mas_right).offset(10);
+        make.centerY.equalTo(addressDesView.mas_centerY);
+        make.right.equalTo(messageButton.mas_left);
+    }];
+    [messageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(addressDesView.mas_centerY);
+        make.right.equalTo(addressDesView);
+        make.width.mas_equalTo(@(15));
+        make.height.mas_equalTo(@(_addressInfoHeight));
+    }];
+}
+- (void)messageButtonClick {
+    [self hideNaviDesViwe];
 }
 - (void)createTableHeaderView {
     self.purchaseHeaderView = [[JMPurchaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 150)];
@@ -732,6 +801,28 @@ static BOOL isAgreeTerms = YES;
         }];
     }else { }
 }
+- (void)composeHeaderSaveIdcard:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params {
+    button.enabled = NO;
+    [MBProgressHUD showLoading:@""];
+    NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,params[@"id"]];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:modifyUrlStr WithParaments:params WithSuccess:^(id responseObject) {
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 0) {
+            [self loadAddressInfo];
+            [MBProgressHUD hideHUD];
+            self.purchaseHeaderView.saveIdcardSuccess = YES;
+        }else {
+            [MBProgressHUD showWarning:responseObject[@"info"]];
+        }
+        button.enabled = YES;
+    } WithFail:^(NSError *error) {
+        button.enabled = YES;
+        [MBProgressHUD showWarning:@"修改地址失败,请重新修改"];
+    } Progress:^(float progress) {
+        
+    }];
+}
+
 // PurchaseAddressDelegate (地址选择修改代理回调)
 - (void)addressView:(JMAddressViewController *)addressVC model:(JMAddressModel *)model{
     self.purchaseHeaderView.addressModel = model;
@@ -1221,55 +1312,6 @@ static BOOL isAgreeTerms = YES;
 //        }];
 
 
-
-
-
-
-
-
-
-//
-//
-//
-//
-//CGFloat h = 60.;
-//CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - h;
-//CGFloat x = 0;
-//CGFloat w = self.view.cs_w;
-//UIView *naviDesView = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, h)];
-//naviDesView.backgroundColor = [UIColor redColor];
-//self.naviDesView = naviDesView;
-////插入导航控制器下导航条下面
-//[self.navigationController.view insertSubview:naviDesView belowSubview:self.navigationController.navigationBar];
-//
-//
-//
-
-
-//
-//
-//
-//
-////动画往下面平移
-//[UIView animateWithDuration:0.25 animations:^{
-//    self.naviDesView.transform = CGAffineTransformMakeTranslation(0, 60);
-//    self.tableView.transform = CGAffineTransformMakeTranslation(0, 60);
-//    self.tableView.mj_h = SCREENHEIGHT - 60;
-//} completion:^(BOOL finished) {
-//    //网上面平移
-//    //        [UIView animateWithDuration:0.25 delay:2 options:UIViewAnimationOptionCurveLinear animations:^{
-//    //            //还原
-//    //            self.naviDesView.transform = CGAffineTransformIdentity;
-//    //            self.tableView.transform = CGAffineTransformIdentity;
-//    //            self.tableView.mj_h = SCREENHEIGHT;
-//    //        } completion:^(BOOL finished) {
-//    //            [self.naviDesView removeFromSuperview];
-//    //        }];
-//}];
-//
-//
-//
-//
 
 
 

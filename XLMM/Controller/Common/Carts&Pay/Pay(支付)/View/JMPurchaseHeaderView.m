@@ -8,9 +8,10 @@
 
 #import "JMPurchaseHeaderView.h"
 #import "JMAddressModel.h"
+#import "JMRichTextTool.h"
 
 
-@interface JMPurchaseHeaderView ()
+@interface JMPurchaseHeaderView () <UITextFieldDelegate>
 
 /**
  *  地址_姓名
@@ -29,6 +30,9 @@
 @property (nonatomic, strong) UILabel *promptLabel;
 
 @property (nonatomic, strong) UILabel *nomalLabel;
+@property (nonatomic, strong) UITextField *idCardField;
+@property (nonatomic, strong) UIButton *idcardSaveButton;
+@property (nonatomic, strong) UILabel *idCardLabel;
 
 @end
 
@@ -44,6 +48,7 @@
         self.nomalLabel.text = @"请填写收货地址";
     }else {
         NSDictionary *addressDic = addressArr[0];
+        self.addressModel = [JMAddressModel mj_objectWithKeyValues:addressDic];
         self.nomalLabel.hidden = YES;
         self.addressNameLabel.text = addressDic[@"receiver_name"];
         self.addressPhoneLabel.text = addressDic[@"receiver_phone"];
@@ -73,13 +78,10 @@
 - (void)setCartsInfoLevel:(NSInteger)cartsInfoLevel {
     _cartsInfoLevel = cartsInfoLevel;
     if (cartsInfoLevel > 1) {
-        self.promptLabel.text = payOrderLevelInfo;
-        CGFloat promptLabelHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
+//        [self addSubview:self.promptView];
+        self.promptView.hidden = NO;
         [self.promptView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(@(promptLabelHeight));
-        }];
-        [self.promptLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(@(promptLabelHeight - 10));
+            make.height.mas_equalTo(@(50));
         }];
     }else {
 
@@ -128,19 +130,56 @@
     self.addressDetailLabel.numberOfLines = 0;
     
     UIView *promptView = [UIView new];
-    promptView.backgroundColor = [UIColor sectionViewColor];
+    promptView.backgroundColor = [UIColor countLabelColor];
     [self addSubview:promptView];
     self.promptView = promptView;
     
-    UILabel *promptLabel = [UILabel new];
-    [promptView addSubview:promptLabel];
-    promptLabel = promptLabel;
-    promptLabel.font = [UIFont systemFontOfSize:12.];
-    promptLabel.textColor = [UIColor redColor];
-    promptLabel.numberOfLines = 0;
-//    self.promptLabel.textAlignment = NSTextAlignmentCenter;
-    self.promptLabel = promptLabel;
+    UIView *kongbaiView = [UIView new];
+    kongbaiView.backgroundColor = [UIColor whiteColor];
+    [promptView addSubview:kongbaiView];
     
+    UITextField *idCardField = [[UITextField alloc] init];
+    idCardField.backgroundColor = [UIColor whiteColor];
+    idCardField.placeholder = @"请输入身份证号";
+    idCardField.borderStyle = UITextBorderStyleNone;
+    idCardField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    idCardField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    idCardField.font = [UIFont systemFontOfSize:13.];
+    idCardField.delegate = self;
+    [promptView addSubview:idCardField];
+    [idCardField addTarget:self action:@selector(idcardFieldChange:) forControlEvents:UIControlEventEditingChanged];
+    self.idCardField = idCardField;
+    
+    UILabel *idCardLabel = [UILabel new];
+    idCardLabel.backgroundColor = [UIColor whiteColor];
+    idCardLabel.font = CS_UIFontSize(14.);
+    [promptView addSubview:idCardLabel];
+    self.idCardLabel = idCardLabel;
+    
+    [promptView bringSubviewToFront:self.idCardField];
+    
+    UIButton *idcardSaveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [idcardSaveButton setTitle:@"保存" forState:UIControlStateNormal];
+    [idcardSaveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    idcardSaveButton.titleLabel.font = CS_UIFontSize(12.);
+    idcardSaveButton.backgroundColor = [UIColor titleDarkGrayColor];
+    [idcardSaveButton addTarget:self action:@selector(saveIDCardClick:) forControlEvents:UIControlEventTouchUpInside];
+    idcardSaveButton.enabled = NO;
+    [promptView addSubview:idcardSaveButton];
+    self.idcardSaveButton = idcardSaveButton;
+    
+    
+    self.promptView.hidden = YES;
+    
+//    UILabel *promptLabel = [UILabel new];
+//    [promptView addSubview:promptLabel];
+//    promptLabel = promptLabel;
+//    promptLabel.font = [UIFont systemFontOfSize:12.];
+//    promptLabel.textColor = [UIColor redColor];
+//    promptLabel.numberOfLines = 0;
+////    self.promptLabel.textAlignment = NSTextAlignmentCenter;
+//    self.promptLabel = promptLabel;
+//    
     UIView *lineView = [UIView new];
     [self addSubview:lineView];
     lineView.backgroundColor = [UIColor lineGrayColor];
@@ -202,12 +241,36 @@
         make.top.equalTo(weakSelf.addressView.mas_bottom);
         make.centerX.equalTo(weakSelf.mas_centerX);
         make.width.mas_equalTo(@(SCREENWIDTH));
-        make.height.mas_equalTo(@(0.5));
+        make.height.mas_equalTo(@(0));
     }];
-    [promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(promptView).offset(5);
-        make.width.mas_equalTo(@(SCREENWIDTH - 10));
-        make.height.mas_equalTo(0.5);
+//    [promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.left.equalTo(promptView).offset(5);
+//        make.width.mas_equalTo(@(SCREENWIDTH - 10));
+//        make.height.mas_equalTo(0.5);
+//    }];
+    [kongbaiView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(promptView);
+        make.centerY.equalTo(promptView.mas_centerY);
+        make.width.mas_equalTo(@(10));
+        make.height.mas_equalTo(@(35));
+    }];
+    [idCardField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(kongbaiView.mas_right);
+        make.right.equalTo(idcardSaveButton.mas_left);
+        make.centerY.equalTo(promptView.mas_centerY);
+        make.height.mas_equalTo(@(35));
+    }];
+    [idCardLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(kongbaiView.mas_right);
+        make.right.equalTo(idcardSaveButton.mas_left);
+        make.centerY.equalTo(promptView.mas_centerY);
+        make.height.mas_equalTo(@(35));
+    }];
+    [idcardSaveButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(promptView);
+        make.centerY.equalTo(promptView.mas_centerY);
+        make.width.mas_equalTo(@(60));
+        make.height.mas_equalTo(@(35));
     }];
     
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -218,7 +281,7 @@
     
     // == 物流信息视图 == //
     [fourView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineView.mas_bottom).offset(0);
+        make.top.equalTo(promptView.mas_bottom).offset(15);
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(@45);
     }];
@@ -254,7 +317,7 @@
         make.centerX.equalTo(weakSelf.addressView.mas_centerX);
     }];
     
-    
+//    [self.promptView removeFromSuperview];
 }
 - (void)tapClick:(UITapGestureRecognizer *)tap {
     UIView *tapView = [tap view];
@@ -264,7 +327,91 @@
         [_delegate composeHeaderTapView:self TapClick:tag];
     }
 }
+#pragma mark 代理实现
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return YES;
+}
+- (void)idcardFieldChange:(UITextField *)textField {
+    NSLog(@"%@",textField.text);
+//    if (textField.text.length > 18) {
+//        [MBProgressHUD showWarning:@"身份证号最多18位"];
+//        textField.text = [textField.text substringToIndex:18];
+//        self.idcardSaveButton.enabled = YES;
+//        self.idcardSaveButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+//    }else {
+//        self.idcardSaveButton.enabled = NO;
+//        self.idcardSaveButton.backgroundColor = [UIColor titleDarkGrayColor];
+//    }
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
+    [muString appendString:string];
+    [muString deleteCharactersInRange:range];
+    NSLog(@"%@",muString);
+    if (muString.length > 18) {
+        [MBProgressHUD showWarning:@"身份证号最多18位"];
+        return NO;
+    }else if (muString.length == 18) {
+        self.idcardSaveButton.enabled = YES;
+        self.idcardSaveButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+        self.idCardField.text = [NSString stringWithFormat:@"%@",muString];
+        return NO;
+    }else {
+        self.idcardSaveButton.enabled = NO;
+        self.idcardSaveButton.backgroundColor = [UIColor titleDarkGrayColor];
+    }
+    return YES;
+}
+- (void)saveIDCardClick:(UIButton *)button {
+    [self.idCardField resignFirstResponder];
+    if (_saveIdcardSuccess) {
+        _saveIdcardSuccess = NO;
+        [self.idcardSaveButton setTitle:@"保存" forState:UIControlStateNormal];
+        [self.promptView bringSubviewToFront:self.idCardField];
+        self.idCardField.text = @"";
+        return;
+    }
+    if (![[JMGlobal global] validateIdentityCard:self.idCardField.text]) {
+        [MBProgressHUD showWarning:@"请核对身份证号"];
+        return ;
+    }
+    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
+    parame[@"receiver_state"] = self.addressModel.receiver_state;
+    parame[@"receiver_city"] = self.addressModel.receiver_city;
+    parame[@"receiver_district"] = self.addressModel.receiver_district;
+    parame[@"receiver_address"] = self.addressModel.receiver_address;
+    parame[@"receiver_name"] = self.addressModel.receiver_name;
+    parame[@"receiver_mobile"] = self.addressModel.receiver_mobile;
+    parame[@"identification_no"] = self.idCardField.text;
+    parame[@"id"] = self.addressModel.addressID;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(composeHeaderSaveIdcard:Button:params:)]) {
+        [self.delegate composeHeaderSaveIdcard:self Button:button params:parame];
+    }
 
+    
+}
+
+- (void)setSaveIdcardSuccess:(BOOL)saveIdcardSuccess {
+    _saveIdcardSuccess = saveIdcardSuccess;
+    [self.idcardSaveButton setTitle:@"修改" forState:UIControlStateNormal];
+    self.idcardSaveButton.enabled = YES;
+    self.idcardSaveButton.backgroundColor = [UIColor buttonEnabledBackgroundColor];
+    [self.promptView bringSubviewToFront:self.idCardLabel];
+    NSString *idCardStr = @"身份证号   ";
+    NSMutableString * mutablePhoneNumber = [self.idCardField.text mutableCopy];
+    NSRange range = {4,10};
+    if (mutablePhoneNumber.length == 18) {
+        [mutablePhoneNumber replaceCharactersInRange:range withString:@"**********"];
+    }
+    self.idCardLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:14.] SubColor:[UIColor textDarkGrayColor] AllString:[NSString stringWithFormat:@"%@%@",idCardStr,mutablePhoneNumber] SubStringArray:@[mutablePhoneNumber]];
+    [MBProgressHUD showSuccess:@"身份证保存成功"];
+    
+}
 
 @end
 
