@@ -43,7 +43,7 @@ static UdeskLanguageTool *sharedModel;
 
 - (void)initLanguage
 {
-    NSString *tmp = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE_SET];
+    NSString *tmp = [JMUserDefaults objectForKey:LANGUAGE_SET];
     
     //默认是中文
     if ([UdeskTools isBlankString:tmp])
@@ -99,8 +99,8 @@ static UdeskLanguageTool *sharedModel;
     }
     
     self.language = language;
-    [[NSUserDefaults standardUserDefaults]setObject:language forKey:LANGUAGE_SET];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    [JMUserDefaults setObject:language forKey:LANGUAGE_SET];
+    [JMUserDefaults synchronize];
 }
 
 @end

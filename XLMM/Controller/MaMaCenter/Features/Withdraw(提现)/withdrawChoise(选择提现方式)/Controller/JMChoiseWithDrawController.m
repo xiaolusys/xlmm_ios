@@ -29,7 +29,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
     [MobClick beginLogPageView:@"JMChoiseWithDrawController"];
     
 }
@@ -104,7 +104,7 @@
     [headerView addSubview:takeoutMoney];
     takeoutMoney = takeoutMoney;
     takeoutMoney.text = @"我的余额(元)";
-    takeoutMoney.font = CS_SYSTEMFONT(13.);
+    takeoutMoney.font = CS_UIFontSize(13.);
     takeoutMoney.textAlignment = NSTextAlignmentCenter;
     
     [takeoutMoney mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -115,7 +115,7 @@
     UILabel *moneyLabel = [[UILabel alloc] init];
     [headerView addSubview:moneyLabel];
     self.moneyLabel = moneyLabel;
-    self.moneyLabel.font = CS_SYSTEMFONT(40.);
+    self.moneyLabel.font = CS_UIFontSize(40.);
     self.moneyLabel.text = CS_FLOAT(self.myBlance);
     self.moneyLabel.textColor = [UIColor buttonEnabledBackgroundColor];
     [self.moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -127,7 +127,7 @@
     self.tableView.tableFooterView = footerView;
     UILabel *withDrawDescLabel = [UILabel new];
     [footerView addSubview:withDrawDescLabel];
-    withDrawDescLabel.font = CS_SYSTEMFONT(13.);
+    withDrawDescLabel.font = CS_UIFontSize(13.);
     withDrawDescLabel.textColor = [UIColor dingfanxiangqingColor];
     withDrawDescLabel.numberOfLines = 0;
     self.withDrawDescLabel = withDrawDescLabel;
@@ -215,7 +215,7 @@
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 
 @end

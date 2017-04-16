@@ -81,8 +81,8 @@ NSString *const JMGoodsExplainCellIdentifier = @"JMGoodsExplainCellIdentifier";
     }
     
     
-    BOOL isXLMM = [[NSUserDefaults standardUserDefaults] boolForKey:kISXLMM];
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    BOOL isXLMM = [JMUserDefaults boolForKey:kISXLMM];
+    BOOL isLogin = [JMUserDefaults boolForKey:kIsLogin];
     BOOL isShow = isXLMM && isLogin;
     
 

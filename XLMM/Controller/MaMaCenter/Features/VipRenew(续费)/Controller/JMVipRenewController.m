@@ -505,7 +505,7 @@
 - (void)paySuccessful{
     [MobClick event:@"renewBuy_succ"];
     [self.navigationController popViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"ZhifuSeccessfully" object:nil];
 }
 - (void)popview{
     [MobClick event:@"renewBuy_cancel"];
@@ -669,8 +669,8 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     
     [MobClick beginLogPageView:@"JMVipRenewController"];
     
@@ -683,7 +683,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 @end
 

@@ -12,45 +12,130 @@
 #import "JMEmptyView.h"
 #import "JMReloadEmptyDataView.h"
 #import "CSTableViewPlaceHolderDelegate.h"
-
+#import "JMCouponController.h"
 //#import "JMSelecterButton.h"
 
-@interface JMUntappedCouponController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate>
+
+@interface JMUntappedCouponController ()<UITableViewDataSource,UITableViewDelegate,CSTableViewPlaceHolderDelegate> {
+    NSString *_urlStr;
+}
+
 
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 @property (nonatomic, strong) JMCouponModel *couponModel;
 @property (nonatomic, assign) BOOL isPopToRootView;
-//@property (nonatomic, strong) JMSelecterButton *sureButton;
 @property (nonatomic, strong) JMReloadEmptyDataView *reload;
+//下拉的标志
+@property (nonatomic) BOOL isPullDown;
+//上拉的标志
+@property (nonatomic) BOOL isLoadMore;
 
 @end
 
-@implementation JMUntappedCouponController {
-    NSString *_urlStr;
-    
-    UIView *emptyView;
-}
+@implementation JMUntappedCouponController
 
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self createTabelView];
-//    [self displayEmptyView];
-    
-}
-- (NSInteger)couponCount {
-    return 0;
-}
+#pragma 懒加载
 - (NSMutableArray *)dataSource {
     if (_dataSource == nil) {
         _dataSource = [NSMutableArray array];
     }
     return _dataSource;
 }
+#pragma mrak 刷新界面
+- (void)createPullHeaderRefresh {
+    kWeakSelf
+    self.tableView.mj_header = [MJAnimationHeader headerWithRefreshingBlock:^{
+        _isPullDown = YES;
+        [self.tableView.mj_footer resetNoMoreData];
+        [weakSelf loadDataSource];
+    }];
+}
+- (void)createPullFooterRefresh {
+    kWeakSelf
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        _isLoadMore = YES;
+        [weakSelf loadMore];
+    }];
+}
+- (void)endRefresh {
+    if (_isPullDown) {
+        _isPullDown = NO;
+        [self.tableView.mj_header endRefreshing];
+    }
+    if (_isLoadMore) {
+        _isLoadMore = NO;
+        [self.tableView.mj_footer endRefreshing];
+    }
+}
+#pragma mark 生命周期函数
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"JMUserCouponController"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMUserCouponController"];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self createTabelView];
+    [self createPullHeaderRefresh];
+    [self createPullFooterRefresh];
+    [self.tableView.mj_header beginRefreshing];
+    
+}
+- (void)loadDataSource {
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:self.urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        [self.dataSource removeAllObjects];
+        [self fetchData:responseObject];
+        [self endRefresh];
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"优惠券加载失败,请稍后重试~!"];
+        [self endRefresh];
+    } Progress:^(float progress) {
+        
+    }];
+}
+- (void)loadMore {
+    if ([NSString isStringEmpty:_urlStr]) {
+        [self endRefresh];
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        return;
+    }
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:_urlStr WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return;
+        [self fetchData:responseObject];
+        [self endRefresh];
+    } WithFail:^(NSError *error) {
+        [self endRefresh];
+    } Progress:^(float progress) {
+        
+    }];
+}
+- (void)fetchData:(NSDictionary *)couponData {
+    _urlStr = couponData[@"next"];
+    NSArray *resultsArr = couponData[@"results"];
+    NSString *statusStr = self.itemArr[self.segmentIndex];
+    if ([statusStr rangeOfString:@"("].location == NSNotFound) {
+        statusStr = [NSString stringWithFormat:@"%@(%ld)",statusStr,[couponData[@"count"] integerValue]];
+        self.itemArr[self.segmentIndex] = statusStr;
+        self.payCouponVC.segmentSectionTitle = [self.itemArr copy];
+    }
+    
+    if (resultsArr.count != 0) {
+        for (NSDictionary *dic in resultsArr) {
+            JMCouponModel *model = [JMCouponModel mj_objectWithKeyValues:dic];
+            [self.dataSource addObject:model];
+        }
+    }
+    [self.tableView cs_reloadData];
+}
+
 - (void)createTabelView {
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 104) style:UITableViewStylePlain];
@@ -62,16 +147,7 @@
     self.tableView.tableFooterView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
-- (void)setCouponArray:(NSArray *)couponArray {
-    _couponArray = couponArray;
-    if (couponArray.count != 0) {
-        for (NSDictionary *dic in couponArray) {
-            self.couponModel = [JMCouponModel mj_objectWithKeyValues:dic];
-            [self.dataSource addObject:self.couponModel];
-        }
-    }
-    [self.tableView cs_reloadData];
-}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
@@ -83,13 +159,11 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     self.couponModel = self.dataSource[indexPath.row];
-    [cell configData:self.couponModel Index:[self couponCount]];
+    [cell configData:self.couponModel Index:self.couponStatus];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self couponCount] == 8) {
-        NSLog(@"couponCount == 8 被点击");
-    }
+
 }
 - (UIView *)createPlaceHolderView {
     return self.reload;
@@ -105,51 +179,6 @@
     return _reload;
 }
 
-//- (void)emptyView {
-//    kWeakSelf
-//    JMEmptyView *empty = [[JMEmptyView alloc] initWithFrame:CGRectMake(0, 80, SCREENWIDTH, SCREENHEIGHT - 80) Title:@"您暂时还没有优惠券哦～" DescTitle:@"" BackImage:@"emptyYouhuiquanIcon" InfoStr:@"快去逛逛"];
-//    [self.view addSubview:empty];
-//    empty.block = ^(NSInteger index) {
-//        if (index == 100) {
-//            self.isPopToRootView = YES;
-//            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-////            [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-//        }
-//    };
-//}
-
-- (void)displayEmptyView{
-    NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"EmptyYHQView" owner:nil options:nil];
-    UIView *empty = views[0];
-    UIButton *button = (UIButton *)[empty viewWithTag:100];
-    button.layer.cornerRadius = 15;
-    button.layer.borderWidth = 0.5;
-    button.layer.borderColor = [UIColor buttonEmptyBorderColor].CGColor;
-    [button addTarget:self action:@selector(gotoLeadingView) forControlEvents:UIControlEventTouchUpInside];
-    emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    emptyView.backgroundColor = [UIColor backgroundlightGrayColor];
-    emptyView.hidden = YES;
-    [self.view addSubview:emptyView];
-    empty.frame = CGRectMake(0, SCREENHEIGHT/2 - 100, SCREENWIDTH, 220);
-    [emptyView addSubview:empty];
-}
-- (void)gotoLeadingView{
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.isPopToRootView = NO;
-    [self.tableView.mj_header beginRefreshing];
-    [MobClick beginLogPageView:@"YouHuiQuan"];
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.isPopToRootView) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
-    }
-    [MobClick endLogPageView:@"YouHuiQuan"];
-}
 @end
 
 

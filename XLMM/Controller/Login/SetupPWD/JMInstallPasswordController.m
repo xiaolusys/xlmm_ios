@@ -126,7 +126,7 @@
     self.loginBtn = loginBtn;
     self.loginBtn.layer.masksToBounds = YES;
     self.loginBtn.layer.cornerRadius = 20;
-    [self disableTijiaoButton];
+    [self enableTijiaoButton];
     [loginBtn setTitle:@"完成" forState:UIControlStateNormal];
     loginBtn.tag = 102;
     [loginBtn addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -176,8 +176,18 @@
 //                [MBProgressHUD showMessage:@"请同意小鹿美美服务条款"];
 //                return ;
 //            }
+            if ([NSString isStringEmpty:self.pwdTextField1.text] || [NSString isStringEmpty:self.pwdTextField2.text]) {
+                [MBProgressHUD showMessage:@"请输入密码"];
+                return;
+            }
+//            textF.text.length >= 5 && textF.text.length <= 15
+            if (!(self.pwdTextField1.text.length >= 5 && self.pwdTextField1.text.length <= 15)) {
+                [MBProgressHUD showMessage:@"请输入 5 - 15 位密码"];
+                return;
+            }
+            
             if ([self.pwdTextField1.text isEqualToString:self.pwdTextField2.text]) {
-                [self enableTijiaoButton];
+//                [self enableTijiaoButton];
                 [MBProgressHUD showLoading:@""];
             }else {
                 [MBProgressHUD showMessage:@"请检查两次输入密码是否一致"];
@@ -236,18 +246,18 @@
     return YES;
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
-    [self disableTijiaoButton];
+//    [self disableTijiaoButton];
     return YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
-    [muString appendString:string];
-    [muString deleteCharactersInRange:range];
-    if ([self textFieldLength:self.pwdTextField1] && [self textFieldLength:self.pwdTextField2]) {
-        [self enableTijiaoButton];
-    }else {
-        [self disableTijiaoButton];
-    }
+//    NSMutableString *muString = [[NSMutableString alloc] initWithString:textField.text];
+//    [muString appendString:string];
+//    [muString deleteCharactersInRange:range];
+//    if ([self textFieldLength:self.pwdTextField1] && [self textFieldLength:self.pwdTextField2]) {
+//        [self enableTijiaoButton];
+//    }else {
+//        [self disableTijiaoButton];
+//    }
     return YES;
 }
 - (BOOL)textFieldLength:(UITextField *)textF {

@@ -13,6 +13,8 @@
 #import "JMLogInViewController.h"
 #import "JMVerificationCodeController.h"
 #import "AESEncryption.h"
+#import "JMRootTabBarController.h"
+#import "AppDelegate.h"
 
 
 #define rememberPwdKey @"rememberPwd"
@@ -67,12 +69,12 @@
     [self prepareInitUI];
     
     //设置记住密码的默认值
-    self.rememberPwdBtn.selected = [[NSUserDefaults standardUserDefaults] boolForKey:rememberPwdKey];
+    self.rememberPwdBtn.selected = [JMUserDefaults boolForKey:rememberPwdKey];
     
     //设置账号和密码的默认值
-    self.phoneNumTextF.text = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    self.phoneNumTextF.text = [JMUserDefaults objectForKey:kUserName];
     if (self.rememberPwdBtn.selected) {
-        NSString *decryptedStr = [AESEncryption decrypt:[[NSUserDefaults standardUserDefaults] objectForKey:kPassWord] password:self.phoneNumTextF.text];
+        NSString *decryptedStr = [AESEncryption decrypt:[JMUserDefaults objectForKey:kPassWord] password:self.phoneNumTextF.text];
         self.passwordTextF.text = decryptedStr;
     }
     
@@ -164,23 +166,38 @@
 #pragma mark --- 记住密码按钮的点击
 - (void)remenberClick:(UIButton *)sender {
     self.rememberPwdBtn.selected = !self.rememberPwdBtn.selected;
-    [[NSUserDefaults standardUserDefaults] setBool:self.rememberPwdBtn.selected forKey:rememberPwdKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [JMUserDefaults setBool:self.rememberPwdBtn.selected forKey:rememberPwdKey];
+    [JMUserDefaults synchronize];
 }
 
 #pragma mark ------ 登录按钮点击
 - (void)loginBtnClick:(UIButton *)btn {
+    // ....
+    if ([NSString isStringEmpty:self.phoneNumTextF.text]) {
+        [MBProgressHUD showMessage:@"请输入手机号!"];
+        return ;
+    }else {
+        if (self.phoneNumTextF.text.length != 11  || ![NSString isStringWithNumber:self.phoneNumTextF.text]) {
+            [MBProgressHUD showMessage:@"请检查手机号!"];
+            return ;
+        }
+    }
+    if ([NSString isStringEmpty:self.passwordTextF.text]) {
+        [MBProgressHUD showMessage:@"请输入密码!"];
+        return ;
+    }else {
+        
+    }
     btn.enabled = NO;
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
-    
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;
     if (userName.length == 0 || password.length == 0) {
         [MBProgressHUD showWarning:@"请输入正确的信息！"];
         return;
     }
-    [MBProgressHUD showMessage:@"登录中....."];
+    [MBProgressHUD showLoading:@"登录中....."];
     NSDictionary *parameters = @{@"username":userName,
                                  @"password":password,
                                  @"devtype":LOGINDEVTYPE};
@@ -193,28 +210,92 @@
             return ;
         }
         // 手机登录成功 ，保存用户信息以及登录途径
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
-        [[NSUserDefaults standardUserDefaults] setObject:Root_URL forKey:@"serverip"];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsLogin];
+        [JMUserDefaults setObject:Root_URL forKey:@"serverip"];
         NSString *encryptionStr = [AESEncryption encrypt:self.passwordTextF.text password:self.phoneNumTextF.text];
-        [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumTextF.text forKey:kUserName];
-        [[NSUserDefaults standardUserDefaults] setObject:encryptionStr forKey:kPassWord];
-        [[NSUserDefaults standardUserDefaults] setObject:kPhoneLogin forKey:kLoginMethod];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        btn.enabled = YES;
+        [JMUserDefaults setObject:self.phoneNumTextF.text forKey:kUserName];
+        [JMUserDefaults setObject:encryptionStr forKey:kPassWord];
+        [JMUserDefaults setObject:kPhoneLogin forKey:kLoginMethod];
+        [JMUserDefaults synchronize];
         // 发送手机号码登录成功的通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"phoneNumberLogin" object:nil];
+        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
+        [self loadUserInfo];
         [self setDevice];
-        [self backApointInterface];
     } WithFail:^(NSError *error) {
         [MBProgressHUD showError:@"登录失败，请重试"];
         btn.enabled = YES;
     } Progress:^(float progress) {
-        
     }];
 }
-
+#pragma mark ---- 登录成功后获取用户信息
+- (void)loadUserInfo {
+    /*
+     1. 用户绑定手机, 且是精英妈妈.  ---> 跳转到主页
+     2. 用户绑定手机, 但不是精英妈妈. ---> 提示此用户权限不够.
+     3. 用户没用绑定手机, 但是是精英妈妈. ---> 跳转到绑定手机.
+     4. 用户没有绑定手机, 且不是精英妈妈. ---> 提示用户需要注册成为会员
+     */
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsVIP = NO;
+        if (kIsXLMMStatus) {
+            NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
+            kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
+        }
+        [JMUserDefaults setBool:kIsLoginStatus forKey:kIsLogin];
+        [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
+        [JMUserDefaults synchronize];
+        if (kIsVIP) {
+            if (kIsBindPhone) {
+                // 跳主页
+                [self backApointInterface];
+                JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+                JMKeyWindow.rootViewController = tabBarVC;
+            }else {
+                // 绑定手机
+                NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
+                JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+                vc.verificationCodeType = SMSVerificationCodeWithBind;
+                vc.userInfo = weChatInfo;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else {
+            JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+            vc.verificationCodeType = SMSVerificationCodeWithLogin;
+            vc.userNotXLMM = YES;
+            vc.profileUserInfo = responseObject;
+            [self.navigationController pushViewController:vc animated:YES];
+            // 提示
+            //            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
+        }
+        self.loginBtn.enabled = YES;
+        [MBProgressHUD hideHUD];
+    } WithFail:^(NSError *error) {
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    [JMUserDefaults removeObjectForKey:kIsLogin];
+                    [JMUserDefaults removeObjectForKey:kISXLMM];
+                }
+            }
+        }
+        [JMUserDefaults synchronize];
+        self.loginBtn.enabled = YES;
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"登录失败，请重试"];
+    } Progress:^(float progress) {
+    }];
+}
 - (void)setDevice{
-    NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+    NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     
     NSLog(@"urlStr = %@", urlString);
@@ -228,9 +309,8 @@
         } else {
             [MiPushSDK setAccount:user_account];
             //保存user_account
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setObject:user_account forKey:@"user_account"];
-            [user synchronize];
+            [JMUserDefaults setObject:user_account forKey:@"user_account"];
+            [JMUserDefaults synchronize];
         }
     } WithFail:^(NSError *error) {
         
@@ -246,6 +326,7 @@
 - (void)forgetPasswordClicked:(UIButton *)sender {
     JMVerificationCodeController *verifyVC = [[JMVerificationCodeController alloc] init];
     verifyVC.verificationCodeType = SMSVerificationCodeWithForgetPWD;
+    verifyVC.userLoginMethodWithWechat = YES;
     [self.navigationController pushViewController:verifyVC animated:YES];
 }
 #pragma mark ----- 是否显示密码明文或者暗文
@@ -276,42 +357,28 @@
     [textField resignFirstResponder];
     return YES;
 }
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
     
 }
-//
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
     return YES;
-    
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    
-    self.loginBtn.enabled = NO;
-    
+    if (textField == self.phoneNumTextF) {
+        self.passwordTextF.text = @"";
+    }
     return YES;
 }
-
-
--(void) alertMessage:(NSString*)msg
-{
+-(void) alertMessage:(NSString*)msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
 }
-
-
 #pragma mark --- 视图显示或者消失时一些属性的状态
-
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    
 }
-
-
 - (void)prepareInitUI {
     
     kWeakSelf
@@ -373,7 +440,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"JMPhonenumViewController"];
-    
+    self.loginBtn.enabled = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

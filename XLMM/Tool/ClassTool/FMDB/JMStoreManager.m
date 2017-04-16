@@ -14,7 +14,7 @@
  */
 + (void)recoderAppLoadNum {
     //取出沙盒的key的值
-    NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:kAppLoadNum];
+    NSInteger num = [JMUserDefaults integerForKey:kAppLoadNum];
     
     if (num == 0) {
         //第一次打开
@@ -26,15 +26,15 @@
     num ++;
     NSLog(@"%ld",(long)num);
     //保存
-    [[NSUserDefaults standardUserDefaults] setInteger:num forKey:kAppLoadNum];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [JMUserDefaults setInteger:num forKey:kAppLoadNum];
+    [JMUserDefaults synchronize];
 }
 
 /**
  *  是否是第一次打开
  */
 + (BOOL)isFirstLoadApp {
-    NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:kAppLoadNum];
+    NSInteger num = [JMUserDefaults integerForKey:kAppLoadNum];
     
     if (num == 1) {
         //第一次打开
@@ -102,22 +102,22 @@
  */
 + (void)storeUserDefults:(id)data forKey:(NSString*)key {
     if (data) {
-        [[NSUserDefaults standardUserDefaults]setObject:data forKey:key];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+        [JMUserDefaults setObject:data forKey:key];
+        [JMUserDefaults synchronize];
     }
 }
 /*  
     读取用户偏好设置
  */
 + (id)readUserDataForKey:(NSString*)key {
-    return [[NSUserDefaults standardUserDefaults]objectForKey:key];
+    return [JMUserDefaults objectForKey:key];
     
 }
 /*
     删除用户偏好设置
  */
 + (void)removeUserDataForkey:(NSString*)key {
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];
+    [JMUserDefaults removeObjectForKey:key];
 }
 
 //获取 一个文件 在沙盒Library/Caches/ 目录下的路径

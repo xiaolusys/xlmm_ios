@@ -103,7 +103,7 @@
 }
 #pragma mark ======== 获取当前/历史购物车信息 ========
 - (void)downloadCurrentCartData {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"shoppingCartNumChange" object:nil userInfo:@{@"type":self.cartType}];
+    [JMNotificationCenter postNotificationName:@"shoppingCartNumChange" object:nil userInfo:@{@"type":self.cartType}];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts?type=%@",Root_URL,self.cartType];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         [MBProgressHUD hideHUD];
@@ -190,7 +190,7 @@
     self.emptyView.block = ^(NSInteger index) {
         if (index == 100) {
             if (weakSelf.isHideNavigationLeftItem) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+                [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
             }else {
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }
@@ -381,7 +381,7 @@
             empty.block = ^(NSInteger index) {
                 if (index == 100) {
                     if (self.isHideNavigationLeftItem) {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
+                        [JMNotificationCenter postNotificationName:@"kuaiquguangguangButtonClick" object:nil];
                     }else {
                         [weakSelf.navigationController popViewControllerAnimated:YES];
                     }
@@ -513,6 +513,7 @@
     [MobClick event:@"purchase"];
     JMPurchaseController *purchaseVC = [[JMPurchaseController alloc] init];
     purchaseVC.purchaseGoods = self.currentCartDataSource;
+    purchaseVC.directBuyGoodsTypeNumber = [NSNumber numberWithInteger:[self.cartType integerValue]];
     [self.navigationController pushViewController:purchaseVC animated:YES];
 }
 #pragma mark ---- 重新购买按钮点击

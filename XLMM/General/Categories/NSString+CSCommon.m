@@ -182,6 +182,18 @@
 //    return [self length] > 0 ? NO : YES;
     return [string isKindOfClass:[NSNull class]] || string == nil || [string isEqual:@""];
 }
+/**
+ *  判断字符串是否为纯数字
+ *
+ *  @return YES 是 NO 不是
+ */
++ (BOOL)isStringWithNumber:(NSString *)string {
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(string.length > 0) {
+        return NO;
+    }
+    return YES;
+}
 
 #pragma mark 时间字符串转换
 /**

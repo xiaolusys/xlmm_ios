@@ -26,7 +26,6 @@
 #import "MaMaOrderListViewController.h"
 #import "MaMaHuoyueduViewController.h"
 #import "JMChoiseWithDrawController.h"
-#import "JMLogInViewController.h"
 #import "JMSettingController.h"
 #import "Account1ViewController.h"
 #import "WebViewController.h"
@@ -37,7 +36,7 @@
 #import "JMOrderListController.h"
 #import "JMEarningListController.h"
 #import "JMPushingDaysController.h"
-
+#import "JMLogInViewController.h"
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
     NSString *_orderRecord;             // 订单记录
@@ -116,17 +115,20 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self createNavigationBarWithTitle:@"妈妈中心" selecotr:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(quitLogin) name:@"logout" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updateMoneyLabel:) name:@"drawCashMoeny" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updataAfterLogin:) name:@"login" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(quitLogin) name:@"logout" object:nil];
     
     _qrCodeRequestDataIndex = 0;
     isShowRefresh = YES;
     [self createTableView];
     [self createPullHeaderRefresh];
     [self loaderweimaData];
+    
+    NSLog(@"%@",self.navigationController.viewControllers);
+    
 }
 #pragma mark 刷新界面
 - (void)createPullHeaderRefresh {
@@ -156,6 +158,7 @@
 - (void)quitLogin {
     self.navigationItem.rightBarButtonItem = nil;
     self.homeHeaderView.userInfoDic = nil;
+
 }
 
 #pragma mark 对外提供的接口
@@ -260,31 +263,33 @@
 // 个人信息请求
 - (void)setUserInfo{
     [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
-        if ([self isLogin]) {
-            [self updateUserInfo:responseObject];
+        [self updateUserInfo:responseObject];
+        [self endRefresh];
+    } failure:^(NSInteger errorCode) {
+        if (errorCode == 403) {
+//            [self quitLogin];
+            [self endRefresh];
         }else {
-            [self quitLogin];
+            [MBProgressHUD showError:@"请求失败,请手动刷新"];
+            [self endRefresh];
         }
-        [self endRefresh];
-    } failure:^(NSError *error) {
-        [self quitLogin];
-        [self endRefresh];
-        
     }];
 }
 - (void)updateUserInfo:(NSDictionary *)dic {
-    if ([self isXiaolumama]) {
-        [self loadMaMaWeb];
-        [self loadDataSource];
-        [self loadMaMaMessage];
-        [self loadfoldLineData];
-        [self craeteNavRightButton];
-        [self customUserInfo];
-    }else {
-        self.navigationItem.rightBarButtonItem = nil;
-        [self endRefresh];
-    }
     _persinCenterDict = dic;
+    [self loadMaMaWeb];
+    [self loadDataSource];
+    [self loadMaMaMessage];
+    [self loadfoldLineData];
+    [self craeteNavRightButton];
+    [self customUserInfo];
+    
+//    if ([self isXiaolumama]) {
+//        
+//    }else {
+//        self.navigationItem.rightBarButtonItem = nil;
+//        [self endRefresh];
+//    }
     //判断是否为0
     if ([[dic objectForKey:@"user_budget"] isKindOfClass:[NSNull class]]) {
         _accountMoney = [NSNumber numberWithFloat:0.00];
@@ -296,20 +301,18 @@
     self.homeHeaderView.userInfoDic = dic;
 }
 - (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
+    BOOL isXLMM = [JMUserDefaults boolForKey:kISXLMM];
     return isXLMM;
 }
 - (BOOL)isLogin {
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isLog = [users boolForKey:kIsLogin];
+    BOOL isLog = [JMUserDefaults boolForKey:kIsLogin];
     return isLog;
 }
 
 
 #pragma ========== UI处理 ==========
 - (void)createTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64 - ktabBarHeight) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64 - kAppTabBarHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor countLabelColor];
@@ -496,7 +499,7 @@
         case 108:
         {
             TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-            today.visitorDate = kVisitorDay;
+            today.visitorDate = [NSNumber numberWithInteger:kAppVisitoryDay];
             [self.navigationController pushViewController:today animated:YES];
         }
             break;
@@ -560,7 +563,7 @@
         case 116:
         {
             TodayVisitorViewController *today = [[TodayVisitorViewController alloc] init];
-            today.visitorDate = kVisitorDay;
+            today.visitorDate = [NSNumber numberWithInteger:kAppVisitoryDay];
             [self.navigationController pushViewController:today animated:YES];
         }
             break;
@@ -605,13 +608,13 @@
     [self.navigationController pushViewController:activity animated:YES];
 }
 #pragma mark - 小鹿客服注册个人信息
-- (void)customUserInfo {
-    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
-    if (userInfo == nil) {
+- (void)customUserInfo {  // _persinCenterDict
+//    NSDictionary *userInfo = [JMStoreManager getDataDictionary:@"usersInfo.plist"];
+    if (_persinCenterDict == nil) {
         return ;
     }
-    NSString *nick_name = userInfo[@"nick"];
-    NSString *sdk_token = [NSString stringWithFormat:@"%@",userInfo[@"id"]];
+    NSString *nick_name = _persinCenterDict[@"nick"];
+    NSString *sdk_token = [NSString stringWithFormat:@"%@",_persinCenterDict[@"id"]];
     //    NSString *cellphone = self.userInfoDic[@"mobile"];
     NSDictionary *parameters = @{
                                  @"user": @{
@@ -631,7 +634,7 @@
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
     NSLog(@"JMMaMaHomeController  --> dealloc被调用");
     if (self.homeHeaderView) {
         if (self.homeHeaderView.pageView) {

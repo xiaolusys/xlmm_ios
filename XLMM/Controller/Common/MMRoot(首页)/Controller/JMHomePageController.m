@@ -21,7 +21,6 @@
 #import "JMUpdataAppPopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMStoreManager.h"
-#import "JMLaunchView.h"
 #import "AppDelegate.h"
 #import "JMFineCounpGoodsController.h"
 #import "JMFineCounpContentController.h"
@@ -70,7 +69,6 @@
 @property (nonatomic, strong) UILabel *cartsLabel;
 
 @property (nonatomic, strong) JMAutoLoopPageView *pageView;
-@property (nonatomic, strong) JMLaunchView *launchView;
 @property (nonatomic, strong) JMEmptyView *empty;
 @property (nonatomic, strong) UIView *suspensionView;
 @property (nonatomic, strong) JMHomeFirstController *homeFirst;
@@ -113,41 +111,41 @@
     //跳转到新的页面
     [JumpUtils jumpToLocation:[notification.userInfo objectForKey:@"target_url"] viewController:self];
 }
-- (void)updataAfterLogin:(NSNotification *)notification{
-    // 微信登录
-    [self loginUpdateIsXiaoluMaMa];
-}
-- (void)phoneNumberLogin:(NSNotification *)notification{
-    //  NSLog(@"手机登录");
-    [self loginUpdateIsXiaoluMaMa];
-}
-- (void)loginOut {
-    
-}
-#pragma mark 登陆后刷新个人信息
-- (void)loginUpdateIsXiaoluMaMa {
-    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
-        if ([self isLogin]) {
-            if ([self isXiaolumama]) {
-//                [self createRightItem];
-            }else {
-            }
-            //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
-        }else {
-        }
-    } failure:^(NSError *error) {
-    }];
-}
-- (BOOL)isXiaolumama{
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isXLMM = [users boolForKey:kISXLMM];
-    return isXLMM;
-}
-- (BOOL)isLogin {
-    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
-    BOOL isLog = [users boolForKey:kIsLogin];
-    return isLog;
-}
+//- (void)updataAfterLogin:(NSNotification *)notification{
+//    // 微信登录
+//    [self loginUpdateIsXiaoluMaMa];
+//}
+//- (void)phoneNumberLogin:(NSNotification *)notification{
+//    //  NSLog(@"手机登录");
+//    [self loginUpdateIsXiaoluMaMa];
+//}
+//- (void)loginOut {
+//    
+//}
+//#pragma mark 登陆后刷新个人信息
+//- (void)loginUpdateIsXiaoluMaMa {
+//    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+//        if ([self isLogin]) {
+//            if ([self isXiaolumama]) {
+////                [self createRightItem];
+//            }else {
+//            }
+//            //            [self performSelector:@selector(isGetCoupon) withObject:nil afterDelay:2.0];  // 判断用户是否可以领取新手礼包
+//        }else {
+//        }
+//    } failure:^(NSInteger errorCode) {
+//    }];
+//}
+//- (BOOL)isXiaolumama{
+//    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+//    BOOL isXLMM = [users boolForKey:kISXLMM];
+//    return isXLMM;
+//}
+//- (BOOL)isLogin {
+//    NSUserDefaults *users = [NSUserDefaults standardUserDefaults];
+//    BOOL isLog = [users boolForKey:kIsLogin];
+//    return isLog;
+//}
 #pragma mark 视图生命周期
 - (instancetype)init {
     if (self == [super init]) {
@@ -162,11 +160,11 @@
     [MobClick beginLogPageView:@"main"];
     
     UIApplication *app = [UIApplication sharedApplication];
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    [JMNotificationCenter addObserver:self
                                              selector:@selector(rootViewWillEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:app];
-    [[NSNotificationCenter defaultCenter] addObserver:self
+    [JMNotificationCenter addObserver:self
                                              selector:@selector(rootViewDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:app];
@@ -176,7 +174,7 @@
     [MobClick endLogPageView:@"main"];
 }
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [JMNotificationCenter removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -185,20 +183,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavigationBarWithTitle:@"" selecotr:nil];
-    UIImage *launchImage = [JMStoreManager getDataImage:@"launchImageCache" Quality:0.];
-    self.launchView = [JMLaunchView initImageWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) Image:launchImage TimeSecond:3. HideSkip:YES LaunchAdClick:^{
-    } TimeEnd:^{
-    }];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [window addSubview:self.launchView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(presentView:) name:@"PresentView" object:nil];
+//    [JMNotificationCenter addObserver:self selector:@selector(updataAfterLogin:) name:@"weixinlogin" object:nil];
+//    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+//    [JMNotificationCenter addObserver:self selector:@selector(loginOut) name:@"logout" object:nil];
     
     
-    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
+//    [self loginUpdateIsXiaoluMaMa];                    // 拿到用户的登录信息与个人信息
     [self createNavigaView];
     [self createSegmentControl];
     [self emptyView];
@@ -207,10 +199,11 @@
     [self loadItemizeData];                            // 获取商品分类
     [self loadAddressInfo];                            // 获得地址信息请求
     self.session = [self backgroundSession];           // 后台下载...
+    [[JMGlobal global] showWaitLoadingInView:self.view];
 }
 #pragma mark 数据请求处理
 - (void)loadCatrsNumData {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+    if ([JMUserDefaults boolForKey:kIsLogin]) {
         NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts/show_carts_num.json",Root_URL];
         [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
             if (!responseObject) return ;
@@ -237,10 +230,12 @@
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
         if (!responseObject) return;
         self.empty.hidden = YES;
+        [[JMGlobal global] hideWaitLoading];
         [_topImageArray removeAllObjects];
         [self fetchCategoryData:responseObject];
     } WithFail:^(NSError *error) {
         self.empty.hidden = NO;
+        [[JMGlobal global] hideWaitLoading];
     } Progress:^(float progress) {
     }];
 }
@@ -471,8 +466,7 @@
 - (void)fetchItemize:(NSDictionary *)dic {
     NSString *isUpData = dic[@"sha1"];
     urlCategory = dic[@"download_url"];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *oldVersion = [defaults stringForKey:@"itemHash"];
+    NSString *oldVersion = [JMUserDefaults stringForKey:@"itemHash"];
     if (oldVersion == nil) {
         [self downLoadUrl:urlCategory];
     }else {
@@ -481,8 +475,8 @@
             [self downLoadUrl:urlCategory];
         }
     }
-    [defaults setObject:isUpData forKey:@"itemHash"];
-    [defaults synchronize];
+    [JMUserDefaults setObject:isUpData forKey:@"itemHash"];
+    [JMUserDefaults synchronize];
 }
 - (void)downLoadUrl:(NSString *)urlStr {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -521,15 +515,14 @@
 - (void)addressData:(NSDictionary *)addressDic {
     _hash = addressDic[@"hash"];
     _downloadURLString = addressDic[@"download_url"];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *oldVersion = [defaults stringForKey:@"hash"];
+    NSString *oldVersion = [JMUserDefaults stringForKey:@"hash"];
     if (oldVersion == nil) {
         [self startDownload:_downloadURLString];
     }else {
         [oldVersion isEqualToString:_hash] && [JMStoreManager isFileExist:@"addressInfo.json"] ? : [self startDownload:_downloadURLString];
     }
-    [defaults setObject:_hash forKey:@"hash"];
-    [defaults synchronize];
+    [JMUserDefaults setObject:_hash forKey:@"hash"];
+    [JMUserDefaults synchronize];
 }
 #pragma mark -- 开始下载地址文件
 - (void)startDownload:(id)downloadURLString {

@@ -12,6 +12,8 @@
 #import "MiPushSDK.h"
 #import "JMSelecterButton.h"
 #import "JMVerificationCodeController.h"
+#import "JMRootTabBarController.h"
+
 
 
 #define SECRET @"3c7b4e3eb5ae4cfb132b2ac060a872ee"
@@ -50,13 +52,24 @@
     NSDictionary *dic;
     NSString *phoneNumber;
 }
-
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    [MobClick beginLogPageView:@"JMLogInViewController"];
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"JMLogInViewController"];
+    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick1:)];
-    
+    self.fd_interactivePopDisabled = YES;
     
     [self initUI];
     [self initAutolayout];
@@ -65,7 +78,6 @@
 }
 //判断是否安装
 - (void)isWechatInstall {
-    
     if ([WXApi isWXAppInstalled]) {
         self.wechatBtn.enabled = YES;
         self.wechatBtn.hidden = NO;
@@ -73,10 +85,7 @@
         self.wechatBtn.hidden = YES;
         self.wechatBtn.enabled = NO;
     }
-    
 }
-
-
 - (void)initUI {
     UIImageView *headView = [[UIImageView alloc] init];
     [self.view addSubview:headView];
@@ -85,14 +94,19 @@
     self.headView.contentMode = UIViewContentModeScaleAspectFill;
     headView.userInteractionEnabled = YES;
     self.headView.clipsToBounds = YES;
-    
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.headView addSubview:backButton];
-    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateHighlighted];
-    backButton.layer.cornerRadius = 18.;
-    [backButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.backButton = backButton;
+
+//    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.headView addSubview:backButton];
+//    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateNormal];
+//    [backButton setImage:[UIImage imageNamed:@"goodsDetailBackColorImage"] forState:UIControlStateHighlighted];
+//    backButton.layer.cornerRadius = 18.;
+//    [backButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    self.backButton = backButton;
+//    if (self.navigationController.viewControllers.count == 1) {
+//        self.backButton.hidden = YES;
+//    }else {
+//        self.backButton.hidden = NO;
+//    }
 
     UIView *bottomView = [[UIView alloc] init];
     [self.view addSubview:bottomView];
@@ -106,20 +120,10 @@
     [wechatBtn setAdjustsImageWhenHighlighted:NO];
     [wechatBtn addTarget:self action:@selector(wechatBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [wechatBtn setSureBackgroundColor:[UIColor wechatBackColor] CornerRadius:20.];
-    
-    
-    // === 添加到微信按钮上的控件
-    UIImageView *wexImage = [[UIImageView alloc] init];
-    [self.wechatBtn addSubview:wexImage];
-    self.wexImage = wexImage;
-    wexImage.image = [UIImage imageNamed:@"wexImage_wither"];
-    
-    UILabel *wexTitleLabel = [UILabel new];
-    [self.wechatBtn addSubview:wexTitleLabel];
-    self.wexTitleLabel = wexTitleLabel;
-    wexTitleLabel.text = @"微信登录";
-    wexTitleLabel.font = [UIFont systemFontOfSize:16.];
-    wexTitleLabel.textColor = [UIColor whiteColor];
+    [wechatBtn setImage:[UIImage imageNamed:@"wexImage_wither"] forState:UIControlStateNormal];
+    [wechatBtn setTitle:@"微信注册登录" forState:UIControlStateNormal];
+    wechatBtn.titleLabel.font = [UIFont systemFontOfSize:16.];
+    [wechatBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     // ===== 手机号登录按钮
     JMSelecterButton *phoneNumBtn = [JMSelecterButton buttonWithType:UIButtonTypeCustom];
@@ -135,43 +139,6 @@
     [captchaBtn addTarget:self action:@selector(jumpToAuthcodeLoginVC:) forControlEvents:UIControlEventTouchUpInside];
     [captchaBtn setSelecterBorderColor:[UIColor buttonEmptyBorderColor] TitleColor:[UIColor buttonEnabledBackgroundColor] Title:@"短信登录" TitleFont:15. CornerRadius:20.];
     
-    
-    // ==== 注册登录按钮
-    UIButton *registerBtn = [[UIButton alloc] init];
-    [self.bottomView addSubview:registerBtn];
-    self.registerBtn = registerBtn;
-    [registerBtn addTarget:self action:@selector(jumpToRegisterVC:) forControlEvents:UIControlEventTouchUpInside];
-    [registerBtn setTitle:@"注册新用户" forState:UIControlStateNormal];
-    [registerBtn setTitleColor:[UIColor colorWithRed:155/255. green:155/255. blue:155/255. alpha:1.0] forState:UIControlStateNormal];
-    
-    UIView *lineView = [[UIView alloc] init];
-    [self.bottomView addSubview:lineView];
-    self.lineView = lineView;
-    lineView.backgroundColor = [UIColor colorWithRed:232/255. green:223/255. blue:224/255. alpha:1.0];
-    
-    UILabel *titleLa = [UILabel new];
-    [self.bottomView addSubview:titleLa];
-    self.titleLa = titleLa;
-    self.titleLa.backgroundColor = [UIColor lineGrayColor];
-    self.titleLa.textAlignment = NSTextAlignmentCenter;
-    self.titleLa.font = [UIFont systemFontOfSize:11.];
-    self.titleLa.textColor = [UIColor titleDarkGrayColor];
-    self.titleLa.text = @"使用微信登录，免注册哦~！";
-    
-    
-}
-#pragma mark --- 注册微信登录的通知
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
-    [MobClick beginLogPageView:@"JMLogInViewController"];
-
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [MobClick endLogPageView:@"JMLogInViewController"];
 }
 - (void)phoneNumberLogin:(NSNotification *)notification{
     //  NSLog(@"手机登录");
@@ -179,7 +146,7 @@
 }
 #pragma mark --- 监听微信登录的通知
 - (void)WeChatLoginNoti:(NSNotificationCenter *)notification {
-    dic = [[NSUserDefaults standardUserDefaults] objectForKey:kWxLoginUserInfo];
+    dic = [JMUserDefaults objectForKey:kWxLoginUserInfo];
     NSArray *randomArray = [self randomArray];
     unsigned long count = (unsigned long)randomArray.count;
     int index = 0;
@@ -202,7 +169,7 @@
     NSLog(@"1.————》%@", sign_params);
     NSString *sign = [sign_params sha1];
     NSLog(@"sign = %@", sign);
-    [MBProgressHUD showLoading:@"正在登录......"];
+    [MBProgressHUD showLoading:@""];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/weixinapplogin?noncestr=%@&timestamp=%@&sign=%@", Root_URL,noncestr, timeSp, sign];
     NSDictionary *newDic = @{@"headimgurl":[dic objectForKey:@"headimgurl"],
                              @"nickname":[dic objectForKey:@"nickname"],
@@ -220,26 +187,24 @@
             [self alertMessage:[result objectForKey:@"msg"]];
             return;
         }
-        NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-        [userdefaults setBool:YES forKey:kIsLogin];
-        [userdefaults synchronize];
-        [self loginSuccessful];
-        
+        [self setDevice];
+        [self loadUserInfo];
     } WithFail:^(NSError *error) {
         [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"登录失败，请重试"];
     } Progress:^(float progress) {
         
     }];
 }
 #pragma mark --- 移除通知
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"phoneNumberLogin" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"WeChatLogin" object:nil];
-}
+//- (void)dealloc {
+//    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
+//}
 #pragma mark ---- 点击微信登录的按钮
 - (void)wechatBtnClick:(UIButton *)btn {
     self.wechatBtn.enabled = NO;
-    [self performSelector:@selector(buttonEnable:) withObject:self.wechatBtn afterDelay:0.5];
+    [self performSelector:@selector(buttonEnable:) withObject:self.wechatBtn afterDelay:1.0];
     if ([WXApi isWXAppInstalled]) {
         
     } else{
@@ -247,9 +212,8 @@
         [alterView show];
         return;
     }
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
-    [userdefaults synchronize];
+    [JMUserDefaults setObject:@"wxlogin" forKey:kWeiXinauthorize];
+    [JMUserDefaults synchronize];
 
     SendAuthReq* req =[[SendAuthReq alloc ] init];
     req.scope = @"snsapi_userinfo,snsapi_base";
@@ -271,27 +235,86 @@
 - (void)jumpToAuthcodeLoginVC:(UIButton *)btn {
     JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
     verfyCodeVC.verificationCodeType = SMSVerificationCodeWithLogin;
+    verfyCodeVC.userLoginMethodWithWechat = YES;
     [self.navigationController pushViewController:verfyCodeVC animated:YES];
 }
 //跳转到注册界面
-- (void)jumpToRegisterVC:(UIButton *)btn {
-    JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
-    verfyCodeVC.verificationCodeType = SMSVerificationCodeWithRegistered;
-    [self.navigationController pushViewController:verfyCodeVC animated:YES];
-}
+//- (void)jumpToRegisterVC:(UIButton *)btn {
+//    JMVerificationCodeController *verfyCodeVC = [[JMVerificationCodeController alloc] init];
+//    verfyCodeVC.verificationCodeType = SMSVerificationCodeWithRegistered;
+//    [self.navigationController pushViewController:verfyCodeVC animated:YES];
+//}
 
-#pragma mark ---- 微信登录成功调用函数
-- (void)loginSuccessful {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"weixinlogin" object:self];
-    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-    [notificationCenter postNotification: broadcastMessage];
-    [self setDevice];
-    [self backApointInterface];
+#pragma mark ---- 登录成功后获取用户信息
+- (void)loadUserInfo {
+    /*
+     1. 用户绑定手机, 且是精英妈妈.  ---> 跳转到主页
+     2. 用户绑定手机, 但不是精英妈妈. ---> 提示此用户权限不够.
+     3. 用户没用绑定手机, 但是是精英妈妈. ---> 跳转到绑定手机.
+     4. 用户没有绑定手机, 且不是精英妈妈. ---> 提示用户需要注册成为会员
+     */
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsVIP = NO;
+        if (kIsXLMMStatus) {
+            NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
+            kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
+        }
+        [JMUserDefaults setBool:kIsLoginStatus forKey:kIsLogin];
+        [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
+        [JMUserDefaults setObject:kWeiXinLogin forKey:kLoginMethod];
+        [JMUserDefaults synchronize];
+        if (kIsVIP) {
+            if (kIsBindPhone) {
+                // 跳主页
+                JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
+                JMKeyWindow.rootViewController = tabBarVC;
+            }else {
+                // 绑定手机
+                NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
+                JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+                vc.verificationCodeType = SMSVerificationCodeWithBind;
+                vc.userInfo = weChatInfo;
+                vc.userLoginMethodWithWechat = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }else {
+            JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+            vc.verificationCodeType = SMSVerificationCodeWithLogin;
+            vc.userNotXLMM = YES;
+            vc.profileUserInfo = responseObject;
+            vc.userLoginMethodWithWechat = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            // 提示
+//            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
+        }
+        [MBProgressHUD hideHUD];
+    } WithFail:^(NSError *error) {
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    [JMUserDefaults removeObjectForKey:kIsLogin];
+                    [JMUserDefaults removeObjectForKey:kISXLMM];
+                }
+            }
+        }
+        [JMUserDefaults synchronize];
+        [MBProgressHUD showError:@"登录失败，请重试"];
+        [MBProgressHUD hideHUD];
+    } Progress:^(float progress) {
+    }];
 }
 #pragma mark ---- 登录成功后获取Device
 - (void)setDevice{
-    NSDictionary *params = [[NSUserDefaults standardUserDefaults]objectForKey:@"MiPush"];
+    NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
         NSString *user_account = [responseObject objectForKey:@"user_account"];
@@ -299,9 +322,8 @@
         } else {
             [MiPushSDK setAccount:user_account];
             //保存user_account
-            NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-            [user setObject:user_account forKey:@"user_account"];
-            [user synchronize];
+            [JMUserDefaults setObject:user_account forKey:@"user_account"];
+            [JMUserDefaults synchronize];
         }
     } WithFail:^(NSError *error) {
         
@@ -312,11 +334,11 @@
 - (void)btnClick1:(UIButton *)btn {
 }
 - (void)btnClick:(UIButton *)btn {
-    if (self.isTabBarLogin) {
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    }else {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+//    if (self.isTabBarLogin) {
+//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    }else {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
     
 }
 
@@ -351,25 +373,19 @@
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(weakSelf.view);
         make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(SCREENHEIGHT - 200);
-    }];
-    [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.headView).offset(10);
-        make.top.equalTo(weakSelf.headView).offset(30);
-        make.width.height.mas_equalTo(@(36));
+        make.height.mas_equalTo(SCREENHEIGHT - 140);
     }];
 //    [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(weakSelf.backView.mas_centerY);
-//        make.centerX.equalTo(weakSelf.backView.mas_centerX);
+//        make.left.equalTo(weakSelf.headView).offset(10);
+//        make.top.equalTo(weakSelf.headView).offset(30);
 //        make.width.height.mas_equalTo(@(36));
 //    }];
-    
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(weakSelf.headView.mas_bottom);
         make.width.mas_equalTo(SCREENWIDTH);
         make.left.equalTo(weakSelf.view);
-        make.height.mas_equalTo(200);
+        make.height.mas_equalTo(140);
     }];
     
     [self.wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -392,46 +408,6 @@
         make.right.equalTo(weakSelf.wechatBtn.mas_right);
         make.left.equalTo(weakSelf.wechatBtn.mas_centerX).offset(25/2);
         make.height.mas_equalTo(@40);
-    }];
-    
-    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.phoneNumBtn.mas_bottom).offset(20);
-        make.centerX.equalTo(weakSelf.bottomView.mas_centerX);
-        make.width.mas_equalTo(SCREENWIDTH);
-        make.height.mas_equalTo(@1);
-    }];
-    
-    [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.lineView.mas_bottom);
-        make.left.equalTo(weakSelf.bottomView);
-        make.width.mas_equalTo(SCREENWIDTH);
-        //        make.bottom.equalTo(weakSelf.view.mas_bottom);
-        make.height.mas_equalTo(@40);
-    }];
-    
-//    [self.cancleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(weakSelf.view).offset(27);
-//        make.left.equalTo(weakSelf.view).offset(10);
-//        make.width.height.mas_equalTo(@28);
-//    }];
-    
-    [self.wexImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.wechatBtn).offset(10);
-        make.right.equalTo(weakSelf.wexTitleLabel.mas_left);
-        //        make.right.equalTo(weakSelf.bottomView.mas_centerX);
-        make.width.height.mas_equalTo(@20);
-    }];
-    
-    [self.wexTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weakSelf.bottomView.mas_centerX).offset(-22);
-        make.centerY.equalTo(weakSelf.wexImage.mas_centerY);
-        make.right.equalTo(weakSelf.wechatBtn);
-    }];
-    
-    [self.titleLa mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.registerBtn.mas_bottom);
-        make.left.right.equalTo(weakSelf.bottomView);
-        make.bottom.equalTo(weakSelf.bottomView);
     }];
     
     

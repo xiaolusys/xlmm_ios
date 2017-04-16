@@ -13,6 +13,8 @@
 #import "JMMiPushManager.h"
 #import "JMHomePageController.h"
 #import "JMRootTabBarController.h"
+#import "XHLaunchAd.h"
+#import "JMLogInViewController.h"
 
 
 #define login @"login"
@@ -59,15 +61,21 @@
 - (void)getLaunchImage {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/activitys/startup_diagrams",Root_URL];
     [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return ;
+        if (!responseObject) return ; // @"http://c.hiphotos.baidu.com/image/pic/item/d62a6059252dd42a6a943c180b3b5bb5c8eab8e7.jpg";
         _imageUrl = responseObject[@"picture"];
-//        NSURL *url = [NSURL URLWithString:[[self.imageUrl ImageNoCompression] JMUrlEncodedString]];
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(queue, ^{
-            UIImage *image = [UIImage imagewithURLString:[NSString stringWithFormat:@"%@?imageMogr2/thumbnail/1320/format/jpg/quality/90",_imageUrl]];
-            [JMStoreManager removeFileByFileName:@"launchImageCache"];
-            [JMStoreManager saveDataFromImage:image WithFilePath:@"launchImageCache" Quality:0.5];
-        });
+        if ([NSString isStringEmpty:_imageUrl]) {
+            return ;
+        }
+        XHLaunchImageAdConfiguration *imageAdconfiguration = [XHLaunchImageAdConfiguration new];
+        imageAdconfiguration.duration = 3;
+        imageAdconfiguration.frame = [UIScreen mainScreen].bounds;
+        imageAdconfiguration.imageNameOrURLString = _imageUrl;
+        imageAdconfiguration.imageOption = XHLaunchAdImageDefault;
+        imageAdconfiguration.contentMode = UIViewContentModeScaleToFill;
+        imageAdconfiguration.showFinishAnimate = ShowFinishAnimateLite;
+        imageAdconfiguration.skipButtonType = SkipTypeTimeText;
+        imageAdconfiguration.showEnterForeground = NO;
+        [XHLaunchAd imageAdWithImageAdConfiguration:imageAdconfiguration delegate:self];
     } WithFail:^(NSError *error) {
     } Progress:^(float progress) { 
         
@@ -75,11 +83,52 @@
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
+    NSInteger netWorkStatus = [AFNetworkReachabilityManager manager].networkReachabilityStatus;
+    if (netWorkStatus == 0) {
+        [self rootWithLoginVC];
+        return ;
+    }
+    [self lodaUserInfo];
+    [XHLaunchAd setWaitDataDuration:2];
+}
+- (void)lodaUserInfo {
+    [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsVIP = NO;
+        if (kIsXLMMStatus) {
+            NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
+            kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
+        }
+        if (kIsVIP) {
+            if (kIsBindPhone) {
+                [self rootWithTabBar];
+                return ;
+            }
+        }
+        [self rootWithLoginVC];
+    } failure:^(NSInteger errorCode) {
+        [self rootWithLoginVC];
+    }];
+}
+- (void)rootWithTabBar {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
     self.window.rootViewController = tabBarVC;
+    [self.window makeKeyAndVisible ];
+    [XHLaunchAd cancelWatiTimer];
+    [self getLaunchImage];
+}
+- (void)rootWithLoginVC {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    [XHLaunchAd cancelWatiTimer];
+    [self getLaunchImage];
 }
 #pragma mark ======== 程序开始启动 ========
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -88,21 +137,19 @@
     [self umengTrackInit];
     [[JMGlobal global] monitoringNetworkStatus];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(openPushMessage) name:@"openPushMessageSwitch" object:nil];
+    
     [[JMDevice defaultDecice] getServerIP];
     /**
      *  检测是否是第一次打开  -- 并且记录打开的次数
      */
     [JMStoreManager recoderAppLoadNum];
-    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
+    NSString *string = [JMUserDefaults objectForKey:kIsReceivePushTZ];
     if ([string isEqual:@"1"] || string == nil) {
         [self openPushMessage];
     }else { }
     
     [self umengShareInit];
-    //创建导航控制器，添加根视图控制器
-    [self getLaunchImage];
-    [self fetchRootVC];
     [[JMMiPushManager miPushManager] finishLaunchingWithOptions:launchOptions First:YES];
     // -- 添加UserAgent
     [self createUserAgent];
@@ -111,10 +158,11 @@
         [[JMGlobal global] clearCacheWithSDImageCache:^(NSString *sdImageCacheString) {
         }];
     }
+    //创建导航控制器，添加根视图控制器
+    [self fetchRootVC];
     
     return YES;
 }
-
 - (void)openPushMessage {
     [MiPushSDK registerMiPush:[JMMiPushManager miPushManager] type:0 connect:YES];
 }
@@ -173,6 +221,7 @@
 - (void)dealloc {
     NSLog(@"dealloc ---> dealloc调用");
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
+    [JMNotificationCenter removeObserver:self name:@"openPushMessageSwitch" object:nil];
 }
 // 程序即将退出 -- > 在这里添加退出前的清理代码以及其他工作代码
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -203,9 +252,9 @@
 - (BOOL)xiaoluPay:(NSURL *)url {
     return [JMPayment handleOpenURL:url WithErrorCodeBlock:^(JMPayError *error) {
         if (error.errorStatus == payMentErrorStatusSuccess) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZhifuSeccessfully" object:nil];
+            [JMNotificationCenter postNotificationName:@"ZhifuSeccessfully" object:nil];
         }else if (error.errorStatus == payMentErrorStatusFail) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"CancleZhifu" object:nil];
+            [JMNotificationCenter postNotificationName:@"CancleZhifu" object:nil];
         }else { }
     }];
     
@@ -265,7 +314,7 @@
 //- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController
 //{
 //    //  NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"presentLeftMenuVC" object:nil];
+//    [JMNotificationCenter postNotificationName:@"presentLeftMenuVC" object:nil];
 //}
 //
 //- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController

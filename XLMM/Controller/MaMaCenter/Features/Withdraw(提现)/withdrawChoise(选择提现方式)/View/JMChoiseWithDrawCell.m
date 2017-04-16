@@ -35,17 +35,17 @@
     self.contentView.backgroundColor = [UIColor countLabelColor];
     
     self.titleLabel = [UILabel new];
-    self.titleLabel.font = CS_SYSTEMFONT(14.);
+    self.titleLabel.font = CS_UIFontSize(14.);
     self.titleLabel.textColor = [UIColor buttonTitleColor];
     [self.contentView addSubview:self.titleLabel];
     
     self.descTitleLabel = [UILabel new];
-    self.descTitleLabel.font = CS_SYSTEMFONT(12.);
+    self.descTitleLabel.font = CS_UIFontSize(12.);
     self.descTitleLabel.textColor = [UIColor dingfanxiangqingColor];
     [self.contentView addSubview:self.descTitleLabel];
     
     self.iconImage = [UIImageView new];
-    self.iconImage.image = CS_IMAGE(@"rightArrow");
+    self.iconImage.image = CS_UIImageName(@"rightArrow");
     [self.contentView addSubview:self.iconImage];
     
     self.cellImage = [UIImageView new];
@@ -108,10 +108,10 @@
     
     self.titleLabel.text = dict[@"title"];
     self.descTitleLabel.text = dict[@"descTitle"];
-    self.iconImage.image = CS_IMAGE(dict[@"iconImage"]);
+    self.iconImage.image = CS_UIImageName(dict[@"iconImage"]);
     
     if (index == 2) {
-        if ([dict[@"descTitle"] isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults] objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
+        if ([dict[@"descTitle"] isEqualToString:@""] && [[JMUserDefaults objectForKey:kLoginMethod] isEqualToString:kWeiXinLogin]) {
             self.descTitleLabel.textColor = [UIColor redColor];
             self.descTitleLabel.text = @"未绑定手机号";
         }else {

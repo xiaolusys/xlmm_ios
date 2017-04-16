@@ -7,7 +7,7 @@
 //
 
 #import "JMOrderListController.h"
-#import "UIImage+ColorImage.h"
+#import "UIImage+UIImageExt.h"
 #import "JMPersonAllOrderController.h"
 #import "HMSegmentedControl.h"
 
@@ -79,6 +79,7 @@
     for (int i = 0 ; i < _itemArr.count; i++) {
         JMPersonAllOrderController *fineVC = [[JMPersonAllOrderController alloc] init];
         [self addChildViewController:fineVC];
+        [fineVC didMoveToParentViewController:self];
     }
     self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _itemArr.count, self.baseScrollView.frame.size.height);
 }
@@ -102,7 +103,6 @@
     homeFirst.urlString = _urlArr[index];
     homeFirst.view.frame = self.baseScrollView.bounds;
     [self.baseScrollView addSubview:homeFirst.view];
-    [homeFirst didMoveToParentViewController:self];
 }
 - (void)backClick {
     if (self.ispopToView) {

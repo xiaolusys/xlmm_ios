@@ -10,6 +10,8 @@
 #import "VersionController.h"
 #import "MiPushSDK.h"
 
+#define MMLOG(a) NSLog(@"%@ = %@", [a class], a)
+
 @interface TSettingViewController ()<MiPushSDKDelegate>
 
 @end
@@ -52,7 +54,7 @@
     
     UISwitch *switchButton = [[UISwitch alloc] init];
     [self.pushOnView addSubview:switchButton];
-    NSString *string = [[NSUserDefaults standardUserDefaults] objectForKey:kIsReceivePushTZ];
+    NSString *string = [JMUserDefaults objectForKey:kIsReceivePushTZ];
     if ([string isEqualToString:@"1"] || string == nil) {
         switchButton.on = YES;
     }else {
@@ -84,13 +86,13 @@
     UISwitch *switchButton = (UISwitch*)sender;
     BOOL isButtonOn = [switchButton isOn];
     if (isButtonOn) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:kIsReceivePushTZ];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults setObject:@"1" forKey:kIsReceivePushTZ];
+        [JMUserDefaults synchronize];
 //        [MiPushSDK registerMiPush:self type:0 connect:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"openPushMessageSwitch" object:nil];
+        [JMNotificationCenter postNotificationName:@"openPushMessageSwitch" object:nil];
     }else {
-        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:kIsReceivePushTZ];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [JMUserDefaults setObject:@"0" forKey:kIsReceivePushTZ];
+        [JMUserDefaults synchronize];
         [MiPushSDK unregisterMiPush];
     }
 
@@ -188,13 +190,13 @@
 
 - (BOOL)isAllowedNotification {
     if ([self isSystemVersioniOS8]) {
-        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        UIUserNotificationSettings *setting = [JMApplication currentUserNotificationSettings];
         if (UIUserNotificationTypeNone != setting.types) {
             return YES;
         }
         
     }else {
-        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        UIRemoteNotificationType type = [JMApplication enabledRemoteNotificationTypes];
         if (UIRemoteNotificationTypeNone != type) {
             return YES;
         }

@@ -39,7 +39,7 @@
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 60 - ktabBarHeight)];
+        _tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 64 - 60 - kAppTabBarHeight)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.rowHeight = 175.f;

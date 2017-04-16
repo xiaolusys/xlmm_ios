@@ -103,6 +103,12 @@
  *  @return YES 是 NO 不是
  */
 + (BOOL)isStringEmpty:(NSString *)string;
+/**
+ *  判断字符串是否为纯数字
+ *
+ *  @return YES 是 NO 不是
+ */
++ (BOOL)isStringWithNumber:(NSString *)string;
 
 /**
  *  获得打印日志时间
@@ -177,9 +183,6 @@
 
 
 + (NSString *)miPushTetOperateType:(NSString *)selector;
-
-
-
 + (NSString *)TimeformatDHMSFromSeconds:(int)second;
 + (NSString *)TimeformatMSFromSeconds:(int)second;
 

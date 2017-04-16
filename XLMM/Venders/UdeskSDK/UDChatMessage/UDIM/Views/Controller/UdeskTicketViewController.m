@@ -57,7 +57,7 @@
         NSURL *ticketURL = [UdeskManager getSubmitTicketURL];
         
         //设置语言
-        NSString *tmp = [[NSUserDefaults standardUserDefaults] objectForKey:LANGUAGE_SET];
+        NSString *tmp = [JMUserDefaults objectForKey:LANGUAGE_SET];
         //默认是中文
         if (!tmp)
         {

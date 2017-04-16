@@ -8,172 +8,58 @@
 
 #import "JMCouponController.h"
 #import "HMSegmentedControl.h"
-#import "JMUsedCouponController.h"
-#import "JMExpiredCouponController.h"
 #import "JMUntappedCouponController.h"
-#import "JMSpecialCouponController.h"
 
 
-@interface JMCouponController ()
+@interface JMCouponController () {
+    NSMutableArray *_itemArr;
+    NSArray *_urlArr;
+    NSArray *_typeArr;
+}
+
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UIScrollView *baseScrollView;
+@property (nonatomic, strong) HMSegmentedControl *segmentControl;
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-
-@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 
 @property (nonatomic, strong) JMUntappedCouponController *untappedCouponVC;
 
-@property (nonatomic, strong) JMExpiredCouponController *expiredCouponVC;
-
-@property (nonatomic, strong) JMUsedCouponController *usedCouponVC;
-
-@property (nonatomic, strong) JMSpecialCouponController *spacialVC;
 
 @end
 
-@implementation JMCouponController {
-    NSMutableArray *_titleArr;
-    NSMutableArray *flageArr;
-    
-    NSArray *untappedArr;
-    NSArray *expiredArr;
-    NSArray *usedArr;
-    
-    
+@implementation JMCouponController
+- (void)setSegmentSectionTitle:(NSArray *)segmentSectionTitle {
+    _segmentSectionTitle = segmentSectionTitle;
+    self.segmentControl.sectionTitles = segmentSectionTitle;
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick:)];
-    self.view.backgroundColor = [UIColor countLabelColor];
-//    [MBProgressHUD showLoading:@"小鹿正在加载优惠券,稍等片刻哦~!"];
-    _titleArr = [NSMutableArray arrayWithObjects:@"未使用",@"精品券",@"已过期",@"已使用", nil];
-    flageArr = [NSMutableArray arrayWithObjects:@0,@0,@0, nil];
-    [self loadCouponData];
-    [self createSegmentView];
-    [self createSegement];
-    [[JMGlobal global] showWaitLoadingInView:self.view];
-}
-
-- (void)loadCouponData {
-    NSArray *countArr = @[@"0",@"3",@"1"];
-    for (int i = 0; i < countArr.count; i++) {
-        [self loadData:countArr[i]];
+#pragma mark 懒加载
+- (HMSegmentedControl *)segmentControl {
+    if (!_segmentControl) {
+        _segmentControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 45)];
+        _segmentControl.backgroundColor = [UIColor countLabelColor];
+        _segmentControl.sectionTitles = _itemArr;
+        _segmentControl.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
+        _segmentControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+        _segmentControl.selectionIndicatorHeight = 2.f;
+        _segmentControl.selectionIndicatorColor = [UIColor orangeColor];
+        _segmentControl.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14.],
+                                                NSForegroundColorAttributeName : [UIColor blackColor]};
+        _segmentControl.selectedTitleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:15.],
+                                                        NSForegroundColorAttributeName : [UIColor orangeColor]};
+        [_segmentControl addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
     }
+    return _segmentControl;
 }
-- (void)loadData:(NSString *)statusCount {
-    NSString *string = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%ld",Root_URL,[statusCount integerValue]];
-    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:string WithParaments:nil WithSuccess:^(id responseObject) {
-        if (!responseObject) return ;
-        [self fetchStatus:statusCount responseArr:responseObject];
-    } WithFail:^(NSError *error) {
-        [self fetchStatus:statusCount responseArr:nil];
-    } Progress:^(float progress) {
-    }];
-    
-}
-- (void)fetchStatus:(NSString *)statusCount responseArr:(NSArray *)responseArr {
-    if ([statusCount isEqualToString:@"0"]) {
-        flageArr[0] = @1;
-        NSMutableArray *resArr = [NSMutableArray array];
-        for (NSDictionary *dic in responseArr) {
-            if ([dic[@"coupon_type"] integerValue] == 8) {
-                [resArr addObject:dic];
-            }
-        }
-        self.untappedCouponVC.couponArray = responseArr;
-        self.spacialVC.couponArray = resArr;
-        _titleArr[0] = [NSString stringWithFormat:@"未使用(%ld)",responseArr.count];
-        _titleArr[1] = [NSString stringWithFormat:@"精品券(%ld)",resArr.count];
-    }else if ([statusCount isEqualToString:@"3"]) {
-        flageArr[1] = @1;
-        self.expiredCouponVC.couponArray = responseArr;
-        _titleArr[2] = [NSString stringWithFormat:@"已过期(%ld)",responseArr.count];
-    }else if ([statusCount isEqualToString:@"1"]) {
-        flageArr[2] = @1;
-        self.usedCouponVC.couponArray = responseArr;
-        _titleArr[3] = [NSString stringWithFormat:@"已使用(%ld)",responseArr.count];
-    }else {
+- (UIScrollView *)baseScrollView {
+    if (!_baseScrollView) {
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.segmentControl.frame), SCREENWIDTH, SCREENHEIGHT - CGRectGetMaxY(self.segmentControl.frame))];
+        _baseScrollView.showsHorizontalScrollIndicator = NO;
+        _baseScrollView.showsVerticalScrollIndicator = NO;
+        _baseScrollView.pagingEnabled = YES;
+        _baseScrollView.delegate = self;
     }
-    BOOL isCreateSegment = ([flageArr[0] isEqual: @1]) && ([flageArr[1] isEqual:@1]) && ([flageArr[2] isEqual:@1]);
-    if (isCreateSegment == YES) {
-        self.segmentedControl.sectionTitles = _titleArr;
-//        [MBProgressHUD hideHUD];
-        [[JMGlobal global] hideWaitLoading];
-    }else{
-        
-    }
-}
-
-- (void)createSegmentView {
-    self.segmentedControl = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, 40)];
-    self.segmentedControl.backgroundColor = [UIColor sectionViewColor];
-    self.segmentedControl.sectionTitles = _titleArr;
-    
-    self.segmentedControl.selectedSegmentIndex = 0;
-    self.segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonTitleColor],NSFontAttributeName:[UIFont systemFontOfSize:14.]};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor buttonEnabledBackgroundColor],NSFontAttributeName:[UIFont systemFontOfSize:16.]};
-    self.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleArrow;
-    self.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationNone;
-    
-    __weak typeof(self) weakSelf = self;
-    [self.segmentedControl setIndexChangeBlock:^(NSInteger index) {
-        [weakSelf.scrollView scrollRectToVisible:CGRectMake(SCREENWIDTH * index, 64, SCREENWIDTH, SCREENHEIGHT) animated:YES];
-    }];
-    [self.view addSubview:self.segmentedControl];
-}
-- (void)createSegement {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 104, SCREENWIDTH, SCREENHEIGHT)];
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.contentSize = CGSizeMake(SCREENWIDTH * 4, SCREENHEIGHT);
-    self.scrollView.delegate = self;
-    [self.scrollView scrollRectToVisible:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT) animated:NO];
-    [self.view addSubview:self.scrollView];
-
-
-    self.untappedCouponVC = [[JMUntappedCouponController alloc] init];
-    self.untappedCouponVC.view.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
-    [self addChildViewController:self.untappedCouponVC];
-    [self.scrollView addSubview:self.untappedCouponVC.view];
-    
-    self.spacialVC = [[JMSpecialCouponController alloc] init];
-    self.spacialVC.view.frame = CGRectMake(SCREENWIDTH, 0, SCREENWIDTH, SCREENHEIGHT);
-    [self addChildViewController:self.spacialVC];
-    [self.scrollView addSubview:self.spacialVC.view];
-    
-    self.expiredCouponVC = [[JMExpiredCouponController alloc] init];
-    self.expiredCouponVC.view.frame = CGRectMake(SCREENWIDTH * 2, 0, SCREENWIDTH, SCREENHEIGHT);
-    [self addChildViewController:self.expiredCouponVC];
-    [self.scrollView addSubview:self.expiredCouponVC.view];
-    
-    
-    self.usedCouponVC = [[JMUsedCouponController alloc] init];
-    self.usedCouponVC.view.frame = CGRectMake(SCREENWIDTH * 3, 0, SCREENWIDTH, SCREENHEIGHT);
-    [self addChildViewController:self.usedCouponVC];
-    [self.scrollView addSubview:self.usedCouponVC.view];
-    
-    
-    
-    
-    
-
-}
-- (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
-    NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
-}
-- (void)uisegmentedControlChangedValue:(UISegmentedControl *)segmentedControl {
-    NSLog(@"Selected index %ld", (long)segmentedControl.selectedSegmentIndex);
-}
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat pageWidth = scrollView.frame.size.width;
-    NSInteger page = scrollView.contentOffset.x / pageWidth;
-    
-    [self.segmentedControl setSelectedSegmentIndex:page animated:YES];
-}
-- (void)backClick:(UIButton *)button{
-    [self.navigationController popViewControllerAnimated:YES];
+    return _baseScrollView;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -183,6 +69,65 @@
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"seeCoupon"];
 }
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self createNavigationBarWithTitle:@"优惠券" selecotr:@selector(backClick)];
+    self.view.backgroundColor = [UIColor countLabelColor];
+    _itemArr = [NSMutableArray arrayWithObjects:@"未使用",@"精品券",@"已过期",@"已使用", nil];
+    NSString *string1 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"0"];
+    NSString *string2 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"0"];
+    NSString *string3 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"3"];
+    NSString *string4 = [NSString stringWithFormat:@"%@/rest/v1/usercoupons/get_user_coupons?status=%@&paging=1",Root_URL,@"1"];
+    _urlArr = @[string1,string2,string3,string4];
+    _typeArr = @[@"0",@"0",@"3",@"1"];
+    
+    
+    [self.view addSubview:self.segmentControl];
+    _segmentControl.selectedSegmentIndex = 0;
+    [self.view addSubview:self.baseScrollView];
+    [self addChildController];
+    [self removeToPage:0];
+    
+}
+
+
+- (void)addChildController {
+    for (int i = 0 ; i < _itemArr.count; i++) {
+        JMUntappedCouponController *couponVC = [[JMUntappedCouponController alloc] init];
+        couponVC.couponStatus = [_typeArr[i] integerValue];
+        couponVC.payCouponVC = self;
+        couponVC.itemArr = _itemArr;
+        couponVC.segmentIndex = i;
+        [self addChildViewController:couponVC];
+        [couponVC didMoveToParentViewController:self];
+    }
+    self.baseScrollView.contentSize = CGSizeMake(SCREENWIDTH * _itemArr.count, self.baseScrollView.frame.size.height);
+}
+- (void)segmentedControlChangedValue:(HMSegmentedControl *)segmentedControl {
+    NSLog(@"Selected index %ld (via UIControlEventValueChanged)", (long)segmentedControl.selectedSegmentIndex);
+    NSInteger page = segmentedControl.selectedSegmentIndex;
+    [self removeToPage:page];
+    
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat pageWidth = scrollView.frame.size.width;
+    NSInteger page = scrollView.contentOffset.x / pageWidth;
+    //    _lastSelectedIndex = (int)page;
+    [self.segmentControl setSelectedSegmentIndex:page animated:YES];
+    [self removeToPage:page];
+    
+}
+- (void)removeToPage:(NSInteger)index {
+    self.baseScrollView.contentOffset = CGPointMake(SCREENWIDTH * index, 0);
+    JMUntappedCouponController *couponVC = self.childViewControllers[index];
+    couponVC.urlString = _urlArr[index];
+    couponVC.view.frame = self.baseScrollView.bounds;
+    [self.baseScrollView addSubview:couponVC.view];
+}
+- (void)backClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 @end
 

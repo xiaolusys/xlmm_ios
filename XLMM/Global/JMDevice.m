@@ -24,8 +24,7 @@
     return defaultDevice;
 }
 - (void)getServerIP {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *serverip = [defaults objectForKey:@"serverip"];
+    NSString *serverip = [JMUserDefaults objectForKey:@"serverip"];
     if((serverip != nil) && (![serverip isEqualToString:@""])){
         Root_URL = serverip;
     }
@@ -76,9 +75,8 @@
     
     //regist the new agent
     NSDictionary *userAgent = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent",  nil];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults registerDefaults:userAgent];
-    [userDefaults synchronize];
+    [JMUserDefaults registerDefaults:userAgent];
+    [JMUserDefaults synchronize];
     
 //    NSString *usa = [userDefaults stringForKey:@"UserAgent"];
 //    NSLog(@"%@",usa);
