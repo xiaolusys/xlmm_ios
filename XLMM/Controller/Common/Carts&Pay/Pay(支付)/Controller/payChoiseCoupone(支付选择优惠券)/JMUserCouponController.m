@@ -119,6 +119,7 @@
     NSInteger code = [couponData[@"code"] integerValue];
     if (code != 0) {
         [MBProgressHUD showWarning:couponData[@"info"]];
+        [self.tableView cs_reloadData];
         return;
     }
     _urlStr = couponData[@"next"];
@@ -185,6 +186,9 @@
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.couponStatus == 1) {
+        return;
+    }
     JMCouponModel *couponModel = [[JMCouponModel alloc] init];
     couponModel = self.dataSource[indexPath.row];
     NSMutableArray *couponArray = [NSMutableArray array];

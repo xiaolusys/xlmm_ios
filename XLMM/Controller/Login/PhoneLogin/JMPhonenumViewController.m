@@ -172,10 +172,25 @@
 
 #pragma mark ------ 登录按钮点击
 - (void)loginBtnClick:(UIButton *)btn {
+    // ....
+    if ([NSString isStringEmpty:self.phoneNumTextF.text]) {
+        [MBProgressHUD showMessage:@"请输入手机号!"];
+        return ;
+    }else {
+        if (self.phoneNumTextF.text.length != 11  || ![NSString isStringWithNumber:self.phoneNumTextF.text]) {
+            [MBProgressHUD showMessage:@"请检查手机号!"];
+            return ;
+        }
+    }
+    if ([NSString isStringEmpty:self.passwordTextF.text]) {
+        [MBProgressHUD showMessage:@"请输入密码!"];
+        return ;
+    }else {
+        
+    }
     btn.enabled = NO;
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
-    
     NSString *userName = _phoneNumTextF.text;
     NSString *password = _passwordTextF.text;
     if (userName.length == 0 || password.length == 0) {
@@ -342,39 +357,28 @@
     [textField resignFirstResponder];
     return YES;
 }
-
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.phoneNumTextF resignFirstResponder];
     [self.passwordTextF resignFirstResponder];
     
 }
-//
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    self.loginBtn.enabled = (self.phoneNumTextF.text.length != 0 && self.passwordTextF.text.length != 0);
     return YES;
-    
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    self.loginBtn.enabled = NO;
+    if (textField == self.phoneNumTextF) {
+        self.passwordTextF.text = @"";
+    }
     return YES;
 }
-
-
 -(void) alertMessage:(NSString*)msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
 }
-
-
 #pragma mark --- 视图显示或者消失时一些属性的状态
-
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    
 }
-
-
 - (void)prepareInitUI {
     
     kWeakSelf
@@ -436,7 +440,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:@"JMPhonenumViewController"];
-    
+    self.loginBtn.enabled = YES;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
