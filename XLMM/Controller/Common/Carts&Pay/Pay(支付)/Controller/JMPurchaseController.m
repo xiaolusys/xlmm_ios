@@ -422,15 +422,16 @@ static BOOL isAgreeTerms = YES;
         if (_cartsInfoLevel > _addressInfoLevel) {
             [self userNotIdCardNumberMessage];
         }
-        if (_cartsInfoLevel > 1) {
-//            CGFloat strHeight = [payOrderLevelInfo heightWithWidth:SCREENWIDTH - 10 andFont:12.].height + 20;
+        if (_cartsInfoLevel == 2) {
             self.purchaseHeaderView.mj_h = 200;
-            self.tableView.tableHeaderView = self.purchaseHeaderView;
-            self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
-            [self showNaviDesViwe];
+        }else if (_cartsInfoLevel == 3) {
+            self.purchaseHeaderView.mj_h = 300;
         }else {
-            self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
+            return;
         }
+        [self showNaviDesViwe];
+        self.tableView.tableHeaderView = self.purchaseHeaderView;
+        self.purchaseHeaderView.cartsInfoLevel = _cartsInfoLevel;
     }
 }
 - (void)setPurchaseGoods:(NSMutableArray *)purchaseGoods {
@@ -744,6 +745,10 @@ static BOOL isAgreeTerms = YES;
             isAgreeTerms = NO;
         }
     }else if (button.tag == 104) {
+        if (!self.purchaseHeaderView.saveIdcardSuccess) {
+            [MBProgressHUD showWarning:@"请填写身份证号"];
+            return;
+        }
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (_cartsInfoLevel > _addressInfoLevel) {
@@ -810,7 +815,12 @@ static BOOL isAgreeTerms = YES;
         if (code == 0) {
             [self loadAddressInfo];
             [MBProgressHUD hideHUD];
+            NSDictionary *result = responseObject[@"result"];
+            if (result) {
+                _addressID = [result[@"address_id"] stringValue];
+            }
             self.purchaseHeaderView.saveIdcardSuccess = YES;
+            [MBProgressHUD showSuccess:@"身份证保存成功"];
         }else {
             [MBProgressHUD showWarning:responseObject[@"info"]];
         }

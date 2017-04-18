@@ -11,7 +11,12 @@
 #import "JMRichTextTool.h"
 
 
-@interface JMPurchaseHeaderView () <UITextFieldDelegate>
+@interface JMPurchaseHeaderView () <UITextFieldDelegate> {
+    UIImageView *_sideFaceImage;
+    UIImageView *_sideBackImage;
+    UILabel *_sideFaceLabel;
+    UILabel *_sideBackLabel;
+}
 
 /**
  *  地址_姓名
@@ -34,6 +39,8 @@
 @property (nonatomic, strong) UIButton *idcardSaveButton;
 @property (nonatomic, strong) UILabel *idCardLabel;
 
+@property (nonatomic, strong) UIView *idCardView;
+
 @end
 
 @implementation JMPurchaseHeaderView
@@ -53,6 +60,16 @@
         self.addressNameLabel.text = addressDic[@"receiver_name"];
         self.addressPhoneLabel.text = addressDic[@"receiver_phone"];
         self.addressDetailLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressDic[@"receiver_state"],addressDic[@"receiver_city"],addressDic[@"receiver_district"],addressDic[@"receiver_address"]];
+        NSString *idCardNumber = [NSString stringWithFormat:@"%@",addressDic[@"identification_no"]];
+        if (![NSString isStringEmpty:idCardNumber]) {
+            self.idCardField.text = idCardNumber;
+            self.saveIdcardSuccess = YES;
+        }else {
+            _saveIdcardSuccess = NO;
+            [self.idcardSaveButton setTitle:@"保存" forState:UIControlStateNormal];
+            [self.promptView bringSubviewToFront:self.idCardField];
+            self.idCardField.text = @"";
+        }
         
     }
 }
@@ -62,6 +79,16 @@
     self.addressNameLabel.text = addressModel.receiver_name;
     self.addressPhoneLabel.text = addressModel.receiver_mobile;
     self.addressDetailLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.receiver_state,addressModel.receiver_city,addressModel.receiver_district,addressModel.receiver_address];
+    NSString *idCardNumber = addressModel.identification_no;
+    if (![NSString isStringEmpty:idCardNumber]) {
+        self.idCardField.text = idCardNumber;
+        self.saveIdcardSuccess = YES;
+    }else {
+        _saveIdcardSuccess = NO;
+        [self.idcardSaveButton setTitle:@"保存" forState:UIControlStateNormal];
+        [self.promptView bringSubviewToFront:self.idCardField];
+        self.idCardField.text = @"";
+    }
 }
 - (void)setIsVirtualCoupone:(BOOL)isVirtualCoupone {
     _isVirtualCoupone = isVirtualCoupone;
@@ -77,19 +104,23 @@
 }
 - (void)setCartsInfoLevel:(NSInteger)cartsInfoLevel {
     _cartsInfoLevel = cartsInfoLevel;
-    if (cartsInfoLevel > 1) {
-//        [self addSubview:self.promptView];
+    if (cartsInfoLevel >= 2) {
         self.promptView.hidden = NO;
         [self.promptView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(@(50));
         }];
-    }else {
-
+        if (cartsInfoLevel == 3) {
+            self.idCardView.hidden = NO;
+            [self.idCardView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(@(100));
+            }];
+        }
     }
     
 }
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        _saveIdcardSuccess = NO;
         [self setUpTopUI];
     }
     return self;
@@ -170,6 +201,55 @@
     
     
     self.promptView.hidden = YES;
+    
+    UIView *idCardView = [UIView new];
+    idCardView.backgroundColor = [UIColor countLabelColor];
+    [self addSubview:idCardView];
+    self.idCardView = idCardView;
+    
+    UIButton *sideFacebutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [idCardView addSubview:sideFacebutton];
+    sideFacebutton.layer.masksToBounds = YES;
+    sideFacebutton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    sideFacebutton.layer.borderWidth = 0.5f;
+    sideFacebutton.tag = 10;
+    [sideFacebutton addTarget:self action:@selector(idcardClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *sideBackbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [idCardView addSubview:sideBackbutton];
+    sideBackbutton.layer.masksToBounds = YES;
+    sideBackbutton.layer.borderColor = [UIColor lineGrayColor].CGColor;
+    sideBackbutton.layer.borderWidth = 0.5f;
+    sideBackbutton.tag = 11;
+    [sideBackbutton addTarget:self action:@selector(idcardClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _sideFaceImage = [UIImageView new];
+    [sideFacebutton addSubview:_sideFaceImage];
+    _sideFaceImage.contentMode = UIViewContentModeScaleAspectFit;
+    _sideFaceImage.image = [UIImage imageNamed:@"idCardSideFace"];
+    _sideBackImage = [UIImageView new];
+    [sideBackbutton addSubview:_sideBackImage];
+    _sideBackImage.contentMode = UIViewContentModeScaleAspectFit;
+    _sideBackImage.image = [UIImage imageNamed:@"idCardSideBack"];
+    
+    _sideFaceLabel = [UILabel new];
+    _sideFaceLabel.font = [UIFont systemFontOfSize:10.];
+    _sideFaceLabel.textColor = [UIColor buttonTitleColor];
+    _sideFaceLabel.numberOfLines = 0;
+    _sideFaceLabel.textAlignment = NSTextAlignmentCenter;
+    //    _sideFaceLabel.text = @"请上传身份证\n正面照";
+    [sideFacebutton addSubview:_sideFaceLabel];
+    _sideBackLabel = [UILabel new];
+    _sideBackLabel.font = [UIFont systemFontOfSize:10.];
+    _sideBackLabel.textColor = [UIColor buttonTitleColor];
+    _sideBackLabel.numberOfLines = 0;
+    _sideBackLabel.textAlignment = NSTextAlignmentCenter;
+    //    _sideBackLabel.text = @"请上传身份证\n反面照";
+    [sideBackbutton addSubview:_sideBackLabel];
+    
+    _sideFaceLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] SubColor:[UIColor redColor] AllString:@"请上传身份证\n正面照" SubStringArray:@[@"正面照"]];
+    _sideBackLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:12.] SubColor:[UIColor redColor] AllString:@"请上传身份证\n反面照" SubStringArray:@[@"反面照"]];
+    
+    self.idCardView.hidden = YES;
     
 //    UILabel *promptLabel = [UILabel new];
 //    [promptView addSubview:promptLabel];
@@ -273,6 +353,46 @@
         make.height.mas_equalTo(@(35));
     }];
     
+    [idCardView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(promptView.mas_bottom);
+        make.centerX.equalTo(weakSelf.mas_centerX);
+        make.width.mas_equalTo(@(SCREENWIDTH));
+        make.height.mas_equalTo(@(0));
+    }];
+    [sideFacebutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(idCardView).offset(5);
+        make.left.equalTo(idCardView).offset(10);
+        make.width.height.mas_equalTo(@(90));
+    }];
+    [sideBackbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(sideFacebutton.mas_centerY);
+        make.left.equalTo(sideFacebutton.mas_right).offset(20);
+        make.width.height.mas_equalTo(@(90));
+    }];
+    [_sideFaceImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sideFacebutton).offset(10);
+        make.centerX.equalTo(sideFacebutton.mas_centerX);
+        make.width.mas_equalTo(@(51));
+        make.height.mas_equalTo(@(32));
+    }];
+    [_sideBackImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sideBackbutton).offset(10);
+        make.centerX.equalTo(sideBackbutton.mas_centerX);
+        make.width.mas_equalTo(@(51));
+        make.height.mas_equalTo(@(32));
+    }];
+    [_sideFaceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(sideFacebutton.mas_centerX);
+        make.bottom.equalTo(sideFacebutton).offset(-5);
+    }];
+    [_sideBackLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(sideBackbutton.mas_centerX);
+        make.bottom.equalTo(sideBackbutton).offset(-5);
+    }];
+    
+    
+    
+    
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(weakSelf).offset(-45);
         make.left.right.equalTo(weakSelf);
@@ -281,7 +401,7 @@
     
     // == 物流信息视图 == //
     [fourView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(promptView.mas_bottom).offset(15);
+        make.top.equalTo(lineView.mas_bottom);
         make.left.right.equalTo(weakSelf);
         make.height.mas_equalTo(@45);
     }];
@@ -318,6 +438,9 @@
     }];
     
 //    [self.promptView removeFromSuperview];
+}
+- (void)idcardClick:(UIButton *)button {
+    
 }
 - (void)tapClick:(UITapGestureRecognizer *)tap {
     UIView *tapView = [tap view];
@@ -409,9 +532,9 @@
         [mutablePhoneNumber replaceCharactersInRange:range withString:@"**********"];
     }
     self.idCardLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:14.] SubColor:[UIColor textDarkGrayColor] AllString:[NSString stringWithFormat:@"%@%@",idCardStr,mutablePhoneNumber] SubStringArray:@[mutablePhoneNumber]];
-    [MBProgressHUD showSuccess:@"身份证保存成功"];
     
 }
+
 
 @end
 
