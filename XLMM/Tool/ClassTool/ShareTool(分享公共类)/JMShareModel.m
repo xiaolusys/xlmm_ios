@@ -36,7 +36,7 @@
     }
     return self;
 }
-/**  122334324342314324123
+/**  
  *
  @property (nonatomic,copy) NSString *active_at;
  

@@ -158,7 +158,6 @@
 - (void)quitLogin {
     self.navigationItem.rightBarButtonItem = nil;
     self.homeHeaderView.userInfoDic = nil;
-
 }
 
 #pragma mark 对外提供的接口

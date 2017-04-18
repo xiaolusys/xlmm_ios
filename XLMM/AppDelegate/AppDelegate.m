@@ -83,9 +83,14 @@
 }
 #pragma mark ======== 设置根控制器 ========
 - (void)fetchRootVC {
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
+    self.window.rootViewController = tabBarVC;
+    [self.window makeKeyAndVisible];
     NSInteger netWorkStatus = [AFNetworkReachabilityManager manager].networkReachabilityStatus;
     if (netWorkStatus == 0) {
-        [self rootWithLoginVC];
+        [[JMGlobal global] showLoginViewController];
         return ;
     }
     [self lodaUserInfo];
@@ -93,6 +98,7 @@
 }
 - (void)lodaUserInfo {
     [[JMGlobal global] upDataLoginStatusSuccess:^(id responseObject) {
+        [self cancleWaitTimerAndReuestLaunchImage];
         BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
         BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
         BOOL kIsVIP = NO;
@@ -102,31 +108,16 @@
         }
         if (kIsVIP) {
             if (kIsBindPhone) {
-                [self rootWithTabBar];
                 return ;
             }
         }
-        [self rootWithLoginVC];
+        [[JMGlobal global] showLoginViewController];
     } failure:^(NSInteger errorCode) {
-        [self rootWithLoginVC];
+        [self cancleWaitTimerAndReuestLaunchImage];
+        [[JMGlobal global] showLoginViewController];
     }];
 }
-- (void)rootWithTabBar {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
-    JMRootTabBarController *tabBarVC = [[JMRootTabBarController alloc] init];
-    self.window.rootViewController = tabBarVC;
-    [self.window makeKeyAndVisible ];
-    [XHLaunchAd cancelWatiTimer];
-    [self getLaunchImage];
-}
-- (void)rootWithLoginVC {
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = [UIColor whiteColor];
-    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    self.window.rootViewController = nav;
-    [self.window makeKeyAndVisible];
+- (void)cancleWaitTimerAndReuestLaunchImage {
     [XHLaunchAd cancelWatiTimer];
     [self getLaunchImage];
 }

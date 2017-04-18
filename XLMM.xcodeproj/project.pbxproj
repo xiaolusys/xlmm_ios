@@ -314,9 +314,6 @@
 		1F2B014D1E83850300E8C47E /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B01471E83850300E8C47E /* NSData+Base64.m */; };
 		1F2B014E1E83850300E8C47E /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B01491E83850300E8C47E /* NSData+CommonCrypto.m */; };
 		1F2B014F1E83850300E8C47E /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B014B1E83850300E8C47E /* NSString+Base64.m */; };
-		1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E161D58223900E3A68B /* JMHotGoodsController.m */; };
-		1F2F9E1A1D58228900E3A68B /* JMOutStockGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E191D58228900E3A68B /* JMOutStockGoodsController.m */; };
-		1F2F9E1D1D582A7A00E3A68B /* JMStoreUpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E1C1D582A7A00E3A68B /* JMStoreUpModel.m */; };
 		1F2F9E321D58864200E3A68B /* JMGoodsExplainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E311D58864200E3A68B /* JMGoodsExplainCell.m */; };
 		1F2F9E351D58865E00E3A68B /* JMGoodsAttributeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E341D58865E00E3A68B /* JMGoodsAttributeCell.m */; };
 		1F2F9E461D5978EB00E3A68B /* JMGoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E451D5978EB00E3A68B /* JMGoodsDetailController.m */; };
@@ -1194,12 +1191,6 @@
 		1F2B01491E83850300E8C47E /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		1F2B014A1E83850300E8C47E /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
 		1F2B014B1E83850300E8C47E /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
-		1F2F9E151D58223900E3A68B /* JMHotGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMHotGoodsController.h; sourceTree = "<group>"; };
-		1F2F9E161D58223900E3A68B /* JMHotGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMHotGoodsController.m; sourceTree = "<group>"; };
-		1F2F9E181D58228900E3A68B /* JMOutStockGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMOutStockGoodsController.h; sourceTree = "<group>"; };
-		1F2F9E191D58228900E3A68B /* JMOutStockGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMOutStockGoodsController.m; sourceTree = "<group>"; };
-		1F2F9E1B1D582A7A00E3A68B /* JMStoreUpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMStoreUpModel.h; sourceTree = "<group>"; };
-		1F2F9E1C1D582A7A00E3A68B /* JMStoreUpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMStoreUpModel.m; sourceTree = "<group>"; };
 		1F2F9E2D1D58797700E3A68B /* JMGoodsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsDetailController.h; sourceTree = "<group>"; };
 		1F2F9E301D58864200E3A68B /* JMGoodsExplainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMGoodsExplainCell.h; sourceTree = "<group>"; };
 		1F2F9E311D58864200E3A68B /* JMGoodsExplainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMGoodsExplainCell.m; sourceTree = "<group>"; };
@@ -2302,7 +2293,6 @@
 			children = (
 				1FD800461DF10A2500382E44 /* homePageFineCounpGoods */,
 				1FE52E3D1D94E0BD0051D5A0 /* Category(分类) */,
-				1F2F9E0E1D5820BF00E3A68B /* MyCollection(我的收藏) */,
 				1F27A62F1D275FB400A0F80B /* MMDetail(详情页) */,
 				1F498B041D276450007E77FC /* Carts&Pay(购物车与支付) */,
 				1F27A6331D275FB400A0F80B /* MMRoot(首页) */,
@@ -3293,43 +3283,6 @@
 				1F2B014B1E83850300E8C47E /* NSString+Base64.m */,
 			);
 			path = AES;
-			sourceTree = "<group>";
-		};
-		1F2F9E0E1D5820BF00E3A68B /* MyCollection(我的收藏) */ = {
-			isa = PBXGroup;
-			children = (
-				1F2F9E101D5820FB00E3A68B /* Model */,
-				1F2F9E111D5820FB00E3A68B /* View */,
-				1F2F9E0F1D5820FB00E3A68B /* Controller */,
-			);
-			path = "MyCollection(我的收藏)";
-			sourceTree = "<group>";
-		};
-		1F2F9E0F1D5820FB00E3A68B /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				1F2F9E151D58223900E3A68B /* JMHotGoodsController.h */,
-				1F2F9E161D58223900E3A68B /* JMHotGoodsController.m */,
-				1F2F9E181D58228900E3A68B /* JMOutStockGoodsController.h */,
-				1F2F9E191D58228900E3A68B /* JMOutStockGoodsController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		1F2F9E101D5820FB00E3A68B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				1F2F9E1B1D582A7A00E3A68B /* JMStoreUpModel.h */,
-				1F2F9E1C1D582A7A00E3A68B /* JMStoreUpModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		1F2F9E111D5820FB00E3A68B /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		1F2F9E2A1D5878F500E3A68B /* Controller */ = {
@@ -6964,7 +6917,6 @@
 				1F1FB8B01D88EAE7004C60CE /* JMMineIntegralModel.m in Sources */,
 				3A2E266B1D12F53E005C1CDA /* IosJsBridge.m in Sources */,
 				1F6B7A971DDB127E009AB446 /* JMCartViewController.m in Sources */,
-				1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */,
 				1F0213171E6435030088AD2D /* UICollectionView+CSCollectionViewPlaceHolder.m in Sources */,
 				1F3C1B121E8B9FCF008720B2 /* XHLaunchAdConfiguration.m in Sources */,
 				1F5877941DB8A60D00949302 /* JMFetureFansModel.m in Sources */,
@@ -7160,7 +7112,6 @@
 				1F498C4A1D2772D0007E77FC /* JMLogTimeListController.m in Sources */,
 				1F4C9EA01D9912600089CE74 /* UIImage+UdeskSDK.m in Sources */,
 				1F4C9E8E1D9912600089CE74 /* UdeskSpectrumView.m in Sources */,
-				1F2F9E1A1D58228900E3A68B /* JMOutStockGoodsController.m in Sources */,
 				183072851C97C00900B7665E /* NSString+URL.m in Sources */,
 				1F56E27D1D347F0B0092EC91 /* JMUntappedCouponController.m in Sources */,
 				1FF72C7C1DE7E7A30035F436 /* JMSocialActivityController.m in Sources */,
@@ -7221,7 +7172,6 @@
 				1F3C1B151E8B9FCF008720B2 /* XHLaunchAdImageManager.m in Sources */,
 				1F760E2C1DB61CC400307093 /* LogisticsModel.m in Sources */,
 				1F4C9E8A1D9912600089CE74 /* UdeskTipsCell.m in Sources */,
-				1F2F9E1D1D582A7A00E3A68B /* JMStoreUpModel.m in Sources */,
 				1F7018D81E6E40650070C2D9 /* JMInpotBoxBaseController.m in Sources */,
 				1F4C9E831D9912600089CE74 /* UdeskChatSend.m in Sources */,
 				1F4C9E9B1D9912600089CE74 /* UdeskTransitioningAnimation.m in Sources */,

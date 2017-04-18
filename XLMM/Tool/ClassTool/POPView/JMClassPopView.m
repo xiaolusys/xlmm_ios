@@ -9,7 +9,6 @@
 #import "JMClassPopView.h"
 #import "JMSelecterButton.h"
 
-#define FONT_SIZE 14.
 #define ButtonWidth SCREENWIDTH * 0.6
 
 @interface JMClassPopView ()
@@ -53,13 +52,8 @@
         }else {
             self.isCancel = NO;
         }
-//        CGFloat Width = frame.size.width;
-//        CGFloat Height = frame.size.height;
-//        CGFloat infoStringW = [self widthForString:descTitle fontSize:FONT_SIZE andHeight:0];
-        CGFloat infoStringH = [self heightForString:descTitle fontSize:FONT_SIZE andWidth:(ButtonWidth - 30)];
-        
+        CGFloat infoStringH = [descTitle heightWithWidth:(ButtonWidth - 30) andFont:14.].height;
         CGFloat cornerR = ButtonWidth / 2;
-        
         UIView *baseView = [UIView new];
         [self addSubview:baseView];
         baseView.backgroundColor = [UIColor whiteColor];
@@ -111,21 +105,9 @@
         self.sureSelectedButton.titleLabel.font = [UIFont systemFontOfSize:16.];
         [self.sureSelectedButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-//        UILabel *label2 = [UILabel new];
-//        [self.sureSelectedButton addSubview:label2];
-//        label2.font = [UIFont systemFontOfSize:16.];
-//        label2.textColor = [UIColor colorWithBlueColor];
-//        label2.text = sure;
-        
         if (self.isCancel) {
             lineView2.hidden = YES;
             self.sureSelectedButton.titleLabel.font = [UIFont systemFontOfSize:18.];
-//            label2.font = [UIFont systemFontOfSize:18.];
-//            UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:self.sureSelectedButton.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(10, 10)];
-//            CAShapeLayer *maskLayer2 = [[CAShapeLayer alloc] init];
-//            maskLayer2.frame = self.sureSelectedButton.bounds;
-//            maskLayer2.path = maskPath2.CGPath;
-//            self.sureSelectedButton.layer.mask = maskLayer2;
         }else {
             self.cancelSelectedButton = [UIButton buttonWithType:UIButtonTypeCustom];
             self.cancelSelectedButton.backgroundColor = [UIColor clearColor];
@@ -135,33 +117,7 @@
             [self.cancelSelectedButton setTitleColor:[UIColor colorWithBlueColor] forState:UIControlStateNormal];
             self.cancelSelectedButton.titleLabel.font = [UIFont systemFontOfSize:16.];
             [self.cancelSelectedButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
-//            UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.cancelSelectedButton.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(10, 0)];
-//            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-//            maskLayer.frame = self.cancelSelectedButton.bounds;
-//            maskLayer.path = maskPath.CGPath;
-//            self.cancelSelectedButton.layer.mask = maskLayer;
-//            
-//            
-//            UIBezierPath *maskPath2 = [UIBezierPath bezierPathWithRoundedRect:self.sureSelectedButton.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(0, 10)];
-//            CAShapeLayer *maskLayer2 = [[CAShapeLayer alloc] init];
-//            maskLayer2.frame = self.sureSelectedButton.bounds;
-//            maskLayer2.path = maskPath2.CGPath;
-//            self.sureSelectedButton.layer.mask = maskLayer2;
-            
-//            self.cancelTitleLabel = [UILabel new];
-//            [self.cancelSelectedButton addSubview:self.cancelTitleLabel];
-//            self.cancelTitleLabel.font = [UIFont systemFontOfSize:16.];
-//            self.cancelTitleLabel.textColor = [UIColor colorWithBlueColor];
-//            self.cancelTitleLabel.text = cancel;
-            
         }
-        
-        
-        
-        
-        
-        
         [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self);
             make.width.mas_equalTo(@(ButtonWidth));
@@ -220,31 +176,7 @@
                 make.width.mas_equalTo(@(cornerR));
                 make.height.mas_equalTo(@(40));
             }];
-//            [self.cancelTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.center.equalTo(self.cancelSelectedButton);
-//            }];
         }
-//        [label2 mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.center.equalTo(self.sureSelectedButton);
-//        }];
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     
@@ -259,21 +191,57 @@
 }
 
 
-//获取字符串的宽度
-- (CGFloat)widthForString:(NSString *)value fontSize:(float)fontSize andHeight:(float)height {
-    
-    
-    CGSize sizeToFit = [value boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.]} context:nil].size;
-    //    CGSize sizeToFit = [value sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(CGFLOAT_MAX, height) lineBreakMode:NSLineBreakByWordWrapping];//此处的换行类型（lineBreakMode）可根据自己的实际情况进行设置
-    return sizeToFit.width;
-}
-//获得字符串的高度
-- (CGFloat)heightForString:(NSString *)value fontSize:(float)fontSize andWidth:(float)width {
-    CGSize sizeToFit = [value boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.]} context:nil].size;
-    
-    //    CGSize sizeToFit = [value sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(width, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];//此处的换行类型（lineBreakMode）可根据自己的实际情况进行设置
-    return sizeToFit.height;
-}
-
-
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

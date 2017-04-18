@@ -439,8 +439,6 @@
         //发送通知在root中接收
         [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
         [self backApointInterface];
-        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
     }else if (self.verificationCodeType == SMSVerificationCodeWithForgetPWD) {
         JMInstallPasswordController *pwdVC = [[JMInstallPasswordController alloc] init];
         pwdVC.pwdType = 0;

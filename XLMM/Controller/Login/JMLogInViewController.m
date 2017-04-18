@@ -56,20 +56,22 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [MobClick beginLogPageView:@"JMLogInViewController"];
-    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMLogInViewController"];
-    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
-    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick1:)];
     self.fd_interactivePopDisabled = YES;
+    
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
     
     [self initUI];
     [self initAutolayout];
@@ -141,7 +143,6 @@
     
 }
 - (void)phoneNumberLogin:(NSNotification *)notification{
-    //  NSLog(@"手机登录");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark --- 监听微信登录的通知
@@ -269,10 +270,11 @@
         [JMUserDefaults setObject:kWeiXinLogin forKey:kLoginMethod];
         [JMUserDefaults synchronize];
         if (kIsVIP) {
-            if (kIsBindPhone) {
+            if (!kIsBindPhone) {
                 // 跳主页
+                [self dismissViewControllerAnimated:YES completion:nil];
                 JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-                JMKeyWindow.rootViewController = tabBarVC;
+                tabBarVC.selectedIndex = 0;
             }else {
                 // 绑定手机
                 NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];

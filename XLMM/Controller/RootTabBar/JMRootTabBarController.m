@@ -59,6 +59,8 @@
     [JMNotificationCenter  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
     [JMNotificationCenter  addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
     [JMNotificationCenter  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti) name:@"WeChatLogin" object:nil];
     
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
@@ -119,9 +121,10 @@
   
 }
 
-- (void)setSelectedIndex:(NSUInteger)selectedIndex {
-    [super setSelectedIndex:selectedIndex];
-}
+//- (void)setSelectedIndex:(NSUInteger)selectedIndex {
+//    [super setSelectedIndex:selectedIndex];
+//    [self setSelectedIndex:selectedIndex];
+//}
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     if ([viewController.tabBarItem.title isEqualToString:@"首页"]) {
@@ -172,10 +175,7 @@
             [MobClick event:@"tabBarWithFine"];
             return YES;
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            loginVC.isTabBarLogin = YES;
-            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
-            [viewController presentViewController:rootNav animated:YES completion:nil];
+            [[JMGlobal global] showLoginViewController];
             return NO;
         }
     }else if ([viewController.tabBarItem.title isEqualToString:@"购物车"]) {
@@ -183,10 +183,7 @@
             [MobClick event:@"tabBarWithShoopingCart"];
             return YES;
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            loginVC.isTabBarLogin = YES;
-            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
-            [viewController presentViewController:rootNav animated:YES completion:nil];
+            [[JMGlobal global] showLoginViewController];
             return NO;
         }
     }else if ([viewController.tabBarItem.title isEqualToString:@"首页"]) {
@@ -212,10 +209,7 @@
             [MobClick event:@"tabBarWithMine"];
             return YES;
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            loginVC.isTabBarLogin = YES;
-            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
-            [viewController presentViewController:rootNav animated:YES completion:nil];
+            [[JMGlobal global] showLoginViewController];
             return NO;
         }
     }else {
@@ -223,11 +217,16 @@
     }
   
 }
-
 - (void)shoppingCartkuaiquguangguang {
     self.selectedIndex = 0;
-    
 }
+- (void)phoneNumberLogin {
+    self.selectedIndex = 0;
+}
+- (void)WeChatLoginNoti {
+    self.selectedIndex = 0;
+}
+
 #pragma mark --- 购物车数量 --- 
 - (void)setLabelNumber {
 //    [self requestCartNumber];

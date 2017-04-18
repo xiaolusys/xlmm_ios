@@ -199,7 +199,6 @@
      */
     self.actualPay.text = [NSString stringWithFormat:@"实付 %.2f", [orderM.order_value floatValue]];
     //    self.actualPay.text = orderM.carry_type_name;
-    
     self.timeLabel.text = [NSString jm_subWithHourAndMinute:orderM.created];
     
 }
