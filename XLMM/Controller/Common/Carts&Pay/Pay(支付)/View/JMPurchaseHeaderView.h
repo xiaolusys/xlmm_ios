@@ -13,6 +13,7 @@
 
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index;
 - (void)composeHeaderSaveIdcard:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params;
+- (void)composeHeaderIdcardActionSheetClick:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params;
 
 @end
 
@@ -37,5 +38,7 @@
 @property (nonatomic, weak) id<JMPurchaseHeaderViewDelegate> delegate;
 
 @property (nonatomic, assign) BOOL saveIdcardSuccess;
+@property (nonatomic, strong) UIImage *zhengImage;
+@property (nonatomic, strong) UIImage *fanImage;
 
 @end

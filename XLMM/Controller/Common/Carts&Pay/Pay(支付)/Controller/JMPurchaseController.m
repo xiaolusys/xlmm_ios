@@ -27,10 +27,17 @@
 #import "JMRichTextTool.h"
 #import "JMPayment.h"
 #import "JMAddressModel.h"
+#import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+
+#define iOS7Later ([UIDevice currentDevice].systemVersion.floatValue >= 7.0f)
+#define iOS8Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
+#define iOS9Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
+#define iOS9_1Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.1f)
 
 
-
-@interface JMPurchaseController ()<UIAlertViewDelegate,JMOrderPayViewDelegate,JMPayCouponControllerDelegate,JMAddressViewControllerDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate> {
+@interface JMPurchaseController ()<UIAlertViewDelegate,UIActionSheetDelegate,JMOrderPayViewDelegate,JMPayCouponControllerDelegate,JMAddressViewControllerDelegate,JMChoiseLogisControllerDelegate,UITableViewDataSource,UITableViewDelegate,JMPurchaseHeaderViewDelegate,JMPurchaseFooterViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
     NSDictionary *_couponData;
     NSString *_logisticsID;           // 选择物流的ID
     NSDictionary *_couponInfo;        // 优惠券
@@ -77,6 +84,12 @@
     BOOL _cartPayInfoLoadFinish;
     BOOL _addressInfoLoadFinish;
     
+    NSString *sideType;
+    UIImage *_currentImage;
+    BOOL _isRefreshAddressInfo;
+    NSMutableDictionary *_upDataAddressParams;
+    NSString *_sideFaceStr;
+    NSString *_sideBackStr;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -169,7 +182,9 @@ static BOOL isAgreeTerms = YES;
     }else {
         self.isInstallWX = NO;
     }
-    [self loadAddressInfo];
+    if (_isRefreshAddressInfo) {
+        [self loadAddressInfo];
+    }
     [MobClick beginLogPageView:@"purchase"];
 }
 - (void)viewWillDisappear:(BOOL)animated {
@@ -192,6 +207,7 @@ static BOOL isAgreeTerms = YES;
     [JMNotificationCenter addObserver:self selector:@selector(paySuccessful) name:@"ZhifuSeccessfully" object:nil];
     [JMNotificationCenter addObserver:self selector:@selector(popview) name:@"CancleZhifu" object:nil];
     
+    _upDataAddressParams = [NSMutableDictionary dictionary];
     self.isCanCoupon = NO;
     self.isUseXLW = NO;
     self.isEnoughRight = NO;
@@ -205,6 +221,7 @@ static BOOL isAgreeTerms = YES;
     _isVirtualCoupone = YES;
     _cartPayInfoLoadFinish = NO;
     _addressInfoLoadFinish = NO;
+    _isRefreshAddressInfo = YES;
     
     _cartsInfoLevel = 0;
     _addressInfoLevel = 0;
@@ -487,7 +504,7 @@ static BOOL isAgreeTerms = YES;
     //插入导航控制器下导航条下面
     [self.navigationController.view insertSubview:addressDesView belowSubview:self.navigationController.navigationBar];
     
-    UIImageView *messageImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageImage"]];
+    UIImageView *messageImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageImageNomal"]];
     [addressDesView addSubview:messageImage];
     messageImage.contentMode = UIViewContentModeScaleAspectFill;
     messageImage.clipsToBounds = YES;
@@ -501,14 +518,15 @@ static BOOL isAgreeTerms = YES;
     
     UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [addressDesView addSubview:messageButton];
-    [messageButton setTitle:@"x" forState:UIControlStateNormal];
+    [messageButton setTitle:@"X" forState:UIControlStateNormal];
     [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    messageButton.titleLabel.font = CS_UIFontSize(14.);
     [messageButton addTarget:self action:@selector(messageButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     [messageImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(addressDesView).offset(10);
         make.centerY.equalTo(addressDesView.mas_centerY);
-        make.width.height.mas_equalTo(@(15));
+        make.width.height.mas_equalTo(@(16));
     }];
     [messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(messageImage.mas_right).offset(10);
@@ -749,6 +767,10 @@ static BOOL isAgreeTerms = YES;
             [MBProgressHUD showWarning:@"请填写身份证号"];
             return;
         }
+        if (self.purchaseHeaderView.zhengImage == nil && self.purchaseHeaderView.fanImage == nil) {
+            [MBProgressHUD showWarning:@"请上传身份证照片"];
+            return;
+        }
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
         if (_cartsInfoLevel > _addressInfoLevel) {
@@ -807,17 +829,21 @@ static BOOL isAgreeTerms = YES;
     }else { }
 }
 - (void)composeHeaderSaveIdcard:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params {
-    button.enabled = NO;
     [MBProgressHUD showLoading:@""];
+    button.enabled = NO;
+    [self saveButton:button Params:params];
+}
+- (void)saveButton:(UIButton *)button Params:(NSDictionary *)params {
     NSString *modifyUrlStr = [NSString stringWithFormat:@"%@/rest/v1/address/%@/update", Root_URL,params[@"id"]];
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:modifyUrlStr WithParaments:params WithSuccess:^(id responseObject) {
         NSInteger code = [responseObject[@"code"] integerValue];
         if (code == 0) {
-            [self loadAddressInfo];
             [MBProgressHUD hideHUD];
             NSDictionary *result = responseObject[@"result"];
             if (result) {
                 _addressID = [result[@"address_id"] stringValue];
+                _addressInfoLevel = [result[@"personalinfo_level"] integerValue];
+                [self layoutLevel];
             }
             self.purchaseHeaderView.saveIdcardSuccess = YES;
             [MBProgressHUD showSuccess:@"身份证保存成功"];
@@ -1084,7 +1110,28 @@ static BOOL isAgreeTerms = YES;
         JMOrderListController *orderVC = [[JMOrderListController alloc] init];
         orderVC.currentIndex = 1;
         [self.navigationController pushViewController:orderVC animated:YES];
-    }else {}
+    }else if (alertView.tag == 103 || alertView.tag == 104) {
+        if (buttonIndex == 1) { // 去设置界面，开启相机访问权限
+            if (iOS8Later) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            } else {
+                NSURL *privacyUrl;
+                if (alertView.tag == 1) {
+                    privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=CAMERA"];
+                } else {
+                    privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=PHOTOS"];
+                }
+                if ([[UIApplication sharedApplication] canOpenURL:privacyUrl]) {
+                    [[UIApplication sharedApplication] openURL:privacyUrl];
+                } else {
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"抱歉" message:@"无法跳转到隐私设置页面，请手动前往设置页面，谢谢" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alert show];
+                }
+            }
+        }
+    }else {
+        
+    }
 }
 
 #pragma mark 支付成功或取消后续操作
@@ -1140,6 +1187,170 @@ static BOOL isAgreeTerms = YES;
     }
 }
 
+- (void)composeHeaderIdcardActionSheetClick:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params {
+    _upDataAddressParams = [params mutableCopy];
+    if (button.tag == 10) {
+        sideType = @"face";
+        [self showActionSheet];
+    }else {
+        sideType = @"back";
+        [self showActionSheet];
+    }
+    
+}
+- (void)showActionSheet {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"去相册选择", nil];
+    [sheet showInView:self.view];
+}
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self takePhoto:buttonIndex];
+}
+#pragma mark - UIImagePickerController
+- (void)takePhoto:(NSInteger)index {
+    if (index == 0) {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (authStatus == AVAuthorizationStatusNotDetermined) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {//相机权限
+                if (granted) {
+                    NSLog(@"Authorized");
+                    [self takePhoto:0];
+                }else{
+                    NSLog(@"Denied or Restricted");
+                    
+                }
+            }];
+        }else if ((authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) && iOS7Later) {
+            // 无相机权限 做一个友好的提示
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+            alert.tag = 103;
+            [alert show];
+            // 拍照之前还需要检查相册权限
+        }else if ([self authorizationStatus] == 0) {
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    NSLog(@"Authorized");
+                    [self diaoyongxiangji:UIImagePickerControllerSourceTypeCamera];
+                }else{
+                    NSLog(@"Denied or Restricted");
+                }
+            }];
+        }else if ([self authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+            alert.tag = 104;
+            [alert show];
+        }else {
+            [self diaoyongxiangji:UIImagePickerControllerSourceTypeCamera];
+        }
+        
+    }else if (index == 1) {
+        if ([self authorizationStatus] == 0) {
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    NSLog(@"Authorized");
+                    [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
+                }else{
+                    NSLog(@"Denied or Restricted");
+                }
+            }];
+        }else if ([self authorizationStatus] == 2) { // 已被拒绝，没有相册权限，将无法保存拍的照片
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"设置", nil];
+            alert.tag = 104;
+            [alert show];
+        }else {
+            [self diaoyongxiangji:UIImagePickerControllerSourceTypePhotoLibrary];
+        }
+        
+        
+    }else {
+        
+    }
+}
+- (void)diaoyongxiangji:(UIImagePickerControllerSourceType)type {
+    _isRefreshAddressInfo = NO;
+    UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
+    ipc.sourceType = type;
+    ipc.delegate = self;
+    [self presentViewController:ipc animated:YES completion:nil];
+    
+    
+    
+}
+
+- (NSInteger)authorizationStatus {
+    if (iOS8Later) {
+        return [PHPhotoLibrary authorizationStatus];
+    } else {
+        return [ALAssetsLibrary authorizationStatus];
+    }
+    return NO;
+}
+#pragma mark -- <UIImagePickerControllerDelegate>--
+// 获取图片后的操作
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    [MBProgressHUD showLoading:@""];
+    // 设置图片
+    _currentImage = info[UIImagePickerControllerOriginalImage];
+    CGFloat whRatio = _currentImage.size.width / _currentImage.size.height;
+    NSData *data = [self imageWithImage:_currentImage scaledToSize:CGSizeMake(whRatio * 600, 600)];
+    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"card_base64"] = encodedImageStr;
+    param[@"side"] = sideType;
+    NSString *string = [NSString stringWithFormat:@"%@/rest/v2/ocr/idcard_indentify", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:string WithParaments:param WithSuccess:^(id responseObject) {
+        NSLog(@"%@",responseObject);
+        [self fetchWithData:responseObject];
+    } WithFail:^(NSError *error) {
+        [MBProgressHUD showError:@"上传失败,请稍后重试"];
+    } Progress:^(float progress) {
+    }];
+}
+- (void)fetchWithData:(NSDictionary *)response {
+    if ([response[@"code"] integerValue] == 0) {
+        NSDictionary *dict = response[@"card_infos"];
+        NSString *sideStr = [NSString stringWithFormat:@"%@",dict[@"side"]];
+        if ([sideStr isEqualToString:@"back"]) {
+            self.purchaseHeaderView.fanImage = _currentImage;
+            _sideFaceStr = [NSString stringWithFormat:@"%@",dict[@"card_imgpath"]];
+        }else {
+            self.purchaseHeaderView.zhengImage = _currentImage;
+            _sideBackStr = [NSString stringWithFormat:@"%@",dict[@"card_imgpath"]];
+            NSString *idCardNum = [NSString stringWithFormat:@"%@",dict[@"num"]];
+            NSString *idCardName = dict[@"name"];
+            if (![self.purchaseHeaderView.addressModel.receiver_name isEqual:idCardName] || ![self.purchaseHeaderView.addressModel.identification_no isEqual:idCardNum]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"为了避免清关失败,提供的身份证必须和收货人一致" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alertView show];
+            }
+        }
+        if (self.purchaseHeaderView.fanImage != nil && self.purchaseHeaderView.zhengImage != nil) {
+            _upDataAddressParams[@"card_backpath"] = _sideBackStr;
+            _upDataAddressParams[@"card_facepath"] = _sideFaceStr;
+            [self saveButton:nil Params:_upDataAddressParams];
+        }else {
+            [MBProgressHUD hideHUD];
+        }
+    }else {
+        [MBProgressHUD showWarning:response[@"info"]];
+    }
+    
+}
+- (NSData *)imageWithImage:(UIImage*)image
+              scaledToSize:(CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return UIImageJPEGRepresentation(newImage, 0.7);
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    if ([picker isKindOfClass:[UIImagePickerController class]]) {
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    }
+}
 
 
 

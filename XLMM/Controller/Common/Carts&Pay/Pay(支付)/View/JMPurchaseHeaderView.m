@@ -16,6 +16,7 @@
     UIImageView *_sideBackImage;
     UILabel *_sideFaceLabel;
     UILabel *_sideBackLabel;
+    NSMutableDictionary *parame;
 }
 
 /**
@@ -70,8 +71,24 @@
             [self.promptView bringSubviewToFront:self.idCardField];
             self.idCardField.text = @"";
         }
-        
+        NSDictionary *idCardDic = addressDic[@"idcard"];
+        [_sideFaceImage sd_setImageWithURL:[NSURL URLWithString:[idCardDic[@"face"] JMUrlEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            self.zhengImage = image;
+        }];
+        [_sideBackImage sd_setImageWithURL:[NSURL URLWithString:[idCardDic[@"back"] JMUrlEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            self.fanImage = image;
+        }];
+        [self fetAddressModel:self.addressModel];
     }
+}
+- (void)fetAddressModel:(JMAddressModel *)model {
+    parame[@"id"] = model.addressID;
+    parame[@"receiver_state"] = model.receiver_state;
+    parame[@"receiver_city"] = model.receiver_city;
+    parame[@"receiver_district"] = model.receiver_district;
+    parame[@"receiver_address"] = model.receiver_address;
+    parame[@"receiver_name"] = model.receiver_name;
+    parame[@"receiver_mobile"] = model.receiver_mobile;
 }
 - (void)setAddressModel:(JMAddressModel *)addressModel {
     _addressModel = addressModel;
@@ -89,6 +106,15 @@
         [self.promptView bringSubviewToFront:self.idCardField];
         self.idCardField.text = @"";
     }
+    NSDictionary *idCardDic = addressModel.idcard;
+    [_sideFaceImage sd_setImageWithURL:[NSURL URLWithString:[idCardDic[@"face"] JMUrlEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.zhengImage = image;
+    }];
+    [_sideBackImage sd_setImageWithURL:[NSURL URLWithString:[idCardDic[@"back"] JMUrlEncodedString]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        self.fanImage = image;
+    }];
+    [self fetAddressModel:self.addressModel];
+    
 }
 - (void)setIsVirtualCoupone:(BOOL)isVirtualCoupone {
     _isVirtualCoupone = isVirtualCoupone;
@@ -121,6 +147,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _saveIdcardSuccess = NO;
+        parame = [NSMutableDictionary dictionary];
         [self setUpTopUI];
     }
     return self;
@@ -440,8 +467,12 @@
 //    [self.promptView removeFromSuperview];
 }
 - (void)idcardClick:(UIButton *)button {
-    
+    if (_delegate && [_delegate respondsToSelector:@selector(composeHeaderIdcardActionSheetClick:Button:params:)]) {
+        [_delegate composeHeaderIdcardActionSheetClick:self Button:button params:parame];
+    }
 }
+
+
 - (void)tapClick:(UITapGestureRecognizer *)tap {
     UIView *tapView = [tap view];
     NSInteger tag = tapView.tag;
@@ -502,16 +533,7 @@
         [MBProgressHUD showWarning:@"请核对身份证号"];
         return ;
     }
-    NSMutableDictionary *parame = [NSMutableDictionary dictionary];
-    parame[@"receiver_state"] = self.addressModel.receiver_state;
-    parame[@"receiver_city"] = self.addressModel.receiver_city;
-    parame[@"receiver_district"] = self.addressModel.receiver_district;
-    parame[@"receiver_address"] = self.addressModel.receiver_address;
-    parame[@"receiver_name"] = self.addressModel.receiver_name;
-    parame[@"receiver_mobile"] = self.addressModel.receiver_mobile;
     parame[@"identification_no"] = self.idCardField.text;
-    parame[@"id"] = self.addressModel.addressID;
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(composeHeaderSaveIdcard:Button:params:)]) {
         [self.delegate composeHeaderSaveIdcard:self Button:button params:parame];
     }
@@ -534,6 +556,42 @@
     self.idCardLabel.attributedText = [JMRichTextTool cs_changeFontAndColorWithSubFont:[UIFont systemFontOfSize:14.] SubColor:[UIColor textDarkGrayColor] AllString:[NSString stringWithFormat:@"%@%@",idCardStr,mutablePhoneNumber] SubStringArray:@[mutablePhoneNumber]];
     
 }
+- (void)setZhengImage:(UIImage *)zhengImage {
+    _zhengImage = zhengImage;
+    if (zhengImage == nil) {
+        _sideFaceImage.image = [UIImage imageNamed:@"idCardSideFace"];
+        _sideFaceLabel.hidden = NO;
+        [_sideFaceImage mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(@(51));
+            make.height.mas_equalTo(@(32));
+        }];
+        return;
+    }
+    _sideFaceImage.image = zhengImage;
+    [_sideFaceImage mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@(70));
+    }];
+    _sideFaceLabel.hidden = YES;
+    
+}
+- (void)setFanImage:(UIImage *)fanImage {
+    _fanImage = fanImage;
+    if (fanImage == nil) {
+        [_sideBackImage mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(@(51));
+            make.height.mas_equalTo(@(32));
+        }];
+        _sideBackLabel.hidden = NO;
+        _sideBackImage.image = [UIImage imageNamed:@"idCardSideBack"];
+        return;
+    }
+    [_sideBackImage mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(@(70));
+    }];
+    _sideBackLabel.hidden = YES;
+    _sideBackImage.image = fanImage;
+}
+
 
 
 @end
