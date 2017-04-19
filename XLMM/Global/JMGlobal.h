@@ -42,6 +42,11 @@ typedef void(^clearCacheBlock)(NSString *sdImageCacheString);
 
 
 /*
+ 弹出登录界面
+ */
+- (void)showLoginViewController;
+
+/*
     弹出视图
  */
 - (void)showpopForReceiveCouponFrame:(CGRect)frame WithBlock:(void (^)(UIView *maskView))clickBlock ActivePopBlock:(void (^)(UIButton *button))activeBlock;

@@ -293,13 +293,15 @@
                 [JMUserDefaults synchronize];
                 
                 if ([author isEqualToString:@"wxlogin"]) {
-                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"WeChatLogin" object:self];
-                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-                    [notificationCenter postNotification: broadcastMessage];
+                    [JMNotificationCenter postNotificationName:@"WeChatLogin" object:self];
+//                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"WeChatLogin" object:self];
+//                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+//                    [notificationCenter postNotification: broadcastMessage];
                 } else if([author isEqualToString:@"binding"]){
-                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"bindingwx" object:self];
-                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
-                    [notificationCenter postNotification: broadcastMessage];
+                    [JMNotificationCenter postNotificationName:@"bindingwx" object:self];
+//                    NSNotification * broadcastMessage = [ NSNotification notificationWithName:@"bindingwx" object:self];
+//                    NSNotificationCenter * notificationCenter = [ NSNotificationCenter defaultCenter];
+//                    [notificationCenter postNotification: broadcastMessage];
                 }
                 
             }

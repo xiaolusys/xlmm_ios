@@ -544,8 +544,7 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
                     pushVC.navTitle = @"文案精选";
                     [self.navigationController pushViewController:pushVC animated:YES];
                 }else {
-                    JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-                    [self.navigationController pushViewController:enterVC animated:YES];
+                    [[JMGlobal global] showLoginViewController];
                 }
             }else {
                 // webview跳转
@@ -978,24 +977,21 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
             cartVC.cartType = currentCartsType;
             [self.navigationController pushViewController:cartVC animated:YES];
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }
     }else if (button.tag == kBottomViewTag + 1) {  // 加入购物车
         _isUserClickAddCart = YES;
         if (isLogin) {
             [self showPopView];
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }
     }else if (button.tag == kBottomViewTag + 2) {  // 立即购买
         _isUserClickAddCart = NO;
         if (isLogin) {
             [self showPopView];
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }
     }else if (button.tag == kBottomViewTag + 3) {
         if (isLogin) {
@@ -1003,8 +999,7 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
             [self addCartUrlString:urlString Paramer:_paramer];
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }
     }else if (button.tag == kBottomViewTag + 4) {
         if (isLogin) {
@@ -1012,8 +1007,7 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
             NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts",Root_URL];
             [self addCartUrlString:urlString Paramer:_paramer];
         }else {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }
     }else { }
 }

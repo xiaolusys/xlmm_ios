@@ -164,9 +164,8 @@
             [JMUserDefaults setObject:@"unlogin" forKey:kLoginMethod];
             [JMUserDefaults synchronize];
             [JMNotificationCenter postNotificationName:@"logout" object:nil];
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            loginVC.isTabBarLogin = YES;
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [self.navigationController popViewControllerAnimated:NO];
+            [[JMGlobal global] showLoginViewController];
 //            RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
 //            [XLMM_APP.window.rootViewController presentViewController:rootNav animated:YES completion:nil];
 //            [self.navigationController popViewControllerAnimated:YES];

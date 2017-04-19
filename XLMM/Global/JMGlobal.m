@@ -13,6 +13,9 @@
 #import "JMRepopView.h"
 #import "JMPopViewAnimationSpring.h"
 #import "JMRefreshLoadView.h"
+#import "JMLogInViewController.h"
+#import "RootNavigationController.h"
+#import "AppDelegate.h"
 
 
 static BOOL isNetPrompt;
@@ -45,6 +48,18 @@ static NSString *userCustomerID;
     // 删除缓存
     [[SDWebImageManager sharedManager].imageCache clearMemory];
 }
+
+
+/*
+ 弹出登录界面
+ */
+- (void)showLoginViewController {
+    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
+    RootNavigationController *rootNav = [[RootNavigationController alloc] initWithRootViewController:loginVC];
+    [XLMM_APP.window.rootViewController presentViewController:rootNav animated:YES completion:^{
+    }];
+}
+
 #pragma mark ---------- 弹出视图 (分享,选择框等) ----------
 - (void)showpopBoxType:(popType)type Frame:(CGRect)frame ViewController:(UIViewController *)viewController WithBlock:(void (^)(UIView *maskView))clickBlock {
     JMShareView *cover = [JMShareView show];

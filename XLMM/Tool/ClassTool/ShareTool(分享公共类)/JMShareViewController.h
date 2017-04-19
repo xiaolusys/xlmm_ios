@@ -10,15 +10,10 @@
 
 @class JMShareModel;
 typedef void(^shareCancelBlock)(UIButton *button);
+
 @interface JMShareViewController : UIViewController
 
 @property (nonatomic,strong) JMShareModel *model;
-
-//@property (nonatomic,copy) NSString *activeID;
-
-//@property (nonatomic,strong) NSMutableDictionary *otherDict;
-
-//@property (nonatomic,copy) NSString *urlStr;
 @property (nonatomic, copy) shareCancelBlock blcok;
 
 

@@ -157,44 +157,13 @@
         self.headerView.hidden = YES;
     }
 }
-
-//- (void)setUrlStr:(NSString *)urlStr {
-//    _urlStr = urlStr;
-//}
-//- (void)setActiveID:(NSString *)activeID {
-//    _activeID = activeID;
-//}
-
 - (void)setModel:(JMShareModel *)model {
     _model = model;
     [self upDataWithModeProfit:model.profit];
     [self createData];
 }
-
-//- (void)setOtherDict:(NSMutableDictionary *)otherDict {
-//    _otherDict = otherDict;
-//}
-//- (void)loadData {
-//    
-//    NSLog(@"Shareview _urlStr=%@ _activeID=%@", _urlStr, _activeID);
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    [manager GET:_urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        if (!responseObject) return;
-//        
-//        [self createData:responseObject];
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//    }];
-//
-//}
-
-
 - (void)createData {
-//    NSDictionary *dic = _model.mj_keyValues;
-//    NSLog(@"Share para=%@",dic);
     if(_model == nil) return;
-    
     BOOL tpyeB = ([_model.share_type isEqual:@"link"] || [_model.share_type isEqual:@"0"]);
     if (tpyeB) {
         _isPic = NO;
@@ -207,10 +176,7 @@
     _imageUrlString = _model.share_img;
     _url = _model.share_link;
 //    _kuaizhaoLink = _url;
-//    _imageData = [UIImage imagewithURLString:[_imageUrlString imageShareCompression]];
-//    _imageData = [[JMGlobal global] getCacheImageWithKey:_imageUrlString];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:_imageUrlString]];
         _imageData = [UIImage imagewithURLString:_imageUrlString];
         dispatch_sync(dispatch_get_main_queue(), ^{
             if (!_imageData) {
@@ -218,13 +184,7 @@
             }
         });
     });
-//    _imageData = [UIImage imagewithURLString:_imageUrlString];
-//    _kuaiZhaoImage = [UIImage imagewithURLString:[_kuaizhaoLink imageShareCompression]];
-    
     _titleUrlString = [NSString stringWithFormat:@"%@",_content];
-    
-    NSLog(@"_titleStr -- > %@, \n _content -- > %@, \n  _imageUrlString -- > %@, \n _url -- > %@, \n _titleUrlString -- > %@, \n _isPic -- > %d",_titleStr,_content,_imageUrlString,_url,_titleUrlString,_isPic);
-    
 }
 
 - (void)composeShareBtn:(JMShareButtonView *)shareBtn didClickBtn:(NSInteger)index {

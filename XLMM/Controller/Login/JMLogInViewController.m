@@ -56,20 +56,22 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [MobClick beginLogPageView:@"JMLogInViewController"];
-    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
-    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:@"JMLogInViewController"];
-    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
-    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+//    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createNavigationBarWithTitle:nil selecotr:@selector(btnClick1:)];
     self.fd_interactivePopDisabled = YES;
+    
+    [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin:) name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti:) name:@"WeChatLogin" object:nil];
     
     [self initUI];
     [self initAutolayout];
@@ -141,7 +143,6 @@
     
 }
 - (void)phoneNumberLogin:(NSNotification *)notification{
-    //  NSLog(@"手机登录");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark --- 监听微信登录的通知
@@ -197,10 +198,10 @@
     }];
 }
 #pragma mark --- 移除通知
-//- (void)dealloc {
-//    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
-//    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
-//}
+- (void)dealloc {
+    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
+}
 #pragma mark ---- 点击微信登录的按钮
 - (void)wechatBtnClick:(UIButton *)btn {
     self.wechatBtn.enabled = NO;
@@ -258,7 +259,7 @@
         if (!responseObject) return ;
         BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
         BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
-        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsBindPhone = [NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
         BOOL kIsVIP = NO;
         if (kIsXLMMStatus) {
             NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
@@ -269,10 +270,10 @@
         [JMUserDefaults setObject:kWeiXinLogin forKey:kLoginMethod];
         [JMUserDefaults synchronize];
         if (kIsVIP) {
-            if (kIsBindPhone) {
+            if (!kIsBindPhone) {
                 // 跳主页
-                JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-                JMKeyWindow.rootViewController = tabBarVC;
+                [self dismissViewControllerAnimated:YES completion:nil];
+                [JMNotificationCenter postNotificationName:@"WeChatLoginSuccess" object:nil];
             }else {
                 // 绑定手机
                 NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
@@ -282,16 +283,14 @@
                 vc.userLoginMethodWithWechat = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
-            
         }else {
+//            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
             JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
             vc.verificationCodeType = SMSVerificationCodeWithLogin;
             vc.userNotXLMM = YES;
             vc.profileUserInfo = responseObject;
             vc.userLoginMethodWithWechat = YES;
             [self.navigationController pushViewController:vc animated:YES];
-            // 提示
-//            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
         }
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {

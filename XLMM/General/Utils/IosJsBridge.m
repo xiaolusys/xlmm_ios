@@ -9,7 +9,6 @@
 #import "IosJsBridge.h"
 #import <UIKit/UIKit.h>
 #import "JumpUtils.h"
-#import "JMLogInViewController.h"
 #import "JMShareViewController.h"
 #import "WebViewController.h"
 #import "UMSocial.h"
@@ -150,8 +149,7 @@
     NSLog(@"callNativeUniShareFunc");
     BOOL login = [JMUserDefaults boolForKey:@"login"];
     if (login == NO) {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-        [vc.navigationController pushViewController:enterVC animated:YES];
+        [[JMGlobal global] showLoginViewController];
         return;
     }else {
         [self universeShare:vc para:data];
@@ -164,8 +162,7 @@
 + (void)jumpToNativeLogin:(UIViewController *)vc para:(NSDictionary *)data{
     BOOL login = [JMUserDefaults boolForKey:@"login"];
     if (login == NO) {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-        [vc.navigationController pushViewController:enterVC animated:YES];
+        [[JMGlobal global] showLoginViewController];
         return;
     }else {
         NSString *target_url = [data objectForKey:@"target_url"];
