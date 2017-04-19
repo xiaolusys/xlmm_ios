@@ -46,6 +46,8 @@
  */
 @property (nonatomic,strong) UILabel *deductLabel;
 
+@property (nonatomic, strong) UILabel *skuNameLabel;
+
 
 @end
 
@@ -61,10 +63,17 @@
 }
 
 - (void)setUpUI {
+    self.layer.borderWidth = 0.5;
+    self.layer.borderColor = [UIColor countLabelColor].CGColor;
     
     UIImageView *iconImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:iconImageView];
     self.iconImageView = iconImageView;
+    self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconImageView.layer.masksToBounds = YES;
+    self.iconImageView.layer.cornerRadius = 5;
+    self.iconImageView.layer.borderWidth = 0.5;
+    self.iconImageView.layer.borderColor = [UIColor buttonDisabledBorderColor].CGColor;
     
     UILabel *isAPP = [[UILabel alloc] init];
     [self.contentView addSubview:isAPP];
@@ -73,6 +82,11 @@
     self.isAPP.textColor = [UIColor whiteColor];
     self.isAPP.font = [UIFont systemFontOfSize:12.];
     
+    UILabel *skuNameLabel = [[UILabel alloc] init];
+    [self.contentView addSubview:skuNameLabel];
+    self.skuNameLabel = skuNameLabel;
+    self.skuNameLabel.font = [UIFont boldSystemFontOfSize:12.];
+    self.skuNameLabel.textColor = [UIColor textDarkGrayColor];
     
     UILabel *userName = [[UILabel alloc] init];
     [self.contentView addSubview:userName];
@@ -113,13 +127,17 @@
     kWeakSelf
     
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.contentView).offset(10);
-        make.left.equalTo(weakSelf.contentView).offset(10);
-        make.width.height.mas_equalTo(@60);
+        make.top.left.equalTo(weakSelf.contentView).offset(10);
+        make.width.height.mas_equalTo(@70);
+    }];
+    [self.skuNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.iconImageView);
+        make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
+        make.right.equalTo(weakSelf.contentView);
     }];
     [self.userName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.iconImageView).offset(5);
         make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
+        make.centerY.equalTo(weakSelf.iconImageView.mas_centerY);
         make.width.mas_equalTo(@(100));
     }];
     [self.payState mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -134,7 +152,7 @@
     
     [self.isAPP mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakSelf.iconImageView.mas_right).offset(10);
-        make.bottom.equalTo(weakSelf.iconImageView.mas_bottom).offset(-5);
+        make.bottom.equalTo(weakSelf.iconImageView.mas_bottom);
     }];
     
     [self.actualPay mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -145,10 +163,6 @@
         make.left.equalTo(weakSelf.actualPay.mas_right).offset(5);
         make.centerY.equalTo(weakSelf.actualPay.mas_centerY);
     }];
-    
-    
-    
-    
     [self.deductLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakSelf.contentView).offset(-10);
         make.centerY.equalTo(weakSelf.actualPay.mas_centerY);
@@ -164,12 +178,9 @@
     
     //    self.isAPP = imageView;
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:[orderM.sku_img JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"zhanwei"]];
-    self.iconImageView.layer.masksToBounds = YES;
-    self.iconImageView.layer.cornerRadius = 5;
-    self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.userName.text = orderM.contributor_nick;
-    
+    self.skuNameLabel.text = orderM.sku_name;
     if ([orderM.carry_type intValue] == 1) {
         self.isAPP.text = @"";
     }else if([orderM.carry_type intValue] == 2) {
