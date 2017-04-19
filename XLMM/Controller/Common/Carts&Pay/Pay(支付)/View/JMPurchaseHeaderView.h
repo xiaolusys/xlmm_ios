@@ -12,6 +12,8 @@
 @protocol JMPurchaseHeaderViewDelegate <NSObject>
 
 - (void)composeHeaderTapView:(JMPurchaseHeaderView *)headerView TapClick:(NSInteger)index;
+- (void)composeHeaderSaveIdcard:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params;
+- (void)composeHeaderIdcardActionSheetClick:(JMPurchaseHeaderView *)headerView Button:(UIButton *)button params:(NSDictionary *)params;
 
 @end
 
@@ -19,7 +21,6 @@
 @interface JMPurchaseHeaderView : UIView
 
 @property (nonatomic, strong) UIView *addressView;
-
 @property (nonatomic, strong) UIView *logisticsView;
 
 @property (nonatomic, strong) NSArray *addressArr;
@@ -36,6 +37,8 @@
 
 @property (nonatomic, weak) id<JMPurchaseHeaderViewDelegate> delegate;
 
-
+@property (nonatomic, assign) BOOL saveIdcardSuccess;
+@property (nonatomic, strong) UIImage *zhengImage;
+@property (nonatomic, strong) UIImage *fanImage;
 
 @end

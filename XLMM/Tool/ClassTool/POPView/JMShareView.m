@@ -8,10 +8,6 @@
 
 #import "JMShareView.h"
 
-
-#define JMKeyWindow [UIApplication sharedApplication].keyWindow
-
-
 @implementation JMShareView
 
 // 设置浅灰色蒙板
