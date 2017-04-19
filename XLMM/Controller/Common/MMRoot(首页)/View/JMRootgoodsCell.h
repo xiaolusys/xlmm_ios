@@ -39,8 +39,6 @@ typedef void(^cacleStoreBlock)(NSString *storID);
 
 - (void)fillDataWithGoodsList:(JMRootGoodsModel *)model;      // 商品展示列表
 
-- (void)fillStoreUpData:(JMStoreUpModel *)model;              // 我的收藏
-
 @property (nonatomic, strong) NSDictionary *itemDict;
 
 @end

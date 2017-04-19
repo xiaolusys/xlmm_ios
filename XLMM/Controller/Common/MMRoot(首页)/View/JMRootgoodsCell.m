@@ -9,7 +9,6 @@
 #import "JMRootgoodsCell.h"
 #import "CollectionModel.h"
 #import "CollectionModel.h"
-#import "JMStoreUpModel.h"
 #import "JMRootGoodsModel.h"
 
 @interface JMRootgoodsCell ()
@@ -259,37 +258,6 @@
 //    }
 }
 
-- (void)fillStoreUpData:(JMStoreUpModel *)model {
-    self.backView.hidden = YES;
-    self.storeUpButton.hidden = NO;
-    
-    NSDictionary *dic = model.modelproduct;
-    NSString *string = dic[@"head_img"];
-
-    NSMutableString *newImageUrl = [NSMutableString stringWithString:string];
-//    [newImageUrl appendString:@"?"];
-    
-    if ([string hasPrefix:@"http:"] || [string hasPrefix:@"https:"]) {
-        
-    }else {
-        [newImageUrl insertString:@"http:" atIndex:0];
-    }
-    self.iconImage.alpha = 0.3;
-    [self.iconImage sd_setImageWithURL:[NSURL URLWithString:[[newImageUrl imageGoodsListCompression] JMUrlEncodedString]] placeholderImage:[UIImage imageNamed:@"placeHolderImage.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [UIView animateWithDuration:0.3f animations:^{
-            self.iconImage.alpha = 1.0;
-        }];
-    }];
-    
-    self.titleLabel.text = dic[@"name"];
-    
-    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.1f", [dic[@"lowest_agent_price"] floatValue]];
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"¥%.1f",[dic[@"lowest_std_sale_price"] floatValue]];
-    
-    _storeID = dic[@"id"];
-    
-    
-}
 - (void)setItemDict:(NSDictionary *)itemDict {
     self.backView.hidden = YES;
     

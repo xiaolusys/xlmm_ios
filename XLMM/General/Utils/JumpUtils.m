@@ -75,8 +75,7 @@
 + (void)jumpToLocation:(NSString *)target_url viewController:(UIViewController *)vc{
     BOOL login = [JMUserDefaults boolForKey:kIsLogin];
     if (!login) {
-        JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-        [vc.navigationController pushViewController:enterVC animated:YES];
+        [[JMGlobal global] showLoginViewController];
         return ;
     }
     if (target_url == nil) {
@@ -115,18 +114,10 @@
         [vc.navigationController pushViewController:youhuiVC animated:YES];
  
     }  else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/home"]){
-        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
-        tabBarVC.selectedIndex = 0;
-        
+        [JMNotificationCenter postNotificationName:@"notificationJump" object:self userInfo:@{@"selectedIndex":@"0"}];
     } else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_home"]){
         //  跳转到小鹿妈妈界面
-        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
-        tabBarVC.selectedIndex = 4;
-//        JMMaMaHomeController *mamaCenterVC = [[JMMaMaHomeController alloc] init];
-//        [vc.navigationController pushViewController:mamaCenterVC animated:YES];
-        
+        [JMNotificationCenter postNotificationName:@"notificationJump" object:self userInfo:@{@"selectedIndex":@"4"}];
     }else if ([target_url isEqualToString:@"com.jimei.xlmm://app/v1/vip_0day"]){
         //跳转到小鹿妈妈每日上新
         JMPushingDaysController *publish = [[JMPushingDaysController alloc] init];
@@ -146,8 +137,7 @@
     }else if ([target_url hasPrefix:@"com.jimei.xlmm://app/v1/shopping_cart"]) {
         BOOL login = [JMUserDefaults boolForKey:@"login"];
         if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [vc.navigationController pushViewController:enterVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
             return;
         }else {
             NSArray *typeArr = [target_url componentsSeparatedByString:@"?"];

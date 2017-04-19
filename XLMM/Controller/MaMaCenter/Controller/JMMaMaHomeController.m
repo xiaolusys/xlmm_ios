@@ -36,7 +36,6 @@
 #import "JMOrderListController.h"
 #import "JMEarningListController.h"
 #import "JMPushingDaysController.h"
-#import "JMLogInViewController.h"
 
 @interface JMMaMaHomeController () <UITableViewDataSource,UITableViewDelegate,JMMaMaHomeHeaderViewDelegte> {
     NSString *_orderRecord;             // 订单记录
@@ -158,7 +157,6 @@
 - (void)quitLogin {
     self.navigationItem.rightBarButtonItem = nil;
     self.homeHeaderView.userInfoDic = nil;
-
 }
 
 #pragma mark 对外提供的接口
@@ -586,8 +584,7 @@
     }
 }
 - (void)displayLoginView{
-    JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-    [self.navigationController pushViewController:loginVC animated:YES];
+    [[JMGlobal global] showLoginViewController];
 }
 
 

@@ -12,7 +12,6 @@
 #import "JMHomeActiveCell.h"
 #import "JMHomeHeaderCell.h"
 #import "JumpUtils.h"
-#import "JMLogInViewController.h"
 #import "WebViewController.h"
 #import "JMAutoLoopPageView.h"
 #import "JMEmptyView.h"
@@ -172,8 +171,7 @@
         [self skipWebView:appLink activeDic:dic];
     }else {
         if ([model.login_required boolValue]) {
-            JMLogInViewController *loginVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }else {
             [self skipWebView:appLink activeDic:dic];
         }

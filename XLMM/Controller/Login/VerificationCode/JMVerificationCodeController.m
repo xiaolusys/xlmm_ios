@@ -400,7 +400,6 @@
     [JMHTTPManager requestWithType:RequestTypePOST WithURLString:TVerifyCode_URL WithParaments:parameters WithSuccess:^(id responseObject) {
         if (!responseObject)return;
         [self verifyAfter:responseObject];
-        [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
         [self reductionSlider];
         [MBProgressHUD showError:@"请求失败,请稍后重试~!"];
@@ -411,55 +410,132 @@
 }
 - (void)verifyAfter:(NSDictionary *)dic {
     if (dic.count == 0)return;
-    NSString *phoneNumber = self.phoneNumberField.text;
+//    NSString *phoneNumber = self.phoneNumberField.text;
     if ([[dic objectForKey:@"rcode"] integerValue] != 0) {
         [self reductionSlider];
         [self alertMessage:[dic objectForKey:@"msg"]];
         return;
     }
     if (self.verificationCodeType == SMSVerificationCodeWithRegistered || self.verificationCodeType == SMSVerificationCodeWithLogin) {
-        [self alertMessage:[dic objectForKey:@"msg"]];
-        NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
-        NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
-        [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
-            NSString *user_account = [responseObject objectForKey:@"user_account"];
-            if ([user_account isEqualToString:@""]) {
-            } else {
-                [MiPushSDK setAccount:user_account];
-                //保存user_account
-                [JMUserDefaults setObject:user_account forKey:@"user_account"];
-                [JMUserDefaults synchronize];
-            }
-        } WithFail:^(NSError *error) {
-        } Progress:^(float progress) {
-        }];
+//        [self alertMessage:[dic objectForKey:@"msg"]];
+        [self loadUserInfo];
+        [self setDevice];
         //设置用户名在newLeft中使用
-        [JMUserDefaults setObject:phoneNumber forKey:kUserName];
-        [JMUserDefaults setBool:YES forKey:kIsLogin];
-        //发送通知在root中接收
-        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
-        [self backApointInterface];
-        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
+//        [JMUserDefaults setObject:phoneNumber forKey:kUserName];
+//        [JMUserDefaults setBool:YES forKey:kIsLogin];
+//        //发送通知在root中接收
+//        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
+//        [self backApointInterface];
     }else if (self.verificationCodeType == SMSVerificationCodeWithForgetPWD) {
+        [MBProgressHUD hideHUD];
         JMInstallPasswordController *pwdVC = [[JMInstallPasswordController alloc] init];
         pwdVC.pwdType = 0;
         pwdVC.verfiyCode = self.verificationCodeField.text;
         pwdVC.phomeNumber = self.phoneNumberField.text;
         [self.navigationController pushViewController:pwdVC animated:YES];
     }else if (self.verificationCodeType == SMSVerificationCodeWithChangePWD) {
+        [MBProgressHUD hideHUD];
         JMInstallPasswordController *pwdVC = [[JMInstallPasswordController alloc] init];
         pwdVC.pwdType = 1;
         pwdVC.verfiyCode = self.verificationCodeField.text;
         pwdVC.phomeNumber = self.phoneNumberField.text;
         [self.navigationController pushViewController:pwdVC animated:YES];
     }else {
-        [self backApointInterface];
-        JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-        JMKeyWindow.rootViewController = tabBarVC;
+        [self loadUserInfo];
+        [self setDevice];
+//        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
+//        [self backApointInterface];
     }
 }
-
+#pragma mark ---- 登录成功后获取用户信息
+- (void)loadUserInfo {
+    /*
+     1. 用户绑定手机, 且是精英妈妈.  ---> 跳转到主页
+     2. 用户绑定手机, 但不是精英妈妈. ---> 提示此用户权限不够.
+     3. 用户没用绑定手机, 但是是精英妈妈. ---> 跳转到绑定手机.
+     4. 用户没有绑定手机, 且不是精英妈妈. ---> 提示用户需要注册成为会员
+     */
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/users/profile", Root_URL];
+    [JMHTTPManager requestWithType:RequestTypeGET WithURLString:urlString WithParaments:nil WithSuccess:^(id responseObject) {
+        if (!responseObject) return ;
+        BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
+        BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
+        BOOL kIsBindPhone = [NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsVIP = NO;
+        if (kIsXLMMStatus) {
+            NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
+            kIsVIP = [xlmmDict[@"last_renew_type"] integerValue] >= 90 ? YES : NO;
+        }
+        [JMUserDefaults setBool:kIsLoginStatus forKey:kIsLogin];
+        [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
+        [JMUserDefaults synchronize];
+        if (kIsVIP) {
+            if (!kIsBindPhone) {
+                // 跳主页
+                // 发送手机号码登录成功的通知
+                [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
+                [self backApointInterface];
+            }else {
+                // 绑定手机
+                NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
+                JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+                vc.verificationCodeType = SMSVerificationCodeWithBind;
+                vc.userInfo = weChatInfo;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }else {
+            JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
+            vc.verificationCodeType = SMSVerificationCodeWithLogin;
+            vc.userNotXLMM = YES;
+            vc.profileUserInfo = responseObject;
+            [self.navigationController pushViewController:vc animated:YES];
+            // 提示
+            //            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
+        }
+        [MBProgressHUD hideHUD];
+    } WithFail:^(NSError *error) {
+        NSHTTPURLResponse *response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        if (response) {
+            if (response.statusCode) {
+                NSInteger statusCode = response.statusCode;
+                if (statusCode == 403) {
+                    NSLog(@"%ld",statusCode);
+                    [JMUserDefaults removeObjectForKey:kIsLogin];
+                    [JMUserDefaults removeObjectForKey:kISXLMM];
+                }
+            }
+        }
+        [JMUserDefaults synchronize];
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"登录失败，请重试"];
+    } Progress:^(float progress) {
+    }];
+}
+- (void)setDevice{
+    NSDictionary *params = [JMUserDefaults objectForKey:@"MiPush"];
+    NSString *urlString = [NSString stringWithFormat:@"%@/rest/v1/push/set_device", Root_URL];
+    
+    NSLog(@"urlStr = %@", urlString);
+    NSLog(@"params = %@", params);
+    [JMHTTPManager requestWithType:RequestTypePOST WithURLString:urlString WithParaments:params WithSuccess:^(id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        NSString *user_account = [responseObject objectForKey:@"user_account"];
+        NSLog(@"user_account = %@", user_account);
+        if ([user_account isEqualToString:@""]) {
+            
+        } else {
+            [MiPushSDK setAccount:user_account];
+            //保存user_account
+            [JMUserDefaults setObject:user_account forKey:@"user_account"];
+            [JMUserDefaults synchronize];
+        }
+    } WithFail:^(NSError *error) {
+        
+    } Progress:^(float progress) {
+        
+    }];
+    
+}
 
 #pragma mark ==== UITextField 代理实现 ====
 //是否允许本字段结束编辑，允许-->文本字段会失去firse responder

@@ -62,8 +62,7 @@
         NSLog(@"callNativeUniShareFunc");
         BOOL login = [JMUserDefaults boolForKey:@"login"];
         if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [webVC.navigationController pushViewController:enterVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
             return;
         }else {
 //            [self universeShare:data];
@@ -76,8 +75,7 @@
     [self.bridge registerHandler:@"jumpToNativeLogin" handler:^(id data, WVJBResponseCallback responseCallback) {
         BOOL login = [JMUserDefaults boolForKey:@"login"];
         if (login == NO) {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [webVC.navigationController pushViewController:enterVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
             return;
         }else {
             [self jsLetiOSWithData:data callBack:responseCallback WebViewController:webVC];
