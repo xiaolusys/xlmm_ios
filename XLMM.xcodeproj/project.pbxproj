@@ -314,6 +314,10 @@
 		1F2B014D1E83850300E8C47E /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B01471E83850300E8C47E /* NSData+Base64.m */; };
 		1F2B014E1E83850300E8C47E /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B01491E83850300E8C47E /* NSData+CommonCrypto.m */; };
 		1F2B014F1E83850300E8C47E /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B014B1E83850300E8C47E /* NSString+Base64.m */; };
+		1F2D21D11EA72EEB009F62E5 /* messageImageNomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F2D21D01EA72EEB009F62E5 /* messageImageNomal@2x.png */; };
+		1F2F9E171D58223900E3A68B /* JMHotGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E161D58223900E3A68B /* JMHotGoodsController.m */; };
+		1F2F9E1A1D58228900E3A68B /* JMOutStockGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E191D58228900E3A68B /* JMOutStockGoodsController.m */; };
+		1F2F9E1D1D582A7A00E3A68B /* JMStoreUpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E1C1D582A7A00E3A68B /* JMStoreUpModel.m */; };
 		1F2F9E321D58864200E3A68B /* JMGoodsExplainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E311D58864200E3A68B /* JMGoodsExplainCell.m */; };
 		1F2F9E351D58865E00E3A68B /* JMGoodsAttributeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E341D58865E00E3A68B /* JMGoodsAttributeCell.m */; };
 		1F2F9E461D5978EB00E3A68B /* JMGoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F9E451D5978EB00E3A68B /* JMGoodsDetailController.m */; };
@@ -2649,6 +2653,7 @@
 		1F12EB8D1DAC97E600511B58 /* MaMaInfoImage */ = {
 			isa = PBXGroup;
 			children = (
+				1F2D21D01EA72EEB009F62E5 /* messageImageNomal@2x.png */,
 				1F12EB8E1DAC97E600511B58 /* EverydayPushNormal@2x.png */,
 				1F12EB8F1DAC97E600511B58 /* EverydayPushNormalColor@2x.png */,
 				1F12EB901DAC97E600511B58 /* inviteShopNormal@2x.png */,
@@ -6808,6 +6813,7 @@
 				1830744D1C97D17900B7665E /* WeiboSDK.bundle in Resources */,
 				3A2BC1D71D2CFF6E00F6F54B /* ios-social-sdk-like.html in Resources */,
 				1F12ECF81DAC97E600511B58 /* 圈圈加载0010@2x.png in Resources */,
+				1F2D21D11EA72EEB009F62E5 /* messageImageNomal@2x.png in Resources */,
 				1F12ED541DAC97E700511B58 /* 5C@2x.png in Resources */,
 				3A2BC1DB1D2CFF6E00F6F54B /* ios-social-sdk-share-detail.html in Resources */,
 				1F498C5F1D2772D0007E77FC /* ShenQingTuikuanController.xib in Resources */,
