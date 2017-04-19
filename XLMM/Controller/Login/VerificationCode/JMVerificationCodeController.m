@@ -442,6 +442,7 @@
         [self.navigationController pushViewController:pwdVC animated:YES];
     }else {
         [self loadUserInfo];
+        [self setDevice];
 //        [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];
 //        [self backApointInterface];
     }
