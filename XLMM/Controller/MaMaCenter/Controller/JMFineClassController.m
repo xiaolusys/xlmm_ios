@@ -13,7 +13,6 @@
 #import "WebViewJavascriptBridge.h"
 #import "JMShareViewController.h"
 #import "JMShareModel.h"
-#import "JMLogInViewController.h"
 #import "JumpUtils.h"
 #import "IosJsBridge.h"
 #import "JMPayShareController.h"

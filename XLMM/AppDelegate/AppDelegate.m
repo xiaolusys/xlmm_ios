@@ -118,7 +118,7 @@
     }];
 }
 - (void)cancleWaitTimerAndReuestLaunchImage {
-    [XHLaunchAd cancelWatiTimer];
+    [XHLaunchAd cancelWatiTimer]; // 取消等待后,维持两秒去请求启动图...
     [self getLaunchImage];
 }
 #pragma mark ======== 程序开始启动 ========

@@ -56,11 +56,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [JMNotificationCenter  addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
-    [JMNotificationCenter  addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
-    [JMNotificationCenter  addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(setLabelNumber) name:@"logout" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(requestCartNumber:) name:@"shoppingCartNumChange" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(shoppingCartkuaiquguangguang) name:@"kuaiquguangguangButtonClick" object:nil];
     [JMNotificationCenter addObserver:self selector:@selector(phoneNumberLogin) name:@"phoneNumberLogin" object:nil];
-    [JMNotificationCenter addObserver:self selector: @selector(WeChatLoginNoti) name:@"WeChatLogin" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(WeChatLoginNoti) name:@"WeChatLoginSuccess" object:nil];
+    [JMNotificationCenter addObserver:self selector:@selector(notificationJump:) name:@"notificationJump" object:nil];
+    
     
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isRefreshFine"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
@@ -225,6 +227,10 @@
 }
 - (void)WeChatLoginNoti {
     self.selectedIndex = 0;
+}
+- (void)notificationJump:(NSNotification *)notification {
+    NSDictionary *dic = notification.userInfo;
+    self.selectedIndex = [dic[@"selectedIndex"] integerValue];
 }
 
 #pragma mark --- 购物车数量 --- 

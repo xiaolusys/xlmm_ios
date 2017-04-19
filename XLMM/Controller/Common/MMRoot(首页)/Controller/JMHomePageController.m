@@ -13,7 +13,6 @@
 #import "JMHomeRootCategoryController.h"
 #import "JMGoodsCountTime.h"
 #import "JMCartViewController.h"
-#import "JMLogInViewController.h"
 #import "JMFineClassController.h"
 #import "JMMaMaHomeController.h"
 #import "JumpUtils.h"

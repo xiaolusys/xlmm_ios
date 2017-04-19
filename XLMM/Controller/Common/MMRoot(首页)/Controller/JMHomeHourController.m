@@ -14,7 +14,6 @@
 #import "JMPushingDaysController.h"
 #import "JMShareModel.h"
 #import "JMShareViewController.h"
-#import "JMLogInViewController.h"
 
 
 @interface JMHomeHourController () <UITableViewDelegate,UITableViewDataSource,JMHomeHourCellDelegate> {
@@ -152,8 +151,7 @@
             pushVC.navTitle = @"文案精选";
             [self.navigationController pushViewController:pushVC animated:YES];
         }else {
-            JMLogInViewController *enterVC = [[JMLogInViewController alloc] init];
-            [self.navigationController pushViewController:enterVC animated:YES];
+            [[JMGlobal global] showLoginViewController];
         }
         
     }else if (button.tag == 101) {

@@ -238,7 +238,7 @@
         if (!responseObject) return ;
         BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
         BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
-        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsBindPhone = [NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
         BOOL kIsVIP = NO;
         if (kIsXLMMStatus) {
             NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
@@ -248,7 +248,7 @@
         [JMUserDefaults setBool:kIsXLMMStatus forKey:kISXLMM];
         [JMUserDefaults synchronize];
         if (kIsVIP) {
-            if (kIsBindPhone) {
+            if (!kIsBindPhone) {
                 // 跳主页
                 // 发送手机号码登录成功的通知
                 [JMNotificationCenter postNotificationName:@"phoneNumberLogin" object:nil];

@@ -198,10 +198,10 @@
     }];
 }
 #pragma mark --- 移除通知
-//- (void)dealloc {
-//    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
-//    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
-//}
+- (void)dealloc {
+    [JMNotificationCenter removeObserver:self name:@"phoneNumberLogin" object:nil];
+    [JMNotificationCenter removeObserver:self name:@"WeChatLogin" object:nil];
+}
 #pragma mark ---- 点击微信登录的按钮
 - (void)wechatBtnClick:(UIButton *)btn {
     self.wechatBtn.enabled = NO;
@@ -259,7 +259,7 @@
         if (!responseObject) return ;
         BOOL kIsLoginStatus = ([responseObject objectForKey:@"id"] != nil)  && ([[responseObject objectForKey:@"id"] integerValue] != 0);
         BOOL kIsXLMMStatus = [[responseObject objectForKey:@"xiaolumm"] isKindOfClass:[NSDictionary class]];
-        BOOL kIsBindPhone = ![NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
+        BOOL kIsBindPhone = [NSString isStringEmpty:[responseObject objectForKey:@"mobile"]];
         BOOL kIsVIP = NO;
         if (kIsXLMMStatus) {
             NSDictionary *xlmmDict = responseObject[@"xiaolumm"];
@@ -273,8 +273,7 @@
             if (!kIsBindPhone) {
                 // 跳主页
                 [self dismissViewControllerAnimated:YES completion:nil];
-                JMRootTabBarController * tabBarVC = [[JMRootTabBarController alloc] init];
-                tabBarVC.selectedIndex = 0;
+                [JMNotificationCenter postNotificationName:@"WeChatLoginSuccess" object:nil];
             }else {
                 // 绑定手机
                 NSDictionary *weChatInfo = [JMUserDefaults objectForKey:kWxLoginUserInfo];
@@ -284,16 +283,14 @@
                 vc.userLoginMethodWithWechat = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             }
-            
         }else {
+//            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
             JMVerificationCodeController *vc = [[JMVerificationCodeController alloc] init];
             vc.verificationCodeType = SMSVerificationCodeWithLogin;
             vc.userNotXLMM = YES;
             vc.profileUserInfo = responseObject;
             vc.userLoginMethodWithWechat = YES;
             [self.navigationController pushViewController:vc animated:YES];
-            // 提示
-//            [MBProgressHUD showMessage:@"您还不是精英妈妈"];
         }
         [MBProgressHUD hideHUD];
     } WithFail:^(NSError *error) {
