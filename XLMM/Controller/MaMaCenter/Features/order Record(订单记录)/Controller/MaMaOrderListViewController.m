@@ -103,7 +103,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREENWIDTH, SCREENHEIGHT - 64) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 80;
+    self.tableView.rowHeight = 90;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.view addSubview:self.tableView];
