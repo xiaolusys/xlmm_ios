@@ -417,13 +417,19 @@
         [button1 setTitleColor:[UIColor buttonEnabledBackgroundColor] forState:UIControlStateNormal];
         NSString *size = sizeArr[_sizeSelectedIndex - 1];
         NSDictionary *sizeDict = [sizeDic objectForKey:size];
-        _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
-        _stockValue =  [sizeDict[@"free_num"] integerValue];
-        _skuSizeString = sizeDict[@"name"];
-        self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
-        self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
-        NSLog(@"_goodsColorID ----- > %ld, _goodsSizeID ---- > %ld",_goodsColorID,_goodsSizeID);
+        [self fetchSizeDict:sizeDict];
+    }else {
+        NSString *size = sizeArr[_sizeSelectedIndex - 1];
+        NSDictionary *sizeDict = [sizeDic objectForKey:size];
+        [self fetchSizeDict:sizeDict];
     }
+}
+- (void)fetchSizeDict:(NSDictionary *)sizeDict {
+    _goodsSizeID = [sizeDict[@"sku_id"] integerValue];
+    _stockValue =  [sizeDict[@"free_num"] integerValue];
+    _skuSizeString = sizeDict[@"name"];
+    self.PriceLabel.text = [NSString stringWithFormat:@"¥%.2f",[sizeDict[@"agent_price"] floatValue]];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"%.2f",[sizeDict[@"std_sale_price"] floatValue]];
 }
 
 - (void)sureButtonClick:(UIButton *)button {
