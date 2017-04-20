@@ -15,6 +15,7 @@
 #import "AESEncryption.h"
 #import "JMRootTabBarController.h"
 #import "AppDelegate.h"
+#import "WebViewController.h"
 
 
 #define rememberPwdKey @"rememberPwd"
@@ -43,7 +44,7 @@
 @property (nonatomic,strong) UIButton *loginBtn;
 
 
-
+@property (nonatomic, strong) UIButton *registeredButton;
 
 
 
@@ -160,6 +161,19 @@
     [loginBtn setBackgroundImage:[UIImage imageNamed:@"success_purecolor"] forState:UIControlStateNormal];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.registeredButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.bottomView addSubview:self.registeredButton];
+    //设置按钮文字的下划线
+    NSMutableAttributedString *muTitle = [[NSMutableAttributedString alloc] initWithString:@"如何注册成为小鹿妈妈"];
+    NSRange titleRange2 = {0,[muTitle length]};
+    [self.registeredButton setTitle:@"如何注册成为小鹿妈妈" forState:UIControlStateNormal];
+    [muTitle addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:titleRange2];
+    [self.registeredButton setAttributedTitle:muTitle forState:UIControlStateNormal];
+    [self.registeredButton.titleLabel setFont:[UIFont systemFontOfSize:13.]];
+    self.registeredButton.titleLabel.textColor = [UIColor redColor];
+    [self.registeredButton addTarget:self action:@selector(registeredButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+
     
 }
 
@@ -428,6 +442,12 @@
         make.height.mas_equalTo(@43);
     }];
     
+    CGFloat registW = [@"如何注册成为小鹿妈妈" widthWithHeight:20. andFont:13.].width + 20;
+    [self.registeredButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weakSelf.loginBtn.mas_bottom).offset(10);
+        make.centerX.equalTo(weakSelf.loginBtn.mas_centerX);
+        make.width.mas_equalTo(@(registW));
+    }];
     
     
 }
@@ -456,6 +476,30 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
+- (void)registeredButtonClicked {
+    NSString *urlString = @"https://m.xiaolumeimei.com/mall/boutiqueinvite";
+    NSString *active = @"myInvite";
+    NSString *titleName = @"我的邀请";
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:@38 forKey:@"activity_id"];
+    [dict setValue:urlString forKey:@"web_url"];
+    [dict setValue:active forKey:@"type_title"];
+    [dict setValue:titleName forKey:@"name_title"];
+    [self pushWebView:dict ShowNavBar:YES ShowRightShareBar:YES Title:nil];
+    
+}
+- (void)pushWebView:(NSMutableDictionary *)dict ShowNavBar:(BOOL)isShowNavBar ShowRightShareBar:(BOOL)isShowRightShareBar Title:(NSString *)title {
+    WebViewController *activity = [[WebViewController alloc] init];
+    if (title != nil) {
+        activity.titleName = title;
+    }
+    activity.webDiction = dict;
+    activity.isShowNavBar = isShowNavBar;
+    activity.isShowRightShareBtn = isShowRightShareBar;
+    [self.navigationController pushViewController:activity animated:YES];
+}
+
+
 
 @end
 

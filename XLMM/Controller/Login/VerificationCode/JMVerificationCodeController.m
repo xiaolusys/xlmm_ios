@@ -162,13 +162,13 @@
     [textFieldView addSubview:verificationCodeField];
     [textFieldView addSubview:self.verificationCodeButton];
     
-    CGFloat registW = [@"如何注册" widthWithHeight:20. andFont:13.].width;
+    CGFloat registW = [@"如何注册成为小鹿妈妈" widthWithHeight:20. andFont:13.].width + 20;
     self.registeredButton  = [[UIButton alloc] initWithFrame:CGRectMake(spaceing, textFieldView.cs_max_Y + 10, registW, 20)];
     [self.maskScrollView addSubview:self.registeredButton];
     //设置按钮文字的下划线
-    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"如何注册"];
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"如何注册成为小鹿妈妈"];
     NSRange titleRange = {0,[title length]};
-    [self.registeredButton setTitle:@"如何注册" forState:UIControlStateNormal];
+    [self.registeredButton setTitle:@"如何注册成为小鹿妈妈" forState:UIControlStateNormal];
     [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:titleRange];
     [self.registeredButton setAttributedTitle:title forState:UIControlStateNormal];
     [self.registeredButton.titleLabel setFont:[UIFont systemFontOfSize:13.]];
