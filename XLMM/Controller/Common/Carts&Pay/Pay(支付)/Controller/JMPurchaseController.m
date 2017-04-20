@@ -767,9 +767,11 @@ static BOOL isAgreeTerms = YES;
             [MBProgressHUD showWarning:@"请填写身份证号"];
             return;
         }
-        if (self.purchaseHeaderView.zhengImage == nil && self.purchaseHeaderView.fanImage == nil && _cartsInfoLevel > 2) {
-            [MBProgressHUD showWarning:@"请上传身份证照片"];
-            return;
+        if (_cartsInfoLevel > 2) {
+            if (self.purchaseHeaderView.zhengImage == nil || self.purchaseHeaderView.fanImage == nil) {
+                [MBProgressHUD showWarning:@"请上传身份证照片"];
+                return;
+            }
         }
         button.enabled = NO;
         [self performSelector:@selector(changeButtonStatus:) withObject:button afterDelay:0.5f];
