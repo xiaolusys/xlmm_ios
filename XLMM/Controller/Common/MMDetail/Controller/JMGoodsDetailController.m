@@ -689,16 +689,16 @@ static NSString *currentCartsType = @"5"; // 当前购物车的类型 (普通购
 #pragma mark -- 加入购物车选择商品属性回调
 - (void)composeGoodsInfoView:(JMGoodsInfoPopView *)popView AttrubuteDic:(NSMutableDictionary *)attrubuteDic {
     NSString *urlString = [NSString stringWithFormat:@"%@/rest/v2/carts?type=%@",Root_URL,currentCartsType];
-    if (_isDirectBuyGoods) {
+//    if (_isDirectBuyGoods) {
         [MBProgressHUD showLoading:@""];
-    }else {
-        [MBProgressHUD showLoading:@"正在加入购物车~"];
-    }
-    if (_isFineGoods) {
+//    }else {
+//        [MBProgressHUD showLoading:@"正在加入购物车~"];
+//    }
+//    if (_isFineGoods) {
         attrubuteDic[@"type"] = @"5";
-    }else {
-        attrubuteDic[@"type"] = @"0";
-    }
+//    }else {
+//        attrubuteDic[@"type"] = @"0";
+//    }
     [self addCartUrlString:urlString Paramer:attrubuteDic];
 }
 - (void)addCartUrlString:(NSString *)urlString Paramer:(NSMutableDictionary *)paramer {
