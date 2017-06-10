@@ -187,6 +187,9 @@
 }
 - (void)mamaWebViewData:(NSDictionary *)mamaDic {
     NSArray *resultsArr = mamaDic[@"results"];
+    if (resultsArr.count == 0) {
+        return;
+    }
     NSDictionary *resultsDict = [NSDictionary dictionary];
     resultsDict = resultsArr[0];
     NSDictionary *dict = resultsDict[@"extra"];
